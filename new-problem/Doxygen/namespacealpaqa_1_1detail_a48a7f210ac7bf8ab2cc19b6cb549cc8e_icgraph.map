@@ -1,0 +1,17 @@
+<map id="projected_gradient_step" name="projected_gradient_step">
+<area shape="rect" id="node1" title="Projected gradient step." alt="" coords="1160,234,1339,261"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a164b2b3296b6868a4dd53b7c0d9d64e2" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="703,133,853,159"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="365,5,635,47"/>
+<area shape="rect" id="node9" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,189,156,215"/>
+<area shape="rect" id="node10" href="$namespacealpaqa_1_1detail.html#adaff98bd8130d1eee1f5bcaab5069026" title=" " alt="" coords="985,234,1048,261"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1SpecializedLBFGS.html#a0b030867dbee1f90710a9b23360807a3" title="L&#45;BFGS update when changing the step size γ, recomputing everything." alt="" coords="921,488,1112,529"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="379,240,621,281"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="415,305,585,347"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1PGASolver.html#af516b794e244432023aea7ba3cd0d1d8" title=" " alt="" coords="425,123,575,164"/>
+<area shape="rect" id="node7" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="425,189,575,215"/>
+<area shape="rect" id="node8" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="204,189,317,215"/>
+<area shape="rect" id="node11" href="$namespacealpaqa_1_1detail.html#a3e432963691339ba0588d90186008735" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="715,234,841,261"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1PANOCSolver.html#aaa9758a40bd362331202fb232b4bb7ae" title=" " alt="" coords="420,371,580,412"/>
+<area shape="rect" id="node14" href="$classalpaqa_1_1SpecializedLBFGS.html#a747b26091f869cb17a768e38f17fbc8d" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="683,491,873,532"/>
+<area shape="rect" id="node15" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a39a241c049e8d029cc86a30a89ef92cf" title=" " alt="" coords="411,487,589,543"/>
+</map>

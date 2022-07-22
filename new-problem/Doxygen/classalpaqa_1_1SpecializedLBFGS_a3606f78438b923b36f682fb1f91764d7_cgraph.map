@@ -1,0 +1,7 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="node1" title="Initialize with the starting point x₀ and the gradient in that point." alt="" coords="5,31,84,57"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1SpecializedLBFGS.html#a7e9b3fd96d52976693a1fb57fb32ba3c" title=" " alt="" coords="132,5,171,32"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1SpecializedLBFGS.html#ac8fb9b5f7c53b1285867cf99b0f79d17" title=" " alt="" coords="132,56,171,83"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SpecializedLBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s, y, x and g stored in the buffer." alt="" coords="219,5,285,32"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1SpecializedLBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s, y, x and g vectors in the buffer." alt="" coords="233,56,271,83"/>
+</map>

@@ -1,0 +1,2622 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+
+    <link rel="shortcut icon" href="_static/alpaqa_favicon.png"/><meta name="generator" content="sphinx-4.2.0, furo 2021.10.09"/><title>Index - Alpaqa documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=0254c309f5cadf746f1a613e7677379ac9c8cdcd" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=16fb25fabf47304eee183a5e9af80b1ba98259b1" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Alpaqa  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/alpaqa_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Alpaqa  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="install/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage/gettingstarted.html">Getting started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples/examples_landing_page.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/example_minimal.html">Minimal example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/regression_problem.html">Nonlinear regression problem</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="examples/mpc/mpc_landing_page.html">Model predictive control</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/mpc/hanging-chain.html">Hanging Chain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/python-api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/cpp-api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contribution/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#K"><strong>K</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a> | <a href="#X"><strong>X</strong></a> | <a href="#Y"><strong>Y</strong></a> | <a href="#Α"><strong>Α</strong></a> | <a href="#Γ"><strong>Γ</strong></a> | <a href="#Δ"><strong>Δ</strong></a> | <a href="#Ε"><strong>Ε</strong></a> | <a href="#Θ"><strong>Θ</strong></a> | <a href="#Ρ"><strong>Ρ</strong></a> | <a href="#Σ"><strong>Σ</strong></a> | <a href="#Τ"><strong>Τ</strong></a> | <a href="#Φ"><strong>Φ</strong></a> | <a href="#Ψ"><strong>Ψ</strong></a> | <a href="#Ε"><strong>Ε</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMSolver.__call__">__call__() (alpaqa._alpaqa.ALMSolver method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGASolver.__call__">(alpaqa._alpaqa.GAAPGASolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolver.__call__">(alpaqa._alpaqa.InnerSolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCSolver.__call__">(alpaqa._alpaqa.PANOCSolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGASolver.__call__">(alpaqa._alpaqa.PGASolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSSolver.__call__">(alpaqa._alpaqa.StructuredPANOCLBFGSSolver method)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.__init__">__init__() (alpaqa._alpaqa.ALMParams method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMSolver.__init__">(alpaqa._alpaqa.ALMSolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Box.__init__">(alpaqa._alpaqa.Box method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.__init__">(alpaqa._alpaqa.EvalCounter method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.__init__">(alpaqa._alpaqa.EvalTimer method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.__init__">(alpaqa._alpaqa.GAAPGAParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.__init__">(alpaqa._alpaqa.GAAPGAProgressInfo method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGASolver.__init__">(alpaqa._alpaqa.GAAPGASolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolver.__init__">(alpaqa._alpaqa.InnerSolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolverStats.__init__">(alpaqa._alpaqa.InnerSolverStats method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.__init__">(alpaqa._alpaqa.LBFGSDirection method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParams.__init__">(alpaqa._alpaqa.LBFGSParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParamsCBFGS.__init__">(alpaqa._alpaqa.LBFGSParamsCBFGS method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSStepsize.__init__">(alpaqa._alpaqa.LBFGSStepsize method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LipschitzEstimateParams.__init__">(alpaqa._alpaqa.LipschitzEstimateParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.__init__">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.__init__">(alpaqa._alpaqa.PANOCParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.__init__">(alpaqa._alpaqa.PANOCProgressInfo method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCSolver.__init__">(alpaqa._alpaqa.PANOCSolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.__init__">(alpaqa._alpaqa.PANOCStopCrit method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.__init__">(alpaqa._alpaqa.PGAParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.__init__">(alpaqa._alpaqa.PGAProgressInfo method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGASolver.__init__">(alpaqa._alpaqa.PGASolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.__init__">(alpaqa._alpaqa.Problem method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.__init__">(alpaqa._alpaqa.ProblemWithCounters method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.__init__">(alpaqa._alpaqa.ProblemWithParam method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.__init__">(alpaqa._alpaqa.ProblemWithParamWithCounters method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.__init__">(alpaqa._alpaqa.SolverStatus method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.__init__">(alpaqa._alpaqa.StructuredPANOCLBFGSParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.__init__">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSSolver.__init__">(alpaqa._alpaqa.StructuredPANOCLBFGSSolver method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams">ALMParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMSolver">ALMSolver (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv46alpaqa">alpaqa (C++ type)</a>
+</li>
+        <li>
+    alpaqa._alpaqa
+
+        <ul>
+          <li><a href="reference/python-api.html#module-alpaqa._alpaqa">module</a>
+</li>
+        </ul></li>
+        <li>
+    alpaqa.casadi_problem
+
+        <ul>
+          <li><a href="reference/python-api.html#module-alpaqa.casadi_problem">module</a>
+</li>
+        </ul></li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParamsE">alpaqa::ALMParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams1ME">alpaqa::ALMParams::M (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams8max_iterE">alpaqa::ALMParams::max_iter (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams23max_num_initial_retriesE">alpaqa::ALMParams::max_num_initial_retries (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams15max_num_retriesE">alpaqa::ALMParams::max_num_retries (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams8max_timeE">alpaqa::ALMParams::max_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams21max_total_num_retriesE">alpaqa::ALMParams::max_total_num_retries (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams15preconditioningE">alpaqa::ALMParams::preconditioning (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams14print_intervalE">alpaqa::ALMParams::print_interval (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMParams21single_penalty_factorE">alpaqa::ALMParams::single_penalty_factor (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa9ALMSolverE">alpaqa::ALMSolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver9ALMSolverE6ParamsRK11InnerSolver">alpaqa::ALMSolver::ALMSolver (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver9ALMSolverE6ParamsRR11InnerSolver">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa9ALMSolver8get_nameEv">alpaqa::ALMSolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa9ALMSolver10get_paramsEv">alpaqa::ALMSolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver12inner_solverE">alpaqa::ALMSolver::inner_solver (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver11InnerSolverE">alpaqa::ALMSolver::InnerSolver (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolverclERK7Problem4rvec4rvec">alpaqa::ALMSolver::operator() (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver6ParamsE">alpaqa::ALMSolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5StatsE">alpaqa::ALMSolver::Stats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats12elapsed_timeE">alpaqa::ALMSolver::Stats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats23initial_penalty_reducedE">alpaqa::ALMSolver::Stats::initial_penalty_reduced (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats5innerE">alpaqa::ALMSolver::Stats::inner (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats26inner_convergence_failuresE">alpaqa::ALMSolver::Stats::inner_convergence_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats12norm_penaltyE">alpaqa::ALMSolver::Stats::norm_penalty (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats16outer_iterationsE">alpaqa::ALMSolver::Stats::outer_iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats15penalty_reducedE">alpaqa::ALMSolver::Stats::penalty_reduced (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5Stats6statusE">alpaqa::ALMSolver::Stats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver4stopEv">alpaqa::ALMSolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13AndersonAccelE">alpaqa::AndersonAccel (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13AndersonAccel8get_nameEv">alpaqa::AndersonAccel::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13AndersonAccel5resetEv">alpaqa::AndersonAccel::reset (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13AndersonAccel6resizeE6size_t6size_t">alpaqa::AndersonAccel::resize (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignalE">alpaqa::AtomicStopSignal (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignal16AtomicStopSignalERK16AtomicStopSignal">alpaqa::AtomicStopSignal::AtomicStopSignal (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignal16AtomicStopSignalERR16AtomicStopSignal">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignal16AtomicStopSignalEv">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignalaSERK16AtomicStopSignal">alpaqa::AtomicStopSignal::operator= (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignalaSERR16AtomicStopSignal">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16AtomicStopSignal4stopEv">alpaqa::AtomicStopSignal::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa16AtomicStopSignal14stop_requestedEv">alpaqa::AtomicStopSignal::stop_requested (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3BoxE">alpaqa::Box (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3Box10lowerboundE">alpaqa::Box::lowerbound (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3Box10upperboundE">alpaqa::Box::upperbound (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapperE">alpaqa::CasADiParamWrapper (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa18CasADiParamWrapper5cloneEv">alpaqa::CasADiParamWrapper::clone (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper6createEjRR9Functions">alpaqa::CasADiParamWrapper::create (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper2csE">alpaqa::CasADiParamWrapper::cs (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9FunctionsE">alpaqa::CasADiParamWrapper::Functions (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9Functions1fE">alpaqa::CasADiParamWrapper::Functions::f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9Functions1gE">alpaqa::CasADiParamWrapper::Functions::g (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9Functions6grad_fE">alpaqa::CasADiParamWrapper::Functions::grad_f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9Functions11grad_g_prodE">alpaqa::CasADiParamWrapper::Functions::grad_g_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9Functions6hess_LE">alpaqa::CasADiParamWrapper::Functions::hess_L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper9Functions11hess_L_prodE">alpaqa::CasADiParamWrapper::Functions::hess_L_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper5paramE">alpaqa::CasADiParamWrapper::param (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18CasADiParamWrapper4wrapER7Problem">alpaqa::CasADiParamWrapper::wrap (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa21CircularIndexIteratorE">alpaqa::CircularIndexIterator (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator21CircularIndexIteratorE7Indices5Index">alpaqa::CircularIndexIterator::CircularIndexIterator (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator21CircularIndexIteratorEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator15difference_typeE">alpaqa::CircularIndexIterator::difference_type (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator1iE">alpaqa::CircularIndexIterator::i (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator5IndexE">alpaqa::CircularIndexIterator::Index (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator7IndicesE">alpaqa::CircularIndexIterator::Indices (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator17iterator_categoryE">alpaqa::CircularIndexIterator::iterator_category (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator3maxE">alpaqa::CircularIndexIterator::max (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa21CircularIndexIteratorneEb21CircularIndexIteratorI6IndexTE21CircularIndexIteratorI6IndexTE">alpaqa::CircularIndexIterator::operator!= (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa21CircularIndexIteratormlEv">alpaqa::CircularIndexIterator::operator* (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIteratorppEi">alpaqa::CircularIndexIterator::operator++ (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIteratorppEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIteratormmEi">alpaqa::CircularIndexIterator::operator-- (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIteratormmEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa21CircularIndexIteratoreqEb21CircularIndexIteratorI6IndexTE21CircularIndexIteratorI6IndexTE">alpaqa::CircularIndexIterator::operator== (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator7pointerE">alpaqa::CircularIndexIterator::pointer (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator9referenceE">alpaqa::CircularIndexIterator::reference (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21CircularIndexIterator10value_typeE">alpaqa::CircularIndexIterator::value_type (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa15CircularIndicesE">alpaqa::CircularIndices (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15CircularIndices8circularE">alpaqa::CircularIndices::circular (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15CircularIndices15CircularIndicesE5Index5Index">alpaqa::CircularIndices::CircularIndices (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15CircularIndices5IndexE">alpaqa::CircularIndices::Index (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa15CircularIndicesneEb15CircularIndicesI6IndexTE15CircularIndicesI6IndexTE">alpaqa::CircularIndices::operator!= (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa15CircularIndiceseqEb15CircularIndicesI6IndexTE15CircularIndicesI6IndexTE">alpaqa::CircularIndices::operator== (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15CircularIndices9zerobasedE">alpaqa::CircularIndices::zerobased (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa13CircularRangeE">alpaqa::CircularRange (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange5beginEv">alpaqa::CircularRange::begin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange6cbeginEv">alpaqa::CircularRange::cbegin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange4cendEv">alpaqa::CircularRange::cend (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange13CircularRangeE5Index5Index5Index5Index">alpaqa::CircularRange::CircularRange (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange14const_iteratorE">alpaqa::CircularRange::const_iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange22const_reverse_iteratorE">alpaqa::CircularRange::const_reverse_iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange7crbeginEv">alpaqa::CircularRange::crbegin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange5crendEv">alpaqa::CircularRange::crend (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange3endEv">alpaqa::CircularRange::end (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange5IndexE">alpaqa::CircularRange::Index (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange7IndicesE">alpaqa::CircularRange::Indices (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange8iteratorE">alpaqa::CircularRange::iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange6rbeginEv">alpaqa::CircularRange::rbegin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13CircularRange4rendEv">alpaqa::CircularRange::rend (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13CircularRange16reverse_iteratorE">alpaqa::CircularRange::reverse_iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5crmatE">alpaqa::crmat (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5crvecE">alpaqa::crvec (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa6detailE">alpaqa::detail (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa6detail21apply_preconditioningERK7ProblemR7Problem5crvecR6real_tR3vec">alpaqa::detail::apply_preconditioning (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa6detail9project_yE4rvec5crvec5crvec6real_t">alpaqa::detail::project_y (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3dimE">alpaqa::dim (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12dist_squaredE5crvecRK3Box">alpaqa::dist_squared (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9enum_nameE12SolverStatus">alpaqa::enum_name (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa9enum_nameE13PANOCStopCrit">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounterE">alpaqa::EvalCounter (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimerE">alpaqa::EvalCounter::EvalTimer (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer1fE">alpaqa::EvalCounter::EvalTimer::f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer1gE">alpaqa::EvalCounter::EvalTimer::g (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer6grad_fE">alpaqa::EvalCounter::EvalTimer::grad_f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer11grad_g_prodE">alpaqa::EvalCounter::EvalTimer::grad_g_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer7grad_giE">alpaqa::EvalCounter::EvalTimer::grad_gi (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer6hess_LE">alpaqa::EvalCounter::EvalTimer::hess_L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter9EvalTimer11hess_L_prodE">alpaqa::EvalCounter::EvalTimer::hess_L_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter1fE">alpaqa::EvalCounter::f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter1gE">alpaqa::EvalCounter::g (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter6grad_fE">alpaqa::EvalCounter::grad_f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter11grad_g_prodE">alpaqa::EvalCounter::grad_g_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter7grad_giE">alpaqa::EvalCounter::grad_gi (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter6hess_LE">alpaqa::EvalCounter::hess_L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter11hess_L_prodE">alpaqa::EvalCounter::hess_L_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter5resetEv">alpaqa::EvalCounter::reset (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11EvalCounter4timeE">alpaqa::EvalCounter::time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParamsE">alpaqa::GAAPGAParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams5L_maxE">alpaqa::GAAPGAParams::L_max (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams5L_minE">alpaqa::GAAPGAParams::L_min (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams13limitedqr_memE">alpaqa::GAAPGAParams::limitedqr_mem (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams9LipschitzE">alpaqa::GAAPGAParams::Lipschitz (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams8max_iterE">alpaqa::GAAPGAParams::max_iter (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams15max_no_progressE">alpaqa::GAAPGAParams::max_no_progress (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams8max_timeE">alpaqa::GAAPGAParams::max_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams14print_intervalE">alpaqa::GAAPGAParams::print_interval (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams37quadratic_upperbound_tolerance_factorE">alpaqa::GAAPGAParams::quadratic_upperbound_tolerance_factor (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGAParams9stop_critE">alpaqa::GAAPGAParams::stop_crit (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfoE">alpaqa::GAAPGAProgressInfo (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo1kE">alpaqa::GAAPGAProgressInfo::k (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo1LE">alpaqa::GAAPGAProgressInfo::L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo9norm_sq_pE">alpaqa::GAAPGAProgressInfo::norm_sq_p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo1pE">alpaqa::GAAPGAProgressInfo::p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo6paramsE">alpaqa::GAAPGAProgressInfo::params (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo7problemE">alpaqa::GAAPGAProgressInfo::problem (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo1xE">alpaqa::GAAPGAProgressInfo::x (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo5x_hatE">alpaqa::GAAPGAProgressInfo::x_hat (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa18GAAPGAProgressInfo1yE">alpaqa::GAAPGAProgressInfo::y (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolverE">alpaqa::GAAPGASolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver12GAAPGASolverERK6Params">alpaqa::GAAPGASolver::GAAPGASolver (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa12GAAPGASolver8get_nameEv">alpaqa::GAAPGASolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa12GAAPGASolver10get_paramsEv">alpaqa::GAAPGASolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver6ParamsE">alpaqa::GAAPGASolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver12ProgressInfoE">alpaqa::GAAPGASolver::ProgressInfo (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">alpaqa::GAAPGASolver::set_progress_callback (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver5StatsE">alpaqa::GAAPGASolver::Stats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver5Stats26accelerated_steps_acceptedE">alpaqa::GAAPGASolver::Stats::accelerated_steps_accepted (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver5Stats12elapsed_timeE">alpaqa::GAAPGASolver::Stats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver5Stats10iterationsE">alpaqa::GAAPGASolver::Stats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver5Stats6statusE">alpaqa::GAAPGASolver::Stats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12GAAPGASolver4stopEv">alpaqa::GAAPGASolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3infE">alpaqa::inf (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa21InnerStatsAccumulatorE">alpaqa::InnerStatsAccumulator (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IEN6alpaqa21InnerStatsAccumulatorI11LBFGSBStatsEE">alpaqa::InnerStatsAccumulator&lt;LBFGSBStats&gt; (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI11LBFGSBStatsE12elapsed_timeE">alpaqa::InnerStatsAccumulator&lt;LBFGSBStats&gt;::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI11LBFGSBStatsE10iterationsE">alpaqa::InnerStatsAccumulator&lt;LBFGSBStats&gt;::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IEN6alpaqa21InnerStatsAccumulatorI10PANOCStatsEE">alpaqa::InnerStatsAccumulator&lt;PANOCStats&gt; (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI10PANOCStatsE12elapsed_timeE">alpaqa::InnerStatsAccumulator&lt;PANOCStats&gt;::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI10PANOCStatsE10iterationsE">alpaqa::InnerStatsAccumulator&lt;PANOCStats&gt;::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI10PANOCStatsE14lbfgs_failuresE">alpaqa::InnerStatsAccumulator&lt;PANOCStats&gt;::lbfgs_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI10PANOCStatsE14lbfgs_rejectedE">alpaqa::InnerStatsAccumulator&lt;PANOCStats&gt;::lbfgs_rejected (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI10PANOCStatsE19linesearch_failuresE">alpaqa::InnerStatsAccumulator&lt;PANOCStats&gt;::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IEN6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsEE">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt; (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsE12elapsed_timeE">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsE10iterationsE">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsE14lbfgs_failuresE">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;::lbfgs_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsE14lbfgs_rejectedE">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;::lbfgs_rejected (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsE19linesearch_failuresE">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGSE">alpaqa::LBFGS (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS8get_nameEv">alpaqa::LBFGS::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS10get_paramsEv">alpaqa::LBFGS::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS7historyEv">alpaqa::LBFGS::history (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS5LBFGSE6Params">alpaqa::LBFGS::LBFGS (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS5LBFGSE6Params6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS1nEv">alpaqa::LBFGS::n (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS6ParamsE">alpaqa::LBFGS::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS5resetEv">alpaqa::LBFGS::reset (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS6resizeE6size_t">alpaqa::LBFGS::resize (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS1sE6size_t">alpaqa::LBFGS::s (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS1sE6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS7scale_yE6real_t">alpaqa::LBFGS::scale_y (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS4SignE">alpaqa::LBFGS::Sign (C++ enum)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS4Sign8NegativeE">alpaqa::LBFGS::Sign::Negative (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS4Sign8PositiveE">alpaqa::LBFGS::Sign::Positive (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS4succE6size_t">alpaqa::LBFGS::succ (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa5LBFGS1yE6size_t">alpaqa::LBFGS::y (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa5LBFGS1yE6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4II0E0EN6alpaqa12LBFGSBSolverE">alpaqa::LBFGSBSolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa12LBFGSBSolver8get_nameEv">alpaqa::LBFGSBSolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa12LBFGSBSolver10get_paramsEv">alpaqa::LBFGSBSolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12LBFGSBSolver12LBFGSBSolverE6Params">alpaqa::LBFGSBSolver::LBFGSBSolver (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12LBFGSBSolver10LineSearchE">alpaqa::LBFGSBSolver::LineSearch (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12LBFGSBSolver6ParamsE">alpaqa::LBFGSBSolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12LBFGSBSolver5StatsE">alpaqa::LBFGSBSolver::Stats (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12LBFGSBSolver4stopEv">alpaqa::LBFGSBSolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSBStatsE">alpaqa::LBFGSBStats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSBStats12elapsed_timeE">alpaqa::LBFGSBStats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSBStats10iterationsE">alpaqa::LBFGSBStats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSBStats6statusE">alpaqa::LBFGSBStats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSParamsE">alpaqa::LBFGSParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSParams5cbfgsE">alpaqa::LBFGSParams::cbfgs (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSParams6memoryE">alpaqa::LBFGSParams::memory (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4II0E0EN6alpaqa11LBFGSSolverE">alpaqa::LBFGSSolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa11LBFGSSolver8get_nameEv">alpaqa::LBFGSSolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa11LBFGSSolver10get_paramsEv">alpaqa::LBFGSSolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver11LBFGSSolverE6Params">alpaqa::LBFGSSolver::LBFGSSolver (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver10LineSearchE">alpaqa::LBFGSSolver::LineSearch (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver6ParamsE">alpaqa::LBFGSSolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5StatsE">alpaqa::LBFGSSolver::Stats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5Stats12elapsed_timeE">alpaqa::LBFGSSolver::Stats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5Stats10iterationsE">alpaqa::LBFGSSolver::Stats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5Stats14lbfgs_failuresE">alpaqa::LBFGSSolver::Stats::lbfgs_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5Stats14lbfgs_rejectedE">alpaqa::LBFGSSolver::Stats::lbfgs_rejected (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5Stats19linesearch_failuresE">alpaqa::LBFGSSolver::Stats::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver5Stats6statusE">alpaqa::LBFGSSolver::Stats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11LBFGSSolver4stopEv">alpaqa::LBFGSSolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13LBFGSStepSizeE">alpaqa::LBFGSStepSize (C++ enum)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13LBFGSStepSize16BasedOnCurvatureE">alpaqa::LBFGSStepSize::BasedOnCurvature (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13LBFGSStepSize23BasedOnGradientStepSizeE">alpaqa::LBFGSStepSize::BasedOnGradientStepSize (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQRE">alpaqa::LimitedMemoryQR (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa15LimitedMemoryQR10add_columnEvRK4VecV">alpaqa::LimitedMemoryQR::add_column (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR18clear_reorth_countEv">alpaqa::LimitedMemoryQR::clear_reorth_count (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR10get_full_REv">alpaqa::LimitedMemoryQR::get_full_R (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR5get_QEv">alpaqa::LimitedMemoryQR::get_Q (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR5get_REv">alpaqa::LimitedMemoryQR::get_R (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9get_raw_QEv">alpaqa::LimitedMemoryQR::get_raw_Q (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9get_raw_REv">alpaqa::LimitedMemoryQR::get_raw_R (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR16get_reorth_countEv">alpaqa::LimitedMemoryQR::get_reorth_count (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR15LimitedMemoryQRE6size_t6size_t">alpaqa::LimitedMemoryQR::LimitedMemoryQR (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR15LimitedMemoryQREv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR1mEv">alpaqa::LimitedMemoryQR::m (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR1nEv">alpaqa::LimitedMemoryQR::n (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR11num_columnsEv">alpaqa::LimitedMemoryQR::num_columns (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR13remove_columnEv">alpaqa::LimitedMemoryQR::remove_column (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR5resetEv">alpaqa::LimitedMemoryQR::reset (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR6resizeE6size_t6size_t">alpaqa::LimitedMemoryQR::resize (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9ring_headEv">alpaqa::LimitedMemoryQR::ring_head (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9ring_iterEv">alpaqa::LimitedMemoryQR::ring_iter (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9ring_nextE6size_t">alpaqa::LimitedMemoryQR::ring_next (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9ring_prevE6size_t">alpaqa::LimitedMemoryQR::ring_prev (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR17ring_reverse_iterEv">alpaqa::LimitedMemoryQR::ring_reverse_iter (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa15LimitedMemoryQR9ring_tailEv">alpaqa::LimitedMemoryQR::ring_tail (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15LimitedMemoryQR7scale_RE6real_t">alpaqa::LimitedMemoryQR::scale_R (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I00ENK6alpaqa15LimitedMemoryQR5solveEvRK4MatBR4MatX">alpaqa::LimitedMemoryQR::solve (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa15LimitedMemoryQR5solveE11solve_ret_tI7DerivedERKN5Eigen9DenseBaseI7DerivedEE">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I00ENK6alpaqa15LimitedMemoryQR9solve_colEvRK4VecBR4VecX">alpaqa::LimitedMemoryQR::solve_col (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa15LimitedMemoryQR11solve_ret_tE">alpaqa::LimitedMemoryQR::solve_ret_t (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa23LipschitzEstimateParamsE">alpaqa::LipschitzEstimateParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19load_CasADi_problemERKNSt6stringEjjb">alpaqa::load_CasADi_problem (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa30load_CasADi_problem_with_paramERKNSt6stringEjjjb">alpaqa::load_CasADi_problem_with_param (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3matE">alpaqa::mat (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3NaNE">alpaqa::NaN (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqaplE11EvalCounterRK11EvalCounter">alpaqa::operator+ (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqapLER11EvalCounterRK11EvalCounter">alpaqa::operator+= (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLER21InnerStatsAccumulatorI10PANOCStatsERK10PANOCStats">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLER21InnerStatsAccumulatorI11LBFGSBStatsERK11LBFGSBStats">[2]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLER21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsERK25StructuredPANOCLBFGSStats">[3]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLER21InnerStatsAccumulatorIN12GAAPGASolver5StatsEERKN12GAAPGASolver5StatsE">[4]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLER21InnerStatsAccumulatorIN22SecondOrderPANOCSolver5StatsEERKN22SecondOrderPANOCSolver5StatsE">[5]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLER21InnerStatsAccumulatorIN9PGASolver5StatsEERKN9PGASolver5StatsE">[6]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqapLERN11EvalCounter9EvalTimerERKN11EvalCounter9EvalTimerE">[7]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqalsERNSt7ostreamE12SolverStatus">alpaqa::operator&lt;&lt; (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqalsERNSt7ostreamE13PANOCStopCrit">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20panoc_min_alloc_sizeE">alpaqa::panoc_min_alloc_size (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa14PANOCDirectionE">alpaqa::PANOCDirection (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IEN6alpaqa14PANOCDirectionI13AndersonAccelEE">alpaqa::PANOCDirection&lt;AndersonAccel&gt; (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IEN6alpaqa14PANOCDirectionI5LBFGSEE">alpaqa::PANOCDirection&lt;LBFGS&gt; (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa14PANOCDirectionI5LBFGSE8get_nameEv">alpaqa::PANOCDirection&lt;LBFGS&gt;::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa14PANOCDirectionI5LBFGSE10get_paramsEv">alpaqa::PANOCDirection&lt;LBFGS&gt;::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa14PANOCDirectionI5LBFGSE5lbfgsE">alpaqa::PANOCDirection&lt;LBFGS&gt;::lbfgs (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa14PANOCDirectionI5LBFGSE14PANOCDirectionERK11LBFGSParams">alpaqa::PANOCDirection&lt;LBFGS&gt;::PANOCDirection (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa14PANOCDirectionI5LBFGSE14PANOCDirectionERK5LBFGS">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa14PANOCDirectionI5LBFGSE14PANOCDirectionERR5LBFGS">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa14PANOCDirectionI5LBFGSE5resetEv">alpaqa::PANOCDirection&lt;LBFGS&gt;::reset (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IEN6alpaqa14PANOCDirectionI16SpecializedLBFGSEE">alpaqa::PANOCDirection&lt;SpecializedLBFGS&gt; (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParamsE">alpaqa::PANOCParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams27alternative_linesearch_condE">alpaqa::PANOCParams::alternative_linesearch_cond (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams5L_maxE">alpaqa::PANOCParams::L_max (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams5L_minE">alpaqa::PANOCParams::L_min (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams14lbfgs_stepsizeE">alpaqa::PANOCParams::lbfgs_stepsize (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams9LipschitzE">alpaqa::PANOCParams::Lipschitz (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams8max_iterE">alpaqa::PANOCParams::max_iter (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams15max_no_progressE">alpaqa::PANOCParams::max_no_progress (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams8max_timeE">alpaqa::PANOCParams::max_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams14print_intervalE">alpaqa::PANOCParams::print_interval (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams37quadratic_upperbound_tolerance_factorE">alpaqa::PANOCParams::quadratic_upperbound_tolerance_factor (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams9stop_critE">alpaqa::PANOCParams::stop_crit (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCParams30update_lipschitz_in_linesearchE">alpaqa::PANOCParams::update_lipschitz_in_linesearch (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfoE">alpaqa::PANOCProgressInfo (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo1kE">alpaqa::PANOCProgressInfo::k (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo1LE">alpaqa::PANOCProgressInfo::L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo9norm_sq_pE">alpaqa::PANOCProgressInfo::norm_sq_p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo1pE">alpaqa::PANOCProgressInfo::p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo6paramsE">alpaqa::PANOCProgressInfo::params (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo7problemE">alpaqa::PANOCProgressInfo::problem (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo1xE">alpaqa::PANOCProgressInfo::x (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo5x_hatE">alpaqa::PANOCProgressInfo::x_hat (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa17PANOCProgressInfo1yE">alpaqa::PANOCProgressInfo::y (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa11PANOCSolverE">alpaqa::PANOCSolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver18direction_providerE">alpaqa::PANOCSolver::direction_provider (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver17DirectionProviderE">alpaqa::PANOCSolver::DirectionProvider (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa11PANOCSolver8get_nameEv">alpaqa::PANOCSolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa11PANOCSolver10get_paramsEv">alpaqa::PANOCSolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver11PANOCSolverE6ParamsRK14PANOCDirectionI17DirectionProviderE">alpaqa::PANOCSolver::PANOCSolver (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver11PANOCSolverE6ParamsRR14PANOCDirectionI17DirectionProviderE">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver6ParamsE">alpaqa::PANOCSolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver12ProgressInfoE">alpaqa::PANOCSolver::ProgressInfo (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">alpaqa::PANOCSolver::set_progress_callback (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver5StatsE">alpaqa::PANOCSolver::Stats (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa11PANOCSolver4stopEv">alpaqa::PANOCSolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStatsE">alpaqa::PANOCStats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStats12elapsed_timeE">alpaqa::PANOCStats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStats10iterationsE">alpaqa::PANOCStats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStats14lbfgs_failuresE">alpaqa::PANOCStats::lbfgs_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStats14lbfgs_rejectedE">alpaqa::PANOCStats::lbfgs_rejected (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStats19linesearch_failuresE">alpaqa::PANOCStats::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa10PANOCStats6statusE">alpaqa::PANOCStats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCritE">alpaqa::PANOCStopCrit (C++ enum)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit9ApproxKKTE">alpaqa::PANOCStopCrit::ApproxKKT (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit10ApproxKKT2E">alpaqa::PANOCStopCrit::ApproxKKT2 (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit7FPRNormE">alpaqa::PANOCStopCrit::FPRNorm (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit8FPRNorm2E">alpaqa::PANOCStopCrit::FPRNorm2 (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit5IpoptE">alpaqa::PANOCStopCrit::Ipopt (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit12ProjGradNormE">alpaqa::PANOCStopCrit::ProjGradNorm (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit13ProjGradNorm2E">alpaqa::PANOCStopCrit::ProjGradNorm2 (C++ enumerator)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit16ProjGradUnitNormE">alpaqa::PANOCStopCrit::ProjGradUnitNorm (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13PANOCStopCrit17ProjGradUnitNorm2E">alpaqa::PANOCStopCrit::ProjGradUnitNorm2 (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ParamWrapperE">alpaqa::ParamWrapper (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa12ParamWrapper5cloneEv">alpaqa::ParamWrapper::clone (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ParamWrapper5paramE">alpaqa::ParamWrapper::param (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ParamWrapper12ParamWrapperEj">alpaqa::ParamWrapper::ParamWrapper (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ParamWrapper4wrapER7Problem">alpaqa::ParamWrapper::wrap (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ParamWrapperD0Ev">alpaqa::ParamWrapper::~ParamWrapper (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParamsE">alpaqa::PGAParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams5L_maxE">alpaqa::PGAParams::L_max (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams5L_minE">alpaqa::PGAParams::L_min (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams9LipschitzE">alpaqa::PGAParams::Lipschitz (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams8max_iterE">alpaqa::PGAParams::max_iter (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams8max_timeE">alpaqa::PGAParams::max_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams14print_intervalE">alpaqa::PGAParams::print_interval (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams37quadratic_upperbound_tolerance_factorE">alpaqa::PGAParams::quadratic_upperbound_tolerance_factor (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGAParams9stop_critE">alpaqa::PGAParams::stop_crit (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfoE">alpaqa::PGAProgressInfo (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo1kE">alpaqa::PGAProgressInfo::k (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo1LE">alpaqa::PGAProgressInfo::L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo9norm_sq_pE">alpaqa::PGAProgressInfo::norm_sq_p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo1pE">alpaqa::PGAProgressInfo::p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo6paramsE">alpaqa::PGAProgressInfo::params (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo7problemE">alpaqa::PGAProgressInfo::problem (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo1xE">alpaqa::PGAProgressInfo::x (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo5x_hatE">alpaqa::PGAProgressInfo::x_hat (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa15PGAProgressInfo1yE">alpaqa::PGAProgressInfo::y (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolverE">alpaqa::PGASolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa9PGASolver8get_nameEv">alpaqa::PGASolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa9PGASolver10get_paramsEv">alpaqa::PGASolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver6ParamsE">alpaqa::PGASolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver9PGASolverERK6Params">alpaqa::PGASolver::PGASolver (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver12ProgressInfoE">alpaqa::PGASolver::ProgressInfo (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">alpaqa::PGASolver::set_progress_callback (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver5StatsE">alpaqa::PGASolver::Stats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver5Stats12elapsed_timeE">alpaqa::PGASolver::Stats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver5Stats10iterationsE">alpaqa::PGASolver::Stats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver5Stats6statusE">alpaqa::PGASolver::Stats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa9PGASolver4stopEv">alpaqa::PGASolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError26accelerated_steps_acceptedE">alpaqa::PhonyNameDueToError::accelerated_steps_accepted (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError12elapsed_timeE">alpaqa::PhonyNameDueToError::elapsed_time (C++ member)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError12elapsed_timeE">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError12elapsed_timeE">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError10iterationsE">alpaqa::PhonyNameDueToError::iterations (C++ member)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError10iterationsE">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError10iterationsE">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError19linesearch_failuresE">alpaqa::PhonyNameDueToError::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19PhonyNameDueToError15newton_failuresE">alpaqa::PhonyNameDueToError::newton_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7ProblemE">alpaqa::Problem (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem1CE">alpaqa::Problem::C (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem1DE">alpaqa::Problem::D (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem1fE">alpaqa::Problem::f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem5f_sigE">alpaqa::Problem::f_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem1gE">alpaqa::Problem::g (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem5g_sigE">alpaqa::Problem::g_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem6grad_fE">alpaqa::Problem::grad_f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem10grad_f_sigE">alpaqa::Problem::grad_f_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem11grad_g_prodE">alpaqa::Problem::grad_g_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem15grad_g_prod_sigE">alpaqa::Problem::grad_g_prod_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem7grad_giE">alpaqa::Problem::grad_gi (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem11grad_gi_sigE">alpaqa::Problem::grad_gi_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem6hess_LE">alpaqa::Problem::hess_L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem11hess_L_prodE">alpaqa::Problem::hess_L_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem15hess_L_prod_sigE">alpaqa::Problem::hess_L_prod_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem10hess_L_sigE">alpaqa::Problem::hess_L_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem1mE">alpaqa::Problem::m (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem1nE">alpaqa::Problem::n (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem7ProblemEjj">alpaqa::Problem::Problem (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem7ProblemEjj3Box3BoxNSt8functionI5f_sigEENSt8functionI10grad_f_sigEENSt8functionI5g_sigEENSt8functionI15grad_g_prod_sigEENSt8functionI11grad_gi_sigEENSt8functionI15hess_L_prod_sigEENSt8functionI10hess_L_sigEE">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa7Problem7ProblemEv">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyDE">alpaqa::ProblemOnlyD (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD1CE">alpaqa::ProblemOnlyD::C (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD1DE">alpaqa::ProblemOnlyD::D (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD1fE">alpaqa::ProblemOnlyD::f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD5f_sigE">alpaqa::ProblemOnlyD::f_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD1gE">alpaqa::ProblemOnlyD::g (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD5g_sigE">alpaqa::ProblemOnlyD::g_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD6grad_fE">alpaqa::ProblemOnlyD::grad_f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD10grad_f_sigE">alpaqa::ProblemOnlyD::grad_f_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD11grad_g_prodE">alpaqa::ProblemOnlyD::grad_g_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD15grad_g_prod_sigE">alpaqa::ProblemOnlyD::grad_g_prod_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD7grad_giE">alpaqa::ProblemOnlyD::grad_gi (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD11grad_gi_sigE">alpaqa::ProblemOnlyD::grad_gi_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD6hess_LE">alpaqa::ProblemOnlyD::hess_L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD11hess_L_prodE">alpaqa::ProblemOnlyD::hess_L_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD15hess_L_prod_sigE">alpaqa::ProblemOnlyD::hess_L_prod_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD10hess_L_sigE">alpaqa::ProblemOnlyD::hess_L_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD1mE">alpaqa::ProblemOnlyD::m (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD1nE">alpaqa::ProblemOnlyD::n (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD12ProblemOnlyDERK7Problem">alpaqa::ProblemOnlyD::ProblemOnlyD (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa12ProblemOnlyD12ProblemOnlyDERR7Problem">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problemsE">alpaqa::problems (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems18himmelblau_problemEv">alpaqa::problems::himmelblau_problem (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems22riskaverse_mpc_problemEv">alpaqa::problems::riskaverse_mpc_problem (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblemE">alpaqa::problems::RiskaverseProblem (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem1AE">alpaqa::problems::RiskaverseProblem::A (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem1BE">alpaqa::problems::RiskaverseProblem::B (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem4DiagE">alpaqa::problems::RiskaverseProblem::Diag (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem1fE5crvec">alpaqa::problems::RiskaverseProblem::f (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem1gE5crvec4rvec">alpaqa::problems::RiskaverseProblem::g (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem5get_CEv">alpaqa::problems::RiskaverseProblem::get_C (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem5get_DEv">alpaqa::problems::RiskaverseProblem::get_D (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem6grad_fE5crvec4rvec">alpaqa::problems::RiskaverseProblem::grad_f (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem6grad_gE5crvec5crvec4rvec">alpaqa::problems::RiskaverseProblem::grad_g (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem1mE">alpaqa::problems::RiskaverseProblem::m (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa8problems17RiskaverseProblem12mpc_dynamicsE5crvec5crvec">alpaqa::problems::RiskaverseProblem::mpc_dynamics (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem1nE">alpaqa::problems::RiskaverseProblem::n (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem2nsE">alpaqa::problems::RiskaverseProblem::ns (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem2nuE">alpaqa::problems::RiskaverseProblem::nu (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem2nxE">alpaqa::problems::RiskaverseProblem::nx (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem2nyE">alpaqa::problems::RiskaverseProblem::ny (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem1QE">alpaqa::problems::RiskaverseProblem::Q (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem1RE">alpaqa::problems::RiskaverseProblem::R (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem17RiskaverseProblemEv">alpaqa::problems::RiskaverseProblem::RiskaverseProblem (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0ENK6alpaqa8problems17RiskaverseProblem1sEDaRR4VecX">alpaqa::problems::RiskaverseProblem::s (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem2TsE">alpaqa::problems::RiskaverseProblem::Ts (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0ENK6alpaqa8problems17RiskaverseProblem1uEDaRR4VecX">alpaqa::problems::RiskaverseProblem::u (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8problems17RiskaverseProblem2x0E">alpaqa::problems::RiskaverseProblem::x0 (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0ENK6alpaqa8problems17RiskaverseProblem1yEDaRR4VecX">alpaqa::problems::RiskaverseProblem::y (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa19ProblemWithCountersE">alpaqa::ProblemWithCounters (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCounters11evaluationsE">alpaqa::ProblemWithCounters::evaluations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCountersaSERK19ProblemWithCounters">alpaqa::ProblemWithCounters::operator= (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCountersaSERR19ProblemWithCounters">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCounters19ProblemWithCountersERK19ProblemWithCounters">alpaqa::ProblemWithCounters::ProblemWithCounters (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCounters19ProblemWithCountersERK8ProblemT">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCounters19ProblemWithCountersERR19ProblemWithCounters">[2]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa19ProblemWithCounters19ProblemWithCountersERR8ProblemT">[3]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParamE">alpaqa::ProblemWithParam (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam1CE">alpaqa::ProblemWithParam::C (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam1DE">alpaqa::ProblemWithParam::D (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam1fE">alpaqa::ProblemWithParam::f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam5f_sigE">alpaqa::ProblemWithParam::f_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam1gE">alpaqa::ProblemWithParam::g (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam5g_sigE">alpaqa::ProblemWithParam::g_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam9get_paramEv">alpaqa::ProblemWithParam::get_param (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16ProblemWithParam9get_paramEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam6grad_fE">alpaqa::ProblemWithParam::grad_f (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam10grad_f_sigE">alpaqa::ProblemWithParam::grad_f_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam11grad_g_prodE">alpaqa::ProblemWithParam::grad_g_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam15grad_g_prod_sigE">alpaqa::ProblemWithParam::grad_g_prod_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam7grad_giE">alpaqa::ProblemWithParam::grad_gi (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam11grad_gi_sigE">alpaqa::ProblemWithParam::grad_gi_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam6hess_LE">alpaqa::ProblemWithParam::hess_L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam11hess_L_prodE">alpaqa::ProblemWithParam::hess_L_prod (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam15hess_L_prod_sigE">alpaqa::ProblemWithParam::hess_L_prod_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam10hess_L_sigE">alpaqa::ProblemWithParam::hess_L_sig (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam1mE">alpaqa::ProblemWithParam::m (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam1nE">alpaqa::ProblemWithParam::n (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParamaSERK16ProblemWithParam">alpaqa::ProblemWithParam::operator= (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParamaSERR16ProblemWithParam">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam7ProblemEjj">alpaqa::ProblemWithParam::Problem (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam7ProblemEjj3Box3BoxNSt8functionI5f_sigEENSt8functionI10grad_f_sigEENSt8functionI5g_sigEENSt8functionI15grad_g_prod_sigEENSt8functionI11grad_gi_sigEENSt8functionI15hess_L_prod_sigEENSt8functionI10hess_L_sigEE">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam7ProblemEv">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam16ProblemWithParamERK16ProblemWithParam">alpaqa::ProblemWithParam::ProblemWithParam (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam16ProblemWithParamERR16ProblemWithParam">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam9set_paramE5crvec">alpaqa::ProblemWithParam::set_param (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam9set_paramERR3vec">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16ProblemWithParam7wrapperE">alpaqa::ProblemWithParam::wrapper (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa7projectEDaRK3VecRK3Box">alpaqa::project (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa21projecting_differenceEDaRK3VecRK3Box">alpaqa::projecting_difference (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa6real_tE">alpaqa::real_t (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7realmatE">alpaqa::realmat (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa7realvecE">alpaqa::realvec (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa28ReverseCircularIndexIteratorE">alpaqa::ReverseCircularIndexIterator (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator15difference_typeE">alpaqa::ReverseCircularIndexIterator::difference_type (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator9forwarditE">alpaqa::ReverseCircularIndexIterator::forwardit (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator15ForwardIteratorE">alpaqa::ReverseCircularIndexIterator::ForwardIterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator5IndexE">alpaqa::ReverseCircularIndexIterator::Index (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator7IndicesE">alpaqa::ReverseCircularIndexIterator::Indices (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator17iterator_categoryE">alpaqa::ReverseCircularIndexIterator::iterator_category (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa28ReverseCircularIndexIteratorneEb28ReverseCircularIndexIteratorI6IndexTE28ReverseCircularIndexIteratorI6IndexTE">alpaqa::ReverseCircularIndexIterator::operator!= (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa28ReverseCircularIndexIteratormlEv">alpaqa::ReverseCircularIndexIterator::operator* (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIteratorppEi">alpaqa::ReverseCircularIndexIterator::operator++ (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIteratorppEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIteratormmEi">alpaqa::ReverseCircularIndexIterator::operator-- (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIteratormmEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa28ReverseCircularIndexIteratoreqEb28ReverseCircularIndexIteratorI6IndexTE28ReverseCircularIndexIteratorI6IndexTE">alpaqa::ReverseCircularIndexIterator::operator== (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator7pointerE">alpaqa::ReverseCircularIndexIterator::pointer (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator9referenceE">alpaqa::ReverseCircularIndexIterator::reference (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator28ReverseCircularIndexIteratorE15ForwardIterator">alpaqa::ReverseCircularIndexIterator::ReverseCircularIndexIterator (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator28ReverseCircularIndexIteratorE7Indices5Index">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator28ReverseCircularIndexIteratorEv">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa28ReverseCircularIndexIterator10value_typeE">alpaqa::ReverseCircularIndexIterator::value_type (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa20ReverseCircularRangeE">alpaqa::ReverseCircularRange (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange5beginEv">alpaqa::ReverseCircularRange::begin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange6cbeginEv">alpaqa::ReverseCircularRange::cbegin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange4cendEv">alpaqa::ReverseCircularRange::cend (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange14const_iteratorE">alpaqa::ReverseCircularRange::const_iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange22const_reverse_iteratorE">alpaqa::ReverseCircularRange::const_reverse_iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange7crbeginEv">alpaqa::ReverseCircularRange::crbegin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange5crendEv">alpaqa::ReverseCircularRange::crend (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange3endEv">alpaqa::ReverseCircularRange::end (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange12ForwardRangeE">alpaqa::ReverseCircularRange::ForwardRange (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange5IndexE">alpaqa::ReverseCircularRange::Index (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange7IndicesE">alpaqa::ReverseCircularRange::Indices (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange8iteratorE">alpaqa::ReverseCircularRange::iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange6rbeginEv">alpaqa::ReverseCircularRange::rbegin (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa20ReverseCircularRange4rendEv">alpaqa::ReverseCircularRange::rend (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange16reverse_iteratorE">alpaqa::ReverseCircularRange::reverse_iterator (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange20ReverseCircularRangeE5Index5Index5Index5Index">alpaqa::ReverseCircularRange::ReverseCircularRange (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa20ReverseCircularRange20ReverseCircularRangeERK12ForwardRange">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa4rmatE">alpaqa::rmat (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa4rvecE">alpaqa::rvec (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParamsE">alpaqa::SecondOrderPANOCParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams27alternative_linesearch_condE">alpaqa::SecondOrderPANOCParams::alternative_linesearch_cond (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams5L_maxE">alpaqa::SecondOrderPANOCParams::L_max (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams5L_minE">alpaqa::SecondOrderPANOCParams::L_min (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams9LipschitzE">alpaqa::SecondOrderPANOCParams::Lipschitz (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams8max_iterE">alpaqa::SecondOrderPANOCParams::max_iter (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams15max_no_progressE">alpaqa::SecondOrderPANOCParams::max_no_progress (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams8max_timeE">alpaqa::SecondOrderPANOCParams::max_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams14print_intervalE">alpaqa::SecondOrderPANOCParams::print_interval (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams37quadratic_upperbound_tolerance_factorE">alpaqa::SecondOrderPANOCParams::quadratic_upperbound_tolerance_factor (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams9stop_critE">alpaqa::SecondOrderPANOCParams::stop_crit (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCParams30update_lipschitz_in_linesearchE">alpaqa::SecondOrderPANOCParams::update_lipschitz_in_linesearch (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolverE">alpaqa::SecondOrderPANOCSolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa22SecondOrderPANOCSolver8get_nameEv">alpaqa::SecondOrderPANOCSolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa22SecondOrderPANOCSolver10get_paramsEv">alpaqa::SecondOrderPANOCSolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver6ParamsE">alpaqa::SecondOrderPANOCSolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfoE">alpaqa::SecondOrderPANOCSolver::ProgressInfo (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo1kE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::k (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo1LE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo9norm_sq_pE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::norm_sq_p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo1pE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo6paramsE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::params (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo7problemE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::problem (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo1xE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::x (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo5x_hatE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::x_hat (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver12ProgressInfo1yE">alpaqa::SecondOrderPANOCSolver::ProgressInfo::y (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver22SecondOrderPANOCSolverE6Params">alpaqa::SecondOrderPANOCSolver::SecondOrderPANOCSolver (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">alpaqa::SecondOrderPANOCSolver::set_progress_callback (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver5StatsE">alpaqa::SecondOrderPANOCSolver::Stats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver5Stats12elapsed_timeE">alpaqa::SecondOrderPANOCSolver::Stats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver5Stats10iterationsE">alpaqa::SecondOrderPANOCSolver::Stats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver5Stats19linesearch_failuresE">alpaqa::SecondOrderPANOCSolver::Stats::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver5Stats15newton_failuresE">alpaqa::SecondOrderPANOCSolver::Stats::newton_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver5Stats6statusE">alpaqa::SecondOrderPANOCSolver::Stats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa22SecondOrderPANOCSolver4stopEv">alpaqa::SecondOrderPANOCSolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatusE">alpaqa::SolverStatus (C++ enum)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus9ConvergedE">alpaqa::SolverStatus::Converged (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus11InterruptedE">alpaqa::SolverStatus::Interrupted (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus7MaxIterE">alpaqa::SolverStatus::MaxIter (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus7MaxTimeE">alpaqa::SolverStatus::MaxTime (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus10NoProgressE">alpaqa::SolverStatus::NoProgress (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus9NotFiniteE">alpaqa::SolverStatus::NotFinite (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa12SolverStatus7UnknownE">alpaqa::SolverStatus::Unknown (C++ enumerator)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGSE">alpaqa::SpecializedLBFGS (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa16SpecializedLBFGS5applyEvRR3Vec">alpaqa::SpecializedLBFGS::apply (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS1gE6size_t">alpaqa::SpecializedLBFGS::g (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1gE6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS8get_nameEv">alpaqa::SpecializedLBFGS::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS7historyEv">alpaqa::SpecializedLBFGS::history (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1nEv">alpaqa::SpecializedLBFGS::n (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS1pEv">alpaqa::SpecializedLBFGS::p (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1pEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS6ParamsE">alpaqa::SpecializedLBFGS::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS4predE6size_t">alpaqa::SpecializedLBFGS::pred (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS5resetEv">alpaqa::SpecializedLBFGS::reset (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS6resizeE6size_t6size_t">alpaqa::SpecializedLBFGS::resize (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS1sE6size_t">alpaqa::SpecializedLBFGS::s (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1sE6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS16SpecializedLBFGSE6Params">alpaqa::SpecializedLBFGS::SpecializedLBFGS (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS16SpecializedLBFGSE6Params6size_t6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS4succE6size_t">alpaqa::SpecializedLBFGS::succ (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS1wEv">alpaqa::SpecializedLBFGS::w (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1wEv">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS1xE6size_t">alpaqa::SpecializedLBFGS::x (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1xE6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa16SpecializedLBFGS1yE6size_t">alpaqa::SpecializedLBFGS::y (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4NK6alpaqa16SpecializedLBFGS1yE6size_t">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParamsE">alpaqa::StructuredPANOCLBFGSParams (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams27alternative_linesearch_condE">alpaqa::StructuredPANOCLBFGSParams::alternative_linesearch_cond (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams22full_augmented_hessianE">alpaqa::StructuredPANOCLBFGSParams::full_augmented_hessian (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams27hessian_step_size_heuristicE">alpaqa::StructuredPANOCLBFGSParams::hessian_step_size_heuristic (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams11hessian_vecE">alpaqa::StructuredPANOCLBFGSParams::hessian_vec (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams30hessian_vec_finite_differencesE">alpaqa::StructuredPANOCLBFGSParams::hessian_vec_finite_differences (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams5L_maxE">alpaqa::StructuredPANOCLBFGSParams::L_max (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams5L_minE">alpaqa::StructuredPANOCLBFGSParams::L_min (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams14lbfgs_stepsizeE">alpaqa::StructuredPANOCLBFGSParams::lbfgs_stepsize (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams9LipschitzE">alpaqa::StructuredPANOCLBFGSParams::Lipschitz (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams8max_iterE">alpaqa::StructuredPANOCLBFGSParams::max_iter (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams15max_no_progressE">alpaqa::StructuredPANOCLBFGSParams::max_no_progress (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams8max_timeE">alpaqa::StructuredPANOCLBFGSParams::max_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams22nonmonotone_linesearchE">alpaqa::StructuredPANOCLBFGSParams::nonmonotone_linesearch (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams14print_intervalE">alpaqa::StructuredPANOCLBFGSParams::print_interval (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams37quadratic_upperbound_tolerance_factorE">alpaqa::StructuredPANOCLBFGSParams::quadratic_upperbound_tolerance_factor (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams9stop_critE">alpaqa::StructuredPANOCLBFGSParams::stop_crit (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParams30update_lipschitz_in_linesearchE">alpaqa::StructuredPANOCLBFGSParams::update_lipschitz_in_linesearch (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfoE">alpaqa::StructuredPANOCLBFGSProgressInfo (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo1kE">alpaqa::StructuredPANOCLBFGSProgressInfo::k (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo1LE">alpaqa::StructuredPANOCLBFGSProgressInfo::L (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo9norm_sq_pE">alpaqa::StructuredPANOCLBFGSProgressInfo::norm_sq_p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo1pE">alpaqa::StructuredPANOCLBFGSProgressInfo::p (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo6paramsE">alpaqa::StructuredPANOCLBFGSProgressInfo::params (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo7problemE">alpaqa::StructuredPANOCLBFGSProgressInfo::problem (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo1xE">alpaqa::StructuredPANOCLBFGSProgressInfo::x (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo5x_hatE">alpaqa::StructuredPANOCLBFGSProgressInfo::x_hat (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa32StructuredPANOCLBFGSProgressInfo1yE">alpaqa::StructuredPANOCLBFGSProgressInfo::y (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolverE">alpaqa::StructuredPANOCLBFGSSolver (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa26StructuredPANOCLBFGSSolver8get_nameEv">alpaqa::StructuredPANOCLBFGSSolver::get_name (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa26StructuredPANOCLBFGSSolver10get_paramsEv">alpaqa::StructuredPANOCLBFGSSolver::get_params (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver5lbfgsE">alpaqa::StructuredPANOCLBFGSSolver::lbfgs (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver6ParamsE">alpaqa::StructuredPANOCLBFGSSolver::Params (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver12ProgressInfoE">alpaqa::StructuredPANOCLBFGSSolver::ProgressInfo (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">alpaqa::StructuredPANOCLBFGSSolver::set_progress_callback (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver5StatsE">alpaqa::StructuredPANOCLBFGSSolver::Stats (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver4stopEv">alpaqa::StructuredPANOCLBFGSSolver::stop (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSSolver26StructuredPANOCLBFGSSolverE6Params11LBFGSParams">alpaqa::StructuredPANOCLBFGSSolver::StructuredPANOCLBFGSSolver (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStatsE">alpaqa::StructuredPANOCLBFGSStats (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStats12elapsed_timeE">alpaqa::StructuredPANOCLBFGSStats::elapsed_time (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStats10iterationsE">alpaqa::StructuredPANOCLBFGSStats::iterations (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStats14lbfgs_failuresE">alpaqa::StructuredPANOCLBFGSStats::lbfgs_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStats14lbfgs_rejectedE">alpaqa::StructuredPANOCLBFGSStats::lbfgs_rejected (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStats19linesearch_failuresE">alpaqa::StructuredPANOCLBFGSStats::linesearch_failures (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa25StructuredPANOCLBFGSStats6statusE">alpaqa::StructuredPANOCLBFGSStats::status (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa3vecE">alpaqa::vec (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocatorE">alpaqa::vec_allocator (C++ class)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator5allocEv">alpaqa::vec_allocator::alloc (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator10alloc_raiiEv">alpaqa::vec_allocator::alloc_raii (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapperE">alpaqa::vec_allocator::alloc_raii_wrapper (C++ struct)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper5allocE">alpaqa::vec_allocator::alloc_raii_wrapper::alloc (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper18alloc_raii_wrapperEP6real_tN5Eigen5IndexEP13vec_allocator">alpaqa::vec_allocator::alloc_raii_wrapper::alloc_raii_wrapper (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper18alloc_raii_wrapperERK18alloc_raii_wrapper">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper18alloc_raii_wrapperERR18alloc_raii_wrapper">[2]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper18alloc_raii_wrapperERR4mvecP13vec_allocator">[3]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper4mvecE">alpaqa::vec_allocator::alloc_raii_wrapper::mvec (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13vec_allocator18alloc_raii_wrappercv5crvecEv">alpaqa::vec_allocator::alloc_raii_wrapper::operator crvec (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrappercv4rvecEv">alpaqa::vec_allocator::alloc_raii_wrapper::operator rvec (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapperaSE5crvec">alpaqa::vec_allocator::alloc_raii_wrapper::operator= (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapperaSERK18alloc_raii_wrapper">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapperaSERR18alloc_raii_wrapper">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapper1vE">alpaqa::vec_allocator::alloc_raii_wrapper::v (C++ member)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator18alloc_raii_wrapperD0Ev">alpaqa::vec_allocator::alloc_raii_wrapper::~alloc_raii_wrapper (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4IDpEN6alpaqa13vec_allocator4freeEv4rvecDpRR4Vecs">alpaqa::vec_allocator::free (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator4freeE4rvec">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13vec_allocator9highwaterEv">alpaqa::vec_allocator::highwater (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocatoraSERK13vec_allocator">alpaqa::vec_allocator::operator= (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocatoraSERR13vec_allocator">[1]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13vec_allocator4sizeEv">alpaqa::vec_allocator::size (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13vec_allocator10used_spaceEv">alpaqa::vec_allocator::used_space (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator13vec_allocatorE6size_tN5Eigen5IndexE">alpaqa::vec_allocator::vec_allocator (C++ function)</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator13vec_allocatorERK13vec_allocator">[1]</a>, <a href="reference/cpp-api.html#_CPPv4N6alpaqa13vec_allocator13vec_allocatorERR13vec_allocator">[2]</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4NK6alpaqa13vec_allocator11vector_sizeEv">alpaqa::vec_allocator::vector_size (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4N6alpaqa8vec_utilE">alpaqa::vec_util (C++ type)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa8vec_util6norm_1E6real_tRK3Vec">alpaqa::vec_util::norm_1 (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa8vec_util8norm_infE6real_tRK3Vec">alpaqa::vec_util::norm_inf (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0EN6alpaqa9wrap_loadEDaRKNSt6stringEPKc1F">alpaqa::wrap_load (C++ function)</a>
+</li>
+        <li><a href="reference/cpp-api.html#_CPPv4I0DpEN6alpaqa12wrapped_loadEDaRKNSt6stringEPKcDpRR4Args">alpaqa::wrapped_load (C++ function)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.alternative_linesearch_cond">alternative_linesearch_cond (alpaqa._alpaqa.PANOCParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.alternative_linesearch_cond">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.apply">apply() (alpaqa._alpaqa.LBFGSDirection method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.apply">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.ApproxKKT">ApproxKKT (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.ApproxKKT2">ApproxKKT2 (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSStepsize.BasedOnCurvature">BasedOnCurvature (alpaqa._alpaqa.LBFGSStepsize attribute)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSStepsize.BasedOnGradientStepSize">BasedOnGradientStepSize (alpaqa._alpaqa.LBFGSStepsize attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Box">Box (class in alpaqa._alpaqa)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.C">C (alpaqa._alpaqa.Problem property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.C">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.C">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.C">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParams.cbfgs">cbfgs (alpaqa._alpaqa.LBFGSParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.changed_">changed_γ() (alpaqa._alpaqa.LBFGSDirection method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.changed_">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.Converged">Converged (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.D">D (alpaqa._alpaqa.Problem property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.D">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.D">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.D">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCSolver.direction">direction (alpaqa._alpaqa.PANOCSolver property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter">EvalCounter (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer">EvalTimer (class in alpaqa._alpaqa)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.evaluations">evaluations (alpaqa._alpaqa.ProblemWithCounters property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.evaluations">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.f">f (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.f">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.f">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.f">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.f">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.f">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.fpr">fpr (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.fpr">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.fpr">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.fpr">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.FPRNorm">FPRNorm (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.FPRNorm2">FPRNorm2 (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.full_augmented_hessian">full_augmented_hessian (alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.full_flush_on__change">full_flush_on_γ_change (alpaqa._alpaqa.GAAPGAParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.g">g (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.g">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.g">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.g">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.g">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.g">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams">GAAPGAParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo">GAAPGAProgressInfo (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGASolver">GAAPGASolver (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa.casadi_problem.generate_and_compile_casadi_problem">generate_and_compile_casadi_problem() (in module alpaqa.casadi_problem)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa.casadi_problem.generate_casadi_problem">generate_casadi_problem() (in module alpaqa.casadi_problem)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolver.get_name">get_name() (alpaqa._alpaqa.InnerSolver method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.get_name">(alpaqa._alpaqa.LBFGSDirection method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.get_name">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolver.get_params">get_params() (alpaqa._alpaqa.InnerSolver method)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.grad_f">grad_f (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.grad_f">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.grad_f">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.grad_f">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.grad_f">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.grad_f">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.grad_g_prod">grad_g_prod (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.grad_g_prod">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.grad_g_prod">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.grad_g_prod">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.grad_g_prod">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.grad_g_prod">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.grad_gi">grad_gi (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.grad_gi">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.grad_gi">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.grad_gi">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.grad_gi">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.grad_gi">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.grad_">grad_ψ (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.grad_">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.grad_">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.grad_">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.grad__hat">grad_ψ_hat (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.grad__hat">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.grad__hat">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.grad__hat">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.hess_L">hess_L (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.hess_L">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.hess_L">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.hess_L">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.hess_L">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.hess_L">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.hess_L_prod">hess_L_prod (alpaqa._alpaqa.EvalCounter property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalTimer.hess_L_prod">(alpaqa._alpaqa.EvalTimer property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.hess_L_prod">(alpaqa._alpaqa.Problem property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.hess_L_prod">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.hess_L_prod">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.hess_L_prod">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.hessian_step_size_heuristic">hessian_step_size_heuristic (alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.hessian_vec">hessian_vec (alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.hessian_vec_finite_differences">hessian_vec_finite_differences (alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.initialize">initialize() (alpaqa._alpaqa.LBFGSDirection method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.initialize">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMSolver.inner_solver">inner_solver (alpaqa._alpaqa.ALMSolver property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolver">InnerSolver (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolverStats">InnerSolverStats (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.Interrupted">Interrupted (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.Ipopt">Ipopt (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="K" class="genindex-section">
+  <h2>K</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.k">k (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.k">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.k">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.k">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.L">L (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.L">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.L">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.L">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LipschitzEstimateParams.L_0">L_0 (alpaqa._alpaqa.LipschitzEstimateParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.L_max">L_max (alpaqa._alpaqa.GAAPGAParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.L_max">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.L_max">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.L_max">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.L_min">L_min (alpaqa._alpaqa.GAAPGAParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.L_min">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.L_min">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.L_min">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.lbfgs_stepsize">lbfgs_stepsize (alpaqa._alpaqa.PANOCParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.lbfgs_stepsize">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection">LBFGSDirection (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParams">LBFGSParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParamsCBFGS">LBFGSParamsCBFGS (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSStepsize">LBFGSStepsize (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.limitedqr_mem">limitedqr_mem (alpaqa._alpaqa.GAAPGAParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.Lipschitz">Lipschitz (alpaqa._alpaqa.GAAPGAParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.Lipschitz">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.Lipschitz">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.Lipschitz">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LipschitzEstimateParams">LipschitzEstimateParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.load_casadi_problem">load_casadi_problem() (in module alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.load_casadi_problem_with_param">load_casadi_problem_with_param() (in module alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Box.lowerbound">lowerbound (alpaqa._alpaqa.Box property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LipschitzEstimateParams.L_factor">Lγ_factor (alpaqa._alpaqa.LipschitzEstimateParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.M">M (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.m">m (alpaqa._alpaqa.Problem property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.m">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.m">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.m">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.max_iter">max_iter (alpaqa._alpaqa.ALMParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.max_iter">(alpaqa._alpaqa.GAAPGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.max_iter">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.max_iter">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.max_iter">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.max_no_progress">max_no_progress (alpaqa._alpaqa.GAAPGAParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.max_no_progress">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.max_no_progress">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.max_num_initial_retries">max_num_initial_retries (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.max_num_retries">max_num_retries (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.max_time">max_time (alpaqa._alpaqa.ALMParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.max_time">(alpaqa._alpaqa.GAAPGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.max_time">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.max_time">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.max_time">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.max_total_num_retries">max_total_num_retries (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.MaxIter">MaxIter (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.MaxTime">MaxTime (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParams.memory">memory (alpaqa._alpaqa.LBFGSParams property)</a>
+</li>
+        <li>
+    module
+
+        <ul>
+          <li><a href="reference/python-api.html#module-alpaqa._alpaqa">alpaqa._alpaqa</a>
+</li>
+          <li><a href="reference/python-api.html#module-alpaqa.casadi_problem">alpaqa.casadi_problem</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="N" class="genindex-section">
+  <h2>N</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem.n">n (alpaqa._alpaqa.Problem property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters.n">(alpaqa._alpaqa.ProblemWithCounters property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.n">(alpaqa._alpaqa.ProblemWithParam property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.n">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSStepsize.name">name (alpaqa._alpaqa.LBFGSStepsize property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.name">(alpaqa._alpaqa.PANOCStopCrit property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.name">(alpaqa._alpaqa.SolverStatus property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.nonmonotone_linesearch">nonmonotone_linesearch (alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.NoProgress">NoProgress (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.norm_sq_p">norm_sq_p (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.norm_sq_p">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.norm_sq_p">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.norm_sq_p">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.NotFinite">NotFinite (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.p">p (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.p">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.p">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.p">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.panoc">panoc() (in module alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection">PANOCDirection (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams">PANOCParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo">PANOCProgressInfo (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCSolver">PANOCSolver (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit">PANOCStopCrit (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam.param">param (alpaqa._alpaqa.ProblemWithParam property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters.param">(alpaqa._alpaqa.ProblemWithParamWithCounters property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMSolver.params">params (alpaqa._alpaqa.ALMSolver property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGASolver.params">(alpaqa._alpaqa.GAAPGASolver property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.params">(alpaqa._alpaqa.LBFGSDirection property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCSolver.params">(alpaqa._alpaqa.PANOCSolver property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGASolver.params">(alpaqa._alpaqa.PGASolver property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSSolver.params">(alpaqa._alpaqa.StructuredPANOCLBFGSSolver property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams">PGAParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo">PGAProgressInfo (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PGASolver">PGASolver (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.preconditioning">preconditioning (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.print_interval">print_interval (alpaqa._alpaqa.ALMParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.print_interval">(alpaqa._alpaqa.GAAPGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.print_interval">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.print_interval">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.print_interval">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Problem">Problem (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithCounters">ProblemWithCounters (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParam">ProblemWithParam (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ProblemWithParamWithCounters">ProblemWithParamWithCounters (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.ProjGradNorm">ProjGradNorm (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.ProjGradNorm2">ProjGradNorm2 (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.ProjGradUnitNorm">ProjGradUnitNorm (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.ProjGradUnitNorm2">ProjGradUnitNorm2 (alpaqa._alpaqa.PANOCStopCrit attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Q" class="genindex-section">
+  <h2>Q</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.quadratic_upperbound_tolerance_factor">quadratic_upperbound_tolerance_factor (alpaqa._alpaqa.GAAPGAParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.quadratic_upperbound_tolerance_factor">(alpaqa._alpaqa.PANOCParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.quadratic_upperbound_tolerance_factor">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.quadratic_upperbound_tolerance_factor">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParams.rescale_when__changes">rescale_when_γ_changes (alpaqa._alpaqa.LBFGSParams property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.reset">reset() (alpaqa._alpaqa.LBFGSDirection method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.reset">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGASolver.set_progress_callback">set_progress_callback() (alpaqa._alpaqa.GAAPGASolver method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCSolver.set_progress_callback">(alpaqa._alpaqa.PANOCSolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGASolver.set_progress_callback">(alpaqa._alpaqa.PGASolver method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSSolver.set_progress_callback">(alpaqa._alpaqa.StructuredPANOCLBFGSSolver method)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.single_penalty_factor">single_penalty_factor (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus">SolverStatus (class in alpaqa._alpaqa)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.InnerSolver.stop">stop() (alpaqa._alpaqa.InnerSolver method)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.stop_crit">stop_crit (alpaqa._alpaqa.GAAPGAParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.stop_crit">(alpaqa._alpaqa.PGAParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.stop_crit">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams">StructuredPANOCLBFGSParams (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo">StructuredPANOCLBFGSProgressInfo (class in alpaqa._alpaqa)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSSolver">StructuredPANOCLBFGSSolver (class in alpaqa._alpaqa)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.EvalCounter.time">time (alpaqa._alpaqa.EvalCounter property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.to_dict">to_dict() (alpaqa._alpaqa.ALMParams method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAParams.to_dict">(alpaqa._alpaqa.GAAPGAParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParams.to_dict">(alpaqa._alpaqa.LBFGSParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParamsCBFGS.to_dict">(alpaqa._alpaqa.LBFGSParamsCBFGS method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LipschitzEstimateParams.to_dict">(alpaqa._alpaqa.LipschitzEstimateParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.to_dict">(alpaqa._alpaqa.PANOCParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAParams.to_dict">(alpaqa._alpaqa.PGAParams method)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.to_dict">(alpaqa._alpaqa.StructuredPANOCLBFGSParams method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.Unknown">Unknown (alpaqa._alpaqa.SolverStatus attribute)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSDirection.update">update() (alpaqa._alpaqa.LBFGSDirection method)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCDirection.update">(alpaqa._alpaqa.PANOCDirection method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams.update_lipschitz_in_linesearch">update_lipschitz_in_linesearch (alpaqa._alpaqa.PANOCParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams.update_lipschitz_in_linesearch">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.Box.upperbound">upperbound (alpaqa._alpaqa.Box property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="V" class="genindex-section">
+  <h2>V</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSStepsize.value">value (alpaqa._alpaqa.LBFGSStepsize property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCStopCrit.value">(alpaqa._alpaqa.PANOCStopCrit property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.SolverStatus.value">(alpaqa._alpaqa.SolverStatus property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="X" class="genindex-section">
+  <h2>X</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.x">x (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.x">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.x">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.x">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.x_hat">x_hat (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.x_hat">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.x_hat">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.x_hat">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Y" class="genindex-section">
+  <h2>Y</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.y">y (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.y">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.y">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.y">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Α" class="genindex-section">
+  <h2>Α</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.LBFGSParamsCBFGS.">α (alpaqa._alpaqa.LBFGSParamsCBFGS property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Γ" class="genindex-section">
+  <h2>Γ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id16">γ (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#id29">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id36">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id39">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Δ" class="genindex-section">
+  <h2>Δ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams.">Δ (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#id0">δ (alpaqa._alpaqa.ALMParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.LipschitzEstimateParams.">(alpaqa._alpaqa.LipschitzEstimateParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._lower">Δ_lower (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Ε" class="genindex-section">
+  <h2>Ε</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id9">ε (alpaqa._alpaqa.ALMParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#id17">(alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id26">(alpaqa._alpaqa.LipschitzEstimateParams property)</a>
+</li>
+          <li><a href="reference/python-api.html#id30">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id37">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id40">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id10">ε_0 (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._0_increase">ε_0_increase (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Θ" class="genindex-section">
+  <h2>Θ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id11">θ (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Ρ" class="genindex-section">
+  <h2>Ρ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id12">ρ (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._increase">ρ_increase (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Σ" class="genindex-section">
+  <h2>Σ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo.">Σ (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo.">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo.">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo.">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._0">Σ_0 (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#id13">σ_0 (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._0_lower">Σ_0_lower (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._max">Σ_max (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.ALMParams._min">Σ_min (alpaqa._alpaqa.ALMParams property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Τ" class="genindex-section">
+  <h2>Τ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id31">τ (alpaqa._alpaqa.PANOCProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#id41">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCParams._min">τ_min (alpaqa._alpaqa.PANOCParams property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSParams._min">(alpaqa._alpaqa.StructuredPANOCLBFGSParams property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Φ" class="genindex-section">
+  <h2>Φ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id32">φγ (alpaqa._alpaqa.PANOCProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#id42">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Ψ" class="genindex-section">
+  <h2>Ψ</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id18">ψ (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#id33">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id38">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#id43">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#alpaqa._alpaqa.GAAPGAProgressInfo._hat">ψ_hat (alpaqa._alpaqa.GAAPGAProgressInfo property)</a>
+
+        <ul>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PANOCProgressInfo._hat">(alpaqa._alpaqa.PANOCProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.PGAProgressInfo._hat">(alpaqa._alpaqa.PGAProgressInfo property)</a>
+</li>
+          <li><a href="reference/python-api.html#alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo._hat">(alpaqa._alpaqa.StructuredPANOCLBFGSProgressInfo property)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
+
+<section id="Ε" class="genindex-section">
+  <h2>Ε</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="reference/python-api.html#id23">ϵ (alpaqa._alpaqa.LBFGSParamsCBFGS property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
+
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, Pieter Pas |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,4 @@
+<map id="calc_ψ_grad_ψ" name="calc_ψ_grad_ψ">
+<area shape="rect" id="node1" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="239,5,355,32"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a94bf6eebbdbba180b681978a42f33d96" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="5,5,191,32"/>
+</map>

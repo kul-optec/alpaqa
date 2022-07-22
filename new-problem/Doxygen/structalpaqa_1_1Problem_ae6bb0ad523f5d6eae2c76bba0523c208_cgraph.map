@@ -1,0 +1,7 @@
+<map id="eval_grad_ψ_from_ŷ" name="eval_grad_ψ_from_ŷ">
+<area shape="rect" id="node1" title="Calculate ∇ψ(x) using ŷ." alt="" coords="5,31,160,57"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#aba98edc04bad2e0a3ad6645991cd7535" title="Function that evaluates the gradient of the cost, ." alt="" coords="609,5,707,32"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#a5f0f7f91b5bd3732b02700627e9a8558" title="Evaluate the gradient of the Lagrangian ." alt="" coords="208,56,308,83"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1Problem.html#a6f4989c25256ca477442ef34ae1c6b7f" title="Evaluate both &#160;and ." alt="" coords="356,56,541,83"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#ab3ddf22ddba40c16ab196c1371405ea0" title="Function that evaluates the gradient of the constraints times a vector, ." alt="" coords="589,56,727,83"/>
+</map>

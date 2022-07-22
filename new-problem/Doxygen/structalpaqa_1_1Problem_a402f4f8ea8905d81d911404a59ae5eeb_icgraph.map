@@ -1,0 +1,7 @@
+<map id="calc_ŷ_dᵀŷ" name="calc_ŷ_dᵀŷ">
+<area shape="rect" id="node1" title="Given g(x), compute the intermediate results ŷ and dᵀŷ that can later be used to compute ψ(x) and ∇ψ(..." alt="" coords="371,56,461,83"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="212,5,315,32"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="204,56,323,83"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#ae9336441a3bb074da2fc22d6f39e1347" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="223,107,304,133"/>
+<area shape="rect" id="node3" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,56,156,83"/>
+</map>

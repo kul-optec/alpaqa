@@ -1,0 +1,493 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Examples" href="../examples/examples_landing_page.html" /><link rel="prev" title="Installation" href="../install/installation.html" />
+
+    <link rel="shortcut icon" href="../_static/alpaqa_favicon.png"/><meta name="generator" content="sphinx-4.5.0, furo 2022.04.07"/>
+        <title>Getting started - Alpaqa documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=68f4518137b9aefe99b631505a2064c3c42c9852" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Alpaqa  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/alpaqa_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Alpaqa  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install/installation.html">Installation</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Getting started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../examples/examples_landing_page.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/example_minimal.html">Minimal example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/regression_problem.html">Nonlinear regression problem</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/mpc/mpc_landing_page.html">Model predictive control</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/mpc/hanging-chain.html">Hanging Chain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/python-api.html">Python API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/cpp-api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contribution/how_to_contribute.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container"><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="getting-started">
+<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">#</a></h1>
+<p>The solver in this library can solve minimization problems of the following form:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\begin{split}\newcommand\mymathbb[1]
+{ {\rm I\mathchoice{\hspace{-2pt}}{\hspace{-2pt}}
+    {\hspace{-1.75pt}}{\hspace{-1.7pt}}#1} }
+\newcommand{\Re}{\mymathbb R}
+\begin{aligned}
+    &amp; \underset{x}{\text{minimize}}
+    &amp; &amp; f(x) &amp;&amp;&amp;&amp; f : \Re^n \rightarrow \Re \\
+    &amp; \text{subject to}
+    &amp; &amp; \underline{x} \le \phantom{g(}x\phantom{)} \le \overline{x} \\
+    &amp;&amp;&amp; \underline{z} \le g(x) \le \overline{z} &amp;&amp;&amp;&amp; g : \Re^n \rightarrow \Re^m
+\end{aligned}\end{split}\]</div></div>
+<p>The objective function <span class="math notranslate nohighlight">\(f(x)\)</span> and the constraints function <span class="math notranslate nohighlight">\(g(x)\)</span>
+should have a Lipschitz-continuous gradient.</p>
+<p>The two types of constraints are
+handled differently: the box constraints on <span class="math notranslate nohighlight">\(x\)</span> are taken into account
+directly, while the general constraints <span class="math notranslate nohighlight">\(g(x)\)</span> are relaxed using
+an Augmented Lagrangian Method (ALM). Whenever possible, try to express your
+constraints as box constraints on <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Equality constraints can be expressed by setting
+<span class="math notranslate nohighlight">\(\underline{z}_i = \overline{z}_i\)</span>.</p>
+<p>For ease of notation, the box constraints on <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(g(x)\)</span>
+are represented as the inclusion in rectangular sets <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(D\)</span>
+respectively:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \underset{x}{\text{minimize}}
+    &amp; &amp; f(x) \\
+    &amp; \text{subject to}
+    &amp; &amp; \phantom{g(}x\phantom{)} \in C \\
+    &amp;&amp;&amp; g(x) \in D
+\end{aligned}\end{split}\]</div></div>
+<section id="simple-example">
+<h2>Simple example<a class="headerlink" href="#simple-example" title="Permalink to this headline">#</a></h2>
+<p>Consider the following simple two-dimensional problem, with the
+Rosenbrock function (parametrized by <span class="math notranslate nohighlight">\(p\)</span>) as the cost function:</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    &amp; \underset{x_1,x_2}{\text{minimize}}
+    &amp; &amp; (1 - x_1)^2 + p\,(x_2 - x_1^2)^2 \\
+    &amp; \text{subject to}
+    &amp; &amp; -0.25 \le x_1 \le 1.5 \\
+    &amp;&amp;&amp; -0.5 \le x_2 \le 2.5 \\
+    &amp;&amp;&amp; (x_1 - 0.5)^3 - x_2 + 1 \;\le 0 \\
+    &amp;&amp;&amp; x_1 + x_2 - 1.5 \;\le 0 \\
+\end{aligned}\end{split}\]</div></div>
+<p>In other words,</p>
+<div class="math-wrapper"><div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    f(x) &amp;= (1 - x_1)^2 + p\,(x_2 - x_1^2)^2 \\
+    g(x) &amp;= \begin{pmatrix}
+        (x_1 - 0.5)^3 - x_2 + 1 \\
+        x_1 + x_2 - 1.5
+    \end{pmatrix} \\
+    C &amp;= [-0.25, 1.5] \times [-0.5, 2.5] \\
+    D &amp;= [-\infty, 0] \times [-\infty, 0]
+\end{aligned}\end{split}\]</div></div>
+<section id="problem-description">
+<h3>Problem description<a class="headerlink" href="#problem-description" title="Permalink to this headline">#</a></h3>
+<p>The objective function and the constraints are defined as
+<a class="reference external" href="https://web.casadi.org/">CasADi</a> expressions with symbolic variables, and
+then converted into CasADi functions. The arguments of these functions are the
+decision variables and an optional parameter vector.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %% Build the problem for PANOC+ALM (CasADi code, independent of alpaqa)</span>
+<span class="kn">import</span> <span class="nn">casadi</span> <span class="k">as</span> <span class="nn">cs</span>
+
+<span class="c1"># Make symbolic decision variables</span>
+<span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s2">"x1"</span><span class="p">),</span> <span class="n">cs</span><span class="o">.</span><span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s2">"x2"</span><span class="p">)</span>
+<span class="c1"># Make a parameter symbol</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">SX</span><span class="o">.</span><span class="n">sym</span><span class="p">(</span><span class="s2">"p"</span><span class="p">)</span>
+
+<span class="c1"># Expressions for the objective function f and the constraints g</span>
+<span class="n">f_expr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="n">g_expr</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">vertcat</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">-</span> <span class="n">x2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span> <span class="o">-</span> <span class="mf">1.5</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Collect decision variables into one vector</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">vertcat</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="c1"># Convert the symbolic expressions to CasADi functions</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s2">"f"</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">f_expr</span><span class="p">])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s2">"g"</span><span class="p">,</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">g_expr</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Next, the gradients of the functions are computed using CasADi, and they are
+compiled as efficient C functions. All of this happens inside of the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">alpaqa.casadi_problem.generate_and_compile_casadi_problem()</span></code>
+function, which returns an instance of <a class="reference internal" href="../reference/python-api.html#alpaqa._alpaqa.Problem" title="alpaqa._alpaqa.Problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">alpaqa._alpaqa.Problem</span></code></a>
+or <a class="reference internal" href="../reference/python-api.html#alpaqa._alpaqa.ProblemWithParam" title="alpaqa._alpaqa.ProblemWithParam"><code class="xref py py-class docutils literal notranslate"><span class="pre">alpaqa._alpaqa.ProblemWithParam</span></code></a>, depending on whether the
+provided functions accept a parameter vector.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %% Generate and compile C-code for the objective and constraints using alpaqa</span>
+<span class="kn">import</span> <span class="nn">alpaqa</span> <span class="k">as</span> <span class="nn">pa</span>
+
+<span class="c1"># Compile and load the problem</span>
+<span class="n">prob</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">generate_and_compile_casadi_problem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The bounds for the constraints can be initialized using lists or NumPy arrays:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the bounds</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">lowerbound</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]</span>       <span class="c1"># -0.25 &lt;= x1 &lt;= 1.5</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">upperbound</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]</span>          <span class="c1"># -0.5  &lt;= x2 &lt;= 2.5</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">lowerbound</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span>  <span class="c1"># g1 &lt;= 0</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">D</span><span class="o">.</span><span class="n">upperbound</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>              <span class="c1"># g2 &lt;= 0</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These lower and upper bounds are immutable, so for example assigning single
+elements is not possible, but you can assign the entire vector, as shown in
+the snippet above.</p>
+</div>
+<p>Finally, the parameter <span class="math notranslate nohighlight">\(p\)</span> is given a value, completing the problem
+definition. This value can be changed later.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span><span class="o">.</span><span class="n">param</span> <span class="o">=</span> <span class="p">[</span><span class="mf">100.</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="selecting-a-solver">
+<h3>Selecting a solver<a class="headerlink" href="#selecting-a-solver" title="Permalink to this headline">#</a></h3>
+<p>The solvers in this package consist of an inner solver that can handle box
+constraints, such as <a class="reference external" href="https://arxiv.org/abs/1709.06487">PANOC</a>,
+and an outer ALM solver that relaxes the general constraints <span class="math notranslate nohighlight">\(g(x) \in D\)</span>.
+Solvers can be composed easily, for instance:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %% Build a solver with the default parameters</span>
+<span class="n">inner_solver</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">StructuredPANOCLBFGSSolver</span><span class="p">()</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">ALMSolver</span><span class="p">(</span><span class="n">inner_solver</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Each solver has its own set of optional parameters that can be specified using
+keyword arguments, for example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %% Build a solver with custom parameters</span>
+<span class="n">inner_solver</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">StructuredPANOCLBFGSSolver</span><span class="p">(</span>
+    <span class="n">panoc_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">'max_iter'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="s1">'stop_crit'</span><span class="p">:</span> <span class="n">pa</span><span class="o">.</span><span class="n">PANOCStopCrit</span><span class="o">.</span><span class="n">ApproxKKT</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">lbfgs_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">'memory'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">solver</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">ALMSolver</span><span class="p">(</span>
+    <span class="n">alm_params</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">'ε'</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">,</span>
+        <span class="s1">'δ'</span><span class="p">:</span> <span class="mf">1e-10</span><span class="p">,</span>
+        <span class="s1">'Σ_0'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">'σ_0'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">'Δ'</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">inner_solver</span><span class="o">=</span><span class="n">inner_solver</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>For a full overview and description of all parameters, see the documentation
+for <a class="reference internal" href="../reference/cpp-api.html#_CPPv4N6alpaqa26StructuredPANOCLBFGSParamsE" title="alpaqa::StructuredPANOCLBFGSParams"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">alpaqa::StructuredPANOCLBFGSParams</span></code></a> and
+<a class="reference internal" href="../reference/cpp-api.html#_CPPv4N6alpaqa9ALMParamsE" title="alpaqa::ALMParams"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">alpaqa::ALMParams</span></code></a>.</p>
+</section>
+<section id="solving-the-problem">
+<h3>Solving the problem<a class="headerlink" href="#solving-the-problem" title="Permalink to this headline">#</a></h3>
+<p>Finally, you can obtain a solution by passing the problem specification to the
+solver. Optionally, you can supply an initial guess for both the decision
+variables <span class="math notranslate nohighlight">\(x\)</span> and the Lagrange multipliers <span class="math notranslate nohighlight">\(y\)</span> of the general
+constraints <span class="math notranslate nohighlight">\(g(x) \in D\)</span>. If no initial guess is specified, the default
+initial values for <code class="code docutils literal notranslate"><span class="pre">x0</span></code> and <code class="code docutils literal notranslate"><span class="pre">y0</span></code> are zero.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %% Compute a solution</span>
+
+<span class="c1"># Set initial guesses at arbitrary values</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">])</span> <span class="c1"># decision variables</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">prob</span><span class="o">.</span><span class="n">m</span><span class="p">,))</span>  <span class="c1"># Lagrange multipliers for g(x)</span>
+
+<span class="c1"># Solve the problem</span>
+<span class="n">x_sol</span><span class="p">,</span> <span class="n">y_sol</span><span class="p">,</span> <span class="n">stats</span> <span class="o">=</span> <span class="n">solver</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">)</span>
+
+<span class="c1"># Print the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">"status"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Solution:      </span><span class="si">{</span><span class="n">x_sol</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Multipliers:   </span><span class="si">{</span><span class="n">y_sol</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cost:          </span><span class="si">{</span><span class="n">prob</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">x_sol</span><span class="p">)</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will print something similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SolverStatus.Converged
+Solution:      [-0.25      0.578125]
+Multipliers:   [103.125   0.   ]
+Cost:          28.14941
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">stats</span></code> variable contains some other solver statistics as well, for
+both the outer and the inner solver. You can find a full overview in the
+documentation of <a class="reference internal" href="../reference/cpp-api.html#_CPPv4N6alpaqa9ALMSolver5StatsE" title="alpaqa::ALMSolver::Stats"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">alpaqa::ALMSolver::Stats</span></code></a>
+and <a class="reference internal" href="../reference/cpp-api.html#_CPPv4IEN6alpaqa21InnerStatsAccumulatorI25StructuredPANOCLBFGSStatsEE" title="alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">alpaqa::InnerStatsAccumulator&lt;StructuredPANOCLBFGSStats&gt;</span></code></a>.</p>
+<a class="reference internal image-reference" href="../_images/example_minimal.svg"><img alt="Contour plot of the result" src="../_images/example_minimal.svg" width="100%"/></a>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../examples/examples_landing_page.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Examples</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../install/installation.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Installation</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021, Pieter Pas
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Getting started</a><ul>
+<li><a class="reference internal" href="#simple-example">Simple example</a><ul>
+<li><a class="reference internal" href="#problem-description">Problem description</a></li>
+<li><a class="reference internal" href="#selecting-a-solver">Selecting a solver</a></li>
+<li><a class="reference internal" href="#solving-the-problem">Solving the problem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

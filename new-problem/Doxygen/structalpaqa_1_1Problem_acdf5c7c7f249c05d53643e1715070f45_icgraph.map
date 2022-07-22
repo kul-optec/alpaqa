@@ -1,0 +1,9 @@
+<map id="eval_g" name="eval_g">
+<area shape="rect" id="node1" title="Function that evaluates the constraints, ." alt="" coords="544,132,609,159"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#ab0e71914b849242cd710193000401e60" title="Evaluate both &#160;and ." alt="" coords="395,56,472,83"/>
+<area shape="rect" id="node4" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,81,156,108"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1Problem.html#ac9c1de8ad2ed2be51c1838f0bec0cec5" title="Evaluate , its gradient &#160;and ." alt="" coords="371,157,496,184"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="212,183,315,209"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="204,5,323,32"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#ae9336441a3bb074da2fc22d6f39e1347" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="223,56,304,83"/>
+</map>

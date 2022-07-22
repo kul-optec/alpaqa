@@ -1,0 +1,4 @@
+<map id="initial_lipschitz_estimate" name="initial_lipschitz_estimate">
+<area shape="rect" id="node1" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="5,5,191,32"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a8f6ca1622de905436d84d5fe0f028d63" title="Calculate the gradient ∇ψ(x)." alt="" coords="239,5,339,32"/>
+</map>

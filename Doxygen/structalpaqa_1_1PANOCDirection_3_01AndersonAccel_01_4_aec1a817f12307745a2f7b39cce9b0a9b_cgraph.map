@@ -1,0 +1,7 @@
+<map id="changed_γ" name="changed_γ">
+<area shape="rect" id="node1" title=" " alt="" coords="5,46,97,73"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1AndersonAccel.html#af1f7f1b0b1868cb2e03aa548c0ae2e85" title=" " alt="" coords="145,39,316,80"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#ad20897c5c8bd47f5d4005989bead0e55" title=" " alt="" coords="364,39,535,80"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="583,5,779,47"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#a25b6259a3ee886a9a54f3a66ab019084" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="583,71,779,112"/>
+</map>

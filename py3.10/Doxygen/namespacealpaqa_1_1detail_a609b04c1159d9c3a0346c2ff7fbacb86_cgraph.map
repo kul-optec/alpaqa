@@ -1,0 +1,4 @@
+<map id="calc_err_z" name="calc_err_z">
+<area shape="rect" id="node1" title="Calculate the error between ẑ and g(x)." alt="" coords="5,5,92,32"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="140,5,259,32"/>
+</map>

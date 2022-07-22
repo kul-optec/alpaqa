@@ -1,0 +1,7 @@
+<map id="calc_augmented_lagrangian_hessian" name="calc_augmented_lagrangian_hessian">
+<area shape="rect" id="node1" title="Compute the Hessian matrix of the augmented Lagrangian function." alt="" coords="5,104,211,145"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1ProblemBase.html#acdf5c7c7f249c05d53643e1715070f45" title="Function that evaluates the constraints, ." alt="" coords="259,5,419,47"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1ProblemBase.html#a1a3532b9cb69303527a65d24e07b23b8" title="Function that evaluates the gradient of one specific constraint, ." alt="" coords="259,71,419,112"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1ProblemBase.html#ae8fd3c627c10ee928da11fb781135f04" title="Function that evaluates the Hessian of the Lagrangian, ." alt="" coords="259,136,419,177"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1ProblemBase.html#a3b54f9aca28cbbbc821d3ca974bbe1e7" title=" " alt="" coords="259,201,419,243"/>
+</map>

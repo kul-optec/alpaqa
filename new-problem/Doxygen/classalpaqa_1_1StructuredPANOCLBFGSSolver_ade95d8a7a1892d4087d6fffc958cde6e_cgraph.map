@@ -1,0 +1,37 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node1" title=" " alt="" coords="5,761,92,788"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1MaxHistory.html#a81a90817360660bfc52b9ba46ec2ed02" title=" " alt="" coords="155,5,335,32"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1detail.html#a92f60c911dd553c7ddf561d87d8c60fd" title="Compute the Hessian matrix of the augmented Lagrangian function multiplied by the given vector,..." alt="" coords="405,128,583,184"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1detail.html#a609b04c1159d9c3a0346c2ff7fbacb86" title="Calculate the error between ẑ and g(x)." alt="" coords="421,630,567,671"/>
+<area shape="rect" id="node7" href="$namespacealpaqa_1_1detail.html#a164b2b3296b6868a4dd53b7c0d9d64e2" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="173,725,318,766"/>
+<area shape="rect" id="node10" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="637,906,817,947"/>
+<area shape="rect" id="node12" href="$namespacealpaqa_1_1detail.html#a998a56114e97dc0ea3b883d34df2cb77" title="Calculate ∇ψ(x) using ŷ." alt="" coords="173,958,318,999"/>
+<area shape="rect" id="node13" href="$namespacealpaqa_1_1detail.html#adaff98bd8130d1eee1f5bcaab5069026" title=" " alt="" coords="414,964,574,991"/>
+<area shape="rect" id="node14" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="421,11,567,53"/>
+<area shape="rect" id="node15" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="173,1023,318,1065"/>
+<area shape="rect" id="node16" href="$namespacealpaqa_1_1detail.html#a2ce2c8e78adf825044f1b9473f389160" title="Check all stop conditions (required tolerance reached, out of time, maximum number of iterations exce..." alt="" coords="167,1089,324,1130"/>
+<area shape="rect" id="node18" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#a92bf6e99eb0770f053457e48cc3a3435" title=" " alt="" coords="140,325,351,352"/>
+<area shape="rect" id="node26" href="$namespacealpaqa_1_1detail.html#a3e432963691339ba0588d90186008735" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="160,893,331,934"/>
+<area shape="rect" id="node27" href="$namespacealpaqa_1_1detail.html#a8a1a5d46f1a3fffc7501abc3e2561367" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="167,107,323,149"/>
+<area shape="rect" id="node28" href="$classalpaqa_1_1MaxHistory.html#adcfd9d745edb4bb4fdc0d31bbf7c81f9" title=" " alt="" coords="153,1155,338,1181"/>
+<area shape="rect" id="node29" href="$namespacealpaqa_1_1detail.html#af622b46ff2f9f3237cef3781eb65cf0c" title=" " alt="" coords="171,1206,320,1247"/>
+<area shape="rect" id="node30" href="$classalpaqa_1_1LBFGS.html#a57b2556ee8993b06958b9c14511fd4ba" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="164,579,327,605"/>
+<area shape="rect" id="node32" href="$namespacealpaqa_1_1detail.html#af0636cda18987394f45b344ccb9e8c8e" title=" " alt="" coords="160,1271,331,1313"/>
+<area shape="rect" id="node33" href="$classalpaqa_1_1LBFGS.html#a4db75f8c280c32a05a44bb83769befb1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="161,401,330,428"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a8f6ca1622de905436d84d5fe0f028d63" title="Calculate the gradient ∇ψ(x)." alt="" coords="655,103,800,145"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="668,671,787,697"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1vec__util.html#a8dc597c55e6fedeccc220e75360e2f87" title="Get the 1&#45;norm of the given vector." alt="" coords="403,761,585,788"/>
+<area shape="rect" id="node9" href="$namespacealpaqa_1_1vec__util.html#adddb38b65e3176db3b57d07a68ff2b54" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="399,812,589,839"/>
+<area shape="rect" id="node11" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="425,695,563,737"/>
+<area shape="rect" id="node17" href="$classalpaqa_1_1AtomicStopSignal.html#aa0097deccc19b49f8ab5344d8d6d5cf6" title=" " alt="" coords="399,1089,589,1130"/>
+<area shape="rect" id="node19" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="414,325,574,352"/>
+<area shape="rect" id="node20" href="$classalpaqa_1_1LBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="643,376,812,403"/>
+<area shape="rect" id="node21" href="$classalpaqa_1_1LBFGS.html#a644d66009a70ccc909120ba9afa45ea5" title=" " alt="" coords="662,325,793,352"/>
+<area shape="rect" id="node23" href="$classalpaqa_1_1LBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="661,427,793,453"/>
+<area shape="rect" id="node24" href="$classalpaqa_1_1LBFGS.html#a7866204934238efa4a186fc9d48a8a2e" title=" " alt="" coords="661,275,794,301"/>
+<area shape="rect" id="node25" href="$classalpaqa_1_1LBFGS.html#aebf0127f7a3e56b2c46e5f189d517f14" title=" " alt="" coords="661,477,793,504"/>
+<area shape="rect" id="node22" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="865,427,997,453"/>
+<area shape="rect" id="node31" href="$classalpaqa_1_1LBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="415,579,573,605"/>
+<area shape="rect" id="node34" href="$classalpaqa_1_1LBFGS.html#a0df701f7bb07249c37bcbf20d9c980fe" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="417,376,571,403"/>
+<area shape="rect" id="node35" href="$classalpaqa_1_1LBFGS.html#aaf9c6519c7a7d7ab977113f33c88e2e3" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="409,209,579,250"/>
+</map>

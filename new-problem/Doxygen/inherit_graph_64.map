@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" title=" " alt="" coords="5,170,192,197"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1PolymorphicInnerSolverBase.html" title=" " alt="" coords="257,71,466,98"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1PolymorphicInnerSolverStatsAccumulatorBase.html" title=" " alt="" coords="256,136,467,177"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1PolymorphicInnerSolverStatsBase.html" title=" " alt="" coords="240,206,483,233"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html" title=" " alt="" coords="242,275,481,302"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1PolymorphicInnerSolver.html" title=" " alt="" coords="567,5,744,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1PolymorphicInnerSolverTrampoline.html" title=" " alt="" coords="531,71,780,98"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1PolymorphicInnerSolver_1_1WrappedStatsAccumulator.html" title=" " alt="" coords="543,122,768,178"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1PolymorphicInnerSolver_1_1WrappedStats.html" title=" " alt="" coords="543,203,768,244"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1PolymorphicPANOCDirection.html" title=" " alt="" coords="552,268,759,309"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1PolymorphicPANOCDirectionTrampoline.html" title=" " alt="" coords="552,333,759,375"/>
+</map>

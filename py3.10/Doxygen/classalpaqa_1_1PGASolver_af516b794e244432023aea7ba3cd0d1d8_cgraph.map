@@ -1,0 +1,19 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node1" title=" " alt="" coords="5,309,92,336"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a609b04c1159d9c3a0346c2ff7fbacb86" title="Calculate the error between ẑ and g(x)." alt="" coords="824,64,969,106"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a164b2b3296b6868a4dd53b7c0d9d64e2" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="385,108,530,150"/>
+<area shape="rect" id="node9" href="$namespacealpaqa_1_1detail.html#a998a56114e97dc0ea3b883d34df2cb77" title="Calculate ∇ψ(x) using ŷ." alt="" coords="608,432,753,474"/>
+<area shape="rect" id="node10" href="$namespacealpaqa_1_1detail.html#adaff98bd8130d1eee1f5bcaab5069026" title=" " alt="" coords="377,178,537,205"/>
+<area shape="rect" id="node11" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="385,331,530,372"/>
+<area shape="rect" id="node12" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="608,278,753,319"/>
+<area shape="rect" id="node13" href="$namespacealpaqa_1_1detail.html#a3e432963691339ba0588d90186008735" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="149,218,320,259"/>
+<area shape="rect" id="node14" href="$namespacealpaqa_1_1detail.html#a8a1a5d46f1a3fffc7501abc3e2561367" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="157,386,313,427"/>
+<area shape="rect" id="node16" href="$namespacealpaqa_1_1detail.html#af622b46ff2f9f3237cef3781eb65cf0c" title=" " alt="" coords="160,514,309,555"/>
+<area shape="rect" id="node17" href="$classalpaqa_1_1AtomicStopSignal.html#aa0097deccc19b49f8ab5344d8d6d5cf6" title=" " alt="" coords="140,579,329,620"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="1017,166,1136,193"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1vec__util.html#a8dc597c55e6fedeccc220e75360e2f87" title="Get the 1&#45;norm of the given vector." alt="" coords="589,60,772,86"/>
+<area shape="rect" id="node6" href="$namespacealpaqa_1_1vec__util.html#adddb38b65e3176db3b57d07a68ff2b54" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="585,161,776,188"/>
+<area shape="rect" id="node7" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="591,212,771,254"/>
+<area shape="rect" id="node8" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="827,191,966,232"/>
+<area shape="rect" id="node15" href="$namespacealpaqa_1_1detail.html#a8f6ca1622de905436d84d5fe0f028d63" title="Calculate the gradient ∇ψ(x)." alt="" coords="385,396,530,438"/>
+</map>

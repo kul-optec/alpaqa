@@ -1,0 +1,15 @@
+<map id="calc_grad_ψ_from_ŷ" name="calc_grad_ψ_from_ŷ">
+<area shape="rect" id="node1" title="Calculate ∇ψ(x) using ŷ." alt="" coords="1080,326,1233,353"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="916,282,1032,309"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="379,103,621,144"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="365,5,635,47"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="415,275,585,316"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1PGASolver.html#af516b794e244432023aea7ba3cd0d1d8" title=" " alt="" coords="425,392,575,433"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1PANOCSolver.html#aaa9758a40bd362331202fb232b4bb7ae" title=" " alt="" coords="695,451,855,492"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1detail.html#a8a1a5d46f1a3fffc7501abc3e2561367" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="683,165,868,191"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1LBFGSSolver.html#a8540540028b02dfe8b7e3ec0c49c07dd" title=" " alt="" coords="697,216,854,257"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1LBFGSBSolver.html#a8540540028b02dfe8b7e3ec0c49c07dd" title=" " alt="" coords="692,333,859,375"/>
+<area shape="rect" id="node8" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="425,169,575,195"/>
+<area shape="rect" id="node9" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="204,169,317,195"/>
+<area shape="rect" id="node10" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,169,156,195"/>
+</map>

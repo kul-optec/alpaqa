@@ -1,0 +1,6 @@
+<map id="projecting_difference" name="projecting_difference">
+<area shape="rect" id="node1" title="Get the difference between the given vector and its projection." alt="" coords="268,71,427,98"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a53c2d9b7ad10df5a3c836506b3b65d6b" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="5,5,220,47"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#ad8b1a455a3b6ad5e25fe20cfccec279b" title="Get the distance squared between the given vector and its projection." alt="" coords="60,71,165,98"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1ProblemBase.html#a19f7ebb13a34619d27b9e82c2b4cf099" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="33,123,193,164"/>
+</map>

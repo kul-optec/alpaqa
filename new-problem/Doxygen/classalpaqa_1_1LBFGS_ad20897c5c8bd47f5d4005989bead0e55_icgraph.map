@@ -1,0 +1,7 @@
+<map id="reset" name="reset">
+<area shape="rect" id="node1" title="Throw away the approximation and all previous vectors s and y." alt="" coords="432,31,487,57"/>
+<area shape="rect" id="node2" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="65,5,215,32"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#a57b2556ee8993b06958b9c14511fd4ba" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="323,56,384,83"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LBFGS.html#af78287282b1c23d282a586aa2386a15a" title=" " alt="" coords="108,56,172,83"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="5,107,275,149"/>
+</map>

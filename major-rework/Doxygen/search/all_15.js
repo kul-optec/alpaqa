@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['with_5fcounters_0',['with_counters',['../namespacealpaqa.html#ab42f77d503513f53ef9d71ac796b8ba5',1,'alpaqa::with_counters(ProblemBase&lt; Conf &gt; &amp;&amp;problem)'],['../namespacealpaqa.html#a3f62b93d0fad5b6ccd5d0eea422b209b',1,'alpaqa::with_counters(const ProblemBase&lt; Conf &gt; &amp;problem)'],['../namespacealpaqa.html#aa0a6dca317b7841382ae84332089f765',1,'alpaqa::with_counters(std::unique_ptr&lt; ProblemBase&lt; Conf &gt; &gt; problem)'],['../namespacealpaqa.html#a24df6063cee54f0ce5cb70929b82bff5',1,'alpaqa::with_counters(std::shared_ptr&lt; ProblemBase&lt; Conf &gt; &gt; problem)']]],
+  ['withparam_1',['WithParam',['../structalpaqa_1_1casadi__loader_1_1CasADiFunctionsWithParam.html#a6fdc7711667fd0e0a5ce73541c73cc4d',1,'alpaqa::casadi_loader::CasADiFunctionsWithParam']]],
+  ['wrap_5fload_2',['wrap_load',['../namespacealpaqa_1_1casadi__loader.html#a68b5c2b5a6f1eade8a83dab01892cff9',1,'alpaqa::casadi_loader']]],
+  ['wrapped_2dproblem_2dwith_2dcounters_2ehpp_3',['wrapped-problem-with-counters.hpp',['../wrapped-problem-with-counters_8hpp.html',1,'']]],
+  ['wrapped_5fload_4',['wrapped_load',['../namespacealpaqa_1_1casadi__loader.html#a81c651be712fb518e23c0d8c4cc22948',1,'alpaqa::casadi_loader']]],
+  ['wrapped_5ftype_5',['wrapped_type',['../classalpaqa_1_1WrappedProblemWithCounters.html#a0509e22cb22642c40dedb6a8af1b7c6d',1,'alpaqa::WrappedProblemWithCounters']]],
+  ['wrappedproblemwithcounters_6',['WrappedProblemWithCounters',['../classalpaqa_1_1WrappedProblemWithCounters.html',1,'WrappedProblemWithCounters&lt; Conf, Holder &gt;'],['../classalpaqa_1_1WrappedProblemWithCounters.html#a5d938c8d513646ac6425c925c308bee8',1,'alpaqa::WrappedProblemWithCounters::WrappedProblemWithCounters(holder_type p)'],['../classalpaqa_1_1WrappedProblemWithCounters.html#a4a056ca7adef25a5558d9fea76a2f9a7',1,'alpaqa::WrappedProblemWithCounters::WrappedProblemWithCounters(const WrappedProblemWithCounters &amp;)=delete'],['../classalpaqa_1_1WrappedProblemWithCounters.html#a64a3d7d9761071f36787d6c2d6c70bdf',1,'alpaqa::WrappedProblemWithCounters::WrappedProblemWithCounters(WrappedProblemWithCounters &amp;&amp;)=default']]]
+];

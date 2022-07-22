@@ -1,0 +1,5 @@
+<map id="eval_grad_ψ_from_ŷ" name="eval_grad_ψ_from_ŷ">
+<area shape="rect" id="node1" title="Calculate ∇ψ(x) using ŷ." alt="" coords="355,31,509,57"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="204,5,307,32"/>
+<area shape="rect" id="node3" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,31,156,57"/>
+</map>

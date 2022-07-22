@@ -1,0 +1,5 @@
+<map id="update" name="update">
+<area shape="rect" id="node1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="323,42,389,69"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="5,5,275,47"/>
+<area shape="rect" id="node3" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="65,71,215,98"/>
+</map>

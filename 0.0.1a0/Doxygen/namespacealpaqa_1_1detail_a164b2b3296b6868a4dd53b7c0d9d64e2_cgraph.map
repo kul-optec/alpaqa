@@ -1,0 +1,8 @@
+<map id="calc_error_stop_crit" name="calc_error_stop_crit">
+<area shape="rect" id="node1" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="5,81,155,108"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1vec__util.html#a8dc597c55e6fedeccc220e75360e2f87" title="Get the 1&#45;norm of the given vector." alt="" coords="207,5,389,32"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1vec__util.html#adddb38b65e3176db3b57d07a68ff2b54" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="203,56,393,83"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="209,107,387,133"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="229,158,367,199"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="441,165,560,192"/>
+</map>

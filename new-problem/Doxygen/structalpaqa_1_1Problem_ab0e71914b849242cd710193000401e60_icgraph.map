@@ -1,0 +1,6 @@
+<map id="eval_f_g" name="eval_f_g">
+<area shape="rect" id="node1" title="Evaluate both &#160;and ." alt="" coords="371,31,448,57"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="204,5,323,32"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1Problem.html#ae9336441a3bb074da2fc22d6f39e1347" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="223,56,304,83"/>
+<area shape="rect" id="node3" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,31,156,57"/>
+</map>

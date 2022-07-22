@@ -1,0 +1,9 @@
+<map id="eval_f" name="eval_f">
+<area shape="rect" id="node1" title="Function that evaluates the cost, ." alt="" coords="536,50,599,77"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#ab0e71914b849242cd710193000401e60" title="Evaluate both &#160;and ." alt="" coords="394,75,471,102"/>
+<area shape="rect" id="node4" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,25,156,51"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#ae9336441a3bb074da2fc22d6f39e1347" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="226,25,307,51"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1Problem.html#a77860f4adb333acb7a3bb46308ff83e2" title="Evaluate both &#160;and its gradient, ." alt="" coords="377,126,488,153"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="207,75,326,102"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1Problem.html#ac9c1de8ad2ed2be51c1838f0bec0cec5" title="Evaluate , its gradient &#160;and ." alt="" coords="204,126,329,153"/>
+</map>

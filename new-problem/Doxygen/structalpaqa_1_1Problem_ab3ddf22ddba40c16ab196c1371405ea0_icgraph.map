@@ -1,0 +1,9 @@
+<map id="eval_grad_g_prod" name="eval_grad_g_prod">
+<area shape="rect" id="node1" title="Function that evaluates the gradient of the constraints times a vector, ." alt="" coords="955,132,1092,159"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#a6f4989c25256ca477442ef34ae1c6b7f" title="Evaluate both &#160;and ." alt="" coords="721,107,907,133"/>
+<area shape="rect" id="node6" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,81,156,108"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#a5f0f7f91b5bd3732b02700627e9a8558" title="Evaluate the gradient of the Lagrangian ." alt="" coords="573,107,673,133"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1Problem.html#ae6bb0ad523f5d6eae2c76bba0523c208" title="Calculate ∇ψ(x) using ŷ." alt="" coords="371,56,525,83"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="204,107,323,133"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="212,5,315,32"/>
+</map>

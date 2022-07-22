@@ -1,0 +1,6 @@
+<map id="eval_f_grad_f" name="eval_f_grad_f">
+<area shape="rect" id="node1" title="Evaluate both &#160;and its gradient, ." alt="" coords="377,31,488,57"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#ac9c1de8ad2ed2be51c1838f0bec0cec5" title="Evaluate , its gradient &#160;and ." alt="" coords="204,5,329,32"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="207,56,326,83"/>
+<area shape="rect" id="node4" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,56,156,83"/>
+</map>

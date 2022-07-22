@@ -1,0 +1,5 @@
+<map id="calc_ŷ_dᵀŷ" name="calc_ŷ_dᵀŷ">
+<area shape="rect" id="node1" title="Given g(x), compute the intermediate results ŷ and dᵀŷ that can later be used to compute ψ(x) and ∇ψ(..." alt="" coords="5,13,96,39"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="144,5,283,47"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="331,13,449,39"/>
+</map>

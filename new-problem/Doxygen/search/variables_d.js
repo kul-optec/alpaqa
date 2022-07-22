@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['n_0',['n',['../structalpaqa_1_1Problem.html#a7d46b74409bd32b539089ef4721ea544',1,'alpaqa::Problem::n()'],['../namespacealpaqa_1_1test.html#a76f11d9a0a47b94f72c2d0e77fb32240',1,'alpaqa.test.n()']]],
+  ['n_1',['N',['../namespacehanging-chain-mpc.html#a7722c8ecbb62d99aee7ce68b1752f337',1,'hanging-chain-mpc']]],
+  ['n_2',['n',['../classalpaqa_1_1vec__allocator.html#a96b1290985abd613f13f20bfc1ba3ba7',1,'alpaqa::vec_allocator::n()'],['../structalpaqa_1_1problems_1_1RiskaverseProblem.html#a079528bb7fc5a12e84dee1bbbe451563',1,'alpaqa::problems::RiskaverseProblem::n()']]],
+  ['n_3',['N',['../classhanging__chain__dynamics_1_1HangingChain.html#a8cc2e7240164328fdc3f0e5e21032c56',1,'hanging_chain_dynamics::HangingChain']]],
+  ['n_5fdist_4',['N_dist',['../namespacehanging-chain-mpc.html#abf02485830d85acbeb8ab2756b569029',1,'hanging-chain-mpc']]],
+  ['n_5fhor_5',['N_hor',['../namespacebicycle-obstacle-avoidance-mpc.html#a7a02144b9fb4855f09d404732218b245',1,'bicycle-obstacle-avoidance-mpc']]],
+  ['n_5fhoriz_6',['N_horiz',['../namespacehanging-chain-mpc.html#aaee2543d6503390a25d142d8561c3a67',1,'hanging-chain-mpc']]],
+  ['n_5finputs_7',['n_inputs',['../namespacebicycle-obstacle-avoidance-mpc.html#a873dbabacd92d63b54bcde33d482e6e2',1,'bicycle-obstacle-avoidance-mpc']]],
+  ['n_5fsim_8',['N_sim',['../namespacehanging-chain-mpc.html#a01dd8830d13945a4739762bf7e132ce4',1,'hanging-chain-mpc.N_sim()'],['../namespacebicycle-obstacle-avoidance-mpc.html#a01dd8830d13945a4739762bf7e132ce4',1,'bicycle-obstacle-avoidance-mpc.N_sim()']]],
+  ['n_5fstate_9',['n_state',['../namespacehanging-chain-mpc.html#a241e3abb5e979baa9c1a1175cb8f0f70',1,'hanging-chain-mpc']]],
+  ['n_5fstates_10',['n_states',['../namespacebicycle-obstacle-avoidance-mpc.html#a98b842eaecdd083a65f773f7a7127215',1,'bicycle-obstacle-avoidance-mpc']]],
+  ['name_11',['name',['../structalpaqa_1_1CUTEstProblem_1_1Report.html#a9b45b3e13bd9167aab02e17e08916231',1,'alpaqa::CUTEstProblem::Report::name()'],['../namespacealpaqa_1_1test.html#a8ccf841cb59e451791bcb2e1ac4f1edc',1,'alpaqa.test.name()'],['../namespacebicycle-obstacle-avoidance-mpc.html#a8ccf841cb59e451791bcb2e1ac4f1edc',1,'bicycle-obstacle-avoidance-mpc.name()'],['../namespacecodegen-rosenbrock.html#ab74e6bf80237ddc4109968cedc58c151',1,'codegen-rosenbrock.name()']]],
+  ['nan_12',['NaN',['../namespacealpaqa.html#a30c5e56e62aa2be84b0af067ab4be243',1,'alpaqa']]],
+  ['ncon_13',['ncon',['../structalpaqa_1_1CUTEstProblem_1_1Report.html#aa5552aeaa9932c04ad55144b57c9bb9a',1,'alpaqa::CUTEstProblem::Report::ncon()'],['../classalpaqa_1_1CUTEstLoader.html#a1228c6f733c6d7d7e1520add237f6b38',1,'alpaqa::CUTEstLoader::ncon()']]],
+  ['newton_5ffailures_14',['newton_failures',['../namespacealpaqa.html#a6a0e378bf3efcfcf485335af788c0e17',1,'alpaqa::InnerStatsAccumulator&lt; SecondOrderPANOCSolver::Stats &gt;::newton_failures()'],['../classalpaqa_1_1SecondOrderPANOCSolver.html#a6a0e378bf3efcfcf485335af788c0e17',1,'alpaqa::SecondOrderPANOCSolver::Stats::newton_failures()']]],
+  ['nlp_15',['nlp',['../namespacebicycle-obstacle-avoidance-mpc.html#ae4da58908fdf601e762be19c30d1e336',1,'bicycle-obstacle-avoidance-mpc']]],
+  ['nonmonotone_5flinesearch_16',['nonmonotone_linesearch',['../structalpaqa_1_1StructuredPANOCLBFGSParams.html#aff4175c1128bb8ba0d7ec483c2fb5fc7',1,'alpaqa::StructuredPANOCLBFGSParams']]],
+  ['norm_5fpenalty_17',['norm_penalty',['../classalpaqa_1_1ALMSolver.html#a43bddff71a2a061986e5a016abe3fff9',1,'alpaqa::ALMSolver::Stats']]],
+  ['norm_5fsq_5fp_18',['norm_sq_p',['../namespacealpaqa.html#a436c2e14e4f1545412df824088634d06',1,'alpaqa::PGAProgressInfo::norm_sq_p()'],['../namespacealpaqa.html#a436c2e14e4f1545412df824088634d06',1,'alpaqa::GAAPGAProgressInfo::norm_sq_p()'],['../namespacealpaqa.html#a436c2e14e4f1545412df824088634d06',1,'alpaqa::StructuredPANOCLBFGSProgressInfo::norm_sq_p()'],['../classalpaqa_1_1SecondOrderPANOCSolver.html#a436c2e14e4f1545412df824088634d06',1,'alpaqa::SecondOrderPANOCSolver::ProgressInfo::norm_sq_p()'],['../namespacealpaqa.html#a436c2e14e4f1545412df824088634d06',1,'alpaqa::PANOCProgressInfo::norm_sq_p()']]],
+  ['ns_19',['ns',['../structalpaqa_1_1problems_1_1RiskaverseProblem.html#aa5dbce80514b18f899a2dea9007d0c2a',1,'alpaqa::problems::RiskaverseProblem']]],
+  ['nu_20',['nu',['../structalpaqa_1_1problems_1_1RiskaverseProblem.html#adfafd84a875dc99d62caff9e1f07b871',1,'alpaqa::problems::RiskaverseProblem']]],
+  ['num_5fvec_21',['num_vec',['../classalpaqa_1_1vec__allocator.html#ae7294a9aed941b6e055dd12f7f4e095d',1,'alpaqa::vec_allocator']]],
+  ['nvar_22',['nvar',['../classalpaqa_1_1CUTEstLoader.html#a912077ba059d2b501757eaa28ec7c8e0',1,'alpaqa::CUTEstLoader::nvar()'],['../structalpaqa_1_1CUTEstProblem_1_1Report.html#ae418bbd8e03c4354121068e749e13a7d',1,'alpaqa::CUTEstProblem::Report::nvar()']]],
+  ['nx_23',['nx',['../structalpaqa_1_1problems_1_1RiskaverseProblem.html#a01f2135f182338889b70db21c894b53a',1,'alpaqa::problems::RiskaverseProblem']]],
+  ['ny_24',['ny',['../structalpaqa_1_1problems_1_1RiskaverseProblem.html#a056ff439271a897bc4506ca293d5861a',1,'alpaqa::problems::RiskaverseProblem']]]
+];

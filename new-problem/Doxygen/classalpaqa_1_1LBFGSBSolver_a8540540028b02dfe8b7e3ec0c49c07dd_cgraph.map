@@ -1,0 +1,8 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node1" title=" " alt="" coords="5,111,92,138"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a609b04c1159d9c3a0346c2ff7fbacb86" title="Calculate the error between ẑ and g(x)." alt="" coords="162,5,307,47"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="162,71,307,112"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="162,136,307,177"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1AtomicStopSignal.html#aa0097deccc19b49f8ab5344d8d6d5cf6" title=" " alt="" coords="140,201,329,243"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="377,13,496,39"/>
+</map>

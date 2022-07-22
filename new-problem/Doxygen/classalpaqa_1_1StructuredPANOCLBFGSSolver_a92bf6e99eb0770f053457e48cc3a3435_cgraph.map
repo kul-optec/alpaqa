@@ -1,0 +1,12 @@
+<map id="compute_quasi_newton_step" name="compute_quasi_newton_step">
+<area shape="rect" id="node1" title=" " alt="" coords="5,187,216,213"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="273,132,433,159"/>
+<area shape="rect" id="node9" href="$namespacealpaqa_1_1detail.html#a92f60c911dd553c7ddf561d87d8c60fd" title="Compute the Hessian matrix of the augmented Lagrangian function multiplied by the given vector,..." alt="" coords="264,204,443,260"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="491,5,660,32"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LBFGS.html#a644d66009a70ccc909120ba9afa45ea5" title=" " alt="" coords="510,56,641,83"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="509,107,641,133"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LBFGS.html#a7866204934238efa4a186fc9d48a8a2e" title=" " alt="" coords="509,157,642,184"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LBFGS.html#aebf0127f7a3e56b2c46e5f189d517f14" title=" " alt="" coords="509,208,641,235"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="708,132,840,159"/>
+<area shape="rect" id="node10" href="$namespacealpaqa_1_1detail.html#a8f6ca1622de905436d84d5fe0f028d63" title="Calculate the gradient ∇ψ(x)." alt="" coords="503,259,648,301"/>
+</map>

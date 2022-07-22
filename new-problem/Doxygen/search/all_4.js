@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['alm_2ehpp_0',['alm.hpp',['../decl_2alm_8hpp.html',1,'']]],
+  ['d_1',['d',['../namespacehanging-chain-mpc.html#a1aabac6d068eef6a7bad3fdf50a05cc8',1,'hanging-chain-mpc']]],
+  ['d_2',['D',['../structalpaqa_1_1Problem.html#ab82decc54181b303b2716d557c9a96cd',1,'alpaqa::Problem::D()'],['../classhanging__chain__dynamics_1_1HangingChain.html#a350bfcb1e3cfb28ddff48ce525d4f139',1,'hanging_chain_dynamics.HangingChain.D()']]],
+  ['descent_5flemma_3',['descent_lemma',['../namespacealpaqa_1_1detail.html#a98f30fcdee84563938d29b8d7ec1cdf8',1,'alpaqa::detail::descent_lemma(const ObjFunT &amp;ψ, const Box &amp;C, real_t rounding_tolerance, real_t L_max, crvec xₖ, real_t ψₖ, crvec grad_ψₖ, rvec x̂ₖ, rvec pₖ, real_t &amp;ψx̂ₖ, real_t &amp;norm_sq_pₖ, real_t &amp;grad_ψₖᵀpₖ, real_t &amp;Lₖ, real_t &amp;γₖ)'],['../namespacealpaqa_1_1detail.html#a3e432963691339ba0588d90186008735',1,'alpaqa::detail::descent_lemma(const Problem &amp;problem, real_t rounding_tolerance, real_t L_max, crvec xₖ, real_t ψₖ, crvec grad_ψₖ, crvec y, crvec Σ, rvec x̂ₖ, rvec pₖ, rvec ŷx̂ₖ, real_t &amp;ψx̂ₖ, real_t &amp;norm_sq_pₖ, real_t &amp;grad_ψₖᵀpₖ, real_t &amp;Lₖ, real_t &amp;γₖ)']]],
+  ['dest_4',['dest',['../namespacebicycle-obstacle-avoidance-mpc.html#ab0bede79c5f4cbed9c2cd932a0ace201',1,'bicycle-obstacle-avoidance-mpc']]],
+  ['diag_5',['Diag',['../structalpaqa_1_1problems_1_1RiskaverseProblem.html#a566a6423323edb6fea4fa782860c8521',1,'alpaqa::problems::RiskaverseProblem']]],
+  ['difference_5ftype_6',['difference_type',['../structalpaqa_1_1CircularIndexIterator.html#ace405568d0b2f3fad4990044252c7732',1,'alpaqa::CircularIndexIterator::difference_type()'],['../structalpaqa_1_1ReverseCircularIndexIterator.html#ace405568d0b2f3fad4990044252c7732',1,'alpaqa::ReverseCircularIndexIterator::difference_type()']]],
+  ['dim_7',['dim',['../namespacealpaqa.html#a5b246a8d61741c364da85dd897e8225e',1,'alpaqa::dim()'],['../namespacehanging-chain-mpc.html#a70b5e28b5bc3d1b63a7435c5fe50b837',1,'hanging-chain-mpc.dim()'],['../classhanging__chain__dynamics_1_1HangingChain.html#ae6fa959b9e8f9c638e0d82bf2c7dc5e7',1,'hanging_chain_dynamics.HangingChain.dim()']]],
+  ['dims_8',['dims',['../namespacealpaqa.html#a9c2f2a22463098d4153281f212a1069e',1,'alpaqa']]],
+  ['dir_9',['Dir',['../classalpaqa_1_1test_1_1Dir.html',1,'alpaqa::test']]],
+  ['direction_10',['direction',['../structalpaqa_1_1PANOCDirection_3_01PolymorphicPANOCDirectionBase_01_4.html#a41cc8e2470728eec96a87f20a225b0da',1,'alpaqa::PANOCDirection&lt; PolymorphicPANOCDirectionBase &gt;']]],
+  ['direction_5fprovider_11',['direction_provider',['../classalpaqa_1_1PolymorphicPANOCDirection.html#ab223671bd7ea54a519b4bfd4353b3439',1,'alpaqa::PolymorphicPANOCDirection::direction_provider()'],['../classalpaqa_1_1PANOCSolver.html#ab223671bd7ea54a519b4bfd4353b3439',1,'alpaqa::PANOCSolver::direction_provider()']]],
+  ['directionprovider_12',['DirectionProvider',['../classalpaqa_1_1PolymorphicPANOCDirection.html#a76f2443687523ac6b8e9d78703eec4f4',1,'alpaqa::PolymorphicPANOCDirection::DirectionProvider()'],['../classalpaqa_1_1PANOCSolver.html#a76f2443687523ac6b8e9d78703eec4f4',1,'alpaqa::PANOCSolver::DirectionProvider()']]],
+  ['directionptr_13',['DirectionPtr',['../structalpaqa_1_1PANOCDirection_3_01PolymorphicPANOCDirectionBase_01_4.html#ae01781cedc051a78fa9132ea4f85a2d0',1,'alpaqa::PANOCDirection&lt; PolymorphicPANOCDirectionBase &gt;']]],
+  ['dist_5fsquared_14',['dist_squared',['../namespacealpaqa.html#ad0cdf210b4e36a43a6d7f7a4a975d9f1',1,'alpaqa::dist_squared(crvec v, const Box &amp;box)'],['../namespacealpaqa.html#afbb5293539f52dbdf340e2543bea918d',1,'alpaqa::dist_squared(crvec v, const Box &amp;box, crvec Σ)']]],
+  ['dlfun_15',['dlfun',['../classalpaqa_1_1CUTEstLoader.html#a91f210b0697f983d4c2ead3f99b23ac9',1,'alpaqa::CUTEstLoader']]],
+  ['dwork_16',['dwork',['../classCasADiFunctionEvaluator.html#af4d8d5e17cf655be1856ca7b652d69c7',1,'CasADiFunctionEvaluator']]],
+  ['dynamics_17',['dynamics',['../classhanging__chain__dynamics_1_1HangingChain.html#a2e4d9874164cfa87334b099f3ce1f288',1,'hanging_chain_dynamics::HangingChain']]],
+  ['lbfgs_2ehpp_18',['lbfgs.hpp',['../decl_2lbfgs_8hpp.html',1,'']]],
+  ['second_2dorder_2dpanoc_2ehpp_19',['second-order-panoc.hpp',['../decl_2second-order-panoc_8hpp.html',1,'']]],
+  ['specialized_2dlbfgs_2ehpp_20',['specialized-lbfgs.hpp',['../decl_2specialized-lbfgs_8hpp.html',1,'']]],
+  ['structured_2dpanoc_2dlbfgs_2ehpp_21',['structured-panoc-lbfgs.hpp',['../decl_2structured-panoc-lbfgs_8hpp.html',1,'']]]
+];

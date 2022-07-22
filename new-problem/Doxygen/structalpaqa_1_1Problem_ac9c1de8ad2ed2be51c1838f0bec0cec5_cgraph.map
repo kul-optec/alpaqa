@@ -1,0 +1,7 @@
+<map id="eval_f_grad_f_g" name="eval_f_grad_f_g">
+<area shape="rect" id="node1" title="Evaluate , its gradient &#160;and ." alt="" coords="5,56,131,83"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#a77860f4adb333acb7a3bb46308ff83e2" title="Evaluate both &#160;and its gradient, ." alt="" coords="179,31,289,57"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#acdf5c7c7f249c05d53643e1715070f45" title="Function that evaluates the constraints, ." alt="" coords="201,81,267,108"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#ae28e48d73d853a238c00ecceb16900d6" title="Function that evaluates the cost, ." alt="" coords="355,5,418,32"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1Problem.html#aba98edc04bad2e0a3ad6645991cd7535" title="Function that evaluates the gradient of the cost, ." alt="" coords="337,56,436,83"/>
+</map>

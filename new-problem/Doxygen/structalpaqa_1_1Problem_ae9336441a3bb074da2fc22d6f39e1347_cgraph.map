@@ -1,0 +1,9 @@
+<map id="eval_ψ_ŷ" name="eval_ψ_ŷ">
+<area shape="rect" id="node1" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="5,70,87,97"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#a402f4f8ea8905d81d911404a59ae5eeb" title="Given g(x), compute the intermediate results ŷ and dᵀŷ that can later be used to compute ψ(x) and ∇ψ(..." alt="" coords="135,15,225,42"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#ae28e48d73d853a238c00ecceb16900d6" title="Function that evaluates the cost, ." alt="" coords="311,71,374,98"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1Problem.html#ab0e71914b849242cd710193000401e60" title="Evaluate both &#160;and ." alt="" coords="141,121,219,147"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="273,5,412,47"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="460,13,579,39"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1Problem.html#acdf5c7c7f249c05d53643e1715070f45" title="Function that evaluates the constraints, ." alt="" coords="310,122,375,149"/>
+</map>

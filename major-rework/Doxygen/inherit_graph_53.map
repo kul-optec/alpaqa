@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classalpaqa_1_1ProblemBase.html" title=" " alt="" coords="5,35,173,61"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1Problem.html" title=" " alt="" coords="221,35,416,61"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1CasADiProblem.html" title=" " alt="" coords="464,5,647,32"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1FunctionalProblem.html" title="Problem class that allows specifying the basic functions as C++ std::functions." alt="" coords="479,57,632,98"/>
+</map>

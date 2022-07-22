@@ -1,0 +1,9 @@
+<map id="project" name="project">
+<area shape="rect" id="node1" title="Project a vector onto a box." alt="" coords="531,71,597,98"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#abbe7a9499d34168ba294d9737ab1516d" title="Calculate the error between ẑ and g(x)." alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#ac54de32700e16d54a9e333360ba0f5b8" title="Get the distance squared between the given vector and its projection in the Σ norm." alt="" coords="323,71,428,98"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#a0aa3a21307a2b125ccd70ac4265c4446" title="Get the difference between the given vector and its projection." alt="" coords="296,122,455,149"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a53c2d9b7ad10df5a3c836506b3b65d6b" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="5,56,220,97"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#ad8b1a455a3b6ad5e25fe20cfccec279b" title="Get the distance squared between the given vector and its projection." alt="" coords="60,122,165,149"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1ProblemBase.html#a19f7ebb13a34619d27b9e82c2b4cf099" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="33,173,193,215"/>
+</map>

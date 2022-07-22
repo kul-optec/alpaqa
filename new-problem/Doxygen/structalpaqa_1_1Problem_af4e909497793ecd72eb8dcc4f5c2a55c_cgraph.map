@@ -1,0 +1,12 @@
+<map id="eval_grad_ψ" name="eval_grad_ψ">
+<area shape="rect" id="node1" title="Calculate the gradient ∇ψ(x)." alt="" coords="5,89,108,115"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#a402f4f8ea8905d81d911404a59ae5eeb" title="Given g(x), compute the intermediate results ŷ and dᵀŷ that can later be used to compute ψ(x) and ∇ψ(..." alt="" coords="188,13,279,39"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#acdf5c7c7f249c05d53643e1715070f45" title="Function that evaluates the constraints, ." alt="" coords="201,63,266,90"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1Problem.html#aba98edc04bad2e0a3ad6645991cd7535" title="Function that evaluates the gradient of the cost, ." alt="" coords="798,165,897,191"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1Problem.html#ae6bb0ad523f5d6eae2c76bba0523c208" title="Calculate ∇ψ(x) using ŷ." alt="" coords="156,165,311,191"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="359,5,497,47"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="579,13,697,39"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1Problem.html#a5f0f7f91b5bd3732b02700627e9a8558" title="Evaluate the gradient of the Lagrangian ." alt="" coords="378,215,478,242"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1Problem.html#a6f4989c25256ca477442ef34ae1c6b7f" title="Evaluate both &#160;and ." alt="" coords="545,215,731,242"/>
+<area shape="rect" id="node10" href="$structalpaqa_1_1Problem.html#ab3ddf22ddba40c16ab196c1371405ea0" title="Function that evaluates the gradient of the constraints times a vector, ." alt="" coords="779,215,916,242"/>
+</map>

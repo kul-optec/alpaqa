@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['main_2ecpp_0',['main.cpp',['../Presentation_2Cpp_2main_8cpp.html',1,'']]],
+  ['panoc_2ddirection_2dupdate_2ehpp_1',['panoc-direction-update.hpp',['../panoc-direction-update_8hpp.html',1,'']]],
+  ['panoc_2dhelpers_2ehpp_2',['panoc-helpers.hpp',['../panoc-helpers_8hpp.html',1,'']]],
+  ['panoc_2dhelpers_2etpp_3',['panoc-helpers.tpp',['../panoc-helpers_8tpp.html',1,'']]],
+  ['panoc_2dstop_2dcrit_2ecpp_4',['panoc-stop-crit.cpp',['../panoc-stop-crit_8cpp.html',1,'']]],
+  ['panoc_2dstop_2dcrit_2ehpp_5',['panoc-stop-crit.hpp',['../panoc-stop-crit_8hpp.html',1,'']]],
+  ['panoc_2ecpp_6',['panoc.cpp',['../panoc_8cpp.html',1,'']]],
+  ['panoc_2ehpp_7',['panoc.hpp',['../panoc_8hpp.html',1,'']]],
+  ['panoc_2etpp_8',['panoc.tpp',['../panoc_8tpp.html',1,'']]],
+  ['print_2ecpp_9',['print.cpp',['../print_8cpp.html',1,'']]],
+  ['print_2ehpp_10',['print.hpp',['../print_8hpp.html',1,'']]],
+  ['print_2etpp_11',['print.tpp',['../print_8tpp.html',1,'']]],
+  ['problem_2dcounters_2ecpp_12',['problem-counters.cpp',['../problem-counters_8cpp.html',1,'']]],
+  ['problem_2dcounters_2ehpp_13',['problem-counters.hpp',['../problem-counters_8hpp.html',1,'']]],
+  ['problem_2ecpp_14',['problem.cpp',['../problem_8cpp.html',1,'']]],
+  ['problem_2ehpp_15',['problem.hpp',['../problem_8hpp.html',1,'']]],
+  ['problem_2etpp_16',['problem.tpp',['../problem_8tpp.html',1,'']]]
+];

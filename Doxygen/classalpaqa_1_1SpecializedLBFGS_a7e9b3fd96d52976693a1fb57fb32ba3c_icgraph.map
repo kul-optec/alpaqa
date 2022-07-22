@@ -1,0 +1,11 @@
+<map id="g" name="g">
+<area shape="rect" id="node1" title=" " alt="" coords="751,146,789,173"/>
+<area shape="rect" id="node2" href="$classhanging__chain__dynamics_1_1HangingChain.html#a2e4d9874164cfa87334b099f3ce1f288" title=" " alt="" coords="459,29,703,71"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SpecializedLBFGS.html#a0b030867dbee1f90710a9b23360807a3" title="L&#45;BFGS update when changing the step size γ, recomputing everything." alt="" coords="533,146,628,173"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1SpecializedLBFGS.html#a3606f78438b923b36f682fb1f91764d7" title="Initialize with the starting point x₀ and the gradient in that point." alt="" coords="541,95,620,122"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1SpecializedLBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="553,197,608,223"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1SpecializedLBFGS.html#a5a4a6bc855faa7998e2308d5e6d10224" title="Standard L&#45;BFGS update without changing the step size γ." alt="" coords="515,247,646,274"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1SpecializedLBFGS.html#a747b26091f869cb17a768e38f17fbc8d" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="288,203,355,230"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a39a241c049e8d029cc86a30a89ef92cf" title=" " alt="" coords="5,189,184,245"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a47b667371126ccfdb51898d979f2c786" title=" " alt="" coords="232,81,411,137"/>
+</map>

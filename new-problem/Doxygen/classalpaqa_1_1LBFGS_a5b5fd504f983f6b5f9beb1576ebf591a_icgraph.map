@@ -1,0 +1,10 @@
+<map id="history" name="history">
+<area shape="rect" id="node1" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="747,147,813,174"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="640,71,699,98"/>
+<area shape="rect" id="node5" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="65,147,215,174"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LBFGS.html#adeddc1e1eb8ce1c1bbaf931b6f9a5b9c" title="Scale the stored y vectors by the given factor." alt="" coords="422,223,493,250"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LBFGS.html#a0df701f7bb07249c37bcbf20d9c980fe" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="644,122,695,149"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#a92bf6e99eb0770f053457e48cc3a3435" title=" " alt="" coords="323,5,592,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="5,44,275,85"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LBFGS.html#a4db75f8c280c32a05a44bb83769befb1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="424,122,491,149"/>
+</map>

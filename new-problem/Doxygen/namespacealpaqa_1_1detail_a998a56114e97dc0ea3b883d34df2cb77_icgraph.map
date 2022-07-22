@@ -1,0 +1,8 @@
+<map id="calc_grad_ψ_from_ŷ" name="calc_grad_ψ_from_ŷ">
+<area shape="rect" id="node1" title="Calculate ∇ψ(x) using ŷ." alt="" coords="323,143,476,170"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1PANOCSolver.html#aaa9758a40bd362331202fb232b4bb7ae" title=" " alt="" coords="60,5,220,47"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="19,71,261,112"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="5,136,275,177"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="55,201,225,243"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1PGASolver.html#af516b794e244432023aea7ba3cd0d1d8" title=" " alt="" coords="65,267,215,308"/>
+</map>

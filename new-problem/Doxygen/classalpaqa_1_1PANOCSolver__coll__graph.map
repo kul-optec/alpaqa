@@ -1,0 +1,7 @@
+<map id="PANOCSolver&lt; DirectionProviderT &gt;" name="PANOCSolver&lt; DirectionProviderT &gt;">
+<area shape="rect" id="node1" title="PANOC solver for ALM." alt="" coords="163,505,422,685"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#structalpaqa_1_1PANOCParams" title="Tuning parameters for the PANOC algorithm." alt="" coords="75,189,295,443"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1LipschitzEstimateParams.html" title=" " alt="" coords="5,5,191,127"/>
+<area shape="rect" id="node4" title=" " alt="" coords="215,27,327,105"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1AtomicStopSignal.html" title=" " alt="" coords="319,233,482,399"/>
+</map>

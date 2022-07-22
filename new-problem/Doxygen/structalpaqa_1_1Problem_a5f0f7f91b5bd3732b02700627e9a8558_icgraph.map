@@ -1,0 +1,7 @@
+<map id="eval_grad_L" name="eval_grad_L">
+<area shape="rect" id="node1" title="Evaluate the gradient of the Lagrangian ." alt="" coords="573,81,673,108"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1Problem.html#ae6bb0ad523f5d6eae2c76bba0523c208" title="Calculate ∇ψ(x) using ŷ." alt="" coords="371,56,525,83"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="204,107,323,133"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="212,5,315,32"/>
+<area shape="rect" id="node4" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,56,156,83"/>
+</map>

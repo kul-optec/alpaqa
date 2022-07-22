@@ -1,0 +1,585 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - fe9d82851c800fce0522f74646b376e49e4b756b - src/include/alpaqa/inner/detail/panoc-helpers.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">src/include/alpaqa/inner/detail</a> - panoc-helpers.hpp<span style="font-size: 80%;"> (source / <a href="panoc-helpers.hpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">fe9d82851c800fce0522f74646b376e49e4b756b</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">110</td>
+            <td class="headerCovTableEntry">148</td>
+            <td class="headerCovTableEntryLo">74.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-11-06 20:16:50</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">15</td>
+            <td class="headerCovTableEntryMed">86.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #pragma once</a>
+<a name="2"><span class="lineNum">       2 </span>            : </a>
+<a name="3"><span class="lineNum">       3 </span>            : #include &lt;alpaqa/inner/decl/panoc-stop-crit.hpp&gt;</a>
+<a name="4"><span class="lineNum">       4 </span>            : #include &lt;alpaqa/util/atomic_stop_signal.hpp&gt;</a>
+<a name="5"><span class="lineNum">       5 </span>            : #include &lt;alpaqa/util/problem.hpp&gt;</a>
+<a name="6"><span class="lineNum">       6 </span>            : #include &lt;alpaqa/util/solverstatus.hpp&gt;</a>
+<a name="7"><span class="lineNum">       7 </span>            : </a>
+<a name="8"><span class="lineNum">       8 </span>            : #include &lt;stdexcept&gt;</a>
+<a name="9"><span class="lineNum">       9 </span>            : </a>
+<a name="10"><span class="lineNum">      10 </span>            : namespace alpaqa::detail {</a>
+<a name="11"><span class="lineNum">      11 </span>            : </a>
+<a name="12"><span class="lineNum">      12 </span>            : /// Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ.</a>
+<a name="13"><span class="lineNum">      13 </span>            : /// @f[ \psi(x^k) = f(x^k) + \frac{1}{2}</a>
+<a name="14"><span class="lineNum">      14 </span>            : /// \text{dist}_\Sigma^2\left(g(x^k) + \Sigma^{-1}y,\;D\right) @f]</a>
+<a name="15"><span class="lineNum">      15 </span>            : /// @f[ \hat{y}  @f]</a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">       1798 : inline real_t calc_ψ_ŷ(const Problem &amp;p, ///&lt; [in]  Problem description</span></a>
+<a name="17"><span class="lineNum">      17 </span>            :                        crvec x,          ///&lt; [in]  Decision variable @f$ x @f$</a>
+<a name="18"><span class="lineNum">      18 </span>            :                        crvec y, ///&lt; [in]  Lagrange multipliers @f$ y @f$</a>
+<a name="19"><span class="lineNum">      19 </span>            :                        crvec Σ, ///&lt; [in]  Penalty weights @f$ \Sigma @f$</a>
+<a name="20"><span class="lineNum">      20 </span>            :                        rvec ŷ   ///&lt; [out] @f$ \hat{y} @f$</a>
+<a name="21"><span class="lineNum">      21 </span>            : ) {</a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineCov">       1798 :     if (p.m == 0) /* [[unlikely]] */</span></a>
+<a name="23"><span class="lineNum">      23 </span><span class="lineCov">          9 :         return p.f(x);</span></a>
+<a name="24"><span class="lineNum">      24 </span>            : </a>
+<a name="25"><span class="lineNum">      25 </span>            :     // g(x)</a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineCov">       1789 :     p.g(x, ŷ);</span></a>
+<a name="27"><span class="lineNum">      27 </span>            :     // ζ = g(x) + Σ⁻¹y</a>
+<a name="28"><span class="lineNum">      28 </span><span class="lineCov">       1789 :     ŷ += Σ.asDiagonal().inverse() * y;</span></a>
+<a name="29"><span class="lineNum">      29 </span>            :     // d = ζ - Π(ζ, D)</a>
+<a name="30"><span class="lineNum">      30 </span><span class="lineCov">       1789 :     ŷ = projecting_difference(ŷ, p.D);</span></a>
+<a name="31"><span class="lineNum">      31 </span>            :     // dᵀŷ, ŷ = Σ d</a>
+<a name="32"><span class="lineNum">      32 </span><span class="lineCov">       1789 :     real_t dᵀŷ = 0;</span></a>
+<a name="33"><span class="lineNum">      33 </span><span class="lineCov">       8940 :     for (unsigned i = 0; i &lt; p.m; ++i) {</span></a>
+<a name="34"><span class="lineNum">      34 </span><span class="lineCov">       7151 :         dᵀŷ += ŷ(i) * Σ(i) * ŷ(i); // TODO: vectorize</span></a>
+<a name="35"><span class="lineNum">      35 </span><span class="lineCov">       7151 :         ŷ(i) = Σ(i) * ŷ(i);</span></a>
+<a name="36"><span class="lineNum">      36 </span><span class="lineCov">       7151 :     }</span></a>
+<a name="37"><span class="lineNum">      37 </span>            :     // ψ(x) = f(x) + ½ dᵀŷ</a>
+<a name="38"><span class="lineNum">      38 </span><span class="lineCov">       1789 :     real_t ψ = p.f(x) + 0.5 * dᵀŷ;</span></a>
+<a name="39"><span class="lineNum">      39 </span>            : </a>
+<a name="40"><span class="lineNum">      40 </span><span class="lineCov">       1789 :     return ψ;</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">       1798 : }</span></a>
+<a name="42"><span class="lineNum">      42 </span>            : </a>
+<a name="43"><span class="lineNum">      43 </span>            : /// Calculate ∇ψ(x) using ŷ.</a>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">       1394 : inline void calc_grad_ψ_from_ŷ(const Problem &amp;p, ///&lt; [in]  Problem description</span></a>
+<a name="45"><span class="lineNum">      45 </span>            :                                crvec x, ///&lt; [in]  Decision variable @f$ x @f$</a>
+<a name="46"><span class="lineNum">      46 </span>            :                                crvec ŷ, ///&lt; [in]  @f$ \hat{y} @f$</a>
+<a name="47"><span class="lineNum">      47 </span>            :                                rvec grad_ψ, ///&lt; [out] @f$ \nabla \psi(x) @f$</a>
+<a name="48"><span class="lineNum">      48 </span>            :                                rvec work_n  ///&lt;       Dimension n</a>
+<a name="49"><span class="lineNum">      49 </span>            : ) {</a>
+<a name="50"><span class="lineNum">      50 </span>            :     // ∇ψ = ∇f(x) + ∇g(x) ŷ</a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">       1394 :     p.grad_f(x, grad_ψ);</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">       1394 :     if (p.m != 0) /* [[likely]] */ {</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">       1385 :         p.grad_g_prod(x, ŷ, work_n);</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">       1385 :         grad_ψ += work_n;</span></a>
+<a name="55"><span class="lineNum">      55 </span><span class="lineCov">       1385 :     }</span></a>
+<a name="56"><span class="lineNum">      56 </span><span class="lineCov">       1394 : }</span></a>
+<a name="57"><span class="lineNum">      57 </span>            : </a>
+<a name="58"><span class="lineNum">      58 </span>            : /// Calculate both ψ(x) and its gradient ∇ψ(x).</a>
+<a name="59"><span class="lineNum">      59 </span>            : /// @f[ \psi(x^k) = f(x^k) + \frac{1}{2}</a>
+<a name="60"><span class="lineNum">      60 </span>            : /// \text{dist}_\Sigma^2\left(g(x^k) + \Sigma^{-1}y,\;D\right) @f]</a>
+<a name="61"><span class="lineNum">      61 </span>            : /// @f[ \nabla \psi(x) = \nabla f(x) + \nabla g(x)\ \hat{y}(x) @f]</a>
+<a name="62"><span class="lineNum">      62 </span><span class="lineCov">        813 : inline real_t calc_ψ_grad_ψ(const Problem &amp;p, ///&lt; [in]  Problem description</span></a>
+<a name="63"><span class="lineNum">      63 </span>            :                             crvec x, ///&lt; [in]  Decision variable @f$ x @f$</a>
+<a name="64"><span class="lineNum">      64 </span>            :                             crvec y, ///&lt; [in]  Lagrange multipliers @f$ y @f$</a>
+<a name="65"><span class="lineNum">      65 </span>            :                             crvec Σ, ///&lt; [in]  Penalty weights @f$ \Sigma @f$</a>
+<a name="66"><span class="lineNum">      66 </span>            :                             rvec grad_ψ, ///&lt; [out] @f$ \nabla \psi(x) @f$</a>
+<a name="67"><span class="lineNum">      67 </span>            :                             rvec work_n, ///&lt;       Dimension n</a>
+<a name="68"><span class="lineNum">      68 </span>            :                             rvec work_m  ///&lt;       Dimension m</a>
+<a name="69"><span class="lineNum">      69 </span>            : ) {</a>
+<a name="70"><span class="lineNum">      70 </span>            :     // ψ(x) = f(x) + ½ dᵀŷ</a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineCov">        813 :     real_t ψ = calc_ψ_ŷ(p, x, y, Σ, work_m);</span></a>
+<a name="72"><span class="lineNum">      72 </span>            :     // ∇ψ = ∇f(x) + ∇g(x) ŷ</a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">        813 :     calc_grad_ψ_from_ŷ(p, x, work_m, grad_ψ, work_n);</span></a>
+<a name="74"><span class="lineNum">      74 </span><span class="lineCov">       1626 :     return ψ;</span></a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineCov">        813 : }</span></a>
+<a name="76"><span class="lineNum">      76 </span>            : </a>
+<a name="77"><span class="lineNum">      77 </span>            : /// Calculate the gradient ∇ψ(x).</a>
+<a name="78"><span class="lineNum">      78 </span>            : /// @f[ \nabla \psi(x) = \nabla f(x) + \nabla g(x)\ \hat{y}(x) @f]</a>
+<a name="79"><span class="lineNum">      79 </span><span class="lineCov">         41 : inline void calc_grad_ψ(const Problem &amp;p, ///&lt; [in]  Problem description</span></a>
+<a name="80"><span class="lineNum">      80 </span>            :                         crvec x,          ///&lt; [in]  Decision variable @f$ x @f$</a>
+<a name="81"><span class="lineNum">      81 </span>            :                         crvec y,     ///&lt; [in]  Lagrange multipliers @f$ y @f$</a>
+<a name="82"><span class="lineNum">      82 </span>            :                         crvec Σ,     ///&lt; [in]  Penalty weights @f$ \Sigma @f$</a>
+<a name="83"><span class="lineNum">      83 </span>            :                         rvec grad_ψ, ///&lt; [out] @f$ \nabla \psi(x) @f$</a>
+<a name="84"><span class="lineNum">      84 </span>            :                         rvec work_n, ///&lt;       Dimension n</a>
+<a name="85"><span class="lineNum">      85 </span>            :                         rvec work_m  ///&lt;       Dimension m</a>
+<a name="86"><span class="lineNum">      86 </span>            : ) {</a>
+<a name="87"><span class="lineNum">      87 </span><span class="lineCov">         41 :     if (p.m == 0) /* [[unlikely]] */</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineCov">          4 :         return p.grad_f(x, grad_ψ);</span></a>
+<a name="89"><span class="lineNum">      89 </span>            : </a>
+<a name="90"><span class="lineNum">      90 </span>            :     // g(x)</a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineCov">         37 :     p.g(x, work_m);</span></a>
+<a name="92"><span class="lineNum">      92 </span>            :     // ζ = g(x) + Σ⁻¹y</a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         37 :     work_m += (y.array() / Σ.array()).matrix();</span></a>
+<a name="94"><span class="lineNum">      94 </span>            :     // d = ζ - Π(ζ, D)</a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineCov">         37 :     work_m = projecting_difference(work_m, p.D);</span></a>
+<a name="96"><span class="lineNum">      96 </span>            :     // ŷ = Σ d</a>
+<a name="97"><span class="lineNum">      97 </span><span class="lineCov">         37 :     work_m = Σ.asDiagonal() * work_m;</span></a>
+<a name="98"><span class="lineNum">      98 </span>            : </a>
+<a name="99"><span class="lineNum">      99 </span>            :     // ∇ψ = ∇f(x) + ∇g(x) ŷ</a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         37 :     p.grad_f(x, grad_ψ);</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineCov">         37 :     p.grad_g_prod(x, work_m, work_n);</span></a>
+<a name="102"><span class="lineNum">     102 </span><span class="lineCov">         37 :     grad_ψ += work_n;</span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">         41 : }</span></a>
+<a name="104"><span class="lineNum">     104 </span>            : </a>
+<a name="105"><span class="lineNum">     105 </span>            : /// Calculate the error between ẑ and g(x).</a>
+<a name="106"><span class="lineNum">     106 </span>            : /// @f[ \hat{z}^k = \Pi_D\left(g(x^k) + \Sigma^{-1}y\right) @f]</a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">         33 : inline void calc_err_z(const Problem &amp;p, ///&lt; [in]  Problem description</span></a>
+<a name="108"><span class="lineNum">     108 </span>            :                        crvec x̂,   ///&lt; [in]  Decision variable @f$ \hat{x} @f$</a>
+<a name="109"><span class="lineNum">     109 </span>            :                        crvec y,   ///&lt; [in]  Lagrange multipliers @f$ y @f$</a>
+<a name="110"><span class="lineNum">     110 </span>            :                        crvec Σ,   ///&lt; [in]  Penalty weights @f$ \Sigma @f$</a>
+<a name="111"><span class="lineNum">     111 </span>            :                        rvec err_z ///&lt; [out] @f$ g(\hat{x}) - \hat{z} @f$</a>
+<a name="112"><span class="lineNum">     112 </span>            : ) {</a>
+<a name="113"><span class="lineNum">     113 </span>            :     // g(x̂)</a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineCov">         33 :     p.g(x̂, err_z);</span></a>
+<a name="115"><span class="lineNum">     115 </span>            :     // ζ = g(x̂) + Σ⁻¹y</a>
+<a name="116"><span class="lineNum">     116 </span>            :     // ẑ = Π(ζ, D)</a>
+<a name="117"><span class="lineNum">     117 </span>            :     // g(x) - ẑ</a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineCov">         33 :     err_z = err_z - project(err_z + Σ.asDiagonal().inverse() * y, p.D);</span></a>
+<a name="119"><span class="lineNum">     119 </span>            :     // TODO: catastrophic cancellation?</a>
+<a name="120"><span class="lineNum">     120 </span><span class="lineCov">         33 : }</span></a>
+<a name="121"><span class="lineNum">     121 </span>            : </a>
+<a name="122"><span class="lineNum">     122 </span>            : /**</a>
+<a name="123"><span class="lineNum">     123 </span>            :  * Projected gradient step</a>
+<a name="124"><span class="lineNum">     124 </span>            :  * @f[ \begin{aligned} </a>
+<a name="125"><span class="lineNum">     125 </span>            :  * \hat{x}^k &amp;= T_{\gamma^k}\left(x^k\right) \\ </a>
+<a name="126"><span class="lineNum">     126 </span>            :  * &amp;= \Pi_C\left(x^k - \gamma^k \nabla \psi(x^k)\right) \\ </a>
+<a name="127"><span class="lineNum">     127 </span>            :  * p^k &amp;= \hat{x}^k - x^k \\ </a>
+<a name="128"><span class="lineNum">     128 </span>            :  * \end{aligned} @f]</a>
+<a name="129"><span class="lineNum">     129 </span>            :  */</a>
+<a name="130"><span class="lineNum">     130 </span>            : inline auto</a>
+<a name="131"><span class="lineNum">     131 </span><span class="lineCov">     521072 : projected_gradient_step(const Box &amp;C, ///&lt; [in]  Set to project onto</span></a>
+<a name="132"><span class="lineNum">     132 </span>            :                         real_t γ,     ///&lt; [in]  Step size</a>
+<a name="133"><span class="lineNum">     133 </span>            :                         crvec x,      ///&lt; [in]  Decision variable @f$ x @f$</a>
+<a name="134"><span class="lineNum">     134 </span>            :                         crvec grad_ψ  ///&lt; [in]  @f$ \nabla \psi(x^k) @f$</a>
+<a name="135"><span class="lineNum">     135 </span>            : ) {</a>
+<a name="136"><span class="lineNum">     136 </span>            :     using binary_real_f = real_t (*)(real_t, real_t);</a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineCov">    1563216 :     return (-γ * grad_ψ)</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineCov">     521072 :         .binaryExpr(C.lowerbound - x, binary_real_f(std::fmax))</span></a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">     521072 :         .binaryExpr(C.upperbound - x, binary_real_f(std::fmin));</span></a>
+<a name="140"><span class="lineNum">     140 </span>            : }</a>
+<a name="141"><span class="lineNum">     141 </span>            : </a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">        983 : inline void calc_x̂(const Problem &amp;prob, ///&lt; [in]  Problem description</span></a>
+<a name="143"><span class="lineNum">     143 </span>            :                    real_t γ,            ///&lt; [in]  Step size</a>
+<a name="144"><span class="lineNum">     144 </span>            :                    crvec x,             ///&lt; [in]  Decision variable @f$ x @f$</a>
+<a name="145"><span class="lineNum">     145 </span>            :                    crvec grad_ψ,        ///&lt; [in]  @f$ \nabla \psi(x^k) @f$</a>
+<a name="146"><span class="lineNum">     146 </span>            :                    rvec x̂, ///&lt; [out] @f$ \hat{x}^k = T_{\gamma^k}(x^k) @f$</a>
+<a name="147"><span class="lineNum">     147 </span>            :                    rvec p  ///&lt; [out] @f$ \hat{x}^k - x^k @f$</a>
+<a name="148"><span class="lineNum">     148 </span>            : ) {</a>
+<a name="149"><span class="lineNum">     149 </span><span class="lineCov">        983 :     p = projected_gradient_step(prob.C, γ, x, grad_ψ);</span></a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineCov">        983 :     x̂ = x + p;</span></a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineCov">        983 : }</span></a>
+<a name="152"><span class="lineNum">     152 </span>            : </a>
+<a name="153"><span class="lineNum">     153 </span><span class="lineCov">         31 : inline bool stop_crit_requires_grad_̂ψₖ(PANOCStopCrit crit) {</span></a>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">         31 :     switch (crit) {</span></a>
+<a name="155"><span class="lineNum">     155 </span>            :         case PANOCStopCrit::ApproxKKT: [[fallthrough]];</a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">         31 :         case PANOCStopCrit::ApproxKKT2: return true;</span></a>
+<a name="157"><span class="lineNum">     157 </span>            :         case PANOCStopCrit::ProjGradNorm: [[fallthrough]];</a>
+<a name="158"><span class="lineNum">     158 </span>            :         case PANOCStopCrit::ProjGradNorm2: [[fallthrough]];</a>
+<a name="159"><span class="lineNum">     159 </span>            :         case PANOCStopCrit::ProjGradUnitNorm: [[fallthrough]];</a>
+<a name="160"><span class="lineNum">     160 </span>            :         case PANOCStopCrit::ProjGradUnitNorm2: [[fallthrough]];</a>
+<a name="161"><span class="lineNum">     161 </span>            :         case PANOCStopCrit::FPRNorm: [[fallthrough]];</a>
+<a name="162"><span class="lineNum">     162 </span><span class="lineNoCov">          0 :         case PANOCStopCrit::FPRNorm2: return false;</span></a>
+<a name="163"><span class="lineNum">     163 </span><span class="lineNoCov">          0 :         case PANOCStopCrit::Ipopt: return true;</span></a>
+<a name="164"><span class="lineNum">     164 </span>            :     }</a>
+<a name="165"><span class="lineNum">     165 </span><span class="lineNoCov">          0 :     throw std::out_of_range(&quot;Invalid PANOCStopCrit&quot;);</span></a>
+<a name="166"><span class="lineNum">     166 </span><span class="lineCov">         31 : }</span></a>
+<a name="167"><span class="lineNum">     167 </span>            : </a>
+<a name="168"><span class="lineNum">     168 </span>            : /// Compute the ε from the stopping criterion, see @ref PANOCStopCrit.</a>
+<a name="169"><span class="lineNum">     169 </span><span class="lineCov">     200599 : inline real_t calc_error_stop_crit(</span></a>
+<a name="170"><span class="lineNum">     170 </span>            :     const Box &amp;C,       ///&lt; [in]  Box constraints on x</a>
+<a name="171"><span class="lineNum">     171 </span>            :     PANOCStopCrit crit, ///&lt; [in]  What stoppint criterion to use</a>
+<a name="172"><span class="lineNum">     172 </span>            :     crvec pₖ,      ///&lt; [in]  Projected gradient step @f$ \hat x^k - x^k @f$</a>
+<a name="173"><span class="lineNum">     173 </span>            :     real_t γ,      ///&lt; [in]  Step size</a>
+<a name="174"><span class="lineNum">     174 </span>            :     crvec xₖ,      ///&lt; [in]  Current iterate</a>
+<a name="175"><span class="lineNum">     175 </span>            :     crvec x̂ₖ,      ///&lt; [in]  Current iterate after projected gradient step</a>
+<a name="176"><span class="lineNum">     176 </span>            :     crvec ŷₖ,      ///&lt; [in]  Candidate Lagrange multipliers</a>
+<a name="177"><span class="lineNum">     177 </span>            :     crvec grad_ψₖ, ///&lt; [in]  Gradient in @f$ x^k @f$</a>
+<a name="178"><span class="lineNum">     178 </span>            :     crvec grad_̂ψₖ  ///&lt; [in]  Gradient in @f$ \hat x^k @f$</a>
+<a name="179"><span class="lineNum">     179 </span>            : ) {</a>
+<a name="180"><span class="lineNum">     180 </span><span class="lineCov">     200599 :     switch (crit) {</span></a>
+<a name="181"><span class="lineNum">     181 </span>            :         case PANOCStopCrit::ApproxKKT: {</a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineCov">     200599 :             auto err = (1 / γ) * pₖ + (grad_ψₖ - grad_̂ψₖ);</span></a>
+<a name="183"><span class="lineNum">     183 </span>            :             // These parentheses     ^^^               ^^^     are important to</a>
+<a name="184"><span class="lineNum">     184 </span>            :             // prevent catastrophic cancellation when the step is small</a>
+<a name="185"><span class="lineNum">     185 </span><span class="lineCov">     200599 :             return vec_util::norm_inf(err);</span></a>
+<a name="186"><span class="lineNum">     186 </span><span class="lineCov">     200599 :         }</span></a>
+<a name="187"><span class="lineNum">     187 </span>            :         case PANOCStopCrit::ApproxKKT2: {</a>
+<a name="188"><span class="lineNum">     188 </span><span class="lineNoCov">          0 :             auto err = (1 / γ) * pₖ + (grad_ψₖ - grad_̂ψₖ);</span></a>
+<a name="189"><span class="lineNum">     189 </span>            :             // These parentheses     ^^^               ^^^     are important to</a>
+<a name="190"><span class="lineNum">     190 </span>            :             // prevent catastrophic cancellation when the step is small</a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineNoCov">          0 :             return err.norm();</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineNoCov">          0 :         }</span></a>
+<a name="193"><span class="lineNum">     193 </span>            :         case PANOCStopCrit::ProjGradNorm: {</a>
+<a name="194"><span class="lineNum">     194 </span><span class="lineNoCov">          0 :             return vec_util::norm_inf(pₖ);</span></a>
+<a name="195"><span class="lineNum">     195 </span>            :         }</a>
+<a name="196"><span class="lineNum">     196 </span>            :         case PANOCStopCrit::ProjGradNorm2: {</a>
+<a name="197"><span class="lineNum">     197 </span><span class="lineNoCov">          0 :             return pₖ.norm();</span></a>
+<a name="198"><span class="lineNum">     198 </span>            :         }</a>
+<a name="199"><span class="lineNum">     199 </span>            :         case PANOCStopCrit::ProjGradUnitNorm: {</a>
+<a name="200"><span class="lineNum">     200 </span><span class="lineNoCov">          0 :             return vec_util::norm_inf(</span></a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineNoCov">          0 :                 projected_gradient_step(C, 1, xₖ, grad_ψₖ));</span></a>
+<a name="202"><span class="lineNum">     202 </span>            :         }</a>
+<a name="203"><span class="lineNum">     203 </span>            :         case PANOCStopCrit::ProjGradUnitNorm2: {</a>
+<a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :             return projected_gradient_step(C, 1, xₖ, grad_ψₖ).norm();</span></a>
+<a name="205"><span class="lineNum">     205 </span>            :         }</a>
+<a name="206"><span class="lineNum">     206 </span>            :         case PANOCStopCrit::FPRNorm: {</a>
+<a name="207"><span class="lineNum">     207 </span><span class="lineNoCov">          0 :             return vec_util::norm_inf(pₖ) / γ;</span></a>
+<a name="208"><span class="lineNum">     208 </span>            :         }</a>
+<a name="209"><span class="lineNum">     209 </span>            :         case PANOCStopCrit::FPRNorm2: {</a>
+<a name="210"><span class="lineNum">     210 </span><span class="lineNoCov">          0 :             return pₖ.norm() / γ;</span></a>
+<a name="211"><span class="lineNum">     211 </span>            :         }</a>
+<a name="212"><span class="lineNum">     212 </span>            :         case PANOCStopCrit::Ipopt: {</a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineNoCov">          0 :             auto err =</span></a>
+<a name="214"><span class="lineNum">     214 </span><span class="lineNoCov">          0 :                 vec_util::norm_inf(projected_gradient_step(C, 1, x̂ₖ, grad_̂ψₖ));</span></a>
+<a name="215"><span class="lineNum">     215 </span><span class="lineNoCov">          0 :             auto n = 2 * (ŷₖ.size() + x̂ₖ.size());</span></a>
+<a name="216"><span class="lineNum">     216 </span><span class="lineNoCov">          0 :             if (n == 0)</span></a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineNoCov">          0 :                 return err;</span></a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineNoCov">          0 :             auto C_lagr_mult =</span></a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineNoCov">          0 :                 vec_util::norm_1(projecting_difference(x̂ₖ - grad_̂ψₖ, C));</span></a>
+<a name="220"><span class="lineNum">     220 </span><span class="lineNoCov">          0 :             auto D_lagr_mult   = vec_util::norm_1(ŷₖ);</span></a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineNoCov">          0 :             const real_t s_max = 100;</span></a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineNoCov">          0 :             real_t s_d =</span></a>
+<a name="223"><span class="lineNum">     223 </span><span class="lineNoCov">          0 :                 std::max(s_max, (C_lagr_mult + D_lagr_mult) / n) / s_max;</span></a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineNoCov">          0 :             return err / s_d;</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :         }</span></a>
+<a name="226"><span class="lineNum">     226 </span>            :     }</a>
+<a name="227"><span class="lineNum">     227 </span><span class="lineNoCov">          0 :     throw std::out_of_range(&quot;Invalid PANOCStopCrit&quot;);</span></a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineCov">     200599 : }</span></a>
+<a name="229"><span class="lineNum">     229 </span>            : </a>
+<a name="230"><span class="lineNum">     230 </span>            : /// Increase the estimate of the Lipschitz constant of the objective gradient</a>
+<a name="231"><span class="lineNum">     231 </span>            : /// and decrease the step size until quadratic upper bound or descent lemma is</a>
+<a name="232"><span class="lineNum">     232 </span>            : /// satisfied:</a>
+<a name="233"><span class="lineNum">     233 </span>            : /// @f[ \psi(x + p) \le \psi(x) + \nabla\psi(x)^\top p + \frac{L}{2} \|p\|^2 @f]</a>
+<a name="234"><span class="lineNum">     234 </span>            : /// The projected gradient iterate @f$ \hat x^k @f$ and step @f$ p^k @f$ are</a>
+<a name="235"><span class="lineNum">     235 </span>            : /// updated with the new step size @f$ \gamma^k @f$, and so are other quantities</a>
+<a name="236"><span class="lineNum">     236 </span>            : /// that depend on them, such as @f$ \nabla\psi(x^k)^\top p^k @f$ and</a>
+<a name="237"><span class="lineNum">     237 </span>            : /// @f$ \|p\|^2 @f$. The intermediate vector @f$ \hat y(x^k) @f$ can be used to</a>
+<a name="238"><span class="lineNum">     238 </span>            : /// compute the gradient @f$ \nabla\psi(\hat x^k) @f$ or to update the Lagrange</a>
+<a name="239"><span class="lineNum">     239 </span>            : /// multipliers.</a>
+<a name="240"><span class="lineNum">     240 </span>            : ///</a>
+<a name="241"><span class="lineNum">     241 </span>            : /// @return The original step size, before it was reduced by this function.</a>
+<a name="242"><span class="lineNum">     242 </span><span class="lineCov">        859 : inline real_t descent_lemma(</span></a>
+<a name="243"><span class="lineNum">     243 </span>            :     /// [in]  Problem description</a>
+<a name="244"><span class="lineNum">     244 </span>            :     const Problem &amp;problem,</a>
+<a name="245"><span class="lineNum">     245 </span>            :     /// [in]    Tolerance used to ignore rounding errors when the function</a>
+<a name="246"><span class="lineNum">     246 </span>            :     ///         @f$ \psi(x) @f$ is relatively flat or the step size is very</a>
+<a name="247"><span class="lineNum">     247 </span>            :     ///         small, which could cause @f$ \psi(x^k) &lt; \psi(\hat x^k) @f$,</a>
+<a name="248"><span class="lineNum">     248 </span>            :     ///         which is mathematically impossible but could occur in finite</a>
+<a name="249"><span class="lineNum">     249 </span>            :     ///         precision floating point arithmetic.</a>
+<a name="250"><span class="lineNum">     250 </span>            :     real_t rounding_tolerance,</a>
+<a name="251"><span class="lineNum">     251 </span>            :     /// [in]    Maximum allowed Lipschitz constant estimate (prevents infinite</a>
+<a name="252"><span class="lineNum">     252 </span>            :     ///         loop if function or derivatives are discontinuous, and keeps</a>
+<a name="253"><span class="lineNum">     253 </span>            :     ///         step size bounded away from zero).</a>
+<a name="254"><span class="lineNum">     254 </span>            :     real_t L_max,</a>
+<a name="255"><span class="lineNum">     255 </span>            :     /// [in]    Current iterate @f$ x^k @f$</a>
+<a name="256"><span class="lineNum">     256 </span>            :     crvec xₖ,</a>
+<a name="257"><span class="lineNum">     257 </span>            :     /// [in]    Objective function @f$ \psi(x^k) @f$</a>
+<a name="258"><span class="lineNum">     258 </span>            :     real_t ψₖ,</a>
+<a name="259"><span class="lineNum">     259 </span>            :     /// [in]    Gradient of objective @f$ \nabla\psi(x^k) @f$</a>
+<a name="260"><span class="lineNum">     260 </span>            :     crvec grad_ψₖ,</a>
+<a name="261"><span class="lineNum">     261 </span>            :     /// [in]    Lagrange multipliers @f$ y @f$</a>
+<a name="262"><span class="lineNum">     262 </span>            :     crvec y,</a>
+<a name="263"><span class="lineNum">     263 </span>            :     /// [in]    Penalty weights @f$ \Sigma @f$</a>
+<a name="264"><span class="lineNum">     264 </span>            :     crvec Σ,</a>
+<a name="265"><span class="lineNum">     265 </span>            :     /// [out]   Projected gradient iterate @f$ \hat x^k @f$</a>
+<a name="266"><span class="lineNum">     266 </span>            :     rvec x̂ₖ,</a>
+<a name="267"><span class="lineNum">     267 </span>            :     /// [out]   Projected gradient step @f$ p^k @f$</a>
+<a name="268"><span class="lineNum">     268 </span>            :     rvec pₖ,</a>
+<a name="269"><span class="lineNum">     269 </span>            :     /// [out]   Intermediate vector @f$ \hat y(x^k) @f$</a>
+<a name="270"><span class="lineNum">     270 </span>            :     rvec ŷx̂ₖ,</a>
+<a name="271"><span class="lineNum">     271 </span>            :     /// [inout] Objective function @f$ \psi(\hat x^k) @f$</a>
+<a name="272"><span class="lineNum">     272 </span>            :     real_t &amp;ψx̂ₖ,</a>
+<a name="273"><span class="lineNum">     273 </span>            :     /// [inout] Squared norm of the step @f$ \left\| p^k \right\|^2 @f$</a>
+<a name="274"><span class="lineNum">     274 </span>            :     real_t &amp;norm_sq_pₖ,</a>
+<a name="275"><span class="lineNum">     275 </span>            :     /// [inout] Gradient of objective times step @f$ \nabla\psi(x^k)^\top p^k@f$</a>
+<a name="276"><span class="lineNum">     276 </span>            :     real_t &amp;grad_ψₖᵀpₖ,</a>
+<a name="277"><span class="lineNum">     277 </span>            :     /// [inout] Lipschitz constant estimate @f$ L_{\nabla\psi}^k @f$</a>
+<a name="278"><span class="lineNum">     278 </span>            :     real_t &amp;Lₖ,</a>
+<a name="279"><span class="lineNum">     279 </span>            :     /// [inout] Step size @f$ \gamma^k @f$</a>
+<a name="280"><span class="lineNum">     280 </span>            :     real_t &amp;γₖ) {</a>
+<a name="281"><span class="lineNum">     281 </span>            : </a>
+<a name="282"><span class="lineNum">     282 </span><span class="lineCov">        859 :     real_t old_γₖ = γₖ;</span></a>
+<a name="283"><span class="lineNum">     283 </span><span class="lineCov">        859 :     real_t margin = (1 + std::abs(ψₖ)) * rounding_tolerance;</span></a>
+<a name="284"><span class="lineNum">     284 </span><span class="lineCov">        983 :     while (ψx̂ₖ - ψₖ &gt; grad_ψₖᵀpₖ + 0.5 * Lₖ * norm_sq_pₖ + margin) {</span></a>
+<a name="285"><span class="lineNum">     285 </span><span class="lineCov">        124 :         if (not(Lₖ * 2 &lt;= L_max))</span></a>
+<a name="286"><span class="lineNum">     286 </span><span class="lineNoCov">          0 :             break;</span></a>
+<a name="287"><span class="lineNum">     287 </span>            : </a>
+<a name="288"><span class="lineNum">     288 </span><span class="lineCov">        124 :         Lₖ *= 2;</span></a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineCov">        124 :         γₖ /= 2;</span></a>
+<a name="290"><span class="lineNum">     290 </span>            : </a>
+<a name="291"><span class="lineNum">     291 </span>            :         // Calculate x̂ₖ and pₖ (with new step size)</a>
+<a name="292"><span class="lineNum">     292 </span><span class="lineCov">        124 :         calc_x̂(problem, γₖ, xₖ, grad_ψₖ, /* in ⟹ out */ x̂ₖ, pₖ);</span></a>
+<a name="293"><span class="lineNum">     293 </span>            :         // Calculate ∇ψ(xₖ)ᵀpₖ and ‖pₖ‖²</a>
+<a name="294"><span class="lineNum">     294 </span><span class="lineCov">        124 :         grad_ψₖᵀpₖ = grad_ψₖ.dot(pₖ);</span></a>
+<a name="295"><span class="lineNum">     295 </span><span class="lineCov">        124 :         norm_sq_pₖ = pₖ.squaredNorm();</span></a>
+<a name="296"><span class="lineNum">     296 </span>            : </a>
+<a name="297"><span class="lineNum">     297 </span>            :         // Calculate ψ(x̂ₖ) and ŷ(x̂ₖ)</a>
+<a name="298"><span class="lineNum">     298 </span><span class="lineCov">        124 :         ψx̂ₖ = calc_ψ_ŷ(problem, x̂ₖ, y, Σ, /* in ⟹ out */ ŷx̂ₖ);</span></a>
+<a name="299"><span class="lineNum">     299 </span>            :     }</a>
+<a name="300"><span class="lineNum">     300 </span><span class="lineCov">       1718 :     return old_γₖ;</span></a>
+<a name="301"><span class="lineNum">     301 </span><span class="lineCov">        859 : }</span></a>
+<a name="302"><span class="lineNum">     302 </span>            : </a>
+<a name="303"><span class="lineNum">     303 </span>            : /// Check all stop conditions (required tolerance reached, out of time,</a>
+<a name="304"><span class="lineNum">     304 </span>            : /// maximum number of iterations exceeded, interrupted by user,</a>
+<a name="305"><span class="lineNum">     305 </span>            : /// infinite iterate, no progress made)</a>
+<a name="306"><span class="lineNum">     306 </span>            : template &lt;class ParamsT, class DurationT&gt;</a>
+<a name="307"><span class="lineNum">     307 </span><span class="lineCov">     200599 : inline SolverStatus check_all_stop_conditions(</span></a>
+<a name="308"><span class="lineNum">     308 </span>            :     /// [in]    Parameters including `max_iter`, `max_time` and `max_no_progress`</a>
+<a name="309"><span class="lineNum">     309 </span>            :     const ParamsT &amp;params,</a>
+<a name="310"><span class="lineNum">     310 </span>            :     /// [in]    Time elapsed since the start of the algorithm</a>
+<a name="311"><span class="lineNum">     311 </span>            :     DurationT time_elapsed,</a>
+<a name="312"><span class="lineNum">     312 </span>            :     /// [in]    The current iteration number</a>
+<a name="313"><span class="lineNum">     313 </span>            :     unsigned iteration,</a>
+<a name="314"><span class="lineNum">     314 </span>            :     /// [in]    A stop signal for the user to interrupt the algorithm</a>
+<a name="315"><span class="lineNum">     315 </span>            :     const AtomicStopSignal &amp;stop_signal,</a>
+<a name="316"><span class="lineNum">     316 </span>            :     /// [in]    Desired primal tolerance</a>
+<a name="317"><span class="lineNum">     317 </span>            :     real_t ε,</a>
+<a name="318"><span class="lineNum">     318 </span>            :     /// [in]    Tolerance of the current iterate</a>
+<a name="319"><span class="lineNum">     319 </span>            :     real_t εₖ,</a>
+<a name="320"><span class="lineNum">     320 </span>            :     /// [in]    The number of successive iterations no progress was made</a>
+<a name="321"><span class="lineNum">     321 </span>            :     unsigned no_progress) {</a>
+<a name="322"><span class="lineNum">     322 </span>            : </a>
+<a name="323"><span class="lineNum">     323 </span><span class="lineCov">     200599 :     bool out_of_time     = time_elapsed &gt; params.max_time;</span></a>
+<a name="324"><span class="lineNum">     324 </span><span class="lineCov">     200599 :     bool out_of_iter     = iteration == params.max_iter;</span></a>
+<a name="325"><span class="lineNum">     325 </span><span class="lineCov">     200599 :     bool interrupted     = stop_signal.stop_requested();</span></a>
+<a name="326"><span class="lineNum">     326 </span><span class="lineCov">     200599 :     bool not_finite      = not std::isfinite(εₖ);</span></a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">     200599 :     bool conv            = εₖ &lt;= ε;</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineCov">     200599 :     bool max_no_progress = no_progress &gt; params.max_no_progress;</span></a>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">     391166 :     return conv              ? SolverStatus::Converged</span></a>
+<a name="330"><span class="lineNum">     330 </span><span class="lineCov">     381134 :            : out_of_time     ? SolverStatus::MaxTime</span></a>
+<a name="331"><span class="lineNum">     331 </span><span class="lineCov">     381134 :            : out_of_iter     ? SolverStatus::MaxIter</span></a>
+<a name="332"><span class="lineNum">     332 </span><span class="lineCov">     381134 :            : not_finite      ? SolverStatus::NotFinite</span></a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineCov">     381134 :            : max_no_progress ? SolverStatus::NoProgress</span></a>
+<a name="334"><span class="lineNum">     334 </span><span class="lineCov">     190567 :            : interrupted     ? SolverStatus::Interrupted</span></a>
+<a name="335"><span class="lineNum">     335 </span>            :                              : SolverStatus::Unknown;</a>
+<a name="336"><span class="lineNum">     336 </span><span class="lineCov">     200599 : }</span></a>
+<a name="337"><span class="lineNum">     337 </span>            : </a>
+<a name="338"><span class="lineNum">     338 </span>            : /// Compute the Hessian matrix of the augmented Lagrangian function</a>
+<a name="339"><span class="lineNum">     339 </span>            : /// @f[ \nabla^2_{xx} L_\Sigma(x, y) =</a>
+<a name="340"><span class="lineNum">     340 </span>            : ///     \Big. \nabla_{xx}^2 L(x, y) \Big|_{\big(x,\, \hat y(x, y)\big)}</a>
+<a name="341"><span class="lineNum">     341 </span>            : ///   + \sum_{i\in\mathcal{I}} \Sigma_i\,\nabla g_i(x) \nabla g_i(x)^\top @f]</a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">          1 : inline void calc_augmented_lagrangian_hessian(</span></a>
+<a name="343"><span class="lineNum">     343 </span>            :     /// [in]  Problem description</a>
+<a name="344"><span class="lineNum">     344 </span>            :     const Problem &amp;problem,</a>
+<a name="345"><span class="lineNum">     345 </span>            :     /// [in]    Current iterate @f$ x^k @f$</a>
+<a name="346"><span class="lineNum">     346 </span>            :     crvec xₖ,</a>
+<a name="347"><span class="lineNum">     347 </span>            :     /// [in]   Intermediate vector @f$ \hat y(x^k) @f$</a>
+<a name="348"><span class="lineNum">     348 </span>            :     crvec ŷxₖ,</a>
+<a name="349"><span class="lineNum">     349 </span>            :     /// [in]    Lagrange multipliers @f$ y @f$</a>
+<a name="350"><span class="lineNum">     350 </span>            :     crvec y,</a>
+<a name="351"><span class="lineNum">     351 </span>            :     /// [in]    Penalty weights @f$ \Sigma @f$</a>
+<a name="352"><span class="lineNum">     352 </span>            :     crvec Σ,</a>
+<a name="353"><span class="lineNum">     353 </span>            :     /// [out]   The constraint values @f$ g(x^k) @f$</a>
+<a name="354"><span class="lineNum">     354 </span>            :     rvec g,</a>
+<a name="355"><span class="lineNum">     355 </span>            :     /// [out]   Hessian matrix @f$ H(x, y) @f$</a>
+<a name="356"><span class="lineNum">     356 </span>            :     mat &amp;H,</a>
+<a name="357"><span class="lineNum">     357 </span>            :     ///         Dimension n</a>
+<a name="358"><span class="lineNum">     358 </span>            :     rvec work_n) {</a>
+<a name="359"><span class="lineNum">     359 </span>            : </a>
+<a name="360"><span class="lineNum">     360 </span>            :     // Compute the Hessian of the Lagrangian</a>
+<a name="361"><span class="lineNum">     361 </span><span class="lineCov">          1 :     problem.hess_L(xₖ, ŷxₖ, H);</span></a>
+<a name="362"><span class="lineNum">     362 </span>            :     // Compute the Hessian of the augmented Lagrangian</a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          1 :     problem.g(xₖ, g);</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          3 :     for (vec::Index i = 0; i &lt; problem.m; ++i) {</span></a>
+<a name="365"><span class="lineNum">     365 </span><span class="lineCov">          2 :         real_t ζ = g(i) + y(i) / Σ(i);</span></a>
+<a name="366"><span class="lineNum">     366 </span><span class="lineCov">          4 :         bool inactive =</span></a>
+<a name="367"><span class="lineNum">     367 </span><span class="lineCov">          2 :             problem.D.lowerbound(i) &lt; ζ &amp;&amp; ζ &lt; problem.D.upperbound(i);</span></a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          2 :         if (not inactive) {</span></a>
+<a name="369"><span class="lineNum">     369 </span><span class="lineCov">          1 :             problem.grad_gi(xₖ, i, work_n);</span></a>
+<a name="370"><span class="lineNum">     370 </span><span class="lineCov">          1 :             H += work_n * Σ(i) * work_n.transpose();</span></a>
+<a name="371"><span class="lineNum">     371 </span><span class="lineCov">          1 :         }</span></a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineCov">          2 :     }</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineCov">          1 : }</span></a>
+<a name="374"><span class="lineNum">     374 </span>            : </a>
+<a name="375"><span class="lineNum">     375 </span>            : /// Compute the Hessian matrix of the augmented Lagrangian function multiplied</a>
+<a name="376"><span class="lineNum">     376 </span>            : /// by the given vector, using finite differences.</a>
+<a name="377"><span class="lineNum">     377 </span>            : /// @f[ \nabla^2_{xx} L_\Sigma(x, y)\, v \approx</a>
+<a name="378"><span class="lineNum">     378 </span>            : ///     \frac{\nabla_x L_\Sigma(x+hv, y) - \nabla_x L_\Sigma(x, y)}{h} @f]</a>
+<a name="379"><span class="lineNum">     379 </span>            : inline void calc_augmented_lagrangian_hessian_prod_fd(</a>
+<a name="380"><span class="lineNum">     380 </span>            :     /// [in]    Problem description</a>
+<a name="381"><span class="lineNum">     381 </span>            :     const Problem &amp;problem,</a>
+<a name="382"><span class="lineNum">     382 </span>            :     /// [in]    Current iterate @f$ x^k @f$</a>
+<a name="383"><span class="lineNum">     383 </span>            :     crvec xₖ,</a>
+<a name="384"><span class="lineNum">     384 </span>            :     /// [in]    Lagrange multipliers @f$ y @f$</a>
+<a name="385"><span class="lineNum">     385 </span>            :     crvec y,</a>
+<a name="386"><span class="lineNum">     386 </span>            :     /// [in]    Penalty weights @f$ \Sigma @f$</a>
+<a name="387"><span class="lineNum">     387 </span>            :     crvec Σ,</a>
+<a name="388"><span class="lineNum">     388 </span>            :     /// [in]    Gradient @f$ \nabla \psi(x^k) @f$</a>
+<a name="389"><span class="lineNum">     389 </span>            :     crvec grad_ψ,</a>
+<a name="390"><span class="lineNum">     390 </span>            :     /// [in]    Vector to multiply with the Hessian</a>
+<a name="391"><span class="lineNum">     391 </span>            :     crvec v,</a>
+<a name="392"><span class="lineNum">     392 </span>            :     /// [out]   Hessian-vector product</a>
+<a name="393"><span class="lineNum">     393 </span>            :     rvec Hv,</a>
+<a name="394"><span class="lineNum">     394 </span>            :     ///         Dimension n</a>
+<a name="395"><span class="lineNum">     395 </span>            :     rvec work_n1,</a>
+<a name="396"><span class="lineNum">     396 </span>            :     ///         Dimension n</a>
+<a name="397"><span class="lineNum">     397 </span>            :     rvec work_n2,</a>
+<a name="398"><span class="lineNum">     398 </span>            :     ///         Dimension m</a>
+<a name="399"><span class="lineNum">     399 </span>            :     rvec work_m) {</a>
+<a name="400"><span class="lineNum">     400 </span>            : </a>
+<a name="401"><span class="lineNum">     401 </span>            :     real_t cbrt_ε = std::cbrt(std::numeric_limits&lt;real_t&gt;::epsilon());</a>
+<a name="402"><span class="lineNum">     402 </span>            :     real_t h      = cbrt_ε * (1 + xₖ.norm());</a>
+<a name="403"><span class="lineNum">     403 </span>            :     rvec xₖh      = work_n1;</a>
+<a name="404"><span class="lineNum">     404 </span>            :     xₖh           = xₖ + h * v;</a>
+<a name="405"><span class="lineNum">     405 </span>            :     calc_grad_ψ(problem, xₖh, y, Σ, Hv, work_n2, work_m);</a>
+<a name="406"><span class="lineNum">     406 </span>            :     Hv -= grad_ψ;</a>
+<a name="407"><span class="lineNum">     407 </span>            :     Hv /= h;</a>
+<a name="408"><span class="lineNum">     408 </span>            : }</a>
+<a name="409"><span class="lineNum">     409 </span>            : </a>
+<a name="410"><span class="lineNum">     410 </span>            : /// Estimate the Lipschitz constant of the gradient @f$ \nabla \psi @f$ using</a>
+<a name="411"><span class="lineNum">     411 </span>            : /// finite differences.</a>
+<a name="412"><span class="lineNum">     412 </span><span class="lineCov">         31 : inline real_t initial_lipschitz_estimate(</span></a>
+<a name="413"><span class="lineNum">     413 </span>            :     /// [in]    Problem description</a>
+<a name="414"><span class="lineNum">     414 </span>            :     const Problem &amp;problem,</a>
+<a name="415"><span class="lineNum">     415 </span>            :     /// [in]    Current iterate @f$ x^k @f$</a>
+<a name="416"><span class="lineNum">     416 </span>            :     crvec xₖ,</a>
+<a name="417"><span class="lineNum">     417 </span>            :     /// [in]    Lagrange multipliers @f$ y @f$</a>
+<a name="418"><span class="lineNum">     418 </span>            :     crvec y,</a>
+<a name="419"><span class="lineNum">     419 </span>            :     /// [in]    Penalty weights @f$ \Sigma @f$</a>
+<a name="420"><span class="lineNum">     420 </span>            :     crvec Σ,</a>
+<a name="421"><span class="lineNum">     421 </span>            :     /// [in]    Finite difference step size relative to xₖ</a>
+<a name="422"><span class="lineNum">     422 </span>            :     real_t ε,</a>
+<a name="423"><span class="lineNum">     423 </span>            :     /// [in]    Minimum absolute finite difference step size</a>
+<a name="424"><span class="lineNum">     424 </span>            :     real_t δ,</a>
+<a name="425"><span class="lineNum">     425 </span>            :     /// [in]    Minimum allowed Lipschitz estimate.</a>
+<a name="426"><span class="lineNum">     426 </span>            :     real_t L_min,</a>
+<a name="427"><span class="lineNum">     427 </span>            :     /// [in]    Maximum allowed Lipschitz estimate.</a>
+<a name="428"><span class="lineNum">     428 </span>            :     real_t L_max,</a>
+<a name="429"><span class="lineNum">     429 </span>            :     /// [out]   @f$ \psi(x^k) @f$</a>
+<a name="430"><span class="lineNum">     430 </span>            :     real_t &amp;ψ,</a>
+<a name="431"><span class="lineNum">     431 </span>            :     /// [out]   Gradient @f$ \nabla \psi(x^k) @f$</a>
+<a name="432"><span class="lineNum">     432 </span>            :     rvec grad_ψ,</a>
+<a name="433"><span class="lineNum">     433 </span>            :     ///         Dimension n</a>
+<a name="434"><span class="lineNum">     434 </span>            :     rvec work_n1,</a>
+<a name="435"><span class="lineNum">     435 </span>            :     ///         Dimension n</a>
+<a name="436"><span class="lineNum">     436 </span>            :     rvec work_n2,</a>
+<a name="437"><span class="lineNum">     437 </span>            :     ///         Dimension n</a>
+<a name="438"><span class="lineNum">     438 </span>            :     rvec work_n3,</a>
+<a name="439"><span class="lineNum">     439 </span>            :     ///         Dimension m</a>
+<a name="440"><span class="lineNum">     440 </span>            :     rvec work_m) {</a>
+<a name="441"><span class="lineNum">     441 </span>            : </a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         31 :     auto h        = (xₖ * ε).cwiseAbs().cwiseMax(δ);</span></a>
+<a name="443"><span class="lineNum">     443 </span><span class="lineCov">         31 :     work_n1       = xₖ + h;</span></a>
+<a name="444"><span class="lineNum">     444 </span><span class="lineCov">         31 :     real_t norm_h = h.norm();</span></a>
+<a name="445"><span class="lineNum">     445 </span>            :     // Calculate ∇ψ(x₀ + h)</a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         62 :     calc_grad_ψ(problem, work_n1, y, Σ, /* in ⟹ out */ work_n2, work_n3,</span></a>
+<a name="447"><span class="lineNum">     447 </span><span class="lineCov">         31 :                 work_m);</span></a>
+<a name="448"><span class="lineNum">     448 </span>            :     // Calculate ψ(xₖ), ∇ψ(x₀)</a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">         62 :     ψ = calc_ψ_grad_ψ(problem, xₖ, y, Σ, /* in ⟹ out */ grad_ψ, work_n1,</span></a>
+<a name="450"><span class="lineNum">     450 </span><span class="lineCov">         31 :                       work_m);</span></a>
+<a name="451"><span class="lineNum">     451 </span>            : </a>
+<a name="452"><span class="lineNum">     452 </span>            :     // Estimate Lipschitz constant using finite differences</a>
+<a name="453"><span class="lineNum">     453 </span><span class="lineCov">         31 :     real_t L = (work_n2 - grad_ψ).norm() / norm_h;</span></a>
+<a name="454"><span class="lineNum">     454 </span><span class="lineCov">         31 :     return std::clamp(L, L_min, L_max);</span></a>
+<a name="455"><span class="lineNum">     455 </span><span class="lineCov">         31 : }</span></a>
+<a name="456"><span class="lineNum">     456 </span>            : </a>
+<a name="457"><span class="lineNum">     457 </span>            : /// Estimate the Lipschitz constant of the gradient @f$ \nabla \psi @f$ using</a>
+<a name="458"><span class="lineNum">     458 </span>            : /// finite differences.</a>
+<a name="459"><span class="lineNum">     459 </span><span class="lineNoCov">          0 : inline real_t initial_lipschitz_estimate(</span></a>
+<a name="460"><span class="lineNum">     460 </span>            :     /// [in]    Problem description</a>
+<a name="461"><span class="lineNum">     461 </span>            :     const Problem &amp;problem,</a>
+<a name="462"><span class="lineNum">     462 </span>            :     /// [in]    Current iterate @f$ x^k @f$</a>
+<a name="463"><span class="lineNum">     463 </span>            :     crvec xₖ,</a>
+<a name="464"><span class="lineNum">     464 </span>            :     /// [in]    Lagrange multipliers @f$ y @f$</a>
+<a name="465"><span class="lineNum">     465 </span>            :     crvec y,</a>
+<a name="466"><span class="lineNum">     466 </span>            :     /// [in]    Penalty weights @f$ \Sigma @f$</a>
+<a name="467"><span class="lineNum">     467 </span>            :     crvec Σ,</a>
+<a name="468"><span class="lineNum">     468 </span>            :     /// [in]    Finite difference step size relative to xₖ</a>
+<a name="469"><span class="lineNum">     469 </span>            :     real_t ε,</a>
+<a name="470"><span class="lineNum">     470 </span>            :     /// [in]    Minimum absolute finite difference step size</a>
+<a name="471"><span class="lineNum">     471 </span>            :     real_t δ,</a>
+<a name="472"><span class="lineNum">     472 </span>            :     /// [in]    Minimum allowed Lipschitz estimate.</a>
+<a name="473"><span class="lineNum">     473 </span>            :     real_t L_min,</a>
+<a name="474"><span class="lineNum">     474 </span>            :     /// [in]    Maximum allowed Lipschitz estimate.</a>
+<a name="475"><span class="lineNum">     475 </span>            :     real_t L_max,</a>
+<a name="476"><span class="lineNum">     476 </span>            :     /// [out]   Gradient @f$ \nabla \psi(x^k) @f$</a>
+<a name="477"><span class="lineNum">     477 </span>            :     rvec grad_ψ,</a>
+<a name="478"><span class="lineNum">     478 </span>            :     ///         Dimension n</a>
+<a name="479"><span class="lineNum">     479 </span>            :     rvec work_n1,</a>
+<a name="480"><span class="lineNum">     480 </span>            :     ///         Dimension n</a>
+<a name="481"><span class="lineNum">     481 </span>            :     rvec work_n2,</a>
+<a name="482"><span class="lineNum">     482 </span>            :     ///         Dimension n</a>
+<a name="483"><span class="lineNum">     483 </span>            :     rvec work_n3,</a>
+<a name="484"><span class="lineNum">     484 </span>            :     ///         Dimension m</a>
+<a name="485"><span class="lineNum">     485 </span>            :     rvec work_m) {</a>
+<a name="486"><span class="lineNum">     486 </span>            : </a>
+<a name="487"><span class="lineNum">     487 </span><span class="lineNoCov">          0 :     auto h        = (xₖ * ε).cwiseAbs().cwiseMax(δ);</span></a>
+<a name="488"><span class="lineNum">     488 </span><span class="lineNoCov">          0 :     work_n1       = xₖ + h;</span></a>
+<a name="489"><span class="lineNum">     489 </span><span class="lineNoCov">          0 :     real_t norm_h = h.norm();</span></a>
+<a name="490"><span class="lineNum">     490 </span>            :     // Calculate ∇ψ(x₀ + h)</a>
+<a name="491"><span class="lineNum">     491 </span><span class="lineNoCov">          0 :     calc_grad_ψ(problem, work_n1, y, Σ, /* in ⟹ out */ work_n2, work_n3,</span></a>
+<a name="492"><span class="lineNum">     492 </span><span class="lineNoCov">          0 :                 work_m);</span></a>
+<a name="493"><span class="lineNum">     493 </span>            :     // Calculate ∇ψ(x₀)</a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineNoCov">          0 :     calc_grad_ψ(problem, xₖ, y, Σ, /* in ⟹ out */ grad_ψ, work_n1, work_m);</span></a>
+<a name="495"><span class="lineNum">     495 </span>            : </a>
+<a name="496"><span class="lineNum">     496 </span>            :     // Estimate Lipschitz constant using finite differences</a>
+<a name="497"><span class="lineNum">     497 </span><span class="lineNoCov">          0 :     real_t L = (work_n2 - grad_ψ).norm() / norm_h;</span></a>
+<a name="498"><span class="lineNum">     498 </span><span class="lineNoCov">          0 :     return std::clamp(L, L_min, L_max);</span></a>
+<a name="499"><span class="lineNum">     499 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="500"><span class="lineNum">     500 </span>            : </a>
+<a name="501"><span class="lineNum">     501 </span>            : } // namespace alpaqa::detail</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.15</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

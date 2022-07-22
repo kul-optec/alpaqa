@@ -1,0 +1,9 @@
+<map id="Problem" name="Problem">
+<area shape="rect" id="node1" title="Problem description for minimization problems." alt="" coords="329,5,505,508"/>
+<area shape="rect" id="node2" href="$classProblemTrampoline.html" title=" " alt="" coords="5,666,164,846"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1CUTEstProblem.html" title="Wrapper for CUTEst problems loaded from an external shared library." alt="" coords="189,571,423,941"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1LambdaProblem.html" title=" " alt="" coords="447,556,610,956"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1ProblemWithParam.html" title=" " alt="" coords="635,622,807,890"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1CasADiProblem.html" title=" " alt="" coords="517,1055,697,1338"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1LambdaProblemWithParam.html" title=" " alt="" coords="722,1004,946,1389"/>
+</map>

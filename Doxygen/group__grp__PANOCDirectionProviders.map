@@ -1,0 +1,4 @@
+<map id="PANOC direction providers" name="PANOC direction providers">
+<area shape="rect" id="node1" href="$group__grp__InnerSolvers.html" title="Solvers for the inner problem, such as PANOC." alt="" coords="5,5,112,31"/>
+<area shape="rect" id="node2" title="Algorithms that provide quasi&#45;Newton steps for the PANOC solver, such as L&#45;BFGS." alt="" coords="160,5,353,31"/>
+</map>

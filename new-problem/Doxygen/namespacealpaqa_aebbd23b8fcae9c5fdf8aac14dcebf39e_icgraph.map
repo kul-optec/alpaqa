@@ -1,0 +1,16 @@
+<map id="projecting_difference" name="projecting_difference">
+<area shape="rect" id="node1" title="Get the difference between the given vector and its projection." alt="" coords="927,338,1085,365"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a164b2b3296b6868a4dd53b7c0d9d64e2" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="733,201,879,243"/>
+<area shape="rect" id="node10" href="$structalpaqa_1_1Problem.html#a402f4f8ea8905d81d911404a59ae5eeb" title="Given g(x), compute the intermediate results ŷ and dᵀŷ that can later be used to compute ψ(x) and ∇ψ(..." alt="" coords="469,401,632,443"/>
+<area shape="rect" id="node14" href="$namespacealpaqa.html#ad0cdf210b4e36a43a6d7f7a4a975d9f1" title="Get the distance squared between the given vector and its projection." alt="" coords="753,389,859,415"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="429,5,672,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="416,71,685,112"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="465,136,636,177"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1PGASolver.html#af516b794e244432023aea7ba3cd0d1d8" title=" " alt="" coords="475,201,626,243"/>
+<area shape="rect" id="node7" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="502,267,599,294"/>
+<area shape="rect" id="node9" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,377,156,403"/>
+<area shape="rect" id="node8" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="255,267,317,294"/>
+<area shape="rect" id="node11" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="204,369,368,411"/>
+<area shape="rect" id="node12" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="204,435,368,476"/>
+<area shape="rect" id="node13" href="$structalpaqa_1_1Problem.html#ae9336441a3bb074da2fc22d6f39e1347" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="204,500,368,541"/>
+</map>

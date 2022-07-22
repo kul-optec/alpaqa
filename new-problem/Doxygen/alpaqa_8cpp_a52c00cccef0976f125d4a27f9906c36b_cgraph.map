@@ -1,0 +1,87 @@
+<map id="PYBIND11_MODULE" name="PYBIND11_MODULE">
+<area shape="rect" id="node1" title=" " alt="" coords="5,1815,156,1841"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="259,489,419,516"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="833,289,1002,316"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LBFGS.html#a644d66009a70ccc909120ba9afa45ea5" title=" " alt="" coords="585,609,716,636"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="1084,289,1216,316"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="585,239,717,265"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LBFGS.html#a7866204934238efa4a186fc9d48a8a2e" title=" " alt="" coords="851,399,984,425"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LBFGS.html#aebf0127f7a3e56b2c46e5f189d517f14" title=" " alt="" coords="585,340,717,367"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#a789abaa4329027a77d9f49036033283c" title=" " alt="" coords="209,741,468,782"/>
+<area shape="rect" id="node11" href="$namespacealpaqa_1_1detail.html#a609b04c1159d9c3a0346c2ff7fbacb86" title="Calculate the error between ẑ and g(x)." alt="" coords="1077,1127,1223,1169"/>
+<area shape="rect" id="node13" href="$namespacealpaqa_1_1detail.html#a164b2b3296b6868a4dd53b7c0d9d64e2" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="845,945,990,986"/>
+<area shape="rect" id="node16" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="1293,851,1473,893"/>
+<area shape="rect" id="node18" href="$classalpaqa_1_1PolymorphicPANOCDirection.html#a67326bc3d5665b77ff93f24753463255" title=" " alt="" coords="209,1582,468,1623"/>
+<area shape="rect" id="node19" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#a0fe5a145be59f5127a9db2392adfb060" title=" " alt="" coords="209,1647,468,1689"/>
+<area shape="rect" id="node20" href="$structalpaqa_1_1Problem.html#ae28e48d73d853a238c00ecceb16900d6" title="Function that evaluates the cost, ." alt="" coords="829,1188,1005,1215"/>
+<area shape="rect" id="node21" href="$structalpaqa_1_1Problem.html#acdf5c7c7f249c05d53643e1715070f45" title="Function that evaluates the constraints, ." alt="" coords="828,1396,1007,1423"/>
+<area shape="rect" id="node22" href="$structalpaqa_1_1Problem.html#aba98edc04bad2e0a3ad6645991cd7535" title="Function that evaluates the gradient of the cost, ." alt="" coords="1301,1541,1465,1582"/>
+<area shape="rect" id="node23" href="$structalpaqa_1_1Problem.html#ab3ddf22ddba40c16ab196c1371405ea0" title="Function that evaluates the gradient of the constraints times a vector, ." alt="" coords="1301,1679,1465,1721"/>
+<area shape="rect" id="node24" href="$structalpaqa_1_1Problem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="Calculate the gradient ∇ψ(x)." alt="" coords="257,1363,421,1405"/>
+<area shape="rect" id="node26" href="$structalpaqa_1_1Problem.html#ae6bb0ad523f5d6eae2c76bba0523c208" title="Calculate ∇ψ(x) using ŷ." alt="" coords="569,1599,733,1641"/>
+<area shape="rect" id="node29" href="$structalpaqa_1_1Problem.html#aa0e2bd5f0128185dcdfc84d858d43bd0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="257,1246,421,1287"/>
+<area shape="rect" id="node32" href="$structalpaqa_1_1Problem.html#ae9336441a3bb074da2fc22d6f39e1347" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="257,1181,421,1222"/>
+<area shape="rect" id="node33" href="$structalpaqa_1_1PolymorphicInnerSolverBase_1_1Stats.html#a2b19ef70fce315531e25f9b1af097099" title=" " alt="" coords="235,1713,442,1754"/>
+<area shape="rect" id="node34" href="$classalpaqa_1_1ALMSolver.html#a0789ba541bd61b1b394ff4d411a40790" title=" " alt="" coords="263,1778,414,1819"/>
+<area shape="rect" id="node35" href="$classalpaqa_1_1LBFGS.html#a0789ba541bd61b1b394ff4d411a40790" title=" " alt="" coords="244,1844,433,1871"/>
+<area shape="rect" id="node36" href="$classalpaqa_1_1PolymorphicInnerSolverBase.html#a9752bfc9dd39aab02fc9487067abf9a9" title=" " alt="" coords="245,1895,433,1937"/>
+<area shape="rect" id="node37" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#a9752bfc9dd39aab02fc9487067abf9a9" title=" " alt="" coords="209,1961,468,2002"/>
+<area shape="rect" id="node38" href="$classalpaqa_1_1PolymorphicInnerSolver.html#aea9b04d36ad2b9a4e1c166589ecb0326" title=" " alt="" coords="245,2026,433,2067"/>
+<area shape="rect" id="node39" href="$classalpaqa_1_1PolymorphicPANOCDirection.html#aea9b04d36ad2b9a4e1c166589ecb0326" title=" " alt="" coords="209,2091,468,2133"/>
+<area shape="rect" id="node40" href="$classalpaqa_1_1ProblemWithParam.html#a9e387cb32e4ce2b17af9cef9e7fd2a6b" title=" " alt="" coords="239,2157,438,2198"/>
+<area shape="rect" id="node41" href="$classalpaqa_1_1ALMSolver.html#a933e2462ce1049db54fed366cce62477" title=" " alt="" coords="263,2222,414,2263"/>
+<area shape="rect" id="node42" href="$classalpaqa_1_1LBFGS.html#a933e2462ce1049db54fed366cce62477" title=" " alt="" coords="266,2287,411,2329"/>
+<area shape="rect" id="node43" href="$classalpaqa_1_1PolymorphicInnerSolverBase.html#ac6327b57b58744678523ed2694d6e909" title=" " alt="" coords="245,2353,433,2394"/>
+<area shape="rect" id="node44" href="$classalpaqa_1_1PolymorphicInnerSolver.html#a5048fc9faa63d726ddd844f57fd05426" title=" " alt="" coords="245,2418,433,2459"/>
+<area shape="rect" id="node45" href="$classalpaqa_1_1PolymorphicPANOCDirection.html#a5048fc9faa63d726ddd844f57fd05426" title=" " alt="" coords="209,2483,468,2525"/>
+<area shape="rect" id="node46" href="$classalpaqa_1_1PolymorphicPANOCDirection.html#a648e9085ba9c8097856915f6a969cf9f" title=" " alt="" coords="209,2549,468,2590"/>
+<area shape="rect" id="node47" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#a5fca949a0873a0aeff5511cdcbc290dd" title=" " alt="" coords="209,2614,468,2655"/>
+<area shape="rect" id="node48" href="$namespacealpaqa.html#ae78e1b0193a88ed158590a0f8c6f1b3a" title=" " alt="" coords="225,2680,453,2707"/>
+<area shape="rect" id="node49" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="282,868,395,895"/>
+<area shape="rect" id="node63" href="$alpaqa_8cpp.html#a7d1da0c0de41e5636f73277127c5dbdc" title=" " alt="" coords="235,2731,442,2757"/>
+<area shape="rect" id="node64" href="$alpaqa_8cpp.html#a555fe4adbd2f0a5f6975cc42a7165f43" title=" " alt="" coords="235,2782,442,2823"/>
+<area shape="rect" id="node65" href="$alpaqa_8cpp.html#a6785128ab0ae967affedb310e01e9f04" title=" " alt="" coords="227,2899,450,2925"/>
+<area shape="rect" id="node66" href="$kwargs-to-struct_8hpp.html#a89c63460319971ac54e62f7b45550a70" title=" " alt="" coords="570,2899,731,2925"/>
+<area shape="rect" id="node67" href="$alpaqa_8cpp.html#a90e754811025a780eb1fbdc53d09ec95" title=" " alt="" coords="204,2949,473,2976"/>
+<area shape="rect" id="node69" href="$classalpaqa_1_1LBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="572,36,729,63"/>
+<area shape="rect" id="node70" href="$classalpaqa_1_1PolymorphicPANOCDirection.html#aebfcdbbd0fe4efbff10b180be50ca6bc" title=" " alt="" coords="209,3001,468,3042"/>
+<area shape="rect" id="node71" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#a20dcbdfbd0ec77afc802522bb7e379c1" title=" " alt="" coords="209,3066,468,3107"/>
+<area shape="rect" id="node72" href="$classalpaqa_1_1LBFGS.html#a57b2556ee8993b06958b9c14511fd4ba" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="257,87,420,113"/>
+<area shape="rect" id="node73" href="$classalpaqa_1_1LBFGS.html#adeddc1e1eb8ce1c1bbaf931b6f9a5b9c" title="Scale the stored y vectors by the given factor." alt="" coords="252,293,425,320"/>
+<area shape="rect" id="node74" href="$classalpaqa_1_1PolymorphicInnerSolver.html#ace9f8395eb75e829f4a916ead52160a8" title=" " alt="" coords="231,3131,446,3173"/>
+<area shape="rect" id="node76" href="$namespacealpaqa.html#a5b2110883a094b8ca915271e530855e0" title=" " alt="" coords="260,3197,417,3224"/>
+<area shape="rect" id="node77" href="$classalpaqa_1_1PolymorphicInnerSolverBase.html#a0efff8623a2fb79dad94a96dcf16d966" title=" " alt="" coords="245,3249,433,3290"/>
+<area shape="rect" id="node78" href="$namespacealpaqa_1_1detail.html#af0636cda18987394f45b344ccb9e8c8e" title=" " alt="" coords="253,3314,424,3355"/>
+<area shape="rect" id="node79" href="$classalpaqa_1_1PolymorphicPANOCDirection.html#a03967df58e1e28a47dd0f3e21a9bd3f3" title=" " alt="" coords="209,3379,468,3421"/>
+<area shape="rect" id="node80" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#ae14496a4efccef34cd47cafdf5c69d3b" title=" " alt="" coords="209,3445,468,3486"/>
+<area shape="rect" id="node81" href="$classalpaqa_1_1LBFGS.html#a4db75f8c280c32a05a44bb83769befb1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="254,413,423,440"/>
+<area shape="rect" id="node83" href="$classalpaqa_1_1LBFGS.html#aaf9c6519c7a7d7ab977113f33c88e2e3" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="566,543,735,585"/>
+<area shape="rect" id="node84" href="$alpaqa_8cpp.html#a6ee9391988875e1328588a83b841f452" title=" " alt="" coords="299,3511,378,3537"/>
+<area shape="rect" id="node85" href="$alpaqa_8cpp.html#a7e8c447a3588e42945f6821e35220bcc" title=" " alt="" coords="298,3561,379,3588"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1PolymorphicPANOCDirectionBase.html#a662fa9c77768d69bc25263ff93656743" title=" " alt="" coords="521,711,780,753"/>
+<area shape="rect" id="node12" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="1324,1101,1443,1128"/>
+<area shape="rect" id="node14" href="$namespacealpaqa_1_1vec__util.html#a8dc597c55e6fedeccc220e75360e2f87" title="Get the 1&#45;norm of the given vector." alt="" coords="1059,960,1241,987"/>
+<area shape="rect" id="node15" href="$namespacealpaqa_1_1vec__util.html#adddb38b65e3176db3b57d07a68ff2b54" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="1055,909,1245,936"/>
+<area shape="rect" id="node17" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="1081,1062,1219,1103"/>
+<area shape="rect" id="node25" href="$structalpaqa_1_1Problem.html#a402f4f8ea8905d81d911404a59ae5eeb" title="Given g(x), compute the intermediate results ŷ and dᵀŷ that can later be used to compute ψ(x) and ∇ψ(..." alt="" coords="569,1330,732,1371"/>
+<area shape="rect" id="node27" href="$structalpaqa_1_1Problem.html#a5f0f7f91b5bd3732b02700627e9a8558" title="Evaluate the gradient of the Lagrangian ." alt="" coords="835,1599,999,1641"/>
+<area shape="rect" id="node28" href="$structalpaqa_1_1Problem.html#a6f4989c25256ca477442ef34ae1c6b7f" title="Evaluate both &#160;and ." alt="" coords="1068,1650,1232,1691"/>
+<area shape="rect" id="node30" href="$structalpaqa_1_1Problem.html#ab0e71914b849242cd710193000401e60" title="Evaluate both &#160;and ." alt="" coords="555,1213,746,1240"/>
+<area shape="rect" id="node31" href="$structalpaqa_1_1Problem.html#a77860f4adb333acb7a3bb46308ff83e2" title="Evaluate both &#160;and its gradient, ." alt="" coords="569,1265,733,1306"/>
+<area shape="rect" id="node50" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="576,777,725,804"/>
+<area shape="rect" id="node61" href="$classalpaqa_1_1vec__allocator.html#a259cb5a711406a8c3e5d937eb9350cca" title=" " alt="" coords="570,829,731,870"/>
+<area shape="rect" id="node62" href="$classalpaqa_1_1vec__allocator.html#a2e036dd8859f446200ade78fabcc9a6a" title=" " alt="" coords="570,894,731,935"/>
+<area shape="rect" id="node51" href="$classalpaqa_1_1vec__allocator.html#afa36e1f076dd1627a83324e717038836" title=" " alt="" coords="837,762,998,803"/>
+<area shape="rect" id="node52" href="$namespacealpaqa_1_1detail.html#adaff98bd8130d1eee1f5bcaab5069026" title=" " alt="" coords="1070,808,1230,835"/>
+<area shape="rect" id="node53" href="$namespacealpaqa_1_1detail.html#a2ce2c8e78adf825044f1b9473f389160" title="Check all stop conditions (required tolerance reached, out of time, maximum number of iterations exce..." alt="" coords="839,566,996,607"/>
+<area shape="rect" id="node55" href="$namespacealpaqa_1_1detail.html#a3e432963691339ba0588d90186008735" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="832,879,1003,921"/>
+<area shape="rect" id="node56" href="$classalpaqa_1_1vec__allocator.html#a455bb0797853d67addd58875c671acef" title=" " alt="" coords="837,501,998,542"/>
+<area shape="rect" id="node57" href="$namespacealpaqa_1_1detail.html#a8a1a5d46f1a3fffc7501abc3e2561367" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="839,697,995,738"/>
+<area shape="rect" id="node60" href="$namespacealpaqa_1_1detail.html#af622b46ff2f9f3237cef3781eb65cf0c" title=" " alt="" coords="843,631,992,673"/>
+<area shape="rect" id="node54" href="$classalpaqa_1_1AtomicStopSignal.html#aa0097deccc19b49f8ab5344d8d6d5cf6" title=" " alt="" coords="1055,566,1245,607"/>
+<area shape="rect" id="node58" href="$namespacealpaqa_1_1detail.html#a8f6ca1622de905436d84d5fe0f028d63" title="Calculate the gradient ∇ψ(x)." alt="" coords="1077,654,1223,695"/>
+<area shape="rect" id="node59" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="1077,719,1223,761"/>
+<area shape="rect" id="node68" href="$alpaqa_8cpp.html#a67465c26bee7fd06be2b8bab1465fe30" title=" " alt="" coords="540,2949,761,2976"/>
+<area shape="rect" id="node75" href="$namespacerosenbrock.html#a15cd9421a8838a458e28185567dde101" title=" " alt="" coords="594,3139,707,3165"/>
+<area shape="rect" id="node82" href="$classalpaqa_1_1LBFGS.html#a0df701f7bb07249c37bcbf20d9c980fe" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="574,391,727,417"/>
+</map>

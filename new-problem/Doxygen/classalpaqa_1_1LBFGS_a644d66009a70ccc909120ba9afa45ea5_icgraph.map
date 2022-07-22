@@ -1,0 +1,8 @@
+<map id="s" name="s">
+<area shape="rect" id="node1" title=" " alt="" coords="755,71,793,98"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="644,21,703,47"/>
+<area shape="rect" id="node5" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="382,71,533,98"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LBFGS.html#a4db75f8c280c32a05a44bb83769befb1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="640,122,707,149"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#a92bf6e99eb0770f053457e48cc3a3435" title=" " alt="" coords="323,5,592,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="5,60,275,101"/>
+</map>
