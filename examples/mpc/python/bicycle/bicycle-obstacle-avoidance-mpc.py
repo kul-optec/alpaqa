@@ -29,7 +29,7 @@ f, nlp, bounds, n_states, n_inputs, first_input_idx = generate_problem(
 
 # %% Build the problem for PANOC+ALM
 
-import panocpy as pa
+import alpaqa as pa
 from tempfile import TemporaryDirectory
 
 name = "mpcproblem"
