@@ -9,8 +9,12 @@
 #ifdef __cplusplus
 extern "C" {
 #define ALPAQA_DL_ABI_VERSION_DEFAULT = ALPAQA_DL_ABI_VERSION
+#define ALPAQA_NULLPTR_DEFAULT = nullptr
+#define ALPAQA_ZERO_DEFAULT = 0
 #else
 #define ALPAQA_DL_ABI_VERSION_DEFAULT
+#define ALPAQA_NULLPTR_DEFAULT
+#define ALPAQA_ZERO_DEFAULT
 #endif
 
 typedef double alpaqa_real_t;
@@ -19,45 +23,45 @@ typedef alpaqa_length_t alpaqa_index_t;
 
 typedef struct {
     uint64_t abi_version ALPAQA_DL_ABI_VERSION_DEFAULT;
-    alpaqa_length_t n, m;
+    alpaqa_length_t n ALPAQA_ZERO_DEFAULT, m ALPAQA_ZERO_DEFAULT;
 
     // clang-format off
     alpaqa_real_t (*eval_f)(
         void *instance,
-        const alpaqa_real_t *x);
+        const alpaqa_real_t *x) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_f)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *grad_fx);
+        alpaqa_real_t *grad_fx) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_g)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *gx);
+        alpaqa_real_t *gx) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_g_prod)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
-        alpaqa_real_t *grad_gxy);
+        alpaqa_real_t *grad_gxy) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_jac_g)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
-        alpaqa_real_t *J_values);
+        alpaqa_real_t *J_values) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_length_t (*get_jac_g_num_nonzeros)(
-        void *instance);
+        void *instance) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_gi)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_index_t i,
-        alpaqa_real_t *grad_gi);
+        alpaqa_real_t *grad_gi) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_hess_L_prod)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t scale,
         const alpaqa_real_t *v,
-        alpaqa_real_t *Hv);
+        alpaqa_real_t *Hv) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_hess_L)(
         void *instance,
         const alpaqa_real_t *x,
@@ -65,9 +69,9 @@ typedef struct {
         alpaqa_real_t scale,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
-        alpaqa_real_t *H_values);
+        alpaqa_real_t *H_values) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_length_t (*get_hess_L_num_nonzeros)(
-        void *instance);
+        void *instance) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_hess_ψ_prod)(
         void *instance,
         const alpaqa_real_t *x,
@@ -77,7 +81,7 @@ typedef struct {
         const alpaqa_real_t *zl,
         const alpaqa_real_t *zu,
         const alpaqa_real_t *v,
-        alpaqa_real_t *Hv);
+        alpaqa_real_t *Hv) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_hess_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -88,29 +92,29 @@ typedef struct {
         const alpaqa_real_t *zu,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
-        alpaqa_real_t *H_values);
+        alpaqa_real_t *H_values) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_length_t (*get_hess_ψ_num_nonzeros)(
-        void *instance);
+        void *instance) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_f_grad_f)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *grad_fx);
+        alpaqa_real_t *grad_fx) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_f_g)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *g);
+        alpaqa_real_t *g) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_f_grad_g_prod)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_f,
-        alpaqa_real_t *grad_gxy);
+        alpaqa_real_t *grad_gxy) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_L)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_L,
-        alpaqa_real_t *work_n);
+        alpaqa_real_t *work_n) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -118,7 +122,7 @@ typedef struct {
         const alpaqa_real_t *Σ,
         const alpaqa_real_t *zl,
         const alpaqa_real_t *zu,
-        alpaqa_real_t *ŷ);
+        alpaqa_real_t *ŷ) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -128,7 +132,7 @@ typedef struct {
         const alpaqa_real_t *zu,
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
-        alpaqa_real_t *work_m);
+        alpaqa_real_t *work_m) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_ψ_grad_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -138,26 +142,26 @@ typedef struct {
         const alpaqa_real_t *zu,
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
-        alpaqa_real_t *work_m);
+        alpaqa_real_t *work_m) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_prox_grad_step)(
         void *instance,
         alpaqa_real_t γ,
         const alpaqa_real_t *x,
         const alpaqa_real_t *grad_ψ,
         alpaqa_real_t *x̂,
-        alpaqa_real_t *p);
+        alpaqa_real_t *p) ALPAQA_NULLPTR_DEFAULT;
     void (*initialize_box_C)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub);
+        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
     void (*initialize_box_D)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub);
+        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
     void (*initialize_l1_reg)(
         void *instance,
         alpaqa_real_t *lambda,
-        alpaqa_length_t *size);
+        alpaqa_length_t *size) ALPAQA_NULLPTR_DEFAULT;
     // clang-format on
 } alpaqa_problem_functions_t;
 
@@ -166,93 +170,96 @@ typedef struct alpaqa_function_dict_s alpaqa_function_dict_t;
 
 typedef struct {
     /// Owning pointer.
-    void *instance;
+    void *instance ALPAQA_NULLPTR_DEFAULT;
     /// Non-owning pointer, lifetime at least as long as @ref instance.
-    alpaqa_problem_functions_t *functions;
+    alpaqa_problem_functions_t *functions ALPAQA_NULLPTR_DEFAULT;
     /// Pointer to the function to clean up @ref instance.
-    void (*cleanup)(void *);
+    void (*cleanup)(void *) ALPAQA_NULLPTR_DEFAULT;
     /// Pointer to a map of extra functions (C++ only).
-    alpaqa_function_dict_t *extra_functions;
+    alpaqa_function_dict_t *extra_functions ALPAQA_NULLPTR_DEFAULT;
 } alpaqa_problem_register_t;
 
 typedef struct {
     uint64_t abi_version ALPAQA_DL_ABI_VERSION_DEFAULT;
-    alpaqa_length_t N, nx, nu, nh, nh_N, nc, nc_N;
+    alpaqa_length_t N ALPAQA_ZERO_DEFAULT, nx ALPAQA_ZERO_DEFAULT,
+        nu ALPAQA_ZERO_DEFAULT, nh ALPAQA_ZERO_DEFAULT,
+        nh_N ALPAQA_ZERO_DEFAULT, nc ALPAQA_ZERO_DEFAULT,
+        nc_N ALPAQA_ZERO_DEFAULT;
 
     // clang-format off
     void (*get_U)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub);
+        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
     void (*get_D)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub);
+        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
     void (*get_D_N)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub);
+        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
     void (*get_x_init)(
         void *instance,
-        alpaqa_real_t *x_init);
+        alpaqa_real_t *x_init) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_f)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
-        alpaqa_real_t *fxu);
+        alpaqa_real_t *fxu) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_jac_f)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
-        alpaqa_real_t *J_fxu);
+        alpaqa_real_t *J_fxu) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_f_prod)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
         const alpaqa_real_t *p,
-        alpaqa_real_t *grad_fxu_p);
+        alpaqa_real_t *grad_fxu_p) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_h)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
-        alpaqa_real_t *h);
+        alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_h_N)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *h);
+        alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_l)(
         void *instance,
         alpaqa_index_t timestep,
-        const alpaqa_real_t *h);
+        const alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_real_t (*eval_l_N)(
         void *instance,
-        const alpaqa_real_t *h);
+        const alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_qr)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *xu,
         const alpaqa_real_t *h,
-        alpaqa_real_t *qr);
+        alpaqa_real_t *qr) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_q_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *h,
-        alpaqa_real_t *q);
+        alpaqa_real_t *q) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_Q)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *xu,
         const alpaqa_real_t *h,
-        alpaqa_real_t *Q);
+        alpaqa_real_t *Q) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_Q_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *h,
-        alpaqa_real_t *Q);
+        alpaqa_real_t *Q) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_R_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -260,7 +267,7 @@ typedef struct {
         const alpaqa_real_t *h,
         const alpaqa_index_t *mask,
         alpaqa_real_t *R,
-        alpaqa_real_t *work);
+        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_S_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -268,7 +275,7 @@ typedef struct {
         const alpaqa_real_t *h,
         const alpaqa_index_t *mask,
         alpaqa_real_t *S,
-        alpaqa_real_t *work);
+        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_R_prod_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -278,7 +285,7 @@ typedef struct {
         const alpaqa_index_t *mask_K,
         const alpaqa_real_t *v,
         alpaqa_real_t *out,
-        alpaqa_real_t *work);
+        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_S_prod_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -287,54 +294,54 @@ typedef struct {
         const alpaqa_index_t *mask_K,
         const alpaqa_real_t *v,
         alpaqa_real_t *out,
-        alpaqa_real_t *work);
+        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_length_t (*get_R_work_size)(
-        void *instance);
+        void *instance) ALPAQA_NULLPTR_DEFAULT;
     alpaqa_length_t (*get_S_work_size)(
-        void *instance);
+        void *instance) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_constr)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
-        alpaqa_real_t *c);
+        alpaqa_real_t *c) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_constr_N)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *c);
+        alpaqa_real_t *c) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_constr_prod)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *p,
-        alpaqa_real_t *grad_cx_p);
+        alpaqa_real_t *grad_cx_p) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_grad_constr_prod_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *p,
-        alpaqa_real_t *grad_cx_p);
+        alpaqa_real_t *grad_cx_p) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_gn_hess_constr)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *M,
-        alpaqa_real_t *out);
+        alpaqa_real_t *out) ALPAQA_NULLPTR_DEFAULT;
     void (*eval_add_gn_hess_constr_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *M,
-        alpaqa_real_t *out);
+        alpaqa_real_t *out) ALPAQA_NULLPTR_DEFAULT;
     // clang-format on
 } alpaqa_control_problem_functions_t;
 
 typedef struct {
     /// Owning pointer.
-    void *instance;
+    void *instance ALPAQA_NULLPTR_DEFAULT;
     /// Non-owning pointer, lifetime at least as long as @ref instance.
-    alpaqa_control_problem_functions_t *functions;
+    alpaqa_control_problem_functions_t *functions ALPAQA_NULLPTR_DEFAULT;
     /// Pointer to the function to clean up @ref instance.
-    void (*cleanup)(void *);
+    void (*cleanup)(void *) ALPAQA_NULLPTR_DEFAULT;
     /// Pointer to a map of extra functions (C++ only).
-    alpaqa_function_dict_t *extra_functions;
+    alpaqa_function_dict_t *extra_functions ALPAQA_NULLPTR_DEFAULT;
 } alpaqa_control_problem_register_t;
 
 #ifdef __cplusplus
