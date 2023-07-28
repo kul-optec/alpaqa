@@ -1,11 +1,10 @@
 #include <alpaqa/config/config.hpp>
 #include <Eigen/Sparse>
+#include <test-util/eigen-matchers.hpp>
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 using spmat = Eigen::SparseMatrix<real_t, Eigen::ColMajor, Eigen::Index>;
 
 #if ALPAQA_WITH_OCP
-
-#include <test-util/eigen-matchers.hpp>
 
 #include <alpaqa/util/sparse-ops.hpp>
 
