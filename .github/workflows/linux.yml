@@ -95,6 +95,7 @@ jobs:
     container: ubuntu:jammy
     strategy:
       matrix:
+        config: [RelWithDebInfo, Debug]
         host: [x86_64-centos7-linux-gnu]
     steps:
       # Git clone
@@ -113,104 +114,59 @@ jobs:
           path: package
       - name: Install
         run: apt install -y ./package/*alpaqa*.deb
-      - name: Build examples (RelWithDebInfo)
+      - name: Build examples (${{ matrix.config }})
         run: |
           cmake -B build-examples -S examples \
             -G "Ninja Multi-Config"
-          cmake --build build-examples -j --config RelWithDebInfo
-      - name: Build tests (RelWithDebInfo)
+          cmake --build build-examples -j --config ${{ matrix.config }}
+      - name: Build tests (${{ matrix.config }})
         run: |
           cmake -B build-tests -S test \
             -G "Ninja Multi-Config"
-          cmake --build build-tests -j --config RelWithDebInfo
-      - name: Upload (RelWithDebInfo)
+          cmake --build build-tests -j --config ${{ matrix.config }}
+      - name: Upload (${{ matrix.config }})
         uses: actions/upload-artifact@v3
         with:
           name: alpaqa-${{ matrix.host }}-test-examples-release
           retention-days: 1
           path: |
-            build-examples/C++/CustomCppProblem/RelWithDebInfo/custom-cpp-problem-example
-            build-examples/C++/SimpleUnconstrProblem/RelWithDebInfo/simple-unconstr-cpp-problem-example
-            build-examples/C++/CustomControlCppProblem/RelWithDebInfo/custom-control-cpp-problem-example
-            build-examples/C++/FortranProblem/RelWithDebInfo/fortran-problem-example
-            build-examples/C++/DLProblem/RelWithDebInfo/dl-problem-example
-            build-examples/C++/DLProblem/RelWithDebInfo/test-matmul
-            build-tests/RelWithDebInfo/tests
-            build-tests/RelWithDebInfo/librosenbrock_functions_test.so
-      - name: Build examples (Debug)
+            build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
+            build-examples/C++/SimpleUnconstrProblem/${{ matrix.config }}/simple-unconstr-cpp-problem-example
+            build-examples/C++/CustomControlCppProblem/${{ matrix.config }}/custom-control-cpp-problem-example
+            build-examples/C++/FortranProblem/${{ matrix.config }}/fortran-problem-example
+            build-examples/C++/DLProblem/${{ matrix.config }}/dl-problem-example
+            build-examples/C++/DLProblem/${{ matrix.config }}/test-matmul
+            build-tests/${{ matrix.config }}/tests
+            build-tests/${{ matrix.config }}/librosenbrock_functions_test.so
+      - name: Run examples (${{ matrix.config }})
         run: |
-          cmake --build build-examples -j --config Debug
-      - name: Build tests (Debug)
+          ./build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
+          ./build-examples/C++/SimpleUnconstrProblem/${{ matrix.config }}/simple-unconstr-cpp-problem-example
+          ./build-examples/C++/CustomControlCppProblem/${{ matrix.config }}/custom-control-cpp-problem-example
+          ./build-examples/C++/FortranProblem/${{ matrix.config }}/fortran-problem-example
+          ./build-examples/C++/DLProblem/${{ matrix.config }}/dl-problem-example
+          ./build-examples/C++/DLProblem/${{ matrix.config }}/test-matmul
+      - name: Run tests (${{ matrix.config }})
         run: |
-          cmake --build build-tests -j --config Debug
-      - name: Upload (Debug)
-        uses: actions/upload-artifact@v3
-        with:
-          name: alpaqa-${{ matrix.host }}-test-examples-debug
-          retention-days: 1
-          path: |
-            build-examples/C++/CustomCppProblem/Debug/custom-cpp-problem-example
-            build-examples/C++/SimpleUnconstrProblem/Debug/simple-unconstr-cpp-problem-example
-            build-examples/C++/CustomControlCppProblem/Debug/custom-control-cpp-problem-example
-            build-examples/C++/FortranProblem/Debug/fortran-problem-example
-            build-examples/C++/DLProblem/Debug/dl-problem-example
-            build-examples/C++/DLProblem/Debug/test-matmul
-            build-tests/Debug/tests
-            build-tests/Debug/librosenbrock_functions_test.so
-      - name: Run examples (RelWithDebInfo)
-        run: |
-          ./build-examples/C++/CustomCppProblem/RelWithDebInfo/custom-cpp-problem-example
-          ./build-examples/C++/SimpleUnconstrProblem/RelWithDebInfo/simple-unconstr-cpp-problem-example
-          ./build-examples/C++/CustomControlCppProblem/RelWithDebInfo/custom-control-cpp-problem-example
-          ./build-examples/C++/FortranProblem/RelWithDebInfo/fortran-problem-example
-          ./build-examples/C++/DLProblem/RelWithDebInfo/dl-problem-example
-          ./build-examples/C++/DLProblem/RelWithDebInfo/test-matmul
-      - name: Run examples (Debug)
-        run: |
-          ./build-examples/C++/CustomCppProblem/Debug/custom-cpp-problem-example
-          ./build-examples/C++/SimpleUnconstrProblem/Debug/simple-unconstr-cpp-problem-example
-          ./build-examples/C++/CustomControlCppProblem/Debug/custom-control-cpp-problem-example
-          ./build-examples/C++/FortranProblem/Debug/fortran-problem-example
-          ./build-examples/C++/DLProblem/Debug/dl-problem-example
-          ./build-examples/C++/DLProblem/Debug/test-matmul
-      - name: Run tests (RelWithDebInfo)
-        run: |
-          ./build-tests/RelWithDebInfo/tests
-          cmake --build build-tests -t test --config RelWithDebInfo
-        env:
-          CTEST_OUTPUT_ON_FAILURE: 1
-      - name: Run tests (Debug)
-        run: |
-          ./build-tests/Debug/tests
-          cmake --build build-tests -t test --config Debug
+          ./build-tests/${{ matrix.config }}/tests
+          cmake --build build-tests -t test --config ${{ matrix.config }}
         env:
           CTEST_OUTPUT_ON_FAILURE: 1
       - name: Install Valgrind
         run: |
           apt update
           apt install -y valgrind --no-install-recommends
-      - name: Run examples (Valgrind, RelWithDebInfo)
+      - name: Run examples (Valgrind, ${{ matrix.config }})
         run: |
-          valgrind --gen-suppressions=all ./build-examples/C++/CustomCppProblem/RelWithDebInfo/custom-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/SimpleUnconstrProblem/RelWithDebInfo/simple-unconstr-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/CustomControlCppProblem/RelWithDebInfo/custom-control-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/FortranProblem/RelWithDebInfo/fortran-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/RelWithDebInfo/dl-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/RelWithDebInfo/test-matmul
-      - name: Run examples (Valgrind, Debug)
+          valgrind --gen-suppressions=all ./build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/SimpleUnconstrProblem/${{ matrix.config }}/simple-unconstr-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/CustomControlCppProblem/${{ matrix.config }}/custom-control-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/FortranProblem/${{ matrix.config }}/fortran-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/${{ matrix.config }}/dl-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/${{ matrix.config }}/test-matmul
+      - name: Run tests (Valgrind, ${{ matrix.config }})
         run: |
-          valgrind --gen-suppressions=all ./build-examples/C++/CustomCppProblem/Debug/custom-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/SimpleUnconstrProblem/Debug/simple-unconstr-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/CustomControlCppProblem/Debug/custom-control-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/FortranProblem/Debug/fortran-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/Debug/dl-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/Debug/test-matmul
-      - name: Run tests (Valgrind, RelWithDebInfo)
-        run: |
-          valgrind --gen-suppressions=all ./build-tests/RelWithDebInfo/tests
-      - name: Run tests (Valgrind, Debug)
-        run: |
-          valgrind --gen-suppressions=all ./build-tests/Debug/tests
+          valgrind --gen-suppressions=all ./build-tests/${{ matrix.config }}/tests
 
   test-deb:
     needs: [build]

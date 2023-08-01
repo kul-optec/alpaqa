@@ -16,6 +16,9 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     container: ubuntu:jammy
+    strategy:
+      matrix:
+        config: [RelWithDebInfo, Debug]
     env:
       HOST: 'x86_64-centos7-linux-gnu'
       CMAKE_C_COMPILER_LAUNCHER: ccache
@@ -42,8 +45,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache
+          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-${{ matrix.config }}-ccache-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-${{ matrix.config }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
         run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build
@@ -52,25 +55,25 @@ jobs:
         run: |
           host="${{ env.HOST }}"
           staging="/opt/$host"
-          cat > ninja-debug.cross.toml <<- EOF
+          cat > ninja-${{ matrix.config }}.cross.toml <<- EOF
           [cmake]
-          config = ["Debug"]
+          config = ["${{ matrix.config }}"]
           generator = "Ninja Multi-Config"
           [cmake.options]
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           EOF
           python${{ env.PYTHON_VERSION }} -m build -w . \
-              -C--cross="$PWD/ninja-debug.cross.toml" \
+              -C--cross="$PWD/ninja-${{ matrix.config }}.cross.toml" \
               -C--cross="$staging/cmake/$host.py-build-cmake.cross.toml"
         env:
-          CFLAGS: '-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=3 -fdiagnostics-color -static-libgcc'
-          CXXFLAGS: '-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=3 -fdiagnostics-color -static-libgcc -static-libstdc++'
+          CFLAGS: "-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=${{ matrix.config != 'Debug' && '3' || '0' }} -fdiagnostics-color -static-libgcc"
+          CXXFLAGS: "-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=${{ matrix.config != 'Debug' && '3' || '0' }} -fdiagnostics-color -static-libgcc -static-libstdc++"
       # Upload
       - name: Upload Wheels
         uses: actions/upload-artifact@v3
         with:
-          name: whl-${{ env.PYTHON_VERSION }}-linux-test
+          name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
           retention-days: 1
           path: dist/*.whl
 
@@ -78,29 +81,32 @@ jobs:
     needs: [build-linux]
     runs-on: ubuntu-latest
     container: python:3.11-bullseye
+    strategy:
+      matrix:
+        config: [RelWithDebInfo, Debug]
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
       - uses: actions/download-artifact@v3
         with:
-          name: whl-${{ env.PYTHON_VERSION }}-linux-test
+          name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
           path: dist
       - name: Install test dependencies
-        run: |
-          python3 -m pip install -U pip cmake ninja twine
+        run: >
+          python3 -m pip install -U pip cmake ninja twine &&
           python3 -m pip install --find-links=dist "${PACKAGE_NAME}[test]==${PACKAGE_VERSION}"
-      - name: Test (Debug)
+      - name: Test (${{ matrix.config }})
         run: python3 -m pytest -rP
         env:
-          ALPAQA_PYTHON_DEBUG: "1"
+          ALPAQA_PYTHON_DEBUG: ${{ matrix.config == 'Debug' }}
       - name: Install Valgrind
-        run: |
-          apt update
+        run: >
+          apt update &&
           apt install -y valgrind --no-install-recommends
-      - name: Test (Valgrind, Debug)
+      - name: Test (Valgrind, ${{ matrix.config }})
         run: valgrind --gen-suppressions=all --suppressions=scripts/valgrind/python.supp python3 -m pytest -rP
         env:
-          ALPAQA_PYTHON_DEBUG: "1"
+          ALPAQA_PYTHON_DEBUG: ${{ matrix.config == 'Debug' }}
       - name: Check Wheel metadata
         run: python -m twine check dist/*.whl
