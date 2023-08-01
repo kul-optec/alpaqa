@@ -2,31 +2,33 @@ find_package(CUTEst REQUIRED)
 
 # SIFDecode
 
-find_program(SIFDECODE_EXE sifdecoder
+find_program(SIFDECODE_EXE bin/sifdecoder
     HINTS
         ${SIFDECODE}
         $ENV{SIFDECODE}
-        ${CUTEST}/../SIFDecode
-        ${CUTEST}/../sifdecode
-    PATH_SUFFIXES
-        bin
+        ${CUTEST_DIR}/../SIFDecode
+        ${CUTEST_DIR}/../sifdecode
     NO_CMAKE_FIND_ROOT_PATH
 )
-cmake_path(GET SIFDECODE_EXE PARENT_PATH SIFDECODE_EXE_DIR)
-set(SIFDECODE_DIR ${SIFDECODE_EXE_DIR}/.. CACHE PATH "")
 
-find_path(ARCHDEFS_DIR NAMES compiler.${CUTEST_MYARCH}
+find_file(ARCHDEFS_COMPILER NAMES compiler.${CUTEST_MYARCH}
     HINTS
         ${ARCHDEFS}
         $ENV{ARCHDEFS}
-        ${CUTEST}/../ARCHDefs
-        ${CUTEST}/../archdefs
+        ${CUTEST_DIR}/../ARCHDefs
+        ${CUTEST_DIR}/../archdefs
 )
-set(ARCHDEFS ${ARCHDEFS_DIR} CACHE PATH "")
 
-mark_as_advanced(SIFDECODE_EXE ARCHDEFS_DIR)
+mark_as_advanced(SIFDECODE_EXE ARCHDEFS_COMPILER)
 find_package_handle_standard_args(SIFDecode 
     REQUIRED_VARS
         SIFDECODE_EXE
-        ARCHDEFS_DIR
+        ARCHDEFS_COMPILER
 )
+
+cmake_path(GET SIFDECODE_EXE PARENT_PATH SIFDECODE_EXE_DIR)
+cmake_path(GET SIFDECODE_EXE_DIR PARENT_PATH SIFDECODE_EXE_DIR)
+set(SIFDECODE_DIR ${SIFDECODE_EXE_DIR} CACHE PATH "")
+
+cmake_path(GET ARCHDEFS_COMPILER PARENT_PATH ARCHDEFS_COMPILER_DIR)
+set(ARCHDEFS_DIR ${ARCHDEFS_COMPILER_DIR} CACHE PATH "")

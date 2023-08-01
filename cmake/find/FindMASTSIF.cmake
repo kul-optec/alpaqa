@@ -6,10 +6,10 @@ find_path(MASTSIF_DIR NAMES mastsif.html sif.html
     HINTS
         ${MASTSIF}
         $ENV{MASTSIF}
-        ${CUTEST}/../MASTSIF
-        ${CUTEST}/../mastsif
-        ${CUTEST}/../SIF
-        ${CUTEST}/../sif
+        ${CUTEST_DIR}/../MASTSIF
+        ${CUTEST_DIR}/../mastsif
+        ${CUTEST_DIR}/../SIF
+        ${CUTEST_DIR}/../sif
     CMAKE_FIND_ROOT_PATH_BOTH
 )
 
