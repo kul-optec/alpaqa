@@ -32,7 +32,7 @@ bash -c "$(wget -O- https://apt.llvm.org/llvm.sh)"
 ### Clone the repository
 
 ```sh
-git clone https://github.com/kul-optec/alpaqa
+git clone https://github.com/kul-optec/alpaqa --branch=develop --single-branch
 ```
 
 ### Create a virtual environment
