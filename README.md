@@ -32,7 +32,7 @@ $$
 The Python interface can be installed directly from [PyPI](https://pypi.org/project/alpaqa):
 
 ```sh
-python3 -m pip install alpaqa
+python3 -m pip install --upgrade --pre alpaqa
 ```
 
 For more information, please see the full

@@ -29,7 +29,7 @@ The package can be easily installed using:
 
 .. code-block:: sh
 
-    python3 -m pip install alpaqa
+    python3 -m pip install --upgrade --pre alpaqa
 
 
 .. toctree::

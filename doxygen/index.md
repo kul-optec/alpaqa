@@ -48,7 +48,7 @@ problems that have been defined in different programming languages:
 The project is available on [PyPI](https://pypi.org/project/alpaqa):
 
 ```sh
-python3 -m pip install alpaqa
+python3 -m pip install --upgrade --pre alpaqa
 ```
 
 For more information, please see the full

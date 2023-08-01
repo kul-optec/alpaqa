@@ -8,7 +8,7 @@ The preferred way to install the alpaqa Python interface is using pip:
 
 .. code-block:: sh
 
-    python3 -m pip install alpaqa
+    python3 -m pip install --upgrade --pre alpaqa
 
 (`PyPI <https://pypi.org/project/alpaqa>`_)
 

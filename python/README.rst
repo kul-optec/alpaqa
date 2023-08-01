@@ -34,7 +34,7 @@ The Python interface can be installed directly from PyPI:
 
 .. code-block:: sh
 
-    python3 -m pip install alpaqa
+    python3 -m pip install --upgrade --pre alpaqa
 
 For more information, please see the full
 `installation instructions <https://kul-optec.github.io/alpaqa/develop/Sphinx/install/installation.html>`_.
