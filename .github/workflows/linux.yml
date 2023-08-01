@@ -127,7 +127,7 @@ jobs:
       - name: Upload (${{ matrix.config }})
         uses: actions/upload-artifact@v3
         with:
-          name: alpaqa-${{ matrix.host }}-test-examples-release
+          name: alpaqa-${{ matrix.host }}-test-examples-${{ matrix.config }}
           retention-days: 1
           path: |
             build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
@@ -140,6 +140,7 @@ jobs:
             build-tests/${{ matrix.config }}/librosenbrock_functions_test.so
       - name: Run examples (${{ matrix.config }})
         run: |
+          set -ex
           ./build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
           ./build-examples/C++/SimpleUnconstrProblem/${{ matrix.config }}/simple-unconstr-cpp-problem-example
           ./build-examples/C++/CustomControlCppProblem/${{ matrix.config }}/custom-control-cpp-problem-example
@@ -148,6 +149,7 @@ jobs:
           ./build-examples/C++/DLProblem/${{ matrix.config }}/test-matmul
       - name: Run tests (${{ matrix.config }})
         run: |
+          set -ex
           ./build-tests/${{ matrix.config }}/tests
           cmake --build build-tests -t test --config ${{ matrix.config }}
         env:
@@ -158,15 +160,16 @@ jobs:
           apt install -y valgrind --no-install-recommends
       - name: Run examples (Valgrind, ${{ matrix.config }})
         run: |
-          valgrind --gen-suppressions=all ./build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/SimpleUnconstrProblem/${{ matrix.config }}/simple-unconstr-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/CustomControlCppProblem/${{ matrix.config }}/custom-control-cpp-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/FortranProblem/${{ matrix.config }}/fortran-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/${{ matrix.config }}/dl-problem-example
-          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/${{ matrix.config }}/test-matmul
+          set -ex
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-examples/C++/CustomCppProblem/${{ matrix.config }}/custom-cpp-problem-example
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-examples/C++/SimpleUnconstrProblem/${{ matrix.config }}/simple-unconstr-cpp-problem-example
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-examples/C++/CustomControlCppProblem/${{ matrix.config }}/custom-control-cpp-problem-example
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-examples/C++/FortranProblem/${{ matrix.config }}/fortran-problem-example
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-examples/C++/DLProblem/${{ matrix.config }}/dl-problem-example
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-examples/C++/DLProblem/${{ matrix.config }}/test-matmul
       - name: Run tests (Valgrind, ${{ matrix.config }})
         run: |
-          valgrind --gen-suppressions=all ./build-tests/${{ matrix.config }}/tests
+          valgrind --gen-suppressions=all --suppressions=scripts/valgrind/cpp.supp --error-exitcode=234 ./build-tests/${{ matrix.config }}/tests
 
   test-deb:
     needs: [build]

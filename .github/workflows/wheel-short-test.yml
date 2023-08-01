@@ -93,19 +93,19 @@ jobs:
           name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
           path: dist
       - name: Install test dependencies
-        run: >
-          python3 -m pip install -U pip cmake ninja twine &&
+        run: |
+          python3 -m pip install -U pip cmake ninja twine
           python3 -m pip install --find-links=dist "${PACKAGE_NAME}[test]==${PACKAGE_VERSION}"
       - name: Test (${{ matrix.config }})
         run: python3 -m pytest -rP
         env:
           ALPAQA_PYTHON_DEBUG: ${{ matrix.config == 'Debug' }}
       - name: Install Valgrind
-        run: >
-          apt update &&
+        run: |
+          apt update
           apt install -y valgrind --no-install-recommends
       - name: Test (Valgrind, ${{ matrix.config }})
-        run: valgrind --gen-suppressions=all --suppressions=scripts/valgrind/python.supp python3 -m pytest -rP
+        run: valgrind --gen-suppressions=all --suppressions=scripts/valgrind/python.supp --error-exitcode=234 python3 -m pytest -rP
         env:
           ALPAQA_PYTHON_DEBUG: ${{ matrix.config == 'Debug' }}
       - name: Check Wheel metadata

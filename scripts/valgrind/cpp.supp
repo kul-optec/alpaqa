@@ -1,0 +1,28 @@
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   ...
+   fun:~basic_string
+   ...
+}
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   ...
+   fun:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED1Ev
+   ...
+}
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   ...
+   fun:~vector
+   ...
+}
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   ...
+   fun:_ZNSt6vectorIdSaIdEED1Ev
+   ...
+}
