@@ -7,6 +7,8 @@ import os
 
 
 def test_alm_threaded():
+    valgrind = 'valgrind' in os.getenv('LD_PRELOAD', '')
+
     import alpaqa.casadi_loader as cl
 
     pp = pa.PANOCParams(max_no_progress=100, max_iter=100)
@@ -46,7 +48,6 @@ def test_alm_threaded():
         return stats
 
     def run(experiment):
-        valgrind = 'valgrind' in os.getenv('LD_PRELOAD', '')
         N = 4 if valgrind else 200
         with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as pool:
             futures = (pool.submit(experiment) for _ in range(N))
@@ -55,16 +56,17 @@ def test_alm_threaded():
                 assert stats["status"] == pa.SolverStatus.MaxIter
 
     run(good_experiment)
-    with pytest.raises(
-        RuntimeError, match=r"^Same instance of ALMSolver<PANOCSolver<LBFGS"
-    ) as e:
-        run(bad_experiment1)
-    print(e.value)
-    with pytest.raises(
-        RuntimeError, match=r"^Same instance of type (class )?alpaqa::TypeErasedProblem"
-    ) as e:
-        run(bad_experiment2)
-    print(e.value)
+    if not valgrind:
+        with pytest.raises(
+            RuntimeError, match=r"^Same instance of ALMSolver<PANOCSolver<LBFGS"
+        ) as e:
+            run(bad_experiment1)
+        print(e.value)
+        with pytest.raises(
+            RuntimeError, match=r"^Same instance of type (class )?alpaqa::TypeErasedProblem"
+        ) as e:
+            run(bad_experiment2)
+        print(e.value)
 
 
 if __name__ == "__main__":
