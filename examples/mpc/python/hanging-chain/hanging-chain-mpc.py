@@ -76,7 +76,7 @@ constr_coeff = [c, -3 * a * c, 3 * a * a * c + d]
 constr_lb = b - c * a**3 - d * a
 
 # %% NLP formulation
-import panocpy as pa
+import alpaqa as pa
 
 prob = pa.generate_and_compile_casadi_problem(mpc_cost_fun, mpc_constr_fun)
 prob.C.lowerbound = -1 * np.ones((dim * N_horiz, ))
