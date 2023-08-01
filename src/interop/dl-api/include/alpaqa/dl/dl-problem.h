@@ -1,3 +1,5 @@
+// NOLINTBEGIN(modernize-use-using,modernize-deprecated-headers)
+
 #pragma once
 
 #include <stddef.h>
@@ -21,40 +23,68 @@ typedef double alpaqa_real_t;
 typedef ptrdiff_t alpaqa_length_t;
 typedef alpaqa_length_t alpaqa_index_t;
 
+/// C API providing function pointers to problem functions.
+/// Used by @ref alpaqa::dl::DLProblem.
+///
+/// @note When used in C, you should initialize this struct by passing a pointer
+///       to your instance to the @ref ALPAQA_PROBLEM_FUNCTIONS_INIT macro.
+///       In C++, this is not necessary, because all members have default
+///       initializers.
 typedef struct {
     uint64_t abi_version ALPAQA_DL_ABI_VERSION_DEFAULT;
-    alpaqa_length_t n ALPAQA_ZERO_DEFAULT, m ALPAQA_ZERO_DEFAULT;
+    /// Number of decision variables.
+    /// @see @ref alpaqa::TypeErasedProblem::get_n()
+    alpaqa_length_t n ALPAQA_ZERO_DEFAULT;
+    /// Number of constraints.
+    /// @see @ref alpaqa::TypeErasedProblem::get_m()
+    alpaqa_length_t m ALPAQA_ZERO_DEFAULT;
 
     // clang-format off
+    /// Cost function.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_f()
     alpaqa_real_t (*eval_f)(
         void *instance,
         const alpaqa_real_t *x) ALPAQA_NULLPTR_DEFAULT;
+    /// Gradient of the cost function.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_f()
     void (*eval_grad_f)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *grad_fx) ALPAQA_NULLPTR_DEFAULT;
+    /// Constraints function.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_g()
     void (*eval_g)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *gx) ALPAQA_NULLPTR_DEFAULT;
+    /// Gradient-vector product of the constraints function.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_g_prod()
     void (*eval_grad_g_prod)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_gxy) ALPAQA_NULLPTR_DEFAULT;
+    /// Jacobian of the constraints function.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_jac_g()
     void (*eval_jac_g)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
         alpaqa_real_t *J_values) ALPAQA_NULLPTR_DEFAULT;
+    /// Number of nonzeros of the sparse Jacobian of the constraints function.
+    /// @see @ref alpaqa::TypeErasedProblem::get_jac_g_num_nonzeros()
     alpaqa_length_t (*get_jac_g_num_nonzeros)(
         void *instance) ALPAQA_NULLPTR_DEFAULT;
+    /// Gradient of specific constraint function.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_gi()
     void (*eval_grad_gi)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_index_t i,
         alpaqa_real_t *grad_gi) ALPAQA_NULLPTR_DEFAULT;
+    /// Hessian-vector product of the Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_L_prod()
     void (*eval_hess_L_prod)(
         void *instance,
         const alpaqa_real_t *x,
@@ -62,6 +92,8 @@ typedef struct {
         alpaqa_real_t scale,
         const alpaqa_real_t *v,
         alpaqa_real_t *Hv) ALPAQA_NULLPTR_DEFAULT;
+    /// Hessian of the Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_L()
     void (*eval_hess_L)(
         void *instance,
         const alpaqa_real_t *x,
@@ -70,8 +102,12 @@ typedef struct {
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
         alpaqa_real_t *H_values) ALPAQA_NULLPTR_DEFAULT;
+    /// Number of nonzeros of the sparse Hessian of the Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::get_hess_L_num_nonzeros()
     alpaqa_length_t (*get_hess_L_num_nonzeros)(
         void *instance) ALPAQA_NULLPTR_DEFAULT;
+    /// Hessian-vector product of the augmented Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_ψ_prod()
     void (*eval_hess_ψ_prod)(
         void *instance,
         const alpaqa_real_t *x,
@@ -82,6 +118,8 @@ typedef struct {
         const alpaqa_real_t *zu,
         const alpaqa_real_t *v,
         alpaqa_real_t *Hv) ALPAQA_NULLPTR_DEFAULT;
+    /// Hessian of the augmented Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_ψ()
     void (*eval_hess_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -93,28 +131,40 @@ typedef struct {
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
         alpaqa_real_t *H_values) ALPAQA_NULLPTR_DEFAULT;
+    /// Number of nonzeros of the sparse Hessian of the augmented Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::get_hess_ψ_num_nonzeros()
     alpaqa_length_t (*get_hess_ψ_num_nonzeros)(
         void *instance) ALPAQA_NULLPTR_DEFAULT;
+    /// Cost and its gradient.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_f_grad_f()
     alpaqa_real_t (*eval_f_grad_f)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *grad_fx) ALPAQA_NULLPTR_DEFAULT;
+    /// Cost and constraints.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_f_g()
     alpaqa_real_t (*eval_f_g)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *g) ALPAQA_NULLPTR_DEFAULT;
+    /// Gradient of the cost and gradient-vector product of the constraints.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_f_grad_g_prod()
     void (*eval_grad_f_grad_g_prod)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_f,
         alpaqa_real_t *grad_gxy) ALPAQA_NULLPTR_DEFAULT;
+    /// Gradient of the Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_L()
     void (*eval_grad_L)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_L,
         alpaqa_real_t *work_n) ALPAQA_NULLPTR_DEFAULT;
+    /// Augmented Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_ψ()
     alpaqa_real_t (*eval_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -123,6 +173,8 @@ typedef struct {
         const alpaqa_real_t *zl,
         const alpaqa_real_t *zu,
         alpaqa_real_t *ŷ) ALPAQA_NULLPTR_DEFAULT;
+    /// Gradient of the augmented Lagrangian.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_ψ()
     void (*eval_grad_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -133,6 +185,8 @@ typedef struct {
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
         alpaqa_real_t *work_m) ALPAQA_NULLPTR_DEFAULT;
+    /// Augmented Lagrangian and its gradient.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_ψ_grad_ψ()
     alpaqa_real_t (*eval_ψ_grad_ψ)(
         void *instance,
         const alpaqa_real_t *x,
@@ -143,6 +197,10 @@ typedef struct {
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
         alpaqa_real_t *work_m) ALPAQA_NULLPTR_DEFAULT;
+    /// Proximal gradient step.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_prox_grad_step()
+    /// If not set, the default implementation from
+    /// @ref alpaqa::BoxConstrProblem is used.
     alpaqa_real_t (*eval_prox_grad_step)(
         void *instance,
         alpaqa_real_t γ,
@@ -150,14 +208,25 @@ typedef struct {
         const alpaqa_real_t *grad_ψ,
         alpaqa_real_t *x̂,
         alpaqa_real_t *p) ALPAQA_NULLPTR_DEFAULT;
+    /// Provide the initial values for the bounds of
+    /// @ref alpaqa::BoxConstrProblem::C, i.e. the constraints on the decision
+    /// variables.
     void (*initialize_box_C)(
         void *instance,
         alpaqa_real_t *lb,
         alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+    /// Provide the initial values for the bounds of
+    /// @ref alpaqa::BoxConstrProblem::D, i.e. the general constraints.
     void (*initialize_box_D)(
         void *instance,
         alpaqa_real_t *lb,
         alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+    /// Provide the initial values for @ref alpaqa::BoxConstrProblem::l1_reg,
+    /// the ℓ₁-regularization factor.
+    /// This function is called twice:
+    ///  1. with @p lambda set to `nullptr`, and the user should set the size.
+    ///  2. with @p lambda pointing to an array of that size, and the user
+    ///     should initialize this array.
     void (*initialize_l1_reg)(
         void *instance,
         alpaqa_real_t *lambda,
@@ -176,6 +245,8 @@ typedef struct {
     /// Pointer to the function to clean up @ref instance.
     void (*cleanup)(void *) ALPAQA_NULLPTR_DEFAULT;
     /// Pointer to a map of extra functions (C++ only).
+    /// @see @ref alpaqa::register_function
+    /// @see @ref alpaqa::register_member_function
     alpaqa_function_dict_t *extra_functions ALPAQA_NULLPTR_DEFAULT;
 } alpaqa_problem_register_t;
 
@@ -348,12 +419,30 @@ typedef struct {
 }
 #endif
 
-#ifndef __cplusplus
-#define ALPAQA_PROBLEM_FUNCTIONS_INIT(self)                                    \
-    do {                                                                       \
-        memset((self), 0, sizeof(*(self)));                                    \
-        (self)->abi_version = ALPAQA_DL_ABI_VERSION;                           \
-    } while (0)
+#if !defined(__cplusplus) || defined(DOXYGEN)
+inline static void
+alpaqa_problem_functions_init(alpaqa_problem_functions_t *self) {
+    *self = (alpaqa_problem_functions_t){
+        .abi_version = ALPAQA_DL_ABI_VERSION,
+    };
+}
+inline static void alpaqa_control_problem_functions_init(
+    alpaqa_control_problem_functions_t *self) {
+    *self = (alpaqa_control_problem_functions_t){
+        .abi_version = ALPAQA_DL_ABI_VERSION,
+    };
+}
+/// Initialize an instance of @ref alpaqa_problem_functions_t or
+/// @ref alpaqa_control_problem_functions_t. It initializes all members to zero,
+/// except for the ABI version, which is initialized to the current ABI version.
+/// Available in C only (unnecessary in C++).
+/// @param  self
+///         A pointer to the instance to initialize.
+#define ALPAQA_PROBLEM_FUNCTIONS_INIT(self)                                           \
+    _Generic((self),                                                                  \
+        alpaqa_problem_functions_t *: alpaqa_problem_functions_init,                  \
+        alpaqa_control_problem_functions_t *: alpaqa_control_problem_functions_init)( \
+        self)
 #endif
 
 #if defined(__cplusplus) && __cplusplus > 201703L
@@ -481,3 +570,5 @@ inline void unregister_functions(function_dict_t *&extra_functions) {
 #endif
 
 #undef ALPAQA_DL_ABI_VERSION_DEFAULT
+
+// NOLINTEND(modernize-use-using,modernize-deprecated-headers)

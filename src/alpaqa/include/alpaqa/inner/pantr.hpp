@@ -86,7 +86,7 @@ struct PANTRParams {
     /// @f[ q_{\varphi_\gamma}(d) = \tfrac12 \inprod{\mathcal Q_\gamma(\hat x)
     /// \mathcal R_\gamma(\hat x) d}{d} + \inprod{\mathcal Q_\gamma(\hat x)
     /// R_\gamma(\hat x)}{d}, @f]
-    /// with @f$ \mathcal Q_\gamma(x) = \id - \gamma \nabla^2 \psi(x) @f$.
+    /// with @f$ \mathcal Q_\gamma(x) = \Id - \gamma \nabla^2 \psi(x) @f$.
     bool ratio_approx_fbe_quadratic_model = true;
 };
 

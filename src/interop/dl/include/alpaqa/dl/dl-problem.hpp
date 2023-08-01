@@ -97,13 +97,17 @@ class DLLoader {
 /// `<symbol_prefix>_register` that accepts a void pointer with user data, and
 /// returns a struct of type @ref alpaqa_problem_register_t that contains all
 /// data to represent the problem, as well as function pointers for all
-/// required operations. See @ref C++/DLProblem/main.cpp
+/// required operations.  
+/// See @ref C++/DLProblem/main.cpp and
+/// @ref problems/sparse-logistic-regression.cpp for examples.
 ///
 /// @note   Copies are shallow, they all share the same problem instance, take
 ///         that into account when using multiple threads.
 ///
 /// @ingroup    grp_Problems
 /// @see @ref   TypeErasedProblem
+/// @see @ref   alpaqa_problem_functions_t
+/// @see @ref   alpaqa_problem_register_t
 class DLProblem : private DLLoader, public BoxConstrProblem<DefaultConfig> {
   public:
     USING_ALPAQA_CONFIG(DefaultConfig);
