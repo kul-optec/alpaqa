@@ -13,6 +13,22 @@ endfunction()
 option(ALPAQA_WITH_OCP 
     "Enable solvers tailored for optimal control problems" On)
 
+add_library(alpaqa-headers INTERFACE)
+target_include_directories(alpaqa-headers INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
+    $<INSTALL_INTERFACE:include>)
+target_compile_features(alpaqa-headers INTERFACE cxx_std_20)
+target_compile_definitions(alpaqa-headers INTERFACE
+    $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
+    $<$<CONFIG:Debug>:EIGEN_RUNTIME_NO_MALLOC>)
+target_link_libraries(alpaqa-headers INTERFACE Eigen3::Eigen)
+target_compile_definitions(alpaqa-headers INTERFACE
+    $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:ALPAQA_WITH_QUAD_PRECISION>)
+target_compile_definitions(alpaqa-headers INTERFACE
+    $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)
+add_library(alpaqa::headers ALIAS alpaqa-headers)
+list(APPEND ALPAQA_INSTALL_TARGETS alpaqa-headers)
+
 add_library(alpaqa
     "alpaqa/src/util/type-erasure.cpp"
     "alpaqa/src/util/demangled-typename.cpp"
@@ -48,20 +64,8 @@ endif()
 if (ALPAQA_WITH_DRIVERS)
     target_sources(alpaqa PRIVATE "alpaqa/src/params/params.cpp")
 endif()
-target_compile_features(alpaqa PUBLIC cxx_std_20)
-target_include_directories(alpaqa PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
-    $<INSTALL_INTERFACE:include>)
-target_compile_definitions(alpaqa PUBLIC
-    $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
-    $<$<CONFIG:Debug>:EIGEN_RUNTIME_NO_MALLOC>)
-target_link_libraries(alpaqa PUBLIC Eigen3::Eigen)
-target_link_libraries(alpaqa PRIVATE warnings)
+target_link_libraries(alpaqa PUBLIC alpaqa-headers PRIVATE warnings)
 alpaqa_configure_visibility(alpaqa)
-target_compile_definitions(alpaqa PUBLIC
-    $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:ALPAQA_WITH_QUAD_PRECISION>)
-target_compile_definitions(alpaqa PUBLIC
-    $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)
 target_link_libraries(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:quadmath>)
 set_target_properties(alpaqa PROPERTIES SOVERSION ${PROJECT_VERSION})
@@ -72,7 +76,7 @@ list(APPEND ALPAQA_INSTALL_TARGETS alpaqa)
 include(GenerateExportHeader)
 generate_export_header(alpaqa
     EXPORT_FILE_NAME export/alpaqa/export.h)
-target_include_directories(alpaqa PUBLIC
+target_include_directories(alpaqa-headers INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
 
 # CasADi
