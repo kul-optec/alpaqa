@@ -6,3 +6,4 @@ if (PROJECT_IS_TOP_LEVEL)
 endif()
     
 add_subdirectory(C++)
+add_subdirectory(problems)
