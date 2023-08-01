@@ -46,8 +46,10 @@ def test_alm_threaded():
         return stats
 
     def run(experiment):
+        valgrind = 'valgrind' in os.getenv('LD_PRELOAD', '')
+        N = 4 if valgrind else 200
         with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as pool:
-            futures = (pool.submit(experiment) for _ in range(200))
+            futures = (pool.submit(experiment) for _ in range(N))
             for future in concurrent.futures.as_completed(futures):
                 stats = future.result()
                 assert stats["status"] == pa.SolverStatus.MaxIter

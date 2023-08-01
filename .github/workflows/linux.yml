@@ -10,7 +10,7 @@ on:
     types: ['released', 'prereleased']
 
 env:
-  PYTHON_VERSION: '3.10'
+  PYTHON_VERSION: '3.11'
 
 jobs:
   build:
@@ -185,6 +185,32 @@ jobs:
           cmake --build build-tests -t test --config Debug
         env:
           CTEST_OUTPUT_ON_FAILURE: 1
+      - name: Install Valgrind
+        run: |
+          apt update
+          apt install -y valgrind --no-install-recommends
+      - name: Run examples (Valgrind, RelWithDebInfo)
+        run: |
+          valgrind --gen-suppressions=all ./build-examples/C++/CustomCppProblem/RelWithDebInfo/custom-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/SimpleUnconstrProblem/RelWithDebInfo/simple-unconstr-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/CustomControlCppProblem/RelWithDebInfo/custom-control-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/FortranProblem/RelWithDebInfo/fortran-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/RelWithDebInfo/dl-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/RelWithDebInfo/test-matmul
+      - name: Run examples (Valgrind, Debug)
+        run: |
+          valgrind --gen-suppressions=all ./build-examples/C++/CustomCppProblem/Debug/custom-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/SimpleUnconstrProblem/Debug/simple-unconstr-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/CustomControlCppProblem/Debug/custom-control-cpp-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/FortranProblem/Debug/fortran-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/Debug/dl-problem-example
+          valgrind --gen-suppressions=all ./build-examples/C++/DLProblem/Debug/test-matmul
+      - name: Run tests (Valgrind, RelWithDebInfo)
+        run: |
+          valgrind --gen-suppressions=all ./build-tests/RelWithDebInfo/tests
+      - name: Run tests (Valgrind, Debug)
+        run: |
+          valgrind --gen-suppressions=all ./build-tests/Debug/tests
 
   test-deb:
     needs: [build]

@@ -1,0 +1,7 @@
+{
+   dlopen invalid read
+   Memcheck:Addr8
+   fun:strncmp
+   ...
+   fun:dl_open_worker
+}
