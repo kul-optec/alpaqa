@@ -18,17 +18,17 @@ The solvers in this library solve minimization problems of the following form:
 
 ## Documentation
 
-[**Sphinx documentation**](https://kul-optec.github.io/alpaqa/Sphinx/index.html)  
-[**Doxygen documentation**](https://kul-optec.github.io/alpaqa/Doxygen/index.html)  
+[**Sphinx documentation**](../Sphinx/index.html)  
+[**Doxygen documentation**](./index.html)  
 
-For the Python interface, it is recommended to consult the [Sphinx documentation](https://kul-optec.github.io/alpaqa/Sphinx/index.html), whereas the Doxygen documentation provides
+For the Python interface, it is recommended to consult the [Sphinx documentation](../Sphinx/index.html), whereas the Doxygen documentation provides
 the best overview of the C++ API (see especially the [**Modules**](./modules.html)
 page).
 
 ## Examples
 
-[**Python examples**](https://kul-optec.github.io/alpaqa/Sphinx/examples/index.html)  
-[**C++ examples**](https://kul-optec.github.io/alpaqa/Doxygen/examples.html)  
+[**Python examples**](../Sphinx/examples/index.html)  
+[**C++ examples**](./examples.html)  
 
 To get started using the C++ API, see the @ref C++/CustomCppProblem/main.cpp
 example, which explains how to formulate an optimization problem, how to
@@ -52,7 +52,7 @@ python3 -m pip install --upgrade --pre alpaqa
 ```
 
 For more information, please see the full
-[installation instructions](https://kul-optec.github.io/alpaqa/Sphinx/install/installation.html).
+[installation instructions](../Sphinx/install/installation.html).
 
 ## Citations
 
