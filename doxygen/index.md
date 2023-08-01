@@ -40,6 +40,9 @@ problems that have been defined in different programming languages:
   - @ref C++/FortranProblem/main.cpp (problem defined in Fortran, solved in C++)
   - @ref C++/DLProblem/main.cpp (problem defined in C, loaded from an external
     DLL, solved in C++)
+  - @ref problems/sparse-logistic-regression.cpp (problem defined in C++,
+    loaded from an external DLL, solved in using the `alpaqa-driver`
+    command-line tool)
   - @ref C++/CasADi/Rosenbrock/main.cpp (problem defined using [CasADi](https://web.casadi.org/),
     loaded from an external DLL, solved in C++)
 
