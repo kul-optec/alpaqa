@@ -14,10 +14,14 @@ mkdir -p "$output_folder"
 # usage:    run_doxygen_coverage <branch-name> <output-directory>
 function run_doxygen_coverage {
     branch="$1"
-    outdir="$2/$branch"
+    if [ "$branch" = "$mainbranch" ]; then
+        outdir="$2"
+    else
+        outdir="$2/$branch"
+    fi
     htmldir="Doxygen"
-    covdir="$2/$branch/Coverage"
-    sphinxdir="$2/$branch/Sphinx"
+    covdir="$outdir/Coverage"
+    sphinxdir="$outdir/Sphinx"
     tmpdir="$repodir/tmp"
     # Prepare temporary folders
     mkdir -p "$tmpdir"

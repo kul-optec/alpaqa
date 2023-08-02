@@ -23,8 +23,13 @@ function write_readme_item_item {
     name="$2"
     path="$3"
     itemname="${4:-$3}"
-    if [ -e "$output_folder/$name/$path/index.html" ]; then
-        echo "  [$itemname]($name/$path/)  \n"
+    if [ "$name" = "$mainbranch" ]; then
+        branchdir="$path"
+    else
+        branchdir="$name/$path"
+    fi
+    if [ -e "$output_folder/$branchdir/index.html" ]; then
+        echo "  [$itemname]($branchdir/)  \n"
     else
         echo "$type $name has no documentation for $itemname" >&2
     fi
@@ -61,11 +66,6 @@ function write_readme {
     fi
 
 
-    # Always have a link to main, it's at the root of the docs folder
-    echo -e '\n### Main branch\n' >> "$README"
-    write_readme_item "main branch" "$mainbranch" "$README"
-
-
     # Find all tags with documentation (version numbers)
     echo -e '\n### Tags and releases\n' >> "$README"
     git tag -l --sort=-creatordate \
@@ -74,11 +74,20 @@ function write_readme {
         write_readme_item "tag" "$tag" "$README"
     done
 
+    # Always have a link to main, it's at the root of the docs folder
+    echo -e '\n### Main branch\n' >> "$README"
+    write_readme_item "main branch" "$mainbranch" "$README"
+
+
     # Find other branches (not version numbers)
     echo -e '\n### Other branches\n' >> "$README"
-    git branch -r --sort=-committerdate | cut -d / -f 2 \
+    git branch -r -l 'origin/*' --format='%(refname)' --sort=-committerdate \
     | while read branch
     do
+        branch="${branch#refs/remotes/origin/}"
+        if [ "$branch" = "HEAD" ]; then
+            continue
+        fi
         if [ "$branch" = "$mainbranch" ]; then
             : # skip the main branch
         else
@@ -103,8 +112,13 @@ function write_index_item_item {
     name="$2"
     path="$3"
     itemname="${4:-$3}"
-    if [ -e "$output_folder/$name/$path/index.html" ]; then
-        echo "<br>\n  <a href=\"$name/$path/\">$itemname</a>"
+    if [ "$name" = "$mainbranch" ]; then
+        branchdir="$path"
+    else
+        branchdir="$name/$path"
+    fi
+    if [ -e "$output_folder/$branchdir/index.html" ]; then
+        echo "<br>\n  <a href=\"$branchdir/\">$itemname</a>"
     else
         echo "$type $name has no documentation for $itemname" >&2
     fi
@@ -143,13 +157,6 @@ function write_index {
         >> "$README"
     fi
 
-
-    # Always have a link to main, it's at the root of the docs folder
-    echo -e '\n<h3>Main branch</h3>\n' >> "$README"
-    echo -e '<ul>' >> "$README"
-    write_index_item "main branch" "$mainbranch" "$README"
-    echo -e '</ul>' >> "$README"
-
     # Find all tags with documentation (version numbers)
     echo -e '\n<h3>Tags and releases</h3>\n' >> "$README"
     echo -e '<ul>' >> "$README"
@@ -160,12 +167,22 @@ function write_index {
     done
     echo -e '</ul>' >> "$README"
 
+    # Always have a link to main, it's at the root of the docs folder
+    echo -e '\n<h3>Main branch</h3>\n' >> "$README"
+    echo -e '<ul>' >> "$README"
+    write_index_item "main branch" "$mainbranch" "$README"
+    echo -e '</ul>' >> "$README"
+
     # Find other branches (not version numbers)
     echo -e '\n<h3>Other branches</h3>\n' >> "$README"
     echo -e '<ul>' >> "$README"
-    git branch -r --sort=-committerdate | cut -d / -f 2 \
+    git branch -r -l 'origin/*' --format='%(refname)' --sort=-committerdate \
     | while read branch
     do
+        branch="${branch#refs/remotes/origin/}"
+        if [ "$branch" = "HEAD" ]; then
+            continue
+        fi
         index="$output_folder/$branch/Doxygen/index.html"
         if [ "$branch" = "$mainbranch" ]; then
             : # skip the main branch

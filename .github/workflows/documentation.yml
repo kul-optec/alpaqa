@@ -31,6 +31,7 @@ jobs:
         git fetch origin gh-pages:gh-pages ||:
         git checkout gh-pages || \
         { git checkout --orphan gh-pages && git rm -rf . && git clean -fxd ; }
+        echo -e 'bib*.aux\ncitelist.doc*' > .gitignore
 
     # Use ccache to cache compilation
     - name: Prepare ccache directory
