@@ -103,8 +103,6 @@ switching to an optimized version later.
 
 ## Windows
 
-==TODO==
-
 The instructions for Windows are quite similar to the ones for Linux. To install
 the dependencies, you can use the Powershell scripts instead of the Bash scripts:
 
@@ -116,17 +114,22 @@ the dependencies, you can use the Powershell scripts instead of the Bash scripts
 
 ## macOS
 
-==TODO==
-
 The instructions for macOS are the same as the ones for Linux, with the caveat
-that the default AppleClang compiler might not be supported. Instead, it is
-recommended to use a mainline Clang compiler (version 14 or higher).  
+that the default AppleClang compiler might not yet support the necessary C++20
+features used by alpaqa. If this is the case, you can use a mainline Clang
+compiler (version 16 or higher), that you install using Homebrew or another
+package manager.  
 You can select the compiler to use by setting the `CC` and `CXX` environment
-variables, for example:
+variables and reconfiguring the project, for example:
 ```sh
-export CC=clang-14
-export CXX=clang++-14
+export CC=clang-16
+export CXX=clang++-16
+rm build/CMakeCache.txt  # Remove cache to trigger a fresh CMake configuration
 ```
+
+If your Clang installation is older than version 16, you'll have to disable the
+optional OCP component, by using the `-D ALPAQA_WITH_OCP=Off` CMake option.
+This should work for Clang 14 and later.
 
 ***
 
@@ -138,8 +141,7 @@ For example:
 
 **main.cpp**
 ```cpp
-#include <alpaqa/inner/panoc.hpp>
-#include <alpaqa/outer/alm.hpp>
+#include <alpaqa/panoc-alm.hpp>
 
 int main() {
     // Use the solvers as shown in the examples
@@ -148,7 +150,7 @@ int main() {
 
 **CMakeLists.txt**
 ```cmake
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.17)
 project(Project)
 
 # Find the library you just installed:
