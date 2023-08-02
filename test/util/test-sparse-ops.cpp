@@ -100,11 +100,10 @@ TEST(SparseOps, Svec) {
 
 #if ALPAQA_WITH_CXX23_TESTS
 
-#include <alpaqa/util/sparse-ops.hpp>
-
-using namespace alpaqa::util;
-
 #if __cpp_lib_ranges_zip >= 202110L && __cpp_lib_ranges_enumerate >= 202302L
+
+#include <alpaqa/util/sparse-ops.hpp>
+using namespace alpaqa::util;
 
 TEST(SparseOps, convertTripletToCCS) {
     // Generate some row and column indices of a sparse matrix
