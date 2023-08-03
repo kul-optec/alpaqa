@@ -111,17 +111,14 @@ void register_panoc(py::module_ &m) {
     register_inner_solver_methods<PANOCSolver, Problem, InnerSolver>(panoc_solver);
 }
 
+// clang-format off
 template void register_panoc<alpaqa::EigenConfigd>(py::module_ &);
-template void register_panoc<alpaqa::EigenConfigf>(py::module_ &);
-template void register_panoc<alpaqa::EigenConfigl>(py::module_ &);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-template void register_panoc<alpaqa::EigenConfigq>(py::module_ &);
-#endif
+ALPAQA_IF_FLOAT(template void register_panoc<alpaqa::EigenConfigf>(py::module_ &);)
+ALPAQA_IF_LONGD(template void register_panoc<alpaqa::EigenConfigl>(py::module_ &);)
+ALPAQA_IF_QUADF(template void register_panoc<alpaqa::EigenConfigq>(py::module_ &);)
 
-// TODO: Why is this needed?
-template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigf>>;
 template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigd>>;
-template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigl>>;
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigq>>;
-#endif
+ALPAQA_IF_FLOAT(template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigf>>;)
+ALPAQA_IF_LONGD(template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigl>>;)
+ALPAQA_IF_QUADF(template class alpaqa::PANOCSolver<alpaqa::TypeErasedPANOCDirection<alpaqa::EigenConfigq>>;)
+// clang-format on

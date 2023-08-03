@@ -2,20 +2,16 @@
 
 namespace alpaqa {
 
-ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(struct, PANOCOCPProgressInfo, EigenConfigq);)
 
-ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigf);
 ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(class, PANOCOCPSolver, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa

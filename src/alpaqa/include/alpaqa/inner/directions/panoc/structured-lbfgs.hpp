@@ -135,12 +135,11 @@ struct StructuredLBFGSDirection {
     DirectionParams direction_params;
 };
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredLBFGSDirection, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa

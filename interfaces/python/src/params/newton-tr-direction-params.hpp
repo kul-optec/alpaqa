@@ -5,9 +5,7 @@
 
 PARAMS_TABLE_DECL(alpaqa::NewtonTRDirectionParams<Conf>);
 
-extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigf>);
 extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigd>);
-extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigq>);)

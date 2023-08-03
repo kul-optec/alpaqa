@@ -17,9 +17,22 @@ inline constexpr bool is_config_v = is_config<T>::value;
 template <class Conf>
 concept Config = is_config_v<Conf>;
 
-struct DefaultConfig;
+struct EigenConfigd;
+struct EigenConfigf;
+struct EigenConfigl;
+using DefaultConfig = EigenConfigd;
+
+#ifdef ALPAQA_WITH_QUAD_PRECISION
+struct EigenConfigq;
 template <>
-struct is_config<DefaultConfig> : std::true_type {};
+struct is_config<EigenConfigq> : std::true_type {};
+#endif
+template <>
+struct is_config<EigenConfigf> : std::true_type {};
+template <>
+struct is_config<EigenConfigd> : std::true_type {};
+template <>
+struct is_config<EigenConfigl> : std::true_type {};
 
 #define USING_ALPAQA_CONFIG_NO_TYPENAME(Conf)                                  \
     using real_t [[maybe_unused]]     = Conf::real_t;                          \
@@ -125,18 +138,7 @@ struct EigenConfigl : EigenConfig<long double> {
 struct EigenConfigq : EigenConfig<__float128> {
     static constexpr const char *get_name() { return "EigenConfigq"; }
 };
-template <>
-struct is_config<EigenConfigq> : std::true_type {};
 #endif
-
-struct DefaultConfig : EigenConfigd {};
-
-template <>
-struct is_config<EigenConfigf> : std::true_type {};
-template <>
-struct is_config<EigenConfigd> : std::true_type {};
-template <>
-struct is_config<EigenConfigl> : std::true_type {};
 
 /// Global empty vector for convenience.
 template <Config Conf>
@@ -163,3 +165,21 @@ auto norm_1(const Eigen::MatrixBase<Derived> &v) {
 } // namespace vec_util
 
 } // namespace alpaqa
+
+#ifdef ALPAQA_WITH_QUAD_PRECISION
+#define ALPAQA_IF_QUADF(...) __VA_ARGS__
+#else
+#define ALPAQA_IF_QUADF(...)
+#endif
+
+#ifdef ALPAQA_WITH_SINGLE_PRECISION
+#define ALPAQA_IF_FLOAT(...) __VA_ARGS__
+#else
+#define ALPAQA_IF_FLOAT(...)
+#endif
+
+#ifdef ALPAQA_WITH_LONG_DOUBLE
+#define ALPAQA_IF_LONGD(...) __VA_ARGS__
+#else
+#define ALPAQA_IF_LONGD(...)
+#endif

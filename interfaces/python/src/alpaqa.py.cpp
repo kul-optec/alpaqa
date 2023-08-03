@@ -97,15 +97,13 @@ PYBIND11_MODULE(MODULE_NAME, m) {
     register_counters(m);
     register_enums(m);
 
-    auto m_single = m.def_submodule("float32", "Single precision");
-    register_classes_for<alpaqa::EigenConfigf>(m_single);
     auto m_double = m.def_submodule("float64", "Double precision");
     register_classes_for<alpaqa::EigenConfigd>(m_double);
-    auto m_long_double = m.def_submodule("longdouble", "Long double precision");
-    register_classes_for<alpaqa::EigenConfigl>(m_long_double);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-    auto m_quad = m.def_submodule("float128", "Quadruple precision");
-    register_classes_for<alpaqa::EigenConfigq>(m_quad);
+    ALPAQA_IF_FLOAT(auto m_single = m.def_submodule("float32", "Single precision");
+                    register_classes_for<alpaqa::EigenConfigf>(m_single);)
+    ALPAQA_IF_LONGD(auto m_long_double = m.def_submodule("longdouble", "Long double precision");
+                    register_classes_for<alpaqa::EigenConfigl>(m_long_double);)
     // Note: this is usually disabled because NumPy doesn't support it.
-#endif
+    ALPAQA_IF_QUADF(auto m_quad = m.def_submodule("float128", "Quadruple precision");
+                    register_classes_for<alpaqa::EigenConfigq>(m_quad);)
 }

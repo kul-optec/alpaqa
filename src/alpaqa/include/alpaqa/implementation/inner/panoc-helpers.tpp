@@ -378,12 +378,11 @@ struct PANOCHelpers {
     }
 };
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANOCHelpers, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa::detail

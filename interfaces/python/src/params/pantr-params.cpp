@@ -26,9 +26,7 @@ PARAMS_TABLE_DEF(alpaqa::PANTRParams<Conf>,                                     
                  PARAMS_MEMBER(ratio_approx_fbe_quadratic_model),               //
 );
 
-PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigq>);)

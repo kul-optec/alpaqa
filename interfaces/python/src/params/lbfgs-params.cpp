@@ -14,16 +14,12 @@ PARAMS_TABLE_DEF(alpaqa::CBFGSParams<Conf>, //
                  PARAMS_MEMBER(ϵ),          //
 );
 
-PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigq>);)
 
-PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::CBFGSParams<alpaqa::EigenConfigq>);)

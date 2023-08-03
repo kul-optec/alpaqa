@@ -7,21 +7,15 @@
 namespace alpaqa {
 
 // clang-format off
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<DefaultConfig>);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigf>);
 ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigd>);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigf>);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigl>);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANTRSolver, NewtonTRDirection<EigenConfigq>);)
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<DefaultConfig>>);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigf>>);
 ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigd>>);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigl>>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigq>>);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigf>>);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigl>>);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, ALMSolver, PANTRSolver<NewtonTRDirection<EigenConfigq>>);)
 // clang-format on
 
 } // namespace alpaqa

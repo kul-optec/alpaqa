@@ -6,16 +6,14 @@
 PARAMS_TABLE_DECL(alpaqa::StructuredNewtonRegularizationParams<Conf>);
 PARAMS_TABLE_DECL(alpaqa::StructuredNewtonDirectionParams<Conf>);
 
-extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigf>);
+// clang-format off
 extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigd>);
-extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonRegularizationParams<alpaqa::EigenConfigq>);)
 
-extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigf>);
 extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigd>);
-extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(extern PARAMS_TABLE_INST(alpaqa::StructuredNewtonDirectionParams<alpaqa::EigenConfigq>);)
+// clang-format on

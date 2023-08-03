@@ -196,13 +196,12 @@ struct ProblemVTable : util::BasicVTable {
     ProblemVTable() = default;
 };
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigq);)
+// clang-format on
 
 /// @addtogroup grp_Problems
 /// @{

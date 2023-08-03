@@ -20,9 +20,7 @@ PARAMS_TABLE_DEF(alpaqa::ZeroFPRParams<Conf>,                               //
                  PARAMS_MEMBER(update_direction_from_prox_step),            //
 );
 
-PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigq>);)

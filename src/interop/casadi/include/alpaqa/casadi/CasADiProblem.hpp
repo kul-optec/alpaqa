@@ -97,6 +97,5 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
 };
 
 CASADI_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiProblem, EigenConfigd);
-CASADI_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiProblem, DefaultConfig);
 
 } // namespace alpaqa

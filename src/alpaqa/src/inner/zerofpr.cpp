@@ -2,28 +2,21 @@
 
 namespace alpaqa {
 
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRParams, EigenConfigq);)
 
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigf);
 ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRStats, EigenConfigq);)
 
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigf);
 ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(struct, ZeroFPRProgressInfo, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa

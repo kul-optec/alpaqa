@@ -26,16 +26,12 @@ PARAMS_TABLE_DEF(alpaqa::LipschitzEstimateParams<Conf>, //
                  PARAMS_MEMBER(Lγ_factor),              //
 );
 
-PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigq>);)
 
-PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::LipschitzEstimateParams<alpaqa::EigenConfigq>);)

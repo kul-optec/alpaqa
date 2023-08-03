@@ -2,12 +2,9 @@
 
 namespace alpaqa::detail {
 
-ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigf);
 ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(struct, ALMHelpers, EigenConfigq);)
 
-} // namespace alpaqa
+} // namespace alpaqa::detail

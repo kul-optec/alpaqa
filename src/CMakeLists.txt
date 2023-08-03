@@ -59,7 +59,10 @@ target_link_libraries(alpaqa PUBLIC Eigen3::Eigen)
 target_link_libraries(alpaqa PRIVATE warnings)
 alpaqa_configure_visibility(alpaqa)
 target_compile_definitions(alpaqa PUBLIC
-    $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:ALPAQA_WITH_QUAD_PRECISION>)
+    $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:ALPAQA_WITH_QUAD_PRECISION>
+    $<$<BOOL:${ALPAQA_WITH_SINGLE_PRECISION}>:ALPAQA_WITH_SINGLE_PRECISION>
+    $<$<BOOL:${ALPAQA_WITH_LONG_DOUBLE}>:ALPAQA_WITH_LONG_DOUBLE>
+)
 target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)
 target_link_libraries(alpaqa PUBLIC

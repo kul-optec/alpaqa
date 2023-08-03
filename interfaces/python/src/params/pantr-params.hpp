@@ -5,9 +5,7 @@
 
 PARAMS_TABLE_DECL(alpaqa::PANTRParams<Conf>);
 
-extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigf>);
 extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigd>);
-extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigq>);)

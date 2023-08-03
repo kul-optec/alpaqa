@@ -179,7 +179,5 @@ class CasADiControlProblem {
 
 CASADI_OCP_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiControlProblem,
                                          EigenConfigd);
-CASADI_OCP_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiControlProblem,
-                                         DefaultConfig);
 
 } // namespace alpaqa

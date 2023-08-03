@@ -181,13 +181,12 @@ struct ControlProblemVTable : util::BasicVTable {
                                                                 const ControlProblemVTable &vtable);
 };
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, EigenConfigq);)
+// clang-format on
 
 /**
  * Nonlinear optimal control problem with finite horizon @f$ N @f$.

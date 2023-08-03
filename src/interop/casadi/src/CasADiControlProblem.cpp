@@ -3,5 +3,4 @@
 
 namespace alpaqa {
 CASADI_OCP_LOADER_EXPORT_TEMPLATE(class, CasADiControlProblem, EigenConfigd);
-CASADI_OCP_LOADER_EXPORT_TEMPLATE(class, CasADiControlProblem, DefaultConfig);
 } // namespace alpaqa

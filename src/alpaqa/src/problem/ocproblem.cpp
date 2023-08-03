@@ -2,12 +2,11 @@
 
 namespace alpaqa {
 
-ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, DefaultConfig);
-ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigd);
-ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_TEMPLATE(struct, ControlProblemVTable, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa

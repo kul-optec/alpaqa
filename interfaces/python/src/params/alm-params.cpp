@@ -27,9 +27,7 @@ PARAMS_TABLE_DEF(alpaqa::ALMParams<Conf>,                       //
                  PARAMS_MEMBER(single_penalty_factor),          //
 );
 
-PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigq>);)

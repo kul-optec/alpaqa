@@ -5,9 +5,9 @@
 
 PARAMS_TABLE_DECL(alpaqa::StructuredLBFGSDirectionParams<Conf>);
 
-extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigf>);
+// clang-format off
 extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigd>);
-extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(extern PARAMS_TABLE_INST(alpaqa::StructuredLBFGSDirectionParams<alpaqa::EigenConfigq>);)
+// clang-format on

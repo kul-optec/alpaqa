@@ -257,28 +257,21 @@ operator+=(InnerStatsAccumulator<PANTRStats<Conf>> &acc,
     return acc;
 }
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRParams, EigenConfigq);)
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigf);
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRStats, EigenConfigq);)
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigf);
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, PANTRProgressInfo, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa

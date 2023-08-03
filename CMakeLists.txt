@@ -20,6 +20,10 @@ endif()
 # Options
 option(ALPAQA_WITH_QUAD_PRECISION
     "Support quad-precision floating point types" Off)
+option(ALPAQA_WITH_SINGLE_PRECISION
+    "Support single-precision floating point types" Off)
+option(ALPAQA_WITH_LONG_DOUBLE
+    "Support long double floating point types" Off)
 option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
 option(ALPAQA_WARNINGS_AS_ERRORS

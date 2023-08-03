@@ -69,12 +69,11 @@ struct ALMHelpers {
 #endif
 };
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ALMHelpers, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa::detail

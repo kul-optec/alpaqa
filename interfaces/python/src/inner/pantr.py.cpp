@@ -102,17 +102,14 @@ void register_pantr(py::module_ &m) {
     register_inner_solver_methods<PANTRSolver, Problem, InnerSolver>(pantr_solver);
 }
 
+// clang-format off
 template void register_pantr<alpaqa::EigenConfigd>(py::module_ &);
-template void register_pantr<alpaqa::EigenConfigf>(py::module_ &);
-template void register_pantr<alpaqa::EigenConfigl>(py::module_ &);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-template void register_pantr<alpaqa::EigenConfigq>(py::module_ &);
-#endif
+ALPAQA_IF_FLOAT(template void register_pantr<alpaqa::EigenConfigf>(py::module_ &);)
+ALPAQA_IF_LONGD(template void register_pantr<alpaqa::EigenConfigl>(py::module_ &);)
+ALPAQA_IF_QUADF(template void register_pantr<alpaqa::EigenConfigq>(py::module_ &);)
 
-// TODO: Why is this needed?
-template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigf>>;
 template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigd>>;
-template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigl>>;
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigq>>;
-#endif
+ALPAQA_IF_FLOAT(template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigf>>;)
+ALPAQA_IF_LONGD(template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigl>>;)
+ALPAQA_IF_QUADF(template class alpaqa::PANTRSolver<alpaqa::TypeErasedTRDirection<alpaqa::EigenConfigq>>;)
+// clang-format on

@@ -40,8 +40,6 @@ void register_inner_solver(py::module_ &m) {
 }
 
 template void register_inner_solver<alpaqa::EigenConfigd>(py::module_ &);
-template void register_inner_solver<alpaqa::EigenConfigf>(py::module_ &);
-template void register_inner_solver<alpaqa::EigenConfigl>(py::module_ &);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-template void register_inner_solver<alpaqa::EigenConfigq>(py::module_ &);
-#endif
+ALPAQA_IF_FLOAT(template void register_inner_solver<alpaqa::EigenConfigf>(py::module_ &);)
+ALPAQA_IF_LONGD(template void register_inner_solver<alpaqa::EigenConfigl>(py::module_ &);)
+ALPAQA_IF_QUADF(template void register_inner_solver<alpaqa::EigenConfigq>(py::module_ &);)

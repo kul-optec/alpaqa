@@ -237,13 +237,12 @@ struct StructuredNewtonDirection {
     DirectionParams direction_params;
 };
 
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, DefaultConfig);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigf);
+// clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigd);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigl);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigq);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigf);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigl);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigq);)
+// clang-format on
 
 } // namespace alpaqa
 
@@ -252,13 +251,10 @@ ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigq);
 namespace alpaqa {
 
 // clang-format off
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<DefaultConfig>);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigf>);
 ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigd>);
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigf>);)
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigl>);)
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigq>);)
 // clang-format on
 
 } // namespace alpaqa

@@ -416,8 +416,6 @@ void register_problems(py::module_ &m) {
 }
 
 template void register_problems<alpaqa::EigenConfigd>(py::module_ &);
-template void register_problems<alpaqa::EigenConfigf>(py::module_ &);
-template void register_problems<alpaqa::EigenConfigl>(py::module_ &);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-template void register_problems<alpaqa::EigenConfigq>(py::module_ &);
-#endif
+ALPAQA_IF_FLOAT(template void register_problems<alpaqa::EigenConfigf>(py::module_ &);)
+ALPAQA_IF_LONGD(template void register_problems<alpaqa::EigenConfigl>(py::module_ &);)
+ALPAQA_IF_QUADF(template void register_problems<alpaqa::EigenConfigq>(py::module_ &);)

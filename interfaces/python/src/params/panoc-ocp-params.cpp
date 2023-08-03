@@ -24,9 +24,7 @@ PARAMS_TABLE_DEF(alpaqa::PANOCOCPParams<Conf>,
                  PARAMS_MEMBER(disable_acceleration),                  //
 );
 
-PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigf>);
 PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigd>);
-PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigl>);
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigq>);
-#endif
+ALPAQA_IF_FLOAT(PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigf>);)
+ALPAQA_IF_LONGD(PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigl>);)
+ALPAQA_IF_QUADF(PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigq>);)
