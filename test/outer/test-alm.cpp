@@ -1,4 +1,6 @@
+#include <alpaqa/newton-tr-pantr-alm.hpp>
 #include <alpaqa/panoc-alm.hpp>
+#include <alpaqa/panoc-anderson-alm.hpp>
 #include <alpaqa/problem/functional-problem.hpp>
 #include <alpaqa/structured-panoc-alm.hpp>
 
@@ -172,16 +174,15 @@ TEST(ALM, multipleshooting1D) {
     std::cout << "Inner: " << stats.inner.iterations
               << ", Outer: " << stats.outer_iterations << std::endl;
 
-    auto duration = duration_cast<std::chrono::nanoseconds>(end - begin);
-    std::cout << duration.count() << "µs" << std::endl;
+    auto duration = std::chrono::duration<double>(end - begin);
+    std::cout << duration.count() * 1e3 << "ms" << std::endl;
 
     EXPECT_NEAR(x(0), -0.454545, 1e-4);
 }
 
-TEST(ALM, multipleshooting8D) {
-    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
+auto build_ms_problem() {
     using namespace alpaqa;
-
+    USING_ALPAQA_CONFIG(DefaultConfig);
     length_t nx = 8, nu = 8;
     length_t n = nu + nx;
     length_t m = nx;
@@ -207,39 +208,57 @@ TEST(ALM, multipleshooting8D) {
     auto x0 = vec(nx);
     x0.fill(1);
 
-    auto f = [&](crvec ux) {
+    mat G(nx + nu, nx);
+    G << B.transpose(), -mat::Identity(nx, nx);
+
+    FunctionalProblem<config_t> op{C, D};
+    op.f = [=](crvec ux) {
         auto u = ux.topRows(nu);
         auto x = ux.bottomRows(nx);
         return x.dot(Q * x) + u.dot(R * u);
     };
-    auto grad_f = [&](crvec ux, rvec grad_f) {
+    op.grad_f = [=](crvec ux, rvec grad_f) {
         auto u                = ux.topRows(nu);
         auto x                = ux.bottomRows(nx);
         grad_f.topRows(nu)    = 2 * (R * u);
         grad_f.bottomRows(nx) = 2 * (Q * x);
     };
-    auto g = [&](crvec ux, rvec g_u) {
+    op.g = [=](crvec ux, rvec g_u) {
         auto u         = ux.topRows(nu);
         auto x         = ux.bottomRows(nx);
         g_u.topRows(m) = A * x0 + B * u - x;
     };
-    auto grad_g = [&](crvec ux, crvec v, rvec grad_u_v) {
+    op.grad_g_prod = [=](crvec ux, crvec v, rvec grad_u_v) {
         (void)ux;
-        grad_u_v.topRows(nu)    = v.transpose() * B;
-        grad_u_v.bottomRows(nx) = -mat::Identity(nx, nx) * v;
+        grad_u_v.topRows(nu)    = B.transpose() * v;
+        grad_u_v.bottomRows(nx) = -v;
     };
+    op.hess_ψ_prod = [=](crvec, crvec, crvec Σ, real_t scale, crvec ux,
+                         rvec Hv) {
+        auto u            = ux.topRows(nu);
+        auto x            = ux.bottomRows(nx);
+        Hv.topRows(nu)    = 2 * scale * R * u;
+        Hv.bottomRows(nx) = 2 * scale * Q * x;
+        Hv += G * Σ.asDiagonal() * (G.transpose() * ux);
+    };
+    return std::tuple{std::move(op), nx, nu};
+}
 
-    FunctionalProblem<config_t> op{C, D};
-    op.f           = f;
-    op.grad_f      = grad_f;
-    op.g           = g;
-    op.grad_g_prod = grad_g;
+template <class>
+class PANOC : public testing::Test {};
+TYPED_TEST_SUITE_P(PANOC);
 
-    using Direction   = alpaqa::LBFGSDirection<config_t>;
+TYPED_TEST_P(PANOC, multipleshooting8D) {
+    USING_ALPAQA_CONFIG_TEMPLATE(TypeParam::config_t);
+    using namespace alpaqa;
+
+    auto [op, nx, nu] = build_ms_problem();
+
+    using Direction   = TypeParam;
     using PANOCSolver = alpaqa::PANOCSolver<Direction>;
     using ALMSolver   = alpaqa::ALMSolver<PANOCSolver>;
 
-    ALMSolver::Params almparam;
+    typename ALMSolver::Params almparam;
     almparam.tolerance                      = 1e-4;
     almparam.dual_tolerance                 = 1e-4;
     almparam.penalty_update_factor          = 5;
@@ -251,19 +270,19 @@ TEST(ALM, multipleshooting8D) {
     almparam.max_penalty                    = 1e9;
     almparam.max_iter                       = 20;
 
-    PANOCSolver::Params panocparam;
+    typename PANOCSolver::Params panocparam;
     panocparam.Lipschitz.ε = 1e-6;
     panocparam.Lipschitz.δ = 1e-12;
     panocparam.max_iter    = 200;
 
-    Direction::AcceleratorParams lbfgsparam;
-    lbfgsparam.memory = 10;
+    typename Direction::AcceleratorParams accelparam;
+    accelparam.memory = 10;
 
-    ALMSolver solver{almparam, {panocparam, lbfgsparam}};
+    ALMSolver solver{almparam, PANOCSolver{panocparam, Direction{accelparam}}};
 
-    vec x(n);
+    vec x(op.get_n());
     x.fill(5);
-    vec y(m);
+    vec y(op.get_m());
     y.fill(1);
 
     auto begin = std::chrono::high_resolution_clock::now();
@@ -273,21 +292,20 @@ TEST(ALM, multipleshooting8D) {
     std::cout << "u = " << x.topRows(nu).transpose() << std::endl;
     std::cout << "x = " << x.bottomRows(nx).transpose() << std::endl;
     std::cout << "y = " << y.transpose() << std::endl;
-    std::cout << "f(x) = " << f(x) << std::endl;
-    auto gx = vec(m);
-    g(x, gx);
+    std::cout << "f(x) = " << op.eval_f(x) << std::endl;
+    auto gx = vec(op.get_m());
+    op.eval_g(x, gx);
     std::cout << "g(x) = " << gx.transpose() << std::endl;
     std::cout << "Inner: " << stats.inner.iterations
               << ", Outer: " << stats.outer_iterations << std::endl;
 
-    auto duration = duration_cast<std::chrono::nanoseconds>(end - begin);
-    std::cout << duration.count() << "µs" << std::endl;
+    auto duration = std::chrono::duration<double>(end - begin);
+    std::cout << duration.count() * 1e3 << "ms" << std::endl;
 
     auto u  = x.topRows(nu);
     auto xs = x.bottomRows(nx);
     auto ε  = 6e-4;
 
-    // TODO: write matcher for Eigen vectors
     vec u_ref(nu);
     u_ref << -1, -1, -1, -1, -1, -0.878565, -0.719274, -0.999999;
     EXPECT_THAT(u, EigenAlmostEqual(u_ref, ε));
@@ -297,74 +315,35 @@ TEST(ALM, multipleshooting8D) {
         0.177012, 1.14043;
     EXPECT_THAT(xs, EigenAlmostEqual(xs_ref, ε));
 
-    vec y_ref(m);
+    vec y_ref(op.get_m());
     y_ref << 6.2595, -22.9787, -0.6222, 33.8783, -2.2632, 32.0098, 3.54023,
         22.8086;
     EXPECT_THAT(y, EigenAlmostEqual(y_ref, ε));
 }
 
-TEST(ALM, multipleshooting8Dstructured) {
-    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
+REGISTER_TYPED_TEST_SUITE_P(PANOC, multipleshooting8D);
+
+using PANOCDirectionTypes =
+    ::testing::Types<alpaqa::LBFGSDirection<alpaqa::DefaultConfig>,
+                     alpaqa::StructuredLBFGSDirection<alpaqa::DefaultConfig>,
+                     alpaqa::AndersonDirection<alpaqa::DefaultConfig>>;
+INSTANTIATE_TYPED_TEST_SUITE_P(ALM, PANOC, PANOCDirectionTypes);
+
+template <class>
+class PANTR : public testing::Test {};
+TYPED_TEST_SUITE_P(PANTR);
+
+TYPED_TEST_P(PANTR, multipleshooting8D) {
+    USING_ALPAQA_CONFIG_TEMPLATE(TypeParam::Direction::config_t);
     using namespace alpaqa;
 
-    length_t nx = 8, nu = 8;
-    length_t n = nu + nx;
-    length_t m = nx;
+    auto [op, nx, nu] = build_ms_problem();
 
-    Box<config_t> C{n};
-    C.lowerbound.topRows(nu).fill(-1);
-    C.lowerbound.bottomRows(nx).fill(-inf<config_t>);
-    C.upperbound.topRows(nu).fill(1);
-    C.upperbound.bottomRows(nx).fill(inf<config_t>);
-    Box<config_t> D{m};
-    D.lowerbound.fill(0);
-    D.upperbound.fill(0);
+    using Direction = typename TypeParam::Direction;
+    using Solver    = alpaqa::PANTRSolver<Direction>;
+    using ALMSolver = alpaqa::ALMSolver<Solver>;
 
-#include "matrices/test-alm.mat.ipp"
-
-    using Diag = Eigen::DiagonalMatrix<real_t, Eigen::Dynamic, Eigen::Dynamic>;
-
-    auto Q = Diag(nx);
-    Q.diagonal().fill(10);
-    auto R = Diag(nu);
-    R.diagonal().fill(1);
-
-    auto x0 = vec(nx);
-    x0.fill(1);
-
-    auto f = [&](crvec ux) {
-        auto u = ux.topRows(nu);
-        auto x = ux.bottomRows(nx);
-        return x.dot(Q * x) + u.dot(R * u);
-    };
-    auto grad_f = [&](crvec ux, rvec grad_f) {
-        auto u                = ux.topRows(nu);
-        auto x                = ux.bottomRows(nx);
-        grad_f.topRows(nu)    = 2 * (R * u);
-        grad_f.bottomRows(nx) = 2 * (Q * x);
-    };
-    auto g = [&](crvec ux, rvec g_u) {
-        auto u         = ux.topRows(nu);
-        auto x         = ux.bottomRows(nx);
-        g_u.topRows(m) = A * x0 + B * u - x;
-    };
-    auto grad_g = [&](crvec ux, crvec v, rvec grad_u_v) {
-        (void)ux;
-        grad_u_v.topRows(nu)    = v.transpose() * B;
-        grad_u_v.bottomRows(nx) = -mat::Identity(nx, nx) * v;
-    };
-
-    FunctionalProblem<config_t> p{C, D};
-    p.f           = f;
-    p.grad_f      = grad_f;
-    p.g           = g;
-    p.grad_g_prod = grad_g;
-
-    using Direction   = alpaqa::StructuredLBFGSDirection<config_t>;
-    using InnerSolver = alpaqa::PANOCSolver<Direction>;
-    using ALMSolver   = alpaqa::ALMSolver<InnerSolver>;
-
-    ALMSolver::Params almparam;
+    typename ALMSolver::Params almparam;
     almparam.tolerance                      = 1e-4;
     almparam.dual_tolerance                 = 1e-4;
     almparam.penalty_update_factor          = 5;
@@ -376,43 +355,42 @@ TEST(ALM, multipleshooting8Dstructured) {
     almparam.max_penalty                    = 1e9;
     almparam.max_iter                       = 20;
 
-    InnerSolver::Params panocparam;
-    panocparam.Lipschitz.ε = 1e-6;
-    panocparam.Lipschitz.δ = 1e-12;
-    panocparam.max_iter    = 200;
+    typename Solver::Params innerparam;
+    innerparam.Lipschitz.ε = 1e-6;
+    innerparam.Lipschitz.δ = 1e-12;
+    innerparam.max_iter    = 200;
 
-    Direction::AcceleratorParams lbfgsparam;
-    lbfgsparam.memory = 10;
+    typename Direction::DirectionParams dirparam;
+    dirparam.finite_diff = TypeParam::finite_diff;
 
-    ALMSolver solver{almparam, {panocparam, lbfgsparam}};
+    ALMSolver solver{almparam, Solver{innerparam, Direction{{}, dirparam}}};
 
-    vec x(n);
+    vec x(op.get_n());
     x.fill(5);
-    vec y(m);
+    vec y(op.get_m());
     y.fill(1);
 
     auto begin = std::chrono::high_resolution_clock::now();
-    auto stats = solver(p, x, y);
+    auto stats = solver(op, x, y);
     auto end   = std::chrono::high_resolution_clock::now();
 
     std::cout << "u = " << x.topRows(nu).transpose() << std::endl;
     std::cout << "x = " << x.bottomRows(nx).transpose() << std::endl;
     std::cout << "y = " << y.transpose() << std::endl;
-    std::cout << "f(x) = " << f(x) << std::endl;
-    auto gx = vec(m);
-    g(x, gx);
+    std::cout << "f(x) = " << op.eval_f(x) << std::endl;
+    auto gx = vec(op.get_m());
+    op.eval_g(x, gx);
     std::cout << "g(x) = " << gx.transpose() << std::endl;
     std::cout << "Inner: " << stats.inner.iterations
               << ", Outer: " << stats.outer_iterations << std::endl;
 
-    auto duration = duration_cast<std::chrono::nanoseconds>(end - begin);
-    std::cout << duration.count() << "µs" << std::endl;
+    auto duration = std::chrono::duration<double>(end - begin);
+    std::cout << duration.count() * 1e3 << "ms" << std::endl;
 
     auto u  = x.topRows(nu);
     auto xs = x.bottomRows(nx);
     auto ε  = 6e-4;
 
-    // TODO: write matcher for Eigen vectors
     vec u_ref(nu);
     u_ref << -1, -1, -1, -1, -1, -0.878565, -0.719274, -0.999999;
     EXPECT_THAT(u, EigenAlmostEqual(u_ref, ε));
@@ -422,8 +400,23 @@ TEST(ALM, multipleshooting8Dstructured) {
         0.177012, 1.14043;
     EXPECT_THAT(xs, EigenAlmostEqual(xs_ref, ε));
 
-    vec y_ref(m);
+    vec y_ref(op.get_m());
     y_ref << 6.2595, -22.9787, -0.6222, 33.8783, -2.2632, 32.0098, 3.54023,
         22.8086;
     EXPECT_THAT(y, EigenAlmostEqual(y_ref, ε));
 }
+
+REGISTER_TYPED_TEST_SUITE_P(PANTR, multipleshooting8D);
+struct NewtonTRHessVec {
+    using Direction = alpaqa::NewtonTRDirection<alpaqa::DefaultConfig>;
+    static constexpr bool finite_diff = false;
+};
+
+struct NewtonTRFiniteDiff {
+    using Direction = alpaqa::NewtonTRDirection<alpaqa::DefaultConfig>;
+    static constexpr bool finite_diff = true;
+};
+
+using PANTRDirectionTypes =
+    ::testing::Types<NewtonTRHessVec, NewtonTRFiniteDiff>;
+INSTANTIATE_TYPED_TEST_SUITE_P(ALM, PANTR, PANTRDirectionTypes);
