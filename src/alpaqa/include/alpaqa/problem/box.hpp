@@ -11,8 +11,8 @@ struct Box {
 
     Box() : Box{0} {}
     Box(length_t n)
-        : lowerbound{vec::Constant(n, -inf<config_t>)}, upperbound{
-                                                            vec::Constant(n, +inf<config_t>)} {}
+        : lowerbound{vec::Constant(n, -inf<config_t>)},
+          upperbound{vec::Constant(n, +inf<config_t>)} {}
 
     static Box NaN(length_t n) {
         return Box{vec::Constant(n, alpaqa::NaN<config_t>),
@@ -35,10 +35,7 @@ template <Config Conf>
 inline auto project(const auto &v,       ///< [in] The vector to project
                     const Box<Conf> &box ///< [in] The box to project onto
 ) {
-    USING_ALPAQA_CONFIG(Conf);
-    using binary_real_f = real_t (*)(real_t, real_t);
-    return v.binaryExpr(box.lowerbound, binary_real_f(std::fmax))
-        .binaryExpr(box.upperbound, binary_real_f(std::fmin));
+    return v.cwiseMax(box.lowerbound).cwiseMin(box.upperbound);
 }
 
 /// Get the difference between the given vector and its projection.
