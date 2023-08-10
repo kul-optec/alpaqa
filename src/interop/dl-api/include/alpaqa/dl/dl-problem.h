@@ -10,13 +10,10 @@
 
 #ifdef __cplusplus
 extern "C" {
-#define ALPAQA_DL_ABI_VERSION_DEFAULT = ALPAQA_DL_ABI_VERSION
-#define ALPAQA_NULLPTR_DEFAULT = nullptr
-#define ALPAQA_ZERO_DEFAULT = 0
+#define ALPAQA_DEFAULT(...)                                                    \
+    { __VA_ARGS__ }
 #else
-#define ALPAQA_DL_ABI_VERSION_DEFAULT
-#define ALPAQA_NULLPTR_DEFAULT
-#define ALPAQA_ZERO_DEFAULT
+#define ALPAQA_DEFAULT(...)
 #endif
 
 typedef double alpaqa_real_t;
@@ -31,39 +28,39 @@ typedef alpaqa_length_t alpaqa_index_t;
 ///       In C++, this is not necessary, because all members have default
 ///       initializers.
 typedef struct {
-    uint64_t abi_version ALPAQA_DL_ABI_VERSION_DEFAULT;
+    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     /// Number of decision variables.
     /// @see @ref alpaqa::TypeErasedProblem::get_n()
-    alpaqa_length_t n ALPAQA_ZERO_DEFAULT;
+    alpaqa_length_t n ALPAQA_DEFAULT(0);
     /// Number of constraints.
     /// @see @ref alpaqa::TypeErasedProblem::get_m()
-    alpaqa_length_t m ALPAQA_ZERO_DEFAULT;
+    alpaqa_length_t m ALPAQA_DEFAULT(0);
 
     // clang-format off
     /// Cost function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_f()
     alpaqa_real_t (*eval_f)(
         void *instance,
-        const alpaqa_real_t *x) ALPAQA_NULLPTR_DEFAULT;
+        const alpaqa_real_t *x) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the cost function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_f()
     void (*eval_grad_f)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *grad_fx) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_fx) ALPAQA_DEFAULT(nullptr);
     /// Constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_g()
     void (*eval_g)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *gx) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *gx) ALPAQA_DEFAULT(nullptr);
     /// Gradient-vector product of the constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_g_prod()
     void (*eval_grad_g_prod)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
-        alpaqa_real_t *grad_gxy) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_gxy) ALPAQA_DEFAULT(nullptr);
     /// Jacobian of the constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_jac_g()
     void (*eval_jac_g)(
@@ -71,18 +68,18 @@ typedef struct {
         const alpaqa_real_t *x,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
-        alpaqa_real_t *J_values) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *J_values) ALPAQA_DEFAULT(nullptr);
     /// Number of nonzeros of the sparse Jacobian of the constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::get_jac_g_num_nonzeros()
     alpaqa_length_t (*get_jac_g_num_nonzeros)(
-        void *instance) ALPAQA_NULLPTR_DEFAULT;
+        void *instance) ALPAQA_DEFAULT(nullptr);
     /// Gradient of specific constraint function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_gi()
     void (*eval_grad_gi)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_index_t i,
-        alpaqa_real_t *grad_gi) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_gi) ALPAQA_DEFAULT(nullptr);
     /// Hessian-vector product of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_hess_L_prod()
     void (*eval_hess_L_prod)(
@@ -91,7 +88,7 @@ typedef struct {
         const alpaqa_real_t *y,
         alpaqa_real_t scale,
         const alpaqa_real_t *v,
-        alpaqa_real_t *Hv) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *Hv) ALPAQA_DEFAULT(nullptr);
     /// Hessian of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_hess_L()
     void (*eval_hess_L)(
@@ -101,11 +98,11 @@ typedef struct {
         alpaqa_real_t scale,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
-        alpaqa_real_t *H_values) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *H_values) ALPAQA_DEFAULT(nullptr);
     /// Number of nonzeros of the sparse Hessian of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::get_hess_L_num_nonzeros()
     alpaqa_length_t (*get_hess_L_num_nonzeros)(
-        void *instance) ALPAQA_NULLPTR_DEFAULT;
+        void *instance) ALPAQA_DEFAULT(nullptr);
     /// Hessian-vector product of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_hess_ψ_prod()
     void (*eval_hess_ψ_prod)(
@@ -117,7 +114,7 @@ typedef struct {
         const alpaqa_real_t *zl,
         const alpaqa_real_t *zu,
         const alpaqa_real_t *v,
-        alpaqa_real_t *Hv) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *Hv) ALPAQA_DEFAULT(nullptr);
     /// Hessian of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_hess_ψ()
     void (*eval_hess_ψ)(
@@ -130,23 +127,23 @@ typedef struct {
         const alpaqa_real_t *zu,
         alpaqa_index_t *inner_idx,
         alpaqa_index_t *outer_ptr,
-        alpaqa_real_t *H_values) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *H_values) ALPAQA_DEFAULT(nullptr);
     /// Number of nonzeros of the sparse Hessian of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::get_hess_ψ_num_nonzeros()
     alpaqa_length_t (*get_hess_ψ_num_nonzeros)(
-        void *instance) ALPAQA_NULLPTR_DEFAULT;
+        void *instance) ALPAQA_DEFAULT(nullptr);
     /// Cost and its gradient.
     /// @see @ref alpaqa::TypeErasedProblem::eval_f_grad_f()
     alpaqa_real_t (*eval_f_grad_f)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *grad_fx) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_fx) ALPAQA_DEFAULT(nullptr);
     /// Cost and constraints.
     /// @see @ref alpaqa::TypeErasedProblem::eval_f_g()
     alpaqa_real_t (*eval_f_g)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *g) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *g) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the cost and gradient-vector product of the constraints.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_f_grad_g_prod()
     void (*eval_grad_f_grad_g_prod)(
@@ -154,7 +151,7 @@ typedef struct {
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_f,
-        alpaqa_real_t *grad_gxy) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_gxy) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_L()
     void (*eval_grad_L)(
@@ -162,7 +159,7 @@ typedef struct {
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_L,
-        alpaqa_real_t *work_n) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work_n) ALPAQA_DEFAULT(nullptr);
     /// Augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_ψ()
     alpaqa_real_t (*eval_ψ)(
@@ -172,7 +169,7 @@ typedef struct {
         const alpaqa_real_t *Σ,
         const alpaqa_real_t *zl,
         const alpaqa_real_t *zu,
-        alpaqa_real_t *ŷ) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *ŷ) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_ψ()
     void (*eval_grad_ψ)(
@@ -184,7 +181,7 @@ typedef struct {
         const alpaqa_real_t *zu,
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
-        alpaqa_real_t *work_m) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work_m) ALPAQA_DEFAULT(nullptr);
     /// Augmented Lagrangian and its gradient.
     /// @see @ref alpaqa::TypeErasedProblem::eval_ψ_grad_ψ()
     alpaqa_real_t (*eval_ψ_grad_ψ)(
@@ -196,7 +193,7 @@ typedef struct {
         const alpaqa_real_t *zu,
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
-        alpaqa_real_t *work_m) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work_m) ALPAQA_DEFAULT(nullptr);
     /// Proximal gradient step.
     /// @see @ref alpaqa::TypeErasedProblem::eval_prox_grad_step()
     /// If not set, the default implementation from
@@ -207,20 +204,20 @@ typedef struct {
         const alpaqa_real_t *x,
         const alpaqa_real_t *grad_ψ,
         alpaqa_real_t *x̂,
-        alpaqa_real_t *p) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *p) ALPAQA_DEFAULT(nullptr);
     /// Provide the initial values for the bounds of
     /// @ref alpaqa::BoxConstrProblem::C, i.e. the constraints on the decision
     /// variables.
     void (*initialize_box_C)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);
     /// Provide the initial values for the bounds of
     /// @ref alpaqa::BoxConstrProblem::D, i.e. the general constraints.
     void (*initialize_box_D)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);
     /// Provide the initial values for @ref alpaqa::BoxConstrProblem::l1_reg,
     /// the ℓ₁-regularization factor.
     /// This function is called twice:
@@ -230,7 +227,7 @@ typedef struct {
     void (*initialize_l1_reg)(
         void *instance,
         alpaqa_real_t *lambda,
-        alpaqa_length_t *size) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_length_t *size) ALPAQA_DEFAULT(nullptr);
     // clang-format on
 } alpaqa_problem_functions_t;
 
@@ -239,98 +236,97 @@ typedef struct alpaqa_function_dict_s alpaqa_function_dict_t;
 
 typedef struct {
     /// Owning pointer.
-    void *instance ALPAQA_NULLPTR_DEFAULT;
+    void *instance ALPAQA_DEFAULT(nullptr);
     /// Non-owning pointer, lifetime at least as long as @ref instance.
-    alpaqa_problem_functions_t *functions ALPAQA_NULLPTR_DEFAULT;
+    alpaqa_problem_functions_t *functions ALPAQA_DEFAULT(nullptr);
     /// Pointer to the function to clean up @ref instance.
-    void (*cleanup)(void *) ALPAQA_NULLPTR_DEFAULT;
+    void (*cleanup)(void *) ALPAQA_DEFAULT(nullptr);
     /// Pointer to a map of extra functions (C++ only).
     /// @see @ref alpaqa::register_function
     /// @see @ref alpaqa::register_member_function
-    alpaqa_function_dict_t *extra_functions ALPAQA_NULLPTR_DEFAULT;
+    alpaqa_function_dict_t *extra_functions ALPAQA_DEFAULT(nullptr);
 } alpaqa_problem_register_t;
 
 typedef struct {
-    uint64_t abi_version ALPAQA_DL_ABI_VERSION_DEFAULT;
-    alpaqa_length_t N ALPAQA_ZERO_DEFAULT, nx ALPAQA_ZERO_DEFAULT,
-        nu ALPAQA_ZERO_DEFAULT, nh ALPAQA_ZERO_DEFAULT,
-        nh_N ALPAQA_ZERO_DEFAULT, nc ALPAQA_ZERO_DEFAULT,
-        nc_N ALPAQA_ZERO_DEFAULT;
+    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
+    alpaqa_length_t N ALPAQA_DEFAULT(0), nx ALPAQA_DEFAULT(0),
+        nu ALPAQA_DEFAULT(0), nh ALPAQA_DEFAULT(0), nh_N ALPAQA_DEFAULT(0),
+        nc ALPAQA_DEFAULT(0), nc_N ALPAQA_DEFAULT(0);
 
     // clang-format off
     void (*get_U)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);
     void (*get_D)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);
     void (*get_D_N)(
         void *instance,
         alpaqa_real_t *lb,
-        alpaqa_real_t *ub) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);
     void (*get_x_init)(
         void *instance,
-        alpaqa_real_t *x_init) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *x_init) ALPAQA_DEFAULT(nullptr);
     void (*eval_f)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
-        alpaqa_real_t *fxu) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *fxu) ALPAQA_DEFAULT(nullptr);
     void (*eval_jac_f)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
-        alpaqa_real_t *J_fxu) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *J_fxu) ALPAQA_DEFAULT(nullptr);
     void (*eval_grad_f_prod)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
         const alpaqa_real_t *p,
-        alpaqa_real_t *grad_fxu_p) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_fxu_p) ALPAQA_DEFAULT(nullptr);
     void (*eval_h)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *u,
-        alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *h) ALPAQA_DEFAULT(nullptr);
     void (*eval_h_N)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *h) ALPAQA_DEFAULT(nullptr);
     alpaqa_real_t (*eval_l)(
         void *instance,
         alpaqa_index_t timestep,
-        const alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
+        const alpaqa_real_t *h) ALPAQA_DEFAULT(nullptr);
     alpaqa_real_t (*eval_l_N)(
         void *instance,
-        const alpaqa_real_t *h) ALPAQA_NULLPTR_DEFAULT;
+        const alpaqa_real_t *h) ALPAQA_DEFAULT(nullptr);
     void (*eval_qr)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *xu,
         const alpaqa_real_t *h,
-        alpaqa_real_t *qr) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *qr) ALPAQA_DEFAULT(nullptr);
     void (*eval_q_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *h,
-        alpaqa_real_t *q) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *q) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_Q)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *xu,
         const alpaqa_real_t *h,
-        alpaqa_real_t *Q) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *Q) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_Q_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *h,
-        alpaqa_real_t *Q) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *Q) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_R_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -338,7 +334,7 @@ typedef struct {
         const alpaqa_real_t *h,
         const alpaqa_index_t *mask,
         alpaqa_real_t *R,
-        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_S_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -346,7 +342,7 @@ typedef struct {
         const alpaqa_real_t *h,
         const alpaqa_index_t *mask,
         alpaqa_real_t *S,
-        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_R_prod_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -356,7 +352,7 @@ typedef struct {
         const alpaqa_index_t *mask_K,
         const alpaqa_real_t *v,
         alpaqa_real_t *out,
-        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_S_prod_masked)(
         void *instance,
         alpaqa_index_t timestep,
@@ -365,54 +361,54 @@ typedef struct {
         const alpaqa_index_t *mask_K,
         const alpaqa_real_t *v,
         alpaqa_real_t *out,
-        alpaqa_real_t *work) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *work) ALPAQA_DEFAULT(nullptr);
     alpaqa_length_t (*get_R_work_size)(
-        void *instance) ALPAQA_NULLPTR_DEFAULT;
+        void *instance) ALPAQA_DEFAULT(nullptr);
     alpaqa_length_t (*get_S_work_size)(
-        void *instance) ALPAQA_NULLPTR_DEFAULT;
+        void *instance) ALPAQA_DEFAULT(nullptr);
     void (*eval_constr)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
-        alpaqa_real_t *c) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *c) ALPAQA_DEFAULT(nullptr);
     void (*eval_constr_N)(
         void *instance,
         const alpaqa_real_t *x,
-        alpaqa_real_t *c) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *c) ALPAQA_DEFAULT(nullptr);
     void (*eval_grad_constr_prod)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *p,
-        alpaqa_real_t *grad_cx_p) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_cx_p) ALPAQA_DEFAULT(nullptr);
     void (*eval_grad_constr_prod_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *p,
-        alpaqa_real_t *grad_cx_p) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *grad_cx_p) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_gn_hess_constr)(
         void *instance,
         alpaqa_index_t timestep,
         const alpaqa_real_t *x,
         const alpaqa_real_t *M,
-        alpaqa_real_t *out) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *out) ALPAQA_DEFAULT(nullptr);
     void (*eval_add_gn_hess_constr_N)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *M,
-        alpaqa_real_t *out) ALPAQA_NULLPTR_DEFAULT;
+        alpaqa_real_t *out) ALPAQA_DEFAULT(nullptr);
     // clang-format on
 } alpaqa_control_problem_functions_t;
 
 typedef struct {
     /// Owning pointer.
-    void *instance ALPAQA_NULLPTR_DEFAULT;
+    void *instance ALPAQA_DEFAULT(nullptr);
     /// Non-owning pointer, lifetime at least as long as @ref instance.
-    alpaqa_control_problem_functions_t *functions ALPAQA_NULLPTR_DEFAULT;
+    alpaqa_control_problem_functions_t *functions ALPAQA_DEFAULT(nullptr);
     /// Pointer to the function to clean up @ref instance.
-    void (*cleanup)(void *) ALPAQA_NULLPTR_DEFAULT;
+    void (*cleanup)(void *) ALPAQA_DEFAULT(nullptr);
     /// Pointer to a map of extra functions (C++ only).
-    alpaqa_function_dict_t *extra_functions ALPAQA_NULLPTR_DEFAULT;
+    alpaqa_function_dict_t *extra_functions ALPAQA_DEFAULT(nullptr);
 } alpaqa_control_problem_register_t;
 
 #ifdef __cplusplus
@@ -511,6 +507,8 @@ void register_member_function(Result &result, std::string name,
 }
 
 namespace detail {
+/// Overload for non-const-qualified member functions.
+/// @see @ref alpaqa::member_caller
 template <auto Member, class Class, class Ret, class... Args>
 static auto member_caller(Ret (Class::*)(Args...)) {
     return [](void *self_, Args... args) -> Ret {
@@ -518,7 +516,8 @@ static auto member_caller(Ret (Class::*)(Args...)) {
         return (self->*Member)(std::forward<Args>(args)...);
     };
 }
-
+/// Overload for const-qualified member functions.
+/// @see @ref alpaqa::member_caller
 template <auto Member, class Class, class Ret, class... Args>
 static auto member_caller(Ret (Class::*)(Args...) const) {
     return []<class Self>(Self * self_, Args... args) -> Ret
@@ -528,7 +527,8 @@ static auto member_caller(Ret (Class::*)(Args...) const) {
         return (self->*Member)(std::forward<Args>(args)...);
     };
 }
-
+/// Overload for member variables.
+/// @see @ref alpaqa::member_caller
 template <auto Member, class Class, class Ret>
 static auto member_caller(Ret Class::*) {
     return []<class Self>(Self * self_) -> decltype(auto)
@@ -542,11 +542,18 @@ static auto member_caller(Ret Class::*) {
 }
 } // namespace detail
 
-/// Wrap the given member function of signature into a lambda function that
-/// accepts the instance as a void pointer.
+/// Wrap the given member function or variable into a (possibly generic) lambda
+/// function that accepts the instance as a type-erased void pointer.
+///
+/// The signature of the resulting function depends on the signature of the
+/// member function:
 ///
 /// - `Ret Class::member(args...)` → `Ret(void *self, args...)`
+/// - `Ret Class::member(args...) const` → `Ret(void *self, args...)`
 /// - `Ret Class::member(args...) const` → `Ret(const void *self, args...)`
+///
+/// If the given member is a variable:
+///
 /// - `Type Class::member` → `Type &(void *self)`
 /// - `Type Class::member` → `const Type &(const void *self)`
 template <auto Member>
@@ -563,12 +570,13 @@ static auto member_caller() {
 ///         you have to do it manually by calling this function.
 inline void unregister_functions(function_dict_t *&extra_functions) {
     delete extra_functions;
+    extra_functions = nullptr;
 }
 
 } // namespace alpaqa
 
 #endif
 
-#undef ALPAQA_DL_ABI_VERSION_DEFAULT
+#undef ALPAQA_DEFAULT
 
 // NOLINTEND(modernize-use-using,modernize-deprecated-headers)
