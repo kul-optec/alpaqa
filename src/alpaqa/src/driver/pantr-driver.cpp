@@ -25,8 +25,7 @@ solver_func_t make_pantr_like_solver(std::string_view direction,
             return [solver{std::move(solver)},
                     N_exp](LoadedProblem &problem,
                            std::ostream &os) mutable -> SolverResults {
-                static std::atomic<decltype(solver) *> solver_to_stop;
-                auto cancel = attach_cancellation<solver_to_stop>(solver);
+                auto cancel = alpaqa::attach_cancellation(solver);
                 return run_alm_solver(problem, solver, os, N_exp);
             };
         };
