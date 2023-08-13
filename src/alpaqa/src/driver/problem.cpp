@@ -6,7 +6,7 @@
 #if ALPAQA_HAVE_CASADI
 #include <alpaqa/casadi/CasADiProblem.hpp>
 #endif
-#if ALPAQA_HAVE_CUTEST
+#ifdef ALPAQA_HAVE_CUTEST
 #include <alpaqa/cutest/cutest-loader.hpp>
 #endif
 
@@ -38,8 +38,6 @@ std::string get_prefix_option(std::span<const std::string_view> prob_opts) {
     return prefix;
 }
 
-} // namespace
-namespace {
 void load_initial_guess(Options &opts, LoadedProblem &problem) {
     const auto n = problem.problem.get_n(), m = problem.problem.get_m();
     alpaqa::params::vec_from_file<config_t> x0{n}, y0{m}, w0{2 * n};
@@ -53,6 +51,90 @@ void load_initial_guess(Options &opts, LoadedProblem &problem) {
     if (w0.value)
         problem.initial_guess_w = std::move(*w0.value);
 }
+
+LoadedProblem load_dl_problem(const fs::path &full_path,
+                              std::span<std::string_view> prob_opts,
+                              Options &opts) {
+    using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
+    using DLProblem  = alpaqa::dl::DLProblem;
+    using CntProblem = alpaqa::ProblemWithCounters<DLProblem>;
+    auto prefix      = get_prefix_option(prob_opts);
+    std::any dl_opt  = prob_opts;
+    LoadedProblem problem{
+        .problem = TEProblem::make<CntProblem>(std::in_place, full_path.c_str(),
+                                               prefix, &dl_opt),
+        .abs_path = fs::absolute(full_path),
+        .path     = full_path,
+    };
+    auto &cnt_problem   = problem.problem.as<CntProblem>();
+    problem.evaluations = cnt_problem.evaluations;
+    load_initial_guess(opts, problem);
+    return problem;
+}
+
+#if ALPAQA_HAVE_CASADI
+LoadedProblem load_cs_problem(const fs::path &full_path,
+                              std::span<std::string_view> prob_opts,
+                              Options &opts) {
+    static std::mutex mtx;
+    std::unique_lock lck{mtx};
+    using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
+    using CsProblem  = alpaqa::CasADiProblem<config_t>;
+    using CntProblem = alpaqa::ProblemWithCounters<CsProblem>;
+    LoadedProblem problem{
+        .problem =
+            TEProblem::make<CntProblem>(std::in_place, full_path.c_str()),
+        .abs_path = fs::absolute(full_path),
+        .path     = full_path,
+    };
+    lck.unlock();
+    auto &cnt_problem   = problem.problem.as<CntProblem>();
+    auto &cs_problem    = cnt_problem.problem;
+    problem.evaluations = cnt_problem.evaluations;
+    auto param_size     = cs_problem.param.size();
+    alpaqa::params::set_params(cs_problem.param, "param", prob_opts);
+    if (cs_problem.param.size() != param_size)
+        throw alpaqa::params::invalid_param(
+            "Incorrect problem parameter size: got " +
+            std::to_string(cs_problem.param.size()) + ", should be " +
+            std::to_string(param_size));
+    load_initial_guess(opts, problem);
+    return problem;
+}
+#endif
+
+#ifdef ALPAQA_HAVE_CUTEST
+LoadedProblem load_cu_problem(const fs::path &full_path,
+                              std::span<std::string_view> prob_opts,
+                              Options &opts) {
+    std::string outsdif_path;
+    alpaqa::params::set_params(outsdif_path, "outsdif", prob_opts);
+    if (outsdif_path.empty())
+        outsdif_path = full_path.parent_path() / "OUTSDIF.d";
+    bool sparse = false;
+    alpaqa::params::set_params(sparse, "sparse", prob_opts);
+    static std::mutex mtx;
+    std::unique_lock lck{mtx};
+    using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
+    using CuProblem  = alpaqa::CUTEstProblem;
+    using CntProblem = alpaqa::ProblemWithCounters<CuProblem>;
+    LoadedProblem problem{
+        .problem = TEProblem::make<CntProblem>(std::in_place, full_path.c_str(),
+                                               outsdif_path.c_str(), sparse),
+        .abs_path = fs::absolute(full_path),
+        .path     = full_path,
+    };
+    lck.unlock();
+    auto &cnt_problem       = problem.problem.as<CntProblem>();
+    auto &cu_problem        = cnt_problem.problem;
+    problem.evaluations     = cnt_problem.evaluations;
+    problem.initial_guess_x = std::move(cu_problem.x0);
+    problem.initial_guess_y = std::move(cu_problem.y0);
+    load_initial_guess(opts, problem);
+    return problem;
+}
+#endif
+
 } // namespace
 
 LoadedProblem load_problem(std::string_view type, const fs::path &dir,
@@ -72,78 +154,23 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
     // Load problem
     auto full_path = dir / file;
     if (type == "dl" || type.empty()) {
-        using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
-        using DLProblem  = alpaqa::dl::DLProblem;
-        using CntProblem = alpaqa::ProblemWithCounters<DLProblem>;
-        auto prefix      = get_prefix_option(prob_opts);
-        std::any dl_opt  = std::span{prob_opts};
-        LoadedProblem problem{
-            .problem = TEProblem::make<CntProblem>(
-                std::in_place, full_path.c_str(), prefix, &dl_opt),
-            .abs_path = fs::absolute(full_path),
-            .path     = full_path,
-        };
-        auto &cnt_problem   = problem.problem.as<CntProblem>();
-        problem.evaluations = cnt_problem.evaluations;
-        load_initial_guess(opts, problem);
-        return problem;
+        return load_dl_problem(full_path, prob_opts, opts);
     } else if (type == "cs") {
 #if ALPAQA_HAVE_CASADI
-        static std::mutex mtx;
-        std::unique_lock lck{mtx};
-        using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
-        using CsProblem  = alpaqa::CasADiProblem<config_t>;
-        using CntProblem = alpaqa::ProblemWithCounters<CsProblem>;
-        LoadedProblem problem{
-            .problem =
-                TEProblem::make<CntProblem>(std::in_place, full_path.c_str()),
-            .abs_path = fs::absolute(full_path),
-            .path     = full_path,
-        };
-        lck.unlock();
-        auto &cnt_problem   = problem.problem.as<CntProblem>();
-        auto &cs_problem    = cnt_problem.problem;
-        problem.evaluations = cnt_problem.evaluations;
-        auto param_size     = cs_problem.param.size();
-        alpaqa::params::set_params(cs_problem.param, "param", prob_opts);
-        if (cs_problem.param.size() != param_size)
-            throw alpaqa::params::invalid_param(
-                "Incorrect problem parameter size: got " +
-                std::to_string(cs_problem.param.size()) + ", should be " +
-                std::to_string(param_size));
-        load_initial_guess(opts, problem);
-        return problem;
+        if constexpr (std::is_same_v<config_t, alpaqa::EigenConfigd>)
+            return load_cs_problem(full_path, prob_opts, opts);
+        else
+            throw std::logic_error("CasADi only supports double precision.");
 #else
         throw std::logic_error(
             "This version of alpaqa was compiled without CasADi support");
 #endif
     } else if (type == "cu") {
-#if ALPAQA_HAVE_CUTEST
-        std::string outsdif_path;
-        alpaqa::params::set_params(outsdif_path, "outsdif", prob_opts);
-        if (outsdif_path.empty())
-            outsdif_path = full_path.parent_path() / "OUTSDIF.d";
-        bool sparse = false;
-        alpaqa::params::set_params(sparse, "sparse", prob_opts);
-        static std::mutex mtx;
-        std::unique_lock lck{mtx};
-        using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
-        using CuProblem  = alpaqa::CUTEstProblem;
-        using CntProblem = alpaqa::ProblemWithCounters<CuProblem>;
-        LoadedProblem problem{
-            .problem = TEProblem::make<CntProblem>(
-                std::in_place, full_path.c_str(), outsdif_path.c_str(), sparse),
-            .abs_path = fs::absolute(full_path),
-            .path     = full_path,
-        };
-        lck.unlock();
-        auto &cnt_problem       = problem.problem.as<CntProblem>();
-        auto &cu_problem        = cnt_problem.problem;
-        problem.evaluations     = cnt_problem.evaluations;
-        problem.initial_guess_x = std::move(cu_problem.x0);
-        problem.initial_guess_y = std::move(cu_problem.y0);
-        load_initial_guess(opts, problem);
-        return problem;
+#ifdef ALPAQA_HAVE_CUTEST
+        if constexpr (std::is_same_v<config_t, alpaqa::EigenConfigd>)
+            return load_cu_problem(full_path, prob_opts, opts);
+        else
+            throw std::logic_error("CUTEst only supports double precision.");
 #else
         throw std::logic_error(
             "This version of alpaqa was compiled without CUTEst support");

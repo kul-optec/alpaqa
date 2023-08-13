@@ -4,7 +4,7 @@
 #include <alpaqa/util/print.hpp>
 #include <sstream>
 
-USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
 TEST(Print, pythonVector) {
     std::ostringstream ss;

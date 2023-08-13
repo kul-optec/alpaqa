@@ -10,7 +10,7 @@ namespace alpaqa {
 /// Based on https://coin-or.github.io/Ipopt/INTERFACES.html
 class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
   public:
-    USING_ALPAQA_CONFIG(DefaultConfig);
+    USING_ALPAQA_CONFIG(EigenConfigd);
     using Problem = TypeErasedProblem<config_t>;
     const Problem &problem;
     vec initial_guess;

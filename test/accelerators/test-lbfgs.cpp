@@ -61,6 +61,6 @@ TEST(LBFGS, quadratic) {
     std::cout << "x:    " << x.transpose() << std::endl;
     std::cout << "f(x): " << f(x) << std::endl;
 
-    EXPECT_NEAR(x(0), 0, 1e-10);
-    EXPECT_NEAR(x(1), 0, 1e-10);
+    EXPECT_NEAR(static_cast<double>(x(0)), 0, 1e-10);
+    EXPECT_NEAR(static_cast<double>(x(1)), 0, 1e-10);
 }

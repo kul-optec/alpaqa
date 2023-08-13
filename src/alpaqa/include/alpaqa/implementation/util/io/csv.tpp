@@ -98,6 +98,18 @@ struct CSVReader {
     }
 };
 
+#ifdef ALPAQA_WITH_QUAD_PRECISION
+template <>
+const char *CSVReader<__float128>::read_single(const char *bufbegin,
+                                               const char *bufend,
+                                               __float128 &v) {
+    long double ld;
+    auto ret = CSVReader<long double>::read_single(bufbegin, bufend, ld);
+    v        = static_cast<__float128>(ld);
+    return ret;
+}
+#endif
+
 template <std::floating_point F>
 void read_row_impl(std::istream &is, Eigen::Ref<Eigen::VectorX<F>> v,
                    char sep) {

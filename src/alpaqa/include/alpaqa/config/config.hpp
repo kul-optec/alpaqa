@@ -20,19 +20,17 @@ concept Config = is_config_v<Conf>;
 struct EigenConfigd;
 struct EigenConfigf;
 struct EigenConfigl;
+struct EigenConfigq;
 using DefaultConfig = EigenConfigd;
 
-#ifdef ALPAQA_WITH_QUAD_PRECISION
-struct EigenConfigq;
-template <>
-struct is_config<EigenConfigq> : std::true_type {};
-#endif
 template <>
 struct is_config<EigenConfigf> : std::true_type {};
 template <>
 struct is_config<EigenConfigd> : std::true_type {};
 template <>
 struct is_config<EigenConfigl> : std::true_type {};
+template <>
+struct is_config<EigenConfigq> : std::true_type {};
 
 #define USING_ALPAQA_CONFIG_NO_TYPENAME(Conf)                                  \
     using real_t [[maybe_unused]]     = Conf::real_t;                          \

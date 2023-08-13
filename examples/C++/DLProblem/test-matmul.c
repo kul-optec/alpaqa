@@ -38,7 +38,7 @@ int main(void) {
 
     matmul(m, n, p, A, B, C);
     for (alpaqa_index_t i = 0; i < (alpaqa_length_t)m * p; ++i)
-        CHECK(fabs(C_expected[i] - C[i]) < 1e-7);
+        CHECK(fabs((double)(C_expected[i] - C[i])) < 1e-7);
 
     const alpaqa_real_t x[m] = {0.28045429, 0.31165826, 0.92905151, 0.22333213,
                                 0.19967747};
@@ -47,6 +47,6 @@ int main(void) {
     alpaqa_real_t b[n];
     matvec_transp(m, n, A, x, b);
     for (alpaqa_index_t i = 0; i < (alpaqa_length_t)n; ++i)
-        CHECK(fabs(b_expected[i] - b[i]) < 1e-7);
+        CHECK(fabs((double)(b_expected[i] - b[i])) < 1e-7);
     puts("Success.");
 }

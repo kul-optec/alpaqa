@@ -62,6 +62,15 @@ void set_param(T &f, ParamString s) {
                                     std::string(s.full_key) + "'");
 }
 
+#ifdef ALPAQA_WITH_QUAD_PRECISION
+template <>
+void ALPAQA_EXPORT set_param(__float128 &f, ParamString s) {
+    long double ld;
+    set_param(ld, s);
+    f = static_cast<__float128>(ld);
+}
+#endif
+
 template <>
 void ALPAQA_EXPORT set_param(alpaqa::vec<config_t> &v, ParamString s) {
     v.resize(std::count(s.value.begin(), s.value.end(), ',') + 1);

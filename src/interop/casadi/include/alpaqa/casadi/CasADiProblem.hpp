@@ -14,7 +14,7 @@ struct CasADiFunctionsWithParam;
 
 /// Problem definition for a CasADi problem, loaded from a DLL.
 /// @ingroup grp_Problems
-template <Config Conf = DefaultConfig>
+template <Config Conf = EigenConfigd>
 class CasADiProblem : public BoxConstrProblem<Conf> {
   public:
     USING_ALPAQA_CONFIG(Conf);

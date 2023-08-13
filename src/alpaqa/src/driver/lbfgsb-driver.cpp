@@ -23,10 +23,9 @@ auto make_inner_lbfgsb_solver(Options &opts) {
     return InnerLBFGSBSolver{solver_param};
 }
 
-} // namespace
-
-solver_func_t make_lbfgsb_driver(std::string_view direction, Options &opts) {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+template <class LoadedProblem>
+solver_func_t make_lbfgsb_driver_impl(std::string_view direction,
+                                      Options &opts) {
     if (!direction.empty())
         throw std::invalid_argument(
             "L-BFGS-B solver does not support any directions");
@@ -41,6 +40,18 @@ solver_func_t make_lbfgsb_driver(std::string_view direction, Options &opts) {
         auto cancel = attach_cancellation<solver_to_stop>(solver);
         return run_alm_solver(problem, solver, os, N_exp);
     };
+}
+
+} // namespace
+
+solver_func_t make_lbfgsb_driver(std::string_view direction, Options &opts) {
+    static constexpr bool valid_config =
+        std::is_same_v<LoadedProblem::config_t, InnerLBFGSBSolver::config_t>;
+    if constexpr (valid_config)
+        return make_lbfgsb_driver_impl<LoadedProblem>(direction, opts);
+    else
+        throw std::invalid_argument(
+            "L-BFGS-B solver only supports double precision");
 }
 
 template class alpaqa::ALMSolver<InnerLBFGSBSolver>;

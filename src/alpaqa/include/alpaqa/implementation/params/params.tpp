@@ -50,6 +50,11 @@ template <class T>
     requires((std::floating_point<T> || std::integral<T>) && !std::is_enum_v<T>)
 void set_param(T &f, ParamString s);
 
+#ifdef ALPAQA_WITH_QUAD_PRECISION
+template <>
+void set_param(__float128 &f, ParamString s);
+#endif
+
 template <>
 void set_param(vec<config_t> &v, ParamString s);
 

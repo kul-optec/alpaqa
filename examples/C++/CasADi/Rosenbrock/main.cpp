@@ -10,7 +10,7 @@
 namespace fs = std::filesystem;
 
 int main(int argc, char *argv[]) {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     // Find the problem to load
     fs::path so_name = ROSENBROCK_FUNC_DLL;

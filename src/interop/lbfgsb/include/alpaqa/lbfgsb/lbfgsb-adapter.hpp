@@ -14,7 +14,7 @@
 namespace alpaqa::lbfgsb {
 
 struct LBFGSB_ADAPTER_EXPORT LBFGSBParams {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     unsigned memory                   = 10;
     unsigned max_iter                 = 1000;
@@ -26,7 +26,7 @@ struct LBFGSB_ADAPTER_EXPORT LBFGSBParams {
 };
 
 struct LBFGSB_ADAPTER_EXPORT LBFGSBStats {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     SolverStatus status = SolverStatus::Busy;
     real_t ε            = inf<config_t>;
@@ -40,7 +40,7 @@ struct LBFGSB_ADAPTER_EXPORT LBFGSBStats {
 /// @ingroup    grp_InnerSolvers
 class LBFGSB_ADAPTER_EXPORT LBFGSBSolver {
   public:
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     using Problem      = TypeErasedProblem<config_t>;
     using Params       = LBFGSBParams;
@@ -85,7 +85,7 @@ struct InnerStatsAccumulator;
 
 template <>
 struct InnerStatsAccumulator<lbfgsb::LBFGSBStats> {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     /// Total elapsed time in the inner solver.
     std::chrono::nanoseconds elapsed_time{};

@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 
 #include <alpaqa/util/print.hpp>
+#include <alpaqa/util/quadmath/quadmath-print.hpp>
 
 /// @file
 /// @see https://google.github.io/googletest/reference/matchers.html#defining-matchers

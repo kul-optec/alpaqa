@@ -12,11 +12,12 @@
 
 namespace {
 
-SolverResults run_ipopt_solver(LoadedProblem &problem,
+SolverResults run_ipopt_solver(auto &problem,
                                Ipopt::SmartPtr<Ipopt::IpoptApplication> &solver,
                                std::ostream &os, unsigned N_exp) {
     // Ipopt problem adapter
     using Problem                    = alpaqa::IpoptAdapter;
+    using vec                        = Problem::vec;
     Ipopt::SmartPtr<Ipopt::TNLP> nlp = new Problem(problem.problem);
     auto *my_nlp                     = dynamic_cast<Problem *>(GetRawPtr(nlp));
 
@@ -80,7 +81,7 @@ SolverResults run_ipopt_solver(LoadedProblem &problem,
         .Σ                  = 0,
         .solution           = nlp_res.solution_x,
         .multipliers        = nlp_res.solution_y,
-        .multipliers_bounds = Problem::vec(problem.problem.get_n() * 2),
+        .multipliers_bounds = vec(problem.problem.get_n() * 2),
         .outer_iter         = nlp_res.iter_count,
         .inner_iter         = nlp_res.iter_count,
         .extra              = {},
@@ -115,9 +116,8 @@ auto make_ipopt_solver(Options &opts) {
     return app;
 }
 
-} // namespace
-
-solver_func_t make_ipopt_driver(std::string_view direction, Options &opts) {
+template <class LoadedProblem>
+solver_func_t make_ipopt_drive_impl(std::string_view direction, Options &opts) {
     if (!direction.empty())
         throw std::invalid_argument(
             "Ipopt solver does not support any directions");
@@ -129,6 +129,18 @@ solver_func_t make_ipopt_driver(std::string_view direction, Options &opts) {
                    std::ostream &os) mutable -> SolverResults {
         return run_ipopt_solver(problem, solver, os, N_exp);
     };
+}
+
+} // namespace
+
+solver_func_t make_ipopt_driver(std::string_view direction, Options &opts) {
+    static constexpr bool valid_config =
+        std::is_same_v<LoadedProblem::config_t, alpaqa::IpoptAdapter::config_t>;
+    if constexpr (valid_config)
+        return make_ipopt_drive_impl<LoadedProblem>(direction, opts);
+    else
+        throw std::invalid_argument(
+            "Ipopt solver only supports double precision");
 }
 
 #else
