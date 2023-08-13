@@ -12,7 +12,6 @@
 #include <alpaqa/implementation/inner/panoc-helpers.tpp>
 #include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/util/alloc-check.hpp>
-#include <alpaqa/util/quadmath/quadmath-print.hpp>
 #include <alpaqa/util/timed.hpp>
 
 namespace alpaqa {

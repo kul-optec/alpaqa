@@ -1,5 +1,6 @@
 #pragma once
 
+#include <alpaqa/util/quadmath/quadmath-print.hpp>
 #include <alpaqa/util/quadmath/quadmath.hpp>
 
 #include <limits>

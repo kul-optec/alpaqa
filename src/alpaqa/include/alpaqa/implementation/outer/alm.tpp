@@ -12,7 +12,6 @@
 #include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/inner/inner-solve-options.hpp>
 #include <alpaqa/inner/internal/solverstatus.hpp>
-#include <alpaqa/util/quadmath/quadmath-print.hpp>
 
 namespace alpaqa {
 
