@@ -73,6 +73,7 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
 }
 
 #if ALPAQA_HAVE_CASADI
+template <bool = true>
 LoadedProblem load_cs_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
                               Options &opts) {
@@ -104,6 +105,7 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
 #endif
 
 #ifdef ALPAQA_HAVE_CUTEST
+template <bool = true>
 LoadedProblem load_cu_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
                               Options &opts) {
