@@ -39,6 +39,8 @@ source $ARCH/system.$OS
 source $ARCH/$COMPILER
 source $ARCH/$CCOMPILER
 
+OPTIMIZATION='-O3 -march=skylake'
+
 yesno_default_no() {
     echo "$1 (y/N)? "
     return 0
