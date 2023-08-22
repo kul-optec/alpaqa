@@ -151,10 +151,10 @@ jobs:
           EOF
           python${{ matrix.python-version }} -m build -w . \
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
-              -C--cross="$staging/cmake/$host.py-build-cmake.cross.toml"
+              -C--cross="$staging/$host.py-build-cmake.cross.toml"
           python${{ matrix.python-version }} -m build -w python/alpaqa-debug \
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
-              -C--cross="$staging/cmake/$host.py-build-cmake.cross.toml" \
+              -C--cross="$staging/$host.py-build-cmake.cross.toml" \
               -o dist-debug
         env:
           CFLAGS: '-static-libgcc'
@@ -212,7 +212,7 @@ jobs:
           EOF
           python${{ env.PYTHON_VERSION }} -m build . \
               -C--cross="$PWD/ninja-debug.cross.toml" \
-              -C--cross="$staging/cmake/$host.py-build-cmake.cross.toml"
+              -C--cross="$staging/$host.py-build-cmake.cross.toml"
         env:
           CFLAGS: '-static-libgcc'
           CXXFLAGS: '-static-libgcc -static-libstdc++'

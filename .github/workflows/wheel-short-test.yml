@@ -65,7 +65,7 @@ jobs:
           EOF
           python${{ env.PYTHON_VERSION }} -m build -w . \
               -C--cross="$PWD/ninja-${{ matrix.config }}.cross.toml" \
-              -C--cross="$staging/cmake/$host.py-build-cmake.cross.toml"
+              -C--cross="$staging/$host.py-build-cmake.cross.toml"
         env:
           CFLAGS: "-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=${{ matrix.config != 'Debug' && '3' || '0' }} -fdiagnostics-color -static-libgcc"
           CXXFLAGS: "-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=${{ matrix.config != 'Debug' && '3' || '0' }} -fdiagnostics-color -static-libgcc -static-libstdc++"
