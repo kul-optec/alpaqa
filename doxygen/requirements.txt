@@ -1,4 +1,4 @@
-sphinx @ git+https://github.com/tttapa/sphinx@7.0.x
+breathe @ git+https://github.com/tttapa/breathe@main
+sphinx @ git+https://github.com/tttapa/sphinx@master
+furo==2023.08.19
 matplotlib
-breathe
-furo
