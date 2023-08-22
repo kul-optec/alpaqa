@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd "$( dirname "${BASH_SOURCE[0]}" )"/..
+cd "$( dirname "${BASH_SOURCE[0]}" )"/../..
 
 if [ -z "${VIRTUAL_ENV+x}" ]; then
     echo "No active virtual environment, refusing to install."
@@ -40,6 +40,16 @@ source $ARCH/$COMPILER
 source $ARCH/$CCOMPILER
 
 OPTIMIZATION='-O3 -march=skylake'
+CXXOPT='-O3 -march=skylake'
+
+if [ -n "$CROSS_COMPILE" ]; then
+    AR="$(which ${CROSS_COMPILE}ar)"
+    RANLIB="$(which ${CROSS_COMPILE}ranlib)"
+    FORTRAN="$(which ${CROSS_COMPILE}gfortran)"
+    CC="$(which ${CROSS_COMPILE}gcc)"
+    CXX="$(which ${CROSS_COMPILE}g++)"
+    echo "Cross-compiling using $FORTRAN"
+fi
 
 yesno_default_no() {
     echo "$1 (y/N)? "
