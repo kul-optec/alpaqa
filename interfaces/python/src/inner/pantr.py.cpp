@@ -51,7 +51,7 @@ void register_pantr(py::module_ &m) {
         .def_readonly("x", &PANTRProgressInfo::x, "Decision variable :math:`x`")
         .def_readonly("p", &PANTRProgressInfo::p, "Projected gradient step :math:`p`")
         .def_readonly("norm_sq_p", &PANTRProgressInfo::norm_sq_p, ":math:`\\left\\|p\\right\\|^2`")
-        .def_readonly("x̂", &PANTRProgressInfo::x̂, "Decision variable after projected gradient step :math:`\\hat x`")
+        .def_readonly("x_hat", &PANTRProgressInfo::x̂, "Decision variable after projected gradient step :math:`\\hat x`")
         .def_readonly("φγ", &PANTRProgressInfo::φγ, "Forward-backward envelope :math:`\\varphi_\\gamma(x)`")
         .def_readonly("ψ", &PANTRProgressInfo::ψ, "Objective value :math:`\\psi(x)`")
         .def_readonly("grad_ψ", &PANTRProgressInfo::grad_ψ, "Gradient of objective :math:`\\nabla\\psi(x)`")

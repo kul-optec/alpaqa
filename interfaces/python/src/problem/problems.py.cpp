@@ -53,7 +53,7 @@ void problem_methods(py::class_<T, Args...> &cls) {
     // clang-format off
     cls.def("eval_proj_diff_g", &T::eval_proj_diff_g, "z"_a, "e"_a);
     cls.def("eval_proj_multipliers", &T::eval_proj_multipliers, "y"_a, "M"_a);
-    cls.def("eval_prox_grad_step", &T::eval_prox_grad_step, "γ"_a, "x"_a, "grad_ψ"_a, "x̂"_a, "p"_a);
+    cls.def("eval_prox_grad_step", &T::eval_prox_grad_step, "γ"_a, "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a);
     cls.def("eval_inactive_indices_res_lna", &T::eval_inactive_indices_res_lna, "γ"_a, "x"_a, "grad_ψ"_a, "J"_a);
     cls.def("eval_f", &T::eval_f, "x"_a);
     cls.def("eval_grad_f", &T::eval_grad_f, "x"_a, "grad_fx"_a);
@@ -246,7 +246,7 @@ void register_problems(py::module_ &m) {
         .def("eval_proj_diff_g", &BoxConstrProblem::eval_proj_diff_g, "z"_a, "e"_a)
         .def("eval_proj_multipliers", &BoxConstrProblem::eval_proj_multipliers, "y"_a, "M"_a)
         .def("eval_prox_grad_step", &BoxConstrProblem::eval_prox_grad_step, "γ"_a, "x"_a,
-             "grad_ψ"_a, "x̂"_a, "p"_a)
+             "grad_ψ"_a, "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &BoxConstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a)
         .def(

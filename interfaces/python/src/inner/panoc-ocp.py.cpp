@@ -42,7 +42,7 @@ void register_panoc_ocp(py::module_ &m) {
         .def_readonly("xu", &PANOCOCPProgressInfo::xu, "States :math:`x` and inputs :math:`u`")
         .def_readonly("p", &PANOCOCPProgressInfo::p, "Projected gradient step :math:`p`")
         .def_readonly("norm_sq_p", &PANOCOCPProgressInfo::norm_sq_p, ":math:`\\left\\|p\\right\\|^2`")
-        .def_readonly("x̂u", &PANOCOCPProgressInfo::x̂u, "Variables after projected gradient step :math:`\\hat u`")
+        .def_readonly("xu_hat", &PANOCOCPProgressInfo::x̂u, "Variables after projected gradient step :math:`\\hat u`")
         .def_readonly("φγ", &PANOCOCPProgressInfo::φγ, "Forward-backward envelope :math:`\\varphi_\\gamma(u)`")
         .def_readonly("ψ", &PANOCOCPProgressInfo::ψ, "Objective value :math:`\\psi(u)`")
         .def_readonly("grad_ψ", &PANOCOCPProgressInfo::grad_ψ, "Gradient of objective :math:`\\nabla\\psi(u)`")
@@ -58,9 +58,9 @@ void register_panoc_ocp(py::module_ &m) {
         .def_property_readonly("problem", member_ptr<&PANOCOCPProgressInfo::problem>(), "Problem being solved")
         .def_property_readonly("params", member_ptr<&PANOCOCPProgressInfo::params>(), "Solver parameters")
         .def_property_readonly("u", &PANOCOCPProgressInfo::u, "Inputs")
-        .def_property_readonly("û", &PANOCOCPProgressInfo::û, "Inputs after projected gradient step")
+        .def_property_readonly("u_hat", &PANOCOCPProgressInfo::û, "Inputs after projected gradient step")
         .def_property_readonly("x", &PANOCOCPProgressInfo::x, "States")
-        .def_property_readonly("x̂", &PANOCOCPProgressInfo::x̂, "States after projected gradient step")
+        .def_property_readonly("x_hat", &PANOCOCPProgressInfo::x̂, "States after projected gradient step")
         // clang-format on
         .def_property_readonly(
             "fpr", [](const PANOCOCPProgressInfo &p) { return std::sqrt(p.norm_sq_p) / p.γ; },

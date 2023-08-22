@@ -48,7 +48,7 @@ void register_zerofpr(py::module_ &m) {
         .def_readonly("x", &ZeroFPRProgressInfo::x, "Decision variable :math:`x`")
         .def_readonly("p", &ZeroFPRProgressInfo::p, "Projected gradient step :math:`p`")
         .def_readonly("norm_sq_p", &ZeroFPRProgressInfo::norm_sq_p, ":math:`\\left\\|p\\right\\|^2`")
-        .def_readonly("x̂", &ZeroFPRProgressInfo::x̂, "Decision variable after projected gradient step :math:`\\hat x`")
+        .def_readonly("x_hat", &ZeroFPRProgressInfo::x̂, "Decision variable after projected gradient step :math:`\\hat x`")
         .def_readonly("φγ", &ZeroFPRProgressInfo::φγ, "Forward-backward envelope :math:`\\varphi_\\gamma(x)`")
         .def_readonly("ψ", &ZeroFPRProgressInfo::ψ, "Objective value :math:`\\psi(x)`")
         .def_readonly("grad_ψ", &ZeroFPRProgressInfo::grad_ψ, "Gradient of objective :math:`\\nabla\\psi(x)`")
