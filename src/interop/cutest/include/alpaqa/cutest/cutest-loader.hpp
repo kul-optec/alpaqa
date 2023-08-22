@@ -13,9 +13,9 @@ namespace alpaqa {
 /// Wrapper for CUTEst problems loaded from an external shared library.
 ///
 /// @ingroup  grp_Problems
-class CUTEstProblem : public BoxConstrProblem<alpaqa::DefaultConfig> {
+class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
   public:
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     /// Load a CUTEst problem from the given shared library and OUTSDIF.d file.
     CUTEstProblem(const char *so_fname, const char *outsdif_fname,
@@ -109,6 +109,8 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::DefaultConfig> {
     void eval_hess_L(crvec x, crvec y, real_t scale, rindexvec inner_idx,
                      rindexvec outer_ptr, rvec H_values) const;
     [[nodiscard]] length_t get_hess_L_num_nonzeros() const;
+    void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v,
+                          rvec Hv) const;
     [[nodiscard]] real_t eval_f_grad_f(crvec x, rvec grad_fx) const;
     [[nodiscard]] real_t eval_f_g(crvec x, rvec g) const;
     void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const;

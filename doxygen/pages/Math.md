@@ -288,7 +288,17 @@ implementation of the PANOC algorithm.
     \nabla \psi(x^k) &= \nabla f(x^k)
         + \nabla g(x^k)\, \Sigma \left(g(x^k) + \Sigma^{-1}y - \Pi_D(g(x^k) + \Sigma^{-1}y)\right) &\text{Gradient of the objective} \\
     &= \nabla f(x^k) + \nabla g(x^k)\, \Sigma\, \big(\zeta^k - \hat{z}^k\big) \\
-    &= \nabla f(x^k) + \nabla g(x^k)\, \hat{y}^k \\[1em]
+    &= \nabla f(x^k) + \nabla g(x^k)\, \hat{y}^k \\
+    &= \nabla f(x^k) + \sum_{i=1}^m \hat{y}^k_i\, \nabla g_i(x^k) \\[1em]
+    \nabla \hat y^k_i(x^k) &= \Sigma_{ii} \left(1 - \partial \Pi_{D_i}\left(g_i(x^k) + \Sigma^{-1}_{ii} y_i\right) \right)\, \nabla g_i(x^k) \\
+    \nabla^2 \psi(x^k) &= \nabla^2 f(x^k) + \sum_{i=1}^m \hat{y}^k_i\, \nabla^2 g_i(x^k) + \sum_{i=1}^m \nabla g_i(x^k)\, \nabla^\top \hat{y}^k_i  &\text{Generalized Hessian of the objective}\\
+    &= \nabla^2_{xx} \Lagr(x^k, y) + \sum_{i=1}^m \nabla g_i(x^k)\, \hat\sigma_i\, \nabla g_i(x^k)^\top \\
+    \hat\sigma_i &\in \begin{cases}
+    \left\{\Sigma_{ii}\right\} & \text{if } g_i(x^k) + \Sigma_{ii}^{-1} y_i \not\in D_i \\
+    \left[0, \Sigma_{ii}\right] & \text{if } g_i(x^k) + \Sigma_{ii}^{-1} y_i \in \operatorname{bd} D_i \\
+    \left\{0\right\} & \text{if } g_i(x^k) + \Sigma_{ii}^{-1} y_i \in \operatorname{int} D_i \\
+    \end{cases}
+    \\[1em]
     \hat{x}^k &\triangleq T_{\gamma^k}\left(x^k\right) &\text{Next proximal gradient iterate}\\
     &= \Pi_C\left(x^k - \gamma^k \nabla \psi(x^k)\right) \\
     p^k &\triangleq \hat{x}^k - x^k &\text{Proximal gradient step}\\

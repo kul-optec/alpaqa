@@ -176,6 +176,7 @@ class CUTEstLoader {
             throw std::runtime_error(
                 "Unconstrained CUTEst problems are currently unsupported");
         work.resize(std::max(nvar, ncon));
+        work2.resize(std::max(nvar, ncon));
         std::replace(C.lowerbound.begin(), C.lowerbound.end(), -CUTE_INF,
                      -inf<config_t>);
         std::replace(C.upperbound.begin(), C.upperbound.end(), +CUTE_INF,
@@ -243,9 +244,9 @@ class CUTEstLoader {
     ConstrFuncs funcs; /// Pointers to loaded problem functions
 
     using logical_vec = Eigen::VectorX<logical>;
-    logical_vec equatn; ///< whether the constraint is an equality
-    logical_vec linear; ///< whether the constraint is linear
-    mutable vec work;   ///< work vector
+    logical_vec equatn;      ///< whether the constraint is an equality
+    logical_vec linear;      ///< whether the constraint is linear
+    mutable vec work, work2; ///< work vectors
 };
 
 CUTEstProblem::CUTEstProblem(const char *so_fname, const char *outsdif_fname,
@@ -426,6 +427,49 @@ void CUTEstProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
     throw_if_error("eval_hess_L_prod: CUTEST_chprod", status);
     if (scale != 1)
         Hv *= scale;
+}
+void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
+                                     crvec v, rvec Hv) const {
+    assert(x.size() == static_cast<length_t>(impl->nvar));
+    assert(y.size() == static_cast<length_t>(impl->ncon));
+    assert(Σ.size() == static_cast<length_t>(impl->ncon));
+    assert(v.size() == static_cast<length_t>(impl->nvar));
+    assert(Hv.size() == static_cast<length_t>(impl->nvar));
+    auto &&ζ = impl->work.topRows(impl->ncon);
+    auto &&ŷ = impl->work2.topRows(impl->ncon);
+    // ζ = g(x) + Σ⁻¹y
+    eval_g(x, ζ);
+    ζ += Σ.asDiagonal().inverse() * y;
+    // d = ζ - Π(ζ, D)
+    this->eval_proj_diff_g(ζ, ŷ);
+    // ŷ = Σ d
+    ŷ.array() *= Σ.array();
+    // Hv = ∇²ℒ(x, ŷ) v
+    eval_hess_L_prod(x, ŷ, scale, v, Hv);
+    // Find active constraints
+    for (index_t i = 0; i < impl->ncon; ++i)
+        ζ(i) = (ζ(i) <= D.lowerbound(i)) || (D.upperbound(i) <= ζ(i))
+                   ? Σ(i)
+                   : real_t(0);
+    // Jg(x) v
+    auto &&Jv = impl->work2.topRows(impl->ncon);
+    integer status;
+    auto lvector = static_cast<integer>(v.size()),
+         lresult = static_cast<integer>(Jv.size());
+    logical gotj = FALSE_, jtrans = FALSE_;
+    impl->funcs.cjprod(&status, &impl->nvar, &impl->ncon, &gotj, &jtrans,
+                       x.data(), v.data(), &lvector, Jv.data(), &lresult);
+    throw_if_error("eval_hess_ψ_prod: CUTEST_cjprod-1", status);
+    // Σ Jg v
+    Jv.array() *= ζ.array();
+    // Jgᵀ Σ Jg v
+    std::swap(lvector, lresult);
+    gotj = jtrans = TRUE_;
+    auto &&JΣJv   = impl->work.topRows(impl->nvar);
+    impl->funcs.cjprod(&status, &impl->nvar, &impl->ncon, &gotj, &jtrans,
+                       x.data(), Jv.data(), &lvector, JΣJv.data(), &lresult);
+    throw_if_error("eval_hess_ψ_prod: CUTEST_cjprod-2", status);
+    Hv += JΣJv;
 }
 void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
                                 rindexvec inner_idx, rindexvec outer_ptr,
