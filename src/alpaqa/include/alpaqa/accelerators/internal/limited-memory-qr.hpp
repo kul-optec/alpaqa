@@ -1,3 +1,5 @@
+#pragma once
+
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/util/ringbuffer.hpp>
 #include <Eigen/Jacobi>

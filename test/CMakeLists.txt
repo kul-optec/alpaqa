@@ -11,6 +11,8 @@ endif()
 
 add_executable(tests
     "accelerators/test-lbfgs.cpp"
+    "accelerators/test-anderson-acceleration.cpp"
+    "accelerators/test-limited-memory-qr.cpp"
     "inner/test-panoc.cpp"
     "util/test-type-erasure.cpp"
     "util/test-index-set.cpp"
