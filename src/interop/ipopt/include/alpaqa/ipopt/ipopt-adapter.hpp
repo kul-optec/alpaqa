@@ -23,8 +23,9 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
     struct Results {
         Ipopt::SolverReturn status = Ipopt::SolverReturn::UNASSIGNED;
         vec solution_x, solution_z_L, solution_z_U, solution_y, solution_g;
-        real_t solution_f, infeasibility, nlp_error;
-        length_t iter_count;
+        real_t solution_f = NaN<config_t>, infeasibility = NaN<config_t>,
+               nlp_error    = NaN<config_t>;
+        length_t iter_count = 0;
     } results;
 
     IpoptAdapter(const Problem &problem);

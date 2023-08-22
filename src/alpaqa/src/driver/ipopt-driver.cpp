@@ -68,6 +68,10 @@ SolverResults run_ipopt_solver(auto &problem,
 
     // Results
     auto &nlp_res = my_nlp->results;
+    if (nlp_res.status == Ipopt::SolverReturn::UNASSIGNED) {
+        nlp_res.solution_x.resize(problem.problem.get_n());
+        nlp_res.solution_y.resize(problem.problem.get_m());
+    }
     SolverResults results{
         .status             = enum_name(status),
         .success            = status == Ipopt::Solve_Succeeded,
@@ -81,12 +85,14 @@ SolverResults run_ipopt_solver(auto &problem,
         .Σ                  = 0,
         .solution           = nlp_res.solution_x,
         .multipliers        = nlp_res.solution_y,
-        .multipliers_bounds = vec(problem.problem.get_n() * 2),
+        .multipliers_bounds = vec(problem.problem.get_n() * 2), // see below
         .outer_iter         = nlp_res.iter_count,
         .inner_iter         = nlp_res.iter_count,
         .extra              = {},
     };
-    results.multipliers_bounds << nlp_res.solution_z_L, nlp_res.solution_z_U;
+    if (nlp_res.status != Ipopt::SolverReturn::UNASSIGNED)
+        results.multipliers_bounds << nlp_res.solution_z_L,
+            nlp_res.solution_z_U;
     return results;
 }
 
