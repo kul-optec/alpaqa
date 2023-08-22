@@ -7,6 +7,7 @@
 #include <alpaqa/accelerators/internal/limited-memory-qr.hpp>
 #include <Eigen/LU>
 #include <Eigen/QR>
+#include <iomanip>
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
@@ -30,8 +31,8 @@ TEST(Anderson, minimize) {
     alpaqa::LimitedMemoryQR qr(4, 3);
 
     X << 1, 2, 3, 4, 5, 6, 7, //
-        2, 4, 3, 7, 1, 2, 4,   //
-        1, 3, 2, 1, 2, 1, 3,   //
+        2, 4, 3, 7, 1, 2, 4,  //
+        1, 3, 2, 1, 2, 1, 3,  //
         5, 2, 1, 3, 3, 4, -1;
 
     G << 7, 6, 5, 4, 3, 2, 1,  //

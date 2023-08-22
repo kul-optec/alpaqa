@@ -6,6 +6,7 @@
 #include <alpaqa/util/iter-adapter.hpp>
 #include <alpaqa/util/set-intersection.hpp>
 
+#include <cassert>
 #include <chrono>
 #include <iostream>
 #include <ranges>
