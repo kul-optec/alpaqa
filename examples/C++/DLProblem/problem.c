@@ -76,20 +76,21 @@ static void initialize_box_D(void *instance, real_t *lb, real_t *ub) {
 static struct ProblemData *create_problem(void *user_data) {
     (void)user_data;
     struct ProblemData *problem = malloc(sizeof(*problem));
-    ALPAQA_PROBLEM_FUNCTIONS_INIT(&problem->functions);
     size_t n = 2, m = 1;
-    problem->functions.n                = (length_t)n;
-    problem->functions.m                = (length_t)m;
-    problem->functions.eval_f           = &eval_f;
-    problem->functions.eval_grad_f      = &eval_grad_f;
-    problem->functions.eval_f_grad_f    = &eval_f_grad_f;
-    problem->functions.eval_g           = &eval_g;
-    problem->functions.eval_grad_g_prod = &eval_grad_g_prod;
-    problem->functions.eval_jac_g       = &eval_jac_g;
-    problem->functions.initialize_box_D = &initialize_box_D;
-    problem->Q                          = malloc(sizeof(real_t) * n * n);
-    problem->A                          = malloc(sizeof(real_t) * m * n);
-    problem->work                       = malloc(sizeof(real_t) * n);
+    problem->functions = (alpaqa_problem_functions_t){
+        .n                = (length_t)n,
+        .m                = (length_t)m,
+        .eval_f           = &eval_f,
+        .eval_grad_f      = &eval_grad_f,
+        .eval_g           = &eval_g,
+        .eval_grad_g_prod = &eval_grad_g_prod,
+        .eval_jac_g       = &eval_jac_g,
+        .eval_f_grad_f    = &eval_f_grad_f,
+        .initialize_box_D = &initialize_box_D,
+    };
+    problem->Q    = malloc(sizeof(real_t) * n * n);
+    problem->A    = malloc(sizeof(real_t) * m * n);
+    problem->work = malloc(sizeof(real_t) * n);
     // Note: column major order
     problem->Q[0] = 3;
     problem->Q[1] = -1;
@@ -112,7 +113,7 @@ PROBLEM_C_EXPORT alpaqa_problem_register_t
 alpaqa_problem_register(void *user_data) {
     struct ProblemData *problem = create_problem(user_data);
     alpaqa_problem_register_t result;
-    memset(&result, 0, sizeof(result));
+    ALPAQA_PROBLEM_REGISTER_INIT(&result);
     result.instance  = problem;
     result.cleanup   = &cleanup_problem;
     result.functions = &problem->functions;

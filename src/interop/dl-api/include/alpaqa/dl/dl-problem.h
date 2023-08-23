@@ -28,7 +28,6 @@ typedef alpaqa_length_t alpaqa_index_t;
 ///       In C++, this is not necessary, because all members have default
 ///       initializers.
 typedef struct {
-    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     /// Number of decision variables.
     /// @see @ref alpaqa::TypeErasedProblem::get_n()
     alpaqa_length_t n ALPAQA_DEFAULT(0);
@@ -233,8 +232,13 @@ typedef struct {
 
 /// Opaque type for a C++-only map of extra functions.
 typedef struct alpaqa_function_dict_s alpaqa_function_dict_t;
+/// Opaque type for a C++-only exception pointer.
+typedef struct alpaqa_exception_ptr_s alpaqa_exception_ptr_t;
 
 typedef struct {
+    /// To check whether the loaded problem is compatible with the version of
+    /// the solver.
+    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     /// Owning pointer.
     void *instance ALPAQA_DEFAULT(nullptr);
     /// Non-owning pointer, lifetime at least as long as @ref instance.
@@ -245,10 +249,11 @@ typedef struct {
     /// @see @ref alpaqa::register_function
     /// @see @ref alpaqa::register_member_function
     alpaqa_function_dict_t *extra_functions ALPAQA_DEFAULT(nullptr);
+    /// Pointer to an exception that ocurred during problem creation.
+    alpaqa_exception_ptr_t *exception ALPAQA_DEFAULT(nullptr);
 } alpaqa_problem_register_t;
 
 typedef struct {
-    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     alpaqa_length_t N ALPAQA_DEFAULT(0), nx ALPAQA_DEFAULT(0),
         nu ALPAQA_DEFAULT(0), nh ALPAQA_DEFAULT(0), nh_N ALPAQA_DEFAULT(0),
         nc ALPAQA_DEFAULT(0), nc_N ALPAQA_DEFAULT(0);
@@ -401,6 +406,9 @@ typedef struct {
 } alpaqa_control_problem_functions_t;
 
 typedef struct {
+    /// To check whether the loaded problem is compatible with the version of
+    /// the solver.
+    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     /// Owning pointer.
     void *instance ALPAQA_DEFAULT(nullptr);
     /// Non-owning pointer, lifetime at least as long as @ref instance.
@@ -409,6 +417,8 @@ typedef struct {
     void (*cleanup)(void *) ALPAQA_DEFAULT(nullptr);
     /// Pointer to a map of extra functions (C++ only).
     alpaqa_function_dict_t *extra_functions ALPAQA_DEFAULT(nullptr);
+    /// Pointer to an exception that ocurred during problem creation.
+    alpaqa_exception_ptr_t *exception ALPAQA_DEFAULT(nullptr);
 } alpaqa_control_problem_register_t;
 
 #ifdef __cplusplus
@@ -417,39 +427,44 @@ typedef struct {
 
 #if !defined(__cplusplus) || defined(DOXYGEN)
 inline static void
-alpaqa_problem_functions_init(alpaqa_problem_functions_t *self) {
-    *self = (alpaqa_problem_functions_t){
+alpaqa_problem_register_init(alpaqa_problem_register_t *self) {
+    *self = (alpaqa_problem_register_t){
         .abi_version = ALPAQA_DL_ABI_VERSION,
     };
 }
-inline static void alpaqa_control_problem_functions_init(
-    alpaqa_control_problem_functions_t *self) {
-    *self = (alpaqa_control_problem_functions_t){
+inline static void
+alpaqa_control_problem_register_init(alpaqa_control_problem_register_t *self) {
+    *self = (alpaqa_control_problem_register_t){
         .abi_version = ALPAQA_DL_ABI_VERSION,
     };
 }
-/// Initialize an instance of @ref alpaqa_problem_functions_t or
-/// @ref alpaqa_control_problem_functions_t. It initializes all members to zero,
+/// Initialize an instance of @ref alpaqa_problem_register_t or
+/// @ref alpaqa_control_problem_register_t. It initializes all members to zero,
 /// except for the ABI version, which is initialized to the current ABI version.
 /// Available in C only (unnecessary in C++).
 /// @param  self
 ///         A pointer to the instance to initialize.
-#define ALPAQA_PROBLEM_FUNCTIONS_INIT(self)                                           \
-    _Generic((self),                                                                  \
-        alpaqa_problem_functions_t *: alpaqa_problem_functions_init,                  \
-        alpaqa_control_problem_functions_t *: alpaqa_control_problem_functions_init)( \
+#define ALPAQA_PROBLEM_REGISTER_INIT(self)                                          \
+    _Generic((self),                                                                \
+        alpaqa_problem_register_t *: alpaqa_problem_register_init,                  \
+        alpaqa_control_problem_register_t *: alpaqa_control_problem_register_init)( \
         self)
 #endif
 
 #if defined(__cplusplus) && __cplusplus > 201703L
 
 #include <any>
+#include <exception>
 #include <functional>
 #include <map>
 #include <string>
 
 struct alpaqa_function_dict_s {
     std::map<std::string, std::any> dict{};
+};
+
+struct alpaqa_exception_ptr_s {
+    std::exception_ptr exc{};
 };
 
 namespace alpaqa {

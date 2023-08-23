@@ -13,31 +13,17 @@
 
 namespace alpaqa::dl {
 
-class DLLoader {
-  protected:
-    /// Load a shared library.
-    DLLoader(
-        /// Filename of the shared library to load.
-        std::string so_filename,
-        /// Prefix of the symbols in the library.
-        std::string symbol_prefix);
+class ExtraFuncs {
+  public:
+    /// Unique type for calling an extra function that is a member function.
+    struct instance_t;
 
-  protected:
-    std::string so_filename;
-    std::string symbol_prefix;
-
-    using dl_handle_t = std::shared_ptr<void>;
-    /// Handle to the shared library (returned by `dlopen`).
-    dl_handle_t handle;
+    ExtraFuncs() = default;
+    ExtraFuncs(std::shared_ptr<function_dict_t> &&extra_funcs)
+        : extra_functions(std::move(extra_funcs)) {}
 
     /// An associative array of additional functions exposed by the problem.
     std::shared_ptr<function_dict_t> extra_functions;
-
-    /// Open the shared library using `dlopen`
-    [[nodiscard]] std::shared_ptr<void> load_lib() const;
-    /// Load a function with signature @p F from the library using `dlsym`.
-    template <class F>
-    [[nodiscard]] F *load_func(std::string_view name) const;
 
     template <class Signature>
         requires std::is_function_v<Signature>
@@ -58,11 +44,6 @@ class DLLoader {
         }
     }
 
-  public:
-    /// Unique type for calling an extra function that is a member function.
-    struct instance_t;
-
-  protected:
     template <class Func>
     struct FuncTag {};
 
@@ -97,7 +78,7 @@ class DLLoader {
 /// `<symbol_prefix>_register` that accepts a void pointer with user data, and
 /// returns a struct of type @ref alpaqa_problem_register_t that contains all
 /// data to represent the problem, as well as function pointers for all
-/// required operations.  
+/// required operations.
 /// See @ref C++/DLProblem/main.cpp and
 /// @ref problems/sparse-logistic-regression.cpp for examples.
 ///
@@ -108,26 +89,30 @@ class DLLoader {
 /// @see @ref   TypeErasedProblem
 /// @see @ref   alpaqa_problem_functions_t
 /// @see @ref   alpaqa_problem_register_t
-class DLProblem : private DLLoader, public BoxConstrProblem<DefaultConfig> {
+class DLProblem : public BoxConstrProblem<DefaultConfig> {
   public:
     USING_ALPAQA_CONFIG(DefaultConfig);
 
     /// Load a problem from a shared library.
     DLProblem(
         /// Filename of the shared library to load.
-        std::string so_filename,
+        const std::string &so_filename,
         /// Prefix of the registration function.
         std::string symbol_prefix = "alpaqa_problem",
         /// Pointer to custom user data to pass to the registration function.
         void *user_param = nullptr);
 
   private:
+    /// Handle to the shared module defining the problem.
+    std::shared_ptr<void> handle;
     /// Problem instance created by the registration function, including the
     /// deleter to destroy it.
     std::shared_ptr<void> instance;
     /// Pointer to the struct of function pointers for evaluating the objective,
     /// constraints, their gradients, etc.
     problem_functions_t *functions = nullptr;
+    /// Dictionary of extra functions that were registered by the problem.
+    ExtraFuncs extra_funcs;
 
   public:
     // clang-format off
@@ -176,19 +161,21 @@ class DLProblem : private DLLoader, public BoxConstrProblem<DefaultConfig> {
     [[nodiscard]] bool provides_get_box_C() const;
     // clang-format on
 
-    using instance_t = DLLoader::instance_t;
+    using instance_t = ExtraFuncs::instance_t;
 
     template <class Signature, class... Args>
     decltype(auto) call_extra_func(const std::string &name,
                                    Args &&...args) const {
-        return extra_func_helper(instance.get(), FuncTag<Signature>{}, name,
-                                 std::forward<Args>(args)...);
+        return call_extra_func_helper(instance.get(),
+                                      ExtraFuncs::FuncTag<Signature>{}, name,
+                                      std::forward<Args>(args)...);
     }
 
     template <class Signature, class... Args>
     decltype(auto) call_extra_func(const std::string &name, Args &&...args) {
-        return call_extra_func_helper(instance.get(), FuncTag<Signature>{},
-                                      name, std::forward<Args>(args)...);
+        return extra_funcs.call_extra_func_helper(
+            instance.get(), ExtraFuncs::FuncTag<Signature>{}, name,
+            std::forward<Args>(args)...);
     }
 };
 
@@ -207,7 +194,7 @@ class DLProblem : private DLLoader, public BoxConstrProblem<DefaultConfig> {
 ///
 /// @ingroup    grp_Problems
 /// @see @ref   TypeErasedControlProblem
-class DLControlProblem : private DLLoader {
+class DLControlProblem {
   public:
     USING_ALPAQA_CONFIG(DefaultConfig);
     using Box = alpaqa::Box<config_t>;
@@ -215,19 +202,23 @@ class DLControlProblem : private DLLoader {
     /// Load a problem from a shared library.
     DLControlProblem(
         /// Filename of the shared library to load.
-        std::string so_filename,
+        const std::string &so_filename,
         /// Prefix of the registration function.
         std::string symbol_prefix = "alpaqa_control_problem",
         /// Pointer to custom user data to pass to the registration function.
         void *user_param = nullptr);
 
   private:
+    /// Handle to the shared module defining the problem.
+    std::shared_ptr<void> handle;
     /// Problem instance created by the registration function, including the
     /// deleter to destroy it.
     std::shared_ptr<void> instance;
     /// Pointer to the struct of function pointers for evaluating the objective,
     /// constraints, their gradients, etc.
     control_problem_functions_t *functions = nullptr;
+    /// Dictionary of extra functions that were registered by the problem.
+    ExtraFuncs extra_funcs;
 
   public:
     length_t get_N() const { return functions->N; }
@@ -284,19 +275,21 @@ class DLControlProblem : private DLLoader {
     [[nodiscard]] bool provides_eval_add_gn_hess_constr_N() const;
     // clang-format on
 
-    using instance_t = DLLoader::instance_t;
+    using instance_t = ExtraFuncs::instance_t;
 
     template <class Signature, class... Args>
     decltype(auto) call_extra_func(const std::string &name,
                                    Args &&...args) const {
-        return extra_func_helper(instance.get(), FuncTag<Signature>{}, name,
-                                 std::forward<Args>(args)...);
+        return extra_funcs.call_extra_func_helper(
+            instance.get(), ExtraFuncs::FuncTag<Signature>{}, name,
+            std::forward<Args>(args)...);
     }
 
     template <class Signature, class... Args>
     decltype(auto) call_extra_func(const std::string &name, Args &&...args) {
-        return call_extra_func_helper(instance.get(), FuncTag<Signature>{},
-                                      name, std::forward<Args>(args)...);
+        return extra_funcs.call_extra_func_helper(
+            instance.get(), ExtraFuncs::FuncTag<Signature>{}, name,
+            std::forward<Args>(args)...);
     }
 };
 

@@ -8,6 +8,7 @@ generate_export_header(problem-c
 set_target_properties(problem-c PROPERTIES
     C_VISIBILITY_PRESET "hidden"
     VISIBILITY_INLINES_HIDDEN true)
+target_compile_features(problem-c PRIVATE c_std_11)
 target_include_directories(problem-c PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 target_link_libraries(problem-c PRIVATE alpaqa::dl-api alpaqa::warnings)

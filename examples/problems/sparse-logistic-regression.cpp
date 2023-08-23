@@ -17,18 +17,20 @@ USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 #include <span>
 #include <stdexcept>
 #include <string_view>
+#include <utility>
 namespace fs = std::filesystem;
 
 struct Problem {
-    alpaqa_problem_functions_t funcs;
-    length_t n;     ///< Number of features
-    length_t m;     ///< Number of data points
-    real_t λ;       ///< Regularization factor
-    real_t μ;       ///< Scaling factor
-    mat A;          ///< Data matrix (m×n)
-    vec b;          ///< Binary labels (m)
-    vec Aᵀb;        ///< Work vector (n)
-    mutable vec Ax; ///< Work vector (m)
+    alpaqa_problem_functions_t funcs{};
+    length_t n;         ///< Number of features
+    length_t m;         ///< Number of data points
+    real_t λ;           ///< Regularization factor
+    real_t μ;           ///< Scaling factor
+    mat A;              ///< Data matrix (m×n)
+    vec b;              ///< Binary labels (m)
+    vec Aᵀb;            ///< Work vector (n)
+    mutable vec Ax;     ///< Work vector (m)
+    fs::path data_file; ///< File we loaded the data from
 
     /// φ(x) = ∑ ln(1 + exp(-b x))
     real_t logistic_loss(crvec x) const {
@@ -166,11 +168,11 @@ struct Problem {
     /// The second row contains the binary labels for all data points.
     /// Every following row contains the values of one feature for all data
     /// points.
-    void load_data(const fs::path &csv_filename) {
-        std::ifstream csv_file{csv_filename};
+    void load_data() {
+        std::ifstream csv_file{data_file};
         if (!csv_file)
             throw std::runtime_error("Unable to open file '" +
-                                     csv_filename.string() + "'");
+                                     data_file.string() + "'");
         // Load dimensions (#data points, #features)
         csv_file >> m >> n;
         csv_file.ignore(1, '\n');
@@ -188,10 +190,15 @@ struct Problem {
             alpaqa::csv::read_row(csv_file, A.col(i));
     }
 
+    std::string get_name() const {
+        return "sparse logistic regression (\"" + data_file.string() + "\")";
+    }
+
     /// Constructor loads CSV data file and exposes the problem functions by
     /// initializing the @c funcs member.
-    Problem(const fs::path &csv_filename, real_t λ_factor) {
-        load_data(csv_filename);
+    Problem(fs::path csv_filename, real_t λ_factor)
+        : data_file(std::move(csv_filename)) {
+        load_data();
         Aᵀb.noalias() = A.transpose() * b;
         real_t λ_max = Aᵀb.lpNorm<Eigen::Infinity>() / static_cast<real_t>(m);
         λ            = λ_factor * λ_max;
@@ -219,7 +226,7 @@ struct Problem {
 /// Main entry point of this file, it is called by the
 /// @ref alpaqa::dl::DLProblem class.
 extern "C" SPARSE_LOGISTIC_REGRESSION_EXPORT alpaqa_problem_register_t
-alpaqa_problem_register(void *user_data_v) {
+alpaqa_problem_register(void *user_data_v) noexcept try {
     // Check and convert user arguments
     if (!user_data_v)
         throw std::invalid_argument("Missing user data");
@@ -237,10 +244,13 @@ alpaqa_problem_register(void *user_data_v) {
     // Build and expose problem
     auto problem = std::make_unique<Problem>(datafilename, λ_factor);
     alpaqa_problem_register_t result;
+    alpaqa::register_member_function(result, "get_name", &Problem::get_name);
     result.functions = &problem->funcs;
     result.instance  = problem.release();
     result.cleanup   = [](void *instance) {
         delete reinterpret_cast<Problem *>(instance);
     };
     return result;
+} catch (...) {
+    return {.exception = new alpaqa_exception_ptr_t{std::current_exception()}};
 }

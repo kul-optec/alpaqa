@@ -4,12 +4,38 @@
 #include <algorithm>
 #include <cassert>
 #include <charconv>
+#include <list>
 #include <memory>
+#include <mutex>
 #include <stdexcept>
 
 namespace alpaqa::dl {
 
-std::shared_ptr<void> DLLoader::load_lib() const {
+namespace {
+
+std::string format_abi_version(uint64_t version) {
+    std::string s(16, '0');
+    auto begin = s.data(), end = begin + s.size();
+    auto [ptr, ec] = std::to_chars(begin, end, version, 16);
+    if (ec != std::errc())
+        throw std::logic_error(std::make_error_code(ec).message());
+    std::rotate(begin, ptr, end);
+    return s;
+}
+
+void check_abi_version(uint64_t abi_version) {
+    if (abi_version != ALPAQA_DL_ABI_VERSION) {
+        auto prob_version   = format_abi_version(abi_version);
+        auto alpaqa_version = format_abi_version(ALPAQA_DL_ABI_VERSION);
+        throw std::runtime_error(
+            "alpaqa::dl::DLProblem::DLProblem: "
+            "Incompatible problem definition (problem ABI version 0x" +
+            prob_version + ", this version of alpaqa supports 0x" +
+            alpaqa_version + ")");
+    }
+}
+
+std::shared_ptr<void> load_lib(const std::string &so_filename) {
     assert(!so_filename.empty());
     ::dlerror();
     void *h = ::dlopen(so_filename.c_str(), RTLD_LOCAL | RTLD_NOW);
@@ -19,56 +45,65 @@ std::shared_ptr<void> DLLoader::load_lib() const {
 }
 
 template <class F>
-F *DLLoader::load_func(std::string_view name) const {
+F *load_func(void *handle, std::string symbol_prefix, std::string_view name) {
     assert(handle);
-    auto full_name = symbol_prefix + "_" + std::string(name);
+    auto &full_name = symbol_prefix;
+    full_name += '_';
+    full_name += name;
     ::dlerror();
-    auto *h = ::dlsym(handle.get(), full_name.c_str());
+    auto *h = ::dlsym(handle, full_name.c_str());
     if (auto *err = ::dlerror())
         throw std::runtime_error(err);
     // We can only hope that the user got the signature right ...
     return reinterpret_cast<F *>(h);
 }
 
-DLLoader::DLLoader(std::string so_filename, std::string symbol_prefix)
-    : so_filename(std::move(so_filename)),
-      symbol_prefix(std::move(symbol_prefix)), handle(load_lib()) {}
+std::mutex leaked_modules_mutex;
+std::list<std::shared_ptr<void>> leaked_modules;
+void leak_lib(std::shared_ptr<void> handle) {
+    std::lock_guard lck{leaked_modules_mutex};
+    leaked_modules.emplace_back(std::move(handle));
+}
 
-DLProblem::DLProblem(std::string so_filename, std::string symbol_prefix,
+} // namespace
+
+DLProblem::DLProblem(const std::string &so_filename, std::string symbol_prefix,
                      void *user_param)
-    : DLLoader{std::move(so_filename), std::move(symbol_prefix)},
-      BoxConstrProblem{0, 0} {
-    auto *register_func = load_func<problem_register_t(void *)>("register");
-    auto r              = register_func(user_param);
-    // Avoid leaking if std::shared_ptr constructor throws
+    : BoxConstrProblem{0, 0} {
+    handle              = load_lib(so_filename);
+    auto *register_func = load_func<problem_register_t(void *)>(
+        handle.get(), std::move(symbol_prefix), "register");
+    auto r = register_func(user_param);
+    // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};
     std::unique_ptr<alpaqa_function_dict_t> unique_extra{r.extra_functions};
-    // Check the ABI version
-    static constexpr auto format_abi_version = [](uint64_t version) {
-        std::string s(16, '0');
-        auto begin = s.data(), end = begin + s.size();
-        auto [ptr, ec] = std::to_chars(begin, end, version, 16);
-        if (ec != std::errc())
-            throw std::logic_error(std::make_error_code(ec).message());
-        std::rotate(begin, ptr, end);
-        return s;
-    };
-    if (r.functions->abi_version != ALPAQA_DL_ABI_VERSION) {
-        auto prob_version   = format_abi_version(r.functions->abi_version);
-        auto alpaqa_version = format_abi_version(ALPAQA_DL_ABI_VERSION);
-        throw std::runtime_error(
-            "alpaqa::dl::DLProblem::DLProblem: "
-            "Incompatible problem definition (problem ABI version 0x" +
-            prob_version + ", this version of alpaqa supports 0x" +
-            alpaqa_version + ")");
+    std::unique_ptr<alpaqa_exception_ptr_t> unique_exception{r.exception};
+    check_abi_version(r.abi_version);
+    // Check exception thrown by plugin
+    if (unique_exception) {
+        // Here we're facing an interesting problem: the exception we throw
+        // might propagate upwards to a point where this instance is destroyed.
+        // This would cause the shared module to be closed using dlclose.
+        // However, the exception is still stored somewhere in the memory of
+        // that module, causing a segmentation fault when accessed.
+        // To get around this issue, we need to ensure that the shared module
+        // is not closed. Here we simply leak it by storing a shared_ptr to it
+        // in a global variable.
+        leak_lib(handle);
+        std::rethrow_exception(unique_exception->exc);
     }
+    if (!r.functions)
+        throw std::logic_error("alpaqa::dl::DLProblem::DLProblem: plugin did "
+                               "not return any functions");
     // Store data returned by plugin
-    instance  = std::shared_ptr<void>{std::move(unique_inst)};
-    functions = r.functions;
-    this->n   = r.functions->n;
-    this->m   = r.functions->m;
-    this->C   = Box{this->n};
-    this->D   = Box{this->m};
+    instance    = std::shared_ptr<void>{std::move(unique_inst)};
+    functions   = r.functions;
+    extra_funcs = std::shared_ptr<function_dict_t>{std::move(unique_extra)};
+
+    this->n = functions->n;
+    this->m = functions->m;
+    this->C = Box{this->n};
+    this->D = Box{this->m};
     if (functions->initialize_box_C)
         functions->initialize_box_C(instance.get(), this->C.lowerbound.data(),
                                     this->C.upperbound.data());
@@ -84,7 +119,6 @@ DLProblem::DLProblem(std::string so_filename, std::string symbol_prefix,
                                          &nλ);
         }
     }
-    extra_functions = std::shared_ptr<function_dict_t>{std::move(unique_extra)};
 }
 
 auto DLProblem::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
@@ -142,19 +176,38 @@ bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_st
 
 #if ALPAQA_WITH_OCP
 
-DLControlProblem::DLControlProblem(std::string so_filename,
-                                   std::string symbol_prefix, void *user_param)
-    : DLLoader{std::move(so_filename), std::move(symbol_prefix)} {
-    auto *register_func =
-        load_func<control_problem_register_t(void *)>("register");
+DLControlProblem::DLControlProblem(const std::string &so_filename,
+                                   std::string symbol_prefix,
+                                   void *user_param) {
+    handle              = load_lib(so_filename);
+    auto *register_func = load_func<control_problem_register_t(void *)>(
+        handle.get(), std::move(symbol_prefix), "register");
     auto r = register_func(user_param);
-    // Avoid leaking if std::shared_ptr constructor throws
+    // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};
     std::unique_ptr<alpaqa_function_dict_t> unique_extra{r.extra_functions};
+    std::unique_ptr<alpaqa_exception_ptr_t> unique_exception{r.exception};
+    check_abi_version(r.abi_version);
+    // Check exception thrown by plugin
+    if (unique_exception) {
+        // Here we're facing an interesting problem: the exception we throw
+        // might propagate upwards to a point where this instance is destroyed.
+        // This would cause the shared module to be closed using dlclose.
+        // However, the exception is still stored somewhere in the memory of
+        // that module, causing a segmentation fault when accessed.
+        // To get around this issue, we need to ensure that the shared module
+        // is not closed. Here we simply leak it by storing a shared_ptr to it
+        // in a global variable.
+        leak_lib(handle);
+        std::rethrow_exception(unique_exception->exc);
+    }
+    if (!functions)
+        throw std::logic_error("alpaqa::dl::DLControlProblem::DLControlProblem:"
+                               " plugin did not return any functions");
     // Store data returned by plugin
-    instance        = std::shared_ptr<void>{std::move(unique_inst)};
-    functions       = r.functions;
-    extra_functions = std::shared_ptr<function_dict_t>{std::move(unique_extra)};
+    instance    = std::shared_ptr<void>{std::move(unique_inst)};
+    functions   = r.functions;
+    extra_funcs = std::shared_ptr<function_dict_t>{std::move(unique_extra)};
 }
 
 // clang-format off
