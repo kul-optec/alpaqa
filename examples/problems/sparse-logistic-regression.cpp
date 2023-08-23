@@ -233,14 +233,21 @@ alpaqa_problem_register(void *user_data_v) noexcept try {
     const auto &user_data = *reinterpret_cast<std::any *>(user_data_v);
     using param_t         = std::span<std::string_view>;
     auto opts             = std::any_cast<param_t>(user_data);
+    std::vector<unsigned> used(opts.size());
     // CSV file to load dataset from
     std::string_view datafilename;
-    alpaqa::params::set_params(datafilename, "datafile", opts);
+    alpaqa::params::set_params(datafilename, "datafile", opts, used);
     if (datafilename.empty())
         throw std::invalid_argument("Missing option problem.datafile");
     // Regularization factor
     real_t λ_factor = 0.1;
-    alpaqa::params::set_params(λ_factor, "λ_factor", opts);
+    alpaqa::params::set_params(λ_factor, "λ_factor", opts, used);
+    // Check any unused options
+    auto unused_opt = std::find(used.begin(), used.end(), 0);
+    auto unused_idx = static_cast<size_t>(unused_opt - used.begin());
+    if (unused_opt != used.end())
+        throw std::invalid_argument("Unused problem option: " +
+                                    std::string(opts[unused_idx]));
     // Build and expose problem
     auto problem = std::make_unique<Problem>(datafilename, λ_factor);
     alpaqa_problem_register_t result;

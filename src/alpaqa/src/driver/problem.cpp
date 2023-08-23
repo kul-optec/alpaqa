@@ -158,7 +158,7 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
     for (auto opt = options.begin(); opt != options.end(); ++opt) {
         if (opt->starts_with(prob_prefix)) {
             prob_opts.push_back(opt->substr(prob_prefix.size()));
-            used.begin()[opt - options.begin()] = true;
+            ++used.begin()[opt - options.begin()];
         }
     }
     // Load problem

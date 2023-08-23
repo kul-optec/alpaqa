@@ -48,7 +48,7 @@ void set_param(T &, ParamString); /* deliberately undefined */
 template <class T>
 void ALPAQA_EXPORT set_params(
     T &t, std::string_view prefix, std::span<const std::string_view> options,
-    std::optional<std::span<bool>> used = std::nullopt) {
+    std::optional<std::span<unsigned>> used = std::nullopt) {
 
     size_t index = 0;
     for (const auto &kv : options) {
@@ -58,7 +58,7 @@ void ALPAQA_EXPORT set_params(
         if (pfx != prefix)
             continue;
         if (used)
-            (*used)[curr_index] = true;
+            ++(*used)[curr_index];
         set_param(t, {.full_key = kv, .key = remainder, .value = value});
     }
 }

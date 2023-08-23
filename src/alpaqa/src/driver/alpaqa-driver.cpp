@@ -258,7 +258,7 @@ int main(int argc, const char *argv[]) try {
 
     // Check options
     auto used       = opts.used();
-    auto unused_opt = std::find(used.begin(), used.end(), false);
+    auto unused_opt = std::find(used.begin(), used.end(), 0);
     auto unused_idx = static_cast<size_t>(unused_opt - used.begin());
     if (unused_opt != used.end())
         throw std::invalid_argument("Unused option: " +

@@ -10,19 +10,17 @@
 class Options {
   private:
     std::vector<std::string_view> options_storage;
-    std::unique_ptr<bool[]> used_storage;
+    std::vector<unsigned> used_storage;
 
   public:
     Options(int argc, const char *const argv[]) {
         std::copy(argv, argv + argc, std::back_inserter(options_storage));
-        used_storage = std::make_unique<bool[]>(options_storage.size());
+        used_storage.resize(options_storage.size());
     }
     [[nodiscard]] std::span<const std::string_view> options() const {
         return options_storage;
     }
-    [[nodiscard]] std::span<bool> used() {
-        return std::span{used_storage.get(), options_storage.size()};
-    }
+    [[nodiscard]] std::span<unsigned> used() { return used_storage; }
 };
 
 template <class T>
