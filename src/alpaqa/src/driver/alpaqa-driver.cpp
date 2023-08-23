@@ -197,7 +197,9 @@ void store_solution(const fs::path &sol_output_dir, std::ostream &os,
     auto timestamp_str  = std::to_string(results.timestamp);
     auto rnd_str        = random_hex_string(std::random_device());
     auto name           = results.problem.path.stem().string();
-    auto suffix         = '_' + name + '_' + timestamp_str + '_' + rnd_str;
+    if (name == "PROBLEM")
+        name = results.problem.name;
+    auto suffix = '_' + name + '_' + timestamp_str + '_' + rnd_str;
     fs::create_directories(sol_output_dir);
     std::array solutions{
         std::tuple{"solution", "sol_x", &sol_res.solution},
