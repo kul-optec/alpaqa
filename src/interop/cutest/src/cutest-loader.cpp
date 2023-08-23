@@ -205,7 +205,7 @@ class CUTEstLoader {
     }
 
     std::string get_name() {
-        std::string name(FSTRING_LEN, '0');
+        std::string name(FSTRING_LEN, ' ');
         integer status;
         LOAD_DL_FUNC(CUTEST_probname)(&status, name.data());
         throw_if_error("Failed to call CUTEST_probname", status);
@@ -253,12 +253,12 @@ CUTEstProblem::CUTEstProblem(const char *so_fname, const char *outsdif_fname,
                              bool sparse)
     : BoxConstrProblem<config_t>{0, 0}, sparse{sparse} {
     impl = std::make_unique<CUTEstLoader>(so_fname, outsdif_fname);
-    name = impl->get_name();
     resize(static_cast<length_t>(impl->nvar),
            static_cast<length_t>(impl->ncon));
     x0.resize(n);
     y0.resize(m);
     impl->setup_problem(x0, y0, C, D);
+    name = impl->get_name();
 }
 
 CUTEstProblem::CUTEstProblem(const CUTEstProblem &)                = default;

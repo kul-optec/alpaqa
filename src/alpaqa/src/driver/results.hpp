@@ -140,8 +140,8 @@ inline void print_results(std::ostream &os, const BenchmarkResults &results) {
     os << '\n'
        << solstats.evals << '\n'
        << "solver:  " << solstats.solver << '\n'
-       << "problem: " << results.problem.path.filename().c_str() << " (from "
-       << results.problem.path.parent_path() << ")" << '\n'
+       << "problem: " << results.problem.name << " (from "
+       << results.problem.path << ")" << '\n'
        << "status:  " << (solstats.success ? "\033[0;32m" : "\033[0;31m")
        << solstats.status << "\033[0m" << '\n'
        << "num var: " << results.problem.problem.get_n() << '\n'
