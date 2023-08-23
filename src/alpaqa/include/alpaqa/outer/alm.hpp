@@ -145,7 +145,7 @@ class ALMSolver {
 
         /// The statistics of the inner solver invocations, accumulated over all
         /// ALM iterations.
-        InnerStatsAccumulator<typename InnerSolver::Stats> inner;
+        InnerStatsAccumulator<typename InnerSolver::Stats> inner{};
     };
 
     ALMSolver(Params params, InnerSolver &&inner_solver)
