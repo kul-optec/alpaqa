@@ -330,6 +330,34 @@ if (ALPAQA_WITH_DRIVERS)
         target_link_libraries(driver PUBLIC alpaqa::lbfgsb-adapter)
         target_compile_definitions(driver PUBLIC WITH_LBFGSB)
     endif()
+
+    # Gradient checker tool
+    add_executable(gradient-checker
+        "alpaqa/src/driver/gradient-checker.cpp"
+        "alpaqa/src/driver/problem.cpp"
+    )
+    set_target_properties(gradient-checker PROPERTIES
+        OUTPUT_NAME "alpaqa-gradient-checker"
+        RELEASE_POSTFIX ""
+        DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}"
+        RELWITHDEBINFO_POSTFIX ""
+        MINSIZEREL_POSTFIX ""
+    )
+    target_link_libraries(gradient-checker
+        PRIVATE alpaqa::alpaqa alpaqa::warnings alpaqa::dl-loader)
+    add_executable(alpaqa::gradient-checker ALIAS gradient-checker)
+    list(APPEND ALPAQA_INSTALL_EXE gradient-checker)
+    if (TARGET alpaqa::casadi-loader)
+        target_link_libraries(gradient-checker PUBLIC alpaqa::casadi-loader casadi)
+        target_compile_definitions(gradient-checker PUBLIC ALPAQA_HAVE_CASADI)
+    endif()
+    if (TARGET alpaqa::cutest-interface)
+        target_link_libraries(gradient-checker PUBLIC alpaqa::cutest-interface)
+        target_compile_definitions(gradient-checker PUBLIC ALPAQA_HAVE_CUTEST)
+    endif()
+    if (TARGET alpaqa::casadi-ocp-loader)
+        target_link_libraries(gradient-checker PUBLIC alpaqa::casadi-ocp-loader)
+    endif()
 endif()
 
 # Installation

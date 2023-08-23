@@ -118,7 +118,11 @@ void print_usage(const char *a0) {
         << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
 #ifdef ALPAQA_HAVE_CASADI
         << "  * CasADi " CASADI_VERSION_STRING
-           " (https://github.com/casadi/casadi) - LGPL-3.0+\n"
+           " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
+#endif
+#ifdef ALPAQA_HAVE_CUTEST
+        << "  * CUTEst"
+           " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
 #endif
 #ifdef WITH_LBFGSB
         << "  * L-BFGS-B 3.0 "
