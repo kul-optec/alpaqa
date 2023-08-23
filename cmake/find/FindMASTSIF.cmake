@@ -67,7 +67,7 @@ function(cutest_sif_problem PROBLEM_NAME)
                 CUTEst::cutest)
         set_target_properties(cutest-problem-${FULL_PROBLEM_NAME}
             PROPERTIES
-                OUTPUT_NAME ${FULL_PROBLEM_NAME}
+                OUTPUT_NAME "PROBLEM"
                 LIBRARY_OUTPUT_DIRECTORY ${PROBLEM_DIR}
                 PREFIX ""
                 RELEASE_POSTFIX ""
