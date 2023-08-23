@@ -17,7 +17,8 @@ namespace alpaqa {
 
 template <class InnerSolverT>
 typename ALMSolver<InnerSolverT>::Stats
-ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
+ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
+                                    std::optional<rvec> Σ) {
     using std::chrono::duration_cast;
     using std::chrono::nanoseconds;
     auto start_time = std::chrono::steady_clock::now();
@@ -25,10 +26,13 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
     // Check the problem dimensions etc.
     p.check();
 
+    if (params.max_iter == 0)
+        return {.status=SolverStatus::MaxIter};
+
     auto m = p.get_m();
     if (m == 0) { // No general constraints, only box constraints
         Stats s;
-        vec Σ(0), error(0);
+        vec Σ_curr(0), error(0);
         InnerSolveOptions<config_t> opts{
             .always_overwrite_results = true,
             .max_time                 = params.max_time,
@@ -36,7 +40,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
             .os                       = os,
             .check                    = false,
         };
-        auto ps              = inner_solver(p, opts, x, y, Σ, error);
+        auto ps              = inner_solver(p, opts, x, y, Σ_curr, error);
         bool inner_converged = ps.status == SolverStatus::Converged;
         auto time_elapsed    = std::chrono::steady_clock::now() - start_time;
         s.inner_convergence_failures = not inner_converged;
@@ -51,7 +55,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
     }
 
     constexpr auto NaN               = alpaqa::NaN<config_t>;
-    vec Σ                            = vec::Constant(m, NaN);
+    vec Σ_curr                       = vec::Constant(m, NaN);
     vec Σ_old                        = vec::Constant(m, NaN);
     vec error_1                      = vec::Constant(m, NaN);
     vec error_2                      = vec::Constant(m, NaN);
@@ -65,13 +69,16 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
 
     Stats s;
 
+    if (Σ && Σ->allFinite() && Σ->norm() > 0) {
+        Σ_curr = *Σ;
+    }
     // Initialize the penalty weights
-    if (params.initial_penalty > 0) {
-        Σ.fill(params.initial_penalty);
+    else if (params.initial_penalty > 0) {
+        Σ_curr.fill(params.initial_penalty);
     }
     // Initial penalty weights from problem
     else {
-        Helpers::initialize_penalty(p, params, x, Σ);
+        Helpers::initialize_penalty(p, params, x, Σ_curr);
     }
 
     real_t ε                      = params.initial_tolerance;
@@ -112,7 +119,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
         };
         // Call the inner solver to minimize the augmented lagrangian for fixed
         // Lagrange multipliers y.
-        auto ps = inner_solver(p, opts, x, y, Σ, error_2);
+        auto ps = inner_solver(p, opts, x, y, Σ_curr, error_2);
         // Check if the inner solver converged
         bool inner_converged = ps.status == SolverStatus::Converged;
         // Accumulate the inner solver statistics
@@ -130,7 +137,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
             const char *color = inner_converged ? "\x1b[0;32m" : "\x1b[0;31m";
             const char *color_end = "\x1b[0m";
             *os << "[\x1b[0;34mALM\x1b[0m]   " << std::setw(5) << i
-                << ": ‖Σ‖ = " << print_real(Σ.norm())
+                << ": ‖Σ‖ = " << print_real(Σ_curr.norm())
                 << ", ‖y‖ = " << print_real(y.norm())
                 << ", δ = " << print_real(δ) << ", ε = " << print_real(ps.ε)
                 << ", Δ = " << print_real(Δ) << ", status = " << color
@@ -143,10 +150,12 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
         if (ps.status == SolverStatus::Interrupted) {
             s.ε                = ps.ε;
             s.δ                = vec_util::norm_inf(error_2);
-            s.norm_penalty     = Σ.norm();
+            s.norm_penalty     = Σ_curr.norm() / std::sqrt(real_t(m));
             s.outer_iterations = i + 1;
             s.elapsed_time     = duration_cast<nanoseconds>(time_elapsed);
             s.status           = ps.status;
+            if (Σ)
+                *Σ = Σ_curr;
             return s;
         }
 
@@ -171,7 +180,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
                               Δ * params.penalty_update_factor_lower);
                 Helpers::update_penalty_weights(params, Δ, false, error_1,
                                                 error_2, norm_e_1, norm_e_2,
-                                                Σ_old, Σ, true);
+                                                Σ_old, Σ_curr, true);
                 // Recompute the primal tolerance with larger ρ
                 ρ = std::fmin(params.ρ_max, ρ * params.ρ_increase);
                 ε = std::fmax(ρ * ε_old, params.tolerance);
@@ -179,7 +188,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
             } else {
                 // We don't have a previous Σ, simply lower the current Σ and
                 // increase ε
-                Σ *= params.initial_penalty_lower;
+                Σ_curr *= params.initial_penalty_lower;
                 ε *= params.initial_tolerance_increase;
                 ++s.initial_penalty_reduced;
             }
@@ -200,22 +209,24 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y) {
             if (exit) {
                 s.ε                = ps.ε;
                 s.δ                = norm_e_1;
-                s.norm_penalty     = Σ.norm();
+                s.norm_penalty     = Σ_curr.norm() / std::sqrt(real_t(m));
                 s.outer_iterations = i + 1;
                 s.elapsed_time     = duration_cast<nanoseconds>(time_elapsed);
                 s.status           = alm_converged ? SolverStatus::Converged
                                      : out_of_time ? SolverStatus::MaxTime
                                      : out_of_iter ? SolverStatus::MaxIter
                                                    : SolverStatus::Busy;
+                if (Σ)
+                    *Σ = Σ_curr;
                 return s;
             }
             // After this line, Σ_old contains the penalty used in the current
             // (successful) iteration.
-            Σ_old.swap(Σ);
+            Σ_old.swap(Σ_curr);
             // Update Σ to contain the penalty to use on the next iteration.
             Helpers::update_penalty_weights(
                 params, Δ, num_successful_iters == 0, error_1, error_2,
-                norm_e_1, norm_e_2, Σ_old, Σ, true);
+                norm_e_1, norm_e_2, Σ_old, Σ_curr, true);
             // Lower the primal tolerance for the inner solver.
             ε_old = std::exchange(ε, std::fmax(ρ * ε, params.tolerance));
             ++num_successful_iters;

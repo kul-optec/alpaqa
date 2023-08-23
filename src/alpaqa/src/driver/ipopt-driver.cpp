@@ -86,6 +86,7 @@ SolverResults run_ipopt_solver(auto &problem,
         .solution           = nlp_res.solution_x,
         .multipliers        = nlp_res.solution_y,
         .multipliers_bounds = vec(problem.problem.get_n() * 2), // see below
+        .penalties          = vec::Zero(problem.problem.get_n()),
         .outer_iter         = nlp_res.iter_count,
         .inner_iter         = nlp_res.iter_count,
         .extra              = {},

@@ -30,6 +30,7 @@ struct SolverResults {
     vec solution{};
     vec multipliers{};
     vec multipliers_bounds{};
+    vec penalties{};
     index_t outer_iter = -1, inner_iter = -1;
     using any_stat_t = std::variant<index_t, real_t, std::string, bool, vec,
                                     std::vector<real_t>>;

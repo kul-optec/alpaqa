@@ -59,9 +59,11 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
 
     // Initial guess
     vec x = problem.initial_guess_x, y = problem.initial_guess_y;
+    // Final penalties
+    vec Σ = vec::Constant(problem.problem.get_m(), alpaqa::NaN<config_t>);
 
     // Solve the problem
-    auto stats = solver(problem.problem, x, y);
+    auto stats = solver(problem.problem, x, y, Σ);
 
     // Store the evaluation counters
     auto evals = *problem.evaluations;
@@ -125,6 +127,7 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
         .solution           = x,
         .multipliers        = y,
         .multipliers_bounds = vec(0),
+        .penalties          = Σ,
         .outer_iter         = static_cast<index_t>(stats.outer_iterations),
         .inner_iter         = static_cast<index_t>(stats.inner.iterations),
         .extra              = std::move(extra),
