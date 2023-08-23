@@ -209,7 +209,8 @@ class CUTEstLoader {
         integer status;
         LOAD_DL_FUNC(CUTEST_probname)(&status, name.data());
         throw_if_error("Failed to call CUTEST_probname", status);
-        name.resize(name.find_last_not_of(' '));
+        if (auto last = name.find_last_not_of(' '); last != name.npos)
+            name.resize(last + 1);
         return name;
     }
 
