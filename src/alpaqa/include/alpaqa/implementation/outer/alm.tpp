@@ -27,7 +27,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
     p.check();
 
     if (params.max_iter == 0)
-        return {.status=SolverStatus::MaxIter};
+        return {.status = SolverStatus::MaxIter};
 
     auto m = p.get_m();
     if (m == 0) { // No general constraints, only box constraints
@@ -108,10 +108,13 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
         // Inner solver
         // ------------
 
-        auto time_elapsed = std::chrono::steady_clock::now() - start_time;
+        auto time_elapsed   = std::chrono::steady_clock::now() - start_time;
+        auto time_remaining = time_elapsed < params.max_time
+                                  ? params.max_time - time_elapsed
+                                  : decltype(time_elapsed){0};
         InnerSolveOptions<config_t> opts{
             .always_overwrite_results = overwrite_results,
-            .max_time                 = params.max_time - time_elapsed,
+            .max_time                 = time_remaining,
             .tolerance                = ε,
             .os                       = os,
             .outer_iter               = i,
