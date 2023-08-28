@@ -7,11 +7,11 @@
 // Problem specification
 // minimize  (a - x)² + b(y - x²)²
 struct RosenbrockProblem : alpaqa::UnconstrProblem<alpaqa::DefaultConfig> {
+    // Specify the number of unknowns
+    RosenbrockProblem() : UnconstrProblem{2} {}
+
     // Problem parameters
     real_t a = 2, b = 100;
-
-    // Number of unknowns
-    length_t get_n() const { return 2; }
 
     // Cost
     real_t eval_f(crvec xy) const {

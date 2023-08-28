@@ -5,7 +5,7 @@ int main() {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
     struct Problem : alpaqa::UnconstrProblem<config_t> {
-        length_t get_n() const { return 1; }
+        Problem() : UnconstrProblem{1} {}
         real_t eval_f(crvec) const { return 0; }
         void eval_grad_f(crvec, rvec gr) const { gr.setZero(); }
     };

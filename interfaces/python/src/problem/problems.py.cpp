@@ -265,10 +265,10 @@ void register_problems(py::module_ &m) {
                     py::cast<index_t>(t[3]),
                 };
             }))
-        .def_readonly("n", &BoxConstrProblem::n,
-                      "Number of decision variables, dimension of :math:`x`")
-        .def_readonly("m", &BoxConstrProblem::m,
-                      "Number of general constraints, dimension of :math:`g(x)`")
+        .def_property_readonly("n", &BoxConstrProblem::get_n,
+                               "Number of decision variables, dimension of :math:`x`")
+        .def_property_readonly("m", &BoxConstrProblem::get_m,
+                               "Number of general constraints, dimension of :math:`g(x)`")
         .def("resize", &BoxConstrProblem::resize, "n"_a, "m"_a)
         .def_readwrite("C", &BoxConstrProblem::C, "Box constraints on :math:`x`")
         .def_readwrite("D", &BoxConstrProblem::D, "Box constraints on :math:`g(x)`")
@@ -293,16 +293,22 @@ void register_problems(py::module_ &m) {
         m, "UnconstrProblem", "C++ documentation: :cpp:class:`alpaqa::UnconstrProblem`");
     default_copy_methods(unconstr_problem);
     unconstr_problem //
-        .def(py::init<>())
+        .def(py::init<length_t>(), "n"_a,
+             ":param n: Number of unknowns")
         .def(py::pickle(
-            [](const UnconstrProblem &) { // __getstate__
-                return py::make_tuple();
+            [](const UnconstrProblem &self) { // __getstate__
+                return py::make_tuple(self.n);
             },
             [](py::tuple t) { // __setstate__
-                if (t.size() != 0)
+                if (t.size() != 1)
                     throw std::runtime_error("Invalid state!");
-                return UnconstrProblem{};
+                return UnconstrProblem{py::cast<length_t>(t[0])};
             }))
+        .def_property_readonly("n", &UnconstrProblem::get_n,
+                               "Number of decision variables, dimension of :math:`x`")
+        .def_property_readonly("m", &UnconstrProblem::get_m,
+                               "Number of general constraints, dimension of :math:`g(x)`")
+        .def("resize", &UnconstrProblem::resize, "n"_a)
         .def("eval_g", &UnconstrProblem::eval_g, "x"_a, "g"_a)
         .def("eval_grad_g_prod", &UnconstrProblem::eval_grad_g_prod, "x"_a, "y"_a, "grad_gxy"_a)
         .def("eval_jac_g", &UnconstrProblem::eval_jac_g, "x"_a, "inner_idx"_a, "outer_ptr"_a,

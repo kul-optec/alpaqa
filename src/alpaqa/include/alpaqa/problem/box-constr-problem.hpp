@@ -3,11 +3,14 @@
 #include <alpaqa/problem/box.hpp>
 #include <alpaqa/util/check-dim.hpp>
 
+#include <utility>
+
 namespace alpaqa {
 
 /// Implements common problem functions for minimization problems with box
 /// constraints. Meant to be used as a base class for custom problem
-/// implementations.
+/// implementations.  
+/// Supports optional @f$ \ell_1 @f$-regularization.
 /// @ingroup grp_Problems
 template <Config Conf>
 class BoxConstrProblem {
@@ -20,6 +23,9 @@ class BoxConstrProblem {
     /// Number of constraints, dimension of g(x) and z
     length_t m;
 
+    /// Create a problem with inactive boxes @f$ (-\infty, +\infty) @f$, with
+    /// no @f$ \ell_1 @f$-regularization, and all general constraints handled
+    /// using ALM.
     BoxConstrProblem(length_t n, ///< Number of decision variables
                      length_t m) ///< Number of constraints
         : n{n}, m{m} {}
@@ -28,11 +34,20 @@ class BoxConstrProblem {
         : n{C.lowerbound.size()}, m{D.lowerbound.size()}, C{std::move(C)}, D{std::move(D)},
           l1_reg{std::move(l1_reg)}, penalty_alm_split{penalty_alm_split} {}
 
+    /// Change the dimensions of the problem (number of decision variables and
+    /// number of constaints).
+    /// Destructive: resizes and/or resets the members @ref C, @ref D,
+    /// @ref l1_reg and @ref penalty_alm_split.
     void resize(length_t n, length_t m) {
-        this->n = n;
-        this->m = m;
-        C       = Box{n};
-        D       = Box{m};
+        if (std::exchange(this->n, n) != n) {
+            C = Box{n};
+            if (l1_reg.size() > 1)
+                l1_reg.resize(0);
+        }
+        if (std::exchange(this->m, m) != m) {
+            D                 = Box{m};
+            penalty_alm_split = 0;
+        }
     }
 
     BoxConstrProblem(const BoxConstrProblem &)                = default;
