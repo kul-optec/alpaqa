@@ -266,6 +266,30 @@ if (ALPAQA_WITH_LBFGSB)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
 endif()
 
+if (ALPAQA_WITH_QPALM)
+    message(STATUS "Compiling QPALM solver adapter")
+    find_package(QPALM_cxx REQUIRED)
+    add_library(qpalm-adapter
+        "interop/qpalm/src/qpalm-adapter.cpp"
+        "interop/qpalm/src/qpalm-params.cpp"
+    )
+    target_link_libraries(qpalm-adapter 
+        PUBLIC QPALM::qpalm_cxx alpaqa::alpaqa PRIVATE alpaqa::warnings)
+    target_include_directories(qpalm-adapter PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/qpalm/include>
+        $<INSTALL_INTERFACE:include>)
+    set_property(TARGET qpalm-adapter
+        PROPERTY OUTPUT_NAME alpaqa-qpalm-adapter)
+    alpaqa_configure_visibility(qpalm-adapter)
+    set_target_properties(qpalm-adapter PROPERTIES SOVERSION ${PROJECT_VERSION})
+    add_library(alpaqa::qpalm-adapter ALIAS qpalm-adapter)
+    list(APPEND ALPAQA_INSTALL_TARGETS qpalm-adapter)
+    generate_export_header(qpalm-adapter
+        EXPORT_FILE_NAME export/alpaqa/qpalm-adapter-export.h)
+    target_include_directories(qpalm-adapter PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+endif()
+
 # Drivers
 if (ALPAQA_WITH_DRIVERS)
     add_executable(driver

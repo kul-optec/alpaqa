@@ -42,6 +42,8 @@ option(ALPAQA_WITH_CASADI
     "Build the CasADi loader" On)
 option(ALPAQA_WITH_CUTEST
     "Build the CUTEst loader" Off)
+option(ALPAQA_WITH_QPALM
+    "Build the QPALM adapter" Off)
 set(ALPAQA_DOXYFILE "Doxyfile" CACHE STRING
     "The Doxyfile to use for the docs target")
 option(ALPAQA_ENABLE_PCH
