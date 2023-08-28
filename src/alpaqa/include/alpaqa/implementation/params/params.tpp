@@ -66,8 +66,8 @@ void set_param(std::chrono::duration<Rep, Period> &t, ParamString s);
 
 /// Return a function that applies @ref set_param to the given attribute of a
 /// value of type @p T.
-template <class T, class A>
-auto param_setter(A T::*attr) {
+template <class T, class T_actual, class A>
+auto param_setter(A T_actual::*attr) {
     return [attr](T &t, ParamString s) { return set_param(t.*attr, s); };
 }
 
@@ -75,8 +75,8 @@ auto param_setter(A T::*attr) {
 /// attribute.
 template <class T>
 struct param_setter_fun_t {
-    template <class A>
-    param_setter_fun_t(A T::*attr) : set(param_setter(attr)) {}
+    template <class T_actual, class A>
+    param_setter_fun_t(A T_actual::*attr) : set(param_setter<T>(attr)) {}
     std::function<void(T &, ParamString)> set;
     void operator()(T &t, ParamString s) const { return set(t, s); }
 };
@@ -135,8 +135,6 @@ void set_param(T &t, ParamString s) {
 /// Helper macro to easily initialize a
 /// @ref alpaqa::params::dict_to_struct_table_t.
 #define PARAMS_MEMBER(name)                                                    \
-    {                                                                          \
-#name, &type::name                                                     \
-    }
+    { #name, &type::name }
 
 } // namespace alpaqa::params
