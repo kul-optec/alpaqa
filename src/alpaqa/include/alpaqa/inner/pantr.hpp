@@ -81,7 +81,7 @@ struct PANTRParams {
     /// \inprod{R_\gamma(\hat x)}{d}. @f]
     /// When set to true, the quadratic model used is
     /// @f[ q_\mathrm{approx}(d) = \inv{(1-\alpha)} q(d), @f]
-    /// where @f$ \alpha = @f$ @ref LipschitzParams::Lγ_factor.
+    /// where @f$ \alpha = @f$ @ref LipschitzEstimateParams::Lγ_factor.
     /// This is an approximation of the quadratic model of the FBE,
     /// @f[ q_{\varphi_\gamma}(d) = \tfrac12 \inprod{\mathcal Q_\gamma(\hat x)
     /// \mathcal R_\gamma(\hat x) d}{d} + \inprod{\mathcal Q_\gamma(\hat x)
