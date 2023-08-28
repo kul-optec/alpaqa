@@ -20,7 +20,7 @@ inputs:
     type: string
   cmake-version:
     required: false
-    default: '3.25.0'
+    default: '3.27.4'
     type: string
   pypy-version:
     required: false

@@ -6,11 +6,9 @@ on:
     types: ['released', 'prereleased']
 
 env:
-  PACKAGE_VERSION: '1.0.0a9'
+  PACKAGE_VERSION: "1.0.0a9"
   PACKAGE_NAME: alpaqa
-  MODULE_NAME: alpaqa
   C_EXTENSIONS: _alpaqa
-  TWINE_REPOSITORY: pypi
 
 jobs:
   generate-stubs:
@@ -19,7 +17,7 @@ jobs:
       image: ubuntu:jammy
     env:
       HOST: 'x86_64-centos7-linux-gnu'
-      PYTHON_VERSION: '3.10'
+      PYTHON_VERSION: '3.11'
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
@@ -48,7 +46,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen py-build-cmake~=0.1.0
+        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen py-build-cmake~=0.2.0a5
       # Build
       - name: Native build
         run: |
@@ -128,7 +126,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen py-build-cmake~=0.0.16a2
+        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen py-build-cmake~=0.2.0a5
       # Download stubs
       - name: Download stubs
         uses: actions/download-artifact@v3
@@ -163,13 +161,13 @@ jobs:
       - name: Upload Wheels
         uses: actions/upload-artifact@v3
         with:
-          name: whl-${{ matrix.pypy }}${{ matrix.python-version }}-linux
+          name: whl-linux
           retention-days: 1
           path: dist/*.whl
       - name: Upload debug Wheels
         uses: actions/upload-artifact@v3
         with:
-          name: whl-${{ matrix.pypy }}${{ matrix.python-version }}-debug-linux
+          name: whl-debug-linux
           retention-days: 1
           path: dist-debug/*.whl
 
@@ -179,7 +177,7 @@ jobs:
       image: ubuntu:jammy
     env:
       HOST: 'x86_64-centos7-linux-gnu'
-      PYTHON_VERSION: '3.10'
+      PYTHON_VERSION: '3.11'
     steps:
       # Git clone
       - name: Install git
@@ -230,14 +228,14 @@ jobs:
     container: python:${{ matrix.python-version }}-bullseye
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
       - uses: actions/download-artifact@v3
         with:
-          name: whl-${{ matrix.python-version }}-linux
+          name: whl-linux
           path: dist
       - name: Test
         run: |
@@ -297,7 +295,7 @@ jobs:
         if: ${{ matrix.arch == 'ARM64' }}
         run: tar xf stubs.tar
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.14.1
+        uses: pypa/cibuildwheel@39a63b5912f086dd459cf6fcb13dcdd3fe3bc24d
         with:
           output-dir: dist
         env:
@@ -305,7 +303,6 @@ jobs:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_TEST_SKIP: "*-{win32,win_arm64} pp*" # no CasADi binaries
           CMAKE_PREFIX_PATH: ${{ github.workspace }}/deps
-          CMAKE_TOOLCHAIN_FILE: ${{ github.workspace }}/scripts/toolchains/Win-${{ matrix.arch }}.cmake
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
@@ -323,6 +320,7 @@ jobs:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /tmp/.ccache
+      MACOSX_DEPLOYMENT_TARGET: '10.9'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -366,7 +364,7 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v3
         with:
-          name: whl-${{ matrix.python-version }}-macos
+          name: whl-macos
           retention-days: 1
           path: dist/*.whl
 
@@ -375,7 +373,7 @@ jobs:
     runs-on: macos-12
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
     steps:
       - uses: actions/checkout@v3
         with:
@@ -386,7 +384,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: actions/download-artifact@v3
         with:
-          name: whl-${{ matrix.python-version }}-macos
+          name: whl-macos
           path: dist
       - name: Test
         run: |
@@ -395,74 +393,53 @@ jobs:
           pytest -rP
 
 
-  release:
+  check-release:
     if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
     needs: [test-linux, build-linux-src, build-windows, test-macos]
     runs-on: ubuntu-latest
-    container: ${{ matrix.container }}:${{ matrix.python-version }}${{ matrix.python-version-suffix }}-bullseye
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-        python-version-suffix: ['']
-        pypy: ['']
-        container: ['python']
-        include:
-          - python-version: '3.8'
-            pypy: 'pypy'
-            container: 'pypy'
-          - python-version: '3.9'
-            pypy: 'pypy'
-            container: 'pypy'
-          - python-version: '3.10'
-            pypy: 'pypy'
-            container: 'pypy'
-          - python-version: '3.12'
-            python-version-suffix: '-rc'
-            pypy: ''
-            container: 'python'
+    container: python:3.11-bullseye
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
         with:
-          name: whl-${{ matrix.pypy }}${{ matrix.python-version }}-linux
+          name: whl-linux
           path: dist
-      - uses: actions/download-artifact@v3
-        with:
-          name: whl-${{ matrix.pypy }}${{ matrix.python-version }}-debug-linux
-          path: dist
-      - uses: actions/download-artifact@v3
-        if: ${{ matrix.python-version == '3.11' && !matrix.pypy }}
-        with:
-          name: whl-windows
-          path: dist
-      - uses: actions/download-artifact@v3
-        if: ${{ matrix.python-version != '3.12' && !matrix.pypy }}
-        with:
-          name: whl-${{ matrix.python-version }}-macos
-          path: dist
-      - name: Install Twine
-        run: python -m pip install -U pip twine
-      - name: Check Wheel metadata
-        run: python -m twine check dist/*.whl
       - name: Install package
         run: python -m pip install --no-deps --no-index --find-links=dist ${PACKAGE_NAME}==${PACKAGE_VERSION}
       - name: Check package version
         run: |
-          [ "${{ github.event.release.tag_name }}" == $(python -c 'from importlib.metadata import version as v; print(v("${{ env.MODULE_NAME }}"))') ]
+          [ "${{ github.event.release.tag_name }}" == $(python -c 'from importlib.metadata import version as v; print(v("${{ env.PACKAGE_NAME }}"))') ]
         shell: bash
-      - name: Upload Wheels to PyPI
-        run: python -m twine upload -r ${{ env.TWINE_REPOSITORY }} dist/*.whl
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PyPI }}
+
+  release:
+    needs: [check-release]
+    if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: release
+      url: https://pypi.org/p/alpaqa
+    permissions:
+      id-token: write  # mandatory for trusted publishing
+    steps:
       - uses: actions/download-artifact@v3
-        if: ${{ matrix.python-version == '3.11' && !matrix.pypy }}
+        with:
+          name: whl-linux
+          path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: whl-debug-linux
+          path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: whl-windows
+          path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: whl-macos
+          path: dist
+      - uses: actions/download-artifact@v3
         with:
           name: src-dist
           path: dist
-      - name: Upload source to PyPI
-        if: ${{ matrix.python-version == '3.11' && !matrix.pypy }}
-        run: python -m twine upload -r ${{ env.TWINE_REPOSITORY }} dist/*.tar.gz
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PyPI }}
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@b7f401de30cb6434a1e19f805ff006643653240e
