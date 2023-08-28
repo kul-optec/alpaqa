@@ -20,19 +20,13 @@ class BoxConstrProblem {
     /// Number of constraints, dimension of g(x) and z
     length_t m;
 
-    /// Components of the constraint function with indices below this number are
-    /// handled using a quadratic penalty method rather than using an
-    /// augmented Lagrangian method. Specifically, the Lagrange multipliers for
-    /// these components (which determine the shifts in ALM) are kept at zero.
-    index_t penalty_alm_split = 0;
-
     BoxConstrProblem(length_t n, ///< Number of decision variables
                      length_t m) ///< Number of constraints
         : n{n}, m{m} {}
 
-    BoxConstrProblem(Box C, Box D, vec l1_reg = vec(0))
+    BoxConstrProblem(Box C, Box D, vec l1_reg = vec(0), index_t penalty_alm_split = 0)
         : n{C.lowerbound.size()}, m{D.lowerbound.size()}, C{std::move(C)}, D{std::move(D)},
-          l1_reg{std::move(l1_reg)} {}
+          l1_reg{std::move(l1_reg)}, penalty_alm_split{penalty_alm_split} {}
 
     void resize(length_t n, length_t m) {
         this->n = n;
@@ -55,6 +49,12 @@ class BoxConstrProblem {
     /// single scalar factor), or @f$ n @f$ (a different factor for each
     /// variable).
     vec l1_reg{};
+
+    /// Components of the constraint function with indices below this number are
+    /// handled using a quadratic penalty method rather than using an
+    /// augmented Lagrangian method. Specifically, the Lagrange multipliers for
+    /// these components (which determine the shifts in ALM) are kept at zero.
+    index_t penalty_alm_split = 0;
 
     /// Number of decision variables, @ref n
     length_t get_n() const { return n; }

@@ -13,6 +13,7 @@ using namespace py::literals;
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
+#include <alpaqa/problem/unconstr-problem.hpp>
 #include <alpaqa/util/check-dim.hpp>
 #if ALPAQA_HAVE_CASADI
 #include <alpaqa/casadi/CasADiProblem.hpp>
@@ -46,6 +47,37 @@ void functional_setter_out(FuncProb &p, std::optional<py::object> o) {
         };
     }
 };
+
+template <class T, class... Args>
+void problem_constr_proj_methods(py::class_<T, Args...> &cls) {
+    USING_ALPAQA_CONFIG_TEMPLATE(T::config_t);
+    cls //
+        .def(
+            "eval_proj_diff_g",
+            [](const T &prob, crvec z) {
+                vec e(z.size());
+                prob.eval_proj_diff_g(z, e);
+                return e;
+            },
+            "z"_a)
+        .def(
+            "eval_prox_grad_step",
+            [](const T &prob, real_t γ, crvec x, crvec grad_ψ) {
+                vec x̂(x.size());
+                vec p(x.size());
+                real_t hx̂ = prob.eval_prox_grad_step(γ, x, grad_ψ, x̂, p);
+                return std::make_tuple(std::move(x̂), std::move(p), hx̂);
+            },
+            "γ"_a, "x"_a, "grad_ψ"_a)
+        .def(
+            "eval_inactive_indices_res_lna",
+            [](const T &prob, real_t γ, crvec x, crvec grad_ψ) {
+                indexvec J_sto(x.size());
+                index_t nJ = prob.eval_inactive_indices_res_lna(γ, x, grad_ψ, J_sto);
+                return indexvec{J_sto.topRows(nJ)};
+            },
+            "γ"_a, "x"_a, "grad_ψ"_a);
+}
 
 template <class T, class... Args>
 void problem_methods(py::class_<T, Args...> &cls) {
@@ -221,20 +253,23 @@ void register_problems(py::module_ &m) {
         .def(py::pickle(
             [](const BoxConstrProblem &self) { // __getstate__
                 self.check();
-                return py::make_tuple(self.C, self.D);
+                return py::make_tuple(self.C, self.D, self.l1_reg, self.penalty_alm_split);
             },
             [](py::tuple t) { // __setstate__
-                if (t.size() != 2)
+                if (t.size() != 4)
                     throw std::runtime_error("Invalid state!");
                 return BoxConstrProblem{
                     py::cast<Box>(t[0]),
                     py::cast<Box>(t[1]),
+                    py::cast<vec>(t[2]),
+                    py::cast<index_t>(t[3]),
                 };
             }))
-        .def_readwrite("n", &BoxConstrProblem::n,
-                       "Number of decision variables, dimension of :math:`x`")
-        .def_readwrite("m", &BoxConstrProblem::m,
-                       "Number of general constraints, dimension of :math:`g(x)`")
+        .def_readonly("n", &BoxConstrProblem::n,
+                      "Number of decision variables, dimension of :math:`x`")
+        .def_readonly("m", &BoxConstrProblem::m,
+                      "Number of general constraints, dimension of :math:`g(x)`")
+        .def("resize", &BoxConstrProblem::resize, "n"_a, "m"_a)
         .def_readwrite("C", &BoxConstrProblem::C, "Box constraints on :math:`x`")
         .def_readwrite("D", &BoxConstrProblem::D, "Box constraints on :math:`g(x)`")
         .def_readwrite("l1_reg", &BoxConstrProblem::l1_reg,
@@ -249,33 +284,37 @@ void register_problems(py::module_ &m) {
              "grad_ψ"_a, "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &BoxConstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a)
-        .def(
-            "eval_proj_diff_g",
-            [](const BoxConstrProblem &prob, crvec z) {
-                vec e(prob.get_m());
-                prob.eval_proj_diff_g(z, e);
-                return e;
-            },
-            "z"_a)
-        .def(
-            "eval_prox_grad_step",
-            [](const BoxConstrProblem &prob, real_t γ, crvec x, crvec grad_ψ) {
-                vec x̂(prob.get_n());
-                vec p(prob.get_n());
-                real_t hx̂ = prob.eval_prox_grad_step(γ, x, grad_ψ, x̂, p);
-                return std::make_tuple(std::move(x̂), std::move(p), hx̂);
-            },
-            "γ"_a, "x"_a, "grad_ψ"_a)
-        .def(
-            "eval_inactive_indices_res_lna",
-            [](const BoxConstrProblem &prob, real_t γ, crvec x, crvec grad_ψ) {
-                indexvec J_sto(prob.get_n());
-                index_t nJ = prob.eval_inactive_indices_res_lna(γ, x, grad_ψ, J_sto);
-                return indexvec{J_sto.topRows(nJ)};
-            },
-            "γ"_a, "x"_a, "grad_ψ"_a)
         .def("get_box_C", &BoxConstrProblem::get_box_C)
         .def("get_box_D", &BoxConstrProblem::get_box_D);
+    problem_constr_proj_methods(box_constr_problem);
+
+    using UnconstrProblem = alpaqa::UnconstrProblem<config_t>;
+    py::class_<UnconstrProblem> unconstr_problem(
+        m, "UnconstrProblem", "C++ documentation: :cpp:class:`alpaqa::UnconstrProblem`");
+    default_copy_methods(unconstr_problem);
+    unconstr_problem //
+        .def(py::init<>())
+        .def(py::pickle(
+            [](const UnconstrProblem &) { // __getstate__
+                return py::make_tuple();
+            },
+            [](py::tuple t) { // __setstate__
+                if (t.size() != 0)
+                    throw std::runtime_error("Invalid state!");
+                return UnconstrProblem{};
+            }))
+        .def("eval_g", &UnconstrProblem::eval_g, "x"_a, "g"_a)
+        .def("eval_grad_g_prod", &UnconstrProblem::eval_grad_g_prod, "x"_a, "y"_a, "grad_gxy"_a)
+        .def("eval_jac_g", &UnconstrProblem::eval_jac_g, "x"_a, "inner_idx"_a, "outer_ptr"_a,
+             "J_values"_a)
+        .def("eval_grad_gi", &UnconstrProblem::eval_grad_gi, "x"_a, "i"_a, "grad_gi"_a)
+        .def("eval_proj_diff_g", &UnconstrProblem::eval_proj_diff_g, "z"_a, "e"_a)
+        .def("eval_proj_multipliers", &UnconstrProblem::eval_proj_multipliers, "y"_a, "M"_a)
+        .def("eval_prox_grad_step", &UnconstrProblem::eval_prox_grad_step, "γ"_a, "x"_a, "grad_ψ"_a,
+             "x_hat"_a, "p"_a)
+        .def("eval_inactive_indices_res_lna", &UnconstrProblem::eval_inactive_indices_res_lna,
+             "γ"_a, "x"_a, "grad_ψ"_a, "J"_a);
+    problem_constr_proj_methods(unconstr_problem);
 
     struct PyProblem {
         USING_ALPAQA_CONFIG(Conf);

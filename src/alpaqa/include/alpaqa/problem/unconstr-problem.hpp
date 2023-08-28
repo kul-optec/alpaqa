@@ -2,6 +2,8 @@
 
 #include <alpaqa/config/config.hpp>
 
+#include <numeric>
+
 namespace alpaqa {
 
 /// Implements common problem functions for minimization problems without
@@ -32,6 +34,12 @@ class UnconstrProblem {
 
     /// @see @ref TypeErasedProblem::eval_proj_multipliers
     void eval_proj_multipliers(rvec, real_t) const {}
+
+    /// @see @ref TypeErasedProblem::eval_inactive_indices_res_lna
+    index_t eval_inactive_indices_res_lna(real_t, crvec, crvec, rindexvec J) const {
+        std::iota(J.begin(), J.end(), index_t{0});
+        return J.size();
+    }
 };
 
 } // namespace alpaqa
