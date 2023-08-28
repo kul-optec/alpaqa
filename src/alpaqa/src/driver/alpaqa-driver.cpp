@@ -9,6 +9,7 @@
 #include "options.hpp"
 #include "panoc-driver.hpp"
 #include "pantr-driver.hpp"
+#include "qpalm-driver.hpp"
 #include "results.hpp"
 #include "solver-driver.hpp"
 #include "util.hpp"
@@ -65,6 +66,9 @@ void print_usage(const char *a0) {
         ipopt:
             Ipopt interior point solver. Requires Jacobian of the constraints
             and Hessian of the Lagrangian (unless finite memory is enabled).
+        qpalm:
+            QPALM proximal ALM QP solver. Assumes that the problem is a QP.
+            Requires Jacobian of the constraints and Hessian of the Lagrangian.
 
     options:
         Solver-specific options can be specified as key-value pairs, where the
@@ -135,6 +139,10 @@ void print_usage(const char *a0) {
         << "  * MUMPS (https://mumps-solver.org) - CECILL-C\n"
         << "  * OpenBLAS (https://github.com/xianyi/OpenBLAS) - BSD-3-Clause\n"
 #endif
+#ifdef WITH_QPALM
+        << "  * QPALM " QPALM_VERSION_STR
+           " (https://github.com/kul-optec/QPALM) - LGPL-3.0\n"
+#endif
         << std::endl;
 }
 
@@ -183,7 +191,7 @@ auto get_solver_builder(Options &opts) {
     std::map<std::string_view, solver_builder_func_t> solvers{
         {"panoc", make_panoc_driver}, {"zerofpr", make_zerofpr_driver},
         {"pantr", make_pantr_driver}, {"lbfgsb", make_lbfgsb_driver},
-        {"ipopt", make_ipopt_driver},
+        {"ipopt", make_ipopt_driver}, {"qpalm", make_qpalm_driver},
     };
     // Find the selected solver builder
     auto solver_it = solvers.find(method);
@@ -257,8 +265,8 @@ int main(int argc, const char *argv[]) try {
     os << "Loading problem " << prob_path << std::endl;
     auto problem = load_problem(prob_type, prob_path.parent_path(),
                                 prob_path.filename(), opts);
-    os << "Loaded problem " << problem.path.stem().c_str() << " from "
-       << problem.path << "\nProvided functions:\n";
+    os << "Loaded problem \"" << problem.name << "\" from " << problem.path
+       << "\nProvided functions:\n";
     alpaqa::print_provided_functions(os, problem.problem);
     os << std::endl;
 

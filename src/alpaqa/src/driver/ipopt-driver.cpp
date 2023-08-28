@@ -17,31 +17,35 @@ SolverResults run_ipopt_solver(auto &problem,
                                std::ostream &os, unsigned N_exp) {
     // Ipopt problem adapter
     using Problem                    = alpaqa::IpoptAdapter;
-    using vec                        = Problem::vec;
     Ipopt::SmartPtr<Ipopt::TNLP> nlp = new Problem(problem.problem);
     auto *my_nlp                     = dynamic_cast<Problem *>(GetRawPtr(nlp));
 
+    USING_ALPAQA_CONFIG(Problem::config_t);
+
+    // Dimensions
+    length_t n = problem.problem.get_n(), m = problem.problem.get_m();
+
     // Initial guess
-    if (auto sz = problem.initial_guess_x.size(); sz != problem.problem.get_n())
+    if (auto sz = problem.initial_guess_x.size(); sz != n)
         throw std::invalid_argument(
             "Invalid size for initial_guess_x (got " + std::to_string(sz) +
-            ", expected " + std::to_string(problem.problem.get_n()) + ")");
-    if (auto sz = problem.initial_guess_y.size(); sz != problem.problem.get_m())
+            ", expected " + std::to_string(n) + ")");
+    if (auto sz = problem.initial_guess_y.size(); sz != m)
         throw std::invalid_argument(
             "Invalid size for initial_guess_y (got " + std::to_string(sz) +
-            ", expected " + std::to_string(problem.problem.get_m()) + ")");
+            ", expected " + std::to_string(m) + ")");
     my_nlp->initial_guess             = problem.initial_guess_x;
     my_nlp->initial_guess_multipliers = problem.initial_guess_y;
     if (auto sz = problem.initial_guess_w.size(); sz > 0) {
-        if (sz != problem.problem.get_n() * 2)
+        if (sz != n * 2)
             throw std::invalid_argument(
                 "Invalid size for initial_guess_w (got " + std::to_string(sz) +
-                ", expected " + std::to_string(problem.problem.get_n() * 2) +
+                ", expected " + std::to_string(n * 2) +
                 ")");
         my_nlp->initial_guess_bounds_multipliers_l =
-            problem.initial_guess_w.bottomRows(problem.problem.get_n());
+            problem.initial_guess_w.bottomRows(n);
         my_nlp->initial_guess_bounds_multipliers_u =
-            problem.initial_guess_w.topRows(problem.problem.get_n());
+            problem.initial_guess_w.topRows(n);
     }
 
     // Solve the problem
@@ -69,11 +73,11 @@ SolverResults run_ipopt_solver(auto &problem,
     // Results
     auto &nlp_res = my_nlp->results;
     if (nlp_res.status == Ipopt::SolverReturn::UNASSIGNED) {
-        nlp_res.solution_x.resize(problem.problem.get_n());
-        nlp_res.solution_y.resize(problem.problem.get_m());
+        nlp_res.solution_x.resize(n);
+        nlp_res.solution_y.resize(m);
     }
     SolverResults results{
-        .status             = enum_name(status),
+        .status             = std::string(enum_name(status)),
         .success            = status == Ipopt::Solve_Succeeded,
         .evals              = evals,
         .duration           = avg_duration,
@@ -85,8 +89,8 @@ SolverResults run_ipopt_solver(auto &problem,
         .Σ                  = 0,
         .solution           = nlp_res.solution_x,
         .multipliers        = nlp_res.solution_y,
-        .multipliers_bounds = vec(problem.problem.get_n() * 2), // see below
-        .penalties          = vec::Zero(problem.problem.get_n()),
+        .multipliers_bounds = vec(n * 2), // see below
+        .penalties          = vec::Zero(n),
         .outer_iter         = nlp_res.iter_count,
         .inner_iter         = nlp_res.iter_count,
         .extra              = {},

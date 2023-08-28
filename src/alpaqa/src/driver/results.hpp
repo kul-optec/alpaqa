@@ -21,7 +21,7 @@ struct SolverResults {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     static constexpr real_t NaN = alpaqa::NaN<config_t>;
 
-    std::string_view status;
+    std::string status;
     bool success = false;
     alpaqa::EvalCounter evals;
     std::chrono::nanoseconds duration{};
@@ -154,9 +154,10 @@ inline void print_results(std::ostream &os, const BenchmarkResults &results) {
        << "nonsmooth objective = " << float_to_str(solstats.h) << '\n'
        << "smooth objective    = " << float_to_str(results.objective) << '\n'
        << "objective           = " << float_to_str(results.objective) << '\n'
-       << "stationarity    = " << float_to_str(kkterr.stationarity) << '\n'
-       << "violation       = " << float_to_str(kkterr.constr_violation) << '\n'
-       << "complementarity = " << float_to_str(kkterr.complementarity) << '\n'
+       << "stationarity     = " << float_to_str(kkterr.stationarity) << '\n'
+       << "violation        = " << float_to_str(kkterr.constr_violation) << '\n'
+       << "complementarity  = " << float_to_str(kkterr.complementarity) << '\n'
+       << "bounds violation = " << float_to_str(kkterr.bounds_violation) << '\n'
        << "time: " << float_to_str(time_s.count(), 3) << " s\n"
        << "outer iter: " << std::setw(6) << solstats.outer_iter << '\n'
        << "iter:       " << std::setw(6) << solstats.inner_iter << '\n'

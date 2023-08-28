@@ -298,6 +298,7 @@ if (ALPAQA_WITH_DRIVERS)
         "alpaqa/src/driver/pantr-driver.cpp"
         "alpaqa/src/driver/ipopt-driver.cpp"
         "alpaqa/src/driver/lbfgsb-driver.cpp"
+        "alpaqa/src/driver/qpalm-driver.cpp"
         "alpaqa/src/driver/problem.cpp"
     )
     set_target_properties(driver PROPERTIES
@@ -329,6 +330,10 @@ if (ALPAQA_WITH_DRIVERS)
     if (TARGET alpaqa::lbfgsb-adapter)
         target_link_libraries(driver PUBLIC alpaqa::lbfgsb-adapter)
         target_compile_definitions(driver PUBLIC WITH_LBFGSB)
+    endif()
+    if (TARGET alpaqa::qpalm-adapter)
+        target_link_libraries(driver PUBLIC alpaqa::qpalm-adapter)
+        target_compile_definitions(driver PUBLIC WITH_QPALM)
     endif()
 
     # Gradient checker tool
