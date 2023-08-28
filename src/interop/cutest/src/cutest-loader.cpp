@@ -522,8 +522,8 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
         assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
         integer status;
         const integer nnz = nnz_H;
-        impl->funcs.cshp(&status, &impl->nvar, &nnz_H, &nnz, H_col.data(),
-                         H_row.data());
+        impl->funcs.cshp(&status, &impl->nvar, &nnz_H, &nnz, H_row.data(),
+                         H_col.data());
         throw_if_error("eval_hess_L: CUTEST_cshp", status);
         std::iota(H_perm.begin(), H_perm.end(), index_t{0});
         util::sort_triplets(H_row, H_col, H_perm);
