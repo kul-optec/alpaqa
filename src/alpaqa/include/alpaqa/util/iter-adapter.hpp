@@ -47,13 +47,13 @@ struct iter_range_adapter {
         using difference_type = std::ptrdiff_t;
     };
 
-    auto begin() const & -> std::input_or_output_iterator auto{
+    auto begin() const & -> std::input_or_output_iterator auto {
         return iter_t{it};
     }
-    auto begin() && -> std::input_or_output_iterator auto{
+    auto begin() && -> std::input_or_output_iterator auto {
         return iter_t{std::forward<It>(it)};
     }
-    auto end() const -> std::sentinel_for<iter_t> auto{ return sentinel_t{}; }
+    auto end() const -> std::sentinel_for<iter_t> auto { return sentinel_t{}; }
 };
 
 } // namespace alpaqa::util

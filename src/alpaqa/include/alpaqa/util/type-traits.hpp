@@ -51,8 +51,8 @@ template <class... Pack>
 using first_type_or_void_t = typename first_type_or_void<Pack...>::type;
 
 template <class... Pack>
-concept no_leading_allocator = !
-std::is_same_v<std::remove_cvref_t<first_type_or_void_t<Pack...>>,
-               std::allocator_arg_t>;
+concept no_leading_allocator =
+    !std::is_same_v<std::remove_cvref_t<first_type_or_void_t<Pack...>>,
+                    std::allocator_arg_t>;
 
 } // namespace alpaqa::util

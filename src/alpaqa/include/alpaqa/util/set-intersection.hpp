@@ -39,8 +39,8 @@ struct set_intersection_iterable
                Proj2 proj2)
             : first1{std::move(first1)}, last1{std::move(last1)},
               first2{std::move(first2)}, last2{std::move(last2)},
-              comp{std::move(comp)}, proj1{std::move(proj1)}, proj2{std::move(
-                                                                  proj2)} {}
+              comp{std::move(comp)}, proj1{std::move(proj1)},
+              proj2{std::move(proj2)} {}
         I1 first1;
         S1 last1;
         I2 first2;
@@ -93,7 +93,7 @@ struct set_intersection_iterable
     }
 
   public:
-    auto begin() const -> std::input_or_output_iterator auto{
+    auto begin() const -> std::input_or_output_iterator auto {
         auto it = iter(std::ranges::begin(range1), std::ranges::end(range1),
                        std::ranges::begin(range2), std::ranges::end(range2));
         it.advance();

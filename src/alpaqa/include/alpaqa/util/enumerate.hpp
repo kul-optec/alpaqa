@@ -52,7 +52,7 @@ struct enumerate_t : std::ranges::view_interface<enumerate_t<Rng>> {
         value_type operator*() const { return {index, *it}; }
     };
 
-    auto begin() const -> std::input_or_output_iterator auto{
+    auto begin() const -> std::input_or_output_iterator auto {
         return iter_t{std::ranges::begin(rng)};
     }
     auto end() const

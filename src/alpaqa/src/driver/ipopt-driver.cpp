@@ -27,21 +27,20 @@ SolverResults run_ipopt_solver(auto &problem,
 
     // Initial guess
     if (auto sz = problem.initial_guess_x.size(); sz != n)
-        throw std::invalid_argument(
-            "Invalid size for initial_guess_x (got " + std::to_string(sz) +
-            ", expected " + std::to_string(n) + ")");
+        throw std::invalid_argument("Invalid size for initial_guess_x (got " +
+                                    std::to_string(sz) + ", expected " +
+                                    std::to_string(n) + ")");
     if (auto sz = problem.initial_guess_y.size(); sz != m)
-        throw std::invalid_argument(
-            "Invalid size for initial_guess_y (got " + std::to_string(sz) +
-            ", expected " + std::to_string(m) + ")");
+        throw std::invalid_argument("Invalid size for initial_guess_y (got " +
+                                    std::to_string(sz) + ", expected " +
+                                    std::to_string(m) + ")");
     my_nlp->initial_guess             = problem.initial_guess_x;
     my_nlp->initial_guess_multipliers = problem.initial_guess_y;
     if (auto sz = problem.initial_guess_w.size(); sz > 0) {
         if (sz != n * 2)
             throw std::invalid_argument(
                 "Invalid size for initial_guess_w (got " + std::to_string(sz) +
-                ", expected " + std::to_string(n * 2) +
-                ")");
+                ", expected " + std::to_string(n * 2) + ")");
         my_nlp->initial_guess_bounds_multipliers_l =
             problem.initial_guess_w.bottomRows(n);
         my_nlp->initial_guess_bounds_multipliers_u =

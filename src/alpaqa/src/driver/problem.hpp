@@ -15,7 +15,7 @@ struct LoadedProblem {
     alpaqa::TypeErasedProblem<config_t> problem;
     fs::path abs_path;
     fs::path path;
-    std::string name = path.filename();
+    std::string name                                 = path.filename();
     std::shared_ptr<alpaqa::EvalCounter> evaluations = nullptr;
     vec initial_guess_x = vec::Zero(problem.get_n()); /// Unknowns
     vec initial_guess_y = vec::Zero(problem.get_m()); /// Multipliers g
