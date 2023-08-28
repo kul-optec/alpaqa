@@ -52,17 +52,17 @@ class FunctionalProblem : public BoxConstrProblem<Conf> {
     }
 
     /// @see @ref TypeErasedProblem::provides_eval_grad_gi
-    bool provides_eval_grad_gi() const { return bool{grad_gi}; }
+    [[nodiscard]] bool provides_eval_grad_gi() const { return bool{grad_gi}; }
     /// @see @ref TypeErasedProblem::provides_eval_jac_g
-    bool provides_eval_jac_g() const { return bool{jac_g}; }
+    [[nodiscard]] bool provides_eval_jac_g() const { return bool{jac_g}; }
     /// @see @ref TypeErasedProblem::provides_eval_hess_L_prod
-    bool provides_eval_hess_L_prod() const { return bool{hess_L_prod}; }
+    [[nodiscard]] bool provides_eval_hess_L_prod() const { return bool{hess_L_prod}; }
     /// @see @ref TypeErasedProblem::provides_eval_hess_L
-    bool provides_eval_hess_L() const { return bool{hess_L}; }
+    [[nodiscard]] bool provides_eval_hess_L() const { return bool{hess_L}; }
     /// @see @ref TypeErasedProblem::provides_eval_hess_ψ_prod
-    bool provides_eval_hess_ψ_prod() const { return bool{hess_ψ_prod}; }
+    [[nodiscard]] bool provides_eval_hess_ψ_prod() const { return bool{hess_ψ_prod}; }
     /// @see @ref TypeErasedProblem::provides_eval_hess_ψ
-    bool provides_eval_hess_ψ() const { return bool{hess_ψ}; }
+    [[nodiscard]] bool provides_eval_hess_ψ() const { return bool{hess_ψ}; }
 
     FunctionalProblem(const FunctionalProblem &)                = default;
     FunctionalProblem &operator=(const FunctionalProblem &)     = default;

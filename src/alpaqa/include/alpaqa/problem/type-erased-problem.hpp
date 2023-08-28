@@ -588,83 +588,99 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
 
     /// Returns true if the problem provides an implementation of
     /// @ref eval_inactive_indices_res_lna.
-    bool provides_eval_inactive_indices_res_lna() const {
+    [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const {
         return vtable.eval_inactive_indices_res_lna != vtable.default_eval_inactive_indices_res_lna;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_jac_g.
-    bool provides_eval_jac_g() const { return vtable.eval_jac_g != vtable.default_eval_jac_g; }
+    [[nodiscard]] bool provides_eval_jac_g() const {
+        return vtable.eval_jac_g != vtable.default_eval_jac_g;
+    }
     /// Returns true if the problem provides an implementation of
     /// @ref get_jac_g_num_nonzeros.
-    bool provides_get_jac_g_num_nonzeros() const {
+    [[nodiscard]] bool provides_get_jac_g_num_nonzeros() const {
         return vtable.get_jac_g_num_nonzeros != vtable.default_get_jac_g_num_nonzeros;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_grad_gi.
-    bool provides_eval_grad_gi() const {
+    [[nodiscard]] bool provides_eval_grad_gi() const {
         return vtable.eval_grad_gi != vtable.default_eval_grad_gi;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_hess_L_prod.
-    bool provides_eval_hess_L_prod() const {
+    [[nodiscard]] bool provides_eval_hess_L_prod() const {
         return vtable.eval_hess_L_prod != vtable.default_eval_hess_L_prod;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_hess_L.
-    bool provides_eval_hess_L() const { return vtable.eval_hess_L != vtable.default_eval_hess_L; }
+    [[nodiscard]] bool provides_eval_hess_L() const {
+        return vtable.eval_hess_L != vtable.default_eval_hess_L;
+    }
     /// Returns true if the problem provides an implementation of
     /// @ref get_hess_L_num_nonzeros.
-    bool provides_get_hess_L_num_nonzeros() const {
+    [[nodiscard]] bool provides_get_hess_L_num_nonzeros() const {
         return vtable.get_hess_L_num_nonzeros != vtable.default_get_hess_L_num_nonzeros;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_hess_ψ_prod.
-    bool provides_eval_hess_ψ_prod() const {
+    [[nodiscard]] bool provides_eval_hess_ψ_prod() const {
         return vtable.eval_hess_ψ_prod != vtable.default_eval_hess_ψ_prod;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_hess_ψ.
-    bool provides_eval_hess_ψ() const { return vtable.eval_hess_ψ != vtable.default_eval_hess_ψ; }
+    [[nodiscard]] bool provides_eval_hess_ψ() const {
+        return vtable.eval_hess_ψ != vtable.default_eval_hess_ψ;
+    }
     /// Returns true if the problem provides an implementation of
     /// @ref get_hess_ψ_num_nonzeros.
-    bool provides_get_hess_ψ_num_nonzeros() const {
+    [[nodiscard]] bool provides_get_hess_ψ_num_nonzeros() const {
         return vtable.get_hess_ψ_num_nonzeros != vtable.default_get_hess_ψ_num_nonzeros;
     }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_f_grad_f, false if it uses the default implementation.
-    bool provides_eval_f_grad_f() const {
+    [[nodiscard]] bool provides_eval_f_grad_f() const {
         return vtable.eval_f_grad_f != vtable.default_eval_f_grad_f;
     }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_f_g, false if it uses the default implementation.
-    bool provides_eval_f_g() const { return vtable.eval_f_g != vtable.default_eval_f_g; }
+    [[nodiscard]] bool provides_eval_f_g() const {
+        return vtable.eval_f_g != vtable.default_eval_f_g;
+    }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_grad_f_grad_g_prod, false if it uses the default implementation.
-    bool provides_eval_grad_f_grad_g_prod() const {
+    [[nodiscard]] bool provides_eval_grad_f_grad_g_prod() const {
         return vtable.eval_grad_f_grad_g_prod != vtable.default_eval_grad_f_grad_g_prod;
     }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_grad_L, false if it uses the default implementation.
-    bool provides_eval_grad_L() const { return vtable.eval_grad_L != vtable.default_eval_grad_L; }
+    [[nodiscard]] bool provides_eval_grad_L() const {
+        return vtable.eval_grad_L != vtable.default_eval_grad_L;
+    }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_ψ, false if it uses the default implementation.
-    bool provides_eval_ψ() const { return vtable.eval_ψ != vtable.default_eval_ψ; }
+    [[nodiscard]] bool provides_eval_ψ() const { return vtable.eval_ψ != vtable.default_eval_ψ; }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_grad_ψ, false if it uses the default implementation.
-    bool provides_eval_grad_ψ() const { return vtable.eval_grad_ψ != vtable.default_eval_grad_ψ; }
+    [[nodiscard]] bool provides_eval_grad_ψ() const {
+        return vtable.eval_grad_ψ != vtable.default_eval_grad_ψ;
+    }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_ψ_grad_ψ, false if it uses the default implementation.
-    bool provides_eval_ψ_grad_ψ() const {
+    [[nodiscard]] bool provides_eval_ψ_grad_ψ() const {
         return vtable.eval_ψ_grad_ψ != vtable.default_eval_ψ_grad_ψ;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref get_box_C.
-    bool provides_get_box_C() const { return vtable.get_box_C != vtable.default_get_box_C; }
+    [[nodiscard]] bool provides_get_box_C() const {
+        return vtable.get_box_C != vtable.default_get_box_C;
+    }
     /// Returns true if the problem provides an implementation of
     /// @ref get_box_D.
-    bool provides_get_box_D() const { return vtable.get_box_D != vtable.default_get_box_D; }
+    [[nodiscard]] bool provides_get_box_D() const {
+        return vtable.get_box_D != vtable.default_get_box_D;
+    }
     /// Returns true if the problem provides an implementation of @ref check.
-    bool provides_check() const { return vtable.check != vtable.default_check; }
+    [[nodiscard]] bool provides_check() const { return vtable.check != vtable.default_check; }
 
     /// @}
 
