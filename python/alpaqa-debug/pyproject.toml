@@ -16,7 +16,11 @@ description = "Debug symbols for the alpaqa package."
 "Bug Tracker" = "https://github.com/kul-optec/alpaqa/issues"
 
 [build-system]
-requires = ["py-build-cmake~=0.2.0a5", "pybind11", "pybind11-stubgen"]
+requires = [
+    "py-build-cmake~=0.2.0a5",
+    "pybind11>=2.10.1,!=2.10.2,!=2.10.3,!=2.10.4,!=2.11.*",
+    "pybind11-stubgen"
+]
 build-backend = "py_build_cmake.build_component"
 
 [tool.py-build-cmake.component]
