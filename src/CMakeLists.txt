@@ -166,14 +166,13 @@ else()
 endif()
 
 if (ALPAQA_WITH_CUTEST)
-    find_package(CUTEst REQUIRED)
     add_library(cutest-interface "interop/cutest/src/cutest-loader.cpp")
     target_include_directories(cutest-interface PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/cutest/include>
         $<INSTALL_INTERFACE:include>)
     target_link_libraries(cutest-interface
         PUBLIC alpaqa::alpaqa
-        PRIVATE CUTEst::headers ${CMAKE_DL_LIBS} alpaqa::warnings)
+        PRIVATE ${CMAKE_DL_LIBS} alpaqa::warnings)
     target_compile_features(alpaqa PUBLIC cxx_std_23)
     set_target_properties(cutest-interface PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::cutest-interface ALIAS cutest-interface)

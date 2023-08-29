@@ -31,23 +31,6 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
     ///
     /// @see `man CUTEST_creport` and `man CUTEST_ureport`
     struct Report {
-        /// Name of the problem.
-        std::string name;
-
-        /// Number of independent variables.
-        int nvar = 0;
-        /// Number of constraints.
-        int ncon = 0;
-
-        /// Status returned by CUTEst.
-        /// @todo   I don't think this is useful, remove it.
-        enum Status {
-            Success         = 0,    ///< Successful call.
-            AllocationError = 1,    ///< Array allocation/deallocation error.
-            ArrayBoundError = 2,    ///< Array bound error.
-            EvaluationError = 3,    ///< Evaluation error.
-        } status = Status::Success; ///< Exit status.
-
         /// Function call counters.
         ///
         /// @note   Note that hessian_times_vector, constraints and constraints_grad
@@ -79,6 +62,8 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
     };
 
     [[nodiscard]] Report get_report() const;
+    std::ostream &format_report(std::ostream &os, const Report &r) const;
+    std::ostream &format_report(std::ostream &os) const;
 
   public:
     std::string name = "<UNKNOWN>"; ///< Problem name
@@ -115,12 +100,5 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
     [[nodiscard]] real_t eval_f_g(crvec x, rvec g) const;
     void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const;
 };
-
-/// @related    CUTEstProblem::Report
-std::ostream &operator<<(std::ostream &, const CUTEstProblem::Report &);
-/// @related    CUTEstProblem::Report::Status
-const char *enum_name(CUTEstProblem::Report::Status);
-/// @related    CUTEstProblem::Report::Status
-std::ostream &operator<<(std::ostream &, CUTEstProblem::Report::Status);
 
 } // namespace alpaqa
