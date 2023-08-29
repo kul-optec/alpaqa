@@ -17,7 +17,6 @@ PARAMS_TABLE_DEF(alpaqa::PANOCParams<Conf>,                                 //
                  PARAMS_MEMBER(linesearch_tolerance_factor),                //
                  PARAMS_MEMBER(update_direction_in_candidate),              //
                  PARAMS_MEMBER(recompute_last_prox_step_after_lbfgs_flush), //
-                 PARAMS_MEMBER(alternative_condition_associativity),        //
 );
 
 PARAMS_TABLE_DEF(alpaqa::LipschitzEstimateParams<Conf>, //

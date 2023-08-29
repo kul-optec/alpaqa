@@ -59,8 +59,7 @@ struct PANOCOCPParams {
     real_t linesearch_tolerance_factor =
         real_t(1e2) * std::numeric_limits<real_t>::epsilon();
 
-    bool disable_acceleration                = false;
-    bool alternative_condition_associativity = false;
+    bool disable_acceleration = false;
 };
 
 template <Config Conf = DefaultConfig>

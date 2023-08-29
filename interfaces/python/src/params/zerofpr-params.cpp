@@ -18,7 +18,6 @@ PARAMS_TABLE_DEF(alpaqa::ZeroFPRParams<Conf>,                               //
                  PARAMS_MEMBER(update_direction_in_candidate),              //
                  PARAMS_MEMBER(recompute_last_prox_step_after_lbfgs_flush), //
                  PARAMS_MEMBER(update_direction_from_prox_step),            //
-                 PARAMS_MEMBER(alternative_condition_associativity),        //
 );
 
 PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigd>);

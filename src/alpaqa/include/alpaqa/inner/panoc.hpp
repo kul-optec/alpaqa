@@ -60,7 +60,6 @@ struct PANOCParams {
 
     bool update_direction_in_candidate              = false;
     bool recompute_last_prox_step_after_lbfgs_flush = false;
-    bool alternative_condition_associativity        = false;
 };
 
 template <Config Conf = DefaultConfig>

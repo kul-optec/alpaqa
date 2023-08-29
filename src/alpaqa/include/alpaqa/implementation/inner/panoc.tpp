@@ -82,12 +82,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
     auto qub_violated = [this](const Iterate &i) {
         real_t margin =
             (1 + std::abs(i.ψx)) * params.quadratic_upperbound_tolerance_factor;
-        if (params.alternative_condition_associativity)
-            return (i.ψx̂ - i.ψx) >
-                   i.grad_ψᵀp + real_t(0.5) * i.L * i.pᵀp + margin;
-        else
-            return i.ψx̂ >
-                   i.ψx + i.grad_ψᵀp + real_t(0.5) * i.L * i.pᵀp + margin;
+        return i.ψx̂ > i.ψx + i.grad_ψᵀp + real_t(0.5) * i.L * i.pᵀp + margin;
     };
 
     auto linesearch_violated = [this](const Iterate &curr,
@@ -98,10 +93,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         real_t σ  = β * (1 - curr.γ * curr.L) / (2 * curr.γ);
         real_t φγ = curr.fbe();
         real_t margin = (1 + std::abs(φγ)) * params.linesearch_tolerance_factor;
-        if (params.alternative_condition_associativity)
-            return (next.fbe() - φγ) > -σ * curr.pᵀp + margin;
-        else
-            return next.fbe() > φγ - σ * curr.pᵀp + margin;
+        return next.fbe() > φγ - σ * curr.pᵀp + margin;
     };
 
     // Problem functions -------------------------------------------------------
