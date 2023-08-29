@@ -240,6 +240,7 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
         curr->L *= 2;
         eval_prox_grad_step(*curr);
         eval_cost_in_prox(*curr);
+        ++s.stepsize_backtracks;
     }
 
     // Loop data ---------------------------------------------------------------

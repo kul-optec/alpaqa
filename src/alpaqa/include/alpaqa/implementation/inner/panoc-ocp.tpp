@@ -507,8 +507,20 @@ auto PANOCOCPSolver<Conf>::operator()(
         return s;
     }
     curr->γ = params.Lipschitz.Lγ_factor / curr->L;
+
+    // First proximal gradient step --------------------------------------------
+
     eval_prox(*curr);
     eval_forward_hat(*curr);
+
+    // Quadratic upper bound
+    while (curr->L < params.L_max && qub_violated(*curr)) {
+        curr->γ /= 2;
+        curr->L *= 2;
+        eval_prox(*curr);
+        eval_forward_hat(*curr);
+        ++s.stepsize_backtracks;
+    }
 
     unsigned k  = 0;
     real_t τ    = NaN<config_t>;

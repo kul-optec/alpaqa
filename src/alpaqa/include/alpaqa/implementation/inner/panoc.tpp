@@ -222,6 +222,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         curr->L *= 2;
         eval_prox_grad_step(*curr);
         eval_ψx̂(*curr);
+        ++s.stepsize_backtracks;
     }
 
     // Loop data ---------------------------------------------------------------

@@ -110,6 +110,7 @@ auto PANTRSolver<DirectionProviderT>::operator()(
             // Compute x̂, p, ψ(x̂)
             eval_prox_grad_step(i);
             eval_ψx̂(i);
+            ++s.stepsize_backtracks;
         }
     };
 
