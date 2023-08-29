@@ -22,6 +22,7 @@ PARAMS_TABLE_DEF(alpaqa::PANOCOCPParams<Conf>,
                  PARAMS_MEMBER(quadratic_upperbound_tolerance_factor), //
                  PARAMS_MEMBER(linesearch_tolerance_factor),           //
                  PARAMS_MEMBER(disable_acceleration),                  //
+                 PARAMS_MEMBER(alternative_condition_associativity),   //
 );
 
 PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigd>);

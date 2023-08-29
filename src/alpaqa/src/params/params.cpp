@@ -270,6 +270,7 @@ PARAMS_TABLE(PANOCParams<config_t>,                                     //
              PARAMS_MEMBER(linesearch_tolerance_factor),                //
              PARAMS_MEMBER(update_direction_in_candidate),              //
              PARAMS_MEMBER(recompute_last_prox_step_after_lbfgs_flush), //
+             PARAMS_MEMBER(alternative_condition_associativity),        //
 );
 
 PARAMS_TABLE(ZeroFPRParams<config_t>,                                   //
@@ -290,6 +291,7 @@ PARAMS_TABLE(ZeroFPRParams<config_t>,                                   //
              PARAMS_MEMBER(update_direction_in_candidate),              //
              PARAMS_MEMBER(recompute_last_prox_step_after_lbfgs_flush), //
              PARAMS_MEMBER(update_direction_from_prox_step),            //
+             PARAMS_MEMBER(alternative_condition_associativity),        //
 );
 
 PARAMS_TABLE(LBFGSDirectionParams<config_t>,              //
@@ -379,6 +381,7 @@ PARAMS_TABLE(PANOCOCPParams<config_t>,
              PARAMS_MEMBER(quadratic_upperbound_tolerance_factor), //
              PARAMS_MEMBER(linesearch_tolerance_factor),           //
              PARAMS_MEMBER(disable_acceleration),                  //
+             PARAMS_MEMBER(alternative_condition_associativity),   //
 );
 #endif
 
