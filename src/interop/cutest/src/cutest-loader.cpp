@@ -1,4 +1,6 @@
 #include <alpaqa/cutest/cutest-loader.hpp>
+
+#include <alpaqa/cutest/cutest-errors.hpp>
 #include <alpaqa/util/sparse-ops.hpp>
 
 #include <dlfcn.h>
@@ -18,8 +20,8 @@ using namespace std::string_literals;
 
 namespace {
 void throw_error(std::string_view s, int code) {
-    throw std::runtime_error(std::string(s) + " (" + std::to_string(code) +
-                             ")");
+    throw alpaqa::cutest::function_call_error(
+        std::string(s), static_cast<alpaqa::cutest::Status>(code));
 }
 void throw_if_error(std::string_view s, int code) {
     if (code)
@@ -28,6 +30,15 @@ void throw_if_error(std::string_view s, int code) {
 void log_if_error(std::string_view s, int code) {
     if (code)
         std::cerr << s << " (" << code << ")\n";
+}
+template <class F>
+auto checked(F &&func, std::string_view msg) {
+    return [msg, func{std::forward<F>(func)}]<class... Args>(
+               Args &&...args) mutable {
+        alpaqa::cutest::integer status;
+        std::forward<F>(func)(&status, std::forward<Args>(args)...);
+        throw_if_error(msg, status);
+    };
 }
 
 std::shared_ptr<void> load_lib(const char *so_filename) {
@@ -268,43 +279,39 @@ auto CUTEstProblem::get_report() const -> Report {
 
 auto CUTEstProblem::eval_f(crvec x) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
-    cutest::integer status;
     real_t f;
     cutest::logical grad = cutest::False;
-    impl->funcs.cofg(&status, &impl->nvar, x.data(), &f, nullptr, &grad);
-    throw_if_error("eval_f: CUTEST_cofg", status);
+    checked(impl->funcs.cofg, "eval_f: CUTEST_cofg")(&impl->nvar, x.data(), &f,
+                                                     nullptr, &grad);
     return f;
 }
 void CUTEstProblem::eval_grad_f(crvec x, rvec grad_fx) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_fx.size() == static_cast<length_t>(impl->nvar));
-    cutest::integer status;
     real_t f;
     cutest::logical grad = cutest::True;
-    impl->funcs.cofg(&status, &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
-    throw_if_error("eval_grad_f: CUTEST_cofg", status);
+    checked(impl->funcs.cofg, "eval_grad_f: CUTEST_cofg")(
+        &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
 }
 void CUTEstProblem::eval_g(crvec x, rvec gx) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(gx.size() == static_cast<length_t>(impl->ncon));
-    cutest::integer status;
     cutest::logical jtrans = cutest::True, grad = cutest::False;
     cutest::integer zero = 0;
-    impl->funcs.ccfg(&status, &impl->nvar, &impl->ncon, x.data(), gx.data(),
-                     &jtrans, &zero, &zero, nullptr, &grad);
-    throw_if_error("eval_g: CUTEST_ccfg", status);
+    checked(impl->funcs.ccfg, "eval_g: CUTEST_ccfg")(
+        &impl->nvar, &impl->ncon, x.data(), gx.data(), &jtrans, &zero, &zero,
+        nullptr, &grad);
 }
 void CUTEstProblem::eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
     assert(grad_gxy.size() == static_cast<length_t>(impl->nvar));
-    cutest::integer status;
     auto lvector         = static_cast<cutest::integer>(y.size()),
          lresult         = static_cast<cutest::integer>(grad_gxy.size());
     cutest::logical gotj = cutest::False, jtrans = cutest::True;
-    impl->funcs.cjprod(&status, &impl->nvar, &impl->ncon, &gotj, &jtrans,
-                       x.data(), y.data(), &lvector, grad_gxy.data(), &lresult);
-    throw_if_error("eval_grad_g_prod: CUTEST_cjprod", status);
+    checked(impl->funcs.cjprod, "eval_grad_g_prod: CUTEST_cjprod")(
+        &impl->nvar, &impl->ncon, &gotj, &jtrans, x.data(), y.data(), &lvector,
+        grad_gxy.data(), &lresult);
 }
 
 void CUTEstProblem::eval_jac_g(crvec x, [[maybe_unused]] rindexvec inner_idx,
@@ -313,7 +320,6 @@ void CUTEstProblem::eval_jac_g(crvec x, [[maybe_unused]] rindexvec inner_idx,
     // Compute the nonzero values
     if (J_values.size() > 0) {
         assert(x.size() == static_cast<length_t>(impl->nvar));
-        cutest::integer status;
         // Sparse Jacobian
         if (sparse) {
             assert(nnz_J >= 0);
@@ -323,10 +329,9 @@ void CUTEstProblem::eval_jac_g(crvec x, [[maybe_unused]] rindexvec inner_idx,
             assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
             const cutest::integer nnz = nnz_J;
             cutest::logical grad      = cutest::True;
-            impl->funcs.ccfsg(&status, &impl->nvar, &impl->ncon, x.data(),
-                              impl->work.data(), &nnz_J, &nnz, J_work.data(),
-                              J_col.data(), J_row.data(), &grad);
-            throw_if_error("eval_jac_g: CUTEST_ccfsg", status);
+            checked(impl->funcs.ccfsg, "eval_jac_g: CUTEST_ccfsg")(
+                &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &nnz_J,
+                &nnz, J_work.data(), J_col.data(), J_row.data(), &grad);
             auto t0  = std::chrono::steady_clock::now();
             J_values = J_work(J_perm);
             auto t1  = std::chrono::steady_clock::now();
@@ -338,12 +343,10 @@ void CUTEstProblem::eval_jac_g(crvec x, [[maybe_unused]] rindexvec inner_idx,
         else {
             assert(J_values.size() == static_cast<length_t>(impl->nvar) *
                                           static_cast<length_t>(impl->ncon));
-            cutest::integer status;
             cutest::logical jtrans = cutest::False, grad = cutest::True;
-            impl->funcs.ccfg(&status, &impl->nvar, &impl->ncon, x.data(),
-                             impl->work.data(), &jtrans, &impl->ncon,
-                             &impl->nvar, J_values.data(), &grad);
-            throw_if_error("eval_jac_g: CUTEST_ccfg", status);
+            checked(impl->funcs.ccfg, "eval_jac_g: CUTEST_ccfg")(
+                &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &jtrans,
+                &impl->ncon, &impl->nvar, J_values.data(), &grad);
         }
     }
     // Compute sparsity pattern without values
@@ -351,10 +354,9 @@ void CUTEstProblem::eval_jac_g(crvec x, [[maybe_unused]] rindexvec inner_idx,
         assert(nnz_J >= 0);
         assert(inner_idx.size() == static_cast<length_t>(nnz_J));
         assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
-        cutest::integer status;
         const cutest::integer nnz = nnz_J;
-        impl->funcs.csjp(&status, &nnz_J, &nnz, J_col.data(), J_row.data());
-        throw_if_error("eval_jac_g: CUTEST_csjp", status);
+        checked(impl->funcs.csjp, "eval_jac_g: CUTEST_csjp")(
+            &nnz_J, &nnz, J_col.data(), J_row.data());
         std::iota(J_perm.begin(), J_perm.end(), index_t{0});
         util::sort_triplets(J_row, J_col, J_perm);
         util::convert_triplets_to_ccs<config_t>(J_row, J_col, inner_idx,
@@ -365,9 +367,8 @@ auto CUTEstProblem::get_jac_g_num_nonzeros() const -> length_t {
     if (!sparse)
         return -1;
     if (nnz_J < 0) {
-        cutest::integer status;
-        impl->funcs.cdimsj(&status, &nnz_J);
-        throw_if_error("get_jac_g_num_nonzeros: CUTEST_cdimsj", status);
+        checked(impl->funcs.cdimsj,
+                "get_jac_g_num_nonzeros: CUTEST_cdimsj")(&nnz_J);
         nnz_J -= impl->nvar;
         assert(nnz_J >= 0);
         J_col.resize(nnz_J);
@@ -380,10 +381,9 @@ auto CUTEstProblem::get_jac_g_num_nonzeros() const -> length_t {
 void CUTEstProblem::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_gi.size() == static_cast<length_t>(impl->nvar));
-    cutest::integer status;
     auto iprob = static_cast<cutest::integer>(i + 1); // index zero is objective
-    impl->funcs.cigr(&status, &impl->nvar, &iprob, x.data(), grad_gi.data());
-    throw_if_error("eval_grad_gi: CUTEST_cigr", status);
+    checked(impl->funcs.cigr, "eval_grad_gi: CUTEST_cigr")(
+        &impl->nvar, &iprob, x.data(), grad_gi.data());
 }
 void CUTEstProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
                                      rvec Hv) const {
@@ -396,11 +396,10 @@ void CUTEstProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
         impl->work = y * (real_t(1) / scale);
         mult       = impl->work.data();
     }
-    cutest::integer status;
     cutest::logical goth = cutest::False;
-    impl->funcs.chprod(&status, &impl->nvar, &impl->ncon, &goth, x.data(), mult,
-                       const_cast<real_t *>(v.data()), Hv.data());
-    throw_if_error("eval_hess_L_prod: CUTEST_chprod", status);
+    checked(impl->funcs.chprod, "eval_hess_L_prod: CUTEST_chprod")(
+        &impl->nvar, &impl->ncon, &goth, x.data(), mult,
+        const_cast<real_t *>(v.data()), Hv.data());
     if (scale != 1)
         Hv *= scale;
 }
@@ -428,23 +427,22 @@ void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
                    ? Σ(i)
                    : real_t(0);
     // Jg(x) v
-    auto &&Jv = impl->work2.topRows(impl->ncon);
-    cutest::integer status;
+    auto &&Jv            = impl->work2.topRows(impl->ncon);
     auto lvector         = static_cast<cutest::integer>(v.size()),
          lresult         = static_cast<cutest::integer>(Jv.size());
     cutest::logical gotj = cutest::False, jtrans = cutest::False;
-    impl->funcs.cjprod(&status, &impl->nvar, &impl->ncon, &gotj, &jtrans,
-                       x.data(), v.data(), &lvector, Jv.data(), &lresult);
-    throw_if_error("eval_hess_ψ_prod: CUTEST_cjprod-1", status);
+    checked(impl->funcs.cjprod, "eval_hess_ψ_prod: CUTEST_cjprod-1")(
+        &impl->nvar, &impl->ncon, &gotj, &jtrans, x.data(), v.data(), &lvector,
+        Jv.data(), &lresult);
     // Σ Jg v
     Jv.array() *= ζ.array();
     // Jgᵀ Σ Jg v
     std::swap(lvector, lresult);
     gotj = jtrans = cutest::True;
     auto &&JΣJv   = impl->work.topRows(impl->nvar);
-    impl->funcs.cjprod(&status, &impl->nvar, &impl->ncon, &gotj, &jtrans,
-                       x.data(), Jv.data(), &lvector, JΣJv.data(), &lresult);
-    throw_if_error("eval_hess_ψ_prod: CUTEST_cjprod-2", status);
+    checked(impl->funcs.cjprod, "eval_hess_ψ_prod: CUTEST_cjprod-2")(
+        &impl->nvar, &impl->ncon, &gotj, &jtrans, x.data(), Jv.data(), &lvector,
+        JΣJv.data(), &lresult);
     Hv += JΣJv;
 }
 void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
@@ -459,7 +457,6 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
             impl->work = y * (real_t(1) / scale);
             mult       = impl->work.data();
         }
-        cutest::integer status;
         // Sparse Hessian
         if (sparse) {
             assert(nnz_H >= 0);
@@ -468,10 +465,9 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
             assert(inner_idx.size() == static_cast<length_t>(nnz_H));
             assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
             const cutest::integer nnz = nnz_H;
-            impl->funcs.csh(&status, &impl->nvar, &impl->ncon, x.data(),
-                            y.data(), &nnz_H, &nnz, H_work.data(), H_col.data(),
-                            H_row.data());
-            throw_if_error("eval_hess_L: CUTEST_csh", status);
+            checked(impl->funcs.csh, "eval_hess_L: CUTEST_csh")(
+                &impl->nvar, &impl->ncon, x.data(), y.data(), &nnz_H, &nnz,
+                H_work.data(), H_col.data(), H_row.data());
             auto t0  = std::chrono::steady_clock::now();
             H_values = H_work(H_perm);
             auto t1  = std::chrono::steady_clock::now();
@@ -483,9 +479,9 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
         else {
             assert(H_values.size() == static_cast<length_t>(impl->nvar) *
                                           static_cast<length_t>(impl->nvar));
-            impl->funcs.cdh(&status, &impl->nvar, &impl->ncon, x.data(), mult,
-                            &impl->nvar, H_values.data());
-            throw_if_error("eval_hess_L: CUTEST_cdh", status);
+            checked(impl->funcs.cdh, "eval_hess_L: CUTEST_cdh")(
+                &impl->nvar, &impl->ncon, x.data(), mult, &impl->nvar,
+                H_values.data());
         }
         if (scale != 1)
             H_values *= scale;
@@ -495,11 +491,9 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
         assert(nnz_H >= 0);
         assert(inner_idx.size() == static_cast<length_t>(nnz_H));
         assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
-        cutest::integer status;
         const cutest::integer nnz = nnz_H;
-        impl->funcs.cshp(&status, &impl->nvar, &nnz_H, &nnz, H_row.data(),
-                         H_col.data());
-        throw_if_error("eval_hess_L: CUTEST_cshp", status);
+        checked(impl->funcs.cshp, "eval_hess_L: CUTEST_cshp")(
+            &impl->nvar, &nnz_H, &nnz, H_row.data(), H_col.data());
         std::iota(H_perm.begin(), H_perm.end(), index_t{0});
         util::sort_triplets(H_row, H_col, H_perm);
         util::convert_triplets_to_ccs<config_t>(H_row, H_col, inner_idx,
@@ -510,9 +504,8 @@ auto CUTEstProblem::get_hess_L_num_nonzeros() const -> length_t {
     if (!sparse)
         return -1;
     if (nnz_H < 0) {
-        cutest::integer status;
-        impl->funcs.cdimsh(&status, &nnz_H);
-        throw_if_error("get_hess_L_num_nonzeros: CUTEST_cdimsh", status);
+        checked(impl->funcs.cdimsh,
+                "get_hess_L_num_nonzeros: CUTEST_cdimsh")(&nnz_H);
         assert(nnz_H >= 0);
         H_col.resize(nnz_H);
         H_row.resize(nnz_H);
@@ -524,32 +517,28 @@ auto CUTEstProblem::get_hess_L_num_nonzeros() const -> length_t {
 auto CUTEstProblem::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_fx.size() == static_cast<length_t>(impl->nvar));
-    cutest::integer status;
     real_t f;
     cutest::logical grad = cutest::True;
-    impl->funcs.cofg(&status, &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
-    throw_if_error("eval_f_grad_f: CUTEST_cofg", status);
+    checked(impl->funcs.cofg, "eval_f_grad_f: CUTEST_cofg")(
+        &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
     return f;
 }
 auto CUTEstProblem::eval_f_g(crvec x, rvec g) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(g.size() == static_cast<length_t>(impl->ncon));
-    cutest::integer status;
     real_t f;
-    impl->funcs.cfn(&status, &impl->nvar, &impl->ncon, x.data(), &f, g.data());
-    throw_if_error("eval_f_g: CUTEST_cfn", status);
+    checked(impl->funcs.cfn, "eval_f_g: CUTEST_cfn")(&impl->nvar, &impl->ncon,
+                                                     x.data(), &f, g.data());
     return f;
 }
 void CUTEstProblem::eval_grad_L(crvec x, crvec y, rvec grad_L, rvec) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
     assert(grad_L.size() == static_cast<length_t>(impl->nvar));
-    cutest::integer status;
     real_t L;
     cutest::logical grad = cutest::True;
-    impl->funcs.clfg(&status, &impl->nvar, &impl->ncon, x.data(), y.data(), &L,
-                     grad_L.data(), &grad);
-    throw_if_error("eval_f_g: CUTEST_clfg", status);
+    checked(impl->funcs.clfg, "eval_f_g: CUTEST_clfg")(
+        &impl->nvar, &impl->ncon, x.data(), y.data(), &L, grad_L.data(), &grad);
 }
 
 std::ostream &CUTEstProblem::format_report(std::ostream &os,

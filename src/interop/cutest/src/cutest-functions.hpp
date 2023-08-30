@@ -2,8 +2,8 @@
 
 #include "cutest-types.hpp"
 
-#include <dlfcn.h>
 #include <alpaqa/cutest/cutest-errors.hpp>
+#include <dlfcn.h>
 
 /*
 CUTEST_cfn      : function and constraints values
@@ -79,7 +79,7 @@ auto Function<Nm, Sgn>::load(void *handle) -> signature_t * {
     const char *name_cstr = name.value.data();
     auto func = reinterpret_cast<signature_t *>(::dlsym(handle, name_cstr));
     if (const char *error = ::dlerror())
-        throw cutest_function_load_error(error);
+        throw function_load_error(error);
     return func;
 }
 
