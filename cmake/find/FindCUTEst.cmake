@@ -14,7 +14,7 @@ endif()
 
 find_library(CUTEST_LIBRARY
     NAMES
-        cutest
+        libcutest.so cutest
     HINTS
         ${CUTEST_DIR}
     PATH_SUFFIXES
@@ -25,8 +25,8 @@ mark_as_advanced(CUTEST_INCLUDE_DIR CUTEST_DIR CUTEST_LIBRARY)
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(CUTEst
     REQUIRED_VARS
-        CUTEST_INCLUDE_DIR
         CUTEST_LIBRARY
+        CUTEST_INCLUDE_DIR
 )
 
 # CUTEst library target
@@ -38,10 +38,13 @@ if (CUTEst_FOUND AND NOT TARGET CUTEst::headers)
 endif()
 
 if (CUTEst_FOUND AND NOT TARGET CUTEst::cutest)
-    add_library(CUTEst::cutest STATIC IMPORTED)
+    add_library(CUTEst::cutest UNKNOWN IMPORTED)
     set_target_properties(CUTEst::cutest PROPERTIES
-        IMPORTED_LOCATION ${CUTEST_LIBRARY})
-    target_link_options(CUTEst::cutest INTERFACE
-        LINKER:-whole-archive,${CUTEST_LIBRARY},-no-whole-archive)
+        IMPORTED_LOCATION ${CUTEST_LIBRARY}
+        IMPORTED_SONAME "libcutest.so")
+    if (CUTEST_LIBRARY MATCHES ".a$")
+        target_link_options(CUTEst::cutest INTERFACE
+            LINKER:-whole-archive,${CUTEST_LIBRARY},-no-whole-archive)
+    endif()
     target_link_libraries(CUTEst::cutest INTERFACE CUTEst::headers)
 endif()

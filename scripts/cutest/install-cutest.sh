@@ -88,15 +88,26 @@ dirs -c
 echo ' Installing SIFDecode ...'
 cd "$SIFDECODE"
 source ./bin/install_sifdecode_main
-if [[ ! $? ]]; then
+status=$?
+if [[ $status -ne 0 ]]; then
     error 'An error occurred while installing SIFDecode.'
-    exit $?
+    exit $status
 fi
 
 echo ' Installing CUTEst ...'
 cd "$CUTEST"
 source ./bin/install_cutest_main
-if [[ ! $? ]]; then
+status=$?
+if [[ $status -ne 0 ]]; then
     error 'An error occurred while installing CUTEst.'
-    exit $?
+    exit $status
+fi
+
+echo 'Creating CUTEst shared library ...'
+OBJ_DIR="$CUTEST/objects/$VERSION/double"
+$FORTRAN -fPIC -rdynamic -shared -Wl,--whole-archive "$OBJ_DIR/libcutest.a" -Wl,--no-whole-archive -Wl,-soname,libcutest.so -o "$OBJ_DIR/libcutest.so"
+status=$?
+if [[ $status -ne 0 ]]; then
+    error 'An error occurred creating the CUTEst shared library.'
+    exit $status
 fi
