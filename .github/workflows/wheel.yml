@@ -46,7 +46,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen py-build-cmake~=0.2.0a5
+        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a7
       # Build
       - name: Native build
         run: |
@@ -126,7 +126,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen py-build-cmake~=0.2.0a5
+        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a7
       # Download stubs
       - name: Download stubs
         uses: actions/download-artifact@v3

@@ -39,9 +39,9 @@ alpaqa = "alpaqa.__main__:main"
 
 [build-system]
 requires = [
-    "py-build-cmake~=0.2.0a5",
+    "py-build-cmake~=0.2.0a7",
     "pybind11>=2.10.1,!=2.10.2,!=2.10.3,!=2.10.4,!=2.11.*",
-    "pybind11-stubgen",
+    "pybind11-stubgen~=0.16.2",
 ]
 build-backend = "py_build_cmake.build"
 
