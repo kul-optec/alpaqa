@@ -29,6 +29,7 @@ pybind11_add_module(_alpaqa MODULE
     "src/inner/panoc-directions.py.cpp"
     "src/inner/inner-solver.py.cpp"
     "src/problem/problems.py.cpp"
+    "src/proximal/prox.py.cpp"
     "src/params/alm-params.cpp"
     "src/params/anderson-direction-params.cpp"
     "src/params/anderson-params.cpp"

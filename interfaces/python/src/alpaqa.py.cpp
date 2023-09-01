@@ -39,6 +39,9 @@ void register_pantr(py::module_ &m);
 template <alpaqa::Config Conf>
 void register_alm(py::module_ &m);
 
+template <alpaqa::Config Conf>
+void register_prox(py::module_ &m);
+
 #if ALPAQA_WITH_OCP
 template <alpaqa::Config Conf>
 void register_control_problems(py::module_ &m);
@@ -74,6 +77,7 @@ void register_classes_for(py::module_ &m) {
     register_pantr<Conf>(m);
     register_ocp<Conf>(m);
     register_alm<Conf>(m);
+    register_prox<Conf>(m);
 }
 
 PYBIND11_MODULE(MODULE_NAME, m) {
