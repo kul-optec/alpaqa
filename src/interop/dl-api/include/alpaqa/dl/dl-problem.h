@@ -22,11 +22,6 @@ typedef alpaqa_length_t alpaqa_index_t;
 
 /// C API providing function pointers to problem functions.
 /// Used by @ref alpaqa::dl::DLProblem.
-///
-/// @note When used in C, you should initialize this struct by passing a pointer
-///       to your instance to the @ref ALPAQA_PROBLEM_FUNCTIONS_INIT macro.
-///       In C++, this is not necessary, because all members have default
-///       initializers.
 typedef struct {
     /// Number of decision variables.
     /// @see @ref alpaqa::TypeErasedProblem::get_n()
@@ -235,6 +230,10 @@ typedef struct alpaqa_function_dict_s alpaqa_function_dict_t;
 /// Opaque type for a C++-only exception pointer.
 typedef struct alpaqa_exception_ptr_s alpaqa_exception_ptr_t;
 
+/// @note When used in C, you should initialize this struct by passing a pointer
+///       to your instance to the @ref ALPAQA_PROBLEM_REGISTER_INIT macro.
+///       In C++, this is not necessary, because all members have default
+///       initializers.
 typedef struct {
     /// To check whether the loaded problem is compatible with the version of
     /// the solver.
@@ -405,6 +404,10 @@ typedef struct {
     // clang-format on
 } alpaqa_control_problem_functions_t;
 
+/// @note When used in C, you should initialize this struct by passing a pointer
+///       to your instance to the @ref ALPAQA_PROBLEM_REGISTER_INIT macro.
+///       In C++, this is not necessary, because all members have default
+///       initializers.
 typedef struct {
     /// To check whether the loaded problem is compatible with the version of
     /// the solver.
