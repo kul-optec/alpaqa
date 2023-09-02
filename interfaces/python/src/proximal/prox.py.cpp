@@ -20,7 +20,9 @@ void register_prox_func(py::module_ &m) {
         [](T &self, crmat in, rmat out, real_t γ) {
             return alpaqa::prox(self, std::move(in), out, γ);
         },
-        "self"_a, "input"_a, "output"_a, "γ"_a = 1);
+        "self"_a, "input"_a, "output"_a, "γ"_a = 1,
+        "C++ documentation: :cpp:var:`alpaqa::prox`\n"
+        "Compute the proximal mapping of ``self`` at ``in`` with step size ``γ``.");
     m.def(
         "prox",
         [](T &self, crmat in, real_t γ) {
@@ -28,7 +30,9 @@ void register_prox_func(py::module_ &m) {
             auto h_out = alpaqa::prox(self, std::move(in), out, γ);
             return std::make_tuple(h_out, std::move(out));
         },
-        "self"_a, "input"_a, "γ"_a = 1);
+        "self"_a, "input"_a, "γ"_a = 1,
+        "C++ documentation: :cpp:var:`alpaqa::prox`\n"
+        "Compute the proximal mapping of ``self`` at ``in`` with step size ``γ``.");
     m.def(
         "prox_step",
         [](T &self, crmat in, crmat in_step, rmat out, rmat out_step, real_t γ, real_t γ_step) {
@@ -36,7 +40,9 @@ void register_prox_func(py::module_ &m) {
                                      γ_step);
         },
         "self"_a, "input"_a, "input_step"_a, "output"_a, "output_step"_a, "γ"_a = 1,
-        "γ_step"_a = -1);
+        "γ_step"_a = -1,
+        "C++ documentation: :cpp:var:`alpaqa::prox_step`\n"
+        "Compute a generalized forward-backward step.");
     m.def(
         "prox_step",
         [](T &self, crmat in, crmat in_step, real_t γ, real_t γ_step) {
@@ -45,7 +51,9 @@ void register_prox_func(py::module_ &m) {
                                            γ, γ_step);
             return std::make_tuple(h_out, std::move(out), std::move(out_step));
         },
-        "self"_a, "input"_a, "input_step"_a, "γ"_a = 1, "γ_step"_a = -1);
+        "self"_a, "input"_a, "input_step"_a, "γ"_a = 1, "γ_step"_a = -1,
+        "C++ documentation: :cpp:var:`alpaqa::prox_step`\n"
+        "Compute a generalized forward-backward step.");
 }
 
 template <alpaqa::Config Conf>

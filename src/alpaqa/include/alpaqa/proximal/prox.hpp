@@ -5,6 +5,8 @@
 
 namespace alpaqa {
 
+/// Proximal mapping customization point.
+/// @see https://wg21.link/P1895R0
 struct prox_fn {
     template <class T>
         requires requires {
@@ -54,6 +56,8 @@ struct prox_fn {
  */
 inline constexpr prox;
 
+/// Proximal mapping customization point for forward-backward steps.
+/// @see https://wg21.link/P1895R0
 struct prox_step_fn {
     template <class T>
         requires requires {
