@@ -10,6 +10,7 @@ Python API Reference
    ./python-api/pantr.rst
    ./python-api/alm.rst
    ./python-api/problem.rst
+   ./python-api/functions.rst
    ./python-api/casadi.rst
 
 Index
