@@ -3,7 +3,7 @@
 #include <alpaqa/config/config.hpp>
 #include <Eigen/SVD>
 
-namespace alpaqa::proximal {
+namespace alpaqa::functions {
 
 template <Config Conf>
 using DefaultSVD = Eigen::BDCSVD<typename Conf::mat,
@@ -60,4 +60,4 @@ struct NuclearNorm {
     }
 };
 
-} // namespace alpaqa::proximal
+} // namespace alpaqa::functions

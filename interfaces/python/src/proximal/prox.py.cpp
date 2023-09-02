@@ -7,10 +7,10 @@
 namespace py = pybind11;
 using namespace py::literals;
 
-#include <alpaqa/proximal/indicator-box.hpp>
-#include <alpaqa/proximal/norm-l1.hpp>
-#include <alpaqa/proximal/nuclear-norm.hpp>
-#include <alpaqa/proximal/prox.hpp>
+#include <alpaqa/functions/indicator-box.hpp>
+#include <alpaqa/functions/norm-l1.hpp>
+#include <alpaqa/functions/nuclear-norm.hpp>
+#include <alpaqa/functions/prox.hpp>
 
 template <alpaqa::Config Conf, class T>
 void register_prox_func(py::module_ &m) {
@@ -60,9 +60,9 @@ template <alpaqa::Config Conf>
 void register_prox(py::module_ &m) {
     USING_ALPAQA_CONFIG(Conf);
 
-    using NuclearNorm = alpaqa::proximal::NuclearNorm<config_t>;
+    using NuclearNorm = alpaqa::functions::NuclearNorm<config_t>;
     py::class_<NuclearNorm>(m, "NuclearNorm",
-                            "C++ documentation :cpp:class:`alpaqa::proximal::NuclearNorm`")
+                            "C++ documentation :cpp:class:`alpaqa::functions::NuclearNorm`")
         .def(py::init<real_t>(), "λ"_a)
         .def(py::init<real_t, length_t, length_t>(), "λ"_a, "rows"_a, "cols"_a)
         .def_readonly("λ", &NuclearNorm::λ)
@@ -77,8 +77,8 @@ void register_prox(py::module_ &m) {
         .def("prox", &NuclearNorm::prox);
     register_prox_func<config_t, NuclearNorm>(m);
 
-    using L1Norm = alpaqa::proximal::L1Norm<config_t>;
-    py::class_<L1Norm>(m, "L1Norm", "C++ documentation :cpp:class:`alpaqa::proximal::L1Norm`")
+    using L1Norm = alpaqa::functions::L1Norm<config_t>;
+    py::class_<L1Norm>(m, "L1Norm", "C++ documentation :cpp:class:`alpaqa::functions::L1Norm`")
         .def(py::init<real_t>(), "λ"_a)
         .def_readonly("λ", &L1Norm::λ)
         .def("prox", &L1Norm::prox);

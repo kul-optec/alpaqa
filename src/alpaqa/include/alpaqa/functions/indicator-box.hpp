@@ -2,7 +2,7 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/box.hpp>
-#include <alpaqa/proximal/prox.hpp>
+#include <alpaqa/functions/prox.hpp>
 #include <cassert>
 
 namespace alpaqa {

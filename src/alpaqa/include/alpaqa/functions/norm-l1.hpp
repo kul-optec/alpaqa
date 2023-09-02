@@ -1,12 +1,12 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/proximal/prox.hpp>
+#include <alpaqa/functions/prox.hpp>
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
 
-namespace alpaqa::proximal {
+namespace alpaqa::functions {
 
 template <Config Conf, class Weight = Conf::real_t>
 struct L1Norm;
@@ -79,4 +79,4 @@ struct L1Norm<Conf, typename Conf::vec> {
     }
 };
 
-} // namespace alpaqa::proximal
+} // namespace alpaqa::functions
