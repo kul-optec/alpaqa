@@ -429,7 +429,7 @@ void register_problems(py::module_ &m) {
             "Parameter vector :math:`p` of the problem");
 #endif
 #if ALPAQA_HAVE_CASADI
-        te_problem.def(py::init<const CasADiProblem &>());
+        te_problem.def(py::init<const CasADiProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<CasADiProblem, TEProblem>();
 #endif
 
@@ -450,14 +450,18 @@ void register_problems(py::module_ &m) {
         "problem_with_counters", [](py::object p) { return te_pwc(PyProblem{std::move(p)}); },
         py::keep_alive<0, 1>(), "problem"_a);
 
-    m.def("provided_functions", [](const TEProblem &problem) {
-        std::ostringstream os;
-        alpaqa::print_provided_functions(os, problem);
-        return os.str();
-    });
+    m.def(
+        "provided_functions",
+        [](const TEProblem &problem) {
+            std::ostringstream os;
+            alpaqa::print_provided_functions(os, problem);
+            return os.str();
+        },
+        "problem"_a, "Returns a string representing the functions provided by the problem.");
 
     // Must be last
-    te_problem.def(py::init([](py::object o) { return TEProblem::template make<PyProblem>(o); }));
+    te_problem.def(py::init([](py::object o) { return TEProblem::template make<PyProblem>(o); }),
+                   "problem"_a, "Explicit conversion from a custom Python class.");
 }
 
 template void register_problems<alpaqa::EigenConfigd>(py::module_ &);

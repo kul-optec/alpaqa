@@ -20,7 +20,7 @@ Index
 
 .. automodule:: alpaqa._alpaqa.float64
 
-.. automodule:: alpaqa._alpaqa.functions
+.. automodule:: alpaqa._alpaqa.float64.functions
 
 .. automodule:: alpaqa.casadi_generator
 

@@ -222,7 +222,7 @@ void register_ocp(py::module_ &m) {
     };
 
     py::class_<OCPEvaluator>(m, "OCPEvaluator")
-        .def(py::init<const typename OCPEvaluator::Problem &>())
+        .def(py::init<const typename OCPEvaluator::Problem &>(), "problem"_a)
         .def("forward_backward", &OCPEvaluator::forward_backward, "u"_a, "y"_a = py::none(),
              "μ"_a = py::none(),
              ":return: * Cost\n"

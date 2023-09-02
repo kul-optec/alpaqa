@@ -95,7 +95,8 @@ void register_control_problems(py::module_ &m) {
                 },
                 "Parameter vector :math:`p` of the problem");
 
-        te_problem.def(py::init<const CasADiControlProblem &>());
+        te_problem.def(py::init<const CasADiControlProblem &>(), "problem"_a,
+                       "Explicit conversion");
         py::implicitly_convertible<CasADiControlProblem, ControlProblem>();
 #endif
         m.def("load_casadi_control_problem", load_CasADi_control_problem, "so_name"_a, "N"_a,

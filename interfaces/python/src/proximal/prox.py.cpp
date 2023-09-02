@@ -22,7 +22,9 @@ void register_prox_func(py::module_ &m) {
         },
         "self"_a, "input"_a, "output"_a, "γ"_a = 1,
         "C++ documentation: :cpp:var:`alpaqa::prox`\n"
-        "Compute the proximal mapping of ``self`` at ``in`` with step size ``γ``.");
+        "Compute the proximal mapping of ``self`` at ``in`` with step size ``γ``. "
+        "This version overwrites the given output arguments.\n\n"
+        ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox_step`");
     m.def(
         "prox",
         [](T &self, crmat in, real_t γ) {
@@ -32,7 +34,9 @@ void register_prox_func(py::module_ &m) {
         },
         "self"_a, "input"_a, "γ"_a = 1,
         "C++ documentation: :cpp:var:`alpaqa::prox`\n"
-        "Compute the proximal mapping of ``self`` at ``in`` with step size ``γ``.");
+        "Compute the proximal mapping of ``self`` at ``in`` with step size ``γ``. "
+        "This version returns the outputs as a tuple.\n\n"
+        ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox_step`");
     m.def(
         "prox_step",
         [](T &self, crmat in, crmat in_step, rmat out, rmat out_step, real_t γ, real_t γ_step) {
@@ -42,7 +46,9 @@ void register_prox_func(py::module_ &m) {
         "self"_a, "input"_a, "input_step"_a, "output"_a, "output_step"_a, "γ"_a = 1,
         "γ_step"_a = -1,
         "C++ documentation: :cpp:var:`alpaqa::prox_step`\n"
-        "Compute a generalized forward-backward step.");
+        "Compute a generalized forward-backward step. "
+        "This version overwrites the given output arguments.\n\n"
+        ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox`");
     m.def(
         "prox_step",
         [](T &self, crmat in, crmat in_step, real_t γ, real_t γ_step) {
@@ -53,7 +59,9 @@ void register_prox_func(py::module_ &m) {
         },
         "self"_a, "input"_a, "input_step"_a, "γ"_a = 1, "γ_step"_a = -1,
         "C++ documentation: :cpp:var:`alpaqa::prox_step`\n"
-        "Compute a generalized forward-backward step.");
+        "Compute a generalized forward-backward step. "
+        "This version returns the outputs as a tuple.\n\n"
+        ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox`");
 }
 
 template <alpaqa::Config Conf>
@@ -69,7 +77,8 @@ void register_prox(py::module_ &m) {
         .def(py::init<real_t, length_t, length_t>(), "λ"_a, "rows"_a, "cols"_a)
         .def_readonly("λ", &NuclearNorm::λ, "Regularization factor.")
         .def_readonly("singular_values", &NuclearNorm::singular_values,
-                      "Vector of singular values of the last output of the prox method.")
+                      "Vector of singular values of the last output of the prox method.\n\n"
+                      ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox`")
         .def_property_readonly(
             "U", [](const NuclearNorm &self) -> mat { return self.svd.matrixU(); },
             "Left singular vectors.")
@@ -79,28 +88,27 @@ void register_prox(py::module_ &m) {
         .def_property_readonly(
             "singular_values_input",
             [](const NuclearNorm &self) -> vec { return self.svd.singularValues(); },
-            "Vector of singular values of the last input of the prox method.")
-        .def("prox", &NuclearNorm::prox, "Proximal mapping.");
+            "Vector of singular values of the last input of the prox method.");
     register_prox_func<config_t, NuclearNorm>(m);
 
     using L1Norm = alpaqa::functions::L1Norm<config_t>;
     py::class_<L1Norm>(funcs, "L1Norm",
                        "C++ documentation :cpp:class:`alpaqa::functions::L1Norm`\n"
-                       "ℓ₁-norm regularizer (with a single scalar regularization factor).")
+                       "ℓ₁-norm regularizer (with a single scalar regularization factor).\n\n"
+                       ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox`")
         .def(py::init<real_t>(), "λ"_a = 1)
-        .def_readonly("λ", &L1Norm::λ, "Regularization factor.")
-        .def("prox", &L1Norm::prox, "Proximal mapping.");
+        .def_readonly("λ", &L1Norm::λ, "Regularization factor.");
     register_prox_func<config_t, L1Norm>(m);
 
     using L1NormElementwise = alpaqa::functions::L1Norm<config_t, vec>;
     py::class_<L1NormElementwise>(
         funcs, "L1NormElementwise",
         "C++ documentation :cpp:class:`alpaqa::functions::L1NormElementwise`\n"
-        "ℓ₁-norm regularizer (with element-wise regularization factors).")
+        "ℓ₁-norm regularizer (with element-wise regularization factors).\n\n"
+        ".. seealso:: :py:func:`alpaqa._alpaqa.float64.prox`")
         .def(py::init<>())
         .def(py::init<vec>(), "λ"_a)
-        .def_readonly("λ", &L1NormElementwise::λ, "Regularization factors.")
-        .def("prox", &L1NormElementwise::prox, "Proximal mapping.");
+        .def_readonly("λ", &L1NormElementwise::λ, "Regularization factors.");
     register_prox_func<config_t, L1NormElementwise>(m);
 
     using Box = alpaqa::Box<config_t>;

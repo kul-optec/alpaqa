@@ -51,7 +51,8 @@ void register_panoc_directions(py::module_ &m) {
         .def("__str__", &LBFGSDir::get_name);
 
     te_direction.def(
-        py::init(&alpaqa::erase_direction_with_params_dict<LBFGSDir, const LBFGSDir &>));
+        py::init(&alpaqa::erase_direction_with_params_dict<LBFGSDir, const LBFGSDir &>),
+        "direction"_a, "Explicit conversion.");
     py::implicitly_convertible<LBFGSDir, TypeErasedPANOCDirection>();
 
     // ----------------------------------------------------------------------------------------- //
@@ -76,8 +77,10 @@ void register_panoc_directions(py::module_ &m) {
                                                 py::return_value_policy::reference_internal))
         .def("__str__", &StructuredLBFGSDir::get_name);
 
-    te_direction.def(py::init(
-        &alpaqa::erase_direction_with_params_dict<StructuredLBFGSDir, const StructuredLBFGSDir &>));
+    te_direction.def(
+        py::init(&alpaqa::erase_direction_with_params_dict<StructuredLBFGSDir,
+                                                           const StructuredLBFGSDir &>),
+        "direction"_a, "Explicit conversion.");
     py::implicitly_convertible<StructuredLBFGSDir, TypeErasedPANOCDirection>();
 
     // ----------------------------------------------------------------------------------------- //
@@ -102,7 +105,8 @@ void register_panoc_directions(py::module_ &m) {
 
     te_direction.def(
         py::init(&alpaqa::erase_direction_with_params_dict<StructuredNewtonDir,
-                                                           const StructuredNewtonDir &>));
+                                                           const StructuredNewtonDir &>),
+        "direction"_a, "Explicit conversion.");
     py::implicitly_convertible<StructuredNewtonDir, TypeErasedPANOCDirection>();
 
     // ----------------------------------------------------------------------------------------- //
@@ -128,61 +132,64 @@ void register_panoc_directions(py::module_ &m) {
         .def("__str__", &AndersonDir::get_name);
 
     te_direction.def(
-        py::init(&alpaqa::erase_direction_with_params_dict<AndersonDir, const AndersonDir &>));
+        py::init(&alpaqa::erase_direction_with_params_dict<AndersonDir, const AndersonDir &>),
+        "direction"_a, "Explicit conversion.");
     py::implicitly_convertible<AndersonDir, TypeErasedPANOCDirection>();
 
     // ----------------------------------------------------------------------------------------- //
     // Catch-all, must be last
     te_direction //
         .def(py::init([](py::object o) {
-            struct {
-                using Problem = alpaqa::TypeErasedProblem<Conf>;
-                void initialize(const Problem &problem, crvec y, crvec Σ, real_t γ_0, crvec x_0,
-                                crvec x̂_0, crvec p_0, crvec grad_ψx_0) {
-                    alpaqa::ScopedMallocAllower ma;
-                    py::gil_scoped_acquire gil;
-                    o.attr("initialize")(problem, y, Σ, γ_0, x_0, x̂_0, p_0, grad_ψx_0);
-                }
-                bool update(real_t γₖ, real_t γₙₑₓₜ, crvec xₖ, crvec xₙₑₓₜ, crvec pₖ, crvec pₙₑₓₜ,
-                            crvec grad_ψxₖ, crvec grad_ψxₙₑₓₜ) {
-                    alpaqa::ScopedMallocAllower ma;
-                    py::gil_scoped_acquire gil;
-                    return py::cast<bool>(
-                        o.attr("update")(γₖ, γₙₑₓₜ, xₖ, xₙₑₓₜ, pₖ, pₙₑₓₜ, grad_ψxₖ, grad_ψxₙₑₓₜ));
-                }
-                bool has_initial_direction() const {
-                    alpaqa::ScopedMallocAllower ma;
-                    py::gil_scoped_acquire gil;
-                    return py::cast<bool>(o.attr("has_initial_direction")());
-                }
-                bool apply(real_t γₖ, crvec xₖ, crvec x̂ₖ, crvec pₖ, crvec grad_ψxₖ, rvec qₖ) const {
-                    alpaqa::ScopedMallocAllower ma;
-                    py::gil_scoped_acquire gil;
-                    return py::cast<bool>(o.attr("apply")(γₖ, xₖ, x̂ₖ, pₖ, grad_ψxₖ, qₖ));
-                }
-                void changed_γ(real_t γₖ, real_t old_γₖ) {
-                    alpaqa::ScopedMallocAllower ma;
-                    py::gil_scoped_acquire gil;
-                    o.attr("changed_γ")(γₖ, old_γₖ);
-                }
-                void reset() {
-                    alpaqa::ScopedMallocAllower ma;
-                    py::gil_scoped_acquire gil;
-                    o.attr("reset")();
-                }
-                std::string get_name() const {
-                    py::gil_scoped_acquire gil;
-                    return py::cast<std::string>(py::str(o));
-                }
-                py::object get_params() const {
-                    py::gil_scoped_acquire gil;
-                    return py::getattr(o, "params");
-                }
+                 struct {
+                     using Problem = alpaqa::TypeErasedProblem<Conf>;
+                     void initialize(const Problem &problem, crvec y, crvec Σ, real_t γ_0,
+                                     crvec x_0, crvec x̂_0, crvec p_0, crvec grad_ψx_0) {
+                         alpaqa::ScopedMallocAllower ma;
+                         py::gil_scoped_acquire gil;
+                         o.attr("initialize")(problem, y, Σ, γ_0, x_0, x̂_0, p_0, grad_ψx_0);
+                     }
+                     bool update(real_t γₖ, real_t γₙₑₓₜ, crvec xₖ, crvec xₙₑₓₜ, crvec pₖ,
+                                 crvec pₙₑₓₜ, crvec grad_ψxₖ, crvec grad_ψxₙₑₓₜ) {
+                         alpaqa::ScopedMallocAllower ma;
+                         py::gil_scoped_acquire gil;
+                         return py::cast<bool>(o.attr("update")(γₖ, γₙₑₓₜ, xₖ, xₙₑₓₜ, pₖ, pₙₑₓₜ,
+                                                                grad_ψxₖ, grad_ψxₙₑₓₜ));
+                     }
+                     bool has_initial_direction() const {
+                         alpaqa::ScopedMallocAllower ma;
+                         py::gil_scoped_acquire gil;
+                         return py::cast<bool>(o.attr("has_initial_direction")());
+                     }
+                     bool apply(real_t γₖ, crvec xₖ, crvec x̂ₖ, crvec pₖ, crvec grad_ψxₖ,
+                                rvec qₖ) const {
+                         alpaqa::ScopedMallocAllower ma;
+                         py::gil_scoped_acquire gil;
+                         return py::cast<bool>(o.attr("apply")(γₖ, xₖ, x̂ₖ, pₖ, grad_ψxₖ, qₖ));
+                     }
+                     void changed_γ(real_t γₖ, real_t old_γₖ) {
+                         alpaqa::ScopedMallocAllower ma;
+                         py::gil_scoped_acquire gil;
+                         o.attr("changed_γ")(γₖ, old_γₖ);
+                     }
+                     void reset() {
+                         alpaqa::ScopedMallocAllower ma;
+                         py::gil_scoped_acquire gil;
+                         o.attr("reset")();
+                     }
+                     std::string get_name() const {
+                         py::gil_scoped_acquire gil;
+                         return py::cast<std::string>(py::str(o));
+                     }
+                     py::object get_params() const {
+                         py::gil_scoped_acquire gil;
+                         return py::getattr(o, "params");
+                     }
 
-                py::object o;
-            } s{std::move(o)};
-            return TypeErasedPANOCDirection{std::move(s)};
-        }));
+                     py::object o;
+                 } s{std::move(o)};
+                 return TypeErasedPANOCDirection{std::move(s)};
+             }),
+             "direction"_a, "Explicit conversion from a custom Python class.");
 }
 
 template void register_panoc_directions<alpaqa::EigenConfigd>(py::module_ &);

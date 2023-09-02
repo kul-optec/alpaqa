@@ -16,6 +16,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 namespace py = pybind11;
+using namespace py::literals;
 
 template <class T>
 T dict_to_struct(const py::dict &);
@@ -149,9 +150,7 @@ T var_kwargs_to_struct(const params_or_dict<T> &p) {
 /// Helper macro to easily initialize a
 /// @ref dict_to_struct_table_t.
 #define PARAMS_MEMBER(name)                                                                        \
-    {                                                                                              \
-#name, &type::name                                                                         \
-    }
+    { #name, &type::name }
 
 /// Helper macro to easily define a specialization @ref dict_to_struct_table.
 #define PARAMS_TABLE_DEF(type_, ...)                                                               \
@@ -209,7 +208,7 @@ inline const dict_to_struct_table_t<alpaqa::GAAPGAParams>
 template <class T>
 void make_dataclass(py::class_<T> &cls) {
     cls //
-        .def(py::init(&dict_to_struct<T>))
+        .def(py::init(&dict_to_struct<T>), "params"_a)
         .def(py::init(&kwargs_to_struct<T>))
         .def("to_dict", &struct_to_dict<T>);
     for (auto &&[key, getset] : dict_to_struct_table<T>::table)

@@ -6,6 +6,7 @@
 
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
+using namespace py::literals;
 
 #include <inner/type-erased-solver-stats.hpp>
 
@@ -83,7 +84,8 @@ struct InnerSolverConversion {
     template <class T>
     void implicitly_convertible_to() {
         assert(this->cls);
-        cls->def(py::init([](const T &t) { return std::make_unique<InnerSolver>(t); }));
+        cls->def(py::init([](const T &t) { return std::make_unique<InnerSolver>(t); }),
+                 "inner_solver"_a, "Explicit conversion.");
         py::implicitly_convertible<T, InnerSolver>();
     }
 };
