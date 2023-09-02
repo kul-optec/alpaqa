@@ -68,6 +68,12 @@ target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)
 target_link_libraries(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:quadmath>)
+if (ALPAQA_WITH_OPENMP)
+    find_package(OpenMP REQUIRED COMPONENTS CXX)
+    target_link_libraries(alpaqa PUBLIC OpenMP::OpenMP_CXX)
+else()
+    target_compile_definitions(alpaqa PUBLIC EIGEN_DONT_PARALLELIZE)
+endif()
 set_target_properties(alpaqa PROPERTIES SOVERSION ${PROJECT_VERSION})
 add_library(alpaqa::alpaqa ALIAS alpaqa)
 list(APPEND ALPAQA_INSTALL_TARGETS alpaqa)

@@ -28,6 +28,8 @@ option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
 option(ALPAQA_WARNINGS_AS_ERRORS
     "Enable -Werror or /WX" Off)
+option(ALPAQA_WITH_OPENMP
+    "Enable parallelization using OpenMP" Off)
 option(BUILD_TESTING
     "Build tests (for Conan integration)" On)
 option(ALPAQA_WITH_TESTS
