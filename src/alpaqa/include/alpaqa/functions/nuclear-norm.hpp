@@ -9,6 +9,8 @@ template <Config Conf>
 using DefaultSVD = Eigen::BDCSVD<typename Conf::mat,
                                  Eigen::ComputeThinU | Eigen::ComputeThinV>;
 
+/// Nuclear norm (ℓ₁-norm of singular values).
+/// @ingroup grp_Functions
 template <Config Conf, class SVD = DefaultSVD<Conf>>
 struct NuclearNorm {
     USING_ALPAQA_CONFIG(Conf);

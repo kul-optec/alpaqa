@@ -13,11 +13,14 @@ namespace alpaqa::functions {
 /// @tparam Weight
 ///         Type of weighting factors. Either scalar or vector.
 template <Config Conf, class Weight = Conf::real_t>
+    requires(std::is_same_v<Weight, typename Conf::real_t> ||
+             std::is_same_v<Weight, typename Conf::vec> ||
+             std::is_same_v<Weight, typename Conf::rvec> ||
+             std::is_same_v<Weight, typename Conf::crvec>)
 struct L1Norm {
     USING_ALPAQA_CONFIG(Conf);
-    using weight_t = Weight;
-    static constexpr bool scalar_weight =
-        std::is_same_v<weight_t, typename Conf::real_t>;
+    using weight_t                      = Weight;
+    static constexpr bool scalar_weight = std::is_same_v<weight_t, real_t>;
 
     L1Norm(weight_t λ) : λ{std::move(λ)} {
         const char *msg = "L1Norm::λ must be nonnegative";
@@ -54,8 +57,9 @@ struct L1Norm {
             out       = vec::Zero(n).cwiseMax(in - step).cwiseMin(in + step);
             return λ * γ * out.template lpNorm<1>();
         } else {
-            if (λ.size() == 0)
-                λ = weight_t::Ones(n);
+            if constexpr (std::is_same_v<weight_t, vec>)
+                if (λ.size() == 0)
+                    λ = weight_t::Ones(n);
             assert(λ.cols() == 1);
             assert(in.size() == λ.size());
             assert((λ.array() >= 0).all());

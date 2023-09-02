@@ -23,3 +23,8 @@
  * @defgroup    grp_Problems  Problems
  * @brief   Classes for defining optimization problems.
  */
+
+/**
+ * @defgroup    grp_Functions  Functions and operators
+ * @brief   (Proximable) functions and operators.
+ */
