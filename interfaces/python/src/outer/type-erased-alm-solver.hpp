@@ -43,7 +43,7 @@ struct ALMSolverVTable : util::BasicVTable {
 #endif
 
     // clang-format off
-    required_function_t<py::tuple(const Problem &, std::optional<vec> x, std::optional<vec> y, bool async)>
+    required_function_t<py::tuple(const Problem &, std::optional<vec> x, std::optional<vec> y, bool async, bool suppress_interrupt)>
         call = nullptr;
     required_function_t<void()>
         stop = nullptr;
@@ -68,7 +68,7 @@ struct ALMSolverVTable : util::BasicVTable {
             return py::cast(self.inner_solver);
         };
         call = [](void *self_, const Problem &p, std::optional<vec> x, std::optional<vec> y,
-                  bool async) {
+                  bool async, bool suppress_interrupt) {
             auto &self       = *std::launder(reinterpret_cast<T *>(self_));
             auto call_solver = [&]<class P>(const P *p) -> py::tuple {
                 if constexpr (!std::is_same_v<P, typename T::Problem>)
@@ -76,7 +76,7 @@ struct ALMSolverVTable : util::BasicVTable {
                         "Unsupported problem type (got '" + demangled_typename(typeid(P)) +
                         "', expected '" + demangled_typename(typeid(typename T::Problem)) + "')");
                 else
-                    return safe_call_solver(self, p, x, y, async);
+                    return safe_call_solver(self, p, x, y, async, suppress_interrupt);
             };
             return std::visit(call_solver, p);
         };
@@ -85,14 +85,15 @@ struct ALMSolverVTable : util::BasicVTable {
 
     template <class T>
     static decltype(auto) safe_call_solver(T &self, const auto &p, std::optional<vec> &x,
-                                           std::optional<vec> &y, bool async) {
+                                           std::optional<vec> &y, bool async,
+                                           bool suppress_interrupt) {
         using InnerSolver = typename T::InnerSolver;
         alpaqa::util::check_dim_msg<config_t>(x, p->get_n(),
                                               "Length of x does not match problem size problem.n");
         alpaqa::util::check_dim_msg<config_t>(y, p->get_m(),
                                               "Length of y does not match problem size problem.m");
         auto invoke_solver = [&] { return self(*p, *x, *y); };
-        auto stats         = async_solve(async, self, invoke_solver, *p);
+        auto stats         = async_solve(async, suppress_interrupt, self, invoke_solver, *p);
         return py::make_tuple(std::move(*x), std::move(*y),
                               alpaqa::conv::stats_to_dict<InnerSolver>(std::move(stats)));
     }
@@ -121,8 +122,8 @@ class TypeErasedALMSolver : public util::TypeErased<ALMSolverVTable<Conf>, Alloc
     }
 
     decltype(auto) operator()(const Problem &p, std::optional<vec> x, std::optional<vec> y,
-                              bool async) {
-        return call(vtable.call, p, x, y, async);
+                              bool async, bool suppress_interrupt) {
+        return call(vtable.call, p, x, y, async, suppress_interrupt);
     }
     decltype(auto) stop() { return call(vtable.stop); }
     decltype(auto) get_name() const { return call(vtable.get_name); }

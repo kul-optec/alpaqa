@@ -14,7 +14,8 @@ using namespace std::chrono_literals;
 #include "thread-checker.hpp"
 
 template <class Solver, class Invoker, class... CheckedArgs>
-auto async_solve(bool async, Solver &solver, Invoker &invoke_solver, CheckedArgs &...checked_args) {
+auto async_solve(bool async, bool suppress_interrupt, Solver &solver, Invoker &invoke_solver,
+                 CheckedArgs &...checked_args) {
     if (!async) {
         // Replace the output stream
         StreamReplacer stream{&solver};
@@ -46,8 +47,12 @@ auto async_solve(bool async, Solver &solver, Invoker &invoke_solver, CheckedArgs
                         // waiting for the solver to finish.
                         std::terminate();
                     }
-                    if (PyErr_Occurred())
-                        throw py::error_already_set();
+                    if (PyErr_Occurred()) {
+                        if (PyErr_ExceptionMatches(PyExc_KeyboardInterrupt) && suppress_interrupt)
+                            PyErr_Clear(); // Clear the KeyboardInterrupt exception
+                        else
+                            throw py::error_already_set();
+                    }
                     break;
                 }
             }

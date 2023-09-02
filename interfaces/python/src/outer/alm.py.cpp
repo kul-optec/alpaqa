@@ -92,12 +92,17 @@ void register_alm(py::module_ &m) {
         // Other functions and properties
         .def_property_readonly("inner_solver", &TEALMSolver::get_inner_solver)
         .def("__call__", &TEALMSolver::operator(), "problem"_a, "x"_a = std::nullopt,
-             "y"_a = std::nullopt, "asynchronous"_a = true,
+             "y"_a = std::nullopt, py::kw_only{}, "asynchronous"_a = true,
+             "suppress_interrupt"_a = false,
              "Solve.\n\n"
              ":param problem: Problem to solve.\n"
              ":param x: Initial guess for decision variables :math:`x`\n\n"
              ":param y: Initial guess for Lagrange multipliers :math:`y`\n"
              ":param asynchronous: Release the GIL and run the solver on a separate thread\n"
+             ":param suppress_interrupt: If the solver is interrupted by a ``KeyboardInterrupt``, "
+             "don't propagate this exception back to the Python interpreter, but stop the solver "
+             "early, and return a solution with the status set to "
+             ":py:data:`alpaqa._alpaqa.SolverStatus.Interrupted`.\n"
              ":return: * Solution :math:`x`\n"
              "         * Lagrange multipliers :math:`y` at the solution\n"
              "         * Statistics\n\n")

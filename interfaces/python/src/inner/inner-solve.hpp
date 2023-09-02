@@ -21,7 +21,7 @@ auto checked_inner_solve() {
     USING_ALPAQA_CONFIG_TEMPLATE(Solver::config_t);
     return [](Solver &solver, const Problem &problem,
               const alpaqa::InnerSolveOptions<config_t> &opts, std::optional<vec> x,
-              std::optional<vec> y, std::optional<vec> Σ, bool async) {
+              std::optional<vec> y, std::optional<vec> Σ, bool async, bool suppress_interrupt) {
         alpaqa::util::check_dim_msg<config_t>(x, problem.get_n(),
                                               "Length of x does not match problem size problem.n");
         bool ret_y = y.has_value();
@@ -35,7 +35,7 @@ auto checked_inner_solve() {
                                               "Length of Σ does not match problem size problem.m");
         vec err_z          = vec::Zero(problem.get_m());
         auto invoke_solver = [&] { return solver(problem, opts, *x, *y, *Σ, err_z); };
-        auto &&stats       = async_solve(async, solver, invoke_solver, problem);
+        auto &&stats       = async_solve(async, suppress_interrupt, solver, invoke_solver, problem);
         return ret_y ? py::make_tuple(std::move(*x), std::move(*y), std::move(err_z),
                                       alpaqa::conv::stats_to_dict(stats))
                      : py::make_tuple(std::move(*x), alpaqa::conv::stats_to_dict(stats));
@@ -50,6 +50,10 @@ inline const char *checked_inner_solve_doc() {
            ":param y: Lagrange multipliers\n"
            ":param Σ: Penalty factors\n"
            ":param asynchronous: Release the GIL and run the solver on a separate thread\n"
+           ":param suppress_interrupt: If the solver is interrupted by a ``KeyboardInterrupt``, "
+           "don't propagate this exception back to the Python interpreter, but stop the solver "
+           "early, and return a solution with the status set to "
+           ":py:data:`alpaqa._alpaqa.SolverStatus.Interrupted`.\n"
            ":return: * Solution :math:`u`\n"
            "         * Updated Lagrange multipliers (only if parameter ``y`` was not ``None``)\n"
            "         * Constraint violation (only if parameter ``y`` was not ``None``)\n"
@@ -59,8 +63,8 @@ inline const char *checked_inner_solve_doc() {
 template <class Solver, class Problem, class InnerSolverType>
 void register_inner_solver_methods(py::class_<Solver> &cls) {
     cls.def("__call__", checked_inner_solve<Solver, Problem>(), "problem"_a, "opts"_a = py::dict(),
-            "x"_a = py::none(), "y"_a = py::none(), "Σ"_a = py::none(), "asynchronous"_a = true,
-            checked_inner_solve_doc())
+            "x"_a = py::none(), "y"_a = py::none(), "Σ"_a = py::none(), py::kw_only{},
+            "asynchronous"_a = true, "suppress_interrupt"_a = false, checked_inner_solve_doc())
         .def_property_readonly("name", &Solver::get_name)
         .def("stop", &Solver::stop)
         .def("__str__", &Solver::get_name);
