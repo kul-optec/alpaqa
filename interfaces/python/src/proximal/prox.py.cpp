@@ -60,29 +60,48 @@ template <alpaqa::Config Conf>
 void register_prox(py::module_ &m) {
     USING_ALPAQA_CONFIG(Conf);
 
+    auto &&funcs = m.def_submodule("functions", "(Proximal) functions and operators.");
+
     using NuclearNorm = alpaqa::functions::NuclearNorm<config_t>;
-    py::class_<NuclearNorm>(m, "NuclearNorm",
+    py::class_<NuclearNorm>(funcs, "NuclearNorm",
                             "C++ documentation :cpp:class:`alpaqa::functions::NuclearNorm`")
         .def(py::init<real_t>(), "λ"_a)
         .def(py::init<real_t, length_t, length_t>(), "λ"_a, "rows"_a, "cols"_a)
-        .def_readonly("λ", &NuclearNorm::λ)
-        .def_readonly("singular_values", &NuclearNorm::singular_values)
-        .def_property_readonly("U",
-                               [](const NuclearNorm &self) -> mat { return self.svd.matrixU(); })
-        .def_property_readonly("V",
-                               [](const NuclearNorm &self) -> mat { return self.svd.matrixV(); })
+        .def_readonly("λ", &NuclearNorm::λ, "Regularization factor.")
+        .def_readonly("singular_values", &NuclearNorm::singular_values,
+                      "Vector of singular values of the last output of the prox method.")
+        .def_property_readonly(
+            "U", [](const NuclearNorm &self) -> mat { return self.svd.matrixU(); },
+            "Left singular vectors.")
+        .def_property_readonly(
+            "V", [](const NuclearNorm &self) -> mat { return self.svd.matrixV(); },
+            "Right singular vectors.")
         .def_property_readonly(
             "singular_values_input",
-            [](const NuclearNorm &self) -> vec { return self.svd.singularValues(); })
-        .def("prox", &NuclearNorm::prox);
+            [](const NuclearNorm &self) -> vec { return self.svd.singularValues(); },
+            "Vector of singular values of the last input of the prox method.")
+        .def("prox", &NuclearNorm::prox, "Proximal mapping.");
     register_prox_func<config_t, NuclearNorm>(m);
 
     using L1Norm = alpaqa::functions::L1Norm<config_t>;
-    py::class_<L1Norm>(m, "L1Norm", "C++ documentation :cpp:class:`alpaqa::functions::L1Norm`")
-        .def(py::init<real_t>(), "λ"_a)
-        .def_readonly("λ", &L1Norm::λ)
-        .def("prox", &L1Norm::prox);
+    py::class_<L1Norm>(funcs, "L1Norm",
+                       "C++ documentation :cpp:class:`alpaqa::functions::L1Norm`\n"
+                       "ℓ₁-norm regularizer (with a single scalar regularization factor).")
+        .def(py::init<real_t>(), "λ"_a = 1)
+        .def_readonly("λ", &L1Norm::λ, "Regularization factor.")
+        .def("prox", &L1Norm::prox, "Proximal mapping.");
     register_prox_func<config_t, L1Norm>(m);
+
+    using L1NormElementwise = alpaqa::functions::L1Norm<config_t, vec>;
+    py::class_<L1NormElementwise>(
+        funcs, "L1NormElementwise",
+        "C++ documentation :cpp:class:`alpaqa::functions::L1NormElementwise`\n"
+        "ℓ₁-norm regularizer (with element-wise regularization factors).")
+        .def(py::init<>())
+        .def(py::init<vec>(), "λ"_a)
+        .def_readonly("λ", &L1NormElementwise::λ, "Regularization factors.")
+        .def("prox", &L1NormElementwise::prox, "Proximal mapping.");
+    register_prox_func<config_t, L1NormElementwise>(m);
 
     using Box = alpaqa::Box<config_t>;
     register_prox_func<config_t, Box>(m);
