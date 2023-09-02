@@ -1,8 +1,5 @@
 Functions and operators
 =======================
 
-.. autoclass:: alpaqa._alpaqa.float64.L1Norm
-    :noindex:
-
-.. autoclass:: alpaqa._alpaqa.float64.NuclearNorm
+.. automodule:: alpaqa._alpaqa.float64.functions
     :noindex:
