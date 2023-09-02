@@ -8,7 +8,7 @@ namespace py = pybind11;
 using namespace py::literals;
 
 #include <alpaqa/functions/indicator-box.hpp>
-#include <alpaqa/functions/norm-l1.hpp>
+#include <alpaqa/functions/l1-norm.hpp>
 #include <alpaqa/functions/nuclear-norm.hpp>
 #include <alpaqa/functions/prox.hpp>
 
