@@ -33,7 +33,7 @@ void functional_setter_ret(FuncProb &p, std::optional<py::object> o) {
             throw std::runtime_error("FunctionalProblem function is None");
         };
     }
-};
+}
 
 template <class FuncProb, auto py_f, auto f, class Out, class Ret, class... Args>
 void functional_setter_out(FuncProb &p, std::optional<py::object> o) {
@@ -46,7 +46,7 @@ void functional_setter_out(FuncProb &p, std::optional<py::object> o) {
             throw std::runtime_error("FunctionalProblem function is None");
         };
     }
-};
+}
 
 template <class T, class... Args>
 void problem_constr_proj_methods(py::class_<T, Args...> &cls) {

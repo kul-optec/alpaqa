@@ -9,7 +9,7 @@ namespace alpaqa {
 
 namespace detail {
 inline std::atomic<void *> solver_to_stop;
-};
+}
 
 /**
  * Attach SIGINT and SIGTERM handlers to stop the given solver.

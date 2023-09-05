@@ -21,7 +21,7 @@ auto async_solve(bool async, bool suppress_interrupt, Solver &solver, Invoker &i
         StreamReplacer stream{&solver};
         // Invoke the solver synchronously
         auto &&stats = invoke_solver();
-        return stats;
+        return static_cast<decltype(stats) &&>(stats);
     } else {
         // Check that the user doesn't use the same solver/problem in multiple threads
         ThreadChecker solver_checker{&solver};
