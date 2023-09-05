@@ -1,13 +1,9 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/functions/prox.hpp>
 #include <alpaqa/util/float.hpp>
-#include <cassert>
 
 namespace alpaqa {
-
-inline namespace sets {
 
 template <Config Conf = DefaultConfig>
 struct Box {
@@ -28,41 +24,6 @@ struct Box {
 
     vec lowerbound;
     vec upperbound;
-
-    friend real_t alpaqa_tag_invoke(tag_t<alpaqa::prox>, Box &self, crmat in, rmat out,
-                                    [[maybe_unused]] real_t γ) {
-        assert(in.rows() == out.rows());
-        assert(in.cols() == out.cols());
-        assert(in.size() == self.lowerbound.size());
-        assert(in.size() == self.upperbound.size());
-        assert(!(self.lowerbound.array() > self.upperbound.array()).any());
-        out = in.reshaped()
-                  .cwiseMax(self.lowerbound)
-                  .cwiseMin(self.upperbound)
-                  .reshaped(in.rows(), in.cols());
-        return 0;
-    }
-
-    friend real_t alpaqa_tag_invoke(tag_t<alpaqa::prox_step>, Box &self, crmat in, crmat fwd_step,
-                                    rmat out, rmat fb_step, [[maybe_unused]] real_t γ,
-                                    real_t γ_fwd) {
-        assert(in.rows() == fwd_step.rows());
-        assert(in.cols() == fwd_step.cols());
-        assert(in.rows() == out.rows());
-        assert(in.cols() == out.cols());
-        assert(in.rows() == fb_step.rows());
-        assert(in.cols() == fb_step.cols());
-        assert(in.size() == self.lowerbound.size());
-        assert(in.size() == self.upperbound.size());
-        assert(!(self.lowerbound.array() > self.upperbound.array()).any());
-        fb_step = (γ_fwd * fwd_step)
-                      .reshaped()
-                      .cwiseMax(self.lowerbound - in.reshaped())
-                      .cwiseMin(self.upperbound - in.reshaped())
-                      .reshaped(in.rows(), in.cols());
-        out = in + fb_step;
-        return 0;
-    }
 
   private:
     Box(vec lower, vec upper) : lowerbound{std::move(lower)}, upperbound{std::move(upper)} {}
@@ -114,7 +75,5 @@ inline auto dist_squared(const auto &v,        ///< [in] The vector to project
     auto d = v - project(v, box);
     return d.dot(Σ.asDiagonal() * d);
 }
-
-} // namespace sets
 
 } // namespace alpaqa
