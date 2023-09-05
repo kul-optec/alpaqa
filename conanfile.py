@@ -19,22 +19,26 @@ class AlpaqaRecipe(ConanFile):
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
+    bool_alpaqa_options = {
+        "with_quad_precision": False,
+        "with_single_precision": False,
+        "with_long_double": False,
+        "with_openmp": False,
+        "with_drivers": True,
+        "with_casadi": False,
+        "with_cutest": False,
+        "with_qpalm": False,
+        "with_lbfgsb": None,
+        "with_ocp": False,
+    }
     options = {
         "shared": [True, False],
         "fPIC": [True, False],
-        "with_quad_precision": [True, False],
-        "with_casadi": [True, False],
-        "with_ocp": [True, False],
-        "with_drivers": [True, False],
-    }
+    } | {k: [True, False, None] for k in bool_alpaqa_options}
     default_options = {
         "shared": False,
         "fPIC": True,
-        "with_quad_precision": False,
-        "with_casadi": True,
-        "with_ocp": True,
-        "with_drivers": True,
-    }
+    } | bool_alpaqa_options
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = (
@@ -48,13 +52,13 @@ class AlpaqaRecipe(ConanFile):
         "README.md",
     )
 
-    generators = ("CMakeDeps", )
+    generators = ("CMakeDeps",)
 
     def requirements(self):
         self.requires("eigen/3.4.0")
         self.test_requires("gtest/1.11.0")
         if self.options.with_casadi:
-            self.requires("casadi/3.6.0@alpaqa")
+            self.requires("casadi/3.6.3@alpaqa")
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -65,11 +69,11 @@ class AlpaqaRecipe(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.variables["ALPAQA_WITH_QUAD_PRECISION"] = self.options.with_quad_precision
-        tc.variables["ALPAQA_WITH_CASADI"] = self.options.with_casadi
         tc.variables["ALPAQA_WITH_EXAMPLES"] = False
-        tc.variables["ALPAQA_WITH_DRIVERS"] = self.options.with_drivers
-        tc.variables["ALPAQA_WITH_LBFGSB"] = True
+        for k in self.bool_alpaqa_options:
+            value = getattr(self.options, k, None)
+            if value is not None and value.value is not None:
+                tc.variables["ALPAQA_" + k.upper()] = bool(value)
         tc.generate()
 
     def build(self):
