@@ -38,7 +38,7 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
         ///         selection of constraints only and may thus be much smaller
         ///         than the number of constraints times the number of
         ///         iterations.
-        struct {
+        struct Calls {
             /// Number of calls to the objective function.
             unsigned objective = 0;
             /// Number of calls to the objective gradient.
@@ -53,7 +53,8 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
             unsigned constraints_grad = 0;
             /// Number of calls to the constraint Hessians.
             unsigned constraints_hess = 0;
-        } calls; ///< Function call counters.
+        };
+        Calls calls; ///< Function call counters.
 
         /// CPU time (in seconds) for CUTEST_csetup.
         double time_setup = 0;

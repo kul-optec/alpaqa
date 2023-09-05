@@ -14,7 +14,7 @@
  */
 
 /**
- * @defgroup    grp_DirectionProviders PANOC direction providers
+ * @defgroup    grp_DirectionProviders Direction providers
  * @brief   Algorithms that provide quasi-Newton steps for the PANOC solver, 
  *          such as L-BFGS.
  */
