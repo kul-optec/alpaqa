@@ -14,7 +14,7 @@ namespace tag_invoke_fn_ns {
 /// Poison pill to hide overloads of foo() that might be found in parent
 /// namespace.
 /// We want to limit to only finding overloads by ADL.
-#if defined(__GNUC__) && __GNUC__ < 12 && !defined(__clang__)
+#if defined(_MSC_VER) || (defined(__GNUC__) && __GNUC__ < 12 && !defined(__clang__))
 void alpaqa_tag_invoke() /* = delete */;
 #else
 void alpaqa_tag_invoke() = delete;
