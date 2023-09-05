@@ -26,12 +26,13 @@ struct prox_fn {
                                     typename T::config_t::real_t>,
                 typename T::config_t::real_t>;
         }
-    auto operator()(T &func, T::config_t::crmat in, T::config_t::rmat out,
-                    T::config_t::real_t γ = 1) const
+    auto operator()(T &func, typename T::config_t::crmat in,
+                    typename T::config_t::rmat out,
+                    typename T::config_t::real_t γ = 1) const
         noexcept(alpaqa::is_nothrow_tag_invocable_v<
                  prox_fn, T &, typename T::config_t::crmat,
-                 typename T::config_t::rmat, typename T::config_t::real_t>)
-            -> T::config_t::real_t {
+                 typename T::config_t::rmat, typename T::config_t::real_t>) ->
+        typename T::config_t::real_t {
         return alpaqa::alpaqa_tag_invoke(*this, func, std::move(in),
                                          std::move(out), γ);
     }
@@ -82,15 +83,18 @@ struct prox_step_fn {
                     typename T::config_t::real_t>,
                 typename T::config_t::real_t>;
         }
-    auto operator()(T &func, T::config_t::crmat in, T::config_t::crmat fwd_step,
-                    T::config_t::rmat out, T::config_t::rmat fb_step,
-                    T::config_t::real_t γ     = 1,
-                    T::config_t::real_t γ_fwd = -1) const
+    auto operator()(T &func, typename T::config_t::crmat in,
+                    typename T::config_t::crmat fwd_step,
+                    typename T::config_t::rmat out,
+                    typename T::config_t::rmat fb_step,
+                    typename T::config_t::real_t γ     = 1,
+                    typename T::config_t::real_t γ_fwd = -1) const
         noexcept(alpaqa::is_nothrow_tag_invocable_v<
                  prox_step_fn, T &, typename T::config_t::crmat,
                  typename T::config_t::crmat, typename T::config_t::rmat,
                  typename T::config_t::rmat, typename T::config_t::real_t,
-                 typename T::config_t::real_t>) -> T::config_t::real_t {
+                 typename T::config_t::real_t>) ->
+        typename T::config_t::real_t {
         return alpaqa::alpaqa_tag_invoke(*this, func, std::move(in),
                                          std::move(fwd_step), std::move(out),
                                          std::move(fb_step), γ, γ_fwd);
@@ -112,14 +116,16 @@ struct prox_step_fn {
                                     typename T::config_t::rmat,
                                     typename T::config_t::real_t>;
         }
-    auto operator()(T &func, T::config_t::crmat in, T::config_t::crmat fwd_step,
-                    T::config_t::rmat out, T::config_t::rmat fb_step,
-                    T::config_t::real_t γ     = 1,
-                    T::config_t::real_t γ_fwd = -1) const
+    auto operator()(T &func, typename T::config_t::crmat in,
+                    typename T::config_t::crmat fwd_step,
+                    typename T::config_t::rmat out,
+                    typename T::config_t::rmat fb_step,
+                    typename T::config_t::real_t γ     = 1,
+                    typename T::config_t::real_t γ_fwd = -1) const
         noexcept(std::is_nothrow_invocable_v<
                  prox_fn, T &, typename T::config_t::crmat,
-                 typename T::config_t::rmat, typename T::config_t::real_t>)
-            -> T::config_t::real_t {
+                 typename T::config_t::rmat, typename T::config_t::real_t>) ->
+        typename T::config_t::real_t {
         fb_step      = in + γ_fwd * fwd_step;
         auto &&h_out = prox(func, fb_step, out, γ);
         fb_step      = out - in;

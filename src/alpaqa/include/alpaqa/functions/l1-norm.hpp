@@ -12,7 +12,7 @@ namespace alpaqa::functions {
 /// @ingroup grp_Functions
 /// @tparam Weight
 ///         Type of weighting factors. Either scalar or vector.
-template <Config Conf, class Weight = Conf::real_t>
+template <Config Conf, class Weight = typename Conf::real_t>
     requires(std::is_same_v<Weight, typename Conf::real_t> ||
              std::is_same_v<Weight, typename Conf::vec> ||
              std::is_same_v<Weight, typename Conf::rvec> ||
