@@ -141,6 +141,7 @@ jobs:
           staging="/opt/$host"
           cat > ninja-debug-release.cross.toml <<- EOF
           [cmake]
+          build_args = ["1"]
           config = ["Debug", "Release"]
           generator = "Ninja Multi-Config"
           [cmake.options]
@@ -202,6 +203,7 @@ jobs:
           staging="/opt/$host"
           cat > ninja-debug.cross.toml <<- EOF
           [cmake]
+          build_args = ["1"]
           config = ["Debug"]
           generator = "Ninja Multi-Config"
           [cmake.options]
