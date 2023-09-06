@@ -42,12 +42,12 @@ struct NuclearNorm {
         L1Norm<config_t> l1 = λ;
         real_t value = l1.prox(svd.singularValues(), singular_values, γ);
 #else
-        auto step        = vec::Constant(n, λ * γ);
-        singular_values  = vec::Zero(n).cwiseMax(svd.singularValues() - step);
-        real_t value     = λ * γ * singular_values.template lpNorm<1>();
+        auto step       = vec::Constant(n, λ * γ);
+        singular_values = vec::Zero(n).cwiseMax(svd.singularValues() - step);
+        real_t value    = λ * γ * singular_values.template lpNorm<1>();
 #endif
-        using std::ranges::find;
-        index_t rank = find(singular_values, 0) - singular_values.begin();
+        auto it0 = std::find(singular_values.begin(), singular_values.end(), 0);
+        index_t rank = it0 - singular_values.begin();
         using Eigen::placeholders::all, Eigen::seqN;
         auto sel = seqN(0, rank);
         auto &&U = svd.matrixU(), &&V = svd.matrixV();
