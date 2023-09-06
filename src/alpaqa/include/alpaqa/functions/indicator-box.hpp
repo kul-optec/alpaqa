@@ -1,11 +1,11 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/problem/box.hpp>
 #include <alpaqa/functions/prox.hpp>
+#include <alpaqa/problem/box.hpp>
 #include <cassert>
 
-namespace alpaqa {
+namespace alpaqa::sets {
 
 template <Config Conf>
 typename Conf::real_t

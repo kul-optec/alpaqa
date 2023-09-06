@@ -5,6 +5,8 @@
 
 namespace alpaqa {
 
+namespace sets {
+
 template <Config Conf = DefaultConfig>
 struct Box {
     USING_ALPAQA_CONFIG(Conf);
@@ -75,5 +77,9 @@ inline auto dist_squared(const auto &v,        ///< [in] The vector to project
     auto d = v - project(v, box);
     return d.dot(Σ.asDiagonal() * d);
 }
+
+} // namespace sets
+
+using sets::Box;
 
 } // namespace alpaqa

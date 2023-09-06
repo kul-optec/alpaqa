@@ -132,9 +132,9 @@ class CasADiControlProblem {
     void eval_proj_diff_g(crvec z, rvec e) const {
         for (index_t t = 0; t < N; ++t)
             e.segment(t * nc, nc) =
-                alpaqa::projecting_difference(z.segment(t * nc, nc), D);
+                projecting_difference(z.segment(t * nc, nc), D);
         e.segment(N * nc, nc_N) =
-            alpaqa::projecting_difference(z.segment(N * nc, nc_N), D_N);
+            projecting_difference(z.segment(N * nc, nc_N), D_N);
     }
     /// @see @ref TypeErasedControlProblem::eval_proj_multipliers
     void eval_proj_multipliers(rvec y, real_t M) const {

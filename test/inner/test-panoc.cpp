@@ -90,12 +90,12 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     vec invΣy = Σ.asDiagonal().inverse() * y;
 
     auto ψ_fun = [&op, &f, &g, &Σ, &invΣy](crvec x) -> real_t {
-        return f(x) + 0.5 * alpaqa::dist_squared(g(x) + invΣy, op.D, Σ);
+        return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.D, Σ);
     };
 
     // Compute ψ and ∇ψ manually
     vec ζ     = g(x) + invΣy;
-    vec ẑ     = alpaqa::project(ζ, op.D);
+    vec ẑ     = project(ζ, op.D);
     vec d     = ζ - ẑ;
     vec ŷ     = Σ.asDiagonal() * d;
     real_t ψ  = f(x) + 0.5 * d.dot(ŷ);
@@ -251,12 +251,12 @@ TEST(PANOC, hessian) {
     vec invΣy = Σ.asDiagonal().inverse() * y;
 
     auto ψ_fun = [&op, &f, &g, &Σ, &invΣy](crvec x) -> real_t {
-        return f(x) + 0.5 * alpaqa::dist_squared(g(x) + invΣy, op.D, Σ);
+        return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.D, Σ);
     };
 
     // Compute ψ and ∇ψ manually
     vec ζ     = g(x) + invΣy;
-    vec ẑ     = alpaqa::project(ζ, op.D);
+    vec ẑ     = project(ζ, op.D);
     vec d     = ζ - ẑ;
     vec ŷ     = Σ.asDiagonal() * d;
     real_t ψ  = f(x) + 0.5 * d.dot(ŷ);
