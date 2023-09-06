@@ -111,3 +111,57 @@ jobs:
           ALPAQA_PYTHON_DEBUG: ${{ matrix.config == 'Debug' }}
       - name: Check Wheel metadata
         run: python -m twine check dist/*.whl
+
+  build-macos:
+    runs-on: macos-12
+    env:
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      CCACHE_DIR: /tmp/.ccache
+      MACOSX_DEPLOYMENT_TARGET: '10.9'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v4
+        id: python
+        name: Install Python
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Install ccache
+        run: brew install ccache && ccache --version
+      - name: Prepare ccache directory
+        run: mkdir -p "${{ env.CCACHE_DIR }}"
+      - name: Cache ccache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-ccache-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-ccache
+      - name: Cache Virtual Environment
+        id: cache-venv
+        uses: actions/cache@v3
+        with:
+          path: py-venv
+          key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('scripts/install-eigen.sh', 'scripts/install-casadi-static.sh') }}
+      - name: Install Python dependencies 
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: |
+          python -m venv py-venv
+          source ./py-venv/bin/activate
+          python -m pip install -U pip build cmake ninja
+          ./scripts/install-eigen.sh
+          ./scripts/install-casadi-static.sh
+      - name: Build
+        run: |
+          source ./py-venv/bin/activate
+          CMAKE_PREFIX_PATH="$VIRTUAL_ENV:$CMAKE_PREFIX_PATH" \
+          _PYTHON_HOST_PLATFORM='macosx-10.9-universal2' \
+          ARCHFLAGS='-arch arm64 -arch x86_64' \
+              python -m build -w .
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: whl-macos
+          retention-days: 1
+          path: dist/*.whl
