@@ -60,6 +60,11 @@ struct PANOCParams {
 
     bool update_direction_in_candidate              = false;
     bool recompute_last_prox_step_after_lbfgs_flush = false;
+    /// When evaluating ψ(x̂) in a candidate point, always evaluate ∇ψ(x̂) as
+    /// well. Can be beneficial if computing ∇ψ(x̂) is not much more expensive
+    /// than computing just ψ(x), and if ∇ψ(x̂) is required in the next iteration
+    /// (e.g. for the stopping criterion, or when using the NoopDirection).
+    bool eager_gradient_eval = false;
 };
 
 template <Config Conf = DefaultConfig>

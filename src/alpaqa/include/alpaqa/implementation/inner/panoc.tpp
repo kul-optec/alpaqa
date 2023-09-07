@@ -50,30 +50,32 @@ auto PANOCSolver<DirectionProviderT>::operator()(
     // Represents an iterate in the algorithm, keeping track of some
     // intermediate values and function evaluations.
     struct Iterate {
-        vec x;      //< Decision variables
-        vec x̂;      //< Decision variables after proximal gradient step
-        vec grad_ψ; //< Gradient of cost in x
-        vec p;      //< Proximal gradient step in x
-        vec ŷx̂;     //< Candidate Lagrange multipliers in x̂
-        real_t ψx       = NaN<config_t>; //< Cost in x
-        real_t ψx̂       = NaN<config_t>; //< Cost in x̂
-        real_t γ        = NaN<config_t>; //< Step size γ
-        real_t L        = NaN<config_t>; //< Lipschitz estimate L
-        real_t pᵀp      = NaN<config_t>; //< Norm squared of p
-        real_t grad_ψᵀp = NaN<config_t>; //< Dot product of gradient and p
-        real_t hx̂       = NaN<config_t>; //< Non-smooth function value in x̂
+        vec x;       //< Decision variables
+        vec x̂;       //< Decision variables after proximal gradient step
+        vec grad_ψ;  //< Gradient of cost in x
+        vec grad_ψx̂; //< Gradient of cost in x̂
+        vec p;       //< Proximal gradient step in x
+        vec ŷx̂;      //< Candidate Lagrange multipliers in x̂
+        real_t ψx         = NaN<config_t>; //< Cost in x
+        real_t ψx̂         = NaN<config_t>; //< Cost in x̂
+        real_t γ          = NaN<config_t>; //< Step size γ
+        real_t L          = NaN<config_t>; //< Lipschitz estimate L
+        real_t pᵀp        = NaN<config_t>; //< Norm squared of p
+        real_t grad_ψᵀp   = NaN<config_t>; //< Dot product of gradient and p
+        real_t hx̂         = NaN<config_t>; //< Non-smooth function value in x̂
+        bool have_grad_ψx̂ = false;
 
         // @pre    @ref ψx, @ref hx̂ @ref pᵀp, @ref grad_ψᵀp
         // @return φγ
         real_t fbe() const { return ψx + hx̂ + pᵀp / (2 * γ) + grad_ψᵀp; }
 
-        Iterate(length_t n, length_t m) : x(n), x̂(n), grad_ψ(n), p(n), ŷx̂(m) {}
+        Iterate(length_t n, length_t m)
+            : x(n), x̂(n), grad_ψ(n), grad_ψx̂(n), p(n), ŷx̂(m) {}
     } iterates[2]{{n, m}, {n, m}};
     Iterate *curr = &iterates[0];
     Iterate *next = &iterates[1];
 
     bool need_grad_ψx̂ = Helpers::stop_crit_requires_grad_ψx̂(params.stop_crit);
-    vec grad_ψx̂(n);
     vec work_n(n), work_m(m);
     vec q(n); // (quasi-)Newton step Hₖ pₖ
 
@@ -106,11 +108,16 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         i.pᵀp = i.p.squaredNorm();
         i.grad_ψᵀp = i.p.dot(i.grad_ψ);
     };
-    auto eval_ψx̂ = [&problem, &y, &Σ](Iterate &i) {
-        i.ψx̂ = problem.eval_ψ(i.x̂, y, Σ, i.ŷx̂);
+    auto eval_ψx̂ = [&problem, &y, &Σ, &work_n, this](Iterate &i) {
+        if (params.eager_gradient_eval)
+            i.ψx̂ = problem.eval_ψ_grad_ψ(i.x̂, y, Σ, i.grad_ψx̂, work_n, i.ŷx̂);
+        else
+            i.ψx̂ = problem.eval_ψ(i.x̂, y, Σ, i.ŷx̂);
+        i.have_grad_ψx̂ = params.eager_gradient_eval;
     };
-    auto eval_grad_ψx̂ = [&problem, &work_n](Iterate &i, rvec grad_ψx̂) {
-        problem.eval_grad_L(i.x̂, i.ŷx̂, grad_ψx̂, work_n);
+    auto eval_grad_ψx̂ = [&problem, &work_n](Iterate &i) {
+        problem.eval_grad_L(i.x̂, i.ŷx̂, i.grad_ψx̂, work_n);
+        i.have_grad_ψx̂ = true;
     };
 
     // Printing ----------------------------------------------------------------
@@ -153,13 +160,15 @@ auto PANOCSolver<DirectionProviderT>::operator()(
             << std::endl; // Flush for Python buffering
     };
 
-    auto do_progress_cb = [this, &s, &problem, &Σ, &y, &opts](
-                              unsigned k, Iterate &it, crvec q, crvec grad_ψx̂,
-                              real_t τ, real_t εₖ, SolverStatus status) {
+    auto do_progress_cb = [this, &s, &problem, &Σ, &y,
+                           &opts](unsigned k, Iterate &it, crvec q, real_t τ,
+                                  real_t εₖ, SolverStatus status) {
         if (!progress_cb)
             return;
         ScopedMallocAllower ma;
         alpaqa::util::Timed t{s.time_progress_callback};
+        auto &&grad_ψx̂ =
+            it.have_grad_ψx̂ ? crvec{it.grad_ψx̂} : crvec{null_vec<config_t>};
         progress_cb(ProgressInfo{
             .k          = k,
             .status     = status,
@@ -241,13 +250,12 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         // Check stopping criteria ---------------------------------------------
 
         // Calculate ∇ψ(x̂ₖ)
-        if (need_grad_ψx̂)
-            eval_grad_ψx̂(*curr, grad_ψx̂);
-        bool have_grad_ψx̂ = need_grad_ψx̂;
+        if (need_grad_ψx̂ && !curr->have_grad_ψx̂)
+            eval_grad_ψx̂(*curr);
 
         real_t εₖ = Helpers::calc_error_stop_crit(
             problem, params.stop_crit, curr->p, curr->γ, curr->x, curr->x̂,
-            curr->ŷx̂, curr->grad_ψ, grad_ψx̂, work_n, next->p);
+            curr->ŷx̂, curr->grad_ψ, curr->grad_ψx̂, work_n, next->p);
 
         // Print progress ------------------------------------------------------
         bool do_print =
@@ -262,8 +270,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         auto stop_status  = Helpers::check_all_stop_conditions(
             params, opts, time_elapsed, k, stop_signal, εₖ, no_progress);
         if (stop_status != SolverStatus::Busy) {
-            do_progress_cb(k, *curr, null_vec<config_t>, grad_ψx̂, -1, εₖ,
-                           stop_status);
+            do_progress_cb(k, *curr, null_vec<config_t>, -1, εₖ, stop_status);
             bool do_final_print = params.print_interval != 0;
             if (!do_print && do_final_print)
                 print_progress_1(k, curr->fbe(), curr->ψx, curr->grad_ψ,
@@ -326,12 +333,12 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         // xₖ₊₁ = xₖ + pₖ
         auto take_safe_step = [&] {
             // Calculate ∇ψ(xₖ₊₁)
-            if (not have_grad_ψx̂)
-                eval_grad_ψx̂(*curr, grad_ψx̂);
-            have_grad_ψx̂ = true;
-            next->x      = curr->x̂; // → safe prox step
-            next->ψx     = curr->ψx̂;
-            next->grad_ψ.swap(grad_ψx̂);
+            if (not curr->have_grad_ψx̂)
+                eval_grad_ψx̂(*curr);
+            next->x  = curr->x̂; // → safe prox step
+            next->ψx = curr->ψx̂;
+            next->grad_ψ.swap(curr->grad_ψx̂);
+            curr->have_grad_ψx̂ = next->have_grad_ψx̂ = false;
         };
 
         // xₖ₊₁ = xₖ + (1-τ) pₖ + τ qₖ
@@ -342,6 +349,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
                 next->x = curr->x + (1 - τ) * curr->p + τ * q;
             // Calculate ψ(xₖ₊₁), ∇ψ(xₖ₊₁)
             eval_ψ_grad_ψ(*next);
+            next->have_grad_ψx̂ = false;
         };
 
         while (!stop_signal.stop_requested()) {
@@ -435,7 +443,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         }
 
         // Print ---------------------------------------------------------------
-        do_progress_cb(k, *curr, q, grad_ψx̂, τ, εₖ, SolverStatus::Busy);
+        do_progress_cb(k, *curr, q, τ, εₖ, SolverStatus::Busy);
         if (do_print && (k != 0 || direction.has_initial_direction()))
             print_progress_2(q, τ, dir_rejected);
 

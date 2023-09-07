@@ -270,6 +270,7 @@ PARAMS_TABLE(PANOCParams<config_t>,                                     //
              PARAMS_MEMBER(linesearch_tolerance_factor),                //
              PARAMS_MEMBER(update_direction_in_candidate),              //
              PARAMS_MEMBER(recompute_last_prox_step_after_lbfgs_flush), //
+             PARAMS_MEMBER(eager_gradient_eval),                        //
 );
 
 PARAMS_TABLE(ZeroFPRParams<config_t>,                                   //
