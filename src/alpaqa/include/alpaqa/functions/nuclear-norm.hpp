@@ -38,14 +38,9 @@ struct NuclearNorm {
         }
         svd.compute(in);
         const length_t n = svd.singularValues().size();
-#if 0
-        L1Norm<config_t> l1 = λ;
-        real_t value = l1.prox(svd.singularValues(), singular_values, γ);
-#else
         auto step       = vec::Constant(n, λ * γ);
         singular_values = vec::Zero(n).cwiseMax(svd.singularValues() - step);
-        real_t value    = λ * γ * singular_values.template lpNorm<1>();
-#endif
+        real_t value    = λ * singular_values.template lpNorm<1>();
         auto it0 = std::find(singular_values.begin(), singular_values.end(), 0);
         index_t rank = it0 - singular_values.begin();
         using Eigen::placeholders::all, Eigen::seqN;

@@ -55,7 +55,7 @@ struct L1Norm {
             }
             auto step = vec::Constant(n, λ * γ);
             out       = vec::Zero(n).cwiseMax(in - step).cwiseMin(in + step);
-            return λ * γ * out.template lpNorm<1>();
+            return λ * out.template lpNorm<1>();
         } else {
             if constexpr (std::is_same_v<weight_t, vec>)
                 if (λ.size() == 0)
@@ -65,7 +65,7 @@ struct L1Norm {
             assert((λ.array() >= 0).all());
             auto step = λ * γ;
             out       = vec::Zero(n).cwiseMax(in - step).cwiseMin(in + step);
-            return γ * out.cwiseProduct(λ).template lpNorm<1>();
+            return out.cwiseProduct(λ).template lpNorm<1>();
         }
     }
 

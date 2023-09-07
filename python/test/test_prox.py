@@ -13,10 +13,10 @@ def test_nuclear_norm():
     y = np.empty((2, 2), order="F")
     h = pa.functions.NuclearNorm(0.25)
     hy = pa.prox(h, x, y, 0.5)
-    assert abs(hy - 0.125 * 0.875) < 1e-12
+    assert abs(hy - 0.25 * 0.875) < 1e-12
     assert np.allclose(y, U @ Σ_expected @ V.T, rtol=1e-12, atol=1e-12)
     hy, y = pa.prox(h, x, 0.5)
-    assert abs(hy - 0.125 * 0.875) < 1e-12
+    assert abs(hy - 0.25 * 0.875) < 1e-12
     assert np.allclose(y, U @ Σ_expected @ V.T, rtol=1e-12, atol=1e-12)
 
 
@@ -24,14 +24,28 @@ def test_l1_norm():
     x = [-1, -0.125, -0.1, 0, 0.05, 0.12, 0.13, 1, 100]
     y_expected = np.array([-0.875, 0, 0, 0, 0, 0, 0.005, 0.875, 99.875])
     y = np.empty(len(x))
+    λ = 0.25
+    h = pa.functions.L1Norm(λ)
+    hy = pa.prox(h, x, y, 0.5)
+    assert np.allclose(y, y_expected, rtol=1e-12, atol=1e-12)
+    assert abs(0.25 * la.norm(y_expected, 1) - hy) < 1e-12
+    hy, y = pa.prox(h, x, 0.5)
+    assert np.allclose(y.ravel(), y_expected, rtol=1e-12, atol=1e-12)
+    assert abs(0.25 * la.norm(y_expected, 1) - hy) < 1e-12
+
+
+def test_l1_norm_vec():
+    x = [-1, -0.125, -0.1, 0, 0.05, 0.12, 0.13, 1, 100]
+    y_expected = np.array([-0.875, 0, 0, 0, 0, 0, 0.005, 0.875, 99.875])
+    y = np.empty(len(x))
     λ = 0.25 * np.ones(len(x))
     h = pa.functions.L1NormElementwise(λ)
     hy = pa.prox(h, x, y, 0.5)
     assert np.allclose(y, y_expected, rtol=1e-12, atol=1e-12)
-    assert abs(0.125 * la.norm(y_expected, 1) - hy) < 1e-12
+    assert abs(0.25 * la.norm(y_expected, 1) - hy) < 1e-12
     hy, y = pa.prox(h, x, 0.5)
     assert np.allclose(y.ravel(), y_expected, rtol=1e-12, atol=1e-12)
-    assert abs(0.125 * la.norm(y_expected, 1) - hy) < 1e-12
+    assert abs(0.25 * la.norm(y_expected, 1) - hy) < 1e-12
 
 
 def test_l1_norm_step():
@@ -47,10 +61,10 @@ def test_l1_norm_step():
     h = pa.functions.L1Norm(0.25)
     hy = pa.prox_step(h, x, g, y, p, 0.5, -γ_fwd)
     assert np.allclose(y, y_expected, rtol=1e-12, atol=1e-12)
-    assert abs(0.125 * la.norm(y_expected, 1) - hy) < 1e-12
+    assert abs(0.25 * la.norm(y_expected, 1) - hy) < 1e-12
     hy, y, p = pa.prox_step(h, x, g, 0.5, -γ_fwd)
     assert np.allclose(y.ravel(), y_expected, rtol=1e-12, atol=1e-12)
-    assert abs(0.125 * la.norm(y_expected, 1) - hy) < 1e-12
+    assert abs(0.25 * la.norm(y_expected, 1) - hy) < 1e-12
 
 
 def test_box():
