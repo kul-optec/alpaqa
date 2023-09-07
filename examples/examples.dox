@@ -210,3 +210,9 @@
  * Run `./build/src/RelWithDebInfo/alpaqa-driver` without arguments for usage
  * and argument information.
  */
+/**
+ * @example{lineno} C++/Advanced/lasso-fbs.cpp
+ *
+ * Applies forward-backward splitting (FBS) to a lasso problem. Demonstrates
+ * the use of the @ref alpaqa::prox_step function.
+ */

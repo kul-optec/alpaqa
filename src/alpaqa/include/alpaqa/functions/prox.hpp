@@ -54,6 +54,8 @@ struct prox_fn {
  *              @f$ \hat x \leftarrow \prox_{\gamma\, h}\left( x \right) @f$
  * @param[in]   γ
  *              Proximal step size @f$ \gamma @f$.
+ * @return      The value of the function evaluated in the output,
+ *              @f$ h(\hat x) @f$.
  * @ingroup grp_Functions
  */
 inline constexpr prox;
@@ -160,6 +162,8 @@ struct prox_step_fn {
  *              Proximal step size @f$ \gamma @f$.
  * @param[in]   γ_fwd
  *              Forward step size @f$ \gamma_\mathrm{fwd} @f$.
+ * @return      The value of the function evaluated in the output,
+ *              @f$ h(\hat x) @f$.
  * @ingroup grp_Functions
  */
 inline constexpr prox_step;

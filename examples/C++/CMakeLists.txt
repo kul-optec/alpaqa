@@ -1,5 +1,6 @@
 add_subdirectory(CustomCppProblem)
 add_subdirectory(SimpleUnconstrProblem)
+add_subdirectory(Advanced)
 
 include(CheckLanguage)
 check_language(Fortran)
