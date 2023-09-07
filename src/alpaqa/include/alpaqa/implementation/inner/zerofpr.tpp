@@ -369,7 +369,8 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
             // If the cost is not finite, or if the quadratic upper bound could
             // not be satisfied, abandon the direction entirely, don't even
             // bother backtracking.
-            bool fail = next->L >= params.L_max || !std::isfinite(next->ψx);
+            bool fail = !std::isfinite(next->ψx);
+            fail |= next->L >= params.L_max && !(curr->L >= params.L_max);
             if (τ > 0 && fail) {
                 // Don't allow a bad accelerated step to destroy the FBS step
                 // size
