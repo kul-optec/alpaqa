@@ -10,6 +10,7 @@
 
 #include <new>
 #include <string>
+#include <type_traits>
 #include <utility>
 
 #include <pybind11/pytypes.h>
@@ -120,7 +121,15 @@ auto erase_direction_with_params_dict(Args &&...args) {
         DirectionWrapper(const T &d) : T{d} {}
         DirectionWrapper(T &&d) : T{std::move(d)} {}
         using T::T;
-        py::object get_params() const { return to_dict_tup(T::get_params()); }
+        py::object get_params() const {
+            constexpr bool void_params = requires(const T &t) {
+                { t.get_params() } -> std::same_as<void>;
+            };
+            if constexpr (void_params)
+                return py::none();
+            else
+                return to_dict_tup(T::get_params());
+        }
     };
     return TypeErasedPANOCDirection<typename T::config_t>::template make<DirectionWrapper>(
         std::forward<Args>(args)...);

@@ -10,6 +10,7 @@ using namespace py::literals;
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
+#include <alpaqa/inner/directions/panoc/noop.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-newton.hpp>
 
@@ -27,6 +28,22 @@ void register_panoc_directions(py::module_ &m) {
     te_direction //
         .def_property_readonly("params", &TypeErasedPANOCDirection::template get_params<>)
         .def("__str__", &TypeErasedPANOCDirection::template get_name<>);
+
+    // ----------------------------------------------------------------------------------------- //
+    using NoopDir = alpaqa::NoopDirection<config_t>;
+
+    py::class_<NoopDir> noop(m, "NoopDirection",
+                             "C++ documentation: :cpp:class:`alpaqa::NoopDirection`");
+    noop //
+        .def(py::init())
+        .def("__str__", &NoopDir::get_name);
+    noop.attr("DirectionParams")   = py::none();
+    noop.attr("AcceleratorParams") = py::none();
+    noop.attr("params")            = py::none();
+
+    te_direction.def(py::init(&alpaqa::erase_direction_with_params_dict<NoopDir, const NoopDir &>),
+                     "direction"_a, "Explicit conversion.");
+    py::implicitly_convertible<NoopDir, TypeErasedPANOCDirection>();
 
     // ----------------------------------------------------------------------------------------- //
     using LBFGSDir       = alpaqa::LBFGSDirection<config_t>;
