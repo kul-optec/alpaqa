@@ -22,12 +22,14 @@ struct NuclearNorm {
     }
     /// Construct with pre-allocation.
     NuclearNorm(real_t λ, length_t rows, length_t cols)
-        : λ{λ}, svd{rows, cols}, singular_values{svd.singularValues().size()} {
+        : λ{λ}, rows{rows}, cols{cols}, svd{rows, cols},
+          singular_values{std::min(rows, cols)} {
         if (λ < 0 || !std::isfinite(λ))
             throw std::invalid_argument("NuclearNorm::λ must be nonnegative");
     }
 
     real_t λ;
+    length_t rows = 0, cols = 0;
     SVD svd;
     vec singular_values;
 
@@ -36,18 +38,28 @@ struct NuclearNorm {
             out = in;
             return 0;
         }
-        svd.compute(in);
+        if (rows == 0 || cols == 0) { // dynamic size
+            assert(in.rows() == out.rows());
+            assert(in.cols() == out.cols());
+            svd.compute(in);
+        } else { // fixed size
+            assert(in.size() == rows * cols);
+            assert(out.size() == rows * cols);
+            svd.compute(in.reshaped(rows, cols));
+        }
         const length_t n = svd.singularValues().size();
-        auto step       = vec::Constant(n, λ * γ);
-        singular_values = vec::Zero(n).cwiseMax(svd.singularValues() - step);
-        real_t value    = λ * singular_values.template lpNorm<1>();
+        auto step        = vec::Constant(n, λ * γ);
+        singular_values  = vec::Zero(n).cwiseMax(svd.singularValues() - step);
+        real_t value     = λ * singular_values.template lpNorm<1>();
         auto it0 = std::find(singular_values.begin(), singular_values.end(), 0);
         index_t rank = it0 - singular_values.begin();
         using Eigen::placeholders::all, Eigen::seqN;
         auto sel = seqN(0, rank);
         auto &&U = svd.matrixU(), &&V = svd.matrixV();
-        out.noalias() = U(all, sel) * singular_values(sel).asDiagonal() *
-                        V.transpose()(sel, all);
+        auto &&U1                = U(all, sel);
+        auto &&Σ1                = singular_values(sel).asDiagonal();
+        auto &&V1T               = V.transpose()(sel, all);
+        out.reshaped().noalias() = (U1 * Σ1 * V1T).reshaped();
         return value;
     }
 

@@ -20,6 +20,25 @@ def test_nuclear_norm():
     assert np.allclose(y, U @ Σ_expected @ V.T, rtol=1e-12, atol=1e-12)
 
 
+def test_nuclear_norm_reshape():
+    θ, φ = 0.3456, 0.8765
+    U = np.array([[np.cos(θ), -np.sin(θ)], [np.sin(θ), np.cos(θ)]])
+    V = np.array([[np.cos(φ), -np.sin(φ)], [np.sin(φ), np.cos(φ)]])
+    Σ = np.diag([1, 0.05])
+    x = U @ Σ @ V.T
+    Σ_expected = np.diag([0.875, 0])
+    y = np.empty(2 * 2, order="F")
+    h = pa.functions.NuclearNorm(0.25, 2, 2)
+    hy = pa.prox(h, x.ravel("F"), y, 0.5)
+    y = np.reshape(y, (2, 2), "F")
+    assert abs(hy - 0.25 * 0.875) < 1e-12
+    assert np.allclose(y, U @ Σ_expected @ V.T, rtol=1e-12, atol=1e-12)
+    hy, y = pa.prox(h, x, 0.5)
+    y = np.reshape(y, (2, 2), "F")
+    assert abs(hy - 0.25 * 0.875) < 1e-12
+    assert np.allclose(y, U @ Σ_expected @ V.T, rtol=1e-12, atol=1e-12)
+
+
 def test_l1_norm():
     x = [-1, -0.125, -0.1, 0, 0.05, 0.12, 0.13, 1, 100]
     y_expected = np.array([-0.875, 0, 0, 0, 0, 0, 0.005, 0.875, 99.875])
@@ -126,6 +145,7 @@ def test_box_step():
 
 if __name__ == "__main__":
     test_nuclear_norm()
+    test_nuclear_norm_reshape()
     test_l1_norm()
     test_l1_norm_vec()
     test_l1_norm_step()
