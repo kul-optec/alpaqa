@@ -117,14 +117,14 @@ class TypeErasedPANOCDirection
 
 template <class T, class... Args>
 auto erase_direction_with_params_dict(Args &&...args) {
+    constexpr static bool void_params = requires(const T &t) {
+        { t.get_params() } -> std::same_as<void>;
+    };
     struct DirectionWrapper : T {
         DirectionWrapper(const T &d) : T{d} {}
         DirectionWrapper(T &&d) : T{std::move(d)} {}
         using T::T;
         py::object get_params() const {
-            constexpr bool void_params = requires(const T &t) {
-                { t.get_params() } -> std::same_as<void>;
-            };
             if constexpr (void_params)
                 return py::none();
             else
