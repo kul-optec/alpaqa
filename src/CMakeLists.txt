@@ -12,6 +12,8 @@ endfunction()
 
 option(ALPAQA_WITH_OCP 
     "Enable solvers tailored for optimal control problems" On)
+option(ALPAQA_DEBUG_CHECKS_EIGEN
+    "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
 
 add_library(alpaqa
     "alpaqa/src/util/type-erasure.cpp"
@@ -53,9 +55,11 @@ target_compile_features(alpaqa PUBLIC cxx_std_20)
 target_include_directories(alpaqa PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
     $<INSTALL_INTERFACE:include>)
-target_compile_definitions(alpaqa PUBLIC
-    $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
-    $<$<CONFIG:Debug>:EIGEN_RUNTIME_NO_MALLOC>)
+if (ALPAQA_DEBUG_CHECKS_EIGEN)
+    target_compile_definitions(alpaqa PUBLIC
+        $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
+        $<$<CONFIG:Debug>:EIGEN_RUNTIME_NO_MALLOC>)
+endif()
 target_link_libraries(alpaqa PUBLIC Eigen3::Eigen)
 target_link_libraries(alpaqa PRIVATE warnings)
 alpaqa_configure_visibility(alpaqa)
