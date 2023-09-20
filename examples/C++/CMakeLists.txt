@@ -22,6 +22,8 @@ if (ALPAQA_WITH_OCP)
     add_subdirectory(CustomControlCppProblem)
 endif()
 
-if (ALPAQA_WITH_CUTEST)
+option(ALPAQA_WITH_CUTEST_EXAMPLES
+    "Build the CUTEst example problems" Off)
+if (ALPAQA_WITH_CUTEST_EXAMPLES)
     add_subdirectory(CUTEst)
 endif()
