@@ -64,7 +64,7 @@ opts = {
     # Use a laxer tolerance because large problems have more numerical errors:
     "quadratic_upperbound_tolerance_factor": 1e-12,
 }
-direction = pa.StructuredLBFGSDirection({"memory": 5}, {"hessian_vec": False})
+direction = pa.StructuredLBFGSDirection({"memory": 5}, {"hessian_vec_factor": 0})
 # direction = pa.LBFGSDirection({"memory": 5})
 solver = pa.PANOCSolver({"print_interval": 5} | opts, direction)
 # Add evaluation counters to the problem

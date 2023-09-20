@@ -94,7 +94,7 @@ inner_solver = Solver(
     },
     direction=pa.StructuredLBFGSDirection(
         lbfgs_params={'memory': 15},
-        direction_params={'hessian_vec': False},
+        direction_params={'hessian_vec_factor': 0},
     ),
 )
 alm_params={
