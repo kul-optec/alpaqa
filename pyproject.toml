@@ -78,6 +78,7 @@ install_components = ["python_modules", "python_stubs"]
 "ALPAQA_WITH_QUAD_PRECISION:BOOL" = "Off"
 "ALPAQA_WITH_UBSAN_DEBUG:BOOL" = "Off"
 "ALPAQA_WITH_ASAN_DEBUG:BOOL" = "Off"
+"ALPAQA_DEBUG_CHECKS_EIGEN:BOOL" = "On"
 
 [tool.py-build-cmake.linux.cmake]
 config = ["Debug", "Release"]
