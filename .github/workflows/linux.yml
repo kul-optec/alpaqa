@@ -65,7 +65,7 @@ jobs:
             -D ALPAQA_WITH_LONG_DOUBLE=On \
             -D ALPAQA_WITH_QUAD_PRECISION=$quadmath \
             -D ALPAQA_WITH_CASADI=On \
-            -D ALPAQA_WITH_CUTEST=On \
+            -D ALPAQA_WITH_CUTEST=Off \
             -D ALPAQA_WITH_CUTEST_EXAMPLES=Off \
             -D CMAKE_TOOLCHAIN_FILE="$staging/$host.toolchain.cmake" \
             -D CMAKE_PREFIX_PATH="$staging/mumps/usr/local;$staging/ipopt/usr/local" \
