@@ -175,7 +175,7 @@ else()
     message(STATUS "Compiling WITHOUT dl support")
 endif()
 
-if (ALPAQA_WITH_CUTEST)
+if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
     add_library(cutest-interface "interop/cutest/src/cutest-loader.cpp")
     target_include_directories(cutest-interface PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/cutest/include>
@@ -184,10 +184,17 @@ if (ALPAQA_WITH_CUTEST)
         PUBLIC alpaqa::alpaqa
         PRIVATE ${CMAKE_DL_LIBS} alpaqa::warnings)
     target_compile_features(alpaqa PUBLIC cxx_std_23)
+    alpaqa_configure_visibility(cutest-interface)
     set_target_properties(cutest-interface PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::cutest-interface ALIAS cutest-interface)
     list(APPEND ALPAQA_INSTALL_TARGETS cutest-interface)
+    generate_export_header(cutest-interface
+        EXPORT_FILE_NAME export/alpaqa/cutest-interface-export.h)
+    target_include_directories(cutest-interface PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
     message(STATUS "Compiling WITH CUTEst support")
+elseif(ALPAQA_WITH_CUTEST)
+    message(STATUS "Compiling WITHOUT CUTEst support: missing dlopen")
 else()
     message(STATUS "Compiling WITHOUT CUTEst support")
 endif()

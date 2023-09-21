@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/cutest-interface-export.h>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/util/copyable_unique_ptr.hpp>
 
@@ -13,7 +14,8 @@ namespace alpaqa {
 /// Wrapper for CUTEst problems loaded from an external shared library.
 ///
 /// @ingroup  grp_Problems
-class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
+class CUTEST_INTERFACE_EXPORT CUTEstProblem
+    : public BoxConstrProblem<alpaqa::EigenConfigd> {
   public:
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
@@ -64,7 +66,9 @@ class CUTEstProblem : public BoxConstrProblem<alpaqa::EigenConfigd> {
 
     [[nodiscard]] Report get_report() const;
     std::ostream &format_report(std::ostream &os, const Report &r) const;
-    std::ostream &format_report(std::ostream &os) const;
+    std::ostream &format_report(std::ostream &os) const {
+        return format_report(os, get_report());
+    }
 
   public:
     std::string name = "<UNKNOWN>"; ///< Problem name

@@ -4,6 +4,7 @@
 
 #include <alpaqa/cutest/cutest-errors.hpp>
 #include <dlfcn.h>
+#include <cassert>
 
 /*
 CUTEST_cfn      : function and constraints values
@@ -80,6 +81,7 @@ auto Function<Nm, Sgn>::load(void *handle) -> signature_t * {
     auto func = reinterpret_cast<signature_t *>(::dlsym(handle, name_cstr));
     if (const char *error = ::dlerror())
         throw function_load_error(error);
+    assert(func);
     return func;
 }
 

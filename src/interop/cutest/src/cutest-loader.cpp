@@ -47,6 +47,7 @@ std::shared_ptr<void> load_lib(const char *so_filename) {
     void *h = ::dlopen(so_filename, RTLD_LOCAL | RTLD_NOW);
     if (auto *err = ::dlerror())
         throw std::runtime_error(err);
+    assert(h);
     return std::shared_ptr<void>{h, &::dlclose};
 }
 } // namespace
@@ -209,15 +210,6 @@ class CUTEstLoader {
             call<cutest::ureport>(&status, calls, time);
             throw_if_error("Failed to call CUTEST_ureport", status);
         }
-    }
-
-    template <class T>
-    T *dlfun(const char *name) {
-        (void)dlerror();
-        auto res = reinterpret_cast<T *>(::dlsym(so_handle.get(), name));
-        if (const char *error = dlerror())
-            throw std::runtime_error(error);
-        return res;
     }
 
     // Order of cleanup is important!
