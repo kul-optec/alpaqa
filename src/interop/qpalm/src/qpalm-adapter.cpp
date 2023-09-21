@@ -1,6 +1,6 @@
 #include <alpaqa/qpalm/qpalm-adapter.hpp>
 
-#include <sparse.hpp>
+#include <qpalm/sparse.hpp>
 
 #include <cmath>
 #include <stdexcept>

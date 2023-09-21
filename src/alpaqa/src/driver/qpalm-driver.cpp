@@ -1,7 +1,7 @@
 #ifdef WITH_QPALM
 
 #include <alpaqa/qpalm/qpalm-adapter.hpp>
-#include <constants.h>
+#include <qpalm/constants.h>
 
 #include <cstdarg>
 #include <stdexcept>
