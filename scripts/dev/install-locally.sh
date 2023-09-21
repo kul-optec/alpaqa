@@ -3,16 +3,11 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"/../..
 
 set -ex
 
-# Determine architecture
-case $(uname -m) in
-    x86_64) triple="x86_64-centos7-linux-gnu" ;;
-    armv6l) triple="armv6-rpi-linux-gnueabihf" ;;
-    armv7l) triple="armv7-neon-linux-gnueabihf" ;;
-    aarch64) triple="aarch64-rpi3-linux-gnu" ;;
-esac
+# Select architecture
+triple="x86_64-centos7-linux-gnu"
 
 # Download compiler
-download_url="https://github.com/tttapa/cross-python/releases/download/0.0.19"
+download_url="https://github.com/tttapa/cross-python/releases/download/0.1.0"
 tools_dir="$PWD/toolchains"
 pfx="$tools_dir/$triple"
 mkdir -p "$tools_dir"
@@ -31,7 +26,7 @@ export FCFLAGS="-march=native -fdiagnostics-color"
 
 # Configure
 cmake -S. -Bbuild-local \
-    --toolchain "$pfx/cmake/$triple.toolchain.cmake" \
+    --toolchain "$pfx/$triple.toolchain.cmake" \
     -DCMAKE_PREFIX_PATH="$pfx/mumps/usr/local;$pfx/ipopt/usr/local" \
     -DCMAKE_FIND_ROOT_PATH="$pfx/eigen;$pfx/casadi;$pfx/openblas;$pfx/mumps;$pfx/ipopt" \
     -DCMAKE_POSITION_INDEPENDENT_CODE=On \
@@ -60,7 +55,7 @@ cat <<- EOF > "$config"
 config = ["Debug", "Release"]
 generator = "Ninja Multi-Config"
 [cmake.options]
-CMAKE_FIND_ROOT_PATH = "$pfx/pybind11;$pfx/casadi;$pfx/eigen-master"
+CMAKE_FIND_ROOT_PATH = "$pfx/pybind11-master;$pfx/casadi;$pfx/eigen-master"
 USE_GLOBAL_PYBIND11 = "On"
 ALPAQA_PYTHON_DEBUG_CONFIG = "Debug"
 ALPAQA_WITH_PY_STUBS = "On"
@@ -71,20 +66,20 @@ develop=true
 if $develop; then
     LDFLAGS='-static-libgcc -static-libstdc++' \
     pip install -e ".[test]" -v \
-        --config-settings=--cross="$pfx/cmake/$triple.py-build-cmake.cross.toml" \
+        --config-settings=--cross="$pfx/$triple.py-build-cmake.cross.toml" \
         --config-settings=--local="$PWD/$config"
 else
     LDFLAGS='-static-libgcc -static-libstdc++' \
     python -m build -w "." -o staging \
-        -C--cross="$pfx/cmake/$triple.py-build-cmake.cross.toml" \
+        -C--cross="$pfx/$triple.py-build-cmake.cross.toml" \
         -C--local="$PWD/$config"
     LDFLAGS='-static-libgcc -static-libstdc++' \
     python -m build -w "python/alpaqa-debug" -o staging \
-        -C--cross="$pfx/cmake/$triple.py-build-cmake.cross.toml" \
+        -C--cross="$pfx/$triple.py-build-cmake.cross.toml" \
         -C--local="$PWD/$config"
     pip install -f staging --force-reinstall --no-deps \
-        "alpaqa==1.0.0a9" "alpaqa-debug==1.0.0a9"
+        "alpaqa==1.0.0a12.dev0" "alpaqa-debug==1.0.0a12.dev0"
     pip install -f staging \
-        "alpaqa[test]==1.0.0a9" "alpaqa-debug==1.0.0a9"
+        "alpaqa[test]==1.0.0a12.dev0" "alpaqa-debug==1.0.0a12.dev0"
 fi
 pytest
