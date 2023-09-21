@@ -18,6 +18,9 @@ using namespace py::literals;
 #if ALPAQA_HAVE_CASADI
 #include <alpaqa/casadi/CasADiProblem.hpp>
 #endif
+#if ALPAQA_HAVE_CUTEST
+#include <alpaqa/cutest/cutest-loader.hpp>
+#endif
 
 #include <util/copy.hpp>
 #include <util/member.hpp>
@@ -101,19 +104,28 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def("eval_f_g", &T::eval_f_g, "x"_a, "g"_a);
     if constexpr (requires { &T::eval_grad_f_grad_g_prod; })
         cls.def("eval_grad_f_grad_g_prod", &T::eval_grad_f_grad_g_prod, "x"_a, "y"_a, "grad_f"_a, "grad_gxy"_a);
-    cls.def("eval_grad_L", &T::eval_grad_L, "x"_a, "y"_a, "grad_L"_a, "work_n"_a);
-    cls.def("eval_ψ", &T::eval_ψ, "x"_a, "y"_a, "Σ"_a, "ŷ"_a);
-    cls.def("eval_grad_ψ", &T::eval_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
-    cls.def("eval_ψ_grad_ψ", &T::eval_ψ_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
-    cls.def("get_box_C", &T::get_box_C);
-    cls.def("get_box_D", &T::get_box_D);
+    if constexpr (requires { &T::eval_grad_L; })
+        cls.def("eval_grad_L", &T::eval_grad_L, "x"_a, "y"_a, "grad_L"_a, "work_n"_a);
+    if constexpr (requires { &T:: eval_ψ; })
+        cls.def("eval_ψ", &T::eval_ψ, "x"_a, "y"_a, "Σ"_a, "ŷ"_a);
+    if constexpr (requires { &T::eval_grad_ψ; })
+        cls.def("eval_grad_ψ", &T::eval_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
+    if constexpr (requires { &T::eval_ψ_grad_ψ; })
+        cls.def("eval_ψ_grad_ψ", &T::eval_ψ_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
+    if constexpr (requires { &T::get_box_C; })
+        cls.def("get_box_C", &T::get_box_C);
+    if constexpr (requires { &T::get_box_D; })
+        cls.def("get_box_D", &T::get_box_D);
 
     if constexpr (requires { &T::provides_eval_inactive_indices_res_lna; })
         cls.def("provides_eval_inactive_indices_res_lna", &T::provides_eval_inactive_indices_res_lna);
-    cls.def("provides_eval_grad_gi", &T::provides_eval_grad_gi);
-    cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L_prod);
+    if constexpr (requires { &T::provides_eval_grad_gi; })
+        cls.def("provides_eval_grad_gi", &T::provides_eval_grad_gi);
+    if constexpr (requires { &T::provides_eval_hess_L_prod; })
+        cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L_prod);
     // cls.def("provides_eval_hess_L", &T::provides_eval_hess_L); // TODO
-    cls.def("provides_eval_hess_ψ_prod", &T::provides_eval_hess_ψ_prod);
+    if constexpr (requires { &T::provides_eval_hess_ψ_prod; })
+        cls.def("provides_eval_hess_ψ_prod", &T::provides_eval_hess_ψ_prod);
     // cls.def("provides_eval_hess_ψ", &T::provides_eval_hess_ψ); // TODO
     if constexpr (requires { &T::provides_eval_f_grad_f; })
         cls.def("provides_eval_f_grad_f", &T::provides_eval_f_grad_f);
@@ -182,24 +194,27 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 p.eval_grad_g_prod(x, y, g);
                 return g;
             },
-            "x"_a, "y"_a)
-        .def(
+            "x"_a, "y"_a);
+    if constexpr (requires { &T::eval_ψ; })
+        cls.def(
             "eval_ψ",
             [](const T &p, crvec x, crvec y, crvec Σ) {
                 vec ŷ(p.get_m());
                 auto ψ = p.eval_ψ(x, y, Σ, ŷ);
                 return std::make_tuple(std::move(ψ), std::move(ŷ));
             },
-            "x"_a, "y"_a, "Σ"_a)
-        .def(
+            "x"_a, "y"_a, "Σ"_a);
+    if constexpr (requires { &T::eval_grad_ψ; })
+        cls.def(
             "eval_grad_ψ",
             [](const T &p, crvec x, crvec y, crvec Σ) {
                 vec grad_ψ(p.get_n()), work_n(p.get_n()), work_m(p.get_m());
                 p.eval_grad_ψ(x, y, Σ, grad_ψ, work_n, work_m);
                 return grad_ψ;
             },
-            "x"_a, "y"_a, "Σ"_a)
-        .def(
+            "x"_a, "y"_a, "Σ"_a);
+    if constexpr (requires { &T::eval_ψ_grad_ψ; })
+        cls.def(
             "eval_ψ_grad_ψ",
             [](const T &p, crvec x, crvec y, crvec Σ) {
                 vec grad_ψ(p.get_n()), work_n(p.get_n()), work_m(p.get_m());
@@ -427,8 +442,6 @@ void register_problems(py::module_ &m) {
                 p.param = param;
             },
             "Parameter vector :math:`p` of the problem");
-#endif
-#if ALPAQA_HAVE_CASADI
         te_problem.def(py::init<const CasADiProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<CasADiProblem, TEProblem>();
 #endif
@@ -444,6 +457,49 @@ void register_problems(py::module_ &m) {
             ":param problem: The original problem to wrap. Copied.\n"
             ":return: * Wrapped problem.\n"
             "         * Counters for wrapped problem.\n\n");
+#endif
+
+#if ALPAQA_HAVE_CUTEST
+        using alpaqa::CUTEstProblem;
+        py::class_<CUTEstProblem, BoxConstrProblem> cutest_problem(
+            m, "CUTEstProblem",
+            "C++ documentation: :cpp:class:`alpaqa::CUTEstProblem`\n\n"
+            "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
+        cutest_problem.def(
+            py::init<const char *, const char *, bool>(), "so_filename"_a, "outsdiff_filename"_a,
+            "sparse"_a = false,
+            "Load a CUTEst problem from the given shared library and OUTSDIF.d file");
+        default_copy_methods(cutest_problem);
+        problem_methods(cutest_problem);
+        py::class_<CUTEstProblem::Report> report(cutest_problem, "Report");
+        py::class_<CUTEstProblem::Report::Calls> calls(report, "Calls");
+        calls.def_readwrite("objective", &CUTEstProblem::Report::Calls::objective)
+            .def_readwrite("objective_grad", &CUTEstProblem::Report::Calls::objective_grad)
+            .def_readwrite("objective_hess", &CUTEstProblem::Report::Calls::objective_hess)
+            .def_readwrite("hessian_times_vector",
+                           &CUTEstProblem::Report::Calls::hessian_times_vector)
+            .def_readwrite("constraints", &CUTEstProblem::Report::Calls::constraints)
+            .def_readwrite("constraints_grad", &CUTEstProblem::Report::Calls::constraints_grad)
+            .def_readwrite("constraints_hess", &CUTEstProblem::Report::Calls::constraints_hess);
+        report.def_readwrite("calls", &CUTEstProblem::Report::calls)
+            .def_readwrite("time_setup", &CUTEstProblem::Report::time_setup)
+            .def_readwrite("time", &CUTEstProblem::Report::time);
+        cutest_problem
+            .def("get_report", &CUTEstProblem::get_report,
+                 "Get the report generated by cutest_creport.")
+            .def(
+                "format_report",
+                [](const CUTEstProblem &self, std::optional<CUTEstProblem::Report> r) {
+                    std::ostringstream oss;
+                    if (r)
+                        self.format_report(oss, *r);
+                    else
+                        self.format_report(oss);
+                    return std::move(oss).str();
+                },
+                "report"_a = std::nullopt, "Convert the given report to a string.");
+        te_problem.def(py::init<const CUTEstProblem &>(), "problem"_a, "Explicit conversion.");
+        py::implicitly_convertible<CUTEstProblem, TEProblem>();
 #endif
     }
     m.def(
