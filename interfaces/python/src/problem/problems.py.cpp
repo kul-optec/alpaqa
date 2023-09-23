@@ -21,6 +21,9 @@ using namespace py::literals;
 #if ALPAQA_HAVE_CUTEST
 #include <alpaqa/cutest/cutest-loader.hpp>
 #endif
+#if ALPAQA_HAVE_DL
+#include <alpaqa/dl/dl-problem.hpp>
+#endif
 
 #include <util/copy.hpp>
 #include <util/member.hpp>
@@ -95,6 +98,7 @@ void problem_methods(py::class_<T, Args...> &cls) {
     cls.def("eval_g", &T::eval_g, "x"_a, "gx"_a);
     cls.def("eval_grad_g_prod", &T::eval_grad_g_prod, "x"_a, "y"_a, "grad_gxy"_a);
     cls.def("eval_grad_gi", &T::eval_grad_gi, "x"_a, "i"_a, "grad_gi"_a);
+    // cls.def("eval_jac_g", &T::eval_jac_g, "x"_a, "J"_a); // TODO
     cls.def("eval_hess_L_prod", &T::eval_hess_L_prod, "x"_a, "y"_a, "scale"_a, "v"_a, "Hv"_a);
     // cls.def("eval_hess_L", &T::eval_hess_L, "x"_a, "y"_a, "H"_a); // TODO
     cls.def("eval_hess_ψ_prod", &T::eval_hess_ψ_prod, "x"_a, "y"_a, "Σ"_a, "scale"_a, "v"_a, "Hv"_a);
@@ -119,14 +123,18 @@ void problem_methods(py::class_<T, Args...> &cls) {
 
     if constexpr (requires { &T::provides_eval_inactive_indices_res_lna; })
         cls.def("provides_eval_inactive_indices_res_lna", &T::provides_eval_inactive_indices_res_lna);
+    if constexpr (requires { &T::provides_eval_jac_g; })
+        cls.def("provides_eval_jac_g", &T::provides_eval_jac_g);
     if constexpr (requires { &T::provides_eval_grad_gi; })
         cls.def("provides_eval_grad_gi", &T::provides_eval_grad_gi);
     if constexpr (requires { &T::provides_eval_hess_L_prod; })
-        cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L_prod);
-    // cls.def("provides_eval_hess_L", &T::provides_eval_hess_L); // TODO
+        cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L);
+    if constexpr (requires { &T::provides_eval_hess_L_prod; })
+        cls.def("provides_eval_hess_L", &T::provides_eval_hess_L);
     if constexpr (requires { &T::provides_eval_hess_ψ_prod; })
         cls.def("provides_eval_hess_ψ_prod", &T::provides_eval_hess_ψ_prod);
-    // cls.def("provides_eval_hess_ψ", &T::provides_eval_hess_ψ); // TODO
+    if constexpr (requires { &T::provides_eval_hess_ψ; })
+        cls.def("provides_eval_hess_ψ", &T::provides_eval_hess_ψ);
     if constexpr (requires { &T::provides_eval_f_grad_f; })
         cls.def("provides_eval_f_grad_f", &T::provides_eval_f_grad_f);
     if constexpr (requires { &T::provides_eval_f_g; })
@@ -195,6 +203,15 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return g;
             },
             "x"_a, "y"_a);
+    if constexpr (requires { &T::eval_f_grad_f; })
+        cls.def(
+            "eval_f_grad_f",
+            [](const T &p, crvec x) {
+                vec g(p.get_n());
+                real_t f = p.eval_f_grad_f(x, g);
+                return py::make_tuple(f, std::move(g));
+            },
+            "x"_a);
     if constexpr (requires { &T::eval_ψ; })
         cls.def(
             "eval_ψ",
@@ -222,6 +239,53 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return std::make_tuple(std::move(ψ), std::move(grad_ψ));
             },
             "x"_a, "y"_a, "Σ"_a);
+    auto cvt_matrix = [](length_t rows, length_t cols, length_t nnz, const auto &func) {
+        if (nnz < 0) {
+            mat G(rows, cols);
+            func(alpaqa::null_indexvec<config_t>, alpaqa::null_indexvec<config_t>, G.reshaped());
+            return py::cast(std::move(G));
+        } else {
+            vec G_values(nnz);
+            indexvec inner(nnz);
+            indexvec outer(cols + 1);
+            func(inner, outer, alpaqa::null_vec<config_t>);
+            func(inner, outer, G_values);
+            auto sp = py::module::import("scipy.sparse");
+            return sp.attr("csc_array")(
+                py::make_tuple(std::move(G_values), std::move(inner), std::move(outer)),
+                "shape"_a = py::make_tuple(rows, cols));
+        }
+    };
+    if constexpr (requires { &T::eval_jac_g; })
+        cls.def(
+            "eval_jac_g",
+            [&](const T &p, crvec x) {
+                return cvt_matrix(p.get_m(), p.get_n(), p.get_jac_g_num_nonzeros(),
+                                  [&](rindexvec inner, rindexvec outer, rvec values) {
+                                      return p.eval_jac_g(x, inner, outer, values);
+                                  });
+            },
+            "x"_a);
+    if constexpr (requires { &T::eval_hess_L; })
+        cls.def(
+            "eval_hess_L",
+            [&](const T &p, crvec x, crvec y, real_t scale) {
+                return cvt_matrix(p.get_n(), p.get_n(), p.get_hess_L_num_nonzeros(),
+                                  [&](rindexvec inner, rindexvec outer, rvec values) {
+                                      return p.eval_hess_L(x, y, scale, inner, outer, values);
+                                  });
+            },
+            "x"_a, "y"_a, "scale"_a = 1.);
+    if constexpr (requires { &T::eval_hess_ψ; })
+        cls.def(
+            "eval_hess_ψ",
+            [&](const T &p, crvec x, crvec y, crvec Σ, real_t scale) {
+                return cvt_matrix(p.get_n(), p.get_n(), p.get_hess_ψ_num_nonzeros(),
+                                  [&](rindexvec inner, rindexvec outer, rvec values) {
+                                      return p.eval_hess_ψ(x, y, Σ, scale, inner, outer, values);
+                                  });
+            },
+            "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.);
 }
 
 template <alpaqa::Config Conf>
@@ -466,8 +530,8 @@ void register_problems(py::module_ &m) {
             "C++ documentation: :cpp:class:`alpaqa::CUTEstProblem`\n\n"
             "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
         cutest_problem.def(
-            py::init<const char *, const char *, bool>(), "so_filename"_a, "outsdiff_filename"_a,
-            "sparse"_a = false,
+            py::init<const char *, const char *, bool>(), "so_filename"_a,
+            "outsdiff_filename"_a = nullptr, "sparse"_a = false,
             "Load a CUTEst problem from the given shared library and OUTSDIF.d file");
         default_copy_methods(cutest_problem);
         problem_methods(cutest_problem);
@@ -500,6 +564,30 @@ void register_problems(py::module_ &m) {
                 "report"_a = std::nullopt, "Convert the given report to a string.");
         te_problem.def(py::init<const CUTEstProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<CUTEstProblem, TEProblem>();
+#endif
+#if ALPAQA_HAVE_DL
+        using alpaqa::dl::DLProblem;
+        py::class_<DLProblem, BoxConstrProblem> dl_problem(
+            m, "DLProblem",
+            "C++ documentation: :cpp:class:`alpaqa::dl::DLProblem`\n\n"
+            "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
+        dl_problem.def(py::init([](const std::string &so_filename, std::string symbol_prefix,
+                                   py::args args, py::kwargs kwargs) {
+                           std::any user_param =
+                               std::make_tuple(std::move(args), std::move(kwargs));
+                           return DLProblem{so_filename, std::move(symbol_prefix), &user_param};
+                       }),
+                       "so_filename"_a, "symbol_prefix"_a = "alpaqa_problem",
+                       "Load a problem from the given shared library file");
+        default_copy_methods(dl_problem);
+        problem_methods(dl_problem);
+        dl_problem.def("call_extra_func", [](DLProblem &self, const std::string &name,
+                                             py::args args, py::kwargs kwargs) {
+            return self.call_extra_func<py::object(py::args, py::kwargs)>(name, std::move(args),
+                                                                          std::move(kwargs));
+        });
+        te_problem.def(py::init<const DLProblem &>(), "problem"_a, "Explicit conversion.");
+        py::implicitly_convertible<DLProblem, TEProblem>();
 #endif
     }
     m.def(
