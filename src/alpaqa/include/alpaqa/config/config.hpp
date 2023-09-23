@@ -49,7 +49,9 @@ struct is_config<EigenConfigq> : std::true_type {};
     using index_t [[maybe_unused]]    = Conf::index_t;                         \
     using indexvec [[maybe_unused]]   = Conf::indexvec;                        \
     using rindexvec [[maybe_unused]]  = Conf::rindexvec;                       \
-    using crindexvec [[maybe_unused]] = Conf::crindexvec
+    using crindexvec [[maybe_unused]] = Conf::crindexvec;                      \
+    using mindexvec [[maybe_unused]]  = Conf::mindexvec;                       \
+    using cmindexvec [[maybe_unused]] = Conf::cmindexvec
 
 #define USING_ALPAQA_CONFIG(Conf) /** @cond CONFIG_TYPES */                    \
     using config_t [[maybe_unused]] = Conf;                                    \
@@ -76,6 +78,8 @@ template <Config Conf = DefaultConfig> using index_t = typename Conf::index_t;
 template <Config Conf = DefaultConfig> using indexvec = typename Conf::indexvec;
 template <Config Conf = DefaultConfig> using rindexvec = typename Conf::rindexvec;
 template <Config Conf = DefaultConfig> using crindexvec = typename Conf::crindexvec;
+template <Config Conf = DefaultConfig> using mindexvec = typename Conf::mindexvec;
+template <Config Conf = DefaultConfig> using cmindexvec = typename Conf::cmindexvec;
 
 template <Config Conf>
 constexpr const auto inf = std::numeric_limits<real_t<Conf>>::infinity();
@@ -117,6 +121,10 @@ struct EigenConfig {
     using rindexvec = Eigen::Ref<indexvec>;
     /// Reference to immutable index vector.
     using crindexvec = Eigen::Ref<const indexvec>;
+    /// Map of index vector type.
+    using mindexvec = Eigen::Map<indexvec>;
+    /// Immutable map of index vector type.
+    using cmindexvec = Eigen::Map<const indexvec>;
 };
 
 /// Single-precision `float` configuration.
@@ -142,6 +150,9 @@ struct EigenConfigq : EigenConfig<__float128> {
 /// Global empty vector for convenience.
 template <Config Conf>
 inline const rvec<Conf> null_vec = mvec<Conf>{nullptr, 0};
+/// Global empty index vector for convenience.
+template <Config Conf>
+inline const rindexvec<Conf> null_indexvec = mindexvec<Conf>{nullptr, 0};
 
 namespace vec_util {
 
