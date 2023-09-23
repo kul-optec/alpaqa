@@ -578,14 +578,21 @@ void register_problems(py::module_ &m) {
                            return DLProblem{so_filename, std::move(symbol_prefix), &user_param};
                        }),
                        "so_filename"_a, "symbol_prefix"_a = "alpaqa_problem",
-                       "Load a problem from the given shared library file");
+                       "Load a problem from the given shared library file.\n"
+                       "Extra arguments are passed to the problem as a void pointer to a "
+                       "``std::any`` which contains a "
+                       "``std::tuple<pybind11::args, pybind11::kwargs>``.");
         default_copy_methods(dl_problem);
         problem_methods(dl_problem);
-        dl_problem.def("call_extra_func", [](DLProblem &self, const std::string &name,
-                                             py::args args, py::kwargs kwargs) {
-            return self.call_extra_func<py::object(py::args, py::kwargs)>(name, std::move(args),
-                                                                          std::move(kwargs));
-        });
+        dl_problem.def(
+            "call_extra_func",
+            [](DLProblem &self, const std::string &name, py::args args, py::kwargs kwargs) {
+                return self.call_extra_func<py::object(py::args, py::kwargs)>(name, std::move(args),
+                                                                              std::move(kwargs));
+            },
+            "name"_a,
+            "Call the given extra function registered by the problem, with the signature "
+            "``pybind11::object(pybind11::args, pybind11::kwargs)``.");
         te_problem.def(py::init<const DLProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<DLProblem, TEProblem>();
 #endif
