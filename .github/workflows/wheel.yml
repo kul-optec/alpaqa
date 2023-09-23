@@ -58,6 +58,7 @@ jobs:
               -D CMAKE_CXX_COMPILER="$staging/x-tools/$host/bin/$host-g++" \
               -D CMAKE_Fortran_COMPILER="$staging/x-tools/$host/bin/$host-gfortran" \
               -D USE_GLOBAL_PYBIND11=On \
+              -D ALPAQA_WITH_CUTEST=On \
               -D CMAKE_FIND_ROOT_PATH="$staging/pybind11;$staging/eigen-master;$staging/casadi"
           $pbc_cli -B native-build build -- -t ${{ env.C_EXTENSIONS }}
           $pbc_cli -B native-build install --component python_stubs -- --prefix "$PWD/staging/python"
@@ -147,6 +148,7 @@ jobs:
           [cmake.options]
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
+          ALPAQA_WITH_CUTEST = "On"
           EOF
           python${{ matrix.python-version }} -m build -w . \
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
@@ -209,6 +211,7 @@ jobs:
           [cmake.options]
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
+          ALPAQA_WITH_CUTEST = "On"
           EOF
           python${{ env.PYTHON_VERSION }} -m build . \
               -C--cross="$PWD/ninja-debug.cross.toml" \

@@ -63,6 +63,7 @@ jobs:
           [cmake.options]
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
+          ALPAQA_WITH_CUTEST = "On"
           EOF
           python${{ env.PYTHON_VERSION }} -m build -w . \
               -C--cross="$PWD/ninja-${{ matrix.config }}.cross.toml" \

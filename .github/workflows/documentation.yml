@@ -46,6 +46,7 @@ jobs:
     # Install Python dependencies for generating docs and tests
     - name: Install Python package and dependencies 
       run: |
+        echo -e '[linux.cmake.options]\n"ALPAQA_WITH_CUTEST:BOOL" = "On"' > py-build-cmake.local.toml
         python3 -m pip install -r doxygen/requirements.txt
         python3 -m pip install --verbose '.[docs]'
         python3 -m pip install cmake
