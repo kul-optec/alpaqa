@@ -6,6 +6,7 @@
 #include <dlfcn.h>
 
 #include <cassert>
+#include <filesystem>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -82,6 +83,11 @@ class CUTEstLoader {
     }
 
     cleanup_t load_outsdif(const char *outsdif_fname) {
+        std::filesystem::path p = outsdif_fname;
+        if (!std::filesystem::is_regular_file(p))
+            throw std::invalid_argument("CUTEstLoader: OUTSDIF path does not "
+                                        "exist or is not a regular file: \"" +
+                                        std::string(outsdif_fname) + '"');
         integer status;
         auto fptr_close = load<cutest::fortran_close>();
         call<cutest::fortran_open>(&funit, outsdif_fname, &status);
@@ -108,7 +114,12 @@ class CUTEstLoader {
         so_handle = load_lib(so_fname);
 
         // Open the OUTSDIF.d file
-        cleanup_outsdif = load_outsdif(outsdif_fname);
+        if (outsdif_fname && *outsdif_fname)
+            cleanup_outsdif = load_outsdif(outsdif_fname);
+        else
+            cleanup_outsdif = load_outsdif(std::filesystem::path(so_fname)
+                                               .replace_filename("OUTSDIF.d")
+                                               .c_str());
 
         // Get the dimensions of the problem
         integer status;

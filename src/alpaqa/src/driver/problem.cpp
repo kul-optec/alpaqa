@@ -118,8 +118,6 @@ LoadedProblem load_cu_problem(const fs::path &full_path,
                               Options &opts) {
     std::string outsdif_path;
     alpaqa::params::set_params(outsdif_path, "outsdif", prob_opts);
-    if (outsdif_path.empty())
-        outsdif_path = full_path.parent_path() / "OUTSDIF.d";
     bool sparse = false;
     alpaqa::params::set_params(sparse, "sparse", prob_opts);
     static std::mutex mtx;

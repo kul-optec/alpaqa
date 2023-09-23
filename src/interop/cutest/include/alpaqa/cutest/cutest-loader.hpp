@@ -20,7 +20,7 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     /// Load a CUTEst problem from the given shared library and OUTSDIF.d file.
-    CUTEstProblem(const char *so_fname, const char *outsdif_fname,
+    CUTEstProblem(const char *so_fname, const char *outsdif_fname = nullptr,
                   bool sparse = false);
     CUTEstProblem(const CUTEstProblem &);
     CUTEstProblem &operator=(const CUTEstProblem &);
