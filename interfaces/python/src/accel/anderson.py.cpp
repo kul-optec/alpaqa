@@ -34,7 +34,27 @@ void register_anderson(py::module_ &m) {
              }),
              "params"_a, "n"_a)
         .def_property_readonly("params", &Anderson::get_params)
-        .def("__str__", &Anderson::get_name);
+        .def_property_readonly("n", &Anderson::n)
+        .def("__str__", &Anderson::get_name)
+        .def("resize", &Anderson::resize, "n"_a)
+        .def("initialize", &Anderson::initialize, "g_0"_a, "r_0"_a)
+        .def(
+            "compute",
+            [](Anderson &self, crvec gₖ, vec rₖ, rvec xₖ) { self.compute(gₖ, std::move(rₖ), xₖ); },
+            "g_k"_a, "r_k"_a, "x_k_aa"_a)
+        .def(
+            "compute",
+            [](Anderson &self, crvec gₖ, vec rₖ) {
+                vec x(self.n());
+                self.compute(gₖ, std::move(rₖ), x);
+                return x;
+            },
+            "g_k"_a, "r_k"_a)
+        .def("reset", &Anderson::reset)
+        .def_property_readonly("history", &Anderson::history)
+        .def_property_readonly("current_history", &Anderson::current_history)
+        .def_property_readonly("Q", [](const Anderson &self) { return self.get_QR().get_Q(); })
+        .def_property_readonly("R", [](const Anderson &self) { return self.get_QR().get_R(); });
 }
 
 template void register_anderson<alpaqa::EigenConfigd>(py::module_ &);

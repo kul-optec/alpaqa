@@ -121,6 +121,9 @@ class AndersonAccel {
     /// Scale the factorization
     void scale_R(real_t scal) { qr.scale_R(scal); }
 
+    /// For testing purposes
+    const LimitedMemoryQR<config_t> &get_QR() const { return qr; }
+
   private:
     Params params;
     LimitedMemoryQR<config_t> qr;
