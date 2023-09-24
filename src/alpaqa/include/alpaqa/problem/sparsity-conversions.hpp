@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <concepts>
 #include <numeric>
 #include <optional>
 #include <stdexcept>
@@ -29,8 +30,7 @@ struct SparsityConverter<Dense<Conf>, Dense<Conf>> {
     SparsityConverter(from_sparsity_t from) : sparsity(std::move(from)) {}
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && { return std::move(sparsity); }
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (to.data() != from.data())
             to = from;
@@ -102,8 +102,7 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && = delete;
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (sparsity.symmetry == Symmetry::Unsymmetric) {
             if (to.data() != from.data())
@@ -160,8 +159,7 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && = delete;
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (to.data() != from.data())
             to = from;
@@ -206,8 +204,7 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && = delete;
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (to.data() != from.data())
             to = from;
@@ -301,8 +298,7 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
     indexvec inner_idx, outer_ptr, permutation;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && = delete;
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (permutation.size() > 0) {
             assert(to.data() != from.data());
@@ -362,8 +358,7 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCSC<Conf>> {
     indexvec inner_idx, outer_ptr, permutation;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && = delete;
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (permutation.size() > 0) {
             assert(to.data() != from.data());
@@ -429,8 +424,7 @@ struct SparsityConverter<Dense<Conf>, SparseCSC<Conf>> {
     indexvec inner_idx, outer_ptr;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
-    operator to_sparsity_t &() & { return sparsity; }
-    operator to_sparsity_t &&() && = delete;
+    const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (sparsity.symmetry == Symmetry::Unsymmetric) {
             if (to.data() != from.data())
@@ -460,26 +454,30 @@ template <class To>
 using ConverterVariant =
     detail::ConverterVariantHelper<To, SparsityVariant<typename To::config_t>>::type;
 
-template <class To>
-struct ConvertedSparsity {
-    USING_ALPAQA_CONFIG_TEMPLATE(To::config_t);
+template <class Conf, class To>
+    requires std::same_as<Conf, typename To::config_t>
+struct SparsityConverter<Sparsity<Conf>, To> {
+    USING_ALPAQA_CONFIG(Conf);
+    using from_sparsity = Sparsity<Conf>;
     using to_sparsity_t = To;
     using Request       = SparsityConversionRequest<to_sparsity_t>;
+    SparsityConverter(Sparsity<config_t> from, Request request = {})
+        : converter{std::visit(wrap_converter(std::move(request)), from)} {}
+    ConverterVariant<To> converter;
+    operator const to_sparsity_t &() const {
+        return std::visit([](const auto &c) -> const to_sparsity_t & { return c; }, converter);
+    }
+    const to_sparsity_t &get_sparsity() const { return *this; }
+    void convert_values(crvec from, rvec to) const {
+        std::visit([&](const auto &c) { c.convert_values(std::move(from), to); }, converter);
+    }
+
+  private:
     template <class... Args>
     static auto wrap_converter(Args &&...args) {
         return [&args...]<class From>(const From &from) -> ConverterVariant<To> {
             return SparsityConverter<From, To>{from, std::forward<Args>(args)...};
         };
-    }
-    ConvertedSparsity(Sparsity<config_t> from, Request request = {})
-        : converter{std::visit(wrap_converter(std::move(request)), from)} {}
-    ConverterVariant<To> converter;
-    operator const To &() const {
-        return std::visit([](const auto &c) -> const To & { return c; }, converter);
-    }
-    const To &get_sparsity() const { return *this; }
-    void convert_values(crvec from, rvec to) const {
-        std::visit([&](const auto &c) { c.convert_values(std::move(from), to); }, converter);
     }
 };
 
