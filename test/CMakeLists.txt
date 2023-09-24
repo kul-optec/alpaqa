@@ -22,6 +22,7 @@ add_executable(tests
     "util/io/test-csv.cpp"
     "outer/test-alm.cpp"
     "problem/test-type-erased-problem.cpp"
+    "problem/test-sparsity.cpp"
     "interop/test-qpalm-conversion.cpp"
 )
 target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

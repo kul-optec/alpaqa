@@ -123,6 +123,7 @@ void sparse_matvec_add_transpose_masked_rows(const SpMat &S, const CVec &v,
 }
 
 #if __cpp_lib_ranges_zip >= 202110L && __cpp_lib_ranges_enumerate >= 202302L
+#define ALPAQA_HAVE_COO_CSC_CONVERSIONS 1
 
 template <Config Conf>
 void convert_triplets_to_ccs(const auto &rows, const auto &cols,
@@ -143,14 +144,8 @@ void convert_triplets_to_ccs(const auto &rows, const auto &cols,
     }
 }
 
-/// Sort the (row, column, value) triplets, column first, then row.
-template <class... Ts>
-void sort_triplets(Ts &&...triplets) {
-    // Sort the indices (column first, then row)
-    auto cmp = [](const auto &a, const auto &b) {
-        return std::tie(std::get<1>(a), std::get<0>(a)) <
-               std::tie(std::get<1>(b), std::get<0>(b));
-    };
+template <auto cmp, class... Ts>
+void sort_triplets_impl(Ts &&...triplets) {
     auto indices = std::views::zip(std::ranges::ref_view{triplets}...);
     auto t0      = std::chrono::steady_clock::now();
     std::ranges::sort(indices, cmp);
@@ -158,6 +153,45 @@ void sort_triplets(Ts &&...triplets) {
     std::cout << "Sorting took: "
               << std::chrono::duration<double>{t1 - t0}.count() * 1e6
               << " µs\n";
+}
+
+/// Sort the (row, column, value) triplets, by column index first, then row.
+template <class... Ts>
+void sort_triplets(Ts &&...triplets) {
+    // Sort the indices (by column first, then row)
+    auto cmp = [](const auto &a, const auto &b) {
+        return std::tie(std::get<1>(a), std::get<0>(a)) <
+               std::tie(std::get<1>(b), std::get<0>(b));
+    };
+    sort_triplets_impl<cmp>(std::forward<Ts>(triplets)...);
+}
+
+/// Sort the (row, column, value) triplets by column index.
+template <class... Ts>
+void sort_triplets_col(Ts &&...triplets) {
+    // Sort the indices (by column)
+    auto cmp = [](const auto &a, const auto &b) {
+        return std::get<1>(a) < std::get<1>(b);
+    };
+    sort_triplets_impl<cmp>(std::forward<Ts>(triplets)...);
+}
+
+template <class Outer, class... Inners>
+void sort_rows_csc(const Outer &outer_ptr, Inners &&...inners) {
+    if (outer_ptr.size() == 0)
+        return;
+    // Sort the indices (by row)
+    auto cmp = [](const auto &a, const auto &b) {
+        return std::get<0>(a) < std::get<0>(b);
+    };
+    for (decltype(outer_ptr.size()) c = 0; c < outer_ptr.size() - 1; ++c) {
+        auto inner_start = outer_ptr(c);
+        auto inner_end   = outer_ptr(c + 1);
+        auto indices     = std::views::zip(
+            std::ranges::subrange{std::ranges::begin(inners) + inner_start,
+                                  std::ranges::begin(inners) + inner_end}...);
+        std::ranges::sort(indices, cmp);
+    }
 }
 
 #endif
