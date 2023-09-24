@@ -37,10 +37,9 @@ struct SparsityConverter<Dense<Conf>, Dense<Conf>> {
     }
 };
 
-template <Config Conf>
-struct SparsityConversionRequest<SparseCOO<Conf>> {
-    // TODO: probably not needed.
-    // std::optional<typename SparseCOO<Conf>::Order> order = std::nullopt;
+template <Config Conf, class StorageIndex>
+struct SparsityConversionRequest<SparseCOO<Conf, StorageIndex>> {
+    std::optional<StorageIndex> first_index = std::nullopt;
 };
 
 template <Config Conf, class StorageIndex>
@@ -51,7 +50,10 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
     using storage_index_t = typename to_sparsity_t::storage_index_t;
     using index_vector_t  = typename to_sparsity_t::index_vector_t;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
-    to_sparsity_t convert_sparsity(from_sparsity_t from) {
+    to_sparsity_t convert_sparsity(from_sparsity_t from, Request request) {
+        storage_index_t Δ = 0;
+        if (request.first_index)
+            Δ = *request.first_index;
         switch (from.symmetry) {
             case Symmetry::Unsymmetric: {
                 length_t nnz = from.rows * from.cols;
@@ -60,8 +62,8 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
                 index_t l = 0;
                 for (index_t c = 0; c < from.cols; ++c) {
                     for (index_t r = 0; r < from.rows; ++r) {
-                        row_indices[l] = static_cast<storage_index_t>(r);
-                        col_indices[l] = static_cast<storage_index_t>(c);
+                        row_indices[l] = static_cast<storage_index_t>(r) + Δ;
+                        col_indices[l] = static_cast<storage_index_t>(c) + Δ;
                         ++l;
                     }
                 }
@@ -75,8 +77,8 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
                 index_t l = 0;
                 for (index_t c = 0; c < from.cols; ++c) {
                     for (index_t r = 0; r <= c; ++r) {
-                        row_indices[l] = static_cast<storage_index_t>(r);
-                        col_indices[l] = static_cast<storage_index_t>(c);
+                        row_indices[l] = static_cast<storage_index_t>(r) + Δ;
+                        col_indices[l] = static_cast<storage_index_t>(c) + Δ;
                         ++l;
                     }
                 }
@@ -92,10 +94,11 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
             .row_indices = row_indices,
             .col_indices = col_indices,
             .order       = to_sparsity_t::SortedByColsAndRows,
-            .first_index = 0,
+            .first_index = request.first_index ? *request.first_index : 0,
         };
     }
-    SparsityConverter(from_sparsity_t from, Request = {}) : sparsity(convert_sparsity(from)) {}
+    SparsityConverter(from_sparsity_t from, Request request = {})
+        : sparsity(convert_sparsity(from, request)) {}
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
@@ -124,7 +127,10 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
     using storage_index_t = typename to_sparsity_t::storage_index_t;
     using index_vector_t  = typename to_sparsity_t::index_vector_t;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
-    to_sparsity_t convert_sparsity(from_sparsity_t from) {
+    to_sparsity_t convert_sparsity(from_sparsity_t from, Request request) {
+        storage_index_t Δ = 0;
+        if (request.first_index)
+            Δ = *request.first_index;
         row_indices.resize(from.nnz());
         col_indices.resize(from.nnz());
         index_t l = 0;
@@ -133,8 +139,8 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
             auto inner_end   = from.outer_ptr(c + 1);
             for (auto i = inner_start; i < inner_end; ++i) {
                 auto r         = from.inner_idx(i);
-                row_indices[l] = static_cast<storage_index_t>(r);
-                col_indices[l] = static_cast<storage_index_t>(c);
+                row_indices[l] = static_cast<storage_index_t>(r) + Δ;
+                col_indices[l] = static_cast<storage_index_t>(c) + Δ;
                 ++l;
             }
         }
@@ -146,10 +152,11 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
             .col_indices = col_indices,
             .order = from.order == from_sparsity_t::SortedRows ? to_sparsity_t::SortedByColsAndRows
                                                                : to_sparsity_t::SortedByColsOnly,
-            .first_index = 0,
+            .first_index = request.first_index ? *request.first_index : 0,
         };
     }
-    SparsityConverter(from_sparsity_t from, Request = {}) : sparsity(convert_sparsity(from)) {}
+    SparsityConverter(from_sparsity_t from, Request request = {})
+        : sparsity(convert_sparsity(from, request)) {}
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
@@ -169,10 +176,18 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
     using storage_index_t = typename to_sparsity_t::storage_index_t;
     using index_vector_t  = typename to_sparsity_t::index_vector_t;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
-    to_sparsity_t convert_sparsity(from_sparsity_t from) {
+    to_sparsity_t convert_sparsity(from_sparsity_t from, Request request) {
+        storage_index_t Δ = 0;
+        if (request.first_index)
+            Δ = *request.first_index - from.first_index;
+        // Check if we can fully reuse the indices without changes
+        if constexpr (std::is_same_v<StorageIndexFrom, StorageIndexTo>)
+            if (Δ == 0)
+                return from;
+        // Otherwise, allocate space for shifted or converted indices
         row_indices.resize(from.nnz());
         col_indices.resize(from.nnz());
-        auto cvt_idx = [](auto i) { return static_cast<storage_index_t>(i); };
+        auto cvt_idx = [Δ](auto i) { return static_cast<storage_index_t>(i) + Δ; };
         std::ranges::transform(from.row_indices, row_indices.begin(), cvt_idx);
         std::ranges::transform(from.col_indices, col_indices.begin(), cvt_idx);
         return {
@@ -182,10 +197,12 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
             .row_indices = row_indices,
             .col_indices = col_indices,
             .order       = static_cast<typename to_sparsity_t::Order>(from.order),
-            .first_index = cvt_idx(from.first_index),
+            .first_index = request.first_index ? *request.first_index
+                                               : static_cast<storage_index_t>(from.first_index),
         };
     }
-    SparsityConverter(from_sparsity_t from, Request = {}) : sparsity(convert_sparsity(from)) {}
+    SparsityConverter(from_sparsity_t from, Request request = {})
+        : sparsity(convert_sparsity(from, request)) {}
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }

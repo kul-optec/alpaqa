@@ -36,6 +36,31 @@ TEST(Sparsity, convertDenseToCOO) {
     EXPECT_THAT(v, EigenEqual(m.reshaped()));
 }
 
+TEST(Sparsity, convertDenseToCOOfirstIndex) {
+    using Source      = sp::Dense<config_t>;
+    using Result      = sp::SparseCOO<config_t>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::ConvertedSparsity<Result>;
+    Source dense{
+        .rows     = 3,
+        .cols     = 4,
+        .symmetry = sp::Symmetry::Unsymmetric,
+    };
+    converter_t converter{Sparsity{dense}, {.first_index = 1}};
+    const auto &result = converter.get_sparsity();
+    ASSERT_EQ(result.nnz(), 12);
+    indexvec expected_row_idcs(12), expected_col_idcs(12);
+    expected_row_idcs << 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3;
+    expected_col_idcs << 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4;
+    EXPECT_THAT(result.row_indices, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.col_indices, EigenEqual(expected_col_idcs));
+    mat m(3, 4);
+    m << 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34;
+    vec v(result.nnz());
+    converter.convert_values(m.reshaped(), v);
+    EXPECT_THAT(v, EigenEqual(m.reshaped()));
+}
+
 TEST(Sparsity, convertDenseToCOOupper) {
     using Source      = sp::Dense<config_t>;
     using Result      = sp::SparseCOO<config_t>;
@@ -92,6 +117,36 @@ TEST(Sparsity, convertCSCToCOO) {
     EXPECT_THAT(v, EigenEqual(m));
 }
 
+TEST(Sparsity, convertCSCToCOOfirstIndex) {
+    using Source      = sp::SparseCSC<config_t>;
+    using Result      = sp::SparseCOO<config_t>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::ConvertedSparsity<Result>;
+    indexvec row_idcs(7), col_ptrs(5);
+    row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    col_ptrs << 0, 2, 4, 6, 7;
+    Source coo{
+        .rows      = 3,
+        .cols      = 4,
+        .symmetry  = sp::Symmetry::Unsymmetric,
+        .inner_idx = row_idcs,
+        .outer_ptr = col_ptrs,
+        .order     = Source::Unsorted,
+    };
+    converter_t converter{Sparsity{coo}, {.first_index = 1}};
+    const auto &result = converter.get_sparsity();
+    indexvec expected_row_idcs(7), expected_col_idcs(7);
+    expected_row_idcs << 1, 2, 2, 3, 1, 3, 1;
+    expected_col_idcs << 1, 1, 2, 2, 3, 3, 4;
+    EXPECT_THAT(result.row_indices, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.col_indices, EigenEqual(expected_col_idcs));
+    vec m(7);
+    m << 1, 2, 3, 4, 5, 6, 7;
+    vec v(result.nnz());
+    converter.convert_values(m, v);
+    EXPECT_THAT(v, EigenEqual(m));
+}
+
 TEST(Sparsity, convertCOOToCOO) {
     using Source      = sp::SparseCOO<config_t>;
     using Result      = sp::SparseCOO<config_t>;
@@ -112,6 +167,67 @@ TEST(Sparsity, convertCOOToCOO) {
     const auto &result    = converter.get_sparsity();
     EXPECT_THAT(result.row_indices, EigenEqual(row_idcs));
     EXPECT_THAT(result.col_indices, EigenEqual(col_idcs));
+    vec m(7);
+    m << 1, 2, 3, 4, 5, 6, 7;
+    vec v(result.nnz());
+    converter.convert_values(m, v);
+    EXPECT_THAT(v, EigenEqual(m));
+}
+
+TEST(Sparsity, convertCOOToCOOfirstIndex) {
+    using Source      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCOO<config_t>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::ConvertedSparsity<Result>;
+    indexvec row_idcs(7), col_idcs(7);
+    row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    col_idcs << 0, 0, 1, 1, 2, 2, 3;
+    Source coo{
+        .rows        = 3,
+        .cols        = 4,
+        .symmetry    = sp::Symmetry::Unsymmetric,
+        .row_indices = row_idcs,
+        .col_indices = col_idcs,
+        .order       = Source::Unsorted,
+    };
+    converter_t converter{Sparsity{coo}, {.first_index = 1}};
+    const auto &result = converter.get_sparsity();
+    indexvec expected_row_idcs(7), expected_col_idcs(7);
+    expected_row_idcs << 1, 2, 2, 3, 1, 3, 1;
+    expected_col_idcs << 1, 1, 2, 2, 3, 3, 4;
+    EXPECT_THAT(result.row_indices, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.col_indices, EigenEqual(expected_col_idcs));
+    vec m(7);
+    m << 1, 2, 3, 4, 5, 6, 7;
+    vec v(result.nnz());
+    converter.convert_values(m, v);
+    EXPECT_THAT(v, EigenEqual(m));
+}
+
+TEST(Sparsity, convertCOOToCOOfirstIndex2) {
+    using Source      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCOO<config_t>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::ConvertedSparsity<Result>;
+    indexvec row_idcs(7), col_idcs(7);
+    row_idcs << 10, 11, 11, 12, 10, 12, 10;
+    col_idcs << 10, 10, 11, 11, 12, 12, 13;
+    Source coo{
+        .rows        = 3,
+        .cols        = 4,
+        .symmetry    = sp::Symmetry::Unsymmetric,
+        .row_indices = row_idcs,
+        .col_indices = col_idcs,
+        .order       = Source::Unsorted,
+        .first_index = 10,
+    };
+    converter_t converter{Sparsity{coo}, {.first_index = 1}};
+    const auto &result = converter.get_sparsity();
+    indexvec expected_row_idcs(7), expected_col_idcs(7);
+    expected_row_idcs << 1, 2, 2, 3, 1, 3, 1;
+    expected_col_idcs << 1, 1, 2, 2, 3, 3, 4;
+    EXPECT_THAT(result.row_indices, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.col_indices, EigenEqual(expected_col_idcs));
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
@@ -592,6 +708,44 @@ TEST(Sparsity, convertCOOToCSCsorted2sorted) {
         .row_indices = row_idcs,
         .col_indices = col_idcs,
         .order       = Source::SortedByColsAndRows,
+    };
+    converter_t converter{Sparsity{coo}, {.order = Result::SortedRows}};
+    const auto &result = converter.get_sparsity();
+    indexvec expected_row_idcs(7), expected_col_ptrs(5);
+    expected_row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    expected_col_ptrs << 0, 2, 4, 6, 7;
+    EXPECT_EQ(result.rows, 3);
+    ASSERT_EQ(result.cols, 4);
+    ASSERT_EQ(result.nnz(), 7);
+    EXPECT_EQ(result.symmetry, sp::Symmetry::Unsymmetric);
+    EXPECT_EQ(result.order, Result::SortedRows);
+    EXPECT_THAT(result.inner_idx, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.outer_ptr, EigenEqual(expected_col_ptrs));
+    vec m(7);
+    m << 1, 2, 3, 4, 5, 6, 7;
+    vec v(result.nnz());
+    converter.convert_values(m, v);
+    EXPECT_THAT(v, EigenEqual(m));
+}
+
+/// @test sorted COO to sorted CSC, with different first index for COO
+TEST(Sparsity, convertCOOToCSCfirstIndex) {
+    SKIP_IF_NO_CSC_CONV();
+    using Source      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCSC<config_t>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::ConvertedSparsity<Result>;
+    indexvec row_idcs(7), col_idcs(7);
+    row_idcs << 10, 11, 11, 12, 10, 12, 10;
+    col_idcs << 10, 10, 11, 11, 12, 12, 13;
+    Source coo{
+        .rows        = 3,
+        .cols        = 4,
+        .symmetry    = sp::Symmetry::Unsymmetric,
+        .row_indices = row_idcs,
+        .col_indices = col_idcs,
+        .order       = Source::SortedByColsAndRows,
+        .first_index = 10,
     };
     converter_t converter{Sparsity{coo}, {.order = Result::SortedRows}};
     const auto &result = converter.get_sparsity();
