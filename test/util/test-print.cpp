@@ -49,3 +49,35 @@ TEST(Print, matlabMatrix) {
               " +3.00000000000000000e+00 +4.00000000000000000e+00;\n"
               " +5.00000000000000000e+00 +1.00000000000000006e-01];\n");
 }
+
+TEST(Print, pythonVectorInt) {
+    std::ostringstream ss;
+    Eigen::VectorX<int> v(6);
+    v << 1, 2, 3, 4, 5, -100;
+    alpaqa::print_python(ss, v);
+    EXPECT_EQ(ss.str(), "[1, 2, 3, 4, 5, -100]\n");
+}
+
+TEST(Print, matlabVectorInt) {
+    std::ostringstream ss;
+    Eigen::VectorX<int> v(6);
+    v << 1, 2, 3, 4, 5, -100;
+    alpaqa::print_matlab(ss, v);
+    EXPECT_EQ(ss.str(), "[1 2 3 4 5 -100];\n");
+}
+
+TEST(Print, pythonVectorIndex) {
+    std::ostringstream ss;
+    indexvec v(6);
+    v << 1, 2, 3, 4, 5, -100;
+    alpaqa::print_python(ss, v);
+    EXPECT_EQ(ss.str(), "[1, 2, 3, 4, 5, -100]\n");
+}
+
+TEST(Print, matlabVectorIndex) {
+    std::ostringstream ss;
+    indexvec v(6);
+    v << 1, 2, 3, 4, 5, -100;
+    alpaqa::print_matlab(ss, v);
+    EXPECT_EQ(ss.str(), "[1 2 3 4 5 -100];\n");
+}

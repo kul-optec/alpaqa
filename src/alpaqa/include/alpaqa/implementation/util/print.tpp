@@ -74,11 +74,18 @@ void print_elem(auto &buf, F value, std::ostream &os) {
     os << float_to_str_vw(buf, value);
 }
 
+template <std::integral I>
+void print_elem(auto &, I value, std::ostream &os) {
+    os << value;
+}
+
 template <std::floating_point F>
 void print_elem(auto &buf, std::complex<F> value, std::ostream &os) {
     os << float_to_str_vw(buf, value.real()) << " + "
        << float_to_str_vw(buf, value.imag()) << 'j';
 }
+
+namespace detail {
 
 template <class T>
 std::ostream &print_csv_impl(std::ostream &os, const T &M, std::string_view sep,
@@ -147,5 +154,7 @@ std::ostream &print_python_impl(std::ostream &os, const T &M,
         return os << "]]" << end;
     }
 }
+
+} // namespace detail
 
 } // namespace alpaqa
