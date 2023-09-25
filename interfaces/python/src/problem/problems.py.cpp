@@ -246,25 +246,29 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 [&](const sp::Dense<config_t> &d) {
                     mat G(d.rows, d.cols);
                     func(G.reshaped());
-                    return py::cast(std::move(G));
+                    return std::make_tuple(py::cast(std::move(G)), d.symmetry);
                 },
                 [&](const sp::SparseCSC<config_t> &csc) {
                     vec G_values(csc.nnz());
                     func(G_values);
                     auto sp = py::module::import("scipy.sparse");
-                    return sp.attr("csc_array")(
-                        py::make_tuple(std::move(G_values), csc.inner_idx, csc.outer_ptr),
-                        "shape"_a = py::make_tuple(csc.rows, csc.cols));
+                    return std::make_tuple(
+                        sp.attr("csc_array")(
+                            py::make_tuple(std::move(G_values), csc.inner_idx, csc.outer_ptr),
+                            "shape"_a = py::make_tuple(csc.rows, csc.cols)),
+                        csc.symmetry);
                 },
                 [&]<class I>(const sp::SparseCOO<config_t, I> &coo) {
                     vec G_values(coo.nnz());
                     func(G_values);
                     auto sp = py::module::import("scipy.sparse");
                     auto Δ  = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
-                    return sp.attr("coo_array")(
-                        py::make_tuple(std::move(G_values),
-                                       py::make_tuple(coo.row_indices - Δ, coo.col_indices - Δ)),
-                        "shape"_a = py::make_tuple(coo.rows, coo.cols));
+                    return std::make_tuple(
+                        sp.attr("coo_array")(py::make_tuple(std::move(G_values),
+                                                            py::make_tuple(coo.row_indices - Δ,
+                                                                           coo.col_indices - Δ)),
+                                             "shape"_a = py::make_tuple(coo.rows, coo.cols)),
+                        coo.symmetry);
                 },
             },
             sparsity);
@@ -276,7 +280,7 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return cvt_matrix(p.get_jac_g_sparsity(),
                                   [&](rvec values) { return p.eval_jac_g(x, values); });
             },
-            "x"_a);
+            "x"_a, "Returns the Jacobian of the constraints and its symmetry.");
     if constexpr (requires { &T::eval_hess_L; })
         cls.def(
             "eval_hess_L",
@@ -284,7 +288,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return cvt_matrix(p.get_hess_L_sparsity(),
                                   [&](rvec values) { return p.eval_hess_L(x, y, scale, values); });
             },
-            "x"_a, "y"_a, "scale"_a = 1.);
+            "x"_a, "y"_a, "scale"_a = 1.,
+            "Returns the Hessian of the Lagrangian and its symmetry.");
     if constexpr (requires { &T::eval_hess_ψ; })
         cls.def(
             "eval_hess_ψ",
@@ -293,7 +298,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
                     return p.eval_hess_ψ(x, y, Σ, scale, values);
                 });
             },
-            "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.);
+            "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.,
+            "Returns the Hessian of the augmented Lagrangian and its symmetry.");
 }
 
 template <alpaqa::Config Conf>

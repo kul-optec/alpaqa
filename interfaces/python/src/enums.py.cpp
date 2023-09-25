@@ -1,6 +1,7 @@
 #include <alpaqa/accelerators/lbfgs.hpp>
 #include <alpaqa/inner/internal/panoc-stop-crit.hpp>
 #include <alpaqa/inner/internal/solverstatus.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
@@ -11,6 +12,13 @@ void register_enums(py::module_ &m) {
                                      "C++ documentation: :cpp:enum:`alpaqa::LBFGSStepSize`")
         .value("BasedOnExternalStepSize", alpaqa::LBFGSStepSize::BasedOnExternalStepSize)
         .value("BasedOnCurvature", alpaqa::LBFGSStepSize::BasedOnCurvature)
+        .export_values();
+
+    py::enum_<alpaqa::sparsity::Symmetry>(
+        m, "Symmetry", "C++ documentation: :cpp:enum:`alpaqa::sparsity::Symmetry`")
+        .value("Unsymmetric", alpaqa::sparsity::Symmetry::Unsymmetric)
+        .value("Upper", alpaqa::sparsity::Symmetry::Upper)
+        .value("Lower", alpaqa::sparsity::Symmetry::Lower)
         .export_values();
 
     using SolverStatus = alpaqa::SolverStatus;
