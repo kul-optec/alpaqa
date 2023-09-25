@@ -3,6 +3,7 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/cutest-interface-export.h>
 #include <alpaqa/problem/box-constr-problem.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/copyable_unique_ptr.hpp>
 
 #include <iosfwd>
@@ -18,6 +19,7 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     : public BoxConstrProblem<alpaqa::EigenConfigd> {
   public:
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
+    using Sparsity = alpaqa::Sparsity<config_t>;
 
     /// Load a CUTEst problem from the given shared library and OUTSDIF.d file.
     CUTEstProblem(const char *so_fname, const char *outsdif_fname = nullptr,
@@ -80,9 +82,9 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     bool sparse       = false;
     mutable int nnz_H = -1;
     mutable int nnz_J = -1;
-    mutable Eigen::VectorX<int> H_row, H_col, J_row, J_col;
-    mutable vec H_work, J_work;
-    mutable indexvec H_perm, J_perm;
+    struct SparseStorage {
+        Eigen::VectorX<int> rows, cols;
+    } mutable storage_jac_g, storage_hess_L;
 
   public:
     [[nodiscard]] real_t eval_f(crvec x) const;
@@ -90,15 +92,13 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     void eval_g(crvec x, rvec gx) const;
     void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const;
 
-    void eval_jac_g(crvec x, rindexvec inner_idx, rindexvec outer_ptr,
-                    rvec J_values) const;
-    [[nodiscard]] length_t get_jac_g_num_nonzeros() const;
+    void eval_jac_g(crvec x, rvec J_values) const;
+    [[nodiscard]] Sparsity get_jac_g_sparsity() const;
     void eval_grad_gi(crvec x, index_t i, rvec grad_gi) const;
     void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
                           rvec Hv) const;
-    void eval_hess_L(crvec x, crvec y, real_t scale, rindexvec inner_idx,
-                     rindexvec outer_ptr, rvec H_values) const;
-    [[nodiscard]] length_t get_hess_L_num_nonzeros() const;
+    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const;
+    [[nodiscard]] Sparsity get_hess_L_sparsity() const;
     void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v,
                           rvec Hv) const;
     [[nodiscard]] real_t eval_f_grad_f(crvec x, rvec grad_fx) const;

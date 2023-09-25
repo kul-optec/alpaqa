@@ -54,17 +54,12 @@ static void eval_grad_g_prod(void *instance, const real_t *x, const real_t *y,
     matvec_transp(m, n, problem->A, y, grad_gxy); // grad_gxy = Aᵀ y
 }
 
-static void eval_jac_g(void *instance, const real_t *x, index_t *inner_idx,
-                       index_t *outer_ptr, real_t *J_values) {
+static void eval_jac_g(void *instance, const real_t *x, real_t *J_values) {
     (void)x;
-    (void)inner_idx; // not used for dense Jacobian
-    (void)outer_ptr;
-    if (J_values) {
-        struct ProblemData *problem = instance;
-        size_t n                    = (size_t)problem->functions.n;
-        size_t m                    = (size_t)problem->functions.m;
-        memcpy(J_values, problem->A, sizeof(real_t) * m * n);
-    }
+    struct ProblemData *problem = instance;
+    size_t n                    = (size_t)problem->functions.n;
+    size_t m                    = (size_t)problem->functions.m;
+    memcpy(J_values, problem->A, sizeof(real_t) * m * n);
 }
 
 static void initialize_box_D(void *instance, real_t *lb, real_t *ub) {

@@ -4,6 +4,7 @@
 #include <alpaqa/export.hpp>
 #include <alpaqa/inner/directions/panoc-direction-update.hpp>
 #include <alpaqa/inner/internal/panoc-helpers.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/util/alloc-check.hpp>
 #include <alpaqa/util/index-set.hpp>
@@ -79,17 +80,10 @@ struct StructuredNewtonDirection {
         // Allocate workspaces
         const auto n = problem.get_n();
         JK.resize(n);
-        H_storage.resize(n * n);
+        H.resize(n, n);
         HJ_storage.resize(n * n);
-        // Store sparsity of H
-        length_t nnz_H = problem.get_hess_ψ_num_nonzeros();
-        if (nnz_H > 0) {
-            inner_idx_H.resize(nnz_H);
-            outer_ptr_H.resize(n + 1);
-            mvec null{nullptr, 0};
-            problem.eval_hess_ψ(x_0, y, Σ, 1, inner_idx_H, outer_ptr_H, null);
+        if (!is_dense(problem.get_hess_ψ_sparsity()))
             throw std::logic_error("Sparse hessians not yet implemented");
-        }
     }
 
     /// @see @ref PANOCDirection::has_initial_direction
@@ -132,9 +126,7 @@ struct StructuredNewtonDirection {
         }
 
         // Compute the Hessian
-        mmat H{H_storage.data(), n, n};
-        problem->eval_hess_ψ(xₖ, *y, *Σ, 1, inner_idx_H, outer_ptr_H,
-                             H_storage);
+        problem->eval_hess_ψ(xₖ, *y, *Σ, 1, H.reshaped());
 
         // There are no active indices K
         if (nJ == n) {
@@ -228,9 +220,8 @@ struct StructuredNewtonDirection {
 #endif
 
     mutable indexvec JK;
-    mutable vec H_storage;
+    mutable mat H;
     mutable vec HJ_storage;
-    mutable indexvec inner_idx_H, outer_ptr_H;
 
   public:
     AcceleratorParams reg_params;

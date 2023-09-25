@@ -46,6 +46,8 @@ option(ALPAQA_WITH_CUTEST
     "Build the CUTEst loader" Off)
 option(ALPAQA_WITH_QPALM
     "Build the QPALM adapter" Off)
+option(ALPAQA_WITH_IPOPT
+    "Build the IPOPT adapter" Off)
 set(ALPAQA_DOXYFILE "Doxyfile" CACHE STRING
     "The Doxyfile to use for the docs target")
 option(ALPAQA_ENABLE_PCH
@@ -57,6 +59,8 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 include(cmake/Warnings.cmake)
 add_warnings_target(warnings ${ALPAQA_WARNINGS_AS_ERRORS})
 add_library(alpaqa::warnings ALIAS warnings)
+set(CMAKE_CXX_EXTENSIONS Off)
+set(CMAKE_C_EXTENSIONS Off)
 
 # Compiler options
 if (ALPAQA_WITH_PYTHON)

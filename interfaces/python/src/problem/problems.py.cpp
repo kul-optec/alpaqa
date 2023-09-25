@@ -239,51 +239,58 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return std::make_tuple(std::move(ψ), std::move(grad_ψ));
             },
             "x"_a, "y"_a, "Σ"_a);
-    auto cvt_matrix = [](length_t rows, length_t cols, length_t nnz, const auto &func) {
-        if (nnz < 0) {
-            mat G(rows, cols);
-            func(alpaqa::null_indexvec<config_t>, alpaqa::null_indexvec<config_t>, G.reshaped());
-            return py::cast(std::move(G));
-        } else {
-            vec G_values(nnz);
-            indexvec inner(nnz);
-            indexvec outer(cols + 1);
-            func(inner, outer, alpaqa::null_vec<config_t>);
-            func(inner, outer, G_values);
-            auto sp = py::module::import("scipy.sparse");
-            return sp.attr("csc_array")(
-                py::make_tuple(std::move(G_values), std::move(inner), std::move(outer)),
-                "shape"_a = py::make_tuple(rows, cols));
-        }
+    auto cvt_matrix = [](alpaqa::Sparsity<config_t> sparsity, const auto &func) {
+        namespace sp = alpaqa::sparsity;
+        return std::visit(
+            sp::detail::overloaded{
+                [&](const sp::Dense<config_t> &d) {
+                    mat G(d.rows, d.cols);
+                    func(G.reshaped());
+                    return py::cast(std::move(G));
+                },
+                [&](const sp::SparseCSC<config_t> &csc) {
+                    vec G_values(csc.nnz());
+                    func(G_values);
+                    auto sp = py::module::import("scipy.sparse");
+                    return sp.attr("csc_array")(
+                        py::make_tuple(std::move(G_values), csc.inner_idx, csc.outer_ptr),
+                        "shape"_a = py::make_tuple(csc.rows, csc.cols));
+                },
+                [&]<class I>(const sp::SparseCOO<config_t, I> &coo) {
+                    vec G_values(coo.nnz());
+                    func(G_values);
+                    auto sp = py::module::import("scipy.sparse");
+                    return sp.attr("coo_array")(
+                        py::make_tuple(std::move(G_values),
+                                       py::make_tuple(coo.row_indices, coo.col_indices)),
+                        "shape"_a = py::make_tuple(coo.rows, coo.cols));
+                },
+            },
+            sparsity);
     };
     if constexpr (requires { &T::eval_jac_g; })
         cls.def(
             "eval_jac_g",
             [&](const T &p, crvec x) {
-                return cvt_matrix(p.get_m(), p.get_n(), p.get_jac_g_num_nonzeros(),
-                                  [&](rindexvec inner, rindexvec outer, rvec values) {
-                                      return p.eval_jac_g(x, inner, outer, values);
-                                  });
+                return cvt_matrix(p.get_jac_g_sparsity(),
+                                  [&](rvec values) { return p.eval_jac_g(x, values); });
             },
             "x"_a);
     if constexpr (requires { &T::eval_hess_L; })
         cls.def(
             "eval_hess_L",
             [&](const T &p, crvec x, crvec y, real_t scale) {
-                return cvt_matrix(p.get_n(), p.get_n(), p.get_hess_L_num_nonzeros(),
-                                  [&](rindexvec inner, rindexvec outer, rvec values) {
-                                      return p.eval_hess_L(x, y, scale, inner, outer, values);
-                                  });
+                return cvt_matrix(p.get_hess_L_sparsity(),
+                                  [&](rvec values) { return p.eval_hess_L(x, y, scale, values); });
             },
             "x"_a, "y"_a, "scale"_a = 1.);
     if constexpr (requires { &T::eval_hess_ψ; })
         cls.def(
             "eval_hess_ψ",
             [&](const T &p, crvec x, crvec y, crvec Σ, real_t scale) {
-                return cvt_matrix(p.get_n(), p.get_n(), p.get_hess_ψ_num_nonzeros(),
-                                  [&](rindexvec inner, rindexvec outer, rvec values) {
-                                      return p.eval_hess_ψ(x, y, Σ, scale, inner, outer, values);
-                                  });
+                return cvt_matrix(p.get_hess_ψ_sparsity(), [&](rvec values) {
+                    return p.eval_hess_ψ(x, y, Σ, scale, values);
+                });
             },
             "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.);
 }
@@ -390,8 +397,7 @@ void register_problems(py::module_ &m) {
         .def("resize", &UnconstrProblem::resize, "n"_a)
         .def("eval_g", &UnconstrProblem::eval_g, "x"_a, "g"_a)
         .def("eval_grad_g_prod", &UnconstrProblem::eval_grad_g_prod, "x"_a, "y"_a, "grad_gxy"_a)
-        .def("eval_jac_g", &UnconstrProblem::eval_jac_g, "x"_a, "inner_idx"_a, "outer_ptr"_a,
-             "J_values"_a)
+        .def("eval_jac_g", &UnconstrProblem::eval_jac_g, "x"_a, "J_values"_a)
         .def("eval_grad_gi", &UnconstrProblem::eval_grad_gi, "x"_a, "i"_a, "grad_gi"_a)
         .def("eval_proj_diff_g", &UnconstrProblem::eval_proj_diff_g, "z"_a, "e"_a)
         .def("eval_proj_multipliers", &UnconstrProblem::eval_proj_multipliers, "y"_a, "M"_a)

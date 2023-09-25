@@ -39,16 +39,16 @@ auto ProblemVTable<Conf>::default_eval_inactive_indices_res_lna(const void *, re
 }
 
 template <Config Conf>
-void ProblemVTable<Conf>::default_eval_jac_g(const void *, crvec, rindexvec, rindexvec, rvec,
+void ProblemVTable<Conf>::default_eval_jac_g(const void *, crvec, rvec,
                                              const ProblemVTable &vtable) {
     if (vtable.m != 0)
         throw not_implemented_error("eval_jac_g");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_jac_g_num_nonzeros(const void *, const ProblemVTable &)
-    -> length_t {
-    return -1;
+auto ProblemVTable<Conf>::default_get_jac_g_sparsity(const void *, const ProblemVTable &vtable)
+    -> Sparsity {
+    return sparsity::Dense<config_t>{vtable.m, vtable.n};
 }
 
 template <Config Conf>
@@ -64,15 +64,15 @@ void ProblemVTable<Conf>::default_eval_hess_L_prod(const void *, crvec, crvec, r
 }
 
 template <Config Conf>
-void ProblemVTable<Conf>::default_eval_hess_L(const void *, crvec, crvec, real_t, rindexvec,
-                                              rindexvec, rvec, const ProblemVTable &) {
+void ProblemVTable<Conf>::default_eval_hess_L(const void *, crvec, crvec, real_t, rvec,
+                                              const ProblemVTable &) {
     throw not_implemented_error("eval_hess_L");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_hess_L_num_nonzeros(const void *, const ProblemVTable &)
-    -> length_t {
-    return -1;
+auto ProblemVTable<Conf>::default_get_hess_L_sparsity(const void *, const ProblemVTable &vtable)
+    -> Sparsity {
+    return sparsity::Dense<config_t>{vtable.n, vtable.n};
 }
 
 template <Config Conf>
@@ -86,18 +86,17 @@ void ProblemVTable<Conf>::default_eval_hess_ψ_prod(const void *self, crvec x, c
 
 template <Config Conf>
 void ProblemVTable<Conf>::default_eval_hess_ψ(const void *self, crvec x, crvec y, crvec,
-                                              real_t scale, rindexvec inner_idx,
-                                              rindexvec outer_ptr, rvec H_values,
+                                              real_t scale, rvec H_values,
                                               const ProblemVTable &vtable) {
     if (y.size() == 0 && vtable.eval_hess_L != default_eval_hess_L)
-        return vtable.eval_hess_L(self, x, y, scale, inner_idx, outer_ptr, H_values, vtable);
+        return vtable.eval_hess_L(self, x, y, scale, H_values, vtable);
     throw not_implemented_error("eval_hess_ψ");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_hess_ψ_num_nonzeros(const void *, const ProblemVTable &)
-    -> length_t {
-    return 0;
+auto ProblemVTable<Conf>::default_get_hess_ψ_sparsity(const void *, const ProblemVTable &vtable)
+    -> Sparsity {
+    return sparsity::Dense<config_t>{vtable.n, vtable.n};
 }
 
 /** @implementation{ProblemVTable<Conf>::default_eval_f_grad_f} */

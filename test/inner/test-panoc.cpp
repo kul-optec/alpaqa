@@ -327,8 +327,7 @@ TEST(PANOC, hessian) {
     vec hess_f1_fd = pa_ref::finite_diff(grad_fi(0), x);
     vec hess_f2_fd = pa_ref::finite_diff(grad_fi(1), x);
     mat H_res(2, 2);
-    indexvec inner, outer;
-    p.eval_hess_L(x, vec::Zero(2), 1, inner, outer, H_res.reshaped());
+    p.eval_hess_L(x, vec::Zero(2), 1, H_res.reshaped());
     EXPECT_THAT(H_res.col(0),
                 EigenAlmostEqual(hess_f1_fd, std::abs(H_res.col(0)(0)) * 5e-6));
     EXPECT_THAT(H_res.col(1),
@@ -341,7 +340,7 @@ TEST(PANOC, hessian) {
             return grad_L_res(i);
         };
     };
-    p.eval_hess_L(x, y, 1, inner, outer, H_res.reshaped());
+    p.eval_hess_L(x, y, 1, H_res.reshaped());
     vec hess_L1_fd = pa_ref::finite_diff(grad_Li(0), x);
     vec hess_L2_fd = pa_ref::finite_diff(grad_Li(1), x);
     EXPECT_THAT(H_res.col(0),

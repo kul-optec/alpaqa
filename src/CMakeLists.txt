@@ -199,9 +199,8 @@ else()
     message(STATUS "Compiling WITHOUT CUTEst support")
 endif()
 
-find_package(Ipopt)
-
-if (TARGET COIN::Ipopt)
+if (ALPAQA_WITH_IPOPT)
+    find_package(Ipopt)
     message(STATUS "Compiling Ipopt problem adapter")
     add_library(ipopt-adapter
         "interop/ipopt/src/ipopt-adapter.cpp"

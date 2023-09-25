@@ -3,6 +3,7 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/export.hpp>
 #include <alpaqa/problem/box.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/alloc-check.hpp>
 #include <alpaqa/util/check-dim.hpp>
 #include <alpaqa/util/not-implemented.hpp>
@@ -22,7 +23,8 @@ namespace alpaqa {
 template <Config Conf>
 struct ProblemVTable : util::BasicVTable {
     USING_ALPAQA_CONFIG(Conf);
-    using Box = alpaqa::Box<config_t>;
+    using Sparsity = alpaqa::Sparsity<config_t>;
+    using Box      = alpaqa::Box<config_t>;
 
     template <class F>
     using optional_function_t = util::BasicVTable::optional_function_t<F, ProblemVTable>;
@@ -51,24 +53,24 @@ struct ProblemVTable : util::BasicVTable {
         eval_inactive_indices_res_lna = default_eval_inactive_indices_res_lna;
 
     // Second order
-    optional_const_function_t<void(crvec x, rindexvec inner_idx, rindexvec outer_ptr, rvec J_values)>
+    optional_const_function_t<void(crvec x, rvec J_values)>
         eval_jac_g = default_eval_jac_g;
-    optional_const_function_t<length_t()>
-        get_jac_g_num_nonzeros = default_get_jac_g_num_nonzeros;
+    optional_const_function_t<Sparsity()>
+        get_jac_g_sparsity = default_get_jac_g_sparsity;
     optional_const_function_t<void(crvec x, index_t i, rvec grad_gi)>
         eval_grad_gi = default_eval_grad_gi;
     optional_const_function_t<void(crvec x, crvec y, real_t scale, crvec v, rvec Hv)>
         eval_hess_L_prod = default_eval_hess_L_prod;
-    optional_const_function_t<void(crvec x, crvec y, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values)>
+    optional_const_function_t<void(crvec x, crvec y, real_t scale, rvec H_values)>
         eval_hess_L = default_eval_hess_L;
-    optional_const_function_t<length_t()>
-        get_hess_L_num_nonzeros = default_get_hess_L_num_nonzeros;
+    optional_const_function_t<Sparsity()>
+        get_hess_L_sparsity = default_get_hess_L_sparsity;
     optional_const_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv)>
         eval_hess_ψ_prod = default_eval_hess_ψ_prod;
-    optional_const_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values)>
+    optional_const_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values)>
         eval_hess_ψ = default_eval_hess_ψ;
-    optional_const_function_t<length_t()>
-        get_hess_ψ_num_nonzeros = default_get_hess_ψ_num_nonzeros;
+    optional_const_function_t<Sparsity()>
+        get_hess_ψ_sparsity = default_get_hess_ψ_sparsity;
 
     // Combined evaluations
     optional_const_function_t<real_t(crvec x, rvec grad_fx)>
@@ -105,27 +107,22 @@ struct ProblemVTable : util::BasicVTable {
     ALPAQA_EXPORT static index_t default_eval_inactive_indices_res_lna(const void *, real_t, crvec,
                                                                        crvec, rindexvec,
                                                                        const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_jac_g(const void *, crvec, rindexvec, rindexvec, rvec,
-                                                 const ProblemVTable &);
-    ALPAQA_EXPORT static length_t default_get_jac_g_num_nonzeros(const void *,
-                                                                 const ProblemVTable &);
+    ALPAQA_EXPORT static void default_eval_jac_g(const void *, crvec, rvec, const ProblemVTable &);
+    ALPAQA_EXPORT static Sparsity default_get_jac_g_sparsity(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static void default_eval_grad_gi(const void *, crvec, index_t, rvec,
                                                    const ProblemVTable &);
     ALPAQA_EXPORT static void default_eval_hess_L_prod(const void *, crvec, crvec, real_t, crvec,
                                                        rvec, const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_hess_L(const void *, crvec, crvec, real_t, rindexvec,
-                                                  rindexvec, rvec, const ProblemVTable &);
-    ALPAQA_EXPORT static length_t default_get_hess_L_num_nonzeros(const void *,
-                                                                  const ProblemVTable &);
+    ALPAQA_EXPORT static void default_eval_hess_L(const void *, crvec, crvec, real_t, rvec,
+                                                  const ProblemVTable &);
+    ALPAQA_EXPORT static Sparsity default_get_hess_L_sparsity(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static void default_eval_hess_ψ_prod(const void *self, crvec x, crvec y, crvec,
                                                        real_t scale, crvec v, rvec Hv,
                                                        const ProblemVTable &vtable);
     ALPAQA_EXPORT static void default_eval_hess_ψ(const void *self, crvec x, crvec y, crvec,
-                                                  real_t scale, rindexvec inner_idx,
-                                                  rindexvec outer_ptr, rvec H_values,
+                                                  real_t scale, rvec H_values,
                                                   const ProblemVTable &vtable);
-    ALPAQA_EXPORT static length_t default_get_hess_ψ_num_nonzeros(const void *,
-                                                                  const ProblemVTable &);
+    ALPAQA_EXPORT static Sparsity default_get_hess_ψ_sparsity(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static real_t default_eval_f_grad_f(const void *self, crvec x, rvec grad_fx,
                                                       const ProblemVTable &vtable);
     ALPAQA_EXPORT static real_t default_eval_f_g(const void *self, crvec x, rvec g,
@@ -166,14 +163,14 @@ struct ProblemVTable : util::BasicVTable {
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_inactive_indices_res_lna, p);
         // Second order
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_jac_g, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_jac_g_num_nonzeros, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_jac_g_sparsity, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_grad_gi, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_L_prod, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_L, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_hess_L_num_nonzeros, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_hess_L_sparsity, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_ψ_prod, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_ψ, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_hess_ψ_num_nonzeros, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_hess_ψ_sparsity, p);
         // Combined evaluations
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_f_grad_f, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_f_g, p);
@@ -222,6 +219,7 @@ template <Config Conf = DefaultConfig, class Allocator = std::allocator<std::byt
 class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator> {
   public:
     USING_ALPAQA_CONFIG(Conf);
+    using Sparsity       = alpaqa::Sparsity<config_t>;
     using Box            = alpaqa::Box<config_t>;
     using VTable         = ProblemVTable<config_t>;
     using allocator_type = Allocator;
@@ -244,10 +242,10 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
 
     /// **[Required]**
     /// Number of decision variables.
-    length_t get_n() const;
+    [[nodiscard]] length_t get_n() const;
     /// **[Required]**
     /// Number of constraints.
-    length_t get_m() const;
+    [[nodiscard]] length_t get_m() const;
 
     /// @}
 
@@ -258,7 +256,7 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// Function that evaluates the cost, @f$ f(x) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
-    real_t eval_f(crvec x) const;
+    [[nodiscard]] real_t eval_f(crvec x) const;
     /// **[Required]**
     /// Function that evaluates the gradient of the cost, @f$ \nabla f(x) @f$
     /// @param  [in] x
@@ -345,7 +343,8 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// For example, in the case of box constraints, we have
     /// @f[ \mathcal J(x) \defeq \defset{i \in \N_{[0, n-1]}}{\underline x_i
     /// \lt x_i - \gamma\nabla_{\!x_i}\psi(x) \lt \overline x_i}. @f]
-    index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const;
+    [[nodiscard]] index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,
+                                                        rindexvec J) const;
 
     /// @}
 
@@ -355,11 +354,11 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// **[Optional]**
     /// Get the rectangular constraint set of the decision variables,
     /// @f$ x \in C @f$.
-    const Box &get_box_C() const;
+    [[nodiscard]] const Box &get_box_C() const;
     /// **[Optional]**
     /// Get the rectangular constraint set of the general constraint function,
     /// @f$ g(x) \in D @f$.
-    const Box &get_box_D() const;
+    [[nodiscard]] const Box &get_box_D() const;
 
     /// @}
 
@@ -367,30 +366,22 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// @{
 
     /// **[Optional]**
-    /// Function that evaluates the Jacobian of the constraints as a sparse
-    /// matrix, @f$ \jac_g(x) @f$
+    /// Function that evaluates the nonzero values of the Jacobian matrix of the
+    /// constraints, @f$ \jac_g(x) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
-    /// @param  [inout] inner_idx
-    ///         Inner indices (row indices of nonzeros).
-    /// @param  [inout] outer_ptr
-    ///         Outer pointers (points to the first nonzero in each column).
     /// @param  [out] J_values
     ///         Nonzero values of the Jacobian
     ///         @f$ \jac_g(x) \in \R^{m\times n} @f$
-    /// If @p J_values has size zero, this function should initialize
-    /// @p inner_idx and @p outer_ptr. If @p J_values is nonempty, @p inner_idx
-    /// and @p outer_ptr can be assumed to be initialized, and this function
-    /// should evaluate @p J_values.
     ///
     /// Required for second-order solvers only.
-    void eval_jac_g(crvec x, rindexvec inner_idx, rindexvec outer_ptr, rvec J_values) const;
+    void eval_jac_g(crvec x, rvec J_values) const;
     /// **[Optional]**
-    /// Function that gets the number of nonzeros of the sparse Jacobian of the
-    /// constraints. Should return -1 for a dense Jacobian.
+    /// Function that returns (a view of) the sparsity pattern of the Jacobian
+    /// of the constraints.
     ///
     /// Required for second-order solvers only.
-    length_t get_jac_g_num_nonzeros() const;
+    [[nodiscard]] Sparsity get_jac_g_sparsity() const;
     /// **[Optional]**
     /// Function that evaluates the gradient of one specific constraint,
     /// @f$ \nabla g_i(x) @f$
@@ -423,35 +414,26 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// Required for second-order solvers only.
     void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const;
     /// **[Optional]**
-    /// Function that evaluates the Hessian of the Lagrangian as a sparse matrix,
-    /// @f$ \nabla_{xx}^2L(x, y) @f$
+    /// Function that evaluates the nonzero values of the Hessian of the
+    /// Lagrangian, @f$ \nabla_{xx}^2L(x, y) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
     /// @param  [in] y
     ///         Lagrange multipliers @f$ y \in \R^m @f$
     /// @param  [in] scale
     ///         Scale factor for the cost function.
-    /// @param  [inout] inner_idx
-    ///         Inner indices (row indices of nonzeros).
-    /// @param  [inout] outer_ptr
-    ///         Outer pointers (points to the first nonzero in each column).
     /// @param  [out] H_values
     ///         Nonzero values of the Hessian
     ///         @f$ \nabla_{xx}^2 L(x, y) \in \R^{n\times n} @f$.
-    /// If @p H_values has size zero, this function should initialize
-    /// @p inner_idx and @p outer_ptr. If @p H_values is nonempty, @p inner_idx
-    /// and @p outer_ptr can be assumed to be initialized, and this function
-    /// should evaluate @p H_values.
     ///
     /// Required for second-order solvers only.
-    void eval_hess_L(crvec x, crvec y, real_t scale, rindexvec inner_idx, rindexvec outer_ptr,
-                     rvec H_values) const;
+    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const;
     /// **[Optional]**
-    /// Function that gets the number of nonzeros of the sparse Hessian of the
-    /// Lagrangian. Should return -1 for a dense Hessian.
+    /// Function that returns (a view of) the sparsity pattern of the Hessian of
+    /// the Lagrangian.
     ///
     /// Required for second-order solvers only.
-    length_t get_hess_L_num_nonzeros() const;
+    [[nodiscard]] Sparsity get_hess_L_sparsity() const;
     /// **[Optional]**
     /// Function that evaluates the Hessian of the augmented Lagrangian
     /// multiplied by a vector,
@@ -473,8 +455,8 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// Required for second-order solvers only.
     void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const;
     /// **[Optional]**
-    /// Function that evaluates the Hessian of the augmented Lagrangian,
-    /// @f$ \nabla_{xx}^2L_\Sigma(x, y) @f$
+    /// Function that evaluates the nonzero values of the Hessian of the
+    /// augmented Lagrangian, @f$ \nabla_{xx}^2L_\Sigma(x, y) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
     /// @param  [in] y
@@ -483,27 +465,18 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         Penalty weights @f$ \Sigma @f$
     /// @param  [in] scale
     ///         Scale factor for the cost function.
-    /// @param  [inout] inner_idx
-    ///         Inner indices (row indices of nonzeros).
-    /// @param  [inout] outer_ptr
-    ///         Outer pointers (points to the first nonzero in each column).
     /// @param  [out] H_values
     ///         Nonzero values of the Hessian
     ///         @f$ \nabla_{xx}^2 L_\Sigma(x, y) \in \R^{n\times n} @f$
-    /// If @p H_values has size zero, this function should initialize
-    /// @p inner_idx and @p outer_ptr. If @p H_values is nonempty, @p inner_idx
-    /// and @p outer_ptr can be assumed to be initialized, and this function
-    /// should evaluate @p H_values.
     ///
     /// Required for second-order solvers only.
-    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rindexvec inner_idx,
-                     rindexvec outer_ptr, rvec H_values) const;
+    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const;
     /// **[Optional]**
-    /// Function that gets the number of nonzeros of the Hessian of the
-    /// augmented Lagrangian.
+    /// Function that returns (a view of) the sparsity pattern of the Hessian of
+    /// the augmented Lagrangian.
     ///
     /// Required for second-order solvers only.
-    length_t get_hess_ψ_num_nonzeros() const;
+    [[nodiscard]] Sparsity get_hess_ψ_sparsity() const;
 
     /// @}
 
@@ -541,10 +514,10 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// @f[ \hat y = \Sigma\, \left(g(x) + \Sigma^{-1}y - \Pi_D\left(g(x)
     ///   + \Sigma^{-1}y\right)\right) @f]
     /// @default_impl   ProblemVTable::default_eval_ψ
-    real_t eval_ψ(crvec x, ///< [in]  Decision variable @f$ x @f$
-                  crvec y, ///< [in]  Lagrange multipliers @f$ y @f$
-                  crvec Σ, ///< [in]  Penalty weights @f$ \Sigma @f$
-                  rvec ŷ   ///< [out] @f$ \hat y @f$
+    [[nodiscard]] real_t eval_ψ(crvec x, ///< [in]  Decision variable @f$ x @f$
+                                crvec y, ///< [in]  Lagrange multipliers @f$ y @f$
+                                crvec Σ, ///< [in]  Penalty weights @f$ \Sigma @f$
+                                rvec ŷ   ///< [out] @f$ \hat y @f$
     ) const;
     /// **[Optional]**
     /// Calculate the gradient ∇ψ(x).
@@ -563,12 +536,12 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// \text{dist}_\Sigma^2\left(g(x) + \Sigma^{-1}y,\;D\right) @f]
     /// @f[ \nabla \psi(x) = \nabla f(x) + \nabla g(x)\,\hat y(x) @f]
     /// @default_impl   ProblemVTable::default_eval_ψ_grad_ψ
-    real_t eval_ψ_grad_ψ(crvec x,     ///< [in]  Decision variable @f$ x @f$
-                         crvec y,     ///< [in]  Lagrange multipliers @f$ y @f$
-                         crvec Σ,     ///< [in]  Penalty weights @f$ \Sigma @f$
-                         rvec grad_ψ, ///< [out] @f$ \nabla \psi(x) @f$
-                         rvec work_n, ///<       Dimension @f$ n @f$
-                         rvec work_m  ///<       Dimension @f$ m @f$
+    [[nodiscard]] real_t eval_ψ_grad_ψ(crvec x,     ///< [in]  Decision variable @f$ x @f$
+                                       crvec y,     ///< [in]  Lagrange multipliers @f$ y @f$
+                                       crvec Σ,     ///< [in]  Penalty weights @f$ \Sigma @f$
+                                       rvec grad_ψ, ///< [out] @f$ \nabla \psi(x) @f$
+                                       rvec work_n, ///<       Dimension @f$ n @f$
+                                       rvec work_m  ///<       Dimension @f$ m @f$
     ) const;
 
     /// @}
@@ -597,9 +570,9 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
         return vtable.eval_jac_g != vtable.default_eval_jac_g;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_jac_g_num_nonzeros.
-    [[nodiscard]] bool provides_get_jac_g_num_nonzeros() const {
-        return vtable.get_jac_g_num_nonzeros != vtable.default_get_jac_g_num_nonzeros;
+    /// @ref get_jac_g_sparsity.
+    [[nodiscard]] bool provides_get_jac_g_sparsity() const {
+        return vtable.get_jac_g_sparsity != vtable.default_get_jac_g_sparsity;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_grad_gi.
@@ -617,9 +590,9 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
         return vtable.eval_hess_L != vtable.default_eval_hess_L;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_hess_L_num_nonzeros.
-    [[nodiscard]] bool provides_get_hess_L_num_nonzeros() const {
-        return vtable.get_hess_L_num_nonzeros != vtable.default_get_hess_L_num_nonzeros;
+    /// @ref get_hess_L_sparsity.
+    [[nodiscard]] bool provides_get_hess_L_sparsity() const {
+        return vtable.get_hess_L_sparsity != vtable.default_get_hess_L_sparsity;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_hess_ψ_prod.
@@ -632,9 +605,9 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
         return vtable.eval_hess_ψ != vtable.default_eval_hess_ψ;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_hess_ψ_num_nonzeros.
-    [[nodiscard]] bool provides_get_hess_ψ_num_nonzeros() const {
-        return vtable.get_hess_ψ_num_nonzeros != vtable.default_get_hess_ψ_num_nonzeros;
+    /// @ref get_hess_ψ_sparsity.
+    [[nodiscard]] bool provides_get_hess_ψ_sparsity() const {
+        return vtable.get_hess_ψ_sparsity != vtable.default_get_hess_ψ_sparsity;
     }
     /// Returns true if the problem provides a specialized implementation of
     /// @ref eval_f_grad_f, false if it uses the default implementation.
@@ -773,13 +746,12 @@ void TypeErasedProblem<Conf, Allocator>::eval_grad_gi(crvec x, index_t i, rvec g
     return call(vtable.eval_grad_gi, x, i, grad_gi);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_jac_g(crvec x, rindexvec inner_idx,
-                                                    rindexvec outer_ptr, rvec J_values) const {
-    return call(vtable.eval_jac_g, x, inner_idx, outer_ptr, J_values);
+void TypeErasedProblem<Conf, Allocator>::eval_jac_g(crvec x, rvec J_values) const {
+    return call(vtable.eval_jac_g, x, J_values);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_jac_g_num_nonzeros() const -> length_t {
-    return call(vtable.get_jac_g_num_nonzeros);
+auto TypeErasedProblem<Conf, Allocator>::get_jac_g_sparsity() const -> Sparsity {
+    return call(vtable.get_jac_g_sparsity);
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
@@ -788,13 +760,12 @@ void TypeErasedProblem<Conf, Allocator>::eval_hess_L_prod(crvec x, crvec y, real
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::eval_hess_L(crvec x, crvec y, real_t scale,
-                                                     rindexvec inner_idx, rindexvec outer_ptr,
                                                      rvec H_values) const {
-    return call(vtable.eval_hess_L, x, y, scale, inner_idx, outer_ptr, H_values);
+    return call(vtable.eval_hess_L, x, y, scale, H_values);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_hess_L_num_nonzeros() const -> length_t {
-    return call(vtable.get_hess_L_num_nonzeros);
+auto TypeErasedProblem<Conf, Allocator>::get_hess_L_sparsity() const -> Sparsity {
+    return call(vtable.get_hess_L_sparsity);
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
@@ -803,13 +774,12 @@ void TypeErasedProblem<Conf, Allocator>::eval_hess_ψ_prod(crvec x, crvec y, crv
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale,
-                                                     rindexvec inner_idx, rindexvec outer_ptr,
                                                      rvec H_values) const {
-    return call(vtable.eval_hess_ψ, x, y, Σ, scale, inner_idx, outer_ptr, H_values);
+    return call(vtable.eval_hess_ψ, x, y, Σ, scale, H_values);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_hess_ψ_num_nonzeros() const -> length_t {
-    return call(vtable.get_hess_ψ_num_nonzeros);
+auto TypeErasedProblem<Conf, Allocator>::get_hess_ψ_sparsity() const -> Sparsity {
+    return call(vtable.get_hess_ψ_sparsity);
 }
 template <Config Conf, class Allocator>
 auto TypeErasedProblem<Conf, Allocator>::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t {

@@ -1,3 +1,5 @@
+#include <alpaqa/problem/sparsity-conversions.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/qpalm/qpalm-adapter.hpp>
 
 #include <qpalm/sparse.hpp>
@@ -108,6 +110,15 @@ void combine_bound_constr(Box<config_t> &b, const Box<config_t> &C,
     b.upperbound.segment(c, m) = D.upperbound - g;
 }
 
+int convert_symmetry(sparsity::Symmetry symmetry) {
+    switch (symmetry) {
+        case sparsity::Symmetry::Unsymmetric: return UNSYMMETRIC;
+        case sparsity::Symmetry::Upper: return UPPER;
+        case sparsity::Symmetry::Lower: return LOWER;
+        default: throw std::invalid_argument("Invalid symmetry");
+    }
+}
+
 } // namespace
 
 OwningQPALMData
@@ -116,11 +127,6 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
 
     // Get the dimensions of the problem matrices
     const auto n = problem.get_n(), m = problem.get_m();
-    const auto nnz_Q = problem.get_hess_L_num_nonzeros();
-    const auto nnz_A = problem.get_jac_g_num_nonzeros();
-    if (nnz_Q < 0 || nnz_A < 0)
-        throw std::logic_error(
-            "Only sparse Hessians and Jacobians are supported");
     auto cvt_idx = [](index_t i) { return static_cast<qpalm::sp_index_t>(i); };
 
     // Dummy data to evaluate Hessian and Jacobian
@@ -129,33 +135,40 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
     // Construct QPALM problem
     OwningQPALMData qp;
 
+    using SparseCSC    = sparsity::SparseCSC<config_t>;
+    using Sparsity     = sparsity::Sparsity<config_t>;
+    using SparsityConv = sparsity::SparsityConverter<Sparsity, SparseCSC>;
     { // Evaluate cost Hessian
-        qp.sto->Q = qpalm::ladel_sparse_create(n, n, nnz_Q, UPPER);
-        qp.Q      = qp.sto->Q.get();
-        // Get sparsity pattern
-        indexvec inner_idx(nnz_Q);
-        indexvec outer_ptr(n + 1);
-        problem.eval_hess_L(x, y, 1, inner_idx, outer_ptr, null_vec<config_t>);
+        Sparsity sp_Q_orig = problem.get_hess_L_sparsity();
+        SparsityConv sp_Q{sp_Q_orig, {.order = SparseCSC::SortedRows}};
+        auto nnz_Q = cvt_idx(sp_Q.get_sparsity().nnz());
+        auto symm  = convert_symmetry(sp_Q.get_sparsity().symmetry);
+        qp.sto->Q  = qpalm::ladel_sparse_create(n, n, nnz_Q, symm);
+        qp.Q       = qp.sto->Q.get();
         // Copy sparsity pattern
-        std::ranges::transform(inner_idx, qp.Q->i, cvt_idx);
-        std::ranges::transform(outer_ptr, qp.Q->p, cvt_idx);
+        std::ranges::transform(sp_Q.get_sparsity().inner_idx, qp.Q->i, cvt_idx);
+        std::ranges::transform(sp_Q.get_sparsity().outer_ptr, qp.Q->p, cvt_idx);
         // Get actual values
+        vec work(get_nnz(sp_Q_orig));
+        problem.eval_hess_L(x, y, 1, work);
         mvec H_values{qp.Q->x, nnz_Q};
-        problem.eval_hess_L(x, y, 1, inner_idx, outer_ptr, H_values);
+        sp_Q.convert_values(work, H_values);
     }
     { // Evaluate constraints Jacobian
-        qp.sto->A = qpalm::ladel_sparse_create(m, n, nnz_A + n, UNSYMMETRIC);
-        qp.A      = qp.sto->A.get();
-        indexvec inner_idx(nnz_A);
-        indexvec outer_ptr(n + 1);
-        // Get sparsity pattern
-        problem.eval_jac_g(x, inner_idx, outer_ptr, null_vec<config_t>);
+        Sparsity sp_A_orig = problem.get_jac_g_sparsity();
+        SparsityConv sp_A{sp_A_orig, {.order = SparseCSC::SortedRows}};
+        auto nnz_A = cvt_idx(sp_A.get_sparsity().nnz());
+        auto symm  = convert_symmetry(sp_A.get_sparsity().symmetry);
+        qp.sto->A  = qpalm::ladel_sparse_create(m, n, nnz_A + n, symm);
+        qp.A       = qp.sto->A.get();
         // Copy sparsity pattern
-        std::ranges::transform(inner_idx, qp.A->i, cvt_idx);
-        std::ranges::transform(outer_ptr, qp.A->p, cvt_idx);
+        std::ranges::transform(sp_A.get_sparsity().inner_idx, qp.A->i, cvt_idx);
+        std::ranges::transform(sp_A.get_sparsity().outer_ptr, qp.A->p, cvt_idx);
         // Get actual values
+        vec work(get_nnz(sp_A_orig));
+        problem.eval_jac_g(x, work);
         mvec J_values{qp.A->x, nnz_A};
-        problem.eval_jac_g(x, inner_idx, outer_ptr, J_values);
+        sp_A.convert_values(work, J_values);
         // Add the bound constraints
         add_bound_constr_to_constr_matrix(*qp.A, problem.get_box_C());
     }

@@ -9,6 +9,7 @@
 #include <casadi/core/external.hpp>
 
 #include <algorithm>
+#include <cassert>
 #include <filesystem>
 #include <fstream>
 #include <memory>
@@ -42,8 +43,6 @@ struct CasADiFunctionsWithParam {
         std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 7, 1>> hess_ψ = std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> jac_g  = std::nullopt;
-    indexvec inner_H{}, outer_H{};
-    indexvec inner_J{}, outer_J{};
 };
 
 } // namespace casadi_loader
@@ -293,30 +292,43 @@ void CasADiProblem<Conf>::eval_grad_gi(crvec, index_t, rvec) const {
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::get_jac_g_num_nonzeros() const -> length_t {
-    if (!impl->jac_g.has_value())
-        return -1;
-    auto &&sparsity = impl->jac_g->fun.sparsity_out(0);
-    return sparsity.is_dense() ? -1 : static_cast<length_t>(sparsity.nnz());
+auto CasADiProblem<Conf>::convert_sparsity(const auto &sparsity,
+                                           SparsityStorage &storage) const
+    -> Sparsity {
+    std::call_once(storage.flag, [&] {
+        auto cvt_idx = detail::casadi_to_index<config_t>;
+        storage.inner_idx.resize(cvt_idx(sparsity.nnz()));
+        storage.outer_ptr.resize(this->n + 1);
+        assert(this->n == cvt_idx(sparsity.size2()));
+        std::transform(sparsity.row(),
+                       sparsity.row() + storage.inner_idx.size(),
+                       storage.inner_idx.begin(), cvt_idx);
+        std::transform(sparsity.colind(),
+                       sparsity.colind() + storage.outer_ptr.size(),
+                       storage.outer_ptr.begin(), cvt_idx);
+    });
+    return sparsity::SparseCSC<Conf>{
+        .rows      = this->m,
+        .cols      = this->n,
+        .inner_idx = sparsity_jac_g.inner_idx,
+        .outer_ptr = sparsity_jac_g.outer_ptr,
+    };
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_jac_g(crvec x, rindexvec inner_idx,
-                                     rindexvec outer_ptr, rvec J_values) const {
+auto CasADiProblem<Conf>::get_jac_g_sparsity() const -> Sparsity {
+    sparsity::Dense<config_t> dense{.rows = this->m, .cols = this->n};
+    if (!impl->jac_g.has_value())
+        return dense;
+    auto &&sparsity = impl->jac_g->fun.sparsity_out(0);
+    return sparsity.is_dense() ? Sparsity{dense}
+                               : convert_sparsity(sparsity, sparsity_jac_g);
+}
+
+template <Config Conf>
+void CasADiProblem<Conf>::eval_jac_g(crvec x, rvec J_values) const {
     assert(impl->jac_g.has_value());
-    if (J_values.size() > 0) {
-        (*impl->jac_g)({x.data(), param.data()}, {J_values.data()});
-    } else {
-        auto &&sparsity = impl->jac_g->fun.sparsity_out(0);
-        using detail::casadi_to_index;
-        if (!sparsity.is_dense()) {
-            std::transform(sparsity.row(), sparsity.row() + sparsity.nnz(),
-                           inner_idx.begin(), casadi_to_index<config_t>);
-            std::transform(sparsity.colind(),
-                           sparsity.colind() + this->get_n() + 1,
-                           outer_ptr.begin(), casadi_to_index<config_t>);
-        }
-    }
+    (*impl->jac_g)({x.data(), param.data()}, {J_values.data()});
 }
 
 template <Config Conf>
@@ -328,32 +340,21 @@ void CasADiProblem<Conf>::eval_hess_L_prod(crvec x, crvec y, real_t scale,
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::get_hess_L_num_nonzeros() const -> length_t {
+auto CasADiProblem<Conf>::get_hess_L_sparsity() const -> Sparsity {
+    sparsity::Dense<config_t> dense{.rows = this->n, .cols = this->n};
     if (!impl->hess_L.has_value())
-        return -1;
+        return dense;
     auto &&sparsity = impl->hess_L->fun.sparsity_out(0);
-    return sparsity.is_dense() ? -1 : static_cast<length_t>(sparsity.nnz());
+    return sparsity.is_dense() ? Sparsity{dense}
+                               : convert_sparsity(sparsity, sparsity_hess_L);
 }
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_hess_L(crvec x, crvec y, real_t scale,
-                                      rindexvec inner_idx, rindexvec outer_ptr,
                                       rvec H_values) const {
     assert(impl->hess_L.has_value());
-    if (H_values.size() > 0) {
-        (*impl->hess_L)({x.data(), param.data(), y.data(), &scale},
-                        {H_values.data()});
-    } else {
-        auto &&sparsity = impl->hess_L->fun.sparsity_out(0);
-        using detail::casadi_to_index;
-        if (!sparsity.is_dense()) {
-            std::transform(sparsity.row(), sparsity.row() + sparsity.nnz(),
-                           inner_idx.begin(), casadi_to_index<config_t>);
-            std::transform(sparsity.colind(),
-                           sparsity.colind() + this->get_n() + 1,
-                           outer_ptr.begin(), casadi_to_index<config_t>);
-        }
-    }
+    (*impl->hess_L)({x.data(), param.data(), y.data(), &scale},
+                    {H_values.data()});
 }
 
 template <Config Conf>
@@ -368,33 +369,22 @@ void CasADiProblem<Conf>::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ,
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::get_hess_ψ_num_nonzeros() const -> length_t {
+auto CasADiProblem<Conf>::get_hess_ψ_sparsity() const -> Sparsity {
+    sparsity::Dense<config_t> dense{.rows = this->n, .cols = this->n};
     if (!impl->hess_ψ.has_value())
-        return 0;
+        return dense;
     auto &&sparsity = impl->hess_ψ->fun.sparsity_out(0);
-    return sparsity.is_dense() ? 0 : static_cast<length_t>(sparsity.nnz());
+    return sparsity.is_dense() ? Sparsity{dense}
+                               : convert_sparsity(sparsity, sparsity_hess_ψ);
 }
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale,
-                                      rindexvec inner_idx, rindexvec outer_ptr,
                                       rvec H_values) const {
     assert(impl->hess_ψ.has_value());
-    if (H_values.size() > 0) {
-        (*impl->hess_ψ)({x.data(), param.data(), y.data(), Σ.data(), &scale,
-                         this->D.lowerbound.data(), this->D.upperbound.data()},
-                        {H_values.data()});
-    } else {
-        auto &&sparsity = impl->hess_ψ->fun.sparsity_out(0);
-        using detail::casadi_to_index;
-        if (!sparsity.is_dense()) {
-            std::transform(sparsity.row(), sparsity.row() + sparsity.nnz(),
-                           inner_idx.begin(), casadi_to_index<config_t>);
-            std::transform(sparsity.colind(),
-                           sparsity.colind() + this->get_n() + 1,
-                           outer_ptr.begin(), casadi_to_index<config_t>);
-        }
-    }
+    (*impl->hess_ψ)({x.data(), param.data(), y.data(), Σ.data(), &scale,
+                     this->D.lowerbound.data(), this->D.upperbound.data()},
+                    {H_values.data()});
 }
 
 template <Config Conf>

@@ -42,7 +42,7 @@ class UnconstrProblem {
     void eval_grad_g_prod(crvec, crvec, rvec grad) const { grad.setZero(); }
     /// Constraint Jacobian is always empty.
     /// @see @ref TypeErasedProblem::eval_jac_g
-    void eval_jac_g(crvec, rindexvec, rindexvec, rvec) const {}
+    void eval_jac_g(crvec, rvec) const {}
     /// Constraint gradient is always zero.
     /// @see @ref TypeErasedProblem::eval_grad_gi
     void eval_grad_gi(crvec, index_t, rvec grad_gi) const { grad_gi.setZero(); }

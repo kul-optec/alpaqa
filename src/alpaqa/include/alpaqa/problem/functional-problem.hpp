@@ -34,21 +34,17 @@ class FunctionalProblem : public BoxConstrProblem<Conf> {
     void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const { ScopedMallocAllower ma; hess_L_prod(x, y, scale, v, Hv); }
     void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const { ScopedMallocAllower ma; hess_ψ_prod(x, y, Σ, scale, v, Hv); }
     // clang-format on
-    void eval_jac_g(crvec x, rindexvec, rindexvec, rvec J_values) const {
+    void eval_jac_g(crvec x, rvec J_values) const {
         ScopedMallocAllower ma;
-        if (J_values.size() > 0)
-            jac_g(x, J_values.reshaped(this->m, this->n));
+        jac_g(x, J_values.reshaped(this->m, this->n));
     }
-    void eval_hess_L(crvec x, crvec y, real_t scale, rindexvec, rindexvec, rvec H_values) const {
+    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const {
         ScopedMallocAllower ma;
-        if (H_values.size() > 0)
-            hess_L(x, y, scale, H_values.reshaped(this->n, this->n));
+        hess_L(x, y, scale, H_values.reshaped(this->n, this->n));
     }
-    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rindexvec, rindexvec,
-                     rvec H_values) const {
+    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const {
         ScopedMallocAllower ma;
-        if (H_values.size() > 0)
-            hess_ψ(x, y, Σ, scale, H_values.reshaped(this->n, this->n));
+        hess_ψ(x, y, Σ, scale, H_values.reshaped(this->n, this->n));
     }
 
     /// @see @ref TypeErasedProblem::provides_eval_grad_gi

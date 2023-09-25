@@ -1,7 +1,7 @@
 #include <alpaqa/cutest/cutest-loader.hpp>
 
 #include <alpaqa/cutest/cutest-errors.hpp>
-#include <alpaqa/util/sparse-ops.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 
 #include <dlfcn.h>
 
@@ -318,69 +318,60 @@ void CUTEstProblem::eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const {
         grad_gxy.data(), &lresult);
 }
 
-void CUTEstProblem::eval_jac_g(crvec x, [[maybe_unused]] rindexvec inner_idx,
-                               [[maybe_unused]] rindexvec outer_ptr,
-                               rvec J_values) const {
+void CUTEstProblem::eval_jac_g(crvec x, rvec J_values) const {
     // Compute the nonzero values
-    if (J_values.size() > 0) {
-        assert(x.size() == static_cast<length_t>(impl->nvar));
-        // Sparse Jacobian
-        if (sparse) {
-            assert(nnz_J >= 0);
-            assert(J_values.size() == static_cast<length_t>(nnz_J));
-            assert(J_work.size() == static_cast<length_t>(nnz_J));
-            assert(inner_idx.size() == static_cast<length_t>(nnz_J));
-            assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
-            const cutest::integer nnz = nnz_J;
-            cutest::logical grad      = cutest::True;
-            checked(impl->funcs.ccfsg, "eval_jac_g: CUTEST_ccfsg")(
-                &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &nnz_J,
-                &nnz, J_work.data(), J_col.data(), J_row.data(), &grad);
-            auto t0  = std::chrono::steady_clock::now();
-            J_values = J_work(J_perm);
-            auto t1  = std::chrono::steady_clock::now();
-            std::cout << "Permutation of J took: "
-                      << std::chrono::duration<double>{t1 - t0}.count() * 1e6
-                      << " µs\n";
-        }
-        // Dense Jacobian
-        else {
-            assert(J_values.size() == static_cast<length_t>(impl->nvar) *
-                                          static_cast<length_t>(impl->ncon));
-            cutest::logical jtrans = cutest::False, grad = cutest::True;
-            checked(impl->funcs.ccfg, "eval_jac_g: CUTEST_ccfg")(
-                &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &jtrans,
-                &impl->ncon, &impl->nvar, J_values.data(), &grad);
-        }
-    }
-    // Compute sparsity pattern without values
-    else {
+    assert(x.size() == static_cast<length_t>(impl->nvar));
+    // Sparse Jacobian
+    if (sparse) {
         assert(nnz_J >= 0);
-        assert(inner_idx.size() == static_cast<length_t>(nnz_J));
-        assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
+        assert(J_values.size() == static_cast<length_t>(nnz_J));
+        assert(storage_jac_g.rows.size() == static_cast<length_t>(nnz_J));
+        assert(storage_jac_g.cols.size() == static_cast<length_t>(nnz_J));
         const cutest::integer nnz = nnz_J;
-        checked(impl->funcs.csjp, "eval_jac_g: CUTEST_csjp")(
-            &nnz_J, &nnz, J_col.data(), J_row.data());
-        std::iota(J_perm.begin(), J_perm.end(), index_t{0});
-        util::sort_triplets(J_row, J_col, J_perm);
-        util::convert_triplets_to_ccs<config_t>(J_row, J_col, inner_idx,
-                                                outer_ptr, 1);
+        cutest::logical grad      = cutest::True;
+        checked(impl->funcs.ccfsg, "eval_jac_g: CUTEST_ccfsg")(
+            &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &nnz_J, &nnz,
+            J_values.data(), storage_jac_g.cols.data(),
+            storage_jac_g.rows.data(), &grad);
+    }
+    // Dense Jacobian
+    else {
+        assert(J_values.size() == static_cast<length_t>(impl->nvar) *
+                                      static_cast<length_t>(impl->ncon));
+        cutest::logical jtrans = cutest::False, grad = cutest::True;
+        checked(impl->funcs.ccfg, "eval_jac_g: CUTEST_ccfg")(
+            &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &jtrans,
+            &impl->ncon, &impl->nvar, J_values.data(), &grad);
     }
 }
-auto CUTEstProblem::get_jac_g_num_nonzeros() const -> length_t {
+auto CUTEstProblem::get_jac_g_sparsity() const -> Sparsity {
     if (!sparse)
-        return -1;
+        return sparsity::Dense<config_t>{
+            .rows     = m,
+            .cols     = n,
+            .symmetry = sparsity::Symmetry::Unsymmetric,
+        };
     if (nnz_J < 0) {
         checked(impl->funcs.cdimsj,
-                "get_jac_g_num_nonzeros: CUTEST_cdimsj")(&nnz_J);
+                "get_jac_g_sparsity: CUTEST_cdimsj")(&nnz_J);
         nnz_J -= impl->nvar;
         assert(nnz_J >= 0);
-        J_col.resize(nnz_J);
-        J_row.resize(nnz_J);
-        J_perm.resize(nnz_J);
-        J_work.resize(nnz_J);
+        storage_jac_g.cols.resize(nnz_J);
+        storage_jac_g.rows.resize(nnz_J);
+        const cutest::integer nnz = nnz_J;
+        checked(impl->funcs.csjp, "eval_jac_g: CUTEST_csjp")(
+            &nnz_J, &nnz, storage_jac_g.cols.data(), storage_jac_g.rows.data());
     }
-    return nnz_J;
+    using SparseCOO = sparsity::SparseCOO<config_t, int>;
+    return SparseCOO{
+        .rows        = m,
+        .cols        = n,
+        .symmetry    = sparsity::Symmetry::Unsymmetric,
+        .row_indices = storage_jac_g.rows,
+        .col_indices = storage_jac_g.cols,
+        .order       = SparseCOO::Unsorted,
+        .first_index = 1, // Fortran-style indices
+    };
 }
 void CUTEstProblem::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
@@ -450,73 +441,66 @@ void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
     Hv += JΣJv;
 }
 void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
-                                rindexvec inner_idx, rindexvec outer_ptr,
                                 rvec H_values) const {
     // Compute the nonzero values
-    if (H_values.size() > 0) {
-        assert(x.size() == static_cast<length_t>(impl->nvar));
-        assert(y.size() == static_cast<length_t>(impl->ncon));
-        const auto *mult = y.data();
-        if (scale != 1) {
-            impl->work = y * (real_t(1) / scale);
-            mult       = impl->work.data();
-        }
-        // Sparse Hessian
-        if (sparse) {
-            assert(nnz_H >= 0);
-            assert(H_values.size() == static_cast<length_t>(nnz_H));
-            assert(H_work.size() == static_cast<length_t>(nnz_H));
-            assert(inner_idx.size() == static_cast<length_t>(nnz_H));
-            assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
-            const cutest::integer nnz = nnz_H;
-            checked(impl->funcs.csh, "eval_hess_L: CUTEST_csh")(
-                &impl->nvar, &impl->ncon, x.data(), y.data(), &nnz_H, &nnz,
-                H_work.data(), H_col.data(), H_row.data());
-            auto t0  = std::chrono::steady_clock::now();
-            H_values = H_work(H_perm);
-            auto t1  = std::chrono::steady_clock::now();
-            std::cout << "Permutation of H took: "
-                      << std::chrono::duration<double>{t1 - t0}.count() * 1e6
-                      << " µs\n";
-        }
-        // Dense Hessian
-        else {
-            assert(H_values.size() == static_cast<length_t>(impl->nvar) *
-                                          static_cast<length_t>(impl->nvar));
-            checked(impl->funcs.cdh, "eval_hess_L: CUTEST_cdh")(
-                &impl->nvar, &impl->ncon, x.data(), mult, &impl->nvar,
-                H_values.data());
-        }
-        if (scale != 1)
-            H_values *= scale;
+    assert(x.size() == static_cast<length_t>(impl->nvar));
+    assert(y.size() == static_cast<length_t>(impl->ncon));
+    const auto *mult = y.data();
+    if (scale != 1) {
+        impl->work = y * (real_t(1) / scale);
+        mult       = impl->work.data();
     }
-    // Compute sparsity pattern without values
-    else {
+    // Sparse Hessian
+    if (sparse) {
         assert(nnz_H >= 0);
-        assert(inner_idx.size() == static_cast<length_t>(nnz_H));
-        assert(outer_ptr.size() == static_cast<length_t>(impl->nvar + 1));
+        assert(H_values.size() == static_cast<length_t>(nnz_H));
+        assert(storage_hess_L.rows.size() == static_cast<length_t>(nnz_H));
+        assert(storage_hess_L.cols.size() == static_cast<length_t>(nnz_H));
         const cutest::integer nnz = nnz_H;
-        checked(impl->funcs.cshp, "eval_hess_L: CUTEST_cshp")(
-            &impl->nvar, &nnz_H, &nnz, H_row.data(), H_col.data());
-        std::iota(H_perm.begin(), H_perm.end(), index_t{0});
-        util::sort_triplets(H_row, H_col, H_perm);
-        util::convert_triplets_to_ccs<config_t>(H_row, H_col, inner_idx,
-                                                outer_ptr, 1);
+        checked(impl->funcs.csh, "eval_hess_L: CUTEST_csh")(
+            &impl->nvar, &impl->ncon, x.data(), y.data(), &nnz_H, &nnz,
+            H_values.data(), storage_hess_L.cols.data(),
+            storage_hess_L.rows.data());
     }
+    // Dense Hessian
+    else {
+        assert(H_values.size() == static_cast<length_t>(impl->nvar) *
+                                      static_cast<length_t>(impl->nvar));
+        checked(impl->funcs.cdh,
+                "eval_hess_L: CUTEST_cdh")(&impl->nvar, &impl->ncon, x.data(),
+                                           mult, &impl->nvar, H_values.data());
+    }
+    if (scale != 1)
+        H_values *= scale;
 }
-auto CUTEstProblem::get_hess_L_num_nonzeros() const -> length_t {
+auto CUTEstProblem::get_hess_L_sparsity() const -> Sparsity {
     if (!sparse)
-        return -1;
+        return sparsity::Dense<config_t>{
+            .rows     = n,
+            .cols     = n,
+            .symmetry = sparsity::Symmetry::Upper,
+        };
     if (nnz_H < 0) {
         checked(impl->funcs.cdimsh,
-                "get_hess_L_num_nonzeros: CUTEST_cdimsh")(&nnz_H);
+                "get_hess_L_sparsity: CUTEST_cdimsh")(&nnz_H);
         assert(nnz_H >= 0);
-        H_col.resize(nnz_H);
-        H_row.resize(nnz_H);
-        H_perm.resize(nnz_H);
-        H_work.resize(nnz_H);
+        storage_hess_L.rows.resize(nnz_H);
+        storage_hess_L.cols.resize(nnz_H);
+        const cutest::integer nnz = nnz_H;
+        checked(impl->funcs.cshp, "eval_hess_L: CUTEST_cshp")(
+            &impl->nvar, &nnz_H, &nnz, storage_hess_L.rows.data(),
+            storage_hess_L.cols.data());
     }
-    return nnz_H;
+    using SparseCOO = sparsity::SparseCOO<config_t, int>;
+    return SparseCOO{
+        .rows        = n,
+        .cols        = n,
+        .symmetry    = sparsity::Symmetry::Upper,
+        .row_indices = storage_hess_L.rows,
+        .col_indices = storage_hess_L.cols,
+        .order       = SparseCOO::Unsorted,
+        .first_index = 1, // Fortran-style indices
+    };
 }
 auto CUTEstProblem::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));

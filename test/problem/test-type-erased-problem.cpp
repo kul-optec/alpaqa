@@ -111,14 +111,13 @@ TEST(TypeErasedProblem, RequiredProblem) {
 struct TestOptProblem : TestReqProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     TestOptProblem()          = default;
-    virtual ~TestOptProblem() = default;
     TestOptProblem(const TestOptProblem &) { throw std::logic_error("copy"); }
     TestOptProblem(TestOptProblem &&) { throw std::logic_error("move"); }
 
     // clang-format off
     MOCK_METHOD(void, eval_grad_gi, (crvec x, index_t i, rvec grad_gi), (const));
     MOCK_METHOD(void, eval_hess_L_prod, (crvec x, crvec y, real_t scale, crvec v, rvec Hv), (const));
-    MOCK_METHOD(void, eval_hess_L, (crvec x, crvec y, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values), (const));
+    MOCK_METHOD(void, eval_hess_L, (crvec x, crvec y, real_t scale, rvec H_values), (const));
     MOCK_METHOD(real_t, eval_f_grad_f, (crvec x, rvec grad_fx), (const));
     MOCK_METHOD(real_t, eval_f_g, (crvec x, rvec g), (const));
     MOCK_METHOD(void, eval_grad_f_grad_g_prod, (crvec x, crvec y, rvec grad_f, rvec grad_gxy), (const));
@@ -183,7 +182,7 @@ TEST(TypeErasedProblem, OptionalProblem) {
 
     ASSERT_NE(te_prob.vtable.eval_hess_L, nullptr);
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_hess_L);
-    te_prob.vtable.eval_hess_L(te_prob.self, x, x, 1, i, i, x, te_prob.vtable);
+    te_prob.vtable.eval_hess_L(te_prob.self, x, x, 1, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     ASSERT_NE(te_prob.vtable.eval_f_grad_f, nullptr);
@@ -300,7 +299,7 @@ TEST(TypeErasedProblem, CountedOptionalProblem) {
     EXPECT_EQ(evals.hess_L, 0);
     ASSERT_NE(te_prob.vtable.eval_hess_L, nullptr);
     EXPECT_CALL(prob, eval_hess_L);
-    te_prob.vtable.eval_hess_L(te_prob.self, x, x, 1, i, i, x, te_prob.vtable);
+    te_prob.vtable.eval_hess_L(te_prob.self, x, x, 1, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
     EXPECT_EQ(evals.hess_L, 1);
 
@@ -359,7 +358,6 @@ TEST(TypeErasedProblem, CountedOptionalProblem) {
 struct TestOptProblemNoHess : TestOptProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     TestOptProblemNoHess()                             = default;
-    virtual ~TestOptProblemNoHess()                    = default;
     TestOptProblemNoHess(const TestOptProblemNoHess &) = default;
     TestOptProblemNoHess(TestOptProblemNoHess &&)      = default;
 
@@ -420,7 +418,7 @@ TEST(TypeErasedProblem, TEOptionalProblem) {
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_f);
-    te_prob.eval_f(x);
+    (void)te_prob.eval_f(x);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_grad_f);
@@ -444,15 +442,15 @@ TEST(TypeErasedProblem, TEOptionalProblem) {
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_hess_L);
-    te_prob.eval_hess_L(x, x, 1, i, i, x);
+    te_prob.eval_hess_L(x, x, 1, x);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_f_grad_f);
-    te_prob.eval_f_grad_f(x, x);
+    (void)te_prob.eval_f_grad_f(x, x);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_f_g);
-    te_prob.eval_f_g(x, x);
+    (void)te_prob.eval_f_g(x, x);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_grad_f_grad_g_prod);
@@ -464,7 +462,7 @@ TEST(TypeErasedProblem, TEOptionalProblem) {
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_ψ);
-    te_prob.eval_ψ(x, x, x, x);
+    (void)te_prob.eval_ψ(x, x, x, x);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_grad_ψ);
@@ -472,7 +470,7 @@ TEST(TypeErasedProblem, TEOptionalProblem) {
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 
     EXPECT_CALL(te_prob.as<TestOptProblem>(), eval_ψ_grad_ψ);
-    te_prob.eval_ψ_grad_ψ(x, x, x, x, x, x);
+    (void)te_prob.eval_ψ_grad_ψ(x, x, x, x, x, x);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
 }
 
@@ -494,6 +492,6 @@ TEST(TypeErasedProblem, TEprovidesNoHess) {
     EXPECT_THROW(te_prob.eval_hess_L_prod(x, x, 1, x, x),
                  alpaqa::not_implemented_error);
 
-    EXPECT_THROW(te_prob.eval_hess_L(x, x, 1, i, i, x),
+    EXPECT_THROW(te_prob.eval_hess_L(x, x, 1, x),
                  alpaqa::not_implemented_error);
 }

@@ -177,7 +177,7 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
     to_sparsity_t convert_sparsity(from_sparsity_t from, Request request) {
         storage_index_t Δ = 0;
         if (request.first_index)
-            Δ = *request.first_index - from.first_index;
+            Δ = *request.first_index - static_cast<storage_index_t>(from.first_index);
         // Check if we can fully reuse the indices without changes
         if constexpr (std::is_same_v<StorageIndexFrom, StorageIndexTo>)
             if (Δ == 0)

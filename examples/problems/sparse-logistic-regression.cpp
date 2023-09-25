@@ -112,8 +112,7 @@ struct Problem {
 
     /// Hessian of Lagrangian.
     void eval_hess_L(const real_t *x, [[maybe_unused]] const real_t *y,
-                     real_t scale, [[maybe_unused]] index_t *inner_idx,
-                     [[maybe_unused]] index_t *outer_ptr, real_t *H) const {
+                     real_t scale, real_t *H) const {
         eval_hess_f(x, H);
         if (scale != 1)
             mmat{H, n, n} *= scale;
@@ -123,10 +122,8 @@ struct Problem {
     void eval_hess_ψ(const real_t *x, const real_t *y,
                      [[maybe_unused]] const real_t *Σ, real_t scale,
                      [[maybe_unused]] const real_t *zl,
-                     [[maybe_unused]] const real_t *zu,
-                     [[maybe_unused]] index_t *inner_idx,
-                     [[maybe_unused]] index_t *outer_ptr, real_t *H) const {
-        eval_hess_L(x, y, scale, inner_idx, outer_ptr, H);
+                     [[maybe_unused]] const real_t *zu, real_t *H) const {
+        eval_hess_L(x, y, scale, H);
     }
 
     /// Both the objective and its gradient.
@@ -150,7 +147,7 @@ struct Problem {
     }
 
     /// Jacobian of constraints.
-    void eval_jac_g(const real_t *, index_t *, index_t *, real_t *) const {}
+    void eval_jac_g(const real_t *, real_t *) const {}
 
     /// ℓ₁-regularization term.
     void initialize_l1_reg(real_t *lambda, length_t *size) const {

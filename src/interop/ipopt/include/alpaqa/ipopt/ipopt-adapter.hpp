@@ -1,6 +1,8 @@
 #pragma once
 
 #include <alpaqa/ipopt-adapter-export.h>
+#include <alpaqa/problem/sparsity-conversions.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 
 #include <IpTNLP.hpp>
@@ -70,13 +72,11 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
     /// @}
 
   private:
-    struct Sparsity {
-        length_t nnz;
-        indexvec inner_idx, outer_ptr;
-    } sparsity_J, sparsity_H;
-
-    static void set_sparsity(Index n, Index m, Index nele, Index *iRow,
-                             Index *jCol, const Sparsity &sp);
+    using SparsityConv =
+        sparsity::SparsityConverter<sparsity::Sparsity<config_t>,
+                                    sparsity::SparseCOO<config_t, Index>>;
+    SparsityConv sparsity_jac_g, sparsity_hess_L;
+    vec work_jac_g, work_hess_L;
 };
 
 } // namespace alpaqa

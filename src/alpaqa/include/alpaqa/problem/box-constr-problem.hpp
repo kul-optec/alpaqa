@@ -9,7 +9,7 @@ namespace alpaqa {
 
 /// Implements common problem functions for minimization problems with box
 /// constraints. Meant to be used as a base class for custom problem
-/// implementations.  
+/// implementations.
 /// Supports optional @f$ \ell_1 @f$-regularization.
 /// @ingroup grp_Problems
 template <Config Conf>

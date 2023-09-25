@@ -1,4 +1,7 @@
+#include <alpaqa/config/config.hpp>
+#include <alpaqa/dl/dl-problem.h>
 #include <alpaqa/dl/dl-problem.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 
 #include <dlfcn.h>
 #include <algorithm>
@@ -63,6 +66,63 @@ std::list<std::shared_ptr<void>> leaked_modules;
 void leak_lib(std::shared_ptr<void> handle) {
     std::lock_guard lck{leaked_modules_mutex};
     leaked_modules.emplace_back(std::move(handle));
+}
+
+template <Config Conf>
+Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
+    USING_ALPAQA_CONFIG(Conf);
+    switch (sp.kind) {
+        case alpaqa_sparsity_t::alpaqa_sparsity_dense:
+            return sparsity::Dense<config_t>{
+                .rows     = sp.dense.rows,
+                .cols     = sp.dense.cols,
+                .symmetry = static_cast<sparsity::Symmetry>(sp.dense.symmetry),
+            };
+        case alpaqa_sparsity_t::alpaqa_sparsity_sparse_csc:
+            return sparsity::SparseCSC<config_t>{
+                .rows = sp.sparse_csc.rows,
+                .cols = sp.sparse_csc.cols,
+                .symmetry =
+                    static_cast<sparsity::Symmetry>(sp.sparse_csc.symmetry),
+                .inner_idx =
+                    cmindexvec{sp.sparse_csc.inner_idx, sp.sparse_csc.nnz},
+                .outer_ptr =
+                    cmindexvec{sp.sparse_csc.outer_ptr, sp.sparse_csc.cols + 1},
+                .order = static_cast<sparsity::SparseCSC<config_t>::Order>(
+                    sp.sparse_csc.order),
+            };
+        case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo:
+            return sparsity::SparseCOO<config_t>{
+                .rows = sp.sparse_coo.rows,
+                .cols = sp.sparse_coo.cols,
+                .symmetry =
+                    static_cast<sparsity::Symmetry>(sp.sparse_coo.symmetry),
+                .row_indices =
+                    cmindexvec{sp.sparse_coo.row_indices, sp.sparse_coo.nnz},
+                .col_indices =
+                    cmindexvec{sp.sparse_coo.col_indices, sp.sparse_coo.nnz},
+                .order = static_cast<sparsity::SparseCOO<config_t>::Order>(
+                    sp.sparse_coo.order),
+                .first_index = sp.sparse_coo.first_index,
+            };
+        case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo_int:
+            return sparsity::SparseCOO<config_t, int>{
+                .rows = sp.sparse_coo_int.rows,
+                .cols = sp.sparse_coo_int.cols,
+                .symmetry =
+                    static_cast<sparsity::Symmetry>(sp.sparse_coo_int.symmetry),
+                .row_indices =
+                    Eigen::Map<const Eigen::VectorX<int>>{
+                        sp.sparse_coo_int.row_indices, sp.sparse_coo_int.nnz},
+                .col_indices =
+                    Eigen::Map<const Eigen::VectorX<int>>{
+                        sp.sparse_coo_int.col_indices, sp.sparse_coo_int.nnz},
+                .order = static_cast<sparsity::SparseCOO<config_t, int>::Order>(
+                    sp.sparse_coo_int.order),
+                .first_index = sp.sparse_coo_int.first_index,
+            };
+        default: throw std::invalid_argument("Invalid sparsity kind");
+    }
 }
 
 } // namespace
@@ -135,14 +195,14 @@ auto DLProblem::eval_grad_f(crvec x, rvec grad_fx) const -> void { return functi
 auto DLProblem::eval_g(crvec x, rvec gx) const -> void { return functions->eval_g(instance.get(), x.data(), gx.data()); }
 auto DLProblem::eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const -> void { return functions->eval_grad_g_prod(instance.get(), x.data(), y.data(), grad_gxy.data()); }
 auto DLProblem::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const -> void { return functions->eval_grad_gi(instance.get(), x.data(), i, grad_gi.data()); }
-auto DLProblem::eval_jac_g(crvec x, rindexvec inner_idx, rindexvec outer_ptr, rvec J_values) const -> void { return functions->eval_jac_g(instance.get(), x.data(), inner_idx.data(), outer_ptr.data(), J_values.size() == 0 ? nullptr : J_values.data()); }
-auto DLProblem::get_jac_g_num_nonzeros() const -> length_t { return functions->get_jac_g_num_nonzeros(instance.get()); }
+auto DLProblem::eval_jac_g(crvec x, rvec J_values) const -> void { return functions->eval_jac_g(instance.get(), x.data(), J_values.size() == 0 ? nullptr : J_values.data()); }
+auto DLProblem::get_jac_g_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_jac_g_sparsity(instance.get())); }
 auto DLProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_hess_L_prod(instance.get(), x.data(), y.data(), scale, v.data(), Hv.data()); }
-auto DLProblem::eval_hess_L(crvec x, crvec y, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values) const -> void { return functions->eval_hess_L(instance.get(), x.data(), y.data(), scale, inner_idx.data(), outer_ptr.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
-auto DLProblem::get_hess_L_num_nonzeros() const -> length_t { return functions->get_hess_L_num_nonzeros(instance.get()); }
+auto DLProblem::eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const -> void { return functions->eval_hess_L(instance.get(), x.data(), y.data(), scale, H_values.size() == 0 ? nullptr : H_values.data()); }
+auto DLProblem::get_hess_L_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_hess_L_sparsity(instance.get())); }
 auto DLProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_hess_ψ_prod(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), v.data(), Hv.data()); }
-auto DLProblem::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values) const -> void { return functions->eval_hess_ψ(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), inner_idx.data(), outer_ptr.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
-auto DLProblem::get_hess_ψ_num_nonzeros() const -> length_t { return functions->get_hess_ψ_num_nonzeros(instance.get()); }
+auto DLProblem::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const -> void { return functions->eval_hess_ψ(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
+auto DLProblem::get_hess_ψ_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_hess_ψ_sparsity(instance.get())); }
 auto DLProblem::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t { return functions->eval_f_grad_f(instance.get(), x.data(), grad_fx.data()); }
 auto DLProblem::eval_f_g(crvec x, rvec g) const -> real_t { return functions->eval_f_g(instance.get(), x.data(), g.data()); }
 auto DLProblem::eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const -> void { return functions->eval_grad_f_grad_g_prod(instance.get(), x.data(), y.data(), grad_f.data(), grad_gxy.data()); }
@@ -156,14 +216,14 @@ bool DLProblem::provides_eval_grad_f() const { return functions->eval_grad_f != 
 bool DLProblem::provides_eval_g() const { return functions->eval_g != nullptr; }
 bool DLProblem::provides_eval_grad_g_prod() const { return functions->eval_grad_g_prod != nullptr; }
 bool DLProblem::provides_eval_jac_g() const { return functions->eval_jac_g != nullptr; }
-bool DLProblem::provides_get_jac_g_num_nonzeros() const { return functions->get_jac_g_num_nonzeros != nullptr; }
+bool DLProblem::provides_get_jac_g_sparsity() const { return functions->get_jac_g_sparsity != nullptr; }
 bool DLProblem::provides_eval_grad_gi() const { return functions->eval_grad_gi != nullptr; }
 bool DLProblem::provides_eval_hess_L_prod() const { return functions->eval_hess_L_prod != nullptr; }
 bool DLProblem::provides_eval_hess_L() const { return functions->eval_hess_L != nullptr; }
-bool DLProblem::provides_get_hess_L_num_nonzeros() const { return functions->get_hess_L_num_nonzeros != nullptr; }
+bool DLProblem::provides_get_hess_L_sparsity() const { return functions->get_hess_L_sparsity != nullptr; }
 bool DLProblem::provides_eval_hess_ψ_prod() const { return functions->eval_hess_ψ_prod != nullptr; }
 bool DLProblem::provides_eval_hess_ψ() const { return functions->eval_hess_ψ != nullptr; }
-bool DLProblem::provides_get_hess_ψ_num_nonzeros() const { return functions->get_hess_ψ_num_nonzeros != nullptr; }
+bool DLProblem::provides_get_hess_ψ_sparsity() const { return functions->get_hess_ψ_sparsity != nullptr; }
 bool DLProblem::provides_eval_f_grad_f() const { return functions->eval_f_grad_f != nullptr; }
 bool DLProblem::provides_eval_f_g() const { return functions->eval_f_g != nullptr; }
 bool DLProblem::provides_eval_grad_f_grad_g_prod() const { return functions->eval_grad_f_grad_g_prod != nullptr; }

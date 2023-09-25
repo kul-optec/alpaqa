@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/problem/problem-counters.hpp>
+#include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/util/timed.hpp>
 
@@ -23,7 +24,8 @@ namespace alpaqa {
 template <class Problem>
 struct ProblemWithCounters {
     USING_ALPAQA_CONFIG_TEMPLATE(std::remove_cvref_t<Problem>::config_t);
-    using Box = typename TypeErasedProblem<config_t>::Box;
+    using Box      = typename TypeErasedProblem<config_t>::Box;
+    using Sparsity = sparsity::Sparsity<config_t>;
 
     // clang-format off
     void eval_proj_diff_g(crvec z, rvec e) const { ++evaluations->proj_diff_g; return timed(evaluations->time.proj_diff_g, std::bind(&std::remove_cvref_t<Problem>::eval_proj_diff_g, &problem, z, e)); }
@@ -35,14 +37,14 @@ struct ProblemWithCounters {
     void eval_g(crvec x, rvec gx) const { ++evaluations->g; return timed(evaluations->time.g, std::bind(&std::remove_cvref_t<Problem>::eval_g, &problem, x, gx)); }
     void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const { ++evaluations->grad_g_prod; return timed(evaluations->time.grad_g_prod, std::bind(&std::remove_cvref_t<Problem>::eval_grad_g_prod, &problem, x, y, grad_gxy)); }
     void eval_grad_gi(crvec x, index_t i, rvec grad_gi) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_gi; } { ++evaluations->grad_gi; return timed(evaluations->time.grad_gi, std::bind(&std::remove_cvref_t<Problem>::eval_grad_gi, &problem, x, i, grad_gi)); }
-    void eval_jac_g(crvec x, rindexvec inner_idx, rindexvec outer_ptr, rvec J_values) const requires requires { &std::remove_cvref_t<Problem>::eval_jac_g; } { if (J_values.size() == 0) return problem.eval_jac_g(x, inner_idx, outer_ptr, J_values); ++evaluations->jac_g; return timed(evaluations->time.jac_g, std::bind(&std::remove_cvref_t<Problem>::eval_jac_g, &problem, x, inner_idx, outer_ptr, J_values)); }
-    length_t get_jac_g_num_nonzeros() const requires requires { &std::remove_cvref_t<Problem>::get_jac_g_num_nonzeros; } { return problem.get_jac_g_num_nonzeros(); }
+    void eval_jac_g(crvec x, rvec J_values) const requires requires { &std::remove_cvref_t<Problem>::eval_jac_g; } { ++evaluations->jac_g; return timed(evaluations->time.jac_g, std::bind(&std::remove_cvref_t<Problem>::eval_jac_g, &problem, x, J_values)); }
+    Sparsity get_jac_g_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_jac_g_sparsity; } { return problem.get_jac_g_sparsity(); }
     void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L_prod; } { ++evaluations->hess_L_prod; return timed(evaluations->time.hess_L_prod, std::bind(&std::remove_cvref_t<Problem>::eval_hess_L_prod, &problem, x, y, scale, v, Hv)); }
-    void eval_hess_L(crvec x, crvec y, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L; } { if (H_values.size() == 0) return problem.eval_hess_L(x, y, scale, inner_idx, outer_ptr, H_values); ++evaluations->hess_L; return timed(evaluations->time.hess_L, std::bind(&std::remove_cvref_t<Problem>::eval_hess_L, &problem, x, y, scale, inner_idx, outer_ptr, H_values)); }
-    length_t get_hess_L_num_nonzeros() const requires requires { &std::remove_cvref_t<Problem>::get_hess_L_num_nonzeros; } { return problem.get_hess_L_num_nonzeros(); }
+    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L; } { ++evaluations->hess_L; return timed(evaluations->time.hess_L, std::bind(&std::remove_cvref_t<Problem>::eval_hess_L, &problem, x, y, scale, H_values)); }
+    Sparsity get_hess_L_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_hess_L_sparsity; } { return problem.get_hess_L_sparsity(); }
     void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ_prod; } { ++evaluations->hess_ψ_prod; return timed(evaluations->time.hess_ψ_prod, std::bind(&std::remove_cvref_t<Problem>::eval_hess_ψ_prod, &problem, x, y, Σ, scale, v, Hv)); }
-    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rindexvec inner_idx, rindexvec outer_ptr, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ; } { if (H_values.size() == 0) return problem.eval_hess_ψ(x, y, Σ, scale, inner_idx, outer_ptr, H_values); ++evaluations->hess_ψ; return timed(evaluations->time.hess_ψ, std::bind(&std::remove_cvref_t<Problem>::eval_hess_ψ, &problem, x, y, Σ, scale, inner_idx, outer_ptr, H_values)); }
-    length_t get_hess_ψ_num_nonzeros() const requires requires { &std::remove_cvref_t<Problem>::get_hess_ψ_num_nonzeros; } { return problem.get_hess_ψ_num_nonzeros(); }
+    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ; } { ++evaluations->hess_ψ; return timed(evaluations->time.hess_ψ, std::bind(&std::remove_cvref_t<Problem>::eval_hess_ψ, &problem, x, y, Σ, scale, H_values)); }
+    Sparsity get_hess_ψ_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_hess_ψ_sparsity; } { return problem.get_hess_ψ_sparsity(); }
     real_t eval_f_grad_f(crvec x, rvec grad_fx) const requires requires { &std::remove_cvref_t<Problem>::eval_f_grad_f; } { ++evaluations->f_grad_f; return timed(evaluations->time.f_grad_f, std::bind(&std::remove_cvref_t<Problem>::eval_f_grad_f, &problem, x, grad_fx)); }
     real_t eval_f_g(crvec x, rvec g) const requires requires { &std::remove_cvref_t<Problem>::eval_f_g; } { ++evaluations->f_g; return timed(evaluations->time.f_g, std::bind(&std::remove_cvref_t<Problem>::eval_f_g, &problem, x, g)); }
     void eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_f_grad_g_prod; } { ++evaluations->grad_f_grad_g_prod; return timed(evaluations->time.grad_f_grad_g_prod, std::bind(&std::remove_cvref_t<Problem>::eval_grad_f_grad_g_prod, &problem, x, y, grad_f, grad_gxy)); }
@@ -57,13 +59,13 @@ struct ProblemWithCounters {
     [[nodiscard]] bool provides_eval_grad_gi() const requires requires (Problem p) { { p.provides_eval_grad_gi() } -> std::convertible_to<bool>; } { return problem.provides_eval_grad_gi(); }
     [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const requires requires (Problem p) { { p.provides_eval_inactive_indices_res_lna() } -> std::convertible_to<bool>; } { return problem.provides_eval_inactive_indices_res_lna(); }
     [[nodiscard]] bool provides_eval_jac_g() const requires requires (Problem p) { { p.provides_eval_jac_g() } -> std::convertible_to<bool>; } { return problem.provides_eval_jac_g(); }
-    [[nodiscard]] bool provides_get_jac_g_num_nonzeros() const requires requires (Problem p) { { p.provides_get_jac_g_num_nonzeros() } -> std::convertible_to<bool>; } { return problem.provides_get_jac_g_num_nonzeros(); }
+    [[nodiscard]] bool provides_get_jac_g_sparsity() const requires requires (Problem p) { { p.provides_get_jac_g_sparsity() } -> std::convertible_to<bool>; } { return problem.provides_get_jac_g_sparsity(); }
     [[nodiscard]] bool provides_eval_hess_L_prod() const requires requires (Problem p) { { p.provides_eval_hess_L_prod() } -> std::convertible_to<bool>; } { return problem.provides_eval_hess_L_prod(); }
     [[nodiscard]] bool provides_eval_hess_L() const requires requires (Problem p) { { p.provides_eval_hess_L() } -> std::convertible_to<bool>; } { return problem.provides_eval_hess_L(); }
-    [[nodiscard]] bool provides_get_hess_L_num_nonzeros() const requires requires (Problem p) { { p.provides_get_hess_L_num_nonzeros() } -> std::convertible_to<bool>; } { return problem.provides_get_hess_L_num_nonzeros(); }
+    [[nodiscard]] bool provides_get_hess_L_sparsity() const requires requires (Problem p) { { p.provides_get_hess_L_sparsity() } -> std::convertible_to<bool>; } { return problem.provides_get_hess_L_sparsity(); }
     [[nodiscard]] bool provides_eval_hess_ψ_prod() const requires requires (Problem p) { { p.provides_eval_hess_ψ() } -> std::convertible_to<bool>; } { return problem.provides_eval_hess_ψ_prod(); }
     [[nodiscard]] bool provides_eval_hess_ψ() const requires requires (Problem p) { { p.provides_eval_hess_ψ() } -> std::convertible_to<bool>; } { return problem.provides_eval_hess_ψ(); }
-    [[nodiscard]] bool provides_get_hess_ψ_num_nonzeros() const requires requires (Problem p) { { p.provides_get_hess_ψ_num_nonzeros() } -> std::convertible_to<bool>; } { return problem.provides_get_hess_ψ_num_nonzeros(); }
+    [[nodiscard]] bool provides_get_hess_ψ_sparsity() const requires requires (Problem p) { { p.provides_get_hess_ψ_sparsity() } -> std::convertible_to<bool>; } { return problem.provides_get_hess_ψ_sparsity(); }
     [[nodiscard]] bool provides_eval_f_grad_f() const requires requires (Problem p) { { p.provides_eval_f_grad_f() } -> std::convertible_to<bool>; } { return problem.provides_eval_f_grad_f(); }
     [[nodiscard]] bool provides_eval_f_g() const requires requires (Problem p) { { p.provides_eval_f_g() } -> std::convertible_to<bool>; } { return problem.provides_eval_f_g(); }
     [[nodiscard]] bool provides_eval_grad_f_grad_g_prod() const requires requires (Problem p) { { p.provides_eval_grad_f_grad_g_prod() } -> std::convertible_to<bool>; } { return problem.provides_eval_grad_f_grad_g_prod(); }
