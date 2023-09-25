@@ -213,7 +213,7 @@ ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfig
 /// Instead, [structural typing](https://en.wikipedia.org/wiki/Structural_type_system)
 /// is used. The @ref ProblemVTable constructor uses reflection to discover
 /// which member functions are provided by the problem implementation. See
-/// @ref page_problem_formulations for more information, and
+/// @ref page-problem-formulations for more information, and
 /// @ref C++/CustomCppProblem/main.cpp for an example.
 template <Config Conf = DefaultConfig, class Allocator = std::allocator<std::byte>>
 class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator> {

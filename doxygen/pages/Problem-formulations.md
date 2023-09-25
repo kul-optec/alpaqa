@@ -1,8 +1,8 @@
-# Problem formulations {#page_problem_formulations}
+# Problem formulations {#page-problem-formulations}
 
 [TOC]
 
-## General NLP formulation {#problem_formulations_general}
+## General NLP formulation {#problem-formulations-general}
 
 Most alpaqa solvers deal with problems in the following form:
 
@@ -118,33 +118,24 @@ Some solvers can exploit information about the Hessian of the (augmented)
 Lagrangian of the problem. To use these solvers, some of the following functions
 are required, they should be added as member functions to your problem struct.
   - @ref alpaqa::TypeErasedProblem::eval_jac_g "eval_jac_g"
-  - @ref alpaqa::TypeErasedProblem::get_jac_g_num_nonzeros "get_jac_g_num_nonzeros"
+  - @ref alpaqa::TypeErasedProblem::get_jac_g_sparsity "get_jac_g_sparsity"
   - @ref alpaqa::TypeErasedProblem::eval_grad_gi "eval_grad_gi"
   - @ref alpaqa::TypeErasedProblem::eval_hess_L_prod "eval_hess_L_prod"
   - @ref alpaqa::TypeErasedProblem::eval_hess_L "eval_hess_L"
-  - @ref alpaqa::TypeErasedProblem::get_hess_L_num_nonzeros "get_hess_L_num_nonzeros"
+  - @ref alpaqa::TypeErasedProblem::get_hess_L_sparsity "get_hess_L_sparsity"
   - @ref alpaqa::TypeErasedProblem::eval_hess_ψ_prod "eval_hess_ψ_prod"
   - @ref alpaqa::TypeErasedProblem::eval_hess_ψ "eval_hess_ψ"
-  - @ref alpaqa::TypeErasedProblem::get_hess_ψ_num_nonzeros "get_hess_ψ_num_nonzeros"
+  - @ref alpaqa::TypeErasedProblem::get_hess_ψ_sparsity "get_hess_ψ_sparsity"
 
-Sparse matrices are stored in [compressed column storage](https://www.eigen.tuxfamily.org/dox/group__TutorialSparse.html#TutorialSparseIntro)
-(CCS) format. For symmetric Hessian matrices, only the upper triangle is stored.
-Upon initialization, the number of nonzeros is queried by the solver using the
-`get_xyz_num_nonzeros()` function, and storage is allocated for the arrays of
-column/row indices and for the nonzero values. Then the `eval_xyz()` function is
-called once with an empty `values` argument (`values.size() == 0`), indicating
-that the column/row indices representing the sparsity should be initialized.
-Subsequent calls to `eval_xyz()` then pass a non-empty `values` argument, in
-addition to the initialized column/row indices, and the user should then
-overwrite the nonzero values of the matrix.
-
-If the matrix is dense, `get_xyz_num_nonzeros()` should return `-1`, the
-column/row indices are not used, and the `values` argument to `eval_xyz()`
-provides storage for a dense column-major matrix.
-
-@note   Currently, symmetric dense matrices should store the full matrix, not
-just the upper triangular part. This is different from the sparse case, and we
-might want to change this in the future.
+Matrices can be stored in a dense format, in [compressed sparse column storage](https://www.eigen.tuxfamily.org/dox/group__TutorialSparse.html#TutorialSparseIntro)
+(CCS) format, or in sparse coordinate list format (COO). Solvers convert the
+input to a format that they support, so some performance could be gained by
+choosing the appropriate storage type, because conversions may involve sorting
+indices and permuting the nonzero values. See @ref alpaqa::sparsity for details.
+For sparse symmetric Hessian matrices, only the upper-triangular part is stored.
+Dense matrices are always stored in full, even if they are symmetric.
+The matrix evaluation functions only overwrite the nonzero values, vectorized
+by column.
 
 Some solvers do not require the full Hessian matrices, but use Hessian-vector
 products only, for example when using Newton-CG. These products can often be

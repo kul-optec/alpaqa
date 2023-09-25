@@ -13,9 +13,15 @@
 
 namespace alpaqa::sparsity {
 
+/// Converts one matrix storage format to another.
+/// @tparam From
+///         The input sparsity pattern type.
+/// @tparam To
+///         The output sparsity pattern type.
 template <class From, class To>
 struct SparsityConverter;
 
+/// Additional options for the conversion performed by @ref SparsityConverter.
 template <class To>
 struct SparsityConversionRequest;
 
@@ -39,6 +45,7 @@ struct SparsityConverter<Dense<Conf>, Dense<Conf>> {
 
 template <Config Conf, class StorageIndex>
 struct SparsityConversionRequest<SparseCOO<Conf, StorageIndex>> {
+    /// Convert the index offset (zero for C/C++, one for Fortran).
     std::optional<StorageIndex> first_index = std::nullopt;
 };
 
@@ -213,6 +220,7 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
 
 template <Config Conf>
 struct SparsityConversionRequest<SparseCSC<Conf>> {
+    /// Sort the indices.
     std::optional<typename SparseCSC<Conf>::Order> order = std::nullopt;
 };
 
@@ -454,13 +462,15 @@ template <class To>
 using ConverterVariant =
     detail::ConverterVariantHelper<To, SparsityVariant<typename To::config_t>>::type;
 
+/// Converts any supported matrix storage format to the given format.
+/// @see @ref Sparsity
 template <class Conf, class To>
     requires std::same_as<Conf, typename To::config_t>
 struct SparsityConverter<Sparsity<Conf>, To> {
     USING_ALPAQA_CONFIG(Conf);
-    using from_sparsity = Sparsity<Conf>;
-    using to_sparsity_t = To;
-    using Request       = SparsityConversionRequest<to_sparsity_t>;
+    using from_sparsity_t = Sparsity<Conf>;
+    using to_sparsity_t   = To;
+    using Request         = SparsityConversionRequest<to_sparsity_t>;
     SparsityConverter(Sparsity<config_t> from, Request request = {})
         : converter{std::visit(wrap_converter(std::move(request)), from)} {}
     ConverterVariant<To> converter;

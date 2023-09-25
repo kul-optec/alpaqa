@@ -39,10 +39,11 @@
  *       for problem definitions. This means that you just have to provide the
  *       supported functions with the correct names and arguments, and the
  *       library will pick them up automatically, you don't have to inherit from
- *       any abstract interfaces or override any virtual functions.
+ *       any abstract interfaces or override any virtual functions. See
+ *       @ref page-problem-formulations for more information.
  *
  * @see If you haven't already, be sure to go through the
- *      @ref page_problem_formulations page.
+ *      @ref page-problem-formulations page.
  *
  * ## Solver selection
  *

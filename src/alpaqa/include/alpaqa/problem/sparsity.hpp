@@ -7,12 +7,15 @@
 
 namespace alpaqa::sparsity {
 
+/// Describes the symmetry of matrices.
 enum class Symmetry {
-    Unsymmetric = 0,
-    Upper = 1,
-    Lower = 2,
+    Unsymmetric = 0, ///< No symmetry.
+    Upper       = 1, ///< Symmetric, upper-triangular part is stored.
+    Lower       = 2, ///< Symmetric, lower-triangular part is stored.
 };
 
+/// Dense matrix structure. Stores all elements in column-major storage.
+/// Symmetric dense matrices always store all elements.
 template <Config Conf>
 struct Dense {
     USING_ALPAQA_CONFIG(Conf);
@@ -20,6 +23,7 @@ struct Dense {
     Symmetry symmetry = Symmetry::Unsymmetric;
 };
 
+/// Sparse compressed-column structure (CCS or CSC).
 template <Config Conf>
 struct SparseCSC {
     USING_ALPAQA_CONFIG(Conf);
@@ -35,12 +39,14 @@ struct SparseCSC {
     };
     Order order = Unsorted;
 
+    /// Get the number of structurally nonzero elements.
     length_t nnz() const {
         assert(outer_ptr.size() == cols + 1);
         return inner_idx.size();
     }
 };
 
+/// Sparse coordinate list structure (COO).
 template <Config Conf, class StorageIndex = index_t<Conf>>
 struct SparseCOO {
     USING_ALPAQA_CONFIG(Conf);
@@ -70,6 +76,7 @@ struct SparseCOO {
     Order order                 = Unsorted;
     storage_index_t first_index = 0; ///< Zero for C/C++, one for Fortran.
 
+    /// Get the number of structurally nonzero elements.
     length_t nnz() const {
         assert(row_indices.size() == col_indices.size());
         return row_indices.size();
@@ -82,6 +89,8 @@ using SparsityVariant = std::variant<Dense<Conf>,     //
                                      SparseCOO<Conf>, //
                                      SparseCOO<Conf, int>>;
 
+/// Stores any of the supported sparsity patterns.
+/// @see @ref SparsityConverter<Sparsity<Conf>, To>
 template <Config Conf>
 struct Sparsity : SparsityVariant<Conf> {
     using SparsityVariant<Conf>::variant;
@@ -96,6 +105,7 @@ template <class... Ts>
 overloaded(Ts...) -> overloaded<Ts...>;
 } // namespace detail
 
+/// Returns true if the sparsity pattern represents a dense matrix.
 template <Config Conf>
 bool is_dense(const Sparsity<Conf> &sp) {
     auto visitor = detail::overloaded{
@@ -105,6 +115,7 @@ bool is_dense(const Sparsity<Conf> &sp) {
     return std::visit(visitor, sp);
 }
 
+/// Get the number of structurally nonzero elements.
 template <Config Conf>
 length_t<Conf> get_nnz(const Sparsity<Conf> &sp) {
     auto visitor = detail::overloaded{
@@ -114,6 +125,7 @@ length_t<Conf> get_nnz(const Sparsity<Conf> &sp) {
     return std::visit(visitor, sp);
 }
 
+/// Returns the symmetry of the sparsity pattern.
 template <Config Conf>
 Symmetry get_symmetry(const Sparsity<Conf> &sp) {
     return std::visit([](const auto &s) { return s.symmetry; }, sp);

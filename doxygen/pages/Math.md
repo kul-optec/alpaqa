@@ -1,4 +1,4 @@
-# Math {#page_math}
+# Math {#page-math}
 
 [TOC]
 
