@@ -260,9 +260,10 @@ void problem_methods(py::class_<T, Args...> &cls) {
                     vec G_values(coo.nnz());
                     func(G_values);
                     auto sp = py::module::import("scipy.sparse");
+                    auto Δ  = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
                     return sp.attr("coo_array")(
                         py::make_tuple(std::move(G_values),
-                                       py::make_tuple(coo.row_indices, coo.col_indices)),
+                                       py::make_tuple(coo.row_indices - Δ, coo.col_indices - Δ)),
                         "shape"_a = py::make_tuple(coo.rows, coo.cols));
                 },
             },

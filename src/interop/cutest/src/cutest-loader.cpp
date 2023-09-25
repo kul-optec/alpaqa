@@ -459,8 +459,8 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
         const cutest::integer nnz = nnz_H;
         checked(impl->funcs.csh, "eval_hess_L: CUTEST_csh")(
             &impl->nvar, &impl->ncon, x.data(), y.data(), &nnz_H, &nnz,
-            H_values.data(), storage_hess_L.cols.data(),
-            storage_hess_L.rows.data());
+            H_values.data(), storage_hess_L.rows.data(),
+            storage_hess_L.cols.data());
     }
     // Dense Hessian
     else {
