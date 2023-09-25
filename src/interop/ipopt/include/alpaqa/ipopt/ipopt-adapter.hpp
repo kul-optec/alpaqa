@@ -13,7 +13,8 @@ namespace alpaqa {
 class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
   public:
     USING_ALPAQA_CONFIG(EigenConfigd);
-    using Problem = TypeErasedProblem<config_t>;
+    using Sparsity = sparsity::Sparsity<config_t>;
+    using Problem  = TypeErasedProblem<config_t>;
     const Problem &problem;
     vec initial_guess;
     vec initial_guess_bounds_multipliers_l;
@@ -73,10 +74,14 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
 
   private:
     using SparsityConv =
-        sparsity::SparsityConverter<sparsity::Sparsity<config_t>,
+        sparsity::SparsityConverter<Sparsity,
                                     sparsity::SparseCOO<config_t, Index>>;
-    SparsityConv sparsity_jac_g, sparsity_hess_L;
-    vec work_jac_g, work_hess_L;
+    Sparsity orig_sparsity_jac_g     = problem.get_jac_g_sparsity(),
+             orig_sparsity_hess_L    = problem.get_hess_L_sparsity();
+    SparsityConv cvt_sparsity_jac_g  = orig_sparsity_jac_g,
+                 cvt_sparsity_hess_L = orig_sparsity_hess_L;
+    vec work_jac_g                   = vec(get_nnz(orig_sparsity_jac_g)),
+        work_hess_L                  = vec(get_nnz(orig_sparsity_hess_L));
 };
 
 } // namespace alpaqa

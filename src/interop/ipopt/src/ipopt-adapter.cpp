@@ -1,13 +1,11 @@
 #include <alpaqa/ipopt/ipopt-adapter.hpp>
 
 #include <IpIpoptCalculatedQuantities.hpp>
+#include <stdexcept>
 
 namespace alpaqa {
 
-IpoptAdapter::IpoptAdapter(const Problem &problem)
-    : problem(problem),
-      sparsity_jac_g(this->problem.get_jac_g_sparsity(), {.first_index = 0}),
-      sparsity_hess_L(this->problem.get_hess_L_sparsity(), {.first_index = 0}) {
+IpoptAdapter::IpoptAdapter(const Problem &problem) : problem(problem) {
     work_jac_g.resize(get_nnz(this->problem.get_jac_g_sparsity()));
     work_hess_L.resize(get_nnz(this->problem.get_hess_L_sparsity()));
 }
@@ -16,10 +14,17 @@ bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
                                 Index &nnz_h_lag, IndexStyleEnum &index_style) {
     n         = static_cast<Index>(problem.get_n());
     m         = static_cast<Index>(problem.get_m());
-    nnz_jac_g = static_cast<Index>(sparsity_jac_g.get_sparsity().nnz());
-    nnz_h_lag = static_cast<Index>(sparsity_hess_L.get_sparsity().nnz());
-    // use the C style indexing (0-based)
-    index_style = TNLP::C_STYLE;
+    nnz_jac_g = static_cast<Index>(cvt_sparsity_jac_g.get_sparsity().nnz());
+    nnz_h_lag = static_cast<Index>(cvt_sparsity_hess_L.get_sparsity().nnz());
+    auto jac_g_index  = cvt_sparsity_jac_g.get_sparsity().first_index;
+    auto hess_L_index = cvt_sparsity_hess_L.get_sparsity().first_index;
+    if (jac_g_index != hess_L_index)
+        throw std::invalid_argument(
+            "All problem matrices should use the same index convention");
+    if (jac_g_index != 0 && jac_g_index != 1)
+        throw std::invalid_argument(
+            "Sparse matrix indices should start at 0 or 1");
+    index_style = jac_g_index == 0 ? TNLP::C_STYLE : TNLP::FORTRAN_STYLE;
     return true;
 }
 
@@ -88,11 +93,11 @@ bool IpoptAdapter::eval_jac_g(Index n, const Number *x,
     if (!problem.provides_eval_jac_g())
         throw std::logic_error("Missing required function: eval_jac_g");
     if (values == nullptr) { // Initialize sparsity
-        std::ranges::copy(sparsity_jac_g.get_sparsity().row_indices, iRow);
-        std::ranges::copy(sparsity_jac_g.get_sparsity().col_indices, jCol);
+        std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().row_indices, iRow);
+        std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
         problem.eval_jac_g(cmvec{x, n}, work_jac_g);
-        sparsity_jac_g.convert_values(work_jac_g, mvec{values, nele_jac});
+        cvt_sparsity_jac_g.convert_values(work_jac_g, mvec{values, nele_jac});
     }
     return true;
 }
@@ -104,12 +109,13 @@ bool IpoptAdapter::eval_h(Index n, const Number *x, [[maybe_unused]] bool new_x,
     if (!problem.provides_eval_hess_L())
         throw std::logic_error("Missing required function: eval_hess_L");
     if (values == nullptr) { // Initialize sparsity
-        std::ranges::copy(sparsity_hess_L.get_sparsity().row_indices, iRow);
-        std::ranges::copy(sparsity_hess_L.get_sparsity().col_indices, jCol);
+        std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().row_indices, iRow);
+        std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
         problem.eval_hess_L(cmvec{x, n}, cmvec{lambda, m}, obj_factor,
                             work_hess_L);
-        sparsity_hess_L.convert_values(work_hess_L, mvec{values, nele_hess});
+        cvt_sparsity_hess_L.convert_values(work_hess_L,
+                                           mvec{values, nele_hess});
     }
     return true;
 }
