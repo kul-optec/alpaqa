@@ -10,7 +10,7 @@ namespace alpaqa::sparsity {
 enum class Symmetry {
     Unsymmetric = 0,
     Upper = 1,
-    Lower = -1,
+    Lower = 2,
 };
 
 template <Config Conf>

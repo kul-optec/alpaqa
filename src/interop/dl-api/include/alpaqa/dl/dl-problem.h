@@ -24,7 +24,7 @@ typedef alpaqa_length_t alpaqa_index_t;
 typedef enum {
     alpaqa_unsymmetric = 0,
     alpaqa_upper       = 1,
-    alpaqa_lower       = -1,
+    alpaqa_lower       = 2,
 } alpaqa_symmetry;
 
 /// Sparsity of matrices.
