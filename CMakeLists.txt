@@ -59,8 +59,8 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 include(cmake/Warnings.cmake)
 add_warnings_target(warnings ${ALPAQA_WARNINGS_AS_ERRORS})
 add_library(alpaqa::warnings ALIAS warnings)
-set(CMAKE_CXX_EXTENSIONS Off)
-set(CMAKE_C_EXTENSIONS Off)
+set(CMAKE_CXX_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
+set(CMAKE_C_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
 
 # Compiler options
 if (ALPAQA_WITH_PYTHON)
