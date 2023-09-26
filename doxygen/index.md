@@ -22,7 +22,7 @@ The solvers in this library solve minimization problems of the following form:
 [**Doxygen documentation**](./index.html)  
 
 For the Python interface, it is recommended to consult the [Sphinx documentation](../Sphinx/index.html), whereas the Doxygen documentation provides
-the best overview of the C++ API (see especially the [**Modules**](./modules.html)
+the best overview of the C++ API (see especially the [**Topics**](./topics.html)
 page).
 
 ## Examples

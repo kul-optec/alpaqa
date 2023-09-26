@@ -54,6 +54,10 @@ function run_doxygen_coverage {
     # Generate the Doxygen C++ documentation
     cmake --build "$tmpdir/build" -t docs
 
+    # Need to support old links to modules.html
+    [ -e "$outdir/$htmldir/modules.html" ] || \
+        cp "$outdir/$htmldir/topics.html" "$outdir/$htmldir/modules.html"
+
     # Tweak the settings for Doxygen for breathe
     cat <<- EOF > "$tmpdir/tmp-Doxyfile"
 	@INCLUDE = "$repodir/doxygen/Doxyfile.breathe"
