@@ -5,7 +5,7 @@
 
 namespace alpaqa {
 
-struct OwningQPALMData : QPALMData {
+struct QPALM_ADAPTER_EXPORT OwningQPALMData : QPALMData {
     USING_ALPAQA_CONFIG(EigenConfigd);
     struct Storage {
         qpalm::ladel_sparse_matrix_ptr Q, A;
