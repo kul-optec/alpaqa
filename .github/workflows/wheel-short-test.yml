@@ -168,6 +168,7 @@ jobs:
           path: dist/*.whl
 
   docs:
+    needs: [build-linux]
     runs-on: ubuntu-latest
     container: ubuntu:jammy
     env:
@@ -214,7 +215,7 @@ jobs:
       # Download and install package, Install dependencies for generating docs
       - uses: actions/download-artifact@v3
         with:
-          name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
+          name: whl-${{ env.PYTHON_VERSION }}-RelWithDebInfo-linux-test
           path: dist
       - name: Install dependencies
         run: |
