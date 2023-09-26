@@ -584,17 +584,30 @@ void register_problems(py::module_ &m) {
             m, "DLProblem",
             "C++ documentation: :cpp:class:`alpaqa::dl::DLProblem`\n\n"
             "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
-        dl_problem.def(py::init([](const std::string &so_filename, std::string symbol_prefix,
-                                   py::args args, py::kwargs kwargs) {
-                           std::any user_param =
-                               std::make_tuple(std::move(args), std::move(kwargs));
-                           return DLProblem{so_filename, std::move(symbol_prefix), &user_param};
-                       }),
-                       "so_filename"_a, "symbol_prefix"_a = "alpaqa_problem",
-                       "Load a problem from the given shared library file.\n"
-                       "Extra arguments are passed to the problem as a void pointer to a "
-                       "``std::any`` which contains a "
-                       "``std::tuple<pybind11::args, pybind11::kwargs>``.");
+        dl_problem.def(
+            py::init([](const std::string &so_filename, py::args args, std::string symbol_prefix,
+                        bool user_param_str, py::kwargs kwargs) {
+                std::any user_param;
+                std::vector<std::string_view> str_opts;
+                if (user_param_str) {
+                    str_opts.resize(args.size());
+                    std::transform(args.begin(), args.end(), str_opts.begin(),
+                                   [](const auto &e) { return py::cast<std::string_view>(e); });
+                    user_param = std::span<std::string_view>(str_opts);
+                } else {
+                    user_param = std::make_tuple(std::move(args), std::move(kwargs));
+                }
+                return DLProblem{so_filename, std::move(symbol_prefix), &user_param};
+            }),
+            "so_filename"_a, py::kw_only{}, "symbol_prefix"_a = "alpaqa_problem",
+            "user_param_str"_a = false,
+            "Load a problem from the given shared library file.\n"
+            "By default, extra arguments are passed to the problem as a void pointer "
+            "to a ``std::any`` which contains a "
+            "``std::tuple<pybind11::args, pybind11::kwargs>``.\n"
+            "If the keyword argument ``user_param_str=True`` is used, the ``args`` "
+            "is converted to a list of strings, and passed as a void pointer to a "
+            "``std::any`` containing a ``std::span<std::string_view>``.");
         default_copy_methods(dl_problem);
         problem_methods(dl_problem);
         dl_problem.def(
