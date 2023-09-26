@@ -20,13 +20,15 @@ rm -rf "$html_dest/*"
 compiler="${1,,}"
 version="${2%%.*}"
 
-if [ ! -z "$version" ]; then version="-${version}"; fi
+if [ -n "$version" ]; then version="-${version}"; fi
 
 echo "Compiler: ${compiler}${version}"
 
 # If the compiler is Clang, use a wrapper around llvm-cov that emulates gcov
 # and use the right c++filt
-if [ "${compiler}" == "clang" ]; then
+if [ -n "$GCOV_BIN" ]; then
+    gcov_bin="$GCOV_BIN";
+elif [ "${compiler}" == "clang" ]; then
     mkdir -p "${TMPDIR:-/tmp}/clang-cxxfilt-gcov"
     echo -e "#!/usr/bin/env sh\nexec llvm-cov${version} gcov \"\$@\"" \
         > "${TMPDIR:-/tmp}/clang-cxxfilt-gcov/llvm-cov"

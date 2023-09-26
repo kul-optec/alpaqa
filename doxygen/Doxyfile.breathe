@@ -13,3 +13,4 @@ PREDEFINED            += x̂=x_hat \
                          G̃=G_tilde \
                          QPALM_ADAPTER_EXPORT= \
                          IPOPT_ADAPTER_EXPORT=
+EXTRACT_ANON_NSPACES   = NO

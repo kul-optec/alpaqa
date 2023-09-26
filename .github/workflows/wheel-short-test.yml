@@ -166,3 +166,78 @@ jobs:
           name: whl-macos
           retention-days: 1
           path: dist/*.whl
+
+  docs:
+    runs-on: ubuntu-latest
+    container: ubuntu:jammy
+    env:
+      HOST: 'x86_64-centos7-linux-gnu'
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      CCACHE_DIR: /root/.ccache
+    steps:
+      # Git clone
+      - name: Install git
+        run: apt -y update && apt -y install --no-install-recommends git ca-certificates
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      # Tools
+      - name: Install tools
+        uses: ./.github/workflows/toolchain
+        with:
+          host: ${{ env.HOST }}
+          python-version: ${{ env.PYTHON_VERSION }}
+          pypy: ''
+      # Ccache
+      - name: Prepare ccache directory
+        run: mkdir -p "${{ env.CCACHE_DIR }}"
+      - name: Cache ccache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-docs-ccache-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-docs-ccache
+      # Create a copy of the repo in /tmp/staging.
+      # Create the `gh-pages` branch if it doesn't exist already, check it out.
+      - name: Create staging area
+        run: |
+          rm -rf /tmp/staging
+          cp -ar $GITHUB_WORKSPACE/ /tmp/staging
+          git config --global --add safe.directory /tmp/staging
+          cd /tmp/staging
+          git fetch origin gh-pages:gh-pages ||:
+          git checkout gh-pages || \
+          { git checkout --orphan gh-pages && git rm -rf . && git clean -fxd ; }
+          echo -e 'bib*.aux\ncitelist.doc*' > .gitignore
+      # Download and install package, Install dependencies for generating docs
+      - uses: actions/download-artifact@v3
+        with:
+          name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
+          path: dist
+      - name: Install dependencies
+        run: |
+          python3 -m pip install -U pip
+          python3 -m pip install --find-links=dist "${PACKAGE_NAME}[docs]==${PACKAGE_VERSION}"
+          python3 -m pip install -r doxygen/requirements.txt
+      # Generate the documentation and save it in /tmp/staging
+      - name: Generate documentation
+        run: |
+          ./doxygen/scripts/gen-docs.sh /tmp/staging
+          ./doxygen/scripts/gen-docs-index.sh /tmp/staging md
+        env:
+          CMAKE_TOOLCHAIN_FILE: /opt/${{ env.HOST }}/${{ env.HOST }}.toolchain.cmake
+          GCOV_BIN: /opt/${{ env.HOST }}/x-tools/${{ env.HOST }}/bin/${{ env.HOST }}-gcov
+          LD_LIBRARY_PATH: "/opt/${{ env.HOST }}/x-tools/${{ env.HOST }}/${{ env.HOST }}/lib64"
+      # Commit the new documentation, squash the commits, and push it to GitHub
+      - name: Commit and push documention
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          commithash=$(git rev-parse HEAD)
+          cd /tmp/staging
+          git add .
+          git commit -m "Documentation for ${commithash}" && \
+          git reset $(git commit-tree HEAD^{tree} -m "Documentation for ${commithash}") && \
+          git push -f origin gh-pages ||:

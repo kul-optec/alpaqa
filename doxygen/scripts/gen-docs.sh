@@ -40,16 +40,24 @@ function run_doxygen_coverage {
 	GENERATE_LATEX = NO
 	EOF
 
+    # See if we're cross-compiling and add dependencies to CMake's search path
+    if [ -n "$CMAKE_TOOLCHAIN_FILE" ]; then
+        pfx="$(dirname "$CMAKE_TOOLCHAIN_FILE")"
+        extra_cmake_opts=("-D" "CMAKE_FIND_ROOT_PATH=$pfx/pybind11;$pfx/eigen-master;$pfx/casadi;$pfx/googletest")
+    fi
+
     # Configure the project
     cmake -S. -B"$tmpdir/build" \
         -G "Ninja" \
         -DALPAQA_WITH_COVERAGE=On \
         -DALPAQA_WITH_TESTS=On \
+        -DALPAQA_FORCE_TEST_DISCOVERY=On \
         -DALPAQA_WITH_QUAD_PRECISION=On \
         -DALPAQA_WITH_PYTHON=Off \
         -DALPAQA_WITH_EXAMPLES=Off \
         -DALPAQA_WITH_CASADI=On \
-        -DALPAQA_DOXYFILE="$tmpdir/tmp-Doxyfile"
+        -DALPAQA_DOXYFILE="$tmpdir/tmp-Doxyfile" \
+        ${extra_cmake_opts[@]}
 
     # Generate the Doxygen C++ documentation
     cmake --build "$tmpdir/build" -t docs
