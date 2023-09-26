@@ -204,7 +204,7 @@ jobs:
       # LCOV
       - name: Install LCOV
         run: |
-          git clone --single-branch --depth=1 --branch "$version" \
+          git clone --single-branch --depth=1 --branch "v1.15" \
               https://github.com/linux-test-project/lcov.git
           make -C lcov install PREFIX="/usr/local"
         working-directory: /tmp
