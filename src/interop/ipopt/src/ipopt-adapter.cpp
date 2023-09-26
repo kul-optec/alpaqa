@@ -24,7 +24,11 @@ bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
     if (jac_g_index != 0 && jac_g_index != 1)
         throw std::invalid_argument(
             "Sparse matrix indices should start at 0 or 1");
-    index_style = jac_g_index == 0 ? TNLP::C_STYLE : TNLP::FORTRAN_STYLE;
+    index_style     = jac_g_index == 0 ? TNLP::C_STYLE : TNLP::FORTRAN_STYLE;
+    auto hess_L_sym = cvt_sparsity_hess_L.get_sparsity().symmetry;
+    using enum sparsity::Symmetry;
+    if (hess_L_sym != Upper && hess_L_sym != Lower)
+        throw std::invalid_argument("Hessian matrix should be symmetric");
     return true;
 }
 
