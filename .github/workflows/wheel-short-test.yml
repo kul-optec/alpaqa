@@ -204,7 +204,7 @@ jobs:
       # LCOV
       - name: Install LCOV
         run: |
-          git clone --single-branch --depth=1 --branch "v1.15" \
+          git clone --single-branch --depth=1 --branch "v2.0" \
               https://github.com/linux-test-project/lcov.git
           make -C lcov install PREFIX="/usr/local"
         working-directory: /tmp
@@ -247,6 +247,7 @@ jobs:
         env:
           CMAKE_TOOLCHAIN_FILE: /opt/${{ env.HOST }}/${{ env.HOST }}.toolchain.cmake
           GCOV_BIN: /opt/${{ env.HOST }}/x-tools/${{ env.HOST }}/bin/${{ env.HOST }}-gcov
+          CPPFILT_BIN: /opt/${{ env.HOST }}/x-tools/${{ env.HOST }}/bin/${{ env.HOST }}-c++filt
           LD_LIBRARY_PATH: "/opt/${{ env.HOST }}/x-tools/${{ env.HOST }}/${{ env.HOST }}/lib64"
       # Commit the new documentation, squash the commits, and push it to GitHub
       - name: Commit and push documention
