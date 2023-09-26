@@ -574,7 +574,10 @@ void register_problems(py::module_ &m) {
                         self.format_report(oss);
                     return std::move(oss).str();
                 },
-                "report"_a = std::nullopt, "Convert the given report to a string.");
+                "report"_a = std::nullopt, "Convert the given report to a string.")
+            .def_readwrite("x0", &CUTEstProblem::x0, "Initial guess for decision variables.")
+            .def_readwrite("y0", &CUTEstProblem::y0, "Initial guess for multipliers.")
+            .def_readonly("name", &CUTEstProblem::name, "CUTEst problem name.");
         te_problem.def(py::init<const CUTEstProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<CUTEstProblem, TEProblem>();
 #endif
