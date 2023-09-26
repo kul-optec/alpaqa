@@ -183,7 +183,7 @@ jobs:
           apt -y update
           apt -y install --no-install-recommends \
               git ca-certificates graphviz \
-              libjson-perl libperlio-gzip-perl perl texlive-bibtex-extra
+              make libjson-perl libperlio-gzip-perl perl texlive-bibtex-extra
       # Git clone
       - uses: actions/checkout@v3
         with:
