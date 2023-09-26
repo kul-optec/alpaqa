@@ -10,7 +10,5 @@ GENERATE_XML           = YES
 XML_OUTPUT             = ../build/xml
 INLINE_INHERITED_MEMB  = NO
 PREDEFINED            += x̂=x_hat \
-                         G̃=G_tilde \
-                         QPALM_ADAPTER_EXPORT= \
-                         IPOPT_ADAPTER_EXPORT=
+                         G̃=G_tilde
 EXTRACT_ANON_NSPACES   = NO

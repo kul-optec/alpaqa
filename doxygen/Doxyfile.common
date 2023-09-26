@@ -2412,6 +2412,12 @@ INCLUDE_FILE_PATTERNS  = *.h \
 PREDEFINED             = DOXYGEN \
                          "ALPAQA_EXPORT=" \
                          "CASADI_LOADER_EXPORT=" \
+                         "CASADI_OCP_LOADER_EXPORT=" \
+                         "CUTEST_INTERFACE_EXPORT=" \
+                         "IPOPT_ADAPTER_EXPORT=" \
+                         "LBFGSPP_ADAPTER_EXPORT=" \
+                         "LBFGSB_ADAPTER_EXPORT=" \
+                         "QPALM_ADAPTER_EXPORT=" \
                          ALPAQA_WITH_OCP \
                          __cplusplus=202002L
 
