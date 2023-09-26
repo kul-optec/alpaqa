@@ -27,62 +27,70 @@ typedef enum {
     alpaqa_lower       = 2,
 } alpaqa_symmetry;
 
+/// @see @ref alpaqa::sparsity::Dense
+typedef struct {
+    alpaqa_length_t rows ALPAQA_DEFAULT(0), cols ALPAQA_DEFAULT(0);
+    alpaqa_symmetry symmetry ALPAQA_DEFAULT(alpaqa_unsymmetric);
+} alpaqa_dense_t;
+
+/// @see @ref alpaqa::sparsity::SparseCSC
+typedef struct {
+    alpaqa_length_t rows, cols;
+    alpaqa_symmetry symmetry;
+    alpaqa_length_t nnz;
+    const alpaqa_index_t *inner_idx;
+    const alpaqa_index_t *outer_ptr;
+    /// @see @ref alpaqa::sparsity::SparseCSC::Order
+    enum {
+        alpaqa_sparse_csc_unsorted    = 0,
+        alpaqa_sparse_csc_sorted_rows = 1,
+    } order;
+} alpaqa_sparse_csc_t;
+
+/// @see @ref alpaqa::sparsity::SparseCOO
+typedef struct {
+    alpaqa_length_t rows, cols;
+    alpaqa_symmetry symmetry;
+    alpaqa_length_t nnz;
+    const alpaqa_index_t *row_indices;
+    const alpaqa_index_t *col_indices;
+    /// @see @ref alpaqa::sparsity::SparseCOO::Order
+    enum {
+        alpaqa_sparse_coo_unsorted                = 0,
+        alpaqa_sparse_coo_sorted_by_cols_and_rows = 1,
+        alpaqa_sparse_coo_sorted_by_cols_only     = 2,
+        alpaqa_sparse_coo_sorted_by_rows_and_cols = 3,
+        alpaqa_sparse_coo_sorted_by_rows_only     = 4,
+    } order;
+    alpaqa_index_t first_index;
+} alpaqa_sparse_coo_t;
+
+/// @see @ref alpaqa::sparsity::SparseCOO
+typedef struct {
+    alpaqa_length_t rows, cols;
+    alpaqa_symmetry symmetry;
+    alpaqa_length_t nnz;
+    const int *row_indices;
+    const int *col_indices;
+    /// @see @ref alpaqa::sparsity::SparseCOO::Order
+    enum {
+        alpaqa_sparse_coo_int_unsorted                = 0,
+        alpaqa_sparse_coo_int_sorted_by_cols_and_rows = 1,
+        alpaqa_sparse_coo_int_sorted_by_cols_only     = 2,
+        alpaqa_sparse_coo_int_sorted_by_rows_and_cols = 3,
+        alpaqa_sparse_coo_int_sorted_by_rows_only     = 4,
+    } order;
+    int first_index;
+} alpaqa_sparse_coo_int_t;
+
 /// Sparsity of matrices.
 /// @see @ref alpaqa::sparsity::Sparsity
 typedef struct {
     union {
-        /// @see @ref alpaqa::sparsity::Dense
-        struct {
-            alpaqa_length_t rows ALPAQA_DEFAULT(0), cols ALPAQA_DEFAULT(0);
-            alpaqa_symmetry symmetry ALPAQA_DEFAULT(alpaqa_unsymmetric);
-        } dense;
-        /// @see @ref alpaqa::sparsity::SparseCSC
-        struct {
-            alpaqa_length_t rows, cols;
-            alpaqa_symmetry symmetry;
-            alpaqa_length_t nnz;
-            const alpaqa_index_t *inner_idx;
-            const alpaqa_index_t *outer_ptr;
-            /// @see @ref alpaqa::sparsity::SparseCSC::Order
-            enum {
-                alpaqa_sparse_csc_unsorted    = 0,
-                alpaqa_sparse_csc_sorted_rows = 1,
-            } order;
-        } sparse_csc;
-        /// @see @ref alpaqa::sparsity::SparseCOO
-        struct {
-            alpaqa_length_t rows, cols;
-            alpaqa_symmetry symmetry;
-            alpaqa_length_t nnz;
-            const alpaqa_index_t *row_indices;
-            const alpaqa_index_t *col_indices;
-            /// @see @ref alpaqa::sparsity::SparseCOO::Order
-            enum {
-                alpaqa_sparse_coo_unsorted                = 0,
-                alpaqa_sparse_coo_sorted_by_cols_and_rows = 1,
-                alpaqa_sparse_coo_sorted_by_cols_only     = 2,
-                alpaqa_sparse_coo_sorted_by_rows_and_cols = 3,
-                alpaqa_sparse_coo_sorted_by_rows_only     = 4,
-            } order;
-            alpaqa_index_t first_index;
-        } sparse_coo;
-        /// @see @ref alpaqa::sparsity::SparseCOO
-        struct {
-            alpaqa_length_t rows, cols;
-            alpaqa_symmetry symmetry;
-            alpaqa_length_t nnz;
-            const int *row_indices;
-            const int *col_indices;
-            /// @see @ref alpaqa::sparsity::SparseCOO::Order
-            enum {
-                alpaqa_sparse_coo_int_unsorted                = 0,
-                alpaqa_sparse_coo_int_sorted_by_cols_and_rows = 1,
-                alpaqa_sparse_coo_int_sorted_by_cols_only     = 2,
-                alpaqa_sparse_coo_int_sorted_by_rows_and_cols = 3,
-                alpaqa_sparse_coo_int_sorted_by_rows_only     = 4,
-            } order;
-            int first_index;
-        } sparse_coo_int;
+        alpaqa_dense_t dense;
+        alpaqa_sparse_csc_t sparse_csc;
+        alpaqa_sparse_coo_t sparse_coo;
+        alpaqa_sparse_coo_int_t sparse_coo_int;
     };
     enum {
         alpaqa_sparsity_dense,
