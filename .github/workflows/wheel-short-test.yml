@@ -177,9 +177,14 @@ jobs:
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
     steps:
+      # Necessary tools
+      - name: Install git and other tools
+        run: |
+          apt -y update
+          apt -y install --no-install-recommends \
+              git ca-certificates graphviz \
+              libjson-perl libperlio-gzip-perl perl texlive-bibtex-extra
       # Git clone
-      - name: Install git
-        run: apt -y update && apt -y install --no-install-recommends git ca-certificates
       - uses: actions/checkout@v3
         with:
           submodules: recursive
@@ -191,6 +196,18 @@ jobs:
           host: ${{ env.HOST }}
           python-version: ${{ env.PYTHON_VERSION }}
           pypy: ''
+      # Doxygen
+      - name: Install Doxygen
+        run: >
+          wget -O- https://github.com/doxygen/doxygen/releases/download/Release_1_9_8/doxygen-1.9.8.linux.bin.tar.gz | 
+          tar xz -C /usr/local/bin doxygen-1.9.8/bin/doxygen --strip-components=2
+      # LCOV
+      - name: Install LCOV
+        run: |
+          git clone --single-branch --depth=1 --branch "$version" \
+              https://github.com/linux-test-project/lcov.git
+          make -C lcov install PREFIX="/usr/local"
+        working-directory: /tmp
       # Ccache
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
