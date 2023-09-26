@@ -93,7 +93,7 @@ using SparsityVariant = std::variant<Dense<Conf>,     //
 /// @see @ref SparsityConverter<Sparsity<Conf>, To>
 template <Config Conf>
 struct Sparsity : SparsityVariant<Conf> {
-    using typename SparsityVariant<Conf>::variant;
+    using SparsityVariant<Conf>::SparsityVariant;
 };
 
 namespace detail {
