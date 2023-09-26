@@ -90,4 +90,4 @@ genhtml \
     -s --demangle-cpp "$cppfilt_bin" \
     --no-function-coverage # because of the many templates
 
-python3 "$proj_dir/scripts/coverage-badge.py"
+# python3 "$proj_dir/scripts/coverage-badge.py"
