@@ -1,4 +1,5 @@
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/problem/sparsity-conversions.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa/util/print.hpp>
 #include <alpaqa-version.h>
@@ -6,6 +7,8 @@
 #include "options.hpp"
 #include "problem.hpp"
 #include "util.hpp"
+
+#include <Eigen/Sparse>
 
 #ifdef ALPAQA_HAVE_CASADI
 #include <casadi/config.h>
@@ -49,6 +52,8 @@ void print_usage(const char *a0) {
     options:
         --full-print
             Print the full gradients.
+        --no-hessians
+            Do not check any Hessian matrices.
         --seed=<seed>
             Seed for the random number generator.
     )==";
@@ -59,20 +64,19 @@ void print_usage(const char *a0) {
                  "\n\n"
                  "    Usage: "
               << a0 << opts << docs << std::endl;
-    std::cout
-        << "Third-party libraries:\n"
-        << "  * Eigen " << EIGEN_WORLD_VERSION << '.' << EIGEN_MAJOR_VERSION
-        << '.' << EIGEN_MINOR_VERSION
-        << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
+    std::cout << "Third-party libraries:\n"
+              << "  * Eigen " << EIGEN_WORLD_VERSION << '.'
+              << EIGEN_MAJOR_VERSION << '.' << EIGEN_MINOR_VERSION
+              << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
 #ifdef ALPAQA_HAVE_CASADI
-        << "  * CasADi " CASADI_VERSION_STRING
-           " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
+              << "  * CasADi " CASADI_VERSION_STRING
+                 " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
 #endif
 #ifdef ALPAQA_HAVE_CUTEST
-        << "  * CUTEst"
-           " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
+              << "  * CUTEst"
+                 " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
 #endif
-        << std::endl;
+              << std::endl;
 }
 
 /// Split the string @p s on the first occurrence of @p tok.
@@ -99,6 +103,7 @@ auto get_problem_path(const char *const *argv) {
 
 struct CheckGradientsOpts {
     bool print_full;
+    bool hessians;
 };
 
 void check_gradients(LoadedProblem &, std::ostream &,
@@ -136,12 +141,13 @@ int main(int argc, const char *argv[]) try {
         auto o_it = std::ranges::find(opts.options(), o);
         if (o_it == opts.options().end())
             return false;
-        auto index         = static_cast<size_t>(o_it - opts.options().begin());
-        opts.used()[index] = true;
+        auto index = static_cast<size_t>(o_it - opts.options().begin());
+        ++opts.used()[index];
         return true;
     };
     CheckGradientsOpts cg_opts{
         .print_full = has_opt("--full-print"),
+        .hessians   = !has_opt("--no-hessians"),
     };
 
     // Seed rand
@@ -169,16 +175,60 @@ int main(int argc, const char *argv[]) try {
 vec finite_diff(const std::function<real_t(crvec)> &f, crvec x) {
     const auto n = x.size();
     vec grad(n);
-    vec h        = vec::Zero(n);
-    const auto ε = 5e-6;
-    const auto δ = 1e-2 * ε;
+    vec h           = vec::Zero(n);
+    const auto ε    = 5e-6;
+    const auto δ    = 1e-2 * ε;
+    const real_t fx = f(x);
     for (index_t i = 0; i < n; ++i) {
         real_t hh        = std::abs(x(i)) * ε > δ ? x(i) * ε : δ;
         h(i)             = hh;
-        grad.coeffRef(i) = (f(x + h) - f(x)) / hh;
+        grad.coeffRef(i) = (f(x + h) - fx) / hh;
         h(i)             = 0;
     }
     return grad;
+}
+
+auto finite_diff_hess_sparse(const std::function<void(crvec, rvec)> &grad_L,
+                             crvec x) {
+    const auto n = x.size();
+    std::vector<Eigen::Triplet<real_t, index_t>> coo;
+    vec h        = vec::Zero(n);
+    const auto ε = 5e-6;
+    const auto δ = 1e-2 * ε;
+    vec grad_x(n), grad_xh(n);
+    grad_L(x, grad_x);
+    for (index_t i = 0; i < n; ++i) {
+        real_t hh = std::abs(x(i)) * ε > δ ? x(i) * ε : δ;
+        h(i)      = hh;
+        grad_L(x + h, grad_xh);
+        grad_xh = (grad_xh - grad_x) / hh;
+        for (index_t j = 0; j < n; ++j)
+            if (real_t v = grad_xh(j); v != 0)
+                coo.emplace_back(std::min(j, i), std::max(i, j),
+                                 v * (i == j ? 1 : 0.5));
+        h(i) = 0;
+    }
+    Eigen::SparseMatrix<real_t, 0, index_t> hess(n, n);
+    hess.setFromTriplets(coo.begin(), coo.end());
+    return hess;
+}
+
+auto finite_diff_hess(const std::function<void(crvec, rvec)> &grad_L, crvec x) {
+    const auto n = x.size();
+    vec h        = vec::Zero(n);
+    const auto ε = 5e-6;
+    const auto δ = 1e-2 * ε;
+    vec grad_x(n), grad_xh(n);
+    mat hess(n, n);
+    grad_L(x, grad_x);
+    for (index_t i = 0; i < n; ++i) {
+        real_t hh = std::abs(x(i)) * ε > δ ? x(i) * ε : δ;
+        h(i)      = hh;
+        grad_L(x + h, grad_xh);
+        hess.col(i) = (grad_xh - grad_x) / hh;
+        h(i)        = 0;
+    }
+    return hess;
 }
 
 void check_gradients(LoadedProblem &lproblem, std::ostream &log,
@@ -199,8 +249,9 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     vec wn(n), wm(m);
 
     auto print_compare = [&log, &opts](const auto &fd, const auto &ad) {
-        auto abs_err = (fd - ad).template lpNorm<Eigen::Infinity>();
-        auto rel_err = abs_err / fd.template lpNorm<Eigen::Infinity>();
+        auto abs_err = (fd - ad).reshaped().template lpNorm<Eigen::Infinity>();
+        auto rel_err =
+            abs_err / fd.reshaped().template lpNorm<Eigen::Infinity>();
         log << "  abs error = " << alpaqa::float_to_str(abs_err) << '\n';
         log << "  rel error = " << alpaqa::float_to_str(rel_err) << '\n';
         if (opts.print_full) {
@@ -242,5 +293,38 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         vec hess_ψv(n);
         te_problem.eval_hess_ψ_prod(x, y, Σ, 1, v, hess_ψv);
         print_compare(fd_hess_ψv, hess_ψv);
+    }
+
+    if (opts.hessians && te_problem.provides_eval_hess_L()) {
+        log << "Hessian verification: ∇²L(x)\n";
+        namespace sp  = alpaqa::sparsity;
+        auto sparsity = te_problem.get_hess_L_sparsity();
+        sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
+            sparsity};
+        vec hess_L_nzs(get_nnz(sparsity));
+        mat hess_L(n, n);
+        te_problem.eval_hess_L(x, y, 1., hess_L_nzs);
+        cvt.convert_values(hess_L_nzs, hess_L.reshaped());
+        mat fd_hess_L = finite_diff_hess(
+            [&](crvec x, rvec g) { te_problem.eval_grad_L(x, y, g, wn); }, x);
+        print_compare(fd_hess_L, hess_L);
+    }
+
+    if (opts.hessians && te_problem.provides_eval_hess_ψ()) {
+        log << "Hessian verification: ∇²L(x)\n";
+        namespace sp  = alpaqa::sparsity;
+        auto sparsity = te_problem.get_hess_ψ_sparsity();
+        sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
+            sparsity};
+        vec hess_ψ_nzs(get_nnz(sparsity));
+        mat hess_ψ(n, n);
+        te_problem.eval_hess_ψ(x, y, Σ, 1., hess_ψ_nzs);
+        cvt.convert_values(hess_ψ_nzs, hess_ψ.reshaped());
+        mat fd_hess_ψ = finite_diff_hess(
+            [&](crvec x, rvec g) {
+                te_problem.eval_grad_ψ(x, y, Σ, g, wn, wm);
+            },
+            x);
+        print_compare(fd_hess_ψ, hess_ψ);
     }
 }
