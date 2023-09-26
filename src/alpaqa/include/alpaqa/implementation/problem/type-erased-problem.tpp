@@ -72,7 +72,7 @@ void ProblemVTable<Conf>::default_eval_hess_L(const void *, crvec, crvec, real_t
 template <Config Conf>
 auto ProblemVTable<Conf>::default_get_hess_L_sparsity(const void *, const ProblemVTable &vtable)
     -> Sparsity {
-    return sparsity::Dense<config_t>{vtable.n, vtable.n};
+    return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
 
 template <Config Conf>
@@ -96,7 +96,7 @@ void ProblemVTable<Conf>::default_eval_hess_ψ(const void *self, crvec x, crvec 
 template <Config Conf>
 auto ProblemVTable<Conf>::default_get_hess_ψ_sparsity(const void *, const ProblemVTable &vtable)
     -> Sparsity {
-    return sparsity::Dense<config_t>{vtable.n, vtable.n};
+    return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
 
 /** @implementation{ProblemVTable<Conf>::default_eval_f_grad_f} */
