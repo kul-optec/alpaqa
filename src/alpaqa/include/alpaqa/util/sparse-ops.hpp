@@ -6,9 +6,11 @@
 #include <alpaqa/util/iter-adapter.hpp>
 #include <alpaqa/util/set-intersection.hpp>
 
+#include <algorithm>
 #include <cassert>
 #include <chrono>
 #include <iostream>
+#include <numeric>
 #include <ranges>
 #include <span>
 
@@ -176,6 +178,8 @@ void sort_triplets_col(Ts &&...triplets) {
     sort_triplets_impl<cmp>(std::forward<Ts>(triplets)...);
 }
 
+/// Given a sparse compressed-column storage matrix, sort all row indices
+/// within each column.
 template <class Outer, class... Inners>
 void sort_rows_csc(const Outer &outer_ptr, Inners &&...inners) {
     if (outer_ptr.size() == 0)
@@ -192,6 +196,33 @@ void sort_rows_csc(const Outer &outer_ptr, Inners &&...inners) {
                                   std::ranges::begin(inners) + inner_end}...);
         std::ranges::sort(indices, cmp);
     }
+}
+
+/// Check that no two entries with the same row and column index exist in
+/// the given sparse coordinate list matrix. Assumes sorted indices.
+template <class... Ts>
+bool check_uniqueness_triplets(Ts &&...triplets) {
+    auto indices = std::views::zip(std::ranges::ref_view{triplets}...);
+    return std::ranges::adjacent_find(indices, std::equal_to<>{}) ==
+           std::ranges::end(indices);
+}
+
+/// Check that no two entries with the same row and column index exist in
+/// the given sparse compressed-column storage matrix. Assumes sorted indices.
+template <class Outer, class Inner>
+bool check_uniqueness_csc(const Outer &outer_ptr, const Inner inner) {
+    if (outer_ptr.size() == 0)
+        return true;
+    auto is_unique_col = [&](auto &inner_start) {
+        auto inner_end = (&inner_start)[1];
+        auto indices =
+            std::ranges::subrange{std::ranges::begin(inner) + inner_start,
+                                  std::ranges::begin(inner) + inner_end};
+        return std::ranges::adjacent_find(indices, std::equal_to<>{}) ==
+               std::ranges::end(indices);
+    };
+    return std::transform_reduce(std::begin(outer_ptr), std::end(outer_ptr) - 1,
+                                 true, std::logical_and<>{}, is_unique_col);
 }
 
 #endif

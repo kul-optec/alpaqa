@@ -33,13 +33,122 @@ struct SparsityConverter<Dense<Conf>, Dense<Conf>> {
     USING_ALPAQA_CONFIG(Conf);
     using from_sparsity_t = Dense<Conf>;
     using to_sparsity_t   = Dense<Conf>;
-    SparsityConverter(from_sparsity_t from) : sparsity(std::move(from)) {}
+    using Request         = SparsityConversionRequest<to_sparsity_t>;
+    SparsityConverter(from_sparsity_t from, Request = {}) : sparsity(from) {
+        if (from.symmetry != Symmetry::Unsymmetric && from.rows != from.cols)
+            throw std::invalid_argument("Nonsquare matrix cannot be symmetric");
+    }
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
     const to_sparsity_t &get_sparsity() const { return *this; }
     void convert_values(crvec from, rvec to) const {
         if (to.data() != from.data())
             to = from;
+    }
+};
+
+template <Config Conf>
+struct SparsityConverter<SparseCSC<Conf>, Dense<Conf>> {
+    USING_ALPAQA_CONFIG(Conf);
+    using from_sparsity_t = SparseCSC<Conf>;
+    using to_sparsity_t   = Dense<Conf>;
+    using Request         = SparsityConversionRequest<to_sparsity_t>;
+    to_sparsity_t convert_sparsity(from_sparsity_t from, Request) {
+        assert(util::check_uniqueness_csc(from.outer_ptr, from.inner_idx));
+        if (from.symmetry != Symmetry::Unsymmetric && from.rows != from.cols)
+            throw std::invalid_argument("Nonsquare matrix cannot be symmetric");
+        return {
+            .rows     = from.rows,
+            .cols     = from.cols,
+            .symmetry = from.symmetry,
+        };
+    }
+    SparsityConverter(from_sparsity_t from, Request request = {})
+        : from_sparsity(from), sparsity(convert_sparsity(from, request)) {}
+    from_sparsity_t from_sparsity;
+    to_sparsity_t sparsity;
+    operator const to_sparsity_t &() const & { return sparsity; }
+    const to_sparsity_t &get_sparsity() const { return *this; }
+    void convert_values(crvec from, rvec to) const {
+        to.setZero();
+        auto &&T  = to.reshaped(sparsity.rows, sparsity.cols);
+        index_t l = 0;
+        for (index_t c = 0; c < from_sparsity.cols; ++c) {
+            auto inner_start = from_sparsity.outer_ptr(c);
+            auto inner_end   = from_sparsity.outer_ptr(c + 1);
+            for (auto i = inner_start; i < inner_end; ++i) {
+                auto r = from_sparsity.inner_idx(i);
+                switch (from_sparsity.symmetry) {
+                    case Symmetry::Unsymmetric: T(r, c) = from(l); break;
+                    case Symmetry::Upper:
+                        if (r > c)
+                            throw std::invalid_argument(
+                                "Invalid symmetric CSC matrix: upper-triangular matrix should not "
+                                "have elements below the diagonal");
+                        T(c, r) = T(r, c) = from(l);
+                        break;
+                    case Symmetry::Lower:
+                        if (r < c)
+                            throw std::invalid_argument(
+                                "Invalid symmetric CSC matrix: lower-triangular matrix should not "
+                                "have elements above the diagonal");
+                        T(c, r) = T(r, c) = from(l);
+                        break;
+                    default: throw std::invalid_argument("Invalid symmetry");
+                }
+                ++l;
+            }
+        }
+    }
+};
+
+template <Config Conf, class StorageIndex>
+struct SparsityConverter<SparseCOO<Conf, StorageIndex>, Dense<Conf>> {
+    USING_ALPAQA_CONFIG(Conf);
+    using from_sparsity_t = SparseCOO<Conf, StorageIndex>;
+    using to_sparsity_t   = Dense<Conf>;
+    using Request         = SparsityConversionRequest<to_sparsity_t>;
+    to_sparsity_t convert_sparsity(from_sparsity_t from, Request) {
+        assert(util::check_uniqueness_triplets(from.row_indices, from.col_indices));
+        if (from.symmetry != Symmetry::Unsymmetric && from.rows != from.cols)
+            throw std::invalid_argument("Nonsquare matrix cannot be symmetric");
+        return {
+            .rows     = from.rows,
+            .cols     = from.cols,
+            .symmetry = from.symmetry,
+        };
+    }
+    SparsityConverter(from_sparsity_t from, Request request = {})
+        : from_sparsity(from), sparsity(convert_sparsity(from, request)) {}
+    from_sparsity_t from_sparsity;
+    to_sparsity_t sparsity;
+    operator const to_sparsity_t &() const & { return sparsity; }
+    const to_sparsity_t &get_sparsity() const { return *this; }
+    void convert_values(crvec from, rvec to) const {
+        to.setZero();
+        auto &&T = to.reshaped(sparsity.rows, sparsity.cols);
+        for (index_t l = 0; l < from_sparsity.nnz(); ++l) {
+            auto r = from_sparsity.row_indices(l) - from_sparsity.first_index;
+            auto c = from_sparsity.col_indices(l) - from_sparsity.first_index;
+            switch (from_sparsity.symmetry) {
+                case Symmetry::Unsymmetric: T(r, c) = from(l); break;
+                case Symmetry::Upper:
+                    if (r > c)
+                        throw std::invalid_argument(
+                            "Invalid symmetric COO matrix: upper-triangular matrix should not "
+                            "have elements below the diagonal");
+                    T(c, r) = T(r, c) = from(l);
+                    break;
+                case Symmetry::Lower:
+                    if (r < c)
+                        throw std::invalid_argument(
+                            "Invalid symmetric COO matrix: lower-triangular matrix should not "
+                            "have elements above the diagonal");
+                    T(c, r) = T(r, c) = from(l);
+                    break;
+                default: throw std::invalid_argument("Invalid symmetry");
+            }
+        }
     }
 };
 
@@ -119,8 +228,6 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
             auto t   = to.begin();
             for (index_t c = 0; c < sparsity.cols; ++c)
                 std::ranges::copy_backward(F.col(c).topRows(c + 1), t += c + 1);
-        } else {
-            assert(false);
         }
     }
 };
@@ -162,7 +269,9 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
         };
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
-        : sparsity(convert_sparsity(from, request)) {}
+        : sparsity(convert_sparsity(from, request)) {
+        assert(util::check_uniqueness_triplets(sparsity.row_indices, sparsity.col_indices));
+    }
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
@@ -207,7 +316,9 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
         };
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
-        : sparsity(convert_sparsity(from, request)) {}
+        : sparsity(convert_sparsity(from, request)) {
+        assert(util::check_uniqueness_triplets(sparsity.row_indices, sparsity.col_indices));
+    }
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
@@ -302,7 +413,9 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
 #endif
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
-        : sparsity(convert_sparsity(from, request)) {}
+        : sparsity(convert_sparsity(from, request)) {
+        assert(util::check_uniqueness_csc(sparsity.outer_ptr, sparsity.inner_idx));
+    }
     indexvec inner_idx, outer_ptr, permutation;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
@@ -362,7 +475,9 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCSC<Conf>> {
         };
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
-        : sparsity(convert_sparsity(from, request)) {}
+        : sparsity(convert_sparsity(from, request)) {
+        assert(util::check_uniqueness_csc(sparsity.outer_ptr, sparsity.inner_idx));
+    }
     indexvec inner_idx, outer_ptr, permutation;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
@@ -442,8 +557,6 @@ struct SparsityConverter<Dense<Conf>, SparseCSC<Conf>> {
             auto t   = to.begin();
             for (index_t c = 0; c < sparsity.cols; ++c)
                 std::ranges::copy_backward(F.col(c).topRows(c + 1), t += c + 1);
-        } else {
-            assert(false);
         }
     }
 };
