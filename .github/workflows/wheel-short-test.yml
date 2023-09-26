@@ -219,9 +219,9 @@ jobs:
           path: dist
       - name: Install dependencies
         run: |
-          python3 -m pip install -U pip
-          python3 -m pip install --find-links=dist "${PACKAGE_NAME}[docs]==${PACKAGE_VERSION}"
-          python3 -m pip install -r doxygen/requirements.txt
+          python${{ env.PYTHON_VERSION }} -m pip install -U pip
+          python${{ env.PYTHON_VERSION }} -m pip install --find-links=dist "${PACKAGE_NAME}[docs]==${PACKAGE_VERSION}"
+          python${{ env.PYTHON_VERSION }} -m pip install -r doxygen/requirements.txt
       # Generate the documentation and save it in /tmp/staging
       - name: Generate documentation
         run: |
