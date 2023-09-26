@@ -111,7 +111,9 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, Dense<Conf>> {
     using to_sparsity_t   = Dense<Conf>;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
     to_sparsity_t convert_sparsity(from_sparsity_t from, Request) {
+#if ALPAQA_HAVE_COO_CSC_CONVERSIONS
         assert(util::check_uniqueness_triplets(from.row_indices, from.col_indices));
+#endif
         if (from.symmetry != Symmetry::Unsymmetric && from.rows != from.cols)
             throw std::invalid_argument("Nonsquare matrix cannot be symmetric");
         return {
@@ -272,7 +274,9 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
         : sparsity(convert_sparsity(from, request)) {
+#if ALPAQA_HAVE_COO_CSC_CONVERSIONS
         assert(util::check_uniqueness_triplets(sparsity.row_indices, sparsity.col_indices));
+#endif
     }
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
@@ -319,7 +323,9 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
         : sparsity(convert_sparsity(from, request)) {
+#if ALPAQA_HAVE_COO_CSC_CONVERSIONS
         assert(util::check_uniqueness_triplets(sparsity.row_indices, sparsity.col_indices));
+#endif
     }
     index_vector_t row_indices, col_indices;
     to_sparsity_t sparsity;
