@@ -17,7 +17,8 @@ template ALPAQA_EXPORT std::string float_to_str(long double value, int precision
 
 namespace detail {
 template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<int>> &, std::string_view, std::string_view, std::string_view);
-template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<Eigen::Index>> &, std::string_view, std::string_view, std::string_view);
+template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<long>> &, std::string_view, std::string_view, std::string_view);
+template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<long long>> &, std::string_view, std::string_view, std::string_view);
 template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<float>> &, std::string_view, std::string_view, std::string_view);
 template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<double>> &, std::string_view, std::string_view, std::string_view);
 template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<long double>> &, std::string_view, std::string_view, std::string_view);
@@ -26,7 +27,8 @@ template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<con
 template ALPAQA_EXPORT ostream &print_csv_impl(ostream &os, const Eigen::Ref<const MatrixX<complex<long double>>> &, std::string_view, std::string_view, std::string_view);
 
 template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<int>> &, std::string_view);
-template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<Eigen::Index>> &, std::string_view);
+template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<long>> &, std::string_view);
+template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<long long>> &, std::string_view);
 template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<float>> &, std::string_view);
 template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<double>> &, std::string_view);
 template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<long double>> &, std::string_view);
@@ -35,7 +37,8 @@ template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<
 template ALPAQA_EXPORT ostream &print_matlab_impl(ostream &os, const Eigen::Ref<const MatrixX<complex<long double>>> &, std::string_view);
 
 template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<int>> &, std::string_view);
-template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<Eigen::Index>> &, std::string_view);
+template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<long>> &, std::string_view);
+template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<long long>> &, std::string_view);
 template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<float>> &, std::string_view);
 template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<double>> &, std::string_view);
 template ALPAQA_EXPORT ostream &print_python_impl(ostream &os, const Eigen::Ref<const MatrixX<long double>> &, std::string_view);

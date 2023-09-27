@@ -293,14 +293,15 @@ void CasADiProblem<Conf>::eval_grad_gi(crvec, index_t, rvec) const {
 
 template <Config Conf>
 Sparsity<Conf> convert_csc(const auto &sp, sparsity::Symmetry symmetry) {
-    using SparseCSC          = sparsity::SparseCSC<Conf, casadi_int>;
-    using index_vector_map_t = typename SparseCSC::index_vector_map_t;
+    USING_ALPAQA_CONFIG(Conf);
+    using SparseCSC = sparsity::SparseCSC<Conf, casadi_int>;
+    using map_t     = typename SparseCSC::index_vector_map_t;
     return SparseCSC{
-        .rows      = sp.size1(),
-        .cols      = sp.size2(),
+        .rows      = static_cast<index_t>(sp.size1()),
+        .cols      = static_cast<index_t>(sp.size2()),
         .symmetry  = symmetry,
-        .inner_idx = index_vector_map_t{sp.row(), sp.nnz()},
-        .outer_ptr = index_vector_map_t{sp.colind(), sp.size2() + 1},
+        .inner_idx = map_t{sp.row(), static_cast<index_t>(sp.nnz())},
+        .outer_ptr = map_t{sp.colind(), static_cast<index_t>(sp.size2()) + 1},
         .order     = SparseCSC::SortedRows,
     };
 }

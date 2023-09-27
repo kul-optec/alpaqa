@@ -44,7 +44,8 @@ ALPAQA_EXPORT std::ostream &print_python_impl(std::ostream &os, const T &M,
     ALPAQA_PRINT_OVL_IMPL(matlab, type)                                        \
     ALPAQA_PRINT_OVL_IMPL(python, type)
 ALPAQA_PRINT_OVL(int)
-ALPAQA_PRINT_OVL(Eigen::Index)
+ALPAQA_PRINT_OVL(long)
+ALPAQA_PRINT_OVL(long long)
 ALPAQA_PRINT_OVL(double)
 ALPAQA_PRINT_OVL(long double)
 #ifdef ALPAQA_WITH_QUAD_PRECISION
