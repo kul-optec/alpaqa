@@ -250,7 +250,7 @@ void problem_methods(py::class_<T, Args...> &cls) {
                     func(G.reshaped());
                     return std::make_tuple(py::cast(std::move(G)), d.symmetry);
                 },
-                [&](const sp::SparseCSC<config_t> &csc) {
+                [&]<class I>(const sp::SparseCSC<config_t, I> &csc) {
                     vec G_values(csc.nnz());
                     func(G_values);
                     auto sp = py::module::import("scipy.sparse");

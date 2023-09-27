@@ -24,13 +24,17 @@ struct Dense {
 };
 
 /// Sparse compressed-column structure (CCS or CSC).
-template <Config Conf>
+template <Config Conf, class StorageIndex>
 struct SparseCSC {
     USING_ALPAQA_CONFIG(Conf);
+    using storage_index_t     = StorageIndex;
+    using index_vector_t      = Eigen::VectorX<storage_index_t>;
+    using index_vector_view_t = Eigen::Ref<const index_vector_t>;
+    using index_vector_map_t  = Eigen::Map<const index_vector_t>;
     length_t rows = 0, cols = 0;
-    Symmetry symmetry    = Symmetry::Unsymmetric;
-    crindexvec inner_idx = null_indexvec<config_t>;
-    crindexvec outer_ptr = null_indexvec<config_t>;
+    Symmetry symmetry             = Symmetry::Unsymmetric;
+    index_vector_view_t inner_idx = index_vector_map_t{nullptr, 0};
+    index_vector_view_t outer_ptr = index_vector_map_t{nullptr, 0};
     enum Order {
         /// The row indices are not sorted.
         Unsorted = 0,
@@ -47,16 +51,17 @@ struct SparseCSC {
 };
 
 /// Sparse coordinate list structure (COO).
-template <Config Conf, class StorageIndex = index_t<Conf>>
+template <Config Conf, class StorageIndex>
 struct SparseCOO {
     USING_ALPAQA_CONFIG(Conf);
     using storage_index_t     = StorageIndex;
     using index_vector_t      = Eigen::VectorX<storage_index_t>;
     using index_vector_view_t = Eigen::Ref<const index_vector_t>;
+    using index_vector_map_t  = Eigen::Map<const index_vector_t>;
     length_t rows = 0, cols = 0;
     Symmetry symmetry               = Symmetry::Unsymmetric;
-    index_vector_view_t row_indices = Eigen::Map<index_vector_t>(nullptr, 0);
-    index_vector_view_t col_indices = Eigen::Map<index_vector_t>(nullptr, 0);
+    index_vector_view_t row_indices = index_vector_map_t{nullptr, 0};
+    index_vector_view_t col_indices = index_vector_map_t{nullptr, 0};
     enum Order {
         /// The indices are not sorted.
         Unsorted = 0,
@@ -84,10 +89,15 @@ struct SparseCOO {
 };
 
 template <Config Conf>
-using SparsityVariant = std::variant<Dense<Conf>,     //
-                                     SparseCSC<Conf>, //
-                                     SparseCOO<Conf>, //
-                                     SparseCOO<Conf, int>>;
+using SparsityVariant = std::variant< //
+    Dense<Conf>,                      //
+    SparseCSC<Conf, int>,             //
+    SparseCSC<Conf, long>,            //
+    SparseCSC<Conf, long long>,       //
+    SparseCOO<Conf, int>,             //
+    SparseCOO<Conf, long>,            //
+    SparseCOO<Conf, long long>        //
+    >;
 
 /// Stores any of the supported sparsity patterns.
 /// @see @ref SparsityConverter<Sparsity<Conf>, To>

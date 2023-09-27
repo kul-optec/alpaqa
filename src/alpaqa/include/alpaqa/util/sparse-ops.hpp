@@ -127,22 +127,19 @@ void sparse_matvec_add_transpose_masked_rows(const SpMat &S, const CVec &v,
 #if __cpp_lib_ranges_zip >= 202110L && __cpp_lib_ranges_enumerate >= 202302L
 #define ALPAQA_HAVE_COO_CSC_CONVERSIONS 1
 
-template <Config Conf>
+template <class I>
 void convert_triplets_to_ccs(const auto &rows, const auto &cols,
-                             rindexvec<Conf> inner_idx,
-                             rindexvec<Conf> outer_ptr,
-                             index_t<Conf> idx_0 = 0) {
-    USING_ALPAQA_CONFIG(Conf);
+                             auto &&inner_idx, auto &&outer_ptr, I idx_0 = 0) {
     // Inner indices: simply the row indices
     assert(std::size(rows) == std::size(inner_idx));
-    auto cvt_indices = [&](auto i) { return static_cast<index_t>(i) - idx_0; };
+    auto cvt_indices = [&](auto i) { return static_cast<I>(i) - idx_0; };
     std::ranges::ref_view rows_vw = rows;
     std::ranges::transform(rows_vw, std::begin(inner_idx), cvt_indices);
     // Outer indices: need to count the number of nonzeros per column
     auto cols_iter = std::begin(cols);
     for (auto &&[i, outer] : std::views::enumerate(outer_ptr)) {
         cols_iter = std::lower_bound(cols_iter, std::end(cols), i + idx_0);
-        outer     = static_cast<index_t>(cols_iter - std::begin(cols));
+        outer     = static_cast<I>(cols_iter - std::begin(cols));
     }
 }
 

@@ -127,7 +127,6 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
 
     // Get the dimensions of the problem matrices
     const auto n = problem.get_n(), m = problem.get_m();
-    auto cvt_idx = [](index_t i) { return static_cast<qpalm::sp_index_t>(i); };
 
     // Dummy data to evaluate Hessian and Jacobian
     vec x = vec::Zero(n), y = vec::Zero(m), g(m);
@@ -135,19 +134,19 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
     // Construct QPALM problem
     OwningQPALMData qp;
 
-    using SparseCSC    = sparsity::SparseCSC<config_t>;
+    using SparseCSC    = sparsity::SparseCSC<config_t, qpalm::sp_index_t>;
     using Sparsity     = sparsity::Sparsity<config_t>;
     using SparsityConv = sparsity::SparsityConverter<Sparsity, SparseCSC>;
     { // Evaluate cost Hessian
         Sparsity sp_Q_orig = problem.get_hess_L_sparsity();
         SparsityConv sp_Q{sp_Q_orig, {.order = SparseCSC::SortedRows}};
-        auto nnz_Q = cvt_idx(sp_Q.get_sparsity().nnz());
+        auto nnz_Q = static_cast<qpalm::sp_index_t>(sp_Q.get_sparsity().nnz());
         auto symm  = convert_symmetry(sp_Q.get_sparsity().symmetry);
         qp.sto->Q  = qpalm::ladel_sparse_create(n, n, nnz_Q, symm);
         qp.Q       = qp.sto->Q.get();
         // Copy sparsity pattern
-        std::ranges::transform(sp_Q.get_sparsity().inner_idx, qp.Q->i, cvt_idx);
-        std::ranges::transform(sp_Q.get_sparsity().outer_ptr, qp.Q->p, cvt_idx);
+        std::ranges::copy(sp_Q.get_sparsity().inner_idx, qp.Q->i);
+        std::ranges::copy(sp_Q.get_sparsity().outer_ptr, qp.Q->p);
         // Get actual values
         vec work(get_nnz(sp_Q_orig));
         problem.eval_hess_L(x, y, 1, work);
@@ -157,13 +156,13 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
     { // Evaluate constraints Jacobian
         Sparsity sp_A_orig = problem.get_jac_g_sparsity();
         SparsityConv sp_A{sp_A_orig, {.order = SparseCSC::SortedRows}};
-        auto nnz_A = cvt_idx(sp_A.get_sparsity().nnz());
+        auto nnz_A = static_cast<qpalm::sp_index_t>(sp_A.get_sparsity().nnz());
         auto symm  = convert_symmetry(sp_A.get_sparsity().symmetry);
         qp.sto->A  = qpalm::ladel_sparse_create(m, n, nnz_A + n, symm);
         qp.A       = qp.sto->A.get();
         // Copy sparsity pattern
-        std::ranges::transform(sp_A.get_sparsity().inner_idx, qp.A->i, cvt_idx);
-        std::ranges::transform(sp_A.get_sparsity().outer_ptr, qp.A->p, cvt_idx);
+        std::ranges::copy(sp_A.get_sparsity().inner_idx, qp.A->i);
+        std::ranges::copy(sp_A.get_sparsity().outer_ptr, qp.A->p);
         // Get actual values
         vec work(get_nnz(sp_A_orig));
         problem.eval_jac_g(x, work);

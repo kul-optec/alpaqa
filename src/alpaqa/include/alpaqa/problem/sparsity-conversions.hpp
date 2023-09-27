@@ -47,10 +47,10 @@ struct SparsityConverter<Dense<Conf>, Dense<Conf>> {
     }
 };
 
-template <Config Conf>
-struct SparsityConverter<SparseCSC<Conf>, Dense<Conf>> {
+template <Config Conf, class StorageIndex>
+struct SparsityConverter<SparseCSC<Conf, StorageIndex>, Dense<Conf>> {
     USING_ALPAQA_CONFIG(Conf);
-    using from_sparsity_t = SparseCSC<Conf>;
+    using from_sparsity_t = SparseCSC<Conf, StorageIndex>;
     using to_sparsity_t   = Dense<Conf>;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
     to_sparsity_t convert_sparsity(from_sparsity_t from, Request) {
@@ -236,11 +236,11 @@ struct SparsityConverter<Dense<Conf>, SparseCOO<Conf, StorageIndex>> {
     }
 };
 
-template <Config Conf, class StorageIndex>
-struct SparsityConverter<SparseCSC<Conf>, SparseCOO<Conf, StorageIndex>> {
+template <Config Conf, class StorageIndexFrom, class StorageIndexTo>
+struct SparsityConverter<SparseCSC<Conf, StorageIndexFrom>, SparseCOO<Conf, StorageIndexTo>> {
     USING_ALPAQA_CONFIG(Conf);
-    using from_sparsity_t = SparseCSC<Conf>;
-    using to_sparsity_t   = SparseCOO<Conf, StorageIndex>;
+    using from_sparsity_t = SparseCSC<Conf, StorageIndexFrom>;
+    using to_sparsity_t   = SparseCOO<Conf, StorageIndexTo>;
     using storage_index_t = typename to_sparsity_t::storage_index_t;
     using index_vector_t  = typename to_sparsity_t::index_vector_t;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
@@ -337,17 +337,19 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCOO<Conf, Stor
     }
 };
 
-template <Config Conf>
-struct SparsityConversionRequest<SparseCSC<Conf>> {
+template <Config Conf, class StorageIndex>
+struct SparsityConversionRequest<SparseCSC<Conf, StorageIndex>> {
     /// Sort the indices.
-    std::optional<typename SparseCSC<Conf>::Order> order = std::nullopt;
+    std::optional<typename SparseCSC<Conf, StorageIndex>::Order> order = std::nullopt;
 };
 
-template <Config Conf, class StorageIndex>
-struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
+template <Config Conf, class StorageIndexFrom, class StorageIndexFromTo>
+struct SparsityConverter<SparseCOO<Conf, StorageIndexFrom>, SparseCSC<Conf, StorageIndexFromTo>> {
     USING_ALPAQA_CONFIG(Conf);
-    using to_sparsity_t   = SparseCSC<Conf>;
-    using from_sparsity_t = SparseCOO<Conf, StorageIndex>;
+    using to_sparsity_t   = SparseCSC<Conf, StorageIndexFromTo>;
+    using from_sparsity_t = SparseCOO<Conf, StorageIndexFrom>;
+    using storage_index_t = typename to_sparsity_t::storage_index_t;
+    using index_vector_t  = typename to_sparsity_t::index_vector_t;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
     to_sparsity_t convert_sparsity([[maybe_unused]] from_sparsity_t from,
                                    [[maybe_unused]] Request request) {
@@ -355,8 +357,8 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
         // Convert the indices
         // TODO: using indexvec here could be suboptimal if the original storage
         //       index was int
-        indexvec row_indices(from.nnz()), col_indices(from.nnz());
-        auto cvt_idx = [](auto i) { return static_cast<index_t>(i); };
+        index_vector_t row_indices(from.nnz()), col_indices(from.nnz());
+        auto cvt_idx = [](auto i) { return static_cast<storage_index_t>(i); };
         std::ranges::transform(from.row_indices, row_indices.begin(), cvt_idx);
         std::ranges::transform(from.col_indices, col_indices.begin(), cvt_idx);
         // Sort the indices
@@ -404,8 +406,8 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
         // Convert the sorted COO format to CSC
         inner_idx.resize(from.nnz());
         outer_ptr.resize(from.cols + 1);
-        util::convert_triplets_to_ccs<config_t>(row_indices, col_indices, inner_idx, outer_ptr,
-                                                cvt_idx(from.first_index));
+        util::convert_triplets_to_ccs(row_indices, col_indices, inner_idx, outer_ptr,
+                                      cvt_idx(from.first_index));
         return {
             .rows      = from.rows,
             .cols      = from.cols,
@@ -426,7 +428,8 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
         assert(util::check_uniqueness_csc(sparsity.outer_ptr, sparsity.inner_idx));
 #endif
     }
-    indexvec inner_idx, outer_ptr, permutation;
+    index_vector_t inner_idx, outer_ptr;
+    indexvec permutation;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
     const to_sparsity_t &get_sparsity() const { return *this; }
@@ -441,48 +444,75 @@ struct SparsityConverter<SparseCOO<Conf, StorageIndex>, SparseCSC<Conf>> {
     }
 };
 
-template <Config Conf>
-struct SparsityConverter<SparseCSC<Conf>, SparseCSC<Conf>> {
+template <Config Conf, class StorageIndexFrom, class StorageIndexTo>
+struct SparsityConverter<SparseCSC<Conf, StorageIndexFrom>, SparseCSC<Conf, StorageIndexTo>> {
     USING_ALPAQA_CONFIG(Conf);
-    using to_sparsity_t   = SparseCSC<Conf>;
-    using from_sparsity_t = SparseCSC<Conf>;
-    using Request         = SparsityConversionRequest<to_sparsity_t>;
+    using to_sparsity_t       = SparseCSC<Conf, StorageIndexTo>;
+    using from_sparsity_t     = SparseCSC<Conf, StorageIndexFrom>;
+    using storage_index_t     = typename to_sparsity_t::storage_index_t;
+    using index_vector_t      = typename to_sparsity_t::index_vector_t;
+    using index_vector_view_t = typename to_sparsity_t::index_vector_view_t;
+    using Request             = SparsityConversionRequest<to_sparsity_t>;
     to_sparsity_t convert_sparsity([[maybe_unused]] from_sparsity_t from, Request request) {
-        // Sort the indices
-        typename to_sparsity_t::Order order = from.order;
+        auto cvt_idx         = [](auto i) { return static_cast<storage_index_t>(i); };
+        auto convert_indices = [&] {
+            inner_idx.resize(from.inner_idx.size());
+            std::ranges::transform(from.inner_idx, inner_idx.begin(), cvt_idx);
+            outer_ptr.resize(from.outer_ptr.size());
+            std::ranges::transform(from.outer_ptr, outer_ptr.begin(), cvt_idx);
+        };
+        auto sort_indices = [&] {
+#if ALPAQA_HAVE_COO_CSC_CONVERSIONS
+            convert_indices();
+            permutation.resize(from.nnz());
+            std::iota(permutation.begin(), permutation.end(), index_t{0});
+            util::sort_rows_csc(outer_ptr, inner_idx, permutation);
+#else
+            throw std::runtime_error(
+                "This build of alpaqa does not support sorting matrices in CSC format. "
+                "Please recompile with a C++23-compliant compiler.");
+#endif
+        };
+        using Order       = typename to_sparsity_t::Order;
+        bool need_sorting = false;
+        auto order        = static_cast<Order>(from.order);
+        // Check whether the user requested the indices to be sorted
         if (request.order && *request.order == to_sparsity_t::SortedRows) {
             order = to_sparsity_t::SortedRows;
             switch (from.order) {
-                case from_sparsity_t::Unsorted:
-#if ALPAQA_HAVE_COO_CSC_CONVERSIONS
-                    inner_idx = from.inner_idx;
-                    outer_ptr = from.outer_ptr;
-                    permutation.resize(from.nnz());
-                    std::iota(permutation.begin(), permutation.end(), index_t{0});
-                    util::sort_rows_csc(outer_ptr, inner_idx, permutation);
-#else
-                    throw std::runtime_error(
-                        "This build of alpaqa does not support sorting matrices in CSC format. "
-                        "Please recompile with a C++23-compliant compiler.");
-#endif
-                    break;
-                case from_sparsity_t::SortedRows:
-                    // No sorting necessary
-                    break;
+                case from_sparsity_t::Unsorted: need_sorting = true; break;
+                case from_sparsity_t::SortedRows: need_sorting = false; break;
                 default: throw std::invalid_argument("Invalid order");
             }
         }
-        assert(!request.order || *request.order == order);
+        // Convert and sort, or only convert the indices
+        if (need_sorting)
+            sort_indices();
+        else if (!std::is_same_v<StorageIndexFrom, StorageIndexTo>)
+            convert_indices();
+        // Remove unnecessary permutations
         if (std::ranges::is_sorted(permutation))
             permutation = indexvec{};
-        return {
-            .rows      = from.rows,
-            .cols      = from.cols,
-            .symmetry  = from.symmetry,
-            .inner_idx = inner_idx.size() > 0 ? crindexvec{inner_idx} : from.inner_idx,
-            .outer_ptr = outer_ptr.size() > 0 ? crindexvec{outer_ptr} : from.outer_ptr,
-            .order     = order,
-        };
+        // If the index types are the same, we may be able to reuse the storage
+        if constexpr (std::is_same_v<StorageIndexFrom, StorageIndexTo>)
+            return {
+                .rows      = from.rows,
+                .cols      = from.cols,
+                .symmetry  = from.symmetry,
+                .inner_idx = need_sorting ? index_vector_view_t{inner_idx} : from.inner_idx,
+                .outer_ptr = need_sorting ? index_vector_view_t{outer_ptr} : from.outer_ptr,
+                .order     = order,
+            };
+        // If the index types are not the same, we have to copy regardless
+        else
+            return {
+                .rows      = from.rows,
+                .cols      = from.cols,
+                .symmetry  = from.symmetry,
+                .inner_idx = inner_idx,
+                .outer_ptr = outer_ptr,
+                .order     = order,
+            };
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
         : sparsity(convert_sparsity(from, request)) {
@@ -490,7 +520,8 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCSC<Conf>> {
         assert(util::check_uniqueness_csc(sparsity.outer_ptr, sparsity.inner_idx));
 #endif
     }
-    indexvec inner_idx, outer_ptr, permutation;
+    index_vector_t inner_idx, outer_ptr;
+    indexvec permutation;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
     const to_sparsity_t &get_sparsity() const { return *this; }
@@ -505,26 +536,30 @@ struct SparsityConverter<SparseCSC<Conf>, SparseCSC<Conf>> {
     }
 };
 
-template <Config Conf>
-struct SparsityConverter<Dense<Conf>, SparseCSC<Conf>> {
+template <Config Conf, class StorageIndex>
+struct SparsityConverter<Dense<Conf>, SparseCSC<Conf, StorageIndex>> {
     USING_ALPAQA_CONFIG(Conf);
-    using to_sparsity_t   = SparseCSC<Conf>;
-    using from_sparsity_t = Dense<Conf>;
-    using Request         = SparsityConversionRequest<to_sparsity_t>;
+    using to_sparsity_t       = SparseCSC<Conf, StorageIndex>;
+    using from_sparsity_t     = Dense<Conf>;
+    using storage_index_t     = typename to_sparsity_t::storage_index_t;
+    using index_vector_t      = typename to_sparsity_t::index_vector_t;
+    using index_vector_view_t = typename to_sparsity_t::index_vector_view_t;
+    using Request             = SparsityConversionRequest<to_sparsity_t>;
     to_sparsity_t convert_sparsity([[maybe_unused]] from_sparsity_t from, Request) {
+        auto cvt_idx = [](auto i) { return static_cast<storage_index_t>(i); };
         switch (from.symmetry) {
             case Symmetry::Unsymmetric: {
                 inner_idx.resize(from.rows * from.cols);
                 outer_ptr.resize(from.cols + 1);
                 index_t l = 0;
                 for (index_t c = 0; c < from.cols; ++c) {
-                    outer_ptr[c] = l;
+                    outer_ptr[c] = cvt_idx(l);
                     for (index_t r = 0; r < from.rows; ++r) {
-                        inner_idx[l] = r;
+                        inner_idx[l] = cvt_idx(r);
                         ++l;
                     }
                 }
-                outer_ptr[from.cols] = l;
+                outer_ptr[from.cols] = cvt_idx(l);
             } break;
             case Symmetry::Upper: {
                 if (from.rows != from.cols)
@@ -533,13 +568,13 @@ struct SparsityConverter<Dense<Conf>, SparseCSC<Conf>> {
                 outer_ptr.resize(from.cols + 1);
                 index_t l = 0;
                 for (index_t c = 0; c < from.cols; ++c) {
-                    outer_ptr[c] = l;
+                    outer_ptr[c] = cvt_idx(l);
                     for (index_t r = 0; r <= c; ++r) {
-                        inner_idx[l] = r;
+                        inner_idx[l] = cvt_idx(r);
                         ++l;
                     }
                 }
-                outer_ptr[from.cols] = l;
+                outer_ptr[from.cols] = cvt_idx(l);
             } break;
             case Symmetry::Lower:
                 throw std::invalid_argument("Lower-triangular symmetry currently not supported");
@@ -556,7 +591,7 @@ struct SparsityConverter<Dense<Conf>, SparseCSC<Conf>> {
     }
     SparsityConverter(from_sparsity_t from, Request request = {})
         : sparsity(convert_sparsity(from, request)) {}
-    indexvec inner_idx, outer_ptr;
+    index_vector_t inner_idx, outer_ptr;
     to_sparsity_t sparsity;
     operator const to_sparsity_t &() const & { return sparsity; }
     const to_sparsity_t &get_sparsity() const { return *this; }

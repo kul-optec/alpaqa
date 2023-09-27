@@ -13,7 +13,7 @@ USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
 TEST(Sparsity, convertDenseToCOO) {
     using Source      = sp::Dense<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     Source dense{
@@ -38,7 +38,7 @@ TEST(Sparsity, convertDenseToCOO) {
 
 TEST(Sparsity, convertDenseToCOOfirstIndex) {
     using Source      = sp::Dense<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     Source dense{
@@ -63,7 +63,7 @@ TEST(Sparsity, convertDenseToCOOfirstIndex) {
 
 TEST(Sparsity, convertDenseToCOOupper) {
     using Source      = sp::Dense<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     Source coo{
@@ -88,8 +88,8 @@ TEST(Sparsity, convertDenseToCOOupper) {
 }
 
 TEST(Sparsity, convertCSCToCOO) {
-    using Source      = sp::SparseCSC<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_ptrs(5);
@@ -118,8 +118,8 @@ TEST(Sparsity, convertCSCToCOO) {
 }
 
 TEST(Sparsity, convertCSCToCOOfirstIndex) {
-    using Source      = sp::SparseCSC<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_ptrs(5);
@@ -148,8 +148,8 @@ TEST(Sparsity, convertCSCToCOOfirstIndex) {
 }
 
 TEST(Sparsity, convertCOOToCOO) {
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -175,8 +175,8 @@ TEST(Sparsity, convertCOOToCOO) {
 }
 
 TEST(Sparsity, convertCOOToCOOfirstIndex) {
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -205,8 +205,8 @@ TEST(Sparsity, convertCOOToCOOfirstIndex) {
 }
 
 TEST(Sparsity, convertCOOToCOOfirstIndex2) {
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -237,7 +237,7 @@ TEST(Sparsity, convertCOOToCOOfirstIndex2) {
 
 TEST(Sparsity, convertCOOintToCOO) {
     using Source      = sp::SparseCOO<config_t, int>;
-    using Result      = sp::SparseCOO<config_t>;
+    using Result      = sp::SparseCOO<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     Eigen::VectorX<int> row_idcs(7), col_idcs(7);
@@ -267,8 +267,8 @@ TEST(Sparsity, convertCOOintToCOO) {
 
 /// @test   sorted CSC to unsorted CSC, so should be no-op
 TEST(Sparsity, convertCSCToCSCsorted) {
-    using Source      = sp::SparseCSC<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_ptrs(5);
@@ -303,8 +303,8 @@ TEST(Sparsity, convertCSCToCSCsorted) {
 
 /// @test   unsorted CSC to unsorted CSC, so should be no-op
 TEST(Sparsity, convertCSCToCSCunsorted) {
-    using Source      = sp::SparseCSC<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_ptrs(5);
@@ -346,8 +346,8 @@ TEST(Sparsity, convertCSCToCSCunsorted) {
 /// @test   unsorted CSC to sorted CSC, requires sorting each column
 TEST(Sparsity, convertCSCToCSCunsorted2sorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCSC<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_ptrs(5);
@@ -384,8 +384,8 @@ TEST(Sparsity, convertCSCToCSCunsorted2sorted) {
 
 /// @test   sorted CSC to sorted CSC, should be no-op
 TEST(Sparsity, convertCSCToCSCsorted2sorted) {
-    using Source      = sp::SparseCSC<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_ptrs(5);
@@ -418,10 +418,82 @@ TEST(Sparsity, convertCSCToCSCsorted2sorted) {
     EXPECT_THAT(v, EigenEqual(m));
 }
 
+/// @test   sorted CSC int to sorted CSC, requires copy
+TEST(Sparsity, convertCSCToCSCsortedInt2sorted) {
+    using Source      = sp::SparseCSC<config_t, int>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::SparsityConverter<Sparsity, Result>;
+    Eigen::VectorX<int> row_idcs(7), col_ptrs(5);
+    row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    col_ptrs << 0, 2, 4, 6, 7;
+    Source coo{
+        .rows      = 3,
+        .cols      = 4,
+        .symmetry  = sp::Symmetry::Unsymmetric,
+        .inner_idx = row_idcs,
+        .outer_ptr = col_ptrs,
+        .order     = Source::SortedRows,
+    };
+    converter_t converter{Sparsity{coo}, {.order = Result::SortedRows}};
+    const auto &result = converter.get_sparsity();
+    indexvec expected_row_idcs(7), expected_col_ptrs(5);
+    expected_row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    expected_col_ptrs << 0, 2, 4, 6, 7;
+    EXPECT_EQ(result.rows, 3);
+    ASSERT_EQ(result.cols, 4);
+    ASSERT_EQ(result.nnz(), 7);
+    EXPECT_THAT(result.inner_idx, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.outer_ptr, EigenEqual(expected_col_ptrs));
+    EXPECT_EQ(result.symmetry, sp::Symmetry::Unsymmetric);
+    EXPECT_EQ(result.order, Result::SortedRows);
+    vec m(7);
+    m << 1, 2, 3, 4, 5, 6, 7;
+    vec v(result.nnz());
+    converter.convert_values(m, v);
+    EXPECT_THAT(v, EigenEqual(m));
+}
+
+/// @test   sorted CSC to sorted CSC int, requires copy
+TEST(Sparsity, convertCSCToCSCsorted2sortedInt) {
+    using Source      = sp::SparseCSC<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, int>;
+    using Sparsity    = sp::Sparsity<config_t>;
+    using converter_t = sp::SparsityConverter<Sparsity, Result>;
+    indexvec row_idcs(7), col_ptrs(5);
+    row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    col_ptrs << 0, 2, 4, 6, 7;
+    Source coo{
+        .rows      = 3,
+        .cols      = 4,
+        .symmetry  = sp::Symmetry::Unsymmetric,
+        .inner_idx = row_idcs,
+        .outer_ptr = col_ptrs,
+        .order     = Source::SortedRows,
+    };
+    converter_t converter{Sparsity{coo}, {.order = Result::SortedRows}};
+    const auto &result = converter.get_sparsity();
+    Eigen::VectorX<int> expected_row_idcs(7), expected_col_ptrs(5);
+    expected_row_idcs << 0, 1, 1, 2, 0, 2, 0;
+    expected_col_ptrs << 0, 2, 4, 6, 7;
+    EXPECT_EQ(result.rows, 3);
+    ASSERT_EQ(result.cols, 4);
+    ASSERT_EQ(result.nnz(), 7);
+    EXPECT_THAT(result.inner_idx, EigenEqual(expected_row_idcs));
+    EXPECT_THAT(result.outer_ptr, EigenEqual(expected_col_ptrs));
+    EXPECT_EQ(result.symmetry, sp::Symmetry::Unsymmetric);
+    EXPECT_EQ(result.order, Result::SortedRows);
+    vec m(7);
+    m << 1, 2, 3, 4, 5, 6, 7;
+    vec v(result.nnz());
+    converter.convert_values(m, v);
+    EXPECT_THAT(v, EigenEqual(m));
+}
+
 /// @test   unsymmetric Dense to CSC
 TEST(Sparsity, convertDenseToCSC) {
     using Source      = sp::Dense<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     Source coo{
@@ -453,7 +525,7 @@ TEST(Sparsity, convertDenseToCSC) {
 /// @test   symmetric Dense to CSC
 TEST(Sparsity, convertDenseToCSCupper) {
     using Source      = sp::Dense<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     Source coo{
@@ -485,8 +557,8 @@ TEST(Sparsity, convertDenseToCSCupper) {
 /// @test   unsorted COO to unsorted CSC, requires sorting columns
 TEST(Sparsity, convertCOOToCSCunsorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -529,8 +601,8 @@ TEST(Sparsity, convertCOOToCSCunsorted) {
 /// @test   COO which is sorted but reported as unsorted, to unsorted CSC
 TEST(Sparsity, convertCOOToCSCsilentlySorted2unsorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -574,8 +646,8 @@ TEST(Sparsity, convertCOOToCSCsilentlySorted2unsorted) {
 ///         no sorting required
 TEST(Sparsity, convertCOOToCSCsortedCols2unsorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -618,8 +690,8 @@ TEST(Sparsity, convertCOOToCSCsortedCols2unsorted) {
 /// @test   COO which is sorted but reported as unsorted, to sorted CSC
 TEST(Sparsity, convertCOOToCSCsilentlySorted2sorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -655,8 +727,8 @@ TEST(Sparsity, convertCOOToCSCsilentlySorted2sorted) {
 /// @test   unsorted COO to sorted CSC
 TEST(Sparsity, convertCOOToCSCunsorted2sorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -694,8 +766,8 @@ TEST(Sparsity, convertCOOToCSCunsorted2sorted) {
 /// @test sorted COO to sorted CSC, no sorting required
 TEST(Sparsity, convertCOOToCSCsorted2sorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -731,8 +803,8 @@ TEST(Sparsity, convertCOOToCSCsorted2sorted) {
 /// @test sorted COO to sorted CSC, with different first index for COO
 TEST(Sparsity, convertCOOToCSCfirstIndex) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -769,8 +841,8 @@ TEST(Sparsity, convertCOOToCSCfirstIndex) {
 /// @test   sorted COO to unsorted CSC, no sorting required
 TEST(Sparsity, convertCOOToCSCsorted2unsorted) {
     SKIP_IF_NO_CSC_CONV();
-    using Source      = sp::SparseCOO<config_t>;
-    using Result      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
+    using Result      = sp::SparseCSC<config_t, index_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
     indexvec row_idcs(7), col_idcs(7);
@@ -829,7 +901,7 @@ TEST(Sparsity, convertDenseToDense) {
 
 /// @test   CSC to dense
 TEST(Sparsity, convertCSCToDense) {
-    using Source      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -861,7 +933,7 @@ TEST(Sparsity, convertCSCToDense) {
 
 /// @test   CSC upper symmetric to dense
 TEST(Sparsity, convertCSCToDenseUpper) {
-    using Source      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -893,7 +965,7 @@ TEST(Sparsity, convertCSCToDenseUpper) {
 
 /// @test   CSC upper symmetric invalid
 TEST(Sparsity, convertCSCToDenseUpperInvalid) {
-    using Source      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -923,7 +995,7 @@ TEST(Sparsity, convertCSCToDenseUpperInvalid) {
 
 /// @test   CSC lower symmetric to dense
 TEST(Sparsity, convertCSCToDenseLower) {
-    using Source      = sp::SparseCSC<config_t>;
+    using Source      = sp::SparseCSC<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -958,7 +1030,7 @@ TEST(Sparsity, convertCSCToDenseLower) {
 
 /// @test   COO to dense
 TEST(Sparsity, convertCOOToDense) {
-    using Source      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -990,7 +1062,7 @@ TEST(Sparsity, convertCOOToDense) {
 
 /// @test   COO upper symmetric to dense
 TEST(Sparsity, convertCOOToDenseUpper) {
-    using Source      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -1022,7 +1094,7 @@ TEST(Sparsity, convertCOOToDenseUpper) {
 
 /// @test   COO upper symmetric invalid
 TEST(Sparsity, convertCOOToDenseUpperInvalid) {
-    using Source      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;
@@ -1052,7 +1124,7 @@ TEST(Sparsity, convertCOOToDenseUpperInvalid) {
 
 /// @test   COO lower symmetric to dense
 TEST(Sparsity, convertCOOToDenseLower) {
-    using Source      = sp::SparseCOO<config_t>;
+    using Source      = sp::SparseCOO<config_t, index_t>;
     using Result      = sp::Dense<config_t>;
     using Sparsity    = sp::Sparsity<config_t>;
     using converter_t = sp::SparsityConverter<Sparsity, Result>;

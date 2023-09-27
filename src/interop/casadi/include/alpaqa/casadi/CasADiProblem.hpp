@@ -6,7 +6,6 @@
 #include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/copyable_unique_ptr.hpp>
 #include <filesystem>
-#include <mutex>
 
 namespace alpaqa {
 namespace casadi_loader {
@@ -97,29 +96,6 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
   private:
     using Functions = casadi_loader::CasADiFunctionsWithParam<Conf>;
     util::copyable_unique_ptr<Functions> impl;
-
-    struct SparsityStorage {
-        SparsityStorage() = default;
-        SparsityStorage(const SparsityStorage &other)
-            : inner_idx(other.inner_idx), outer_ptr(other.outer_ptr) {}
-        SparsityStorage(SparsityStorage &&other) noexcept
-            : inner_idx(std::move(other.inner_idx)),
-              outer_ptr(std::move(other.outer_ptr)) {}
-        SparsityStorage &operator=(const SparsityStorage &other) {
-            inner_idx = other.inner_idx;
-            outer_ptr = other.outer_ptr;
-            return *this;
-        }
-        SparsityStorage &operator=(SparsityStorage &&other) noexcept {
-            inner_idx = std::move(other.inner_idx);
-            outer_ptr = std::move(other.outer_ptr);
-            return *this;
-        }
-        std::once_flag flag; // TODO: this is probably overkill
-        indexvec inner_idx, outer_ptr;
-    } mutable sparsity_jac_g, sparsity_hess_L, sparsity_hess_ψ;
-    Sparsity convert_sparsity(const auto &sparsity,
-                              SparsityStorage &storage) const;
 };
 
 CASADI_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiProblem, EigenConfigd);

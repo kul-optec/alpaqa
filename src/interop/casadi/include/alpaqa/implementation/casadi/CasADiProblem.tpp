@@ -292,37 +292,32 @@ void CasADiProblem<Conf>::eval_grad_gi(crvec, index_t, rvec) const {
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::convert_sparsity(const auto &sparsity,
-                                           SparsityStorage &storage) const
-    -> Sparsity {
-    std::call_once(storage.flag, [&] {
-        auto cvt_idx = detail::casadi_to_index<config_t>;
-        storage.inner_idx.resize(cvt_idx(sparsity.nnz()));
-        storage.outer_ptr.resize(this->n + 1);
-        assert(this->n == cvt_idx(sparsity.size2()));
-        std::transform(sparsity.row(),
-                       sparsity.row() + storage.inner_idx.size(),
-                       storage.inner_idx.begin(), cvt_idx);
-        std::transform(sparsity.colind(),
-                       sparsity.colind() + storage.outer_ptr.size(),
-                       storage.outer_ptr.begin(), cvt_idx);
-    });
-    return sparsity::SparseCSC<Conf>{
-        .rows      = this->m,
-        .cols      = this->n,
-        .inner_idx = sparsity_jac_g.inner_idx,
-        .outer_ptr = sparsity_jac_g.outer_ptr,
+Sparsity<Conf> convert_csc(const auto &sp, sparsity::Symmetry symmetry) {
+    using SparseCSC          = sparsity::SparseCSC<Conf, casadi_int>;
+    using index_vector_map_t = typename SparseCSC::index_vector_map_t;
+    return SparseCSC{
+        .rows      = sp.size1(),
+        .cols      = sp.size2(),
+        .symmetry  = symmetry,
+        .inner_idx = index_vector_map_t{sp.row(), sp.nnz()},
+        .outer_ptr = index_vector_map_t{sp.colind(), sp.size2() + 1},
+        .order     = SparseCSC::SortedRows,
     };
 }
 
 template <Config Conf>
 auto CasADiProblem<Conf>::get_jac_g_sparsity() const -> Sparsity {
-    sparsity::Dense<config_t> dense{.rows = this->m, .cols = this->n};
+    sparsity::Dense<config_t> dense{
+        .rows     = this->m,
+        .cols     = this->n,
+        .symmetry = sparsity::Symmetry::Unsymmetric,
+    };
     if (!impl->jac_g.has_value())
         return dense;
-    auto &&sparsity = impl->jac_g->fun.sparsity_out(0);
-    return sparsity.is_dense() ? Sparsity{dense}
-                               : convert_sparsity(sparsity, sparsity_jac_g);
+    auto &&sp = impl->jac_g->fun.sparsity_out(0);
+    return sp.is_dense()
+               ? Sparsity{dense}
+               : convert_csc<config_t>(sp, sparsity::Symmetry::Unsymmetric);
 }
 
 template <Config Conf>
@@ -341,12 +336,16 @@ void CasADiProblem<Conf>::eval_hess_L_prod(crvec x, crvec y, real_t scale,
 
 template <Config Conf>
 auto CasADiProblem<Conf>::get_hess_L_sparsity() const -> Sparsity {
-    sparsity::Dense<config_t> dense{.rows = this->n, .cols = this->n};
+    sparsity::Dense<config_t> dense{
+        .rows     = this->n,
+        .cols     = this->n,
+        .symmetry = sparsity::Symmetry::Upper,
+    };
     if (!impl->hess_L.has_value())
         return dense;
-    auto &&sparsity = impl->hess_L->fun.sparsity_out(0);
-    return sparsity.is_dense() ? Sparsity{dense}
-                               : convert_sparsity(sparsity, sparsity_hess_L);
+    auto &&sp = impl->hess_L->fun.sparsity_out(0);
+    return sp.is_dense() ? Sparsity{dense}
+                         : convert_csc<config_t>(sp, sparsity::Symmetry::Upper);
 }
 
 template <Config Conf>
@@ -370,12 +369,16 @@ void CasADiProblem<Conf>::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ,
 
 template <Config Conf>
 auto CasADiProblem<Conf>::get_hess_ψ_sparsity() const -> Sparsity {
-    sparsity::Dense<config_t> dense{.rows = this->n, .cols = this->n};
+    sparsity::Dense<config_t> dense{
+        .rows     = this->n,
+        .cols     = this->n,
+        .symmetry = sparsity::Symmetry::Upper,
+    };
     if (!impl->hess_ψ.has_value())
         return dense;
-    auto &&sparsity = impl->hess_ψ->fun.sparsity_out(0);
-    return sparsity.is_dense() ? Sparsity{dense}
-                               : convert_sparsity(sparsity, sparsity_hess_ψ);
+    auto &&sp = impl->hess_ψ->fun.sparsity_out(0);
+    return sp.is_dense() ? Sparsity{dense}
+                         : convert_csc<config_t>(sp, sparsity::Symmetry::Upper);
 }
 
 template <Config Conf>
