@@ -94,4 +94,14 @@ function(find_pybind11_python_first)
     # pybind11 is header-only, so finding a native version is fine
     find_package(pybind11 ${ARGN} REQUIRED CONFIG CMAKE_FIND_ROOT_PATH_BOTH)
 
+    # Pending improved cross-compilation support in py-build-cmake
+    if (CMAKE_CROSSCOMPILING)
+        # Need to force these values again in case they are cleared by
+        # pybind11/tools/pybind11NewTools.cmake
+        set(PYTHON_MODULE_EXTENSION ${PY_BUILD_EXT_SUFFIX}
+            CACHE INTERNAL "" FORCE)
+        set(PYTHON_IS_DEBUG ${PY_BUILD_DEBUG_ABI}
+            CACHE INTERNAL "" FORCE)
+    endif()
+
 endfunction()
