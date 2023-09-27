@@ -30,6 +30,8 @@ using namespace py::literals;
 #include <util/copy.hpp>
 #include <util/member.hpp>
 
+namespace {
+
 template <class FuncProb, auto py_f, auto f, class Ret, class... Args>
 void functional_setter_ret(FuncProb &p, std::optional<py::object> o) {
     if (o) {
@@ -85,6 +87,55 @@ void problem_constr_proj_methods(py::class_<T, Args...> &cls) {
                 return indexvec{J_sto.topRows(nJ)};
             },
             "γ"_a, "x"_a, "grad_ψ"_a);
+}
+
+namespace sp = alpaqa::sparsity;
+
+template <alpaqa::Config Conf, class F>
+struct cvt_matrix_visitor_t {
+    USING_ALPAQA_CONFIG(Conf);
+    using result_t = std::tuple<py::object, sp::Symmetry>;
+    F func;
+    auto operator()(const sp::Dense<config_t> &d) const -> result_t {
+        mat vals(d.rows, d.cols);
+        func(vals.reshaped());
+        return {
+            py::cast(std::move(vals)),
+            d.symmetry,
+        };
+    }
+    template <class I>
+    auto operator()(const sp::SparseCSC<config_t, I> &csc) const -> result_t {
+        vec vals(csc.nnz());
+        func(vals);
+        auto csc_array = py::module_::import("scipy.sparse").attr("csc_array");
+        auto matrix    = py::make_tuple(std::move(vals), csc.inner_idx, csc.outer_ptr);
+        auto shape     = ("shape"_a = py::make_tuple(csc.rows, csc.cols));
+        return {
+            csc_array(std::move(matrix), std::move(shape)),
+            csc.symmetry,
+        };
+    }
+    template <class I>
+    auto operator()(const sp::SparseCOO<config_t, I> &coo) const -> result_t {
+        vec vals(coo.nnz());
+        func(vals);
+        auto coo_array = py::module_::import("scipy.sparse").attr("coo_array");
+        auto Δ         = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
+        auto indices   = py::make_tuple(coo.row_indices - Δ, coo.col_indices - Δ);
+        auto matrix    = py::make_tuple(std::move(vals), std::move(indices));
+        auto shape     = ("shape"_a = py::make_tuple(coo.rows, coo.cols));
+        return {
+            coo_array(std::move(matrix), std::move(shape)),
+            coo.symmetry,
+        };
+    }
+};
+
+template <alpaqa::Config Conf>
+auto cvt_matrix(const alpaqa::Sparsity<Conf> &sparsity, const auto &func) {
+    cvt_matrix_visitor_t<Conf, decltype(func)> visitor{func};
+    return std::visit(visitor, sparsity);
 }
 
 template <class T, class... Args>
@@ -241,40 +292,6 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return std::make_tuple(std::move(ψ), std::move(grad_ψ));
             },
             "x"_a, "y"_a, "Σ"_a);
-    auto cvt_matrix = [](alpaqa::Sparsity<config_t> sparsity, const auto &func) {
-        namespace sp = alpaqa::sparsity;
-        return std::visit(
-            sp::detail::overloaded{
-                [&](const sp::Dense<config_t> &d) {
-                    mat G(d.rows, d.cols);
-                    func(G.reshaped());
-                    return std::make_tuple(py::cast(std::move(G)), d.symmetry);
-                },
-                [&]<class I>(const sp::SparseCSC<config_t, I> &csc) {
-                    vec G_values(csc.nnz());
-                    func(G_values);
-                    auto sp = py::module::import("scipy.sparse");
-                    return std::make_tuple(
-                        sp.attr("csc_array")(
-                            py::make_tuple(std::move(G_values), csc.inner_idx, csc.outer_ptr),
-                            "shape"_a = py::make_tuple(csc.rows, csc.cols)),
-                        csc.symmetry);
-                },
-                [&]<class I>(const sp::SparseCOO<config_t, I> &coo) {
-                    vec G_values(coo.nnz());
-                    func(G_values);
-                    auto sp = py::module::import("scipy.sparse");
-                    auto Δ  = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
-                    return std::make_tuple(
-                        sp.attr("coo_array")(py::make_tuple(std::move(G_values),
-                                                            py::make_tuple(coo.row_indices - Δ,
-                                                                           coo.col_indices - Δ)),
-                                             "shape"_a = py::make_tuple(coo.rows, coo.cols)),
-                        coo.symmetry);
-                },
-            },
-            sparsity);
-    };
     if constexpr (requires { &T::eval_jac_g; })
         cls.def(
             "eval_jac_g",
@@ -303,6 +320,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
             "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.,
             "Returns the Hessian of the augmented Lagrangian and its symmetry.");
 }
+
+} // namespace
 
 template <alpaqa::Config Conf>
 void register_problems(py::module_ &m) {
