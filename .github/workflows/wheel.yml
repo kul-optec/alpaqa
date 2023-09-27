@@ -299,6 +299,13 @@ jobs:
       - name: Extract stubs
         if: ${{ matrix.arch == 'ARM64' }}
         run: tar xf stubs.tar
+      - name: Disable Fortran
+        run: |
+          cat > py-build-cmake.local.toml <<- EOF
+          [cmake.options]
+          CMAKE_Fortran_COMPILER = ""
+          EOF
+        shell: bash
       - name: Build wheels
         uses: pypa/cibuildwheel@39a63b5912f086dd459cf6fcb13dcdd3fe3bc24d
         with:
