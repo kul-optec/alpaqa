@@ -167,6 +167,59 @@ jobs:
           retention-days: 1
           path: dist/*.whl
 
+  build-windows:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        arch: ['AMD64']
+        python-id: ['cp310-*']
+    env:
+      CXXFLAGS: "/bigobj"
+      CFLAGS: "/bigobj"
+      PYTHONUTF8: 1
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Cache dependencies
+        id: cache-dep
+        uses: actions/cache@v3
+        with:
+          path: deps
+          key: deps-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('scripts/install-eigen.ps1', 'scripts/install-casadi-static.ps1') }}
+      - name: Install Python dependencies
+        if: steps.cache-dep.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          mkdir $env:VIRTUAL_ENV
+          ./scripts/install-eigen.ps1
+          ./scripts/install-casadi-static.ps1
+        env:
+          VIRTUAL_ENV: ${{ github.workspace }}/deps
+          CMAKE_TOOLCHAIN_FILE: ${{ github.workspace }}/scripts/toolchains/Win-${{ matrix.arch }}.cmake
+      - name: Disable Fortran
+        run: |
+          cat > py-build-cmake.local.toml <<- EOF
+          [cmake.options]
+          CMAKE_Fortran_COMPILER = ""
+          EOF
+        shell: bash
+      - name: Build wheels
+        uses: pypa/cibuildwheel@39a63b5912f086dd459cf6fcb13dcdd3fe3bc24d
+        with:
+          output-dir: dist
+        env:
+          CIBW_BUILD: ${{ matrix.python-id }}
+          CIBW_ARCHS: ${{ matrix.arch }}
+          CIBW_TEST_SKIP: "*-{win32,win_arm64} pp*" # no CasADi binaries
+          CMAKE_PREFIX_PATH: ${{ github.workspace }}/deps
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: whl-windows
+          retention-days: 1
+          path: dist/*.whl
+
   docs:
     needs: [build-linux]
     runs-on: ubuntu-latest
