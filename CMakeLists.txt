@@ -52,6 +52,8 @@ set(ALPAQA_DOXYFILE "Doxyfile" CACHE STRING
     "The Doxyfile to use for the docs target")
 option(ALPAQA_ENABLE_PCH
     "Enable precompiled headers" Off)
+option(ALPAQA_STANDALONE
+    "Install with relative RPATH to locate its own shared libraries" On)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 

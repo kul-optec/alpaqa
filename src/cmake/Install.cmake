@@ -10,6 +10,17 @@ set(ALPAQA_INSTALL_LIBDIR "${CMAKE_INSTALL_LIBDIR}"
 set(ALPAQA_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}"
     CACHE STRING "Installation directory for headers")
 
+# Set the runtime linker/loader search paths to make alpaqa stand-alone
+if (ALPAQA_STANDALONE)
+    cmake_path(RELATIVE_PATH ALPAQA_INSTALL_LIBDIR
+               BASE_DIRECTORY ALPAQA_INSTALL_BINDIR
+               OUTPUT_VARIABLE ALPAQA_INSTALL_LIBRELBINDIR)
+    foreach (TGT IN LISTS ALPAQA_INSTALL_TARGETS ALPAQA_INSTALL_EXE)
+        set_target_properties(${TGT} PROPERTIES
+            INSTALL_RPATH "$ORIGIN;$ORIGIN/${ALPAQA_INSTALL_LIBRELBINDIR}")
+    endforeach()
+endif()
+
 # Add the alpaqa library to the "export-set", install the library files
 message(STATUS "Targets to install: ${ALPAQA_INSTALL_TARGETS};${ALPAQA_INSTALL_EXE}")
 install(TARGETS ${ALPAQA_INSTALL_TARGETS} warnings
