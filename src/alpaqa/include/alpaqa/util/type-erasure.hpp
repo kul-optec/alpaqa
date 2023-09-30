@@ -43,6 +43,13 @@ class ALPAQA_EXPORT bad_type_erased_type : public std::logic_error {
     mutable std::string message;
 };
 
+class ALPAQA_EXPORT bad_type_erased_constness : public std::logic_error {
+  public:
+    bad_type_erased_constness()
+        : std::logic_error{"Non-const method called on a TypeErased object "
+                           "that references a const object"} {}
+};
+
 /// Struct that stores the size of a polymorphic object, as well as pointers to
 /// functions to copy, move or destroy the object.
 /// Inherit from this struct to add useful functions.
@@ -139,7 +146,12 @@ struct Launderer {
         requires std::is_base_of_v<T, Class>
     [[gnu::always_inline]] static constexpr auto
     invoker_ovl(R (T::*)(Args...)) {
-        return do_invoke<M, void, Class, R, Args...>;
+        if constexpr (std::is_const_v<Class>)
+            return +[](void *, Args..., ExtraArgs...) {
+                throw bad_type_erased_constness{};
+            };
+        else
+            return do_invoke<M, void, Class, R, Args...>;
     }
 
   public:
@@ -210,7 +222,18 @@ class TypeErased {
 
   protected:
     static constexpr size_t invalid_size =
-        static_cast<size_t>(0xDEADBEEFDEADBEEF);
+        static_cast<size_t>(0xDEAD'BEEF'DEAD'BEEF);
+    static constexpr size_t mut_ref_size =
+        static_cast<size_t>(0xFFFF'FFFF'FFFF'FFFF);
+    static constexpr size_t const_ref_size =
+        static_cast<size_t>(0xFFFF'FFFF'FFFF'FFFE);
+    [[nodiscard]] static bool size_indicates_ownership(size_t size) {
+        return size != const_ref_size && size != mut_ref_size;
+    }
+    [[nodiscard]] static bool size_indicates_const(size_t size) {
+        return size == const_ref_size;
+    }
+
     /// Pointer to the stored object.
     void *self = nullptr;
     /// Size required to store the object.
@@ -250,16 +273,17 @@ class TypeErased {
         : allocator{std::move(other.allocator)} {
         size   = other.size;
         vtable = std::move(other.vtable);
-        // If dynamically allocated, simply steal storage
-        if (size > small_buffer_size) {
+        // If dynamically allocated, simply steal storage, or if not owned,
+        // simply move the pointer
+        if (size > small_buffer_size || !other.owns_referenced_object()) {
             // We stole the allocator, so we can steal the storage as well
             self = std::exchange(other.self, nullptr);
         }
         // Otherwise, use the small buffer and do an explicit move
         else if (other.self) {
             self = small_buffer.data();
-            vtable.move(other.self, self);
-            vtable.destroy(other.self); // nothing to deallocate
+            vtable.move(other.self, self); // assumed not to throw
+            vtable.destroy(other.self);    // nothing to deallocate
             other.self = nullptr;
         }
     }
@@ -287,6 +311,10 @@ class TypeErased {
                 other.deallocate();
             }
         }
+        // If not owned, simply move the pointer
+        else if (!other.owns_referenced_object()) {
+            self = std::exchange(other.self, nullptr);
+        }
         // Otherwise, use the small buffer and do an explicit move
         else if (other.self) {
             self = small_buffer.data();
@@ -295,6 +323,7 @@ class TypeErased {
             vtable.destroy(other.self); // nothing to deallocate
             other.self = nullptr;
         }
+        other.size = invalid_size;
     }
     /// Move assignment.
     TypeErased &operator=(TypeErased &&other) noexcept {
@@ -324,7 +353,7 @@ class TypeErased {
             // storage, so do an explicit move
             else {
                 self = allocator.allocate(size);
-                vtable.move(other.self, self);
+                vtable.move(other.self, self); // assumed not to throw
                 vtable.destroy(other.self);
                 // Careful, we might have moved other.allocator!
                 auto &deallocator    = prop_alloc ? allocator : other.allocator;
@@ -334,6 +363,10 @@ class TypeErased {
                 other.self = nullptr;
             }
         }
+        // If not owned, simply move the pointer
+        else if (!owns_referenced_object()) {
+            self = std::exchange(other.self, nullptr);
+        }
         // Otherwise, use the small buffer and do an explicit move
         else if (other.self) {
             self = small_buffer.data();
@@ -341,6 +374,7 @@ class TypeErased {
             vtable.destroy(other.self); // nothing to deallocate
             other.self = nullptr;
         }
+        other.size = invalid_size;
         return *this;
     }
 
@@ -399,6 +433,18 @@ class TypeErased {
     /// objects.
     explicit operator bool() const noexcept { return self != nullptr; }
 
+    /// Check if this wrapper owns the storage of the wrapped object, or
+    /// whether it simply stores a reference to an object that was allocated
+    /// elsewhere.
+    [[nodiscard]] bool owns_referenced_object() const noexcept {
+        return size_indicates_ownership(size);
+    }
+
+    /// Check if the wrapped object is const.
+    [[nodiscard]] bool referenced_object_is_const() const noexcept {
+        return size_indicates_const(size);
+    }
+
     /// Get a copy of the allocator.
     allocator_type get_allocator() const noexcept { return allocator; }
 
@@ -430,6 +476,25 @@ class TypeErased {
         return std::move(*reinterpret_cast<T *>(self));
     }
 
+    /// Get a type-erased pointer to the wrapped object.
+    /// @throws bad_type_erased_constness
+    ///         If the wrapped object is const.
+    /// @see @ref get_const_pointer()
+    [[nodiscard]] void *get_pointer() const {
+        if (referenced_object_is_const())
+            throw bad_type_erased_constness{};
+        return self;
+    }
+    /// Get a type-erased pointer to the wrapped object.
+    [[nodiscard]] const void *get_const_pointer() const { return self; }
+
+    /// @see @ref derived_from_TypeErased
+    template <std::derived_from<TypeErased> Child>
+    friend void derived_from_TypeErased_helper(const Child &) noexcept {
+        static constexpr bool False = sizeof(Child) != sizeof(Child);
+        static_assert(False, "not allowed in an evaluated context");
+    }
+
   private:
     /// Deallocates the storage when destroyed.
     struct Deallocator {
@@ -450,6 +515,8 @@ class TypeErased {
     Deallocator allocate(size_t size) {
         assert(!self);
         assert(size != invalid_size);
+        assert(size > 0);
+        assert(size_indicates_ownership(size));
         self       = size <= small_buffer_size ? small_buffer.data()
                                                : allocator.allocate(size);
         this->size = size;
@@ -459,6 +526,8 @@ class TypeErased {
     /// Deallocate the memory without invoking the destructor.
     void deallocate() {
         assert(size != invalid_size);
+        assert(size > 0);
+        assert(size_indicates_ownership(size));
         using pointer_t = typename allocator_traits::pointer;
         if (size > small_buffer_size)
             allocator.deallocate(reinterpret_cast<pointer_t>(self), size);
@@ -468,7 +537,9 @@ class TypeErased {
     /// Destroy the type-erased object (if not empty), and deallocate the memory
     /// if necessary.
     void cleanup() {
-        if (self) {
+        if (!owns_referenced_object()) {
+            self = nullptr;
+        } else if (self) {
             vtable.destroy(self);
             deallocate();
         }
@@ -482,14 +553,20 @@ class TypeErased {
             allocator = other.allocator;
         if (!other)
             return;
-        vtable             = other.vtable;
-        auto storage_guard = allocate(other.size);
-        // If copy constructor throws, storage should be deallocated and self
-        // set to null, otherwise the TypeErased destructor will attempt to call
-        // the contained object's destructor, which is undefined behavior if
-        // construction failed.
-        vtable.copy(other.self, self);
-        storage_guard.release();
+        vtable = other.vtable;
+        if (!other.owns_referenced_object()) {
+            // Non-owning: simply copy the pointer.
+            size = other.size;
+            self = other.self;
+        } else {
+            auto storage_guard = allocate(other.size);
+            // If copy constructor throws, storage should be deallocated and
+            // self set to null, otherwise the TypeErased destructor will
+            // attempt to call the contained object's destructor, which is
+            // undefined behavior if construction failed.
+            vtable.copy(other.self, self);
+            storage_guard.release();
+        }
     }
 
   protected:
@@ -497,14 +574,22 @@ class TypeErased {
     template <class T, class... Args>
     void construct_inplace(Args &&...args) {
         static_assert(std::is_same_v<T, std::remove_cvref_t<T>>);
-        // Allocate memory
-        auto storage_guard = allocate(sizeof(T));
-        // Construct the stored object
-        using destroyer = std::unique_ptr<T, noop_delete<T>>;
-        destroyer object_guard{new (self) T{std::forward<Args>(args)...}};
-        vtable = VTable{std::in_place, static_cast<T &>(*object_guard.get())};
-        object_guard.release();
-        storage_guard.release();
+        if constexpr (std::is_pointer_v<T>) {
+            T ptr{args...};
+            using Tnp = std::remove_pointer_t<T>;
+            size      = std::is_const_v<Tnp> ? const_ref_size : mut_ref_size;
+            vtable    = VTable{std::in_place, *ptr};
+            self      = const_cast<std::remove_const_t<Tnp> *>(ptr);
+        } else {
+            // Allocate memory
+            auto storage_guard = allocate(sizeof(T));
+            // Construct the stored object
+            using destroyer = std::unique_ptr<T, noop_delete<T>>;
+            destroyer obj_guard{new (self) T{std::forward<Args>(args)...}};
+            vtable = VTable{std::in_place, static_cast<T &>(*obj_guard.get())};
+            obj_guard.release();
+            storage_guard.release();
+        }
     }
 
     /// Call the vtable function @p f with the given arguments @p args,
@@ -527,6 +612,8 @@ class TypeErased {
                                                Args &&...args) {
         assert(f);
         assert(self);
+        if (referenced_object_is_const())
+            throw bad_type_erased_constness{};
         using LastArg = util::last_type_t<FArgs...>;
         if constexpr (std::is_same_v<LastArg, const VTable &>)
             return f(self, std::forward<Args>(args)..., vtable);
@@ -545,6 +632,8 @@ class TypeErased {
     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(void *)) {
         assert(f);
         assert(self);
+        if (referenced_object_is_const())
+            throw bad_type_erased_constness{};
         return f(self);
     }
     /// @copydoc call
@@ -561,8 +650,14 @@ class TypeErased {
                                                         const VTable &)) {
         assert(f);
         assert(self);
+        if (referenced_object_is_const())
+            throw bad_type_erased_constness{};
         return f(self, vtable);
     }
 };
+
+template <class Child>
+concept derived_from_TypeErased =
+    requires(Child c) { derived_from_TypeErased_helper(c); };
 
 } // namespace alpaqa::util

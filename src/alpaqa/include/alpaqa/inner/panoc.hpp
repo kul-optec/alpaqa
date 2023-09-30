@@ -149,7 +149,7 @@ class PANOCSolver {
     template <class P>
     Stats operator()(const P &problem, const SolveOptions &opts, rvec x, rvec y,
                      crvec Σ, rvec e) {
-        return operator()(Problem::template make<P>(problem), opts, x, y, Σ, e);
+        return operator()(Problem{&problem}, opts, x, y, Σ, e);
     }
 
     template <class P>

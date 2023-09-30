@@ -24,8 +24,8 @@ auto async_solve(bool async, bool suppress_interrupt, Solver &solver, Invoker &i
         return static_cast<decltype(stats) &&>(stats);
     } else {
         // Check that the user doesn't use the same solver/problem in multiple threads
-        ThreadChecker solver_checker{&solver};
-        std::tuple checkers{ThreadChecker{&checked_args}...};
+        ThreadChecker solver_checker{solver};
+        std::tuple checkers{ThreadChecker{checked_args}...};
         // Replace the output stream
         StreamReplacer stream{&solver};
         // Invoke the solver asynchronously

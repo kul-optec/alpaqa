@@ -49,7 +49,7 @@ class LBFGSBSolver {
     template <class P>
     Stats operator()(const P &problem, const SolveOptions &opts, rvec u, rvec y,
                      crvec Σ, rvec e) {
-        return operator()(Problem::template make<P>(problem), opts, u, y, Σ, e);
+        return operator()(Problem{&problem}, opts, u, y, Σ, e);
     }
 
     std::string get_name() const;

@@ -30,6 +30,9 @@ class TestTypeErasedProblem
     }
 };
 
+static_assert(util::derived_from_TypeErased<TestTypeErasedProblem<>>);
+static_assert(util::derived_from_TypeErased<TypeErasedProblem<>>);
+
 } // namespace alpaqa
 
 struct TestReqProblem {
@@ -110,9 +113,10 @@ TEST(TypeErasedProblem, RequiredProblem) {
 
 struct TestOptProblem : TestReqProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
-    TestOptProblem()          = default;
-    TestOptProblem(const TestOptProblem &) { throw std::logic_error("copy"); }
-    TestOptProblem(TestOptProblem &&) { throw std::logic_error("move"); }
+    TestOptProblem() = default;
+    static TestReqProblem fail(const auto &msg) { throw std::logic_error(msg); }
+    TestOptProblem(const TestOptProblem &) : TestReqProblem{fail("copy")} {}
+    TestOptProblem(TestOptProblem &&) : TestReqProblem{fail("move")} {}
 
     // clang-format off
     MOCK_METHOD(void, eval_grad_gi, (crvec x, index_t i, rvec grad_gi), (const));
@@ -221,6 +225,102 @@ TEST(TypeErasedProblem, OptionalProblem) {
     te_prob.vtable.eval_ψ_grad_ψ(te_prob.self, x, x, x, x, x, x,
                                  te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&te_prob.as<TestOptProblem>());
+}
+
+TEST(TypeErasedProblem, OptionalProblemPtr) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    TestOptProblem prob;
+    alpaqa::TestTypeErasedProblem<> te_prob{&prob};
+    vec x;
+    indexvec i;
+
+    ASSERT_NE(te_prob.vtable.eval_proj_diff_g, nullptr);
+    EXPECT_CALL(prob, eval_proj_diff_g);
+    te_prob.vtable.eval_proj_diff_g(te_prob.self, x, x);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_proj_multipliers, nullptr);
+    EXPECT_CALL(prob, eval_proj_multipliers);
+    te_prob.vtable.eval_proj_multipliers(te_prob.self, x, 0);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_prox_grad_step, nullptr);
+    EXPECT_CALL(prob, eval_prox_grad_step);
+    te_prob.vtable.eval_prox_grad_step(te_prob.self, 0, x, x, x, x);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_f, nullptr);
+    EXPECT_CALL(prob, eval_f);
+    te_prob.vtable.eval_f(te_prob.self, x);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_grad_f, nullptr);
+    EXPECT_CALL(prob, eval_grad_f);
+    te_prob.vtable.eval_grad_f(te_prob.self, x, x);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_g, nullptr);
+    EXPECT_CALL(prob, eval_g);
+    te_prob.vtable.eval_g(te_prob.self, x, x);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_grad_g_prod, nullptr);
+    EXPECT_CALL(prob, eval_grad_g_prod);
+    te_prob.vtable.eval_grad_g_prod(te_prob.self, x, x, x);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_grad_gi, nullptr);
+    EXPECT_CALL(prob, eval_grad_gi);
+    te_prob.vtable.eval_grad_gi(te_prob.self, x, 0, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_hess_L_prod, nullptr);
+    EXPECT_CALL(prob, eval_hess_L_prod);
+    te_prob.vtable.eval_hess_L_prod(te_prob.self, x, x, 1, x, x,
+                                    te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_hess_L, nullptr);
+    EXPECT_CALL(prob, eval_hess_L);
+    te_prob.vtable.eval_hess_L(te_prob.self, x, x, 1, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_f_grad_f, nullptr);
+    EXPECT_CALL(prob, eval_f_grad_f);
+    te_prob.vtable.eval_f_grad_f(te_prob.self, x, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_f_g, nullptr);
+    EXPECT_CALL(prob, eval_f_g);
+    te_prob.vtable.eval_f_g(te_prob.self, x, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_grad_f_grad_g_prod, nullptr);
+    EXPECT_CALL(prob, eval_grad_f_grad_g_prod);
+    te_prob.vtable.eval_grad_f_grad_g_prod(te_prob.self, x, x, x, x,
+                                           te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_grad_L, nullptr);
+    EXPECT_CALL(prob, eval_grad_L);
+    te_prob.vtable.eval_grad_L(te_prob.self, x, x, x, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_ψ, nullptr);
+    EXPECT_CALL(prob, eval_ψ);
+    te_prob.vtable.eval_ψ(te_prob.self, x, x, x, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_grad_ψ, nullptr);
+    EXPECT_CALL(prob, eval_grad_ψ);
+    te_prob.vtable.eval_grad_ψ(te_prob.self, x, x, x, x, x, x, te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
+
+    ASSERT_NE(te_prob.vtable.eval_ψ_grad_ψ, nullptr);
+    EXPECT_CALL(prob, eval_ψ_grad_ψ);
+    te_prob.vtable.eval_ψ_grad_ψ(te_prob.self, x, x, x, x, x, x,
+                                 te_prob.vtable);
+    testing::Mock::VerifyAndClearExpectations(&prob);
 }
 
 TEST(TypeErasedProblem, CountedOptionalProblem) {

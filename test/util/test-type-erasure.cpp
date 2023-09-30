@@ -54,12 +54,8 @@ struct CustomVTable : alpaqa::util::BasicVTable {
     CustomVTable()                        = default;
     template <class T>
     CustomVTable(std::in_place_t, T &t) : BasicVTable{std::in_place, t} {
-        get_msg = [](const void *self) {
-            return std::launder(reinterpret_cast<const T *>(self))->get_msg();
-        };
-        set_msg = [](void *self, const char *m) {
-            std::launder(reinterpret_cast<T *>(self))->set_msg(m);
-        };
+        get_msg = alpaqa::util::type_erased_wrapped<T, &T::get_msg>();
+        set_msg = alpaqa::util::type_erased_wrapped<T, &T::set_msg>();
     }
 };
 
@@ -283,7 +279,6 @@ struct TypeErasedTest : public testing::Test {};
 TYPED_TEST_SUITE_P(TypeErasedTest);
 
 TYPED_TEST_P(TypeErasedTest, copyConstruct) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("test-copy");
     auto b{a};
     ASSERT_TRUE(a);
@@ -298,8 +293,43 @@ TYPED_TEST_P(TypeErasedTest, copyConstruct) {
     EXPECT_STREQ(b.get_msg(), "b-replace");
 }
 
+TYPED_TEST_P(TypeErasedTest, copyConstructPtr) {
+    Noisy n{"test-copy"};
+    auto a = TypeParam::template make<Noisy *>(&n);
+    auto b{a};
+    ASSERT_TRUE(a);
+    ASSERT_TRUE(b);
+    EXPECT_FALSE(a.owns_referenced_object());
+    EXPECT_FALSE(b.owns_referenced_object());
+    EXPECT_STREQ(n.get_msg(), "test-copy");
+    EXPECT_STREQ(a.get_msg(), "test-copy");
+    EXPECT_STREQ(b.get_msg(), "test-copy");
+    a.set_msg("a-replace");
+    EXPECT_STREQ(n.get_msg(), "a-replace");
+    EXPECT_STREQ(a.get_msg(), "a-replace");
+    EXPECT_STREQ(b.get_msg(), "a-replace");
+    b.set_msg("b-replace");
+    EXPECT_STREQ(n.get_msg(), "b-replace");
+    EXPECT_STREQ(a.get_msg(), "b-replace");
+    EXPECT_STREQ(b.get_msg(), "b-replace");
+}
+
+TYPED_TEST_P(TypeErasedTest, copyConstructPtrConst) {
+    Noisy n{"test-copy"};
+    auto a = TypeParam::template make<const Noisy *>(&n);
+    auto b{a};
+    ASSERT_TRUE(a);
+    ASSERT_TRUE(b);
+    EXPECT_FALSE(a.owns_referenced_object());
+    EXPECT_FALSE(b.owns_referenced_object());
+    EXPECT_STREQ(n.get_msg(), "test-copy");
+    EXPECT_STREQ(a.get_msg(), "test-copy");
+    EXPECT_STREQ(b.get_msg(), "test-copy");
+    EXPECT_THROW(a.set_msg("a-fail"), alpaqa::util::bad_type_erased_constness);
+    EXPECT_THROW(b.set_msg("b-fail"), alpaqa::util::bad_type_erased_constness);
+}
+
 TYPED_TEST_P(TypeErasedTest, copy) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("a-copy");
     auto b = TypeParam::template make<Noisy>("b-copy");
     ASSERT_TRUE(a);
@@ -319,8 +349,32 @@ TYPED_TEST_P(TypeErasedTest, copy) {
     EXPECT_STREQ(b.get_msg(), "b-replace");
 }
 
+TYPED_TEST_P(TypeErasedTest, copyPtr) {
+    Noisy n{"a-copy"};
+    auto a = TypeParam::template make<Noisy *>(&n);
+    auto b = TypeParam::template make<Noisy>("b-copy");
+    ASSERT_TRUE(a);
+    ASSERT_TRUE(b);
+    EXPECT_FALSE(a.owns_referenced_object());
+    EXPECT_TRUE(b.owns_referenced_object());
+    EXPECT_STREQ(a.get_msg(), "a-copy");
+    EXPECT_STREQ(b.get_msg(), "b-copy");
+    b = a;
+    ASSERT_TRUE(a);
+    ASSERT_TRUE(b);
+    EXPECT_FALSE(a.owns_referenced_object());
+    EXPECT_FALSE(b.owns_referenced_object());
+    EXPECT_STREQ(a.get_msg(), "a-copy");
+    EXPECT_STREQ(b.get_msg(), "a-copy");
+    a.set_msg("a-replace");
+    EXPECT_STREQ(a.get_msg(), "a-replace");
+    EXPECT_STREQ(b.get_msg(), "a-replace");
+    b.set_msg("b-replace");
+    EXPECT_STREQ(a.get_msg(), "b-replace");
+    EXPECT_STREQ(b.get_msg(), "b-replace");
+}
+
 TYPED_TEST_P(TypeErasedTest, copyFromEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b = TypeParam::template make<Noisy>();
     EXPECT_TRUE(b);
@@ -330,7 +384,6 @@ TYPED_TEST_P(TypeErasedTest, copyFromEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, copyToEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b = TypeParam::template make<Noisy>("test-copy");
     EXPECT_FALSE(a);
@@ -348,7 +401,6 @@ TYPED_TEST_P(TypeErasedTest, copyToEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, copySelf) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("test-copy");
     ASSERT_TRUE(a);
     EXPECT_STREQ(a.get_msg(), "test-copy");
@@ -358,7 +410,6 @@ TYPED_TEST_P(TypeErasedTest, copySelf) {
 }
 
 TYPED_TEST_P(TypeErasedTest, copyEmptyToEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b = TypeParam();
     EXPECT_FALSE(a);
@@ -369,14 +420,12 @@ TYPED_TEST_P(TypeErasedTest, copyEmptyToEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, copyEmptySelf) {
-    struct test_exception {};
     auto a = TypeParam();
     a      = a;
     EXPECT_FALSE(a);
 }
 
 TYPED_TEST_P(TypeErasedTest, copyConstructFromEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b{a};
     EXPECT_FALSE(a);
@@ -384,7 +433,6 @@ TYPED_TEST_P(TypeErasedTest, copyConstructFromEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, moveConstruct) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("test-move");
     auto b{std::move(a)};
     ASSERT_FALSE(a);
@@ -394,8 +442,20 @@ TYPED_TEST_P(TypeErasedTest, moveConstruct) {
     EXPECT_STREQ(b.get_msg(), "b-replace");
 }
 
+TYPED_TEST_P(TypeErasedTest, moveConstructPtr) {
+    Noisy n{"test-move"};
+    auto a = TypeParam::template make<Noisy *>(&n);
+    auto b{std::move(a)};
+    ASSERT_FALSE(a);
+    ASSERT_TRUE(b);
+    EXPECT_STREQ(n.get_msg(), "test-move");
+    EXPECT_STREQ(b.get_msg(), "test-move");
+    b.set_msg("b-replace");
+    EXPECT_STREQ(n.get_msg(), "b-replace");
+    EXPECT_STREQ(b.get_msg(), "b-replace");
+}
+
 TYPED_TEST_P(TypeErasedTest, move) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("a-move");
     auto b = TypeParam::template make<Noisy>("b-move");
     ASSERT_TRUE(a);
@@ -408,8 +468,23 @@ TYPED_TEST_P(TypeErasedTest, move) {
     EXPECT_STREQ(b.get_msg(), "b-replace");
 }
 
+TYPED_TEST_P(TypeErasedTest, movePtr) {
+    Noisy n{"test-move"};
+    auto a = TypeParam::template make<Noisy *>(&n);
+    auto b = TypeParam::template make<Noisy>("b-move");
+    ASSERT_TRUE(a);
+    ASSERT_TRUE(b);
+    b = std::move(a);
+    ASSERT_FALSE(a);
+    ASSERT_TRUE(b);
+    EXPECT_STREQ(n.get_msg(), "test-move");
+    EXPECT_STREQ(b.get_msg(), "test-move");
+    b.set_msg("b-replace");
+    EXPECT_STREQ(n.get_msg(), "b-replace");
+    EXPECT_STREQ(b.get_msg(), "b-replace");
+}
+
 TYPED_TEST_P(TypeErasedTest, moveFromEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b = TypeParam::template make<Noisy>();
     EXPECT_FALSE(a);
@@ -420,7 +495,6 @@ TYPED_TEST_P(TypeErasedTest, moveFromEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, moveToEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b = TypeParam::template make<Noisy>("test-move");
     EXPECT_FALSE(a);
@@ -432,7 +506,6 @@ TYPED_TEST_P(TypeErasedTest, moveToEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, moveSelf) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("test-move");
     ASSERT_TRUE(a);
     EXPECT_STREQ(a.get_msg(), "test-move");
@@ -442,7 +515,6 @@ TYPED_TEST_P(TypeErasedTest, moveSelf) {
 }
 
 TYPED_TEST_P(TypeErasedTest, moveEmptyToEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b = TypeParam();
     EXPECT_FALSE(a);
@@ -453,7 +525,6 @@ TYPED_TEST_P(TypeErasedTest, moveEmptyToEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, moveConstructFromEmpty) {
-    struct test_exception {};
     auto a = TypeParam();
     auto b{std::move(a)};
     EXPECT_FALSE(a);
@@ -461,7 +532,6 @@ TYPED_TEST_P(TypeErasedTest, moveConstructFromEmpty) {
 }
 
 TYPED_TEST_P(TypeErasedTest, moveConstructAllocAware) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("test-move");
     TypeParam b{std::move(a), std::allocator<std::byte>()};
     ASSERT_FALSE(a);
@@ -471,8 +541,20 @@ TYPED_TEST_P(TypeErasedTest, moveConstructAllocAware) {
     EXPECT_STREQ(b.get_msg(), "b-replace");
 }
 
+TYPED_TEST_P(TypeErasedTest, moveConstructAllocAwarePtr) {
+    Noisy n{"test-move"};
+    auto a = TypeParam::template make<Noisy *>(&n);
+    TypeParam b{std::move(a), std::allocator<std::byte>()};
+    ASSERT_FALSE(a);
+    ASSERT_TRUE(b);
+    EXPECT_STREQ(n.get_msg(), "test-move");
+    EXPECT_STREQ(b.get_msg(), "test-move");
+    b.set_msg("b-replace");
+    EXPECT_STREQ(n.get_msg(), "b-replace");
+    EXPECT_STREQ(b.get_msg(), "b-replace");
+}
+
 TYPED_TEST_P(TypeErasedTest, moveConstructFromEmptyAllocAware) {
-    struct test_exception {};
     auto a = TypeParam();
     TypeParam b{std::move(a), std::allocator<std::byte>()};
     EXPECT_FALSE(a);
@@ -480,7 +562,6 @@ TYPED_TEST_P(TypeErasedTest, moveConstructFromEmptyAllocAware) {
 }
 
 TYPED_TEST_P(TypeErasedTest, copyConstructAllocAware) {
-    struct test_exception {};
     auto a = TypeParam::template make<Noisy>("test-copy");
     TypeParam b{a, std::allocator<std::byte>()};
     ASSERT_TRUE(a);
@@ -491,8 +572,22 @@ TYPED_TEST_P(TypeErasedTest, copyConstructAllocAware) {
     EXPECT_STREQ(b.get_msg(), "b-replace");
 }
 
+TYPED_TEST_P(TypeErasedTest, copyConstructAllocAwarePtr) {
+    Noisy n{"test-copy"};
+    auto a = TypeParam::template make<Noisy *>(&n);
+    TypeParam b{a, std::allocator<std::byte>()};
+    ASSERT_TRUE(a);
+    ASSERT_TRUE(b);
+    EXPECT_STREQ(n.get_msg(), "test-copy");
+    EXPECT_STREQ(a.get_msg(), "test-copy");
+    EXPECT_STREQ(b.get_msg(), "test-copy");
+    b.set_msg("b-replace");
+    EXPECT_STREQ(n.get_msg(), "b-replace");
+    EXPECT_STREQ(a.get_msg(), "b-replace");
+    EXPECT_STREQ(b.get_msg(), "b-replace");
+}
+
 TYPED_TEST_P(TypeErasedTest, copyConstructFromEmptyAllocAware) {
-    struct test_exception {};
     auto a = TypeParam();
     TypeParam b{a, std::allocator<std::byte>()};
     EXPECT_FALSE(a);
@@ -520,12 +615,14 @@ TYPED_TEST_P(TypeErasedTest, throwingCtor) {
 }
 
 REGISTER_TYPED_TEST_SUITE_P(
-    TypeErasedTest, copyConstruct, copy, copyFromEmpty, copyToEmpty, copySelf,
-    copyEmptyToEmpty, copyEmptySelf, copyConstructFromEmpty, moveConstruct,
-    move, moveFromEmpty, moveToEmpty, moveSelf, moveEmptyToEmpty,
-    moveConstructFromEmpty, moveConstructAllocAware,
+    TypeErasedTest, copyConstruct, copyConstructPtr, copyConstructPtrConst,
+    copy, copyPtr, copyFromEmpty, copyToEmpty, copySelf, copyEmptyToEmpty,
+    copyEmptySelf, copyConstructFromEmpty, moveConstruct, moveConstructPtr,
+    move, movePtr, moveFromEmpty, moveToEmpty, moveSelf, moveEmptyToEmpty,
+    moveConstructFromEmpty, moveConstructAllocAware, moveConstructAllocAwarePtr,
     moveConstructFromEmptyAllocAware, copyConstructAllocAware,
-    copyConstructFromEmptyAllocAware, throwingCopyCtor, throwingCtor);
+    copyConstructAllocAwarePtr, copyConstructFromEmptyAllocAware,
+    throwingCopyCtor, throwingCtor);
 struct TENoBuffer : CustomTypeErased<> {
     using CustomTypeErased<>::CustomTypeErased;
     template <class T, class... Args>

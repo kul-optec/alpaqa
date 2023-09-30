@@ -159,7 +159,7 @@ class ALMSolver {
     template <class P>
     Stats operator()(const P &problem, rvec x, rvec y,
                      std::optional<rvec> Σ = std::nullopt) {
-        return operator()(Problem::template make<P>(problem), x, y, Σ);
+        return operator()(Problem{&problem}, x, y, Σ);
     }
 
     std::string get_name() const {

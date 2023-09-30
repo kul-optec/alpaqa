@@ -151,7 +151,7 @@ class PANOCOCPSolver {
     template <class P>
     Stats operator()(const P &problem, const SolveOptions &opts, rvec u, rvec y,
                      crvec μ, rvec e) {
-        return operator()(Problem::template make<P>(problem), opts, u, y, μ, e);
+        return operator()(Problem{&problem}, opts, u, y, μ, e);
     }
 
     template <class P>
