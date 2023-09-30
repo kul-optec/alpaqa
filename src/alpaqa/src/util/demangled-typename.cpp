@@ -1,4 +1,5 @@
 #include <alpaqa/util/demangled-typename.hpp>
+#include <cstdlib>
 #include <memory>
 #ifdef __GNUC__
 #include <cxxabi.h>
