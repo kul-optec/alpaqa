@@ -5,10 +5,7 @@
 
 namespace alpaqa {
 
-IpoptAdapter::IpoptAdapter(const Problem &problem) : problem(problem) {
-    work_jac_g.resize(get_nnz(this->problem.get_jac_g_sparsity()));
-    work_hess_L.resize(get_nnz(this->problem.get_hess_L_sparsity()));
-}
+IpoptAdapter::IpoptAdapter(const Problem &problem) : problem(problem) {}
 
 bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
                                 Index &nnz_h_lag, IndexStyleEnum &index_style) {
@@ -100,8 +97,8 @@ bool IpoptAdapter::eval_jac_g(Index n, const Number *x,
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        problem.eval_jac_g(cmvec{x, n}, work_jac_g);
-        cvt_sparsity_jac_g.convert_values(work_jac_g, mvec{values, nele_jac});
+        auto eval_jac_g = [&](rvec v) { problem.eval_jac_g(cmvec{x, n}, v); };
+        cvt_sparsity_jac_g.convert_values(eval_jac_g, mvec{values, nele_jac});
     }
     return true;
 }
@@ -116,9 +113,10 @@ bool IpoptAdapter::eval_h(Index n, const Number *x, [[maybe_unused]] bool new_x,
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        problem.eval_hess_L(cmvec{x, n}, cmvec{lambda, m}, obj_factor,
-                            work_hess_L);
-        cvt_sparsity_hess_L.convert_values(work_hess_L,
+        auto eval_hess_L = [&](rvec v) {
+            problem.eval_hess_L(cmvec{x, n}, cmvec{lambda, m}, obj_factor, v);
+        };
+        cvt_sparsity_hess_L.convert_values(eval_hess_L,
                                            mvec{values, nele_hess});
     }
     return true;

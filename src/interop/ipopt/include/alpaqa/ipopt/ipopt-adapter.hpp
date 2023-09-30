@@ -80,8 +80,6 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
              orig_sparsity_hess_L    = problem.get_hess_L_sparsity();
     SparsityConv cvt_sparsity_jac_g  = orig_sparsity_jac_g,
                  cvt_sparsity_hess_L = orig_sparsity_hess_L;
-    vec work_jac_g                   = vec(get_nnz(orig_sparsity_jac_g)),
-        work_hess_L                  = vec(get_nnz(orig_sparsity_hess_L));
 };
 
 } // namespace alpaqa

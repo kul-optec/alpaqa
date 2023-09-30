@@ -301,10 +301,9 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         auto sparsity = te_problem.get_hess_L_sparsity();
         sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
             sparsity};
-        vec hess_L_nzs(get_nnz(sparsity));
         mat hess_L(n, n);
-        te_problem.eval_hess_L(x, y, 1., hess_L_nzs);
-        cvt.convert_values(hess_L_nzs, hess_L.reshaped());
+        auto eval_h = [&](rvec v) { te_problem.eval_hess_L(x, y, 1., v); };
+        cvt.convert_values(eval_h, hess_L.reshaped());
         mat fd_hess_L = finite_diff_hess(
             [&](crvec x, rvec g) { te_problem.eval_grad_L(x, y, g, wn); }, x);
         print_compare(fd_hess_L, hess_L);
@@ -316,10 +315,9 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         auto sparsity = te_problem.get_hess_ψ_sparsity();
         sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
             sparsity};
-        vec hess_ψ_nzs(get_nnz(sparsity));
         mat hess_ψ(n, n);
-        te_problem.eval_hess_ψ(x, y, Σ, 1., hess_ψ_nzs);
-        cvt.convert_values(hess_ψ_nzs, hess_ψ.reshaped());
+        auto eval_h = [&](rvec v) { te_problem.eval_hess_ψ(x, y, Σ, 1., v); };
+        cvt.convert_values(eval_h, hess_ψ.reshaped());
         mat fd_hess_ψ = finite_diff_hess(
             [&](crvec x, rvec g) {
                 te_problem.eval_grad_ψ(x, y, Σ, g, wn, wm);

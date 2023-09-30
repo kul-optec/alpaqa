@@ -148,10 +148,9 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_Q.get_sparsity().inner_idx, qp.Q->i);
         std::ranges::copy(sp_Q.get_sparsity().outer_ptr, qp.Q->p);
         // Get actual values
-        vec work(get_nnz(sp_Q_orig));
-        problem.eval_hess_L(x, y, 1, work);
         mvec H_values{qp.Q->x, nnz_Q};
-        sp_Q.convert_values(work, H_values);
+        auto eval_h = [&](rvec v) { problem.eval_hess_L(x, y, 1, v); };
+        sp_Q.convert_values(eval_h, H_values);
     }
     { // Evaluate constraints Jacobian
         Sparsity sp_A_orig = problem.get_jac_g_sparsity();
@@ -164,10 +163,9 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_A.get_sparsity().inner_idx, qp.A->i);
         std::ranges::copy(sp_A.get_sparsity().outer_ptr, qp.A->p);
         // Get actual values
-        vec work(get_nnz(sp_A_orig));
-        problem.eval_jac_g(x, work);
         mvec J_values{qp.A->x, nnz_A};
-        sp_A.convert_values(work, J_values);
+        auto eval_j = [&](rvec v) { problem.eval_jac_g(x, v); };
+        sp_A.convert_values(eval_j, J_values);
         // Add the bound constraints
         add_bound_constr_to_constr_matrix(*qp.A, problem.get_box_C());
     }

@@ -11,6 +11,10 @@ namespace sp = alpaqa::sparsity;
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
+auto cvt_values_func(crvec m) {
+    return [m](rvec v) { v = m; };
+}
+
 TEST(Sparsity, convertDenseToCOO) {
     using Source      = sp::Dense<config_t>;
     using Result      = sp::SparseCOO<config_t, index_t>;
@@ -32,7 +36,7 @@ TEST(Sparsity, convertDenseToCOO) {
     mat m(3, 4);
     m << 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34;
     vec v(result.nnz());
-    converter.convert_values(m.reshaped(), v);
+    converter.convert_values(cvt_values_func(m.reshaped()), v);
     EXPECT_THAT(v, EigenEqual(m.reshaped()));
 }
 
@@ -57,7 +61,7 @@ TEST(Sparsity, convertDenseToCOOfirstIndex) {
     mat m(3, 4);
     m << 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34;
     vec v(result.nnz());
-    converter.convert_values(m.reshaped(), v);
+    converter.convert_values(cvt_values_func(m.reshaped()), v);
     EXPECT_THAT(v, EigenEqual(m.reshaped()));
 }
 
@@ -81,7 +85,7 @@ TEST(Sparsity, convertDenseToCOOupper) {
     mat m(4, 4);
     m << 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44;
     vec v(result.nnz());
-    converter.convert_values(m.reshaped(), v);
+    converter.convert_values(cvt_values_func(m.reshaped()), v);
     vec expected_v(10);
     expected_v << 11, 12, 22, 13, 23, 33, 14, 24, 34, 44;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -113,7 +117,7 @@ TEST(Sparsity, convertCSCToCOO) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -143,7 +147,7 @@ TEST(Sparsity, convertCSCToCOOfirstIndex) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -170,7 +174,7 @@ TEST(Sparsity, convertCOOToCOO) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -200,7 +204,7 @@ TEST(Sparsity, convertCOOToCOOfirstIndex) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -231,7 +235,7 @@ TEST(Sparsity, convertCOOToCOOfirstIndex2) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -261,7 +265,7 @@ TEST(Sparsity, convertCOOintToCOO) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -297,7 +301,7 @@ TEST(Sparsity, convertCSCToCSCsorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -333,7 +337,7 @@ TEST(Sparsity, convertCSCToCSCunsorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -376,7 +380,7 @@ TEST(Sparsity, convertCSCToCSCunsorted2sorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     vec expected_v(result.nnz());
     expected_v << 2, 1, 4, 3, 6, 5, 7;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -414,7 +418,7 @@ TEST(Sparsity, convertCSCToCSCsorted2sorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -450,7 +454,7 @@ TEST(Sparsity, convertCSCToCSCsortedInt2sorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -486,7 +490,7 @@ TEST(Sparsity, convertCSCToCSCsorted2sortedInt) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -518,7 +522,7 @@ TEST(Sparsity, convertDenseToCSC) {
     vec m(12);
     m << 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -548,7 +552,7 @@ TEST(Sparsity, convertDenseToCSCupper) {
     mat m(4, 4);
     m << 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44;
     vec v(result.nnz());
-    converter.convert_values(m.reshaped(), v);
+    converter.convert_values(cvt_values_func(m.reshaped()), v);
     vec expected_v(10);
     expected_v << 11, 12, 22, 13, 23, 33, 14, 24, 34, 44;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -588,7 +592,7 @@ TEST(Sparsity, convertCOOToCSCunsorted) {
         m(i) = real_t(i);
     }
     vec v(7);
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     for (index_t c = 0; c < 4; ++c)
         for (index_t i = result.outer_ptr(c); i < result.outer_ptr(c + 1); ++i)
             a_trip.emplace_back(result.inner_idx(i), c, v(i));
@@ -632,7 +636,7 @@ TEST(Sparsity, convertCOOToCSCsilentlySorted2unsorted) {
         m(i) = real_t(i);
     }
     vec v(7);
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     for (index_t c = 0; c < 4; ++c)
         for (index_t i = result.outer_ptr(c); i < result.outer_ptr(c + 1); ++i)
             a_trip.emplace_back(result.inner_idx(i), c, v(i));
@@ -677,7 +681,7 @@ TEST(Sparsity, convertCOOToCSCsortedCols2unsorted) {
         m(i) = real_t(i);
     }
     vec v(7);
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     for (index_t c = 0; c < 4; ++c)
         for (index_t i = result.outer_ptr(c); i < result.outer_ptr(c + 1); ++i)
             a_trip.emplace_back(result.inner_idx(i), c, v(i));
@@ -720,7 +724,7 @@ TEST(Sparsity, convertCOOToCSCsilentlySorted2sorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -757,7 +761,7 @@ TEST(Sparsity, convertCOOToCSCunsorted2sorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     vec expected_v(result.nnz());
     expected_v << 5, 2, 3, 6, 7, 4, 1;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -796,7 +800,7 @@ TEST(Sparsity, convertCOOToCSCsorted2sorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -834,7 +838,7 @@ TEST(Sparsity, convertCOOToCSCfirstIndex) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -871,7 +875,7 @@ TEST(Sparsity, convertCOOToCSCsorted2unsorted) {
     vec m(7);
     m << 1, 2, 3, 4, 5, 6, 7;
     vec v(result.nnz());
-    converter.convert_values(m, v);
+    converter.convert_values(cvt_values_func(m), v);
     EXPECT_THAT(v, EigenEqual(m));
 }
 
@@ -895,7 +899,7 @@ TEST(Sparsity, convertDenseToDense) {
     mat m(3, 4);
     m << 11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34;
     vec v(12);
-    converter.convert_values(m.reshaped(), v);
+    converter.convert_values(cvt_values_func(m.reshaped()), v);
     EXPECT_THAT(v, EigenEqual(m.reshaped()));
 }
 
@@ -925,7 +929,7 @@ TEST(Sparsity, convertCSCToDense) {
     vec m(7);
     m << 11, 21, 22, 32, 13, 33, 14;
     mat v(3, 4);
-    converter.convert_values(m, v.reshaped());
+    converter.convert_values(cvt_values_func(m), v.reshaped());
     mat expected_v(3, 4);
     expected_v << 11, 0, 13, 14, 21, 22, 0, 0, 0, 32, 33, 0;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -957,7 +961,7 @@ TEST(Sparsity, convertCSCToDenseUpper) {
     vec m(7);
     m << 11, 12, 22, 13, 33, 24, 44;
     mat v(4, 4);
-    converter.convert_values(m, v.reshaped());
+    converter.convert_values(cvt_values_func(m), v.reshaped());
     mat expected_v(4, 4);
     expected_v << 11, 12, 13, 0, 12, 22, 0, 24, 13, 0, 33, 0, 0, 24, 0, 44;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -989,7 +993,7 @@ TEST(Sparsity, convertCSCToDenseUpperInvalid) {
     vec m(7);
     m << 11, 12, 32, 13, 33, 24, 44;
     mat v(4, 4);
-    EXPECT_THROW(converter.convert_values(m, v.reshaped()),
+    EXPECT_THROW(converter.convert_values(cvt_values_func(m), v.reshaped()),
                  std::invalid_argument);
 }
 
@@ -1019,7 +1023,7 @@ TEST(Sparsity, convertCSCToDenseLower) {
     vec m(7);
     m << 11, 12, 13, 22, 24, 33, 44;
     mat v(4, 4);
-    converter.convert_values(m, v.reshaped());
+    converter.convert_values(cvt_values_func(m), v.reshaped());
     mat expected_v(4, 4);
     expected_v << 11, 12, 13, 0, //
         12, 22, 0, 24,           //
@@ -1054,7 +1058,7 @@ TEST(Sparsity, convertCOOToDense) {
     vec m(7);
     m << 11, 21, 22, 32, 13, 33, 14;
     mat v(3, 4);
-    converter.convert_values(m, v.reshaped());
+    converter.convert_values(cvt_values_func(m), v.reshaped());
     mat expected_v(3, 4);
     expected_v << 11, 0, 13, 14, 21, 22, 0, 0, 0, 32, 33, 0;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -1086,7 +1090,7 @@ TEST(Sparsity, convertCOOToDenseUpper) {
     vec m(7);
     m << 11, 12, 22, 13, 33, 24, 44;
     mat v(4, 4);
-    converter.convert_values(m, v.reshaped());
+    converter.convert_values(cvt_values_func(m), v.reshaped());
     mat expected_v(4, 4);
     expected_v << 11, 12, 13, 0, 12, 22, 0, 24, 13, 0, 33, 0, 0, 24, 0, 44;
     EXPECT_THAT(v, EigenEqual(expected_v));
@@ -1118,7 +1122,7 @@ TEST(Sparsity, convertCOOToDenseUpperInvalid) {
     vec m(7);
     m << 11, 12, 32, 13, 33, 24, 44;
     mat v(4, 4);
-    EXPECT_THROW(converter.convert_values(m, v.reshaped()),
+    EXPECT_THROW(converter.convert_values(cvt_values_func(m), v.reshaped()),
                  std::invalid_argument);
 }
 
@@ -1148,7 +1152,7 @@ TEST(Sparsity, convertCOOToDenseLower) {
     vec m(7);
     m << 11, 12, 13, 22, 24, 33, 44;
     mat v(4, 4);
-    converter.convert_values(m, v.reshaped());
+    converter.convert_values(cvt_values_func(m), v.reshaped());
     mat expected_v(4, 4);
     expected_v << 11, 12, 13, 0, //
         12, 22, 0, 24,           //
