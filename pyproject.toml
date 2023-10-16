@@ -21,7 +21,7 @@ classifiers = [
     "Operating System :: MacOS",
     "Typing :: Typed",
 ]
-dependencies = ["numpy", "casadi~=3.6.0"]
+dependencies = ["numpy<2", "casadi~=3.6.0"]
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
