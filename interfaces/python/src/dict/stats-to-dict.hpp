@@ -232,8 +232,6 @@ py::dict stats_to_dict(const typename ALMSolver<Inner>::Stats &s) {
     return py::dict{
         "outer_iterations"_a           = s.outer_iterations,
         "elapsed_time"_a               = s.elapsed_time,
-        "initial_penalty_reduced"_a    = s.initial_penalty_reduced,
-        "penalty_reduced"_a            = s.penalty_reduced,
         "inner_convergence_failures"_a = s.inner_convergence_failures,
         "ε"_a                          = s.ε,
         "δ"_a                          = s.δ,

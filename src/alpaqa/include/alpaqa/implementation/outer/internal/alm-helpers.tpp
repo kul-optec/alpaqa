@@ -16,29 +16,23 @@ struct ALMHelpers {
     static void update_penalty_weights(const ALMParams<config_t> &params,
                                        real_t Δ, bool first_iter, rvec e,
                                        rvec old_e, real_t norm_e,
-                                       real_t old_norm_e, crvec Σ_old, rvec Σ,
-                                       bool monotone) {
+                                       real_t old_norm_e, rvec Σ) {
         const real_t θ = params.rel_penalty_increase_threshold;
         if (norm_e <= params.dual_tolerance) {
-            Σ = Σ_old;
             return;
         }
         if (params.single_penalty_factor) {
             if (first_iter || norm_e > θ * old_norm_e) {
-                real_t new_Σ = std::fmin(params.max_penalty, Δ * Σ_old(0));
+                real_t new_Σ = std::fmin(params.max_penalty, Δ * Σ(0));
                 Σ.setConstant(new_Σ);
-            } else {
-                Σ = Σ_old;
             }
         } else {
             for (index_t i = 0; i < e.rows(); ++i) {
                 if (first_iter || std::abs(e(i)) > θ * std::abs(old_e(i))) {
-                    Σ(i) = std::fmin(params.max_penalty,
-                                     std::fmax(Δ * std::abs(e(i)) / norm_e,
-                                               real_t(1) * monotone) *
-                                         Σ_old(i));
-                } else {
-                    Σ(i) = Σ_old(i);
+                    Σ(i) = std::fmin(
+                        params.max_penalty,
+                        std::fmax(Δ * std::abs(e(i)) / norm_e, real_t(1)) *
+                            Σ(i));
                 }
             }
         }
