@@ -292,7 +292,7 @@ implementation of the PANOC algorithm.
     &= \nabla f(x^k) + \sum_{i=1}^m \hat{y}^k_i\, \nabla g_i(x^k) \\[1em]
     \nabla \hat y^k_i(x^k) &= \Sigma_{ii} \left(1 - \partial \Pi_{D_i}\left(g_i(x^k) + \Sigma^{-1}_{ii} y_i\right) \right)\, \nabla g_i(x^k) \\
     \nabla^2 \psi(x^k) &= \nabla^2 f(x^k) + \sum_{i=1}^m \hat{y}^k_i\, \nabla^2 g_i(x^k) + \sum_{i=1}^m \nabla g_i(x^k)\, \nabla^\top \hat{y}^k_i  &\text{Generalized Hessian of the objective}\\
-    &= \nabla^2_{xx} \Lagr(x^k, y) + \sum_{i=1}^m \nabla g_i(x^k)\, \hat\sigma_i\, \nabla g_i(x^k)^\top \\
+    &= \nabla^2_{xx} \Lagr(x^k, \hat y) + \sum_{i=1}^m \nabla g_i(x^k)\, \hat\sigma_i\, \nabla g_i(x^k)^\top \\
     \hat\sigma_i &\in \begin{cases}
     \left\{\Sigma_{ii}\right\} & \text{if } g_i(x^k) + \Sigma_{ii}^{-1} y_i \not\in D_i \\
     \left[0, \Sigma_{ii}\right] & \text{if } g_i(x^k) + \Sigma_{ii}^{-1} y_i \in \operatorname{bd} D_i \\
