@@ -6,7 +6,7 @@ from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 
 class AlpaqaRecipe(ConanFile):
     name = "alpaqa"
-    version = "1.0.0-alpha.12"
+    version = "1.0.0-alpha.13"
 
     # Optional metadata
     license = "LGPLv3"
