@@ -284,6 +284,17 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     te_problem.eval_grad_ψ(x, y, Σ, grad_ψ, wn, wm);
     print_compare(fd_grad_ψ, grad_ψ);
 
+    if (te_problem.provides_eval_hess_L_prod()) {
+        log << "Hessian product verification: ∇²L(x)\n";
+        vec grad_Lv(n);
+        vec xv = x + v;
+        te_problem.eval_grad_L(xv, y, grad_Lv, wn);
+        vec fd_hess_Lv = grad_Lv - grad_L;
+        vec hess_Lv(n);
+        te_problem.eval_hess_L_prod(x, y, 1, v, hess_Lv);
+        print_compare(fd_hess_Lv, hess_Lv);
+    }
+
     if (te_problem.provides_eval_hess_ψ_prod()) {
         log << "Hessian product verification: ∇²ψ(x)\n";
         vec grad_ψv(n);
@@ -310,7 +321,7 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     }
 
     if (opts.hessians && te_problem.provides_eval_hess_ψ()) {
-        log << "Hessian verification: ∇²L(x)\n";
+        log << "Hessian verification: ∇²ψ(x)\n";
         namespace sp  = alpaqa::sparsity;
         auto sparsity = te_problem.get_hess_ψ_sparsity();
         sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
