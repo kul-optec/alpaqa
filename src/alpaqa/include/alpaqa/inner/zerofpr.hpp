@@ -95,6 +95,7 @@ struct ZeroFPRProgressInfo {
     crvec p;
     real_t norm_sq_p;
     crvec x̂;
+    crvec ŷ;
     real_t φγ;
     real_t ψ;
     crvec grad_ψ;

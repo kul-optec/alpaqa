@@ -62,6 +62,7 @@ void register_panoc(py::module_ &m) {
         .def_readonly("p", &PANOCProgressInfo::p, "Projected gradient step :math:`p`")
         .def_readonly("norm_sq_p", &PANOCProgressInfo::norm_sq_p, ":math:`\\left\\|p\\right\\|^2`")
         .def_readonly("x_hat", &PANOCProgressInfo::x̂, "Decision variable after projected gradient step :math:`\\hat x`")
+        .def_readonly("y_hat", &PANOCProgressInfo::ŷ, "Candidate updated multipliers at x̂ :math:`\\hat y(\\hat x)`")
         .def_readonly("φγ", &PANOCProgressInfo::φγ, "Forward-backward envelope :math:`\\varphi_\\gamma(x)`")
         .def_readonly("ψ", &PANOCProgressInfo::ψ, "Objective value :math:`\\psi(x)`")
         .def_readonly("grad_ψ", &PANOCProgressInfo::grad_ψ, "Gradient of objective :math:`\\nabla\\psi(x)`")

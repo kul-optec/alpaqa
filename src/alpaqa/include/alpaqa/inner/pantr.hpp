@@ -119,6 +119,7 @@ struct PANTRProgressInfo {
     crvec p;
     real_t norm_sq_p;
     crvec x̂;
+    crvec ŷ;
     real_t φγ;
     real_t ψ;
     crvec grad_ψ;
@@ -129,6 +130,8 @@ struct PANTRProgressInfo {
     real_t γ;
     real_t Δ;
     real_t ρ;
+    /// 1 if previous step accepted, 0 otherwise (PANOC compatibility)
+    real_t τ;
     real_t ε;
     crvec Σ;
     crvec y;

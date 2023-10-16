@@ -158,7 +158,7 @@ auto PANTRSolver<DirectionProviderT>::operator()(
     auto do_progress_cb = [this, &s, &problem, &Σ, &y,
                            &opts](unsigned k, Iterate &it, crvec q,
                                   crvec grad_ψx̂, real_t Δ, real_t ρ, real_t εₖ,
-                                  SolverStatus status) {
+                                  bool accepted, SolverStatus status) {
         if (!progress_cb)
             return;
         ScopedMallocAllower ma;
@@ -170,6 +170,7 @@ auto PANTRSolver<DirectionProviderT>::operator()(
             .p          = it.p,
             .norm_sq_p  = it.pᵀp,
             .x̂          = it.x̂,
+            .ŷ          = it.ŷx̂,
             .φγ         = it.fbe(),
             .ψ          = it.ψx,
             .grad_ψ     = it.grad_ψ,
@@ -180,6 +181,7 @@ auto PANTRSolver<DirectionProviderT>::operator()(
             .γ          = it.γ,
             .Δ          = Δ,
             .ρ          = ρ,
+            .τ          = accepted ? 1.0 : 0.0,
             .ε          = εₖ,
             .Σ          = Σ,
             .y          = y,
@@ -267,7 +269,7 @@ auto PANTRSolver<DirectionProviderT>::operator()(
             params, opts, time_elapsed, k, stop_signal, εₖ, no_progress);
         if (stop_status != SolverStatus::Busy) {
             do_progress_cb(k, *curr, null_vec<config_t>, grad_ψx̂, NaN<config_t>,
-                           NaN<config_t>, εₖ, stop_status);
+                           NaN<config_t>, εₖ, accept_candidate, stop_status);
             bool do_final_print = params.print_interval != 0;
             if (!do_print && do_final_print)
                 print_progress_1(k, curr->fbe(), curr->ψx, curr->grad_ψ,
@@ -404,7 +406,8 @@ auto PANTRSolver<DirectionProviderT>::operator()(
         }
 
         // Progress callback
-        do_progress_cb(k, *curr, q, grad_ψx̂, Δ, ρ, εₖ, SolverStatus::Busy);
+        do_progress_cb(k, *curr, q, grad_ψx̂, Δ, ρ, εₖ, accept_candidate,
+                       SolverStatus::Busy);
 
         // Accept TR step
         if (accept_candidate) {

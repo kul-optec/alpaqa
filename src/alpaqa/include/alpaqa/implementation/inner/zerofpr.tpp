@@ -184,6 +184,7 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
             .p          = it.p,
             .norm_sq_p  = it.pᵀp,
             .x̂          = it.x̂,
+            .ŷ          = it.ŷx̂,
             .φγ         = it.fbe(),
             .ψ          = it.ψx,
             .grad_ψ     = it.grad_ψ,
