@@ -540,7 +540,7 @@ def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split):
         writerow(l1_reg)
         f.write(str(penalty_alm_split))
 
-def write_casadi_control_problem_data(sofile, U, D, D_N, x_init, param):
+def write_casadi_control_problem_data(sofile, U, D, D_N, x_init, param, penalty_alm_split=0):
     if U is None and D is None and D_N is None and x_init is None and param is None:
         return
     U = ([], []) if U is None else U
@@ -562,3 +562,4 @@ def write_casadi_control_problem_data(sofile, U, D, D_N, x_init, param):
         writerow(try_ub(D_N))
         writerow(x_init)
         writerow(param)
+        f.write(str(penalty_alm_split))

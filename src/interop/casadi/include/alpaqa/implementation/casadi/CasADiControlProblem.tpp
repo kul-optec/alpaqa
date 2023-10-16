@@ -211,30 +211,52 @@ CasADiControlProblem<Conf>::CasADiControlProblem(const std::string &so_name,
 template <Config Conf>
 void CasADiControlProblem<Conf>::load_numerical_data(
     const std::filesystem::path &filepath, char sep) {
+    // Open data file
     std::ifstream data_file{filepath};
     if (!data_file)
-        throw std::runtime_error("Unable to open bounds file \"" +
+        throw std::runtime_error("Unable to open data file \"" +
                                  filepath.string() + '"');
-    index_t line          = 0;
-    auto wrap_bounds_load = [&](std::string_view name, auto &v) {
+
+    // Helper function for reading single line of (float) data
+    index_t line        = 0;
+    auto wrap_data_load = [&](std::string_view name, auto &v,
+                              bool fixed_size = true) {
         try {
             ++line;
-            csv::read_row(data_file, v, sep);
+            if (data_file.peek() == '\n') // Ignore empty lines
+                return static_cast<void>(data_file.get());
+            if (fixed_size) {
+                csv::read_row(data_file, v, sep);
+            } else { // Dynamic size
+                auto s = csv::read_row_std_vector<real_t>(data_file, sep);
+                v      = cmvec{s.data(), static_cast<index_t>(s.size())};
+            }
         } catch (csv::read_error &e) {
+            // Transform any errors in something more readable
             throw std::runtime_error("Unable to read " + std::string(name) +
-                                     " from bounds file \"" +
-                                     filepath.string() + ':' +
-                                     std::to_string(line) + "\": " + e.what());
+                                     " from data file \"" + filepath.string() +
+                                     ':' + std::to_string(line) +
+                                     "\": " + e.what());
         }
     };
-    wrap_bounds_load("U.lowerbound", this->U.lowerbound);
-    wrap_bounds_load("U.upperbound", this->U.upperbound);
-    wrap_bounds_load("D.lowerbound", this->D.lowerbound);
-    wrap_bounds_load("D.upperbound", this->D.upperbound);
-    wrap_bounds_load("D_N.lowerbound", this->D_N.lowerbound);
-    wrap_bounds_load("D_N.upperbound", this->D_N.upperbound);
-    wrap_bounds_load("x_init", this->x_init);
-    wrap_bounds_load("param", this->param);
+    // Helper function for reading a single value
+    auto read_single = [&](std::string_view name, auto &v) {
+        data_file >> v;
+        if (!data_file)
+            throw std::runtime_error("Unable to read " + std::string(name) +
+                                     " from data file \"" + filepath.string() +
+                                     ':' + std::to_string(line) + '"');
+    };
+    wrap_data_load("U.lowerbound", this->U.lowerbound);
+    wrap_data_load("U.upperbound", this->U.upperbound);
+    wrap_data_load("D.lowerbound", this->D.lowerbound);
+    wrap_data_load("D.upperbound", this->D.upperbound);
+    wrap_data_load("D_N.lowerbound", this->D_N.lowerbound);
+    wrap_data_load("D_N.upperbound", this->D_N.upperbound);
+    wrap_data_load("x_init", this->x_init);
+    wrap_data_load("param", this->param);
+    // Penalty/ALM split is a single integer
+    read_single("penalty_alm_split", this->penalty_alm_split);
 }
 
 template <Config Conf>
