@@ -7,4 +7,5 @@
 #include "results.hpp"
 #include "solver-driver.hpp"
 
-solver_func_t make_qpalm_driver(std::string_view direction, Options &opts);
+SharedSolverWrapper make_qpalm_driver(std::string_view direction,
+                                      Options &opts);

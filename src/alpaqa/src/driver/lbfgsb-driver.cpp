@@ -24,8 +24,8 @@ auto make_inner_lbfgsb_solver(Options &opts) {
 }
 
 template <class LoadedProblem>
-solver_func_t make_lbfgsb_driver_impl(std::string_view direction,
-                                      Options &opts) {
+SharedSolverWrapper make_lbfgsb_driver_impl(std::string_view direction,
+                                            Options &opts) {
     if (!direction.empty())
         throw std::invalid_argument(
             "L-BFGS-B solver does not support any directions");
@@ -33,17 +33,18 @@ solver_func_t make_lbfgsb_driver_impl(std::string_view direction,
     auto solver       = make_alm_solver(std::move(inner_solver), opts);
     unsigned N_exp    = 0;
     set_params(N_exp, "num_exp", opts);
-    return [solver{std::move(solver)},
-            N_exp](LoadedProblem &problem,
-                   std::ostream &os) mutable -> SolverResults {
-        auto cancel = alpaqa::attach_cancellation(solver);
-        return run_alm_solver(problem, solver, os, N_exp);
-    };
+    return std::make_shared<SolverWrapper>(
+        [solver{std::move(solver)}, N_exp](
+            LoadedProblem &problem, std::ostream &os) mutable -> SolverResults {
+            auto cancel = alpaqa::attach_cancellation(solver);
+            return run_alm_solver(problem, solver, os, N_exp);
+        });
 }
 
 } // namespace
 
-solver_func_t make_lbfgsb_driver(std::string_view direction, Options &opts) {
+SharedSolverWrapper make_lbfgsb_driver(std::string_view direction,
+                                       Options &opts) {
     static constexpr bool valid_config =
         std::is_same_v<LoadedProblem::config_t, InnerLBFGSBSolver::config_t>;
     if constexpr (valid_config)
@@ -59,7 +60,7 @@ template class alpaqa::ALMSolver<InnerLBFGSBSolver>;
 
 #include "solver-driver.hpp"
 
-solver_func_t make_lbfgsb_driver(std::string_view, Options &) {
+SharedSolverWrapper make_lbfgsb_driver(std::string_view, Options &) {
     throw std::invalid_argument(
         "This version of alpaqa was compiled without L-BFGS-B support.");
 }

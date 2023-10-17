@@ -189,22 +189,25 @@ auto get_qpalm_settings(Options &opts) {
 }
 
 template <class LoadedProblem>
-solver_func_t make_qpalm_drive_impl(std::string_view direction, Options &opts) {
+SharedSolverWrapper make_qpalm_drive_impl(std::string_view direction,
+                                          Options &opts) {
     if (!direction.empty())
         throw std::invalid_argument(
             "QPALM solver does not support any directions");
     auto settings  = get_qpalm_settings(opts);
     unsigned N_exp = 0;
     set_params(N_exp, "num_exp", opts);
-    return [settings, N_exp](LoadedProblem &problem,
-                             std::ostream &os) mutable -> SolverResults {
-        return run_qpalm_solver(problem, settings, os, N_exp);
-    };
+    return std::make_shared<SolverWrapper>(
+        [settings, N_exp](LoadedProblem &problem,
+                          std::ostream &os) mutable -> SolverResults {
+            return run_qpalm_solver(problem, settings, os, N_exp);
+        });
 }
 
 } // namespace
 
-solver_func_t make_qpalm_driver(std::string_view direction, Options &opts) {
+SharedSolverWrapper make_qpalm_driver(std::string_view direction,
+                                      Options &opts) {
     static constexpr bool valid_config =
         std::is_same_v<LoadedProblem::config_t, alpaqa::EigenConfigd>;
     if constexpr (valid_config)
@@ -218,7 +221,7 @@ solver_func_t make_qpalm_driver(std::string_view direction, Options &opts) {
 
 #include "solver-driver.hpp"
 
-solver_func_t make_qpalm_driver(std::string_view, Options &) {
+SharedSolverWrapper make_qpalm_driver(std::string_view, Options &) {
     throw std::invalid_argument(
         "This version of alpaqa was compiled without QPALM support.");
 }

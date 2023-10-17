@@ -127,23 +127,25 @@ auto make_ipopt_solver(Options &opts) {
 }
 
 template <class LoadedProblem>
-solver_func_t make_ipopt_drive_impl(std::string_view direction, Options &opts) {
+SharedSolverWrapper make_ipopt_drive_impl(std::string_view direction,
+                                          Options &opts) {
     if (!direction.empty())
         throw std::invalid_argument(
             "Ipopt solver does not support any directions");
     auto solver    = make_ipopt_solver(opts);
     unsigned N_exp = 0;
     set_params(N_exp, "num_exp", opts);
-    return [solver{std::move(solver)},
-            N_exp](LoadedProblem &problem,
-                   std::ostream &os) mutable -> SolverResults {
-        return run_ipopt_solver(problem, solver, os, N_exp);
-    };
+    return std::make_shared<SolverWrapper>(
+        [solver{std::move(solver)}, N_exp](
+            LoadedProblem &problem, std::ostream &os) mutable -> SolverResults {
+            return run_ipopt_solver(problem, solver, os, N_exp);
+        });
 }
 
 } // namespace
 
-solver_func_t make_ipopt_driver(std::string_view direction, Options &opts) {
+SharedSolverWrapper make_ipopt_driver(std::string_view direction,
+                                      Options &opts) {
     static constexpr bool valid_config =
         std::is_same_v<LoadedProblem::config_t, alpaqa::IpoptAdapter::config_t>;
     if constexpr (valid_config)
@@ -157,7 +159,7 @@ solver_func_t make_ipopt_driver(std::string_view direction, Options &opts) {
 
 #include "solver-driver.hpp"
 
-solver_func_t make_ipopt_driver(std::string_view, Options &) {
+SharedSolverWrapper make_ipopt_driver(std::string_view, Options &) {
     throw std::invalid_argument(
         "This version of alpaqa was compiled without Ipopt support.");
 }
