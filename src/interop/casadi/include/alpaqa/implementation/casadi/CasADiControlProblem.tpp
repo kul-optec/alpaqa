@@ -257,6 +257,7 @@ void CasADiControlProblem<Conf>::load_numerical_data(
     wrap_data_load("param", this->param);
     // Penalty/ALM split is a single integer
     read_single("penalty_alm_split", this->penalty_alm_split);
+    read_single("penalty_alm_split_N", this->penalty_alm_split_N);
 }
 
 template <Config Conf>

@@ -540,7 +540,9 @@ def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split):
         writerow(l1_reg)
         f.write(str(penalty_alm_split))
 
-def write_casadi_control_problem_data(sofile, U, D, D_N, x_init, param, penalty_alm_split=0):
+def write_casadi_control_problem_data(
+    sofile, U, D, D_N, x_init, param, penalty_alm_split=0, penalty_alm_split_N=None
+):
     if U is None and D is None and D_N is None and x_init is None and param is None:
         return
     U = ([], []) if U is None else U
@@ -548,6 +550,8 @@ def write_casadi_control_problem_data(sofile, U, D, D_N, x_init, param, penalty_
     D_N = ([], []) if D_N is None else D_N
     x_init = [] if x_init is None else x_init
     param = [] if param is None else param
+    if penalty_alm_split_N is None:
+        penalty_alm_split_N = penalty_alm_split
     with open(f"{splitext(sofile)[0]}.csv", "w") as f:
         opt = dict(delimiter=",", newline="\n")
         ravelrow = lambda x: np.reshape(x, (1, -1), order="A")
@@ -562,4 +566,4 @@ def write_casadi_control_problem_data(sofile, U, D, D_N, x_init, param, penalty_
         writerow(try_ub(D_N))
         writerow(x_init)
         writerow(param)
-        f.write(str(penalty_alm_split))
+        f.write(f"{penalty_alm_split} {penalty_alm_split_N}")
