@@ -1,6 +1,5 @@
 # %% Build the problem (CasADi code, independent of alpaqa)
 import casadi as cs
-import numpy as np
 
 # Make symbolic decision variables
 x1, x2 = cs.SX.sym("x1"), cs.SX.sym("x2")
@@ -17,7 +16,7 @@ g = cs.vertcat(
 
 # Define the bounds
 C = [-0.25, -0.5], [1.5, 2.5]  # -0.25 <= x1 <= 1.5, -0.5 <= x2 <= 2.5
-D = [-np.inf, -np.inf], [0, 0]  #         g1 <= 0,           g2 <= 0
+D = [-cs.inf, -cs.inf], [0, 0]  #         g1 <= 0,           g2 <= 0
 
 # %% Generate and compile C-code for the objective and constraints using alpaqa
 from alpaqa import minimize
@@ -40,17 +39,17 @@ inner_solver = pa.PANOCSolver()
 solver = pa.ALMSolver(inner_solver)
 
 # %% Build a solver with custom parameters
+
 inner_solver = pa.PANOCSolver(
     panoc_params={
         'max_iter': 1000,
-        'stop_crit': pa.PANOCStopCrit.ApproxKKT,
+        'stop_crit': pa.PANOCStopCrit.FPRNorm,
         'print_interval': 1,
     },
     lbfgs_params={
         'memory': 10,
     },
 )
-
 solver = pa.ALMSolver(
     alm_params={
         'tolerance': 1e-10,
@@ -59,10 +58,35 @@ solver = pa.ALMSolver(
         'penalty_update_factor': 20,
         'print_interval': 1,
     },
-    inner_solver=inner_solver
+    inner_solver=inner_solver,
+)
+
+# %% Build a solver with alternative fast directions
+
+direction = pa.LBFGSDirection({'memory': 10})
+inner_solver = pa.PANOCSolver(
+    {
+        "stop_crit": pa.FPRNorm,
+        'print_interval': 1,
+    },
+    direction,
+)
+solver = pa.ALMSolver(
+    {
+        'tolerance': 1e-10,
+        'dual_tolerance': 1e-10,
+        'initial_penalty': 50,
+        'penalty_update_factor': 20,
+        'print_interval': 1,
+    },
+    inner_solver,
 )
 
 # %% Compute a solution
+
+x_sol, y_sol, stats = solver(problem)
+
+# %% Compute a solution starting with an initial guess
 
 # Set initial guesses at arbitrary values
 x0 = [0.1, 1.8]  # decision variables

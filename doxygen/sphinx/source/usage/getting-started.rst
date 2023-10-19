@@ -21,11 +21,9 @@ Most solvers in this library solve minimization problems of the following form:
 The objective function :math:`f(x)` and the constraints function :math:`g(x)`
 should have a Lipschitz-continuous gradient.
 
-The two types of constraints are 
-handled differently: the box constraints on :math:`x` are taken into account 
-directly, while the general constraints :math:`g(x)` are relaxed using 
-an Augmented Lagrangian Method (ALM). Whenever possible, try to express your 
-constraints as box constraints on :math:`x`.
+The two types of constraints are handled differently: the box constraints on
+:math:`x` are taken into account directly, while the general constraints
+:math:`g(x)` are relaxed using an Augmented Lagrangian Method (ALM).
 
 Equality constraints can be expressed by setting
 :math:`\underline{z}_i = \overline{z}_i`.
@@ -46,7 +44,7 @@ respectively:
 Simple example
 --------------
 
-Consider the following simple two-dimensional problem, with the 
+Consider the following simple two-dimensional problem, with the
 Rosenbrock function (parametrized by :math:`p`) as the cost function:
 
 .. math::
@@ -80,7 +78,7 @@ In other words,
 Problem description
 ^^^^^^^^^^^^^^^^^^^
 
-The objective function and the constraints are defined as 
+The objective function and the constraints are defined as
 `CasADi <https://web.casadi.org/>`_ expressions with symbolic variables, and
 then converted into CasADi functions. The arguments of these functions are the
 decision variables and an optional parameter vector.
@@ -89,7 +87,6 @@ decision variables and an optional parameter vector.
 
     # %% Build the problem (CasADi code, independent of alpaqa)
     import casadi as cs
-    import numpy as np
 
     # Make symbolic decision variables
     x1, x2 = cs.SX.sym("x1"), cs.SX.sym("x2")
@@ -106,9 +103,9 @@ decision variables and an optional parameter vector.
 
     # Define the bounds
     C = [-0.25, -0.5], [1.5, 2.5]  # -0.25 <= x1 <= 1.5, -0.5 <= x2 <= 2.5
-    D = [-np.inf, -np.inf], [0, 0]  #         g1 <= 0,           g2 <= 0
+    D = [-cs.inf, -cs.inf], [0, 0]  #         g1 <= 0,           g2 <= 0
 
-Next, we compose the alpaqa-specific minimization problem, using the
+Next, we construct the alpaqa-specific minimization problem, using the
 :py:func:`alpaqa.pyapi.minimize.minimize` function.
 The gradients of the problem functions are computed using CasADi, and they are
 compiled as efficient C functions. All of this happens inside of the
@@ -147,7 +144,7 @@ specified when generating the problem, or can be modified after loading it:
 Selecting a solver
 ^^^^^^^^^^^^^^^^^^
 
-The solvers in this package consist of an inner solver that can handle box 
+The solvers in this package consist of an inner solver that can handle box
 constraints, such as `PANOC <https://arxiv.org/abs/1709.06487>`_,
 and an outer ALM solver that relaxes the general constraints :math:`g(x) \in D`.
 Solvers can be composed easily, for instance:
@@ -160,22 +157,22 @@ Solvers can be composed easily, for instance:
     inner_solver = pa.PANOCSolver()
     solver = pa.ALMSolver(inner_solver)
 
-Each solver has its own set of optional parameters that can be specified using 
-keyword arguments or dictionaries, for example:
+Each solver has its own set of optional parameters that can be specified using
+a dictionary, for example:
 
 .. testcode::
 
     # %% Build a solver with custom parameters
+
     inner_solver = pa.PANOCSolver(
         panoc_params={
             'max_iter': 1000,
-            'stop_crit': pa.PANOCStopCrit.ApproxKKT,
+            'stop_crit': pa.PANOCStopCrit.FPRNorm,
         },
         lbfgs_params={
             'memory': 10,
         },
     )
-
     solver = pa.ALMSolver(
         alm_params={
             'tolerance': 1e-10,
@@ -183,26 +180,67 @@ keyword arguments or dictionaries, for example:
             'initial_penalty': 50,
             'penalty_update_factor': 20,
         },
-        inner_solver=inner_solver
+        inner_solver=inner_solver,
     )
 
-For a full overview and description of all parameters, see the documentation 
-for :cpp:class:`alpaqa::PANOCParams` and
+For a full overview and description of all parameters, see the documentation
+for :cpp:class:`alpaqa::PANOCParams`, :cpp:class:`alpaqa::LBFGSParams`, and
 :cpp:class:`alpaqa::ALMParams`.
+
+Some inner solvers can be configured with alternative fast directions. For
+example, the PANOC solver uses the :cpp:class:`alpaqa::StructuredLBFGSDirection`
+by default, but can also make use of e.g. :cpp:class:`alpaqa::LBFGSDirection`
+or :cpp:class:`alpaqa::AndersonDirection`.
+
+.. testcode::
+
+    # %% Build a solver with alternative fast directions
+
+    direction = pa.LBFGSDirection({'memory': 10})
+    inner_solver = pa.PANOCSolver({"stop_crit": pa.FPRNorm}, direction)
+    solver = pa.ALMSolver(
+        {
+            'tolerance': 1e-10,
+            'dual_tolerance': 1e-10,
+            'initial_penalty': 50,
+            'penalty_update_factor': 20,
+        },
+        inner_solver,
+    )
+
+.. image:: ../img/classes-light.svg
+    :width: 100% 
+    :alt: Different solver classes
+    :class: only-light
+
+.. image:: ../img/classes-dark.svg
+    :width: 100% 
+    :alt: Different solver classes
+    :class: only-dark
 
 Solving the problem
 ^^^^^^^^^^^^^^^^^^^
 
-Finally, you can obtain a solution by passing the problem specification to the 
-solver. Optionally, you can supply an initial guess for both the decision 
-variables :math:`x` and the Lagrange multipliers :math:`y` of the general 
-constraints :math:`g(x) \in D`. If no initial guess is specified, the default 
-initial values for :code:`x0` and :code:`y0` are zero.
+Finally, you can obtain a solution by passing the problem specification to the
+solver. This returns the local minimizer :math:`x_\mathrm{sol}`, the
+corresponding Lagrange multipliers :math:`y_\mathrm{sol}` of the general
+constraints :math:`g(x) \in D`, and a dictionary containing solver statistics.
+
+.. testcode::
+
+    # %% Compute a solution
+
+    x_sol, y_sol, stats = solver(problem)
+
+Optionally, you can supply an initial guess for both the decision variables
+:math:`x` and the Lagrange multipliers :math:`y`. If no initial guess is
+specified, the default initial values for :code:`x0` and :code:`y0` are zero.
 
 .. testcode::
     :hide:
 
-    np.set_printoptions(precision=5) # make doctest predictable
+    import numpy as np
+    np.set_printoptions(precision=5)  # make doctest predictable
 
 .. testcode::
 
@@ -230,12 +268,18 @@ This will print something similar to:
     Multipliers:   [10.3125  0.    ]
     Cost:          4.22119
 
-The :code:`stats` variable contains some other solver statistics as well, for 
+It is highly recommended to always check the solver status in
+:code:`stats["status"]` to make sure that it actually converged.
+The :code:`stats` variable contains some other solver statistics as well, for
 both the outer and the inner solver. You can find a full overview in the
 documentation of :cpp:class:`alpaqa::ALMSolver::Stats`
 and :cpp:class:`alpaqa::InnerStatsAccumulator\<PANOCStats\>`.
 
 
-.. image:: ../img/example_minimal.svg 
+.. figure:: ../img/example_minimal.svg 
     :width: 100% 
     :alt: Contour plot of the result
+
+    A contour plot of the objective function, with the constraints shown in
+    black, and the iterates produced by the solver in red. The red circle
+    indicates the optimal solution.
