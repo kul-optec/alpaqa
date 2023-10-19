@@ -181,7 +181,7 @@ auto PANTRSolver<DirectionProviderT>::operator()(
             .γ          = it.γ,
             .Δ          = Δ,
             .ρ          = ρ,
-            .τ          = accepted ? 1.0 : 0.0,
+            .τ          = static_cast<real_t>(accepted),
             .ε          = εₖ,
             .Σ          = Σ,
             .y          = y,
