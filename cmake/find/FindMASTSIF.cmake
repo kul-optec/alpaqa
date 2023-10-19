@@ -22,13 +22,18 @@ find_package_handle_standard_args(MASTSIF
 
 function(cutest_sif_problem PROBLEM_NAME)
     set(options "ALL")
-    set(oneValueArgs SUFFIX)
+    set(oneValueArgs SUFFIX COLLECTION)
     set(multiValueArgs OPTIONS)
     cmake_parse_arguments(PARSE_ARGV 1 CUTEST_SIF_PROBLEM
         "${options}" "${oneValueArgs}" "${multiValueArgs}")
     set(FULL_PROBLEM_NAME "${PROBLEM_NAME}${CUTEST_SIF_PROBLEM_SUFFIX}")
     if (NOT CUTEST_SIF_PROBLEM_ALL)
         set(CUTEST_SIF_PROBLEM_EXCLUDE_FROM_ALL EXCLUDE_FROM_ALL)
+    endif()
+    set(PROBLEM_MASTSIF_DIR ${MASTSIF_DIR})
+    if (CUTEST_SIF_PROBLEM_COLLECTION)
+        cmake_path(GET PROBLEM_MASTSIF_DIR PARENT_PATH PROBLEM_MASTSIF_DIR)
+        cmake_path(APPEND PROBLEM_MASTSIF_DIR ${CUTEST_SIF_PROBLEM_COLLECTION})
     endif()
     if (NOT TARGET CUTEst::problem-${FULL_PROBLEM_NAME})
         set(PROBLEM_DIR ${CMAKE_BINARY_DIR}/CUTEst/${FULL_PROBLEM_NAME})
@@ -44,13 +49,13 @@ function(cutest_sif_problem PROBLEM_NAME)
             COMMAND ${CMAKE_COMMAND} -E env 
                 ARCHDEFS="${ARCHDEFS_DIR}" 
                 SIFDECODE="${SIFDECODE_DIR}"
-                MASTSIF="${MASTSIF_DIR}"
+                MASTSIF="${PROBLEM_MASTSIF_DIR}"
                 MYARCH="${CUTEST_MYARCH}"
                 "${SIFDECODE_EXE}"
                 ${CUTEST_SIF_PROBLEM_OPTIONS}
                 ${PROBLEM_NAME}
             MAIN_DEPENDENCY
-                "${MASTSIF_DIR}/${PROBLEM_NAME}.SIF"
+                "${PROBLEM_MASTSIF_DIR}/${PROBLEM_NAME}.SIF"
             WORKING_DIRECTORY
                 ${PROBLEM_DIR}
             USES_TERMINAL

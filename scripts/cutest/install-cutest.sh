@@ -20,6 +20,12 @@ rm -rf cutest
 [ -d optrove-sif-* ] || {
     wget https://bitbucket.org/optrove/sif/get/master.tar.bz2 -O- | \
     tar xj && ln -s optrove-sif-* sif ; }
+[ -d optrove-maros-meszaros* ] || {
+    wget https://bitbucket.org/optrove/maros-meszaros/get/master.tar.bz2 -O- | \
+    tar xj && ln -s optrove-maros-meszaros-* maros-meszaros ; }
+[ -d optrove-netlib-lp* ] || {
+    wget https://bitbucket.org/optrove/netlib-lp/get/master.tar.bz2 -O- | \
+    tar xj && ln -s optrove-netlib-lp-* netlib-lp ; }
 
 export ARCH="$CUTEST_ROOT/archdefs"
 export ARCHDEFS="$CUTEST_ROOT/archdefs"
