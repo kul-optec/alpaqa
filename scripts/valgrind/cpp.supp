@@ -26,3 +26,19 @@
    fun:_ZNSt6vectorIdSaIdEED1Ev
    ...
 }
+{
+   Conditional jump or move depends on uninitialised value(s)
+   Memcheck:Cond
+   fun:convert_sparsity
+   ...
+   fun:_ZN37Sparsity_convertCSCToCSCunsorted_Test8TestBodyEv
+   ...
+}
+{
+   Conditional jump or move depends on uninitialised value(s)
+   Memcheck:Cond
+   fun:convert_sparsity
+   ...
+   fun:_ZN35Sparsity_convertCSCToCSCsorted_Test8TestBodyEv
+   ...
+}
