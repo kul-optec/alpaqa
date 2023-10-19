@@ -27,7 +27,7 @@ N_horiz = 50  #     MPC horizon                          [time steps]
 N_sim = 300  #      Simulation length                    [time steps]
 
 # Continous-time dynamics
-a_pend = (l_pend * cs.sin(θ) * ω**2 - g_gravity * cs.cos(θ) * cs.sin(θ))
+a_pend = l_pend * cs.sin(θ) * ω**2 - g_gravity * cs.cos(θ) * cs.sin(θ)
 a = (F - b_cart * v + m_pend * a_pend) / (m_cart + m_pend)
 α = (g_gravity * cs.sin(θ) - a * cs.cos(θ)) / l_pend
 f_c = cs.Function("f_c", [state, F], [cs.vertcat(ω, α, v, a)])
@@ -64,43 +64,42 @@ mpc_param = cs.vertcat(mpc_x0, Q, Qf, R)
 mpc_y_cost = cs.sum2(stage_cost_x.map(N_horiz - 1)(mpc_x[:, :-1], Q))
 mpc_u_cost = cs.sum2(stage_cost_u.map(N_horiz)(mpc_u, R))
 mpc_terminal_cost = terminal_cost_x(mpc_x[:, -1], Qf)
-mpc_cost_fun = cs.Function('f_mpc', [cs.vec(mpc_u), mpc_param],
-                           [mpc_y_cost + mpc_u_cost + mpc_terminal_cost])
+mpc_cost = mpc_y_cost + mpc_u_cost + mpc_terminal_cost
+
+# Box constraints on the actuator force:
+C = -F_max * np.ones(N_horiz), +F_max * np.ones(N_horiz)
 
 # Compile into an alpaqa problem
-from alpaqa import casadi_loader as cl
+import alpaqa
 
 # Generate C code for the cost function, compile it, and load it as an
 # alpaqa problem description:
-problem = cl.generate_and_compile_casadi_problem(
-    f=mpc_cost_fun,
-    g=None,
-    sym=cs.MX.sym,
-)
-# Box constraints on the actuator force:
-problem.C.lowerbound = -F_max * np.ones((N_horiz, ))
-problem.C.upperbound = +F_max * np.ones((N_horiz, ))
+problem = (
+    alpaqa.minimize(mpc_cost, cs.vec(mpc_u))  # objective and variables
+    .subject_to_box(C)  #                       box constraints on the variables
+    .with_param(mpc_param)  #                   parameters to be changed later
+).compile(sym=cs.MX.sym)
 
-import alpaqa as pa
 from datetime import timedelta
 
 # Configure an alpaqa solver:
-Solver = pa.PANOCSolver
+Solver = alpaqa.PANOCSolver
 inner_solver = Solver(
     panoc_params={
-        'max_time': timedelta(seconds=Ts),
-        'max_iter': 200,
-        'stop_crit': pa.PANOCStopCrit.ProjGradUnitNorm2,
+        "max_time": timedelta(seconds=Ts),
+        "max_iter": 200,
+        "stop_crit": alpaqa.PANOCStopCrit.ProjGradUnitNorm2,
     },
-    direction=pa.StructuredLBFGSDirection(
-        lbfgs_params={'memory': 15},
-        direction_params={'hessian_vec_factor': 0},
+    direction=alpaqa.StructuredLBFGSDirection(
+        lbfgs_params={"memory": 15},
+        direction_params={"hessian_vec_factor": 0},
     ),
 )
-alm_params={
-    'tolerance': 1e-4,'initial_tolerance': 1e-4,
+alm_params = {
+    "tolerance": 1e-4,
+    "initial_tolerance": 1e-4,
 }
-solver = pa.ALMSolver(
+solver = alpaqa.ALMSolver(
     alm_params=alm_params,
     inner_solver=inner_solver,
 )
@@ -108,17 +107,17 @@ solver = pa.ALMSolver(
 
 # %% Controller class
 
+
 # Wrap the solver in a class that solves the optimal control problem at each
 # time step, implementing warm starting:
 class MPCController:
-
-    def __init__(self, problem: pa.CasADiProblem):
+    def __init__(self, problem: alpaqa.CasADiProblem):
         self.problem = problem
         self.tot_it = 0
         self.tot_time = timedelta()
         self.max_time = timedelta()
         self.failures = 0
-        self.u = np.ones((nu * N_horiz, ))
+        self.u = np.ones(problem.n)
 
     def __call__(self, state_n):
         state_n = np.array(state_n).ravel()
@@ -130,13 +129,16 @@ class MPCController:
         # (warm start using the shifted previous solution)
         self.u, _, stats = solver(self.problem, self.u)
         # Print some solver statistics
-        print(f"{stats['status']!s:24} {stats['inner']['iterations']:4} "
-              f"{stats['elapsed_time']} {stats['inner_convergence_failures']} "
-              f"{stats['ε']:1.3e} {stats['inner']['final_γ']:1.3e}")
-        self.tot_it += stats['inner']['iterations']
-        self.failures += stats['status'] != pa.SolverStatus.Converged
-        self.tot_time += stats['elapsed_time']
-        self.max_time = max(self.max_time, stats['elapsed_time'])
+        print(
+            f"{stats['status']!s:24} iter={stats['inner']['iterations']:4} "
+            f"time={stats['elapsed_time']} "
+            f"failures={stats['inner_convergence_failures']} "
+            f"tol={stats['ε']:1.3e} stepsize={stats['inner']['final_γ']:1.3e}"
+        )
+        self.tot_it += stats["inner"]["iterations"]
+        self.failures += stats["status"] != alpaqa.SolverStatus.Converged
+        self.tot_time += stats["elapsed_time"]
+        self.max_time = max(self.max_time, stats["elapsed_time"])
         # Return the optimal control signal for the first time step
         return self.u[:nu]
 
@@ -164,8 +166,10 @@ for n in range(N_sim):
     mpc_states[:, n + 1] = f_d(mpc_states[:, n], mpc_inputs[:, n]).T
 
 print(f"{controller.tot_it} iterations, {controller.failures} failures")
-print(f"time: {controller.tot_time} (total), {controller.max_time} (max), "
-      f"{controller.tot_time / N_sim} (avg)")
+print(
+    f"time: {controller.tot_time} (total), {controller.max_time} (max), "
+    f"{controller.tot_time / N_sim} (avg)"
+)
 
 
 # %% Visualize the results
@@ -174,30 +178,29 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib import animation
 
-mpl.rcParams['animation.frame_format'] = 'svg'
+mpl.rcParams["animation.frame_format"] = "svg"
 
 # Plot the cart and pendulum
 fig, ax = plt.subplots()
 h = 0.04
 x = [state_0[2], state_0[2] + l_pend * np.sin(state_0[0])]
 y = [h, h + l_pend * np.cos(state_0[0])]
-target_pend, = ax.plot(x, y, '--', color='tab:blue', linewidth=1, label='Initial state')
+(target_pend,) = ax.plot(x, y, "--", color="tab:blue", label="Initial state")
 state_N = [0, 0, 0, 0]
 x = [state_N[2], state_N[2] + l_pend * np.sin(state_N[0])]
 y = [h, h + l_pend * np.cos(state_N[0])]
-target_pend, = ax.plot(x, y, '--', color='tab:green', linewidth=1, label='Target state')
-pend, = ax.plot(x, y, '-o', color='tab:orange', alpha=0.9, label='MPC')
-cart = plt.Rectangle((-2 * h, 0), 4 * h, h, color='tab:orange')
+(target_pend,) = ax.plot(x, y, "--", color="tab:green", label="Target state")
+(pend,) = ax.plot(x, y, "-o", color="tab:orange", alpha=0.9, label="MPC")
+cart = plt.Rectangle((-2 * h, 0), 4 * h, h, color="tab:orange")
 ax.add_patch(cart)
 plt.legend()
 plt.ylim([-l_pend + h, l_pend + 2 * h])
 plt.xlim([-1.5 * l_pend, +1.5 * l_pend])
-plt.gca().set_aspect('equal', 'box')
+plt.gca().set_aspect("equal", "box")
 plt.tight_layout()
 
 
 class Animation:
-
     def __call__(self, n):
         state_n = mpc_states[:, n]
         x = [state_n[2], state_n[2] + l_pend * np.sin(state_n[0])]
@@ -208,19 +211,17 @@ class Animation:
         return [pend, cart]
 
 
-ani = animation.FuncAnimation(fig,
-                              Animation(),
-                              interval=1000 * Ts,
-                              blit=True,
-                              repeat=True,
-                              frames=N_sim)
+ani = animation.FuncAnimation(
+    fig, Animation(), interval=1000 * Ts, blit=True, repeat=True, frames=N_sim
+)
 
 fig, axs = plt.subplots(5, sharex=True, figsize=(6, 9))
 ts = np.arange(N_sim + 1) * Ts
 labels = [
     "Angle $\\theta$ [rad]",
     "Angular velocity $\\omega$ [rad/s]",
-    "Position $x$ [m]", "Velocity $v$ [m/s]", 
+    "Position $x$ [m]",
+    "Velocity $v$ [m/s]",
 ]
 for i, (ax, lbl) in enumerate(zip(axs[:-1], labels)):
     ax.plot(ts, mpc_states[i, :])
