@@ -656,7 +656,7 @@ struct SparsityConverter<Sparsity<Conf>, To> {
     using to_sparsity_t   = To;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
     SparsityConverter(Sparsity<config_t> from, Request request = {})
-        : converter{std::visit(wrap_converter(std::move(request)), from)} {}
+        : converter{std::visit(wrap_converter(request), from)} {}
     ConverterVariant<To> converter;
     operator const to_sparsity_t &() const {
         return std::visit([](const auto &c) -> const to_sparsity_t & { return c; }, converter);
@@ -669,10 +669,9 @@ struct SparsityConverter<Sparsity<Conf>, To> {
     void convert_values(crvec from, rvec to) const = delete;
 
   private:
-    template <class... Args>
-    static auto wrap_converter(Args &&...args) {
-        return [&args...]<class From>(const From &from) -> ConverterVariant<To> {
-            return SparsityConverter<From, To>{from, std::forward<Args>(args)...};
+    static auto wrap_converter(Request request) {
+        return [request]<class From>(const From &from) -> ConverterVariant<To> {
+            return SparsityConverter<From, To>{from, request};
         };
     }
 };
