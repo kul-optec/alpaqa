@@ -12,12 +12,21 @@
 namespace alpaqa {
 
 /// Parameters for the @ref NewtonTRDirection class.
+/// @ingroup grp_Parameters
 template <Config Conf>
 struct NewtonTRDirectionParams {
     USING_ALPAQA_CONFIG(Conf);
-    bool rescale_on_step_size_changes = false;
-    real_t hessian_vec_factor         = real_t(0.5);
-    bool finite_diff                  = false;
+    /// The factor in front of the term @f$ \langle H_{\mathcal{JK}}
+    /// d_{\mathcal {K}}, d_{\mathcal{J}} \rangle @f$ in equation (9) in
+    /// @cite bodard2023pantr.
+    /// Set it to zero to leave out that term (this usually only slightly
+    /// increases the number of iterations, and eliminates one Hessian-vector
+    /// product per iteration, improving the overall runtime).
+    real_t hessian_vec_factor = real_t(1);
+    /// Use finite differences to compute Hessian-vector products.
+    bool finite_diff = false;
+    /// Size of the perturbation for the finite differences computation.
+    /// Multiplied by @f$ 1+\|x\| @f$.
     real_t finite_diff_stepsize =
         std::sqrt(std::numeric_limits<real_t>::epsilon());
 };
@@ -117,8 +126,9 @@ struct NewtonTRDirection {
         // Hessian-vector term
         if (direction_params.hessian_vec_factor != 0) {
             if (direction_params.finite_diff) {
-                real_t ε = (1 + grad_ψxₖ.norm()) *
-                           direction_params.finite_diff_stepsize;
+                real_t ε =
+                    (1 + xₖ(J).norm()) * direction_params.finite_diff_stepsize;
+                /// TODO: use a better rule to determine the step size
                 work = xₖ + ε * qₖ;
                 problem->eval_grad_ψ(work, *y, *Σ, work_2, work_n_fd,
                                      work_m_fd);
@@ -133,8 +143,9 @@ struct NewtonTRDirection {
         // Hessian-vector product on subset J
         auto hess_vec_mult = [&](crvec p, rvec Bp) {
             if (direction_params.finite_diff) {
-                real_t ε = (1 + grad_ψxₖ.norm()) *
-                           direction_params.finite_diff_stepsize;
+                real_t ε =
+                    (1 + xₖ(J).norm()) * direction_params.finite_diff_stepsize;
+                /// TODO: use a better rule to determine the step size
                 work = xₖ;
                 work(J) += ε * p;
                 problem->eval_grad_ψ(work, *y, *Σ, work_2, work_n_fd,
@@ -156,9 +167,6 @@ struct NewtonTRDirection {
 
     /// @see @ref PANTRDirection::changed_γ
     void changed_γ([[maybe_unused]] real_t γₖ, [[maybe_unused]] real_t old_γₖ) {
-        if (direction_params.rescale_on_step_size_changes)
-            throw std::invalid_argument("NewtonTRDirection does not support "
-                                        "rescale_on_step_size_changes");
     }
 
     /// @see @ref PANTRDirection::reset

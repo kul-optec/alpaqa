@@ -16,6 +16,7 @@ template <class InnerSolverStats>
 struct InnerStatsAccumulator;
 
 /// Parameters for the Augmented Lagrangian solver.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct ALMParams {
     USING_ALPAQA_CONFIG(Conf);

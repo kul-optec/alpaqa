@@ -15,6 +15,7 @@ PARAMS_TABLE_DEF(alpaqa::ALMParams<Conf>,                       //
                  PARAMS_MEMBER(max_iter),                       //
                  PARAMS_MEMBER(max_time),                       //
                  PARAMS_MEMBER(print_interval),                 //
+                 PARAMS_MEMBER(print_precision),                //
                  PARAMS_MEMBER(single_penalty_factor),          //
 );
 

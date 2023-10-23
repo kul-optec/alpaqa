@@ -183,8 +183,9 @@ a dictionary, for example:
         inner_solver=inner_solver,
     )
 
-For a full overview and description of all parameters, see the documentation
-for :cpp:class:`alpaqa::PANOCParams`, :cpp:class:`alpaqa::LBFGSParams`, and
+For a full overview and description of all parameters, see the
+:ref:`Parameters cpp` page. For example, you can find the documentation for
+:cpp:class:`alpaqa::PANOCParams`, :cpp:class:`alpaqa::LBFGSParams`, and
 :cpp:class:`alpaqa::ALMParams`.
 
 Some inner solvers can be configured with alternative fast directions. For

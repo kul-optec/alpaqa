@@ -13,6 +13,7 @@ namespace alpaqa {
 
 /// Cautious BFGS update.
 /// @see @ref LBFGSParams::cbfgs
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct CBFGSParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -24,7 +25,8 @@ struct CBFGSParams {
 /// Which method to use to select the L-BFGS step size.
 enum class LBFGSStepSize {
     /// Initial inverse Hessian approximation is set to
-    /// @f$ H_0 = \gamma I @f$.
+    /// @f$ H_0 = \gamma I @f$, where @f$ \gamma @f$ is the forward-backward
+    /// splitting step size.
     BasedOnExternalStepSize = 0,
     /// Initial inverse Hessian approximation is set to
     /// @f$ H_0 = \frac{s^\top y}{y^\top y} I @f$.
@@ -35,6 +37,7 @@ enum class LBFGSStepSize {
 };
 
 /// Parameters for the @ref LBFGS class.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct LBFGSParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -42,12 +45,15 @@ struct LBFGSParams {
     /// Length of the history to keep.
     length_t memory = 10;
     /// Reject update if @f$ y^\top s \le \text{min_div_fac} \cdot s^\top s @f$.
+    /// Keeps the inverse Hessian approximation positive definite.
     real_t min_div_fac = std::numeric_limits<real_t>::epsilon();
     /// Reject update if @f$ s^\top s \le \text{min_abs_s} @f$.
+    /// Keeps the Hessian approximation nonsingular.
     real_t min_abs_s =
         std::pow(std::numeric_limits<real_t>::epsilon(), real_t(2));
     /// Parameters in the cautious BFGS update condition
-    /// @f[ \frac{y^\top s}{s^\top s} \ge \epsilon \| g \|^\alpha @f]
+    /// @f[ \frac{y^\top s}{s^\top s} \ge \epsilon \| g \|^\alpha. @f]
+    /// Disabled by default.
     /// @see https://epubs.siam.org/doi/10.1137/S1052623499354242
     CBFGSParams<config_t> cbfgs = {};
     /// If set to true, the inverse Hessian estimate should remain definite,
@@ -57,6 +63,9 @@ struct LBFGSParams {
     /// update if
     /// @f$ \left| y^\top s \right| \le \text{min_div_fac} \cdot s^\top s @f$.
     bool force_pos_def = true;
+    /// Scale of the initial inverse Hessian approximation that the rank-one
+    /// L-BFGS updates are applied to, @f$ H_0 @f$.
+    /// You probably want to keep this as the default.
     /// @see LBFGSStepSize
     LBFGSStepSize stepsize = LBFGSStepSize::BasedOnCurvature;
 };

@@ -14,6 +14,7 @@ C++ API Reference
    ./cpp-api/functions.rst
    ./cpp-api/inner-solvers.rst
    ./cpp-api/direction-providers.rst
+   ./cpp-api/parameters.rst
    ./cpp-api/problems.rst
 
 Index

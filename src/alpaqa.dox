@@ -20,6 +20,11 @@
  */
 
 /**
+ * @defgroup    grp_Parameters Parameters and options
+ * @brief   Parameters to customize the behavior of solvers and directions.
+ */
+
+/**
  * @defgroup    grp_Problems  Problems
  * @brief   Classes for defining optimization problems.
  */

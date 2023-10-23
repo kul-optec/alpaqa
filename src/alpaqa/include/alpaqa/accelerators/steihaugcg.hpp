@@ -5,12 +5,30 @@
 
 namespace alpaqa {
 
+/// Parameters for @ref SteihaugCG.
+/// @ingroup grp_Parameters
 template <Config Conf>
 struct SteihaugCGParams {
     USING_ALPAQA_CONFIG(Conf);
+    /// Determines the tolerance for termination of the algorithm.
+    /// It terminates if the norm of the residual @f$ r = -g - Hq @f$ is smaller
+    /// than the tolerance @f[
+    ///     \mathrm{tolerance} = \min\left(
+    ///         \mathrm{tol\_max},\; \mathrm{tol\_scale}\cdot \|g\|\cdot
+    ///         \min\left(\mathrm{tol\_scale\_root},\; \sqrt{\|g\|}\right)
+    ///     \right)
+    /// @f]
     real_t tol_scale       = 1;
+    /// Determines the tolerance for termination of the algorithm.
+    /// See @ref tol_scale.
     real_t tol_scale_root  = real_t(0.5);
+    /// Determines the tolerance for termination of the algorithm.
+    /// Prevents the use of huge tolerances if the gradient norm is still large.
+    /// See @ref tol_scale.
     real_t tol_max         = inf<config_t>;
+    /// Limit the number of CG iterations to @f$ \lfloor n \cdot
+    /// \mathrm{max\_iter\_factor} \rceil @f$, where @f$ n @f$ is the number
+    /// of free variables of the problem.
     real_t max_iter_factor = 1;
 };
 

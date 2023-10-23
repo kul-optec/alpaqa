@@ -10,13 +10,16 @@
 namespace alpaqa {
 
 /// Parameters for the @ref StructuredLBFGSDirection class.
+/// @ingroup grp_Parameters
 template <Config Conf>
 struct StructuredLBFGSDirectionParams {
     USING_ALPAQA_CONFIG(Conf);
     /// Set this option to a nonzero value to include the Hessian-vector product
     /// @f$ \nabla^2_{x_\mathcal{J}x_\mathcal{K}}\psi(x) q_\mathcal{K} @f$ from
     /// equation 12b in @cite pas2022alpaqa, scaled by this parameter.
-    /// Set it to zero to leave out that term.
+    /// Set it to zero to leave out that term (this usually only slightly
+    /// increases the number of iterations, and eliminates one Hessian-vector
+    /// product per iteration, improving the overall runtime).
     real_t hessian_vec_factor = 0;
     /// If @ref hessian_vec_factor is nonzero, set this option to true to
     /// approximate that term using finite differences instead of using AD.

@@ -13,6 +13,8 @@
 
 namespace alpaqa::lbfgsb {
 
+/// Tuning parameters for the L-BFGS-B solver @ref LBFGSBSolver.
+/// @ingroup grp_Parameters
 struct LBFGSB_ADAPTER_EXPORT LBFGSBParams {
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 

@@ -12,6 +12,7 @@
 namespace alpaqa {
 
 /// Tuning parameters for the PANOC algorithm.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct PANOCOCPParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -40,10 +41,15 @@ struct PANOCOCPParams {
     /// Maximum number of iterations without any progress before giving up.
     unsigned max_no_progress = 10;
     /// How often to use a Gauss-Newton step. Zero to disable GN entirely.
-    unsigned gn_interval        = 1;
-    bool gn_sticky              = true;
+    unsigned gn_interval = 1;
+    /// Keep trying to apply a Gauss-Newton step as long as they keep getting
+    /// accepted with step size one.
+    bool gn_sticky = true;
+    /// Flush the L-BFGS buffer when a Gauss-Newton step is accepted.
     bool reset_lbfgs_on_gn_step = false;
-    bool lqr_factor_cholesky    = true;
+    /// Use a Cholesky factorization for the Riccati recursion. Use LU if set
+    /// to false.
+    bool lqr_factor_cholesky = true;
 
     /// L-BFGS parameters (e.g. memory).
     LBFGSParams<config_t> lbfgs_params;
@@ -54,11 +60,21 @@ struct PANOCOCPParams {
     /// The precision of the floating point values printed by the solver.
     int print_precision = std::numeric_limits<real_t>::max_digits10 / 2;
 
+    /// Tolerance factor used in the quadratic upper bound condition that
+    /// determines the step size. Its goal is to account for numerical errors
+    /// in the function and gradient evaluations. If you notice that the step
+    /// size γ becomes very small, you may want to increase this factor.
     real_t quadratic_upperbound_tolerance_factor =
         real_t(1e2) * std::numeric_limits<real_t>::epsilon();
+    /// Tolerance factor used in the line search. Its goal is to account for
+    /// numerical errors in the function and gradient evaluations. If you notice
+    /// that accelerated steps are rejected (τ = 0) when getting closer to the
+    /// solution, you may want to increase this factor.
     real_t linesearch_tolerance_factor =
         real_t(1e2) * std::numeric_limits<real_t>::epsilon();
 
+    /// Don't compute accelerated steps, fall back to forward-backward splitting.
+    /// For testing purposes.
     bool disable_acceleration = false;
 };
 

@@ -18,6 +18,7 @@
 namespace alpaqa {
 
 /// Tuning parameters for the PANTR algorithm.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct PANTRParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -43,6 +44,10 @@ struct PANTRParams {
     /// The precision of the floating point values printed by the solver.
     int print_precision = std::numeric_limits<real_t>::max_digits10 / 2;
 
+    /// Tolerance factor used in the quadratic upper bound condition that
+    /// determines the step size. Its goal is to account for numerical errors
+    /// in the function and gradient evaluations. If you notice that the step
+    /// size γ becomes very small, you may want to increase this factor.
     real_t quadratic_upperbound_tolerance_factor =
         10 * std::numeric_limits<real_t>::epsilon();
     real_t TR_tolerance_factor = 10 * std::numeric_limits<real_t>::epsilon();

@@ -19,6 +19,7 @@
 namespace alpaqa {
 
 /// Tuning parameters for the ZeroFPR algorithm.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct ZeroFPRParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -52,14 +53,31 @@ struct ZeroFPRParams {
     /// The precision of the floating point values printed by the solver.
     int print_precision = std::numeric_limits<real_t>::max_digits10 / 2;
 
+    /// Tolerance factor used in the quadratic upper bound condition that
+    /// determines the step size. Its goal is to account for numerical errors
+    /// in the function and gradient evaluations. If you notice that the step
+    /// size γ becomes very small, you may want to increase this factor.
     real_t quadratic_upperbound_tolerance_factor =
         10 * std::numeric_limits<real_t>::epsilon();
+    /// Tolerance factor used in the line search. Its goal is to account for
+    /// numerical errors in the function and gradient evaluations. If you notice
+    /// that accelerated steps are rejected (τ = 0) when getting closer to the
+    /// solution, you may want to increase this factor.
     real_t linesearch_tolerance_factor =
         10 * std::numeric_limits<real_t>::epsilon();
 
-    bool update_direction_in_candidate              = false;
-    bool recompute_last_prox_step_after_lbfgs_flush = false;
-    bool update_direction_from_prox_step            = false;
+    /// Use the candidate point rather than the accepted point to update the
+    /// quasi-Newton direction.
+    bool update_direction_in_candidate = false;
+    /// If the step size changes, the direction buffer is flushed. The current
+    /// step will still be used to update the direction, but may still use the
+    /// old step size. If set to true, the current step will be recomputed with
+    /// the new step size as well, to match the step in the candidate iterate.
+    bool recompute_last_prox_step_after_stepsize_change = false;
+    /// Update the direction between current forward-backward point and the
+    /// candidate iterate instead of between the current iterate and the
+    /// candidate iterate.
+    bool update_direction_from_prox_step = false;
 };
 
 template <Config Conf = DefaultConfig>

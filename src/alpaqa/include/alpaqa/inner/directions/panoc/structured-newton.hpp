@@ -20,6 +20,7 @@
 namespace alpaqa {
 
 /// Parameters for the @ref StructuredNewtonDirection class.
+/// @ingroup grp_Parameters
 template <Config Conf>
 struct StructuredNewtonRegularizationParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -32,6 +33,7 @@ struct StructuredNewtonRegularizationParams {
 };
 
 /// Parameters for the @ref StructuredNewtonDirection class.
+/// @ingroup grp_Parameters
 template <Config Conf>
 struct StructuredNewtonDirectionParams {
     USING_ALPAQA_CONFIG(Conf);

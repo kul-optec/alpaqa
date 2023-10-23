@@ -20,6 +20,7 @@
 namespace alpaqa {
 
 /// Tuning parameters for the PANOC algorithm.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct PANOCParams {
     USING_ALPAQA_CONFIG(Conf);
@@ -53,13 +54,27 @@ struct PANOCParams {
     /// The precision of the floating point values printed by the solver.
     int print_precision = std::numeric_limits<real_t>::max_digits10 / 2;
 
+    /// Tolerance factor used in the quadratic upper bound condition that
+    /// determines the step size. Its goal is to account for numerical errors
+    /// in the function and gradient evaluations. If you notice that the step
+    /// size γ becomes very small, you may want to increase this factor.
     real_t quadratic_upperbound_tolerance_factor =
         10 * std::numeric_limits<real_t>::epsilon();
+    /// Tolerance factor used in the line search. Its goal is to account for
+    /// numerical errors in the function and gradient evaluations. If you notice
+    /// that accelerated steps are rejected (τ = 0) when getting closer to the
+    /// solution, you may want to increase this factor.
     real_t linesearch_tolerance_factor =
         10 * std::numeric_limits<real_t>::epsilon();
 
-    bool update_direction_in_candidate              = false;
-    bool recompute_last_prox_step_after_lbfgs_flush = false;
+    /// Use the candidate point rather than the accepted point to update the
+    /// quasi-Newton direction.
+    bool update_direction_in_candidate = false;
+    /// If the step size changes, the direction buffer is flushed. The current
+    /// step will still be used to update the direction, but may still use the
+    /// old step size. If set to true, the current step will be recomputed with
+    /// the new step size as well, to match the step in the candidate iterate.
+    bool recompute_last_prox_step_after_stepsize_change = false;
     /// When evaluating ψ(x̂) in a candidate point, always evaluate ∇ψ(x̂) as
     /// well. Can be beneficial if computing ∇ψ(x̂) is not much more expensive
     /// than computing just ψ(x), and if ∇ψ(x̂) is required in the next iteration

@@ -10,6 +10,7 @@
 namespace alpaqa {
 
 /// Parameters for the @ref AndersonAccel class.
+/// @ingroup grp_Parameters
 template <Config Conf = DefaultConfig>
 struct AndersonAccelParams {
     USING_ALPAQA_CONFIG(Conf);

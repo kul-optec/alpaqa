@@ -7,8 +7,11 @@
 namespace alpaqa {
 
 /// Parameters for the @ref AndersonDirection class.
+/// @ingroup grp_Parameters
 template <Config Conf>
 struct AndersonDirectionParams {
+    /// Instead of flushing the buffer when the step size changes, rescale the
+    /// buffer by a factor @f$ \gamma_k / \gamma_{k-1} @f$.
     bool rescale_on_step_size_changes = false;
 };
 

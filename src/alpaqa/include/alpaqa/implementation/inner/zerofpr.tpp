@@ -444,7 +444,7 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
         if (!updated_lbfgs) {
             if (curr->γ != next->γ) { // Flush L-BFGS if γ changed
                 direction.changed_γ(next->γ, curr->γ);
-                if (params.recompute_last_prox_step_after_lbfgs_flush) {
+                if (params.recompute_last_prox_step_after_stepsize_change) {
                     curr->γ = next->γ;
                     curr->L = next->L;
                     eval_prox_grad_step_in_prox(*curr);
