@@ -39,13 +39,13 @@ void ALPAQA_EXPORT set_param(bool &b, ParamString s) {
 
 template <>
 void ALPAQA_EXPORT set_param(std::string_view &v, ParamString s) {
-    assert_key_empty<bool>(s);
+    assert_key_empty<std::string_view>(s);
     v = s.value;
 }
 
 template <>
 void ALPAQA_EXPORT set_param(std::string &v, ParamString s) {
-    assert_key_empty<bool>(s);
+    assert_key_empty<std::string>(s);
     v = s.value;
 }
 
@@ -131,7 +131,6 @@ void set_param(std::chrono::duration<Rep, Period> &t, ParamString s) {
                                     "' in '" + std::string(s.full_key) +
                                     "': " + std::make_error_code(ec).message());
 #else
-#pragma message "Using std::stod as a fallback to replace std::from_chars"
     size_t end_index;
     try {
         value = std::stod(std::string(s.value), &end_index);
