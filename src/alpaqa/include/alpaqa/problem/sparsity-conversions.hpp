@@ -656,7 +656,7 @@ struct SparsityConverter<Sparsity<Conf>, To> {
     using to_sparsity_t   = To;
     using Request         = SparsityConversionRequest<to_sparsity_t>;
     SparsityConverter(Sparsity<config_t> from, Request request = {})
-        : converter{std::visit(wrap_converter(request), from)} {}
+        : converter{std::visit(wrap_converter(request), from.value)} {}
     ConverterVariant<To> converter;
     operator const to_sparsity_t &() const {
         return std::visit([](const auto &c) -> const to_sparsity_t & { return c; }, converter);

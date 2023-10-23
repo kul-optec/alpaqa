@@ -135,7 +135,7 @@ struct cvt_matrix_visitor_t {
 template <alpaqa::Config Conf>
 auto cvt_matrix(const alpaqa::Sparsity<Conf> &sparsity, const auto &func) {
     cvt_matrix_visitor_t<Conf, decltype(func)> visitor{func};
-    return std::visit(visitor, sparsity);
+    return std::visit(visitor, sparsity.value);
 }
 
 template <class T, class... Args>

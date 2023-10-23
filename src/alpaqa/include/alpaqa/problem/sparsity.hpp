@@ -3,6 +3,7 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/export.hpp>
 #include <cassert>
+#include <concepts>
 #include <variant>
 
 namespace alpaqa::sparsity {
@@ -102,8 +103,9 @@ using SparsityVariant = std::variant< //
 /// Stores any of the supported sparsity patterns.
 /// @see @ref SparsityConverter<Sparsity<Conf>, To>
 template <Config Conf>
-struct Sparsity : SparsityVariant<Conf> {
-    using SparsityVariant<Conf>::SparsityVariant;
+struct Sparsity {
+    Sparsity(std::convertible_to<SparsityVariant<Conf>> auto value) : value{std::move(value)} {}
+    SparsityVariant<Conf> value;
 };
 
 namespace detail {
@@ -122,7 +124,7 @@ bool is_dense(const Sparsity<Conf> &sp) {
         [](const Dense<Conf> &) { return true; },
         [](const auto &) { return false; },
     };
-    return std::visit(visitor, sp);
+    return std::visit(visitor, sp.value);
 }
 
 /// Get the number of structurally nonzero elements.
@@ -132,13 +134,13 @@ length_t<Conf> get_nnz(const Sparsity<Conf> &sp) {
         [](const Dense<Conf> &d) { return d.rows * d.cols; },
         [](const auto &s) { return s.nnz(); },
     };
-    return std::visit(visitor, sp);
+    return std::visit(visitor, sp.value);
 }
 
 /// Returns the symmetry of the sparsity pattern.
 template <Config Conf>
 Symmetry get_symmetry(const Sparsity<Conf> &sp) {
-    return std::visit([](const auto &s) { return s.symmetry; }, sp);
+    return std::visit([](const auto &s) { return s.symmetry; }, sp.value);
 }
 
 } // namespace alpaqa::sparsity

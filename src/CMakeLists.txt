@@ -183,6 +183,9 @@ if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
     target_link_libraries(cutest-interface
         PUBLIC alpaqa::alpaqa
         PRIVATE ${CMAKE_DL_LIBS} alpaqa::warnings)
+    if (NOT "cxx_std_23" IN_LIST CMAKE_CXX_COMPILE_FEATURES)
+        message(FATAL_ERROR "ALPAQA_WITH_CUTEST requires C++23 support")
+    endif()
     target_compile_features(alpaqa PUBLIC cxx_std_23)
     alpaqa_configure_visibility(cutest-interface)
     set_target_properties(cutest-interface PROPERTIES SOVERSION ${PROJECT_VERSION})
