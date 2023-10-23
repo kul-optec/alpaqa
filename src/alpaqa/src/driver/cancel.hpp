@@ -27,23 +27,36 @@ template <class Solver>
             throw std::logic_error(
                 "alpaqa-driver:attach_cancellation can only be used once");
         }
-        struct sigaction action;
-        action.sa_handler = [](int) {
+        auto handler = +[](int) {
             if (auto *s = solver_to_stop.load(std::memory_order::acquire))
                 reinterpret_cast<Solver *>(s)->stop();
         };
+#ifdef _WIN32
+        signal(SIGINT, handler);
+        signal(SIGTERM, handler);
+#else
+        struct sigaction action;
+        action.sa_handler = handler;
         sigemptyset(&action.sa_mask);
         action.sa_flags = 0;
         sigaction(SIGINT, &action, nullptr);
         sigaction(SIGTERM, &action, nullptr);
+#endif
         auto detach_solver = +[](solver_to_stop_t *p) {
+#ifdef _WIN32
+            signal(SIGINT, SIG_DFL);
+            signal(SIGTERM, SIG_DFL);
+#else
             struct sigaction action;
             action.sa_handler = SIG_DFL;
             sigemptyset(&action.sa_mask);
             action.sa_flags = 0;
             sigaction(SIGINT, &action, nullptr);
             sigaction(SIGTERM, &action, nullptr);
+#endif
             p->store(nullptr, std::memory_order_relaxed);
+            // Don't reorder this store with subsequent destruction of solver
+            std::atomic_signal_fence(std::memory_order_release);
         };
         return std::unique_ptr<solver_to_stop_t, decltype(detach_solver)>{
             &solver_to_stop, detach_solver};

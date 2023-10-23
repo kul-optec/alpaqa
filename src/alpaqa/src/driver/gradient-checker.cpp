@@ -1,3 +1,8 @@
+#ifdef _WIN32
+#define NOMINMAX
+#include <Windows.h>
+#endif
+
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/sparsity-conversions.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
@@ -110,6 +115,9 @@ void check_gradients(LoadedProblem &, std::ostream &,
                      const CheckGradientsOpts &);
 
 int main(int argc, const char *argv[]) try {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     // Check command line options
     if (argc < 1)
         return -1;
@@ -130,7 +138,7 @@ int main(int argc, const char *argv[]) try {
     os << "Loading problem " << prob_path << std::endl;
     auto problem = load_problem(prob_type, prob_path.parent_path(),
                                 prob_path.filename(), opts);
-    os << "Loaded problem " << problem.path.stem().c_str() << " from "
+    os << "Loaded problem " << problem.path.stem().string() << " from "
        << problem.path << "\nnvar: " << problem.problem.get_n()
        << "\nncon: " << problem.problem.get_m() << "\nProvided functions:\n";
     alpaqa::print_provided_functions(os, problem.problem);
@@ -157,7 +165,7 @@ int main(int argc, const char *argv[]) try {
 
     // Check options
     auto used       = opts.used();
-    auto unused_opt = std::ranges::find(used, false);
+    auto unused_opt = std::ranges::find(used, 0);
     auto unused_idx = static_cast<size_t>(unused_opt - used.begin());
     if (unused_opt != used.end())
         throw std::invalid_argument("Unused option: " +

@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <map>
 #include <numeric>
+#include <random>
 #include <string_view>
 #include <variant>
 
@@ -50,7 +51,7 @@ struct BenchmarkResults {
 };
 
 inline std::string random_hex_string(auto &&rng) {
-    auto rnd     = std::uniform_int_distribution<uint32_t>()(rng);
+    auto rnd     = std::uniform_int_distribution<uint32_t>{}(rng);
     auto rnd_str = std::string(8, '0');
     std::to_chars(rnd_str.data() + std::countl_zero(rnd) / 4,
                   rnd_str.data() + rnd_str.size(), rnd, 16);

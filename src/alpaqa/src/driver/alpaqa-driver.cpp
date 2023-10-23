@@ -1,3 +1,8 @@
+#ifdef _WIN32
+#define NOMINMAX
+#include <Windows.h>
+#endif
+
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/kkt-error.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
@@ -247,6 +252,9 @@ void store_solution(const fs::path &sol_output_dir, std::ostream &os,
 }
 
 int main(int argc, const char *argv[]) try {
+#ifdef _WIN32
+    SetConsoleOutputCP(CP_UTF8);
+#endif
     // Check command line options
     if (argc < 1)
         return -1;
@@ -284,7 +292,7 @@ int main(int argc, const char *argv[]) try {
 
     // Check options
     auto used       = opts.used();
-    auto unused_opt = std::find(used.begin(), used.end(), 0);
+    auto unused_opt = std::ranges::find(used, 0);
     auto unused_idx = static_cast<size_t>(unused_opt - used.begin());
     if (unused_opt != used.end())
         throw std::invalid_argument("Unused option: " +
