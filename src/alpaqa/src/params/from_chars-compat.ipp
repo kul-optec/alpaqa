@@ -6,14 +6,35 @@
 #include <charconv>
 #endif
 
-#if __cpp_lib_to_chars && (!defined(__clang__)) &&                             \
-    (!defined(__GNUC__) || __GNUC__ > 1)
+#if __cpp_lib_to_chars
+
+#define ALPAQA_USE_FROM_CHARS_INT 1
+#if defined(__clang__) // Clang
+#pragma message("Using std::stod as a fallback to replace std::from_chars")
+#define ALPAQA_USE_FROM_CHARS_FLOAT 0
+#elif defined(_MSC_VER) // MSVC
+#if _MSC_VER >= 1924
 #define ALPAQA_USE_FROM_CHARS_FLOAT 1
 #else
-#pragma message "Using std::stod as a fallback to replace std::from_chars"
+#pragma message("Using std::stod as a fallback to replace std::from_chars")
 #define ALPAQA_USE_FROM_CHARS_FLOAT 0
 #endif
-#define ALPAQA_USE_FROM_CHARS_INT 1
+#elif defined(__GNUC__) // GCC
+#if __GNUC__ >= 11
+#define ALPAQA_USE_FROM_CHARS_FLOAT 1
+#else
+#pragma message("Using std::stod as a fallback to replace std::from_chars")
+#define ALPAQA_USE_FROM_CHARS_FLOAT 0
+#endif
+#else // Unknown
+#pragma message("Unknown compiler: not using std::from_chars for floats")
+#define ALPAQA_USE_FROM_CHARS_FLOAT 0
+#endif
+
+#else // __cpp_lib_to_chars
+#define ALPAQA_USE_FROM_CHARS_INT 0
+#define ALPAQA_USE_FROM_CHARS_FLOAT 0
+#endif
 
 namespace {
 using namespace alpaqa::params;
