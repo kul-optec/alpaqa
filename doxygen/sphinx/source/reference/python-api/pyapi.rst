@@ -37,3 +37,6 @@ For examples, see the :ref:`lasso <lasso example>` and
 
     .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.compile
         :noindex:
+
+    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.build
+        :noindex:

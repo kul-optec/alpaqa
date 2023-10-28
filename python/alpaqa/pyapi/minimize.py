@@ -4,7 +4,8 @@ from typing import Union, Optional, Tuple
 import numpy as np
 from copy import copy
 from ..casadi_loader import generate_and_compile_casadi_problem
-from ..alpaqa import CasADiProblem
+from ..casadi_generator import _prepare_casadi_problem
+from ..alpaqa import CasADiProblem, deserialize_casadi_problem
 import inspect
 
 
@@ -110,34 +111,10 @@ class MinimizationProblemDescription:
         ret.parameter_value = value
         return ret
 
-    def compile(self, **kwargs) -> CasADiProblem:
+    def _convert_parts(self) -> dict:
         """
-        Generate, compile and load the problem.
-
-        :param \\**kwargs:
-            Arguments passed to :py:func:`alpaqa.casadi_loader.generate_and_compile_casadi_problem`.
-
-        :Keyword Arguments:
-            * **second_order**: ``str`` --
-              Whether to generate functions for evaluating second-order
-              derivatives:
-
-              * ``'no'``: only first-order derivatives (default).
-              * ``'full'``: Hessians and Hessian-vector products of the
-                Lagrangian and the augmented Lagrangian.
-              * ``'prod'``: Hessian-vector products of the
-                Lagrangian and the augmented Lagrangian.
-              * ``'L'``: Hessian of the Lagrangian.
-              * ``'L_prod'``: Hessian-vector product of the Lagrangian.
-              * ``'psi'``: Hessian of the augmented Lagrangian.
-              * ``'psi_prod'``: Hessian-vector product of the augmented
-                Lagrangian.
-            * **name**: ``str`` --
-              Optional string description of the problem (used for filenames).
-            * **sym**: ``Callable`` --
-              Symbolic variable constructor, usually either ``cs.SX.sym``
-              (default) or ``cs.MX.sym``.
-
+        Build a dictionary with all necessary components to build an alpaqa
+        problem, i.e. the functions f and g, the sets C and D, etc.
         """
         # Function arguments (variables and parameters)
         x, param = self.variable, self.parameter
@@ -169,16 +146,103 @@ class MinimizationProblemDescription:
         if num_param is None:
             num_param = np.NaN * np.ones(p)
         λ = self.regularizer
-        problem = generate_and_compile_casadi_problem(
+        return dict(
             f=cs.Function("f", args, f),
-            g=cs.Function("g", args, g),
+            g=cs.Function("g", args, g) if g else None,
             C=C,
             D=np.hstack((D_qpm, D_alm)),
             param=num_param,
             l1_reg=λ,
             penalty_alm_split=m_qpm,
+        )
+
+    def compile(self, **kwargs) -> CasADiProblem:
+        """
+        Generate, compile and load the problem.
+
+        A C compiler is required (e.g. GCC or Clang on Linux, Xcode on macOS, or
+        Visual Studio on Windows).
+        If no compiler is available, you could use the
+        :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.build`
+        method instead.
+
+        :param \\**kwargs:
+            Arguments passed to :py:func:`alpaqa.casadi_loader.generate_and_compile_casadi_problem`.
+
+        :Keyword Arguments:
+            * **second_order**: ``str`` --
+              Whether to generate functions for evaluating second-order
+              derivatives:
+
+              * ``'no'``: only first-order derivatives (default).
+              * ``'full'``: Hessians and Hessian-vector products of the
+                Lagrangian and the augmented Lagrangian.
+              * ``'prod'``: Hessian-vector products of the
+                Lagrangian and the augmented Lagrangian.
+              * ``'L'``: Hessian of the Lagrangian.
+              * ``'L_prod'``: Hessian-vector product of the Lagrangian.
+              * ``'psi'``: Hessian of the augmented Lagrangian.
+              * ``'psi_prod'``: Hessian-vector product of the augmented
+                Lagrangian.
+            * **name**: ``str`` --
+              Optional string description of the problem (used for filenames).
+            * **sym**: ``Callable`` --
+              Symbolic variable constructor, usually either ``cs.SX.sym``
+              (default) or ``cs.MX.sym``.
+              ``SX`` expands the expressions and generally results in better
+              run-time performance, while ``MX`` usually has faster compile
+              times.
+
+        """
+
+        return generate_and_compile_casadi_problem(
+            **self._convert_parts(),
             **kwargs,
         )
+
+    def build(self, **kwargs) -> CasADiProblem:
+        """
+        Finalize the problem formulation and return a problem type that can be
+        used by the solvers.
+
+        This method is usually not recommended: the
+        :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.compile`
+        method is preferred because it pre-compiles the problem for better
+        performance.
+
+        :Keyword Arguments:
+            * **second_order**: ``str`` --
+              Whether to generate functions for evaluating second-order
+              derivatives:
+
+              * ``'no'``: only first-order derivatives (default).
+              * ``'full'``: Hessians and Hessian-vector products of the
+                Lagrangian and the augmented Lagrangian.
+              * ``'prod'``: Hessian-vector products of the
+                Lagrangian and the augmented Lagrangian.
+              * ``'L'``: Hessian of the Lagrangian.
+              * ``'L_prod'``: Hessian-vector product of the Lagrangian.
+              * ``'psi'``: Hessian of the augmented Lagrangian.
+              * ``'psi_prod'``: Hessian-vector product of the augmented
+                Lagrangian.
+            * **sym**: ``Callable`` --
+              Symbolic variable constructor, usually either ``cs.SX.sym``
+              (default) or ``cs.MX.sym``.
+              ``SX`` expands the expressions and generally results in better
+              run-time performance.
+
+        """
+        parts = self._convert_parts()
+        functions = _prepare_casadi_problem(parts["f"], parts["g"], **kwargs)
+        ser_funcs = {k: v.serialize() for k, v in functions.items()}
+        problem: CasADiProblem = deserialize_casadi_problem(ser_funcs)
+        problem.C.lowerbound, problem.C.upperbound = parts["C"]
+        problem.D.lowerbound, problem.D.upperbound = parts["D"]
+        if parts["param"] is not None:
+            problem.param = parts["param"]
+        if parts["l1_reg"] is not None:
+            problem.l1_reg = parts["l1_reg"]
+        problem.penalty_alm_split = parts["penalty_alm_split"]
         return problem
 
 

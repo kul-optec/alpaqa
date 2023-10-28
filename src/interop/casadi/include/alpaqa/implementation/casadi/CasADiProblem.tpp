@@ -26,6 +26,7 @@ namespace casadi_loader {
 template <Config Conf>
 struct CasADiFunctionsWithParam {
     USING_ALPAQA_CONFIG(Conf);
+    length_t n, m, p;
     CasADiFunctionEvaluator<Conf, 2, 1> f;
     CasADiFunctionEvaluator<Conf, 2, 2> f_grad_f;
     // CasADiFunctionEvaluator<6, 1> grad_ψ;
@@ -43,6 +44,88 @@ struct CasADiFunctionsWithParam {
         std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 7, 1>> hess_ψ = std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> jac_g  = std::nullopt;
+
+    template <class Loader>
+        requires requires(Loader &&loader, const char *name) {
+            { loader(name) } -> std::same_as<casadi::Function>;
+            { loader.format_name(name) } -> std::same_as<std::string>;
+        }
+    static std::unique_ptr<CasADiFunctionsWithParam> load(Loader &&loader) {
+        length_t n = 0, m = 0, p = 0;
+        auto load_g =
+            [&]() -> std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> {
+            casadi::Function gfun = loader("g");
+            using namespace std::literals::string_literals;
+            if (gfun.n_in() != 2)
+                throw invalid_argument_dimensions(
+                    "Invalid number of input arguments: got "s +
+                    std::to_string(gfun.n_in()) + ", should be 2.");
+            if (gfun.n_out() > 1)
+                throw invalid_argument_dimensions(
+                    "Invalid number of output arguments: got "s +
+                    std::to_string(gfun.n_in()) + ", should be 0 or 1.");
+            if (gfun.size2_in(0) != 1)
+                throw invalid_argument_dimensions(
+                    "First input argument should be a column vector.");
+            if (gfun.size2_in(1) != 1)
+                throw invalid_argument_dimensions(
+                    "Second input argument should be a column vector.");
+            if (gfun.n_out() == 1 && gfun.size2_out(0) != 1)
+                throw invalid_argument_dimensions(
+                    "First output argument should be a column vector.");
+            n = static_cast<length_t>(gfun.size1_in(0));
+            if (gfun.n_out() == 1)
+                m = static_cast<length_t>(gfun.size1_out(0));
+            p = static_cast<length_t>(gfun.size1_in(1));
+            if (gfun.n_out() == 0) {
+                if (m != 0)
+                    throw invalid_argument_dimensions(
+                        "Function g has no outputs but m != 0");
+                return std::nullopt;
+            }
+            CasADiFunctionEvaluator<Conf, 2, 1> g{std::move(gfun)};
+            g.validate_dimensions({dim(n, 1), dim(p, 1)}, {dim(m, 1)});
+            return std::make_optional(std::move(g));
+        };
+
+        auto g = wrap_load(loader, "g", load_g);
+
+        auto self =
+            std::make_unique<CasADiFunctionsWithParam>(CasADiFunctionsWithParam{
+                .n = n,
+                .m = m,
+                .p = p,
+                .f = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
+                    loader, "f", dims(n, p), dims(1)),
+                .f_grad_f = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 2>>(
+                    loader, "f_grad_f", dims(n, p), dims(1, n)),
+                // .grad_ψ = wrapped_load<CasADiFunctionEvaluator<6, 1>>(
+                //     loader, "grad_psi", dims(n, p, m, m, m, m), dims(n)),
+                .ψ_grad_ψ = wrapped_load<CasADiFunctionEvaluator<Conf, 6, 2>>(
+                    loader, "psi_grad_psi", dims(n, p, m, m, m, m), dims(1, n)),
+            });
+
+        if (g)
+            self->constr = {
+                std::move(*g),
+                wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "grad_L", dims(n, p, m), dims(n)),
+                wrapped_load<CasADiFunctionEvaluator<Conf, 6, 2>>(
+                    loader, "psi", dims(n, p, m, m, m, m), dims(1, m)),
+            };
+
+        self->hess_L_prod = try_load<CasADiFunctionEvaluator<Conf, 5, 1>>(
+            loader, "hess_L_prod", dims(n, p, m, 1, n), dims(n));
+        self->hess_L = try_load<CasADiFunctionEvaluator<Conf, 4, 1>>(
+            loader, "hess_L", dims(n, p, m, 1), dims(dim(n, n)));
+        self->hess_ψ_prod = try_load<CasADiFunctionEvaluator<Conf, 8, 1>>(
+            loader, "hess_psi_prod", dims(n, p, m, m, 1, m, m, n), dims(n));
+        self->hess_ψ = try_load<CasADiFunctionEvaluator<Conf, 7, 1>>(
+            loader, "hess_psi", dims(n, p, m, m, 1, m, m), dims(dim(n, n)));
+        self->jac_g = try_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
+            loader, "jacobian_g", dims(n, p), dims(dim(m, n)));
+        return self;
+    }
 };
 
 } // namespace casadi_loader
@@ -56,89 +139,51 @@ auto casadi_to_index(casadi_int i) -> index_t<Conf> {
 } // namespace detail
 
 template <Config Conf>
-CasADiProblem<Conf>::CasADiProblem(const std::string &so_name)
+CasADiProblem<Conf>::CasADiProblem(const std::string &filename)
     : BoxConstrProblem<Conf>{0, 0} {
-    using namespace casadi_loader;
-    length_t n = 0, m = 0, p = 0;
-    auto load_g_unknown_dims =
-        [&]() -> std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> {
-        casadi::Function gfun = casadi::external("g", so_name);
-        using namespace std::literals::string_literals;
-        if (gfun.n_in() != 2)
-            throw std::invalid_argument(
-                "Invalid number of input arguments: got "s +
-                std::to_string(gfun.n_in()) + ", should be 2.");
-        if (gfun.n_out() > 1)
-            throw std::invalid_argument(
-                "Invalid number of output arguments: got "s +
-                std::to_string(gfun.n_in()) + ", should be 0 or 1.");
-        if (gfun.size2_in(0) != 1)
-            throw std::invalid_argument(
-                "First input argument should be a column vector.");
-        if (gfun.size2_in(1) != 1)
-            throw std::invalid_argument(
-                "Second input argument should be a column vector.");
-        if (gfun.n_out() == 1 && gfun.size2_out(0) != 1)
-            throw std::invalid_argument(
-                "First output argument should be a column vector.");
-        n = static_cast<length_t>(gfun.size1_in(0));
-        if (gfun.n_out() == 1)
-            m = static_cast<length_t>(gfun.size1_out(0));
-        p = static_cast<length_t>(gfun.size1_in(1));
-        if (gfun.n_out() == 0) {
-            if (m != 0)
-                throw std::invalid_argument(
-                    "Function g has no outputs but m != 0");
-            return std::nullopt;
+
+    struct {
+        const std::string &filename;
+        auto operator()(const std::string &name) const {
+            return casadi::external(name, filename);
         }
-        CasADiFunctionEvaluator<Conf, 2, 1> g{std::move(gfun)};
-        g.validate_dimensions({dim(n, 1), dim(p, 1)}, {dim(m, 1)});
-        return std::make_optional(std::move(g));
-    };
+        auto format_name(const std::string &name) const {
+            return filename + ':' + name;
+        }
+    } loader{filename};
+    impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
 
-    auto g = wrap_load(so_name, "g", load_g_unknown_dims);
+    this->n     = impl->n;
+    this->m     = impl->m;
+    this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
+    this->C     = Box<config_t>{impl->n};
+    this->D     = Box<config_t>{impl->m};
 
-    this->n     = n;
-    this->m     = m;
-    this->param = vec::Constant(p, alpaqa::NaN<Conf>);
-    this->C     = Box<config_t>{n};
-    this->D     = Box<config_t>{m};
-
-    impl = std::make_unique<CasADiFunctionsWithParam<Conf>>(
-        CasADiFunctionsWithParam<Conf>{
-            .f        = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 1>>( //
-                so_name, "f", dims(n, p), dims(1)),
-            .f_grad_f = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 2>>( //
-                so_name, "f_grad_f", dims(n, p), dims(1, n)),
-            // .grad_ψ = wrapped_load<CasADiFunctionEvaluator<6, 1>>( //
-            //     so_name, "grad_psi", dims(n, p, m, m, m, m), dims(n)),
-            .ψ_grad_ψ = wrapped_load<CasADiFunctionEvaluator<Conf, 6, 2>>( //
-                so_name, "psi_grad_psi", dims(n, p, m, m, m, m), dims(1, n)),
-        });
-
-    if (g)
-        impl->constr = {
-            std::move(*g),
-            wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>( //
-                so_name, "grad_L", dims(n, p, m), dims(n)),
-            wrapped_load<CasADiFunctionEvaluator<Conf, 6, 2>>( //
-                so_name, "psi", dims(n, p, m, m, m, m), dims(1, m)),
-        };
-
-    impl->hess_L_prod = try_load<CasADiFunctionEvaluator<Conf, 5, 1>>( //
-        so_name, "hess_L_prod", dims(n, p, m, 1, n), dims(n));
-    impl->hess_L      = try_load<CasADiFunctionEvaluator<Conf, 4, 1>>( //
-        so_name, "hess_L", dims(n, p, m, 1), dims(dim(n, n)));
-    impl->hess_ψ_prod = try_load<CasADiFunctionEvaluator<Conf, 8, 1>>( //
-        so_name, "hess_psi_prod", dims(n, p, m, m, 1, m, m, n), dims(n));
-    impl->hess_ψ      = try_load<CasADiFunctionEvaluator<Conf, 7, 1>>( //
-        so_name, "hess_psi", dims(n, p, m, m, 1, m, m), dims(dim(n, n)));
-    impl->jac_g       = try_load<CasADiFunctionEvaluator<Conf, 2, 1>>( //
-        so_name, "jacobian_g", dims(n, p), dims(dim(m, n)));
-
-    auto data_filepath = fs::path{so_name}.replace_extension("csv");
+    auto data_filepath = fs::path{filename}.replace_extension("csv");
     if (fs::exists(data_filepath))
         load_numerical_data(data_filepath);
+}
+
+template <Config Conf>
+CasADiProblem<Conf>::CasADiProblem(const SerializedCasADiFunctions &functions)
+    : BoxConstrProblem<Conf>{0, 0} {
+
+    struct {
+        const SerializedCasADiFunctions &functions;
+        auto operator()(const std::string &name) const {
+            return casadi::Function::deserialize(functions.functions.at(name));
+        }
+        auto format_name(const std::string &name) const {
+            return "SerializedCasADiFunctions['" + name + "']";
+        }
+    } loader{functions};
+    impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
+
+    this->n     = impl->n;
+    this->m     = impl->m;
+    this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
+    this->C     = Box<config_t>{impl->n};
+    this->D     = Box<config_t>{impl->m};
 }
 
 template <Config Conf>

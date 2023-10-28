@@ -55,6 +55,85 @@ def test_alm():
     print("y", y)
     pprint(stats)
     assert stats['status'] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+
+
+def test_alm_pyapi_compile():
+    import casadi as cs
+
+    n = 2
+    m = 2
+    x = cs.SX.sym("x", n)
+
+    Q = np.array([[1.5, 0.5], [0.5, 1.5]])
+    f = 0.5 * x.T @ Q @ x
+    g = x
+    D = [-np.inf, 0.5], [+np.inf, +np.inf]
+    p = pa.minimize(f, x).subject_to(g, D).compile()
+    p = copy(p) # test copying/cloning
+    p = deepcopy(p) # test copying/cloning
+    print(p)
+    solver = pa.PANOCSolver(
+        pa.PANOCParams(max_iter=200, print_interval=1),
+        pa.LBFGSDirection(pa.LBFGS.Params(memory=5)),
+    )
+    almparams = pa.ALMParams(max_iter=20, print_interval=1, tolerance=1e-12, dual_tolerance=1e-12)
+    almsolver = pa.ALMSolver(almparams, solver)
+    cnt = pa.problem_with_counters(p)
+    x0 = np.array([3, 3])
+    y0 = np.zeros((m, ))
+    
+    x, y, stats = almsolver(cnt.problem, x=x0, y=y0)
+
+    print()
+    print(cnt.evaluations)
+    print(stats["status"])
+    print("x", x)
+    print("y", y)
+    pprint(stats)
+    assert stats['status'] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+
+
+def test_alm_pyapi_build():
+    import casadi as cs
+
+    n = 2
+    m = 2
+    x = cs.SX.sym("x", n)
+
+    Q = np.array([[1.5, 0.5], [0.5, 1.5]])
+    f = 0.5 * x.T @ Q @ x
+    g = x
+    D = [-np.inf, 0.5], [+np.inf, +np.inf]
+    p = pa.minimize(f, x).subject_to(g, D).build()
+    p = copy(p) # test copying/cloning
+    p = deepcopy(p) # test copying/cloning
+    print(p)
+    solver = pa.PANOCSolver(
+        pa.PANOCParams(max_iter=200, print_interval=1),
+        pa.LBFGSDirection(pa.LBFGS.Params(memory=5)),
+    )
+    almparams = pa.ALMParams(max_iter=20, print_interval=1, tolerance=1e-12, dual_tolerance=1e-12)
+    almsolver = pa.ALMSolver(almparams, solver)
+    cnt = pa.problem_with_counters(p)
+    x0 = np.array([3, 3])
+    y0 = np.zeros((m, ))
+    
+    x, y, stats = almsolver(cnt.problem, x=x0, y=y0)
+
+    print()
+    print(cnt.evaluations)
+    print(stats["status"])
+    print("x", x)
+    print("y", y)
+    pprint(stats)
+    assert stats['status'] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+
 
 class MyProblem(pa.BoxConstrProblem):
     vec = np.ndarray
@@ -106,6 +185,8 @@ def test_alm_inherit():
     print("y", y)
     pprint(stats)
     assert stats['status'] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
 
 
 def test_alm_structured_inherit():
@@ -132,6 +213,8 @@ def test_alm_structured_inherit():
     print("y", y)
     pprint(stats)
     assert stats['status'] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
 
 
 if __name__ == '__main__':

@@ -518,9 +518,17 @@ void register_problems(py::module_ &m) {
         auto load_CasADi_problem = [](const char *so_name) {
             return std::make_unique<CasADiProblem>(so_name);
         };
+        auto deserialize_CasADi_problem = [](std::map<std::string, std::string> functions) {
+            return std::make_unique<CasADiProblem>(
+                alpaqa::SerializedCasADiFunctions{std::move(functions)});
+        };
 #else
         struct CasADiProblem : BoxConstrProblem {};
         auto load_CasADi_problem = [](const char *) -> std::unique_ptr<CasADiProblem> {
+            throw std::runtime_error("This version of alpaqa was compiled without CasADi support");
+        };
+        auto deserialize_CasADi_problem =
+            [](std::map<std::string, std::string>) -> std::unique_ptr<CasADiProblem> {
             throw std::runtime_error("This version of alpaqa was compiled without CasADi support");
         };
 #endif
@@ -546,6 +554,9 @@ void register_problems(py::module_ &m) {
 
         m.def("load_casadi_problem", load_CasADi_problem, "so_name"_a,
               "Load a compiled CasADi problem.\n\n");
+
+        m.def("deserialize_casadi_problem", deserialize_CasADi_problem, "functions"_a,
+              "Deserialize a CasADi problem from the given serialized functions.\n\n");
 
 #if ALPAQA_HAVE_CASADI
         m.def(

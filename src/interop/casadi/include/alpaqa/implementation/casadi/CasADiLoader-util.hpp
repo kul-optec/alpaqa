@@ -1,8 +1,10 @@
 #pragma once
 
+#include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
+#include <alpaqa/util/demangled-typename.hpp>
 #include <casadi/core/casadi_types.hpp>
-#include <casadi/core/external.hpp>
 #include <array>
+#include <exception>
 #include <optional>
 #include <stdexcept>
 #include <string>
@@ -10,31 +12,33 @@
 
 namespace alpaqa::casadi_loader {
 
-template <class F>
-auto wrap_load(const std::string &so_name, const char *name, F f) {
+template <class Loader, class F>
+auto wrap_load(Loader &&loader, const char *name, F f) {
     try {
         return f();
-    } catch (const std::invalid_argument &e) {
-        throw std::invalid_argument("Unable to load function '" + so_name +
-                                    ":" + name + "': " + e.what());
+    } catch (const invalid_argument_dimensions &e) {
+        throw std::invalid_argument(
+            "Unable to load function '" + loader.format_name(name) +
+            "': " + demangled_typename(typeid(e)) + ": " + e.what());
     }
 }
 
-template <class T, class... Args>
-auto wrapped_load(const std::string &so_name, const char *name,
-                  Args &&...args) {
-    return wrap_load(so_name, name, [&] {
-        return T(casadi::external(name, so_name), std::forward<Args>(args)...);
+template <class T, class Loader, class... Args>
+auto wrapped_load(Loader &&loader, const char *name, Args &&...args) {
+    return wrap_load(loader, name, [&] {
+        return T(loader(name), std::forward<Args>(args)...);
     });
 }
 
-template <class T, class... Args>
-std::optional<T> try_load(const std::string &so_name, const char *name,
-                          Args &&...args) {
+template <class T, class Loader, class... Args>
+std::optional<T> try_load(Loader &&loader, const char *name, Args &&...args) {
     try {
-        return std::make_optional(
-            wrapped_load<T>(so_name, name, std::forward<Args>(args)...));
-    } catch (casadi::CasadiException &e) {
+        return std::make_optional(wrapped_load<T>(
+            std::forward<Loader>(loader), name, std::forward<Args>(args)...));
+    } catch (casadi::CasadiException &) {
+        return std::nullopt;
+    } catch (std::out_of_range &) {
+        // TODO: can be made more robust against false positives
         return std::nullopt;
     }
 }

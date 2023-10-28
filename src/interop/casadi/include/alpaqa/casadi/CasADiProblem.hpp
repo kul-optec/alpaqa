@@ -6,12 +6,18 @@
 #include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/copyable_unique_ptr.hpp>
 #include <filesystem>
+#include <map>
+#include <string>
 
 namespace alpaqa {
 namespace casadi_loader {
 template <Config>
 struct CasADiFunctionsWithParam;
 } // namespace casadi_loader
+
+struct SerializedCasADiFunctions {
+    std::map<std::string, std::string> functions;
+};
 
 /// Problem definition for a CasADi problem, loaded from a DLL.
 /// @ingroup grp_Problems
@@ -37,6 +43,8 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
     /// @throws std::invalid_argument
     ///         The dimensions of the loaded functions do not match.
     CasADiProblem(const std::string &filename);
+    /// Create a problem from a collection of serialized CasADi functions.
+    CasADiProblem(const SerializedCasADiFunctions &functions);
     ~CasADiProblem();
 
     CasADiProblem(const CasADiProblem &);

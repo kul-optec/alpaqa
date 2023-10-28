@@ -29,6 +29,7 @@ struct CasADiControlFunctionsWithParam {
     USING_ALPAQA_CONFIG(Conf);
 
     static constexpr bool WithParam = true;
+    length_t nx, nu, nh, nh_N, nc, nc_N, p;
     CasADiFunctionEvaluator<Conf, 2 + WithParam, 1> f;
     CasADiFunctionEvaluator<Conf, 2 + WithParam, 1> jac_f;
     CasADiFunctionEvaluator<Conf, 3 + WithParam, 1> grad_f_prod;
@@ -51,149 +52,189 @@ struct CasADiControlFunctionsWithParam {
     CasADiFunctionEvaluator<Conf, 1 + WithParam, 1> c_N;
     CasADiFunctionEvaluator<Conf, 2 + WithParam, 1> grad_c_prod_N;
     CasADiFunctionEvaluator<Conf, 2 + WithParam, 1> gn_hess_c_N;
+
+    template <class Loader>
+        requires requires(Loader &&loader, const char *name) {
+            { loader(name) } -> std::same_as<casadi::Function>;
+            { loader.format_name(name) } -> std::same_as<std::string>;
+        }
+    static std::unique_ptr<CasADiControlFunctionsWithParam>
+    load(Loader &&loader) {
+        length_t nx, nu, nh, nh_N, nc, nc_N, p;
+        auto load_f = [&]() -> CasADiFunctionEvaluator<Conf, 3, 1> {
+            casadi::Function ffun = loader("f");
+            using namespace std::literals::string_literals;
+            if (ffun.n_in() != 3)
+                throw invalid_argument_dimensions(
+                    "Invalid number of input arguments: got "s +
+                    std::to_string(ffun.n_in()) + ", should be 3.");
+            if (ffun.n_out() != 1)
+                throw invalid_argument_dimensions(
+                    "Invalid number of output arguments: got "s +
+                    std::to_string(ffun.n_in()) + ", should be 1.");
+            nx = static_cast<length_t>(ffun.size1_in(0));
+            nu = static_cast<length_t>(ffun.size1_in(1));
+            p  = static_cast<length_t>(ffun.size1_in(2));
+            CasADiFunctionEvaluator<Conf, 3, 1> f{std::move(ffun)};
+            f.validate_dimensions({dim(nx, 1), dim(nu, 1), dim(p, 1)},
+                                  {dim(nx, 1)});
+            return f;
+        };
+        auto load_h = [&]() -> CasADiFunctionEvaluator<Conf, 3, 1> {
+            casadi::Function hfun = loader("h");
+            using namespace std::literals::string_literals;
+            if (hfun.n_in() != 3)
+                throw invalid_argument_dimensions(
+                    "Invalid number of input arguments: got "s +
+                    std::to_string(hfun.n_in()) + ", should be 3.");
+            if (hfun.n_out() != 1)
+                throw invalid_argument_dimensions(
+                    "Invalid number of output arguments: got "s +
+                    std::to_string(hfun.n_in()) + ", should be 1.");
+            nh = static_cast<length_t>(hfun.size1_out(0));
+            CasADiFunctionEvaluator<Conf, 3, 1> h{std::move(hfun)};
+            h.validate_dimensions({dim(nx, 1), dim(nu, 1), dim(p, 1)},
+                                  {dim(nh, 1)});
+            return h;
+        };
+        auto load_h_N = [&]() -> CasADiFunctionEvaluator<Conf, 2, 1> {
+            casadi::Function hfun = loader("h_N");
+            using namespace std::literals::string_literals;
+            if (hfun.n_in() != 2)
+                throw invalid_argument_dimensions(
+                    "Invalid number of input arguments: got "s +
+                    std::to_string(hfun.n_in()) + ", should be 2.");
+            if (hfun.n_out() != 1)
+                throw invalid_argument_dimensions(
+                    "Invalid number of output arguments: got "s +
+                    std::to_string(hfun.n_in()) + ", should be 1.");
+            nh_N = static_cast<length_t>(hfun.size1_out(0));
+            CasADiFunctionEvaluator<Conf, 2, 1> h{std::move(hfun)};
+            h.validate_dimensions({dim(nx, 1), dim(p, 1)}, {dim(nh_N, 1)});
+            return h;
+        };
+        auto load_c = [&]() -> CasADiFunctionEvaluator<Conf, 2, 1> {
+            casadi::Function cfun = loader("c");
+            using namespace std::literals::string_literals;
+            if (cfun.n_in() != 2)
+                throw invalid_argument_dimensions(
+                    "Invalid number of input arguments: got "s +
+                    std::to_string(cfun.n_in()) + ", should be 2.");
+            if (cfun.n_out() != 1)
+                throw invalid_argument_dimensions(
+                    "Invalid number of output arguments: got "s +
+                    std::to_string(cfun.n_in()) + ", should be 1.");
+            nc = static_cast<length_t>(cfun.size1_out(0));
+            CasADiFunctionEvaluator<Conf, 2, 1> c{std::move(cfun)};
+            c.validate_dimensions({dim(nx, 1), dim(p, 1)}, {dim(nc, 1)});
+            return c;
+        };
+        auto load_c_N = [&]() -> CasADiFunctionEvaluator<Conf, 2, 1> {
+            casadi::Function cfun = loader("c_N");
+            using namespace std::literals::string_literals;
+            if (cfun.n_in() != 2)
+                throw invalid_argument_dimensions(
+                    "Invalid number of input arguments: got "s +
+                    std::to_string(cfun.n_in()) + ", should be 2.");
+            if (cfun.n_out() != 1)
+                throw invalid_argument_dimensions(
+                    "Invalid number of output arguments: got "s +
+                    std::to_string(cfun.n_in()) + ", should be 1.");
+            nc_N = static_cast<length_t>(cfun.size1_out(0));
+            CasADiFunctionEvaluator<Conf, 2, 1> c{std::move(cfun)};
+            c.validate_dimensions({dim(nx, 1), dim(p, 1)}, {dim(nc_N, 1)});
+            return c;
+        };
+        // Load the functions "f", "h", and "c" to determine the unknown dimensions.
+        auto f   = wrap_load(loader, "f", load_f);
+        auto h   = wrap_load(loader, "h", load_h);
+        auto h_N = wrap_load(loader, "h_N", load_h_N);
+        auto c   = wrap_load(loader, "c", load_c);
+        auto c_N = wrap_load(loader, "c_N", load_c_N);
+
+        auto self = std::make_unique<CasADiControlFunctionsWithParam<Conf>>(
+            CasADiControlFunctionsWithParam<Conf>{
+                .nx    = nx,
+                .nu    = nu,
+                .nh    = nh,
+                .nh_N  = nh_N,
+                .nc    = nc,
+                .nc_N  = nc_N,
+                .p     = p,
+                .f     = std::move(f),
+                .jac_f = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "jacobian_f", dims(nx, nu, p),
+                    dims(dim(nx, nx + nu))),
+                .grad_f_prod =
+                    wrapped_load<CasADiFunctionEvaluator<Conf, 4, 1>>(
+                        loader, "grad_f_prod", dims(nx, nu, p, nx),
+                        dims(nx + nu)),
+                .h   = std::move(h),
+                .h_N = std::move(h_N),
+                .l   = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
+                    loader, "l", dims(nh, p), dims(1)),
+                .l_N = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
+                    loader, "l_N", dims(nh_N, p), dims(1)),
+                .qr = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "qr", dims(nx + nu, nh, p), dims(nx + nu)),
+                .q_N = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "q_N", dims(nx, nh_N, p), dims(nx)),
+                .Q = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "Q", dims(nx + nu, nh, p), dims(dim{nx, nx})),
+                .Q_N = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "Q_N", dims(nx, nh_N, p), dims(dim{nx, nx})),
+                .R = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "R", dims(nx + nu, nh, p), dims(dim{nu, nu})),
+                .S = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "S", dims(nx + nu, nh, p), dims(dim{nu, nx})),
+                .c = std::move(c),
+                .grad_c_prod =
+                    wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                        loader, "grad_c_prod", dims(nx, p, nc), dims(nx)),
+                .gn_hess_c = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "gn_hess_c", dims(nx, p, nc), dims(dim{nx, nx})),
+                .c_N = std::move(c_N),
+                .grad_c_prod_N =
+                    wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                        loader, "grad_c_prod_N", dims(nx, p, nc_N), dims(nx)),
+                .gn_hess_c_N =
+                    wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                        loader, "gn_hess_c_N", dims(nx, p, nc_N),
+                        dims(dim{nx, nx})),
+            });
+        return self;
+    }
 };
 
 } // namespace casadi_loader
 
 template <Config Conf>
-CasADiControlProblem<Conf>::CasADiControlProblem(const std::string &so_name,
+CasADiControlProblem<Conf>::CasADiControlProblem(const std::string &filename,
                                                  length_t N)
     : N{N} {
-    length_t p;
-    using namespace casadi_loader;
-    auto load_f = [&]() -> CasADiFunctionEvaluator<Conf, 3, 1> {
-        casadi::Function ffun = casadi::external("f", so_name);
-        using namespace std::literals::string_literals;
-        if (ffun.n_in() != 3)
-            throw std::invalid_argument(
-                "Invalid number of input arguments: got "s +
-                std::to_string(ffun.n_in()) + ", should be 3.");
-        if (ffun.n_out() != 1)
-            throw std::invalid_argument(
-                "Invalid number of output arguments: got "s +
-                std::to_string(ffun.n_in()) + ", should be 1.");
-        nx = static_cast<length_t>(ffun.size1_in(0));
-        nu = static_cast<length_t>(ffun.size1_in(1));
-        p  = static_cast<length_t>(ffun.size1_in(2));
-        CasADiFunctionEvaluator<Conf, 3, 1> f{std::move(ffun)};
-        f.validate_dimensions({dim(nx, 1), dim(nu, 1), dim(p, 1)},
-                              {dim(nx, 1)});
-        return f;
-    };
-    auto load_h = [&]() -> CasADiFunctionEvaluator<Conf, 3, 1> {
-        casadi::Function hfun = casadi::external("h", so_name);
-        using namespace std::literals::string_literals;
-        if (hfun.n_in() != 3)
-            throw std::invalid_argument(
-                "Invalid number of input arguments: got "s +
-                std::to_string(hfun.n_in()) + ", should be 3.");
-        if (hfun.n_out() != 1)
-            throw std::invalid_argument(
-                "Invalid number of output arguments: got "s +
-                std::to_string(hfun.n_in()) + ", should be 1.");
-        nh = static_cast<length_t>(hfun.size1_out(0));
-        CasADiFunctionEvaluator<Conf, 3, 1> h{std::move(hfun)};
-        h.validate_dimensions({dim(nx, 1), dim(nu, 1), dim(p, 1)},
-                              {dim(nh, 1)});
-        return h;
-    };
-    auto load_h_N = [&]() -> CasADiFunctionEvaluator<Conf, 2, 1> {
-        casadi::Function hfun = casadi::external("h_N", so_name);
-        using namespace std::literals::string_literals;
-        if (hfun.n_in() != 2)
-            throw std::invalid_argument(
-                "Invalid number of input arguments: got "s +
-                std::to_string(hfun.n_in()) + ", should be 2.");
-        if (hfun.n_out() != 1)
-            throw std::invalid_argument(
-                "Invalid number of output arguments: got "s +
-                std::to_string(hfun.n_in()) + ", should be 1.");
-        nh_N = static_cast<length_t>(hfun.size1_out(0));
-        CasADiFunctionEvaluator<Conf, 2, 1> h{std::move(hfun)};
-        h.validate_dimensions({dim(nx, 1), dim(p, 1)}, {dim(nh_N, 1)});
-        return h;
-    };
-    auto load_c = [&]() -> CasADiFunctionEvaluator<Conf, 2, 1> {
-        casadi::Function cfun = casadi::external("c", so_name);
-        using namespace std::literals::string_literals;
-        if (cfun.n_in() != 2)
-            throw std::invalid_argument(
-                "Invalid number of input arguments: got "s +
-                std::to_string(cfun.n_in()) + ", should be 2.");
-        if (cfun.n_out() != 1)
-            throw std::invalid_argument(
-                "Invalid number of output arguments: got "s +
-                std::to_string(cfun.n_in()) + ", should be 1.");
-        nc = static_cast<length_t>(cfun.size1_out(0));
-        CasADiFunctionEvaluator<Conf, 2, 1> c{std::move(cfun)};
-        c.validate_dimensions({dim(nx, 1), dim(p, 1)}, {dim(nc, 1)});
-        return c;
-    };
-    auto load_c_N = [&]() -> CasADiFunctionEvaluator<Conf, 2, 1> {
-        casadi::Function cfun = casadi::external("c_N", so_name);
-        using namespace std::literals::string_literals;
-        if (cfun.n_in() != 2)
-            throw std::invalid_argument(
-                "Invalid number of input arguments: got "s +
-                std::to_string(cfun.n_in()) + ", should be 2.");
-        if (cfun.n_out() != 1)
-            throw std::invalid_argument(
-                "Invalid number of output arguments: got "s +
-                std::to_string(cfun.n_in()) + ", should be 1.");
-        nc_N = static_cast<length_t>(cfun.size1_out(0));
-        CasADiFunctionEvaluator<Conf, 2, 1> c{std::move(cfun)};
-        c.validate_dimensions({dim(nx, 1), dim(p, 1)}, {dim(nc_N, 1)});
-        return c;
-    };
-    // Load the functions "f", "h", and "c" to determine the unknown dimensions.
-    auto f   = wrap_load(so_name, "f", load_f);
-    auto h   = wrap_load(so_name, "h", load_h);
-    auto h_N = wrap_load(so_name, "h_N", load_h_N);
-    auto c   = wrap_load(so_name, "c", load_c);
-    auto c_N = wrap_load(so_name, "c_N", load_c_N);
 
+    struct {
+        const std::string &filename;
+        auto operator()(const std::string &name) const {
+            return casadi::external(name, filename);
+        }
+        auto format_name(const std::string &name) const {
+            return filename + ':' + name;
+        }
+    } loader{filename};
+    impl = casadi_loader::CasADiControlFunctionsWithParam<Conf>::load(loader);
+
+    this->nx     = impl->nx;
+    this->nu     = impl->nu;
+    this->nh     = impl->nh;
+    this->nh_N   = impl->nh_N;
+    this->nc     = impl->nc;
+    this->nc_N   = impl->nc_N;
     this->x_init = vec::Constant(nx, alpaqa::NaN<Conf>);
-    this->param  = vec::Constant(p, alpaqa::NaN<Conf>);
+    this->param  = vec::Constant(impl->p, alpaqa::NaN<Conf>);
     this->U      = Box{nu};
     this->D      = Box{nc};
     this->D_N    = Box{nc_N};
-
-    impl = std::make_unique<CasADiControlFunctionsWithParam<Conf>>(
-        CasADiControlFunctionsWithParam<Conf>{
-            .f     = std::move(f),
-            .jac_f = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "jacobian_f", dims(nx, nu, p), dims(dim(nx, nx + nu))),
-            .grad_f_prod = wrapped_load<CasADiFunctionEvaluator<Conf, 4, 1>>(
-                so_name, "grad_f_prod", dims(nx, nu, p, nx), dims(nx + nu)),
-            .h   = std::move(h),
-            .h_N = std::move(h_N),
-            .l   = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
-                so_name, "l", dims(nh, p), dims(1)),
-            .l_N = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
-                so_name, "l_N", dims(nh_N, p), dims(1)),
-            .qr = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "qr", dims(nx + nu, nh, p), dims(nx + nu)),
-            .q_N = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "q_N", dims(nx, nh_N, p), dims(nx)),
-            .Q = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "Q", dims(nx + nu, nh, p), dims(dim{nx, nx})),
-            .Q_N = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "Q_N", dims(nx, nh_N, p), dims(dim{nx, nx})),
-            .R = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "R", dims(nx + nu, nh, p), dims(dim{nu, nu})),
-            .S = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "S", dims(nx + nu, nh, p), dims(dim{nu, nx})),
-            .c           = std::move(c),
-            .grad_c_prod = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "grad_c_prod", dims(nx, p, nc), dims(nx)),
-            .gn_hess_c = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "gn_hess_c", dims(nx, p, nc), dims(dim{nx, nx})),
-            .c_N           = std::move(c_N),
-            .grad_c_prod_N = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "grad_c_prod_N", dims(nx, p, nc_N), dims(nx)),
-            .gn_hess_c_N = wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
-                so_name, "gn_hess_c_N", dims(nx, p, nc_N), dims(dim{nx, nx})),
-        });
 
     auto n_work = std::max({
         impl->Q.fun.sparsity_out(0).nnz(),
@@ -203,7 +244,7 @@ CasADiControlProblem<Conf>::CasADiControlProblem(const std::string &so_name,
     });
     this->work  = vec::Constant(static_cast<length_t>(n_work), NaN<Conf>);
 
-    auto bounds_filepath = fs::path{so_name}.replace_extension("csv");
+    auto bounds_filepath = fs::path{filename}.replace_extension("csv");
     if (fs::exists(bounds_filepath))
         load_numerical_data(bounds_filepath);
 }

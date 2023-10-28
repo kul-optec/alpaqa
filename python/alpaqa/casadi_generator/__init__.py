@@ -3,27 +3,17 @@ import numpy as np
 from os.path import splitext
 from typing import Tuple, Optional, Literal, get_args, Callable
 
-SECOND_ORDER_SPEC = Literal['no', 'full', 'prod', 'L', 'L_prod', 'psi', 'psi_prod']
+SECOND_ORDER_SPEC = Literal["no", "full", "prod", "L", "L_prod", "psi", "psi_prod"]
 
-def generate_casadi_problem(
+
+def _prepare_casadi_problem(
     f: cs.Function,
     g: Optional[cs.Function],
-    second_order: SECOND_ORDER_SPEC = 'no',
-    name: str = "alpaqa_problem",
+    second_order: SECOND_ORDER_SPEC = "no",
     sym: Callable = cs.SX.sym,
 ) -> cs.CodeGenerator:
-    """Convert the objective and constraint functions into a CasADi code
-    generator.
-
-    :param f:            Objective function.
-    :param g:            Constraint function.
-    :param second_order: Whether to generate functions for evaluating Hessians.
-    :param name: Optional string description of the problem (used for filename).
-    :param sym: Symbolic variable constructor, usually either ``casadi.SX.sym``
-        (default) or ``casadi.MX.sym``.
-    :return: Code generator that generates the functions and derivatives used
-             by the solvers.
-    """
+    """Convert the objective and constraint functions, their gradients,
+    Lagrangians, etc. into CasADi functions."""
 
     assert second_order in get_args(SECOND_ORDER_SPEC)
 
@@ -50,10 +40,9 @@ def generate_casadi_problem(
         m = 0
     x = sym("x", n)
     p = sym("p", f.size1_in(1) if with_param else 0)
-    xp = (x, p) if with_param else (x, )
+    xp = (x, p) if with_param else (x,)
     xp_def = (x, p)
-    xp_names = (f.name_in(0), f.name_in(1)) if with_param \
-          else (f.name_in(0), "p")
+    xp_names = (f.name_in(0), f.name_in(1)) if with_param else (f.name_in(0), "p")
     x = xp[0]
     y = sym("y", m)
     s = sym("s")
@@ -77,117 +66,133 @@ def generate_casadi_problem(
         L = f(*xp)
         ψ = f(*xp)
 
-    cgname = f"{name}.c"
-    cg = cs.CodeGenerator(cgname)
-    cg.add(cs.Function(
-        "f",
-        [*xp_def],
-        [f(*xp)],
-        [*xp_names],
-        ["f"],
-    ))
-    cg.add(
-        cs.Function(
+    functions = {
+        "f": cs.Function(
+            "f",
+            [*xp_def],
+            [f(*xp)],
+            [*xp_names],
+            ["f"],
+        ),
+        "f_grad_f": cs.Function(
             "f_grad_f",
             [*xp_def],
             [f(*xp), cs.gradient(f(*xp), x)],
             [*xp_names],
             ["f", "grad_f"],
-        ))
-    cg.add(
-        cs.Function(
+        ),
+        "g": cs.Function(
             "g",
             [*xp_def],
             [g(*xp)] if m > 0 else [],
             [*xp_names],
             ["g"] if m > 0 else [],
-        ))
-    cg.add(
-        cs.Function(
+        ),
+        "psi_grad_psi": cs.Function(
             "psi_grad_psi",
             [*xp_def, y, Σ, zl, zu],
             [ψ, cs.gradient(ψ, x)],
             [*xp_names, "y", "Σ", "zl", "zu"],
             ["ψ", "grad_ψ"],
-        ))
+        ),
+    }
     if False:
-        cg.add(
-            cs.Function(
-                "grad_psi",
-                [*xp_def, y, Σ, zl, zu],
-                [cs.gradient(ψ, x)],
-                [*xp_names, "y", "Σ", "zl", "zu"],
-                ["grad_ψ"],
-            ))
+        functions["grad_psi"] = cs.Function(
+            "grad_psi",
+            [*xp_def, y, Σ, zl, zu],
+            [cs.gradient(ψ, x)],
+            [*xp_names, "y", "Σ", "zl", "zu"],
+            ["grad_ψ"],
+        )
     if m > 0:
-        cg.add(
-            cs.Function(
-                "grad_L",
-                [*xp_def, y],
-                [cs.gradient(L, x)],
-                [*xp_names, "y"],
-                ["grad_L"],
-            ))
-        cg.add(
-            cs.Function(
-                "psi",
-                [*xp_def, y, Σ, zl, zu],
-                [ψ, ŷ],
-                [*xp_names, "y", "Σ", "zl", "zu"],
-                ["ψ", "ŷ"],
-            ))
+        functions["grad_L"] = cs.Function(
+            "grad_L",
+            [*xp_def, y],
+            [cs.gradient(L, x)],
+            [*xp_names, "y"],
+            ["grad_L"],
+        )
+        functions["psi"] = cs.Function(
+            "psi",
+            [*xp_def, y, Σ, zl, zu],
+            [ψ, ŷ],
+            [*xp_names, "y", "Σ", "zl", "zu"],
+            ["ψ", "ŷ"],
+        )
 
-    if second_order in ['full', 'L']:
-        cg.add(
-            cs.Function(
-                "jacobian_g",
-                [*xp_def],
-                [cs.jacobian(g(*xp), x)],
-                [*xp_names],
-                ["jac_g"],
-            ))
+    if second_order in ["full", "L"]:
+        functions["jacobian_g"] = cs.Function(
+            "jacobian_g",
+            [*xp_def],
+            [cs.jacobian(g(*xp), x)],
+            [*xp_names],
+            ["jac_g"],
+        )
         HL = cs.hessian(sL, x)[0]
         if not HL.is_dense():
             HL = cs.triu(HL)
-        cg.add(
-            cs.Function(
-                "hess_L",
-                [*xp_def, y, s],
-                [HL],
-                [*xp_names, "y", "s"],
-                ["hess_L"],
-            ))
-    if second_order in ['full', 'prod', 'L_prod']:
-        cg.add(
-            cs.Function(
-                "hess_L_prod",
-                [*xp_def, y, s, v],
-                [cs.gradient(cs.jtimes(sL, x, v, False), x)],
-                [*xp_names, "y", "s", "v"],
-                ["hess_L_prod"],
-            ))
-    if second_order in ['full', 'psi']:
+        functions["hess_L"] = cs.Function(
+            "hess_L",
+            [*xp_def, y, s],
+            [HL],
+            [*xp_names, "y", "s"],
+            ["hess_L"],
+        )
+    if second_order in ["full", "prod", "L_prod"]:
+        functions["hess_L_prod"] = cs.Function(
+            "hess_L_prod",
+            [*xp_def, y, s, v],
+            [cs.gradient(cs.jtimes(sL, x, v, False), x)],
+            [*xp_names, "y", "s", "v"],
+            ["hess_L_prod"],
+        )
+    if second_order in ["full", "psi"]:
         Hψ = cs.hessian(sψ, x)[0]
         if not Hψ.is_dense():
             Hψ = cs.triu(Hψ)
-        cg.add(
-            cs.Function(
-                "hess_psi",
-                [*xp_def, y, Σ, s, zl, zu],
-                [Hψ],
-                [*xp_names, "y", "Σ", "s", "zl", "zu"],
-                ["hess_psi"],
-            )
+        functions["hess_psi"] = cs.Function(
+            "hess_psi",
+            [*xp_def, y, Σ, s, zl, zu],
+            [Hψ],
+            [*xp_names, "y", "Σ", "s", "zl", "zu"],
+            ["hess_psi"],
         )
-    if second_order in ['full', 'prod', 'psi_prod']:
-        cg.add(
-            cs.Function(
-                "hess_psi_prod",
-                [*xp_def, y, Σ, s, zl, zu, v],
-                [cs.gradient(cs.jtimes(sψ, x, v, False), x)],
-                [*xp_names, "y", "Σ", "s", "zl", "zu", "v"],
-                ["hess_psi_prod"],
-            ))
+    if second_order in ["full", "prod", "psi_prod"]:
+        functions["hess_psi_prod"] = cs.Function(
+            "hess_psi_prod",
+            [*xp_def, y, Σ, s, zl, zu, v],
+            [cs.gradient(cs.jtimes(sψ, x, v, False), x)],
+            [*xp_names, "y", "Σ", "s", "zl", "zu", "v"],
+            ["hess_psi_prod"],
+        )
+    return functions
+
+def generate_casadi_problem(
+    f: cs.Function,
+    g: Optional[cs.Function],
+    second_order: SECOND_ORDER_SPEC = 'no',
+    name: str = "alpaqa_problem",
+    sym: Callable = cs.SX.sym,
+) -> cs.CodeGenerator:
+    """Convert the objective and constraint functions into a CasADi code
+    generator.
+
+    :param f:            Objective function.
+    :param g:            Constraint function.
+    :param second_order: Whether to generate functions for evaluating Hessians.
+    :param name: Optional string description of the problem (used for filename).
+    :param sym: Symbolic variable constructor, usually either ``casadi.SX.sym``
+        (default) or ``casadi.MX.sym``.
+    :return: Code generator that generates the functions and derivatives used
+             by the solvers.
+    """
+
+    functions = _prepare_casadi_problem(f, g, second_order, sym)
+
+    cgname = f"{name}.c"
+    cg = cs.CodeGenerator(cgname)
+    for func in functions.values():
+        cg.add(func)
     return cg
 
 def _add_parameter(f: cs.Function, expected_inputs: int) -> Tuple[cs.Function, cs.SX, str]:

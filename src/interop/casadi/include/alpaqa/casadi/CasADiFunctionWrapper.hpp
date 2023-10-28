@@ -11,6 +11,10 @@
 
 namespace alpaqa::casadi_loader {
 
+struct invalid_argument_dimensions : std::invalid_argument {
+    using std::invalid_argument::invalid_argument;
+};
+
 /// Class for evaluating CasADi functions, allocating the necessary workspace
 /// storage in advance for allocation-free evaluations.
 template <Config Conf, size_t N_in, size_t N_out>
@@ -21,24 +25,24 @@ class CasADiFunctionEvaluator {
 
     using casadi_dim = std::pair<casadi_int, casadi_int>;
 
-    /// @throws std::invalid_argument
+    /// @throws invalid_argument_dimensions
     CasADiFunctionEvaluator(casadi::Function &&f)
         : fun(std::move(f)), iwork(fun.sz_iw()), dwork(fun.sz_w()),
           arg_work(fun.sz_arg()), res_work(fun.sz_res()) {
         using namespace std::literals::string_literals;
         if (N_in != fun.n_in())
-            throw std::invalid_argument(
+            throw invalid_argument_dimensions(
                 "Invalid number of input arguments: got "s +
                 std::to_string(fun.n_in()) + ", should be " +
                 std::to_string(N_in) + ".");
         if (N_out != fun.n_out())
-            throw std::invalid_argument(
+            throw invalid_argument_dimensions(
                 "Invalid number of output arguments: got "s +
                 std::to_string(fun.n_out()) + ", should be " +
                 std::to_string(N_out) + ".");
     }
 
-    /// @throws std::invalid_argument
+    /// @throws invalid_argument_dimensions
     CasADiFunctionEvaluator(casadi::Function &&f,
                             const std::array<casadi_dim, N_in> &dim_in,
                             const std::array<casadi_dim, N_out> &dim_out)
@@ -46,7 +50,7 @@ class CasADiFunctionEvaluator {
         validate_dimensions(dim_in, dim_out);
     }
 
-    /// @throws std::invalid_argument
+    /// @throws invalid_argument_dimensions
     void
     validate_dimensions(const std::array<casadi_dim, N_in> &dim_in   = {},
                         const std::array<casadi_dim, N_out> &dim_out = {}) {
@@ -63,7 +67,7 @@ class CasADiFunctionEvaluator {
         for (size_t n = 0; n < N_in; ++n) {
             auto cs_n = static_cast<casadi_int>(n);
             if (dim_in[n].first != 0 && dim_in[n] != fun.size_in(cs_n))
-                throw std::invalid_argument(
+                throw invalid_argument_dimensions(
                     "Invalid dimension of "s + count[n] +
                     " input argument: got " + to_string(fun.size_in(cs_n)) +
                     ", should be " + to_string(dim_in[n]) + ".");
@@ -71,7 +75,7 @@ class CasADiFunctionEvaluator {
         for (size_t n = 0; n < N_out; ++n) {
             auto cs_n = static_cast<casadi_int>(n);
             if (dim_out[n].first != 0 && dim_out[n] != fun.size_out(cs_n))
-                throw std::invalid_argument(
+                throw invalid_argument_dimensions(
                     "Invalid dimension of "s + count[n] +
                     " output argument: got " + to_string(fun.size_out(cs_n)) +
                     ", should be " + to_string(dim_out[n]) + ".");

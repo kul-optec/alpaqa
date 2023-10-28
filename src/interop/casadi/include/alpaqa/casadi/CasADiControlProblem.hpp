@@ -33,7 +33,7 @@ class CasADiControlProblem {
     /// Same as @ref penalty_alm_split, but for the terminal constraint.
     index_t penalty_alm_split_N = 0;
 
-    CasADiControlProblem(const std::string &so_name, length_t N);
+    CasADiControlProblem(const std::string &filename, length_t N);
     ~CasADiControlProblem();
 
     CasADiControlProblem(const CasADiControlProblem &);
