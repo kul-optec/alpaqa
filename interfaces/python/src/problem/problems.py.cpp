@@ -141,6 +141,10 @@ auto cvt_matrix(const alpaqa::Sparsity<Conf> &sparsity, const auto &func) {
 template <class T, class... Args>
 void problem_methods(py::class_<T, Args...> &cls) {
     USING_ALPAQA_CONFIG_TEMPLATE(T::config_t);
+    cls.def_property_readonly("n", &T::get_n,
+                              "Number of decision variables, dimension of :math:`x`");
+    cls.def_property_readonly("m", &T::get_m,
+                              "Number of general constraints, dimension of :math:`g(x)`");
     // clang-format off
     cls.def("eval_proj_diff_g", &T::eval_proj_diff_g, "z"_a, "e"_a);
     cls.def("eval_proj_multipliers", &T::eval_proj_multipliers, "y"_a, "M"_a);
@@ -169,6 +173,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def("eval_grad_ψ", &T::eval_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
     if constexpr (requires { &T::eval_ψ_grad_ψ; })
         cls.def("eval_ψ_grad_ψ", &T::eval_ψ_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
+    if constexpr (requires { &T::check; })
+        cls.def("check", &T::check);
     if constexpr (requires { &T::get_box_C; })
         cls.def("get_box_C", &T::get_box_C);
     if constexpr (requires { &T::get_box_D; })
@@ -178,16 +184,22 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def("provides_eval_inactive_indices_res_lna", &T::provides_eval_inactive_indices_res_lna);
     if constexpr (requires { &T::provides_eval_jac_g; })
         cls.def("provides_eval_jac_g", &T::provides_eval_jac_g);
+    if constexpr (requires { &T::provides_get_jac_g_sparsity; })
+        cls.def("provides_get_jac_g_sparsity", &T::provides_get_jac_g_sparsity);
     if constexpr (requires { &T::provides_eval_grad_gi; })
         cls.def("provides_eval_grad_gi", &T::provides_eval_grad_gi);
     if constexpr (requires { &T::provides_eval_hess_L_prod; })
-        cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L);
-    if constexpr (requires { &T::provides_eval_hess_L_prod; })
+        cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L_prod);
+    if constexpr (requires { &T::provides_eval_hess_L; })
         cls.def("provides_eval_hess_L", &T::provides_eval_hess_L);
+    if constexpr (requires { &T::provides_get_hess_L_sparsity; })
+        cls.def("provides_get_hess_L_sparsity", &T::provides_get_hess_L_sparsity);
     if constexpr (requires { &T::provides_eval_hess_ψ_prod; })
         cls.def("provides_eval_hess_ψ_prod", &T::provides_eval_hess_ψ_prod);
     if constexpr (requires { &T::provides_eval_hess_ψ; })
         cls.def("provides_eval_hess_ψ", &T::provides_eval_hess_ψ);
+    if constexpr (requires { &T::provides_get_hess_ψ_sparsity; })
+        cls.def("provides_get_hess_ψ_sparsity", &T::provides_get_hess_ψ_sparsity);
     if constexpr (requires { &T::provides_eval_f_grad_f; })
         cls.def("provides_eval_f_grad_f", &T::provides_eval_f_grad_f);
     if constexpr (requires { &T::provides_eval_f_g; })
@@ -202,6 +214,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def("provides_eval_grad_ψ", &T::provides_eval_grad_ψ);
     if constexpr (requires { &T::provides_eval_ψ_grad_ψ; })
         cls.def("provides_eval_ψ_grad_ψ", &T::provides_eval_ψ_grad_ψ);
+    if constexpr (requires { &T::provides_check; })
+        cls.def("provides_check", &T::provides_check);
     if constexpr (requires { &T::provides_get_box_C; })
         cls.def("provides_get_box_C", &T::provides_get_box_C);
     if constexpr (requires { &T::provides_get_box_D; })
@@ -479,6 +493,7 @@ void register_problems(py::module_ &m) {
         [[nodiscard]] bool provides_eval_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ"); }
         [[nodiscard]] bool provides_eval_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_ψ"); }
         [[nodiscard]] bool provides_eval_ψ_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ_grad_ψ"); }
+        [[nodiscard]] bool provides_check() const { py::gil_scoped_acquire gil; return py::hasattr(o, "check"); }
         [[nodiscard]] bool provides_get_box_C() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_C"); }
         [[nodiscard]] bool provides_get_box_D() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_D"); }
 
@@ -620,7 +635,7 @@ void register_problems(py::module_ &m) {
             "C++ documentation: :cpp:class:`alpaqa::dl::DLProblem`\n\n"
             "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
         dl_problem.def(
-            py::init([](const std::string &so_filename, py::args args, std::string symbol_prefix,
+            py::init([](const std::string &so_filename, py::args args, std::string function_name,
                         bool user_param_str, py::kwargs kwargs) {
                 std::any user_param;
                 std::vector<std::string_view> str_opts;
@@ -632,9 +647,9 @@ void register_problems(py::module_ &m) {
                 } else {
                     user_param = std::make_tuple(std::move(args), std::move(kwargs));
                 }
-                return DLProblem{so_filename, std::move(symbol_prefix), &user_param};
+                return DLProblem{so_filename, std::move(function_name), &user_param};
             }),
-            "so_filename"_a, py::kw_only{}, "symbol_prefix"_a = "alpaqa_problem",
+            "so_filename"_a, py::kw_only{}, "function_name"_a = "register_alpaqa_problem",
             "user_param_str"_a = false,
             "Load a problem from the given shared library file.\n"
             "By default, extra arguments are passed to the problem as a void pointer "
