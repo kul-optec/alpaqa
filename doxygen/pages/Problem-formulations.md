@@ -172,3 +172,86 @@ documentation. They can be provided in the same fashion as `eval_f` above.
   - @ref alpaqa::TypeErasedProblem::eval_ψ "eval_ψ": augmented Lagrangian: @f$ \psi(x) @f$
   - @ref alpaqa::TypeErasedProblem::eval_grad_ψ "eval_grad_ψ": gradient of augmented Lagrangian: @f$ \nabla \psi(x) @f$
   - @ref alpaqa::TypeErasedProblem::eval_ψ_grad_ψ "eval_ψ_grad_ψ": augmented Lagrangian and gradient: @f$ \psi(x) @f$ and @f$ \nabla \psi(x) @f$
+
+## Dynamically loading problems
+
+alpaqa has a dependency-free, single-header C API that can be used to define
+problems in a shared library that can be dynamically loaded by the solvers.
+
+The API is defined in @ref dl-problem.h. The main entry point of your shared
+object should be a function called `register_alpaqa_problem` that returns a
+struct of type @ref alpaqa_problem_register_t. This struct contains a pointer to
+the problem instance, a function pointer that will be called to clean up the
+problem instance, and a pointer to a struct of type
+@ref alpaqa_problem_functions_t, which contains function pointers to all problem
+functions.
+
+Additional user-defined arguments can be passed through a void pointer parameter
+of the `register_alpaqa_problem` function.
+
+In C++, you could register a problem like this:
+
+```cpp
+#include <alpaqa/dl/dl-problem.h>
+using real_t = alpaqa_real_t;
+
+/// Custom problem class to expose to alpaqa.
+struct Problem {
+    alpaqa_problem_functions_t funcs{};
+
+    real_t eval_f(const real_t *x_) const;
+    void eval_grad_f(const real_t *x_, real_t *gr_) const;
+    void eval_g(const real_t *x_, real_t *g_) const;
+    void eval_grad_g_prod(const real_t *x_, const real_t *y_, real_t *gr_) const;
+    void initialize_box_C(real_t *lb_, real_t *ub_) const;
+    void initialize_box_D(real_t *lb_, real_t *ub_) const;
+
+    std::string get_name() const { return "example problem"; }
+
+    /// Constructor initializes the problem and exposes the problem functions.
+    Problem(/* ... */) {
+        using alpaqa::member_caller;
+        funcs.n                = 3; // number of variables
+        funcs.m                = 2; // number of constraints
+        funcs.eval_f           = member_caller<&Problem::eval_f>();
+        funcs.eval_grad_f      = member_caller<&Problem::eval_grad_f>();
+        funcs.eval_g           = member_caller<&Problem::eval_g>();
+        funcs.eval_grad_g_prod = member_caller<&Problem::eval_grad_g_prod>();
+        funcs.initialize_box_C = member_caller<&Problem::initialize_box_C>();
+        funcs.initialize_box_D = member_caller<&Problem::initialize_box_D>();
+    }
+};
+
+/// Main entry point: it is called by the @ref alpaqa::dl::DLProblem class.
+extern "C" alpaqa_problem_register_t
+register_alpaqa_problem(void *user_data_v) noexcept try {
+    auto problem = std::make_unique<Problem>(/* ... */);
+    alpaqa_problem_register_t result;
+    alpaqa::register_member_function(result, "get_name", &Problem::get_name);
+    result.functions = &problem->funcs;
+    result.instance  = problem.release();
+    result.cleanup   = [](void *instance) { delete static_cast<Problem *>(instance); };
+    return result;
+} catch (...) {
+    return {.exception = new alpaqa_exception_ptr_t{std::current_exception()}};
+}
+```
+
+A full example can be found in @ref problems/sparse-logistic-regression.cpp.
+While defining the `register_alpaqa_problem` in C++ is usually much more
+ergonomic than in plain C, the latter is also supported, as demonstrated in
+@ref C++/DLProblem/main.cpp.
+
+The problem can then be loaded using the @ref alpaqa::dl::DLProblem class,
+or using the `alpaqa-driver` command line interface.
+
+## Existing problem adapters
+
+For interoperability with existing frameworks like [CasADi](https://web.casadi.org/)
+and [CUTEst](https://github.com/ralna/CUTEst), alpaqa provides the following
+problem adapters:
+
+ - @ref alpaqa::CasADiProblem
+ - @ref alpaqa::CUTEstProblem
+
+@see @ref grp_Problems topic

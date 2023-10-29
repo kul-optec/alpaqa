@@ -477,7 +477,7 @@ class TypeErased {
     }
 
     /// Get a type-erased pointer to the wrapped object.
-    /// @throws bad_type_erased_constness
+    /// @throws alpaqa::util::bad_type_erased_constness
     ///         If the wrapped object is const.
     /// @see @ref get_const_pointer()
     [[nodiscard]] void *get_pointer() const {
