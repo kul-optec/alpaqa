@@ -48,15 +48,13 @@ std::shared_ptr<void> load_lib(const std::string &so_filename) {
 }
 
 template <class F>
-F *load_func(void *handle, std::string symbol_prefix, std::string_view name) {
+F *load_func(void *handle, const std::string &name) {
     assert(handle);
-    auto &full_name = symbol_prefix;
-    full_name += '_';
-    full_name += name;
     ::dlerror();
-    auto *h = ::dlsym(handle, full_name.c_str());
+    auto *h = ::dlsym(handle, name.c_str());
     if (auto *err = ::dlerror())
-        throw std::runtime_error(err);
+        throw std::runtime_error("Unable to load function '" + name +
+                                 "': " + err);
     // We can only hope that the user got the signature right ...
     return reinterpret_cast<F *>(h);
 }
@@ -151,12 +149,12 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
 
 } // namespace
 
-DLProblem::DLProblem(const std::string &so_filename, std::string symbol_prefix,
-                     void *user_param)
+DLProblem::DLProblem(const std::string &so_filename,
+                     const std::string &function_name, void *user_param)
     : BoxConstrProblem{0, 0} {
-    handle              = load_lib(so_filename);
-    auto *register_func = load_func<problem_register_t(void *)>(
-        handle.get(), std::move(symbol_prefix), "register");
+    handle = load_lib(so_filename);
+    auto *register_func =
+        load_func<problem_register_t(void *)>(handle.get(), function_name);
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};
@@ -261,11 +259,11 @@ bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_st
 #if ALPAQA_WITH_OCP
 
 DLControlProblem::DLControlProblem(const std::string &so_filename,
-                                   std::string symbol_prefix,
+                                   const std::string &function_name,
                                    void *user_param) {
     handle              = load_lib(so_filename);
     auto *register_func = load_func<control_problem_register_t(void *)>(
-        handle.get(), std::move(symbol_prefix), "register");
+        handle.get(), function_name);
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};

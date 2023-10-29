@@ -168,7 +168,7 @@
  * The constructor also loads the actual classification data from the given
  * CSV file.
  *
- * The main entry point is the `alpaqa_problem_register` function at the bottom.
+ * The main entry point is the `register_alpaqa_problem` function at the bottom.
  * It is the only function that is exported from the shared module, and it
  * is called by the @ref alpaqa::dl::DLProblem class when loading the problem
  * for the solvers.  

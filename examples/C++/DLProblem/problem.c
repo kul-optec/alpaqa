@@ -105,7 +105,7 @@ static void cleanup_problem(void *instance) {
 }
 
 PROBLEM_C_EXPORT alpaqa_problem_register_t
-alpaqa_problem_register(void *user_data) {
+register_alpaqa_problem(void *user_data) {
     struct ProblemData *problem = create_problem(user_data);
     alpaqa_problem_register_t result;
     ALPAQA_PROBLEM_REGISTER_INIT(&result);

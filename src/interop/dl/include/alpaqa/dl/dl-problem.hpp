@@ -75,11 +75,10 @@ class ExtraFuncs {
 
 /// Class that loads a problem using `dlopen`.
 ///
-/// The shared library should export a C function with the name
-/// `<symbol_prefix>_register` that accepts a void pointer with user data, and
-/// returns a struct of type @ref alpaqa_problem_register_t that contains all
-/// data to represent the problem, as well as function pointers for all
-/// required operations.
+/// The shared library should export a C function with the name @c function_name
+/// that accepts a void pointer with user data, and returns a struct of type
+/// @ref alpaqa_problem_register_t that contains all data to represent the
+/// problem, as well as function pointers for all required operations.
 /// See @ref C++/DLProblem/main.cpp and
 /// @ref problems/sparse-logistic-regression.cpp for examples.
 ///
@@ -99,8 +98,9 @@ class DLProblem : public BoxConstrProblem<DefaultConfig> {
     DLProblem(
         /// Filename of the shared library to load.
         const std::string &so_filename,
-        /// Prefix of the registration function.
-        std::string symbol_prefix = "alpaqa_problem",
+        /// Name of the problem registration function.
+        /// Should have signature `alpaqa_problem_register_t(void *)`.
+        const std::string &function_name = "register_alpaqa_problem",
         /// Pointer to custom user data to pass to the registration function.
         void *user_param = nullptr);
 
@@ -185,11 +185,10 @@ class DLProblem : public BoxConstrProblem<DefaultConfig> {
 
 /// Class that loads an optimal control problem using `dlopen`.
 ///
-/// The shared library should export a C function with the name
-/// `<symbol_prefix>_register` that accepts a void pointer with user data, and
-/// returns a struct of type @ref alpaqa_control_problem_register_t that
-/// contains all data to represent the problem, as well as function pointers for
-/// all required operations. See @ref C++/DLProblem/main.cpp
+/// The shared library should export a C function with the name @c function_name
+/// that accepts a void pointer with user data, and returns a struct of type
+/// @ref alpaqa_control_problem_register_t that contains all data to represent
+/// the problem, as well as function pointers for all required operations.
 ///
 /// @note   Copies are shallow, they all share the same problem instance, take
 ///         that into account when using multiple threads.
@@ -205,8 +204,9 @@ class DLControlProblem {
     DLControlProblem(
         /// Filename of the shared library to load.
         const std::string &so_filename,
-        /// Prefix of the registration function.
-        std::string symbol_prefix = "alpaqa_control_problem",
+        /// Name of the problem registration function.
+        /// Should have signature `alpaqa_control_problem_register_t(void *)`.
+        const std::string &function_name = "register_alpaqa_control_problem",
         /// Pointer to custom user data to pass to the registration function.
         void *user_param = nullptr);
 

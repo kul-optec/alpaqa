@@ -5,7 +5,7 @@ function(configure_problem_visibility target)
     if (CMAKE_SYSTEM_NAME MATCHES "Linux")
         set(VERSION_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/${target}-export.lds")
         file(WRITE ${VERSION_SCRIPT}
-            "{ global: alpaqa_problem_register; local: *; };")
+            "{ global: register_alpaqa_problem; local: *; };")
         target_link_options(${target} PRIVATE
             "LINKER:--version-script=${VERSION_SCRIPT}")
     endif()

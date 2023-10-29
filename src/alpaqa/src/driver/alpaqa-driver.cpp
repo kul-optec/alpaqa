@@ -44,9 +44,8 @@ USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 const auto *docs = R"==(
 problem types:
     dl: Dynamically loaded problem using the DLProblem class.
-        Specify the prefix of the registration function using the
-        problem.prefix option, e.g. problem.prefix=alpaqa_problem will look
-        for a registration function with the name alpaqa_problem_register.
+        Specify the name of the registration function using the
+        problem.register option, e.g. problem.register=register_alpaqa_problem.
         Further options can be passed to the problem using
         problem.<key>[=<value>].
     cs: Load a CasADi problem using the CasADiProblem class.
@@ -95,7 +94,7 @@ options:
 
 examples:
     alpaqa-driver problem.so \
-        problem.prefix=alpaqa_problem \
+        problem.register=register_alpaqa_problem \
         problem.custom_arg=foo \
         method=panoc.struclbfgs \
         accel.memory=50 \

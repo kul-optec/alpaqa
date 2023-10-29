@@ -29,15 +29,15 @@ namespace {
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
-std::string get_prefix_option(std::span<const std::string_view> prob_opts) {
-    std::string prefix          = "alpaqa_problem";
-    std::string_view prefix_key = "prefix=";
-    auto prefix_it              = std::find_if(
+std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
+    std::string name          = "register_alpaqa_problem";
+    std::string_view name_key = "register=";
+    auto name_it              = std::find_if(
         prob_opts.rbegin(), prob_opts.rend(),
-        [&](std::string_view opt) { return opt.starts_with(prefix_key); });
-    if (prefix_it != prob_opts.rend())
-        prefix = prefix_it->substr(prefix_key.size());
-    return prefix;
+        [&](std::string_view opt) { return opt.starts_with(name_key); });
+    if (name_it != prob_opts.rend())
+        name = name_it->substr(name_key.size());
+    return name;
 }
 
 void load_initial_guess(Options &opts, LoadedProblem &problem) {
@@ -58,14 +58,14 @@ void load_initial_guess(Options &opts, LoadedProblem &problem) {
 LoadedProblem load_dl_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
                               Options &opts) {
-    using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
-    using DLProblem  = alpaqa::dl::DLProblem;
-    using CntProblem = alpaqa::ProblemWithCounters<DLProblem>;
-    auto prefix      = get_prefix_option(prob_opts);
-    std::any dl_opt  = prob_opts;
+    using TEProblem    = alpaqa::TypeErasedProblem<config_t>;
+    using DLProblem    = alpaqa::dl::DLProblem;
+    using CntProblem   = alpaqa::ProblemWithCounters<DLProblem>;
+    auto register_name = get_reg_name_option(prob_opts);
+    std::any dl_opt    = prob_opts;
     LoadedProblem problem{
         .problem = TEProblem::make<CntProblem>(std::in_place, full_path.c_str(),
-                                               prefix, &dl_opt),
+                                               register_name, &dl_opt),
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };

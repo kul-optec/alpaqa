@@ -37,31 +37,31 @@ namespace fs = std::filesystem;
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
+const auto *docs = R"==(
+problem types:
+    dl: Dynamically loaded problem using the DLProblem class.
+        Specify the name of the registration function using the
+        problem.register option, e.g. problem.register=register_alpaqa_problem.
+        Further options can be passed to the problem using
+        problem.<key>[=<value>].
+    cs: Load a CasADi problem using the CasADiProblem class.
+        If a .tsv file with the same name as the shared library file exists,
+        the bounds and parameters will be loaded from that file. See
+        CasADiProblem::load_numerical_data for more details.
+        The problem parameter can be set using the problem.param option.
+    cu: Load a CUTEst problem using the CUTEstProblem class.
+
+options:
+    --full-print
+        Print the full gradients.
+    --no-hessians
+        Do not check any Hessian matrices.
+    --seed=<seed>
+        Seed for the random number generator.
+)==";
+
 void print_usage(const char *a0) {
     const auto *opts = " [<problem-type>:][<path>/]<name> [options...]\n";
-    const auto *docs = R"==(
-    problem types:
-        dl: Dynamically loaded problem using the DLProblem class.
-            Specify the prefix of the registration function using the
-            problem.prefix option, e.g. problem.prefix=alpaqa_problem will look
-            for a registration function with the name alpaqa_problem_register.
-            Further options can be passed to the problem using
-            problem.<key>[=<value>].
-        cs: Load a CasADi problem using the CasADiProblem class.
-            If a .tsv file with the same name as the shared library file exists,
-            the bounds and parameters will be loaded from that file. See
-            CasADiProblem::load_numerical_data for more details.
-            The problem parameter can be set using the problem.param option.
-        cu: Load a CUTEst problem using the CUTEstProblem class.
-
-    options:
-        --full-print
-            Print the full gradients.
-        --no-hessians
-            Do not check any Hessian matrices.
-        --seed=<seed>
-            Seed for the random number generator.
-    )==";
     std::cout << "alpaqa gradient-checker (" ALPAQA_VERSION_FULL ")\n\n"
                  "    Command-line utility to check problem gradients.\n"
                  "    alpaqa is published under the LGPL-3.0.\n"
