@@ -15,7 +15,7 @@ install the `venv` module to create virtual environments).
 sudo apt install g++ gcc git python3-venv python3-dev
 ```
 The alpaqa package requires a relatively recent compiler
-(tested using GCC 10-12, Clang 14-16).
+(tested using GCC 10-13, Clang 14-16).
 
 To install GCC 11 on older versions of Ubuntu, you can use
 ```sh
@@ -63,9 +63,9 @@ bash ./scripts/install-eigen.sh "$VIRTUAL_ENV" Release
 ```
 
 CasADi is built as a static library because it is later statically linked into
-the final alpaqa libraries for better portability, this especially useful when
-creating the Python package. If you need to link against CasADi dynamically, you
-can use the `install-casadi.sh` script instead.
+the final alpaqa libraries for better portability, this is especially useful
+when creating the Python package. If you need to link against CasADi
+dynamically, you can use the `install-casadi.sh` script instead.
 
 ### Build and install
 

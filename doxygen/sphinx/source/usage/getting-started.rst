@@ -1,7 +1,7 @@
 .. _getting started:
 
 Getting started
-===================================
+===============
 
 Most solvers in this library solve minimization problems of the following form:
 
@@ -116,7 +116,7 @@ solver.
 
 .. testcode::
 
-    # %% Generate and compile C-code for the objective and constraints using alpaqa
+    # %% Generate and compile C code for the objective and constraints using alpaqa
     from alpaqa import minimize
 
     problem = (
