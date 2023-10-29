@@ -51,19 +51,22 @@ def clean(alpaqa_cache_dir=None):
 
 
 def interactive_clean(args):
-    alpaqa_cache_dir = get_alpaqa_cache_dir()
+    cache_dir = get_alpaqa_cache_dir()
+
+    if args.cmake:
+        cache_dir = join(cache_dir, "build")
 
     if args.dry:
-        print(f"Would remove: {alpaqa_cache_dir}")
+        print(f"Would remove: {cache_dir}")
         exit(0)
     else:
         confirmed = args.force
-        msg = f"Are you sure you want to remove {alpaqa_cache_dir} [y/N]? "
+        msg = f"Are you sure you want to remove {cache_dir} [y/N]? "
         if not confirmed:
             confirmed = input(msg).lower() == "y"
         if not confirmed:
             print("Aborted.")
             exit(1)
-        print("Removing", alpaqa_cache_dir)
-        clean(alpaqa_cache_dir)
+        print("Removing", cache_dir)
+        clean(cache_dir)
         exit(0)

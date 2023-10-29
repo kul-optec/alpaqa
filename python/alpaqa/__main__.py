@@ -28,8 +28,12 @@ def main():
         '-n',
         action='store_true',
         help='perform a dry run without actually deleting the cache')
-    # alpaqa cache print
-    cachesubparsers.add_parser("print",
+    cleanparser.add_argument(
+        '--cmake',
+        action='store_true',
+        help='only remove the CMake cache and build directories')
+    # alpaqa cache path
+    cachesubparsers.add_parser("path",
                                description="print the cache path and exit")
 
     args = parser.parse_args()
@@ -39,7 +43,7 @@ def main():
     elif args.command == 'cache':
         if args.cachecommand == 'clean':
             interactive_clean(args)
-        elif args.cachecommand == 'print':
+        elif args.cachecommand == 'path':
             print(get_alpaqa_cache_dir())
             exit(0)
 
