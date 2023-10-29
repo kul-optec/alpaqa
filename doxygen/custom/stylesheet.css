@@ -1,5 +1,6 @@
-/* Colors */
+/* Fonts and Colors */
 html {
+    --font-family-monospace: 'JetBrains Mono',Consolas,Monaco,'Ubuntu Mono',monospace,fixed;
     --body-background-color: #DDD;
     --nav-background-color: #DDE;
     --code-background-color: #F4F4FF;
@@ -452,6 +453,7 @@ blockquote.doxtable > p:last-child {
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
     html:not(.dark-mode) {
+        --font-family-monospace: 'JetBrains Mono',Consolas,Monaco,'Ubuntu Mono',monospace,fixed;
         --page-link-color: rgb(92, 136, 218);
         --page-visited-link-color: rgb(167, 190, 255);
         --body-background-color: black;
