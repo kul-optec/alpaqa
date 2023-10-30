@@ -1,7 +1,7 @@
 import casadi as cs
 import numpy as np
 from os.path import splitext
-from typing import Tuple, Optional, Literal, get_args, Callable
+from typing import Tuple, Optional, Literal, get_args, Callable, Dict
 
 SECOND_ORDER_SPEC = Literal["no", "full", "prod", "L", "L_prod", "psi", "psi_prod"]
 
@@ -11,7 +11,7 @@ def _prepare_casadi_problem(
     g: Optional[cs.Function],
     second_order: SECOND_ORDER_SPEC = "no",
     sym: Callable = cs.SX.sym,
-) -> cs.CodeGenerator:
+) -> Dict[str, cs.Function]:
     """Convert the objective and constraint functions, their gradients,
     Lagrangians, etc. into CasADi functions."""
 

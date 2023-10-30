@@ -213,6 +213,12 @@ and then set the appropriate environment variables, for example:
     compilation of a CasADi problem after clearing the cache. Later changes to
     the environment variables are ignored and do not affect the cached values.
 
+To change the `CMake build configuration <https://cmake.org/cmake/help/latest/manual/cmake.1.html#cmdoption-cmake-build-config>`_,
+you can set the ``ALPAQA_BUILD_CONFIG`` environment variable. To change the
+`number of parallel build jobs <https://cmake.org/cmake/help/latest/manual/cmake.1.html#cmdoption-cmake-build-j>`_,
+you can set the ``ALPAQA_BUILD_PARALLEL`` environment variable. These two
+variables are not cached and take effect immediately.
+
 Compiler installation
 ^^^^^^^^^^^^^^^^^^^^^
 
