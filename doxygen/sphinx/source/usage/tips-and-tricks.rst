@@ -95,19 +95,19 @@ The :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.compile`
 method generates C code for the problem functions and their derivatives, and
 compiles them into an optimized binary. Since |pylib_name| solvers spend most
 of their time inside of problem function evaluations, this compilation can have
-a significant impact in solver performance.
+a significant impact on solver performance.
 
 By default, the CasADi ``SX`` class is used for code generation. This causes the
 subexpressions to be expanded, which is usually beneficial for performance.
-However, the resulting expression trees can grow massive, and compiling the
-generated C code can become very slow for large or complex problems. In such
+However, the resulting expression trees can grow quite massive, and compiling
+the generated C code can become very slow for large or complex problems. In such
 cases, you can use the ``MX`` class, by passing ``sym=casadi.MX.sym`` as an
 argument to the ``compile()`` function.
 
 If you don't want to compile the problem at all (e.g. because no C compiler is
 available, or because the resulting C files are too large), you can use the
 The :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.build`
-method instead of :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.compile`.
+method instead of :code:`compile()`.
 This will use CasADi's VM to evaluate the expressions.
 
 Classes

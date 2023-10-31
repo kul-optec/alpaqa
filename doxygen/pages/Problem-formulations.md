@@ -222,7 +222,7 @@ struct Problem {
     }
 };
 
-/// Main entry point: it is called by the @ref alpaqa::dl::DLProblem class.
+/// Main entry point: called by the @ref alpaqa::dl::DLProblem class.
 extern "C" alpaqa_problem_register_t
 register_alpaqa_problem(void *user_data_v) noexcept try {
     auto problem = std::make_unique<Problem>(/* ... */);
