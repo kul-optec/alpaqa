@@ -3,6 +3,7 @@
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-newton.hpp>
 #include <alpaqa/inner/directions/pantr/newton-tr.hpp>
+#include <alpaqa/inner/fista.hpp>
 #include <alpaqa/inner/internal/lipschitz.hpp>
 #include <alpaqa/inner/internal/panoc-stop-crit.hpp>
 #include <alpaqa/inner/panoc.hpp>
@@ -272,6 +273,20 @@ PARAMS_TABLE(PANOCParams<config_t>,                                         //
              PARAMS_MEMBER(eager_gradient_eval),                            //
 );
 
+PARAMS_TABLE(FISTAParams<config_t>,                                //
+             PARAMS_MEMBER(Lipschitz),                             //
+             PARAMS_MEMBER(max_iter),                              //
+             PARAMS_MEMBER(max_time),                              //
+             PARAMS_MEMBER(L_min),                                 //
+             PARAMS_MEMBER(L_max),                                 //
+             PARAMS_MEMBER(stop_crit),                             //
+             PARAMS_MEMBER(max_no_progress),                       //
+             PARAMS_MEMBER(print_interval),                        //
+             PARAMS_MEMBER(print_precision),                       //
+             PARAMS_MEMBER(quadratic_upperbound_tolerance_factor), //
+             PARAMS_MEMBER(disable_acceleration),                  //
+);
+
 PARAMS_TABLE(ZeroFPRParams<config_t>,                                       //
              PARAMS_MEMBER(Lipschitz),                                      //
              PARAMS_MEMBER(max_iter),                                       //
@@ -447,6 +462,7 @@ ALPAQA_SET_PARAM_INST(std::chrono::minutes);
 ALPAQA_SET_PARAM_INST(std::chrono::hours);
 
 ALPAQA_SET_PARAM_INST(PANOCParams<config_t>);
+ALPAQA_SET_PARAM_INST(FISTAParams<config_t>);
 ALPAQA_SET_PARAM_INST(ZeroFPRParams<config_t>);
 ALPAQA_SET_PARAM_INST(PANTRParams<config_t>);
 ALPAQA_SET_PARAM_INST(LBFGSParams<config_t>);

@@ -28,6 +28,7 @@ add_library(alpaqa
     "alpaqa/src/outer/alm.cpp"
     "alpaqa/src/outer/internal/alm-helpers.cpp"
     "alpaqa/src/inner/panoc.cpp"
+    "alpaqa/src/inner/fista.cpp"
     "alpaqa/src/inner/zerofpr.cpp"
     "alpaqa/src/inner/pantr.cpp"
     "alpaqa/src/panoc-alm.cpp"
@@ -313,6 +314,7 @@ if (ALPAQA_WITH_DRIVERS)
     add_executable(driver
         "alpaqa/src/driver/alpaqa-driver.cpp"
         "alpaqa/src/driver/panoc-driver.cpp"
+        "alpaqa/src/driver/fista-driver.cpp"
         "alpaqa/src/driver/pantr-driver.cpp"
         "alpaqa/src/driver/ipopt-driver.cpp"
         "alpaqa/src/driver/lbfgsb-driver.cpp"

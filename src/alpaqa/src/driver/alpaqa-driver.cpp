@@ -9,6 +9,7 @@
 #include <alpaqa/util/print.hpp>
 #include <alpaqa-version.h>
 
+#include "fista-driver.hpp"
 #include "ipopt-driver.hpp"
 #include "lbfgsb-driver.hpp"
 #include "options.hpp"
@@ -64,6 +65,9 @@ methods:
     pantr:
         PANTR solver. Requires products with the Hessian of the augmented
         Lagrangian (unless dir.finite_diff=true).
+    fista:
+        FISTA (fast iterative shrinkage-thresholding algorithm). Only for
+        convex problems.
     ipopt:
         Ipopt interior point solver. Requires Jacobian of the constraints
         and Hessian of the Lagrangian (unless finite memory is enabled).
@@ -198,7 +202,8 @@ auto get_solver_builder(Options &opts) {
     std::map<std::string_view, solver_builder_func> solvers{
         {"panoc", make_panoc_driver}, {"zerofpr", make_zerofpr_driver},
         {"pantr", make_pantr_driver}, {"lbfgsb", make_lbfgsb_driver},
-        {"ipopt", make_ipopt_driver}, {"qpalm", make_qpalm_driver},
+        {"fista", make_fista_driver}, {"ipopt", make_ipopt_driver},
+        {"qpalm", make_qpalm_driver},
     };
     // Find the selected solver builder
     auto solver_it = solvers.find(method);
