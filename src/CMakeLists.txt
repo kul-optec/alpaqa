@@ -10,7 +10,7 @@ function(alpaqa_configure_visibility target)
     endif()
 endfunction()
 
-option(ALPAQA_WITH_OCP 
+option(ALPAQA_WITH_OCP
     "Enable solvers tailored for optimal control problems" On)
 option(ALPAQA_DEBUG_CHECKS_EIGEN
     "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
@@ -95,7 +95,7 @@ if (ALPAQA_WITH_CASADI)
     find_package(casadi REQUIRED)
     find_package(Threads REQUIRED)
     # Normal NLPs
-    add_library(casadi-loader 
+    add_library(casadi-loader
         "interop/casadi/src/CasADiProblem.cpp"
         "interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp")
     target_include_directories(alpaqa PUBLIC
@@ -210,7 +210,7 @@ if (ALPAQA_WITH_IPOPT)
         "interop/ipopt/src/ipopt-adapter.cpp"
         "interop/ipopt/src/ipopt-params.cpp"
     )
-    target_link_libraries(ipopt-adapter 
+    target_link_libraries(ipopt-adapter
         PUBLIC COIN::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(ipopt-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/ipopt/include>
@@ -231,7 +231,7 @@ find_package(lbfgspp QUIET)
 if (TARGET lbfgspp)
     message(STATUS "Compiling LBFGS++ solver adapter")
     add_library(lbfgspp-adapter "interop/lbfgspp/src/lbfgsb-adapter.cpp")
-    target_link_libraries(lbfgspp-adapter 
+    target_link_libraries(lbfgspp-adapter
         PUBLIC lbfgspp alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(lbfgspp-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgspp/include>
@@ -264,11 +264,11 @@ if (ALPAQA_WITH_LBFGSB)
     add_library(lbfgsb-adapter
         "interop/lbfgsb/src/lbfgsb-adapter.cpp"
         "interop/lbfgsb/src/lbfgsb-params.cpp"
-        "interop/lbfgsb/src/lbfgsb_c.f90"
+        "interop/lbfgsb/src/lbfgsb_c.F90"
     )
-    set_property(SOURCE "interop/lbfgsb/src/lbfgsb_c.f90"
+    set_property(SOURCE "interop/lbfgsb/src/lbfgsb_c.F90"
                  PROPERTY Fortran_PREPROCESS On)
-    target_link_libraries(lbfgsb-adapter 
+    target_link_libraries(lbfgsb-adapter
         PUBLIC lbfgsb-fortran alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(lbfgsb-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgsb/include>
@@ -292,7 +292,7 @@ if (ALPAQA_WITH_QPALM)
         "interop/qpalm/src/qpalm-adapter.cpp"
         "interop/qpalm/src/qpalm-params.cpp"
     )
-    target_link_libraries(qpalm-adapter 
+    target_link_libraries(qpalm-adapter
         PUBLIC QPALM::qpalm_cxx alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(qpalm-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/qpalm/include>

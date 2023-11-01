@@ -33,9 +33,28 @@ struct LBFGSB_ADAPTER_EXPORT LBFGSBStats {
     SolverStatus status = SolverStatus::Busy;
     real_t ε            = inf<config_t>;
     std::chrono::nanoseconds elapsed_time{};
+    std::chrono::nanoseconds time_progress_callback{};
     unsigned iterations     = 0;
     real_t final_ψ          = 0;
     unsigned lbfgs_rejected = 0;
+};
+
+struct LBFGSBProgressInfo {
+    USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
+
+    unsigned k;
+    SolverStatus status;
+    crvec x;
+    real_t ψ;
+    crvec grad_ψ;
+    real_t τ_max;
+    real_t τ;
+    real_t ε;
+    crvec Σ;
+    crvec y;
+    unsigned outer_iter;
+    const TypeErasedProblem<config_t> *problem;
+    const LBFGSBParams *params;
 };
 
 /// L-BFGS-B solver for ALM.
@@ -47,6 +66,7 @@ class LBFGSB_ADAPTER_EXPORT LBFGSBSolver {
     using Problem      = TypeErasedProblem<config_t>;
     using Params       = LBFGSBParams;
     using Stats        = LBFGSBStats;
+    using ProgressInfo = LBFGSBProgressInfo;
     using SolveOptions = InnerSolveOptions<config_t>;
 
     LBFGSBSolver(const Params &params) : params(params) {}
@@ -64,6 +84,15 @@ class LBFGSB_ADAPTER_EXPORT LBFGSBSolver {
         return operator()(Problem{&problem}, opts, u, y, Σ, e);
     }
 
+    /// Specify a callable that is invoked with some intermediate results on
+    /// each iteration of the algorithm.
+    /// @see @ref ProgressInfo
+    LBFGSBSolver &
+    set_progress_callback(std::function<void(const ProgressInfo &)> cb) {
+        this->progress_cb = cb;
+        return *this;
+    }
+
     std::string get_name() const;
 
     void stop() { stop_signal.stop(); }
@@ -73,6 +102,7 @@ class LBFGSB_ADAPTER_EXPORT LBFGSBSolver {
   private:
     Params params;
     AtomicStopSignal stop_signal;
+    std::function<void(const ProgressInfo &)> progress_cb;
 
   public:
     std::ostream *os = &std::cout;
@@ -91,6 +121,8 @@ struct InnerStatsAccumulator<lbfgsb::LBFGSBStats> {
 
     /// Total elapsed time in the inner solver.
     std::chrono::nanoseconds elapsed_time{};
+    /// Total time spent in the user-provided progress callback.
+    std::chrono::nanoseconds time_progress_callback{};
     /// Total number of inner PANOC iterations.
     unsigned iterations = 0;
     /// Final value of the smooth cost @f$ \psi(\hat x) @f$.
@@ -105,6 +137,7 @@ operator+=(InnerStatsAccumulator<lbfgsb::LBFGSBStats> &acc,
            const lbfgsb::LBFGSBStats &s) {
     acc.iterations += s.iterations;
     acc.elapsed_time += s.elapsed_time;
+    acc.time_progress_callback += s.time_progress_callback;
     acc.final_ψ = s.final_ψ;
     acc.lbfgs_rejected += s.lbfgs_rejected;
     return acc;

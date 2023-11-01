@@ -1,5 +1,6 @@
 #include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/lbfgsb/lbfgsb-adapter.hpp>
+#include <alpaqa/util/timed.hpp>
 
 #include <iomanip>
 #include <stdexcept>
@@ -51,6 +52,31 @@ auto LBFGSBSolver::operator()(
     const auto &C       = problem.get_box_C();
     const auto mem      = static_cast<length_t>(params.memory);
 
+    auto do_progress_cb = [this, &s, &problem, &Σ, &y,
+                           &opts](unsigned k, crvec x, real_t ψx, crvec grad_ψx,
+                                  real_t τ_max, real_t τ, real_t ε,
+                                  SolverStatus status) {
+        if (!progress_cb)
+            return;
+        ScopedMallocAllower ma;
+        alpaqa::util::Timed t{s.time_progress_callback};
+        progress_cb(ProgressInfo{
+            .k          = k,
+            .status     = status,
+            .x          = x,
+            .ψ          = ψx,
+            .grad_ψ     = grad_ψx,
+            .τ_max      = τ_max,
+            .τ          = τ,
+            .ε          = ε,
+            .Σ          = Σ,
+            .y          = y,
+            .outer_iter = opts.outer_iter,
+            .problem    = &problem,
+            .params     = &params,
+        });
+    };
+
     using intvec = Eigen::VectorX<int>;
 
     vec work_n(n), work_m(m_constr);
@@ -82,6 +108,7 @@ auto LBFGSBSolver::operator()(
     const int &num_iter          = isave.coeffRef(29);
     const int &lbfgs_skipped     = isave.coeffRef(25);
     const int &num_free_var      = isave.coeffRef(37);
+    const real_t &q_norm         = dsave.coeffRef(3);
     const real_t &τ_max          = dsave.coeffRef(11);
     const real_t &proj_grad_norm = dsave.coeffRef(12);
     const real_t &τ_rel          = dsave.coeffRef(13);
@@ -98,26 +125,32 @@ auto LBFGSBSolver::operator()(
     auto print_real3 = [&print_buf](real_t x) {
         return float_to_str_vw(print_buf, x, 3);
     };
-    auto print_progress_1 = [&](int k, real_t ψₖ, crvec grad_ψₖ, real_t εₖ) {
+    auto print_progress_1 = [&](unsigned k, real_t ψₖ, crvec grad_ψₖ,
+                                real_t εₖ) {
         if (k == 0)
             *os << "┌─[LBFGSB]\n";
         else
             *os << "├─ " << std::setw(6) << k << " ──\n";
-        *os << "│     ψ = " << print_real(ψₖ)             //
-            << ",  ‖∇ψ‖ = " << print_real(grad_ψₖ.norm()) //
-            << ",     ε = " << print_real(εₖ) << '\n';
+        *os << "│    ψ = " << print_real(ψₖ)             //
+            << ", ‖∇ψ‖ = " << print_real(grad_ψₖ.norm()) //
+            << ",    ε = " << print_real(εₖ) << '\n';
     };
-    auto print_progress_2 = [&](real_t τ_max, real_t τ_rel, int nJ) {
-        *os << "│ τ_max = " << print_real3(τ_max) //
-            << ", τ_rel = " << print_real3(τ_rel) //
-            << ",    #J = " << std::setw(6) << nJ
+    auto print_progress_2 = [&](real_t q_norm, real_t τ_max, real_t τ_rel,
+                                int nJ) {
+        const auto thres  = std::sqrt(std::numeric_limits<real_t>::epsilon());
+        const char *color = τ_rel == 1      ? "\033[0;32m"
+                            : τ_rel > thres ? "\033[0;33m"
+                                            : "\033[0;35m";
+        *os << "│  ‖q‖ = " << print_real(q_norm)                       //
+            << ",    τ = " << color << print_real3(τ_rel) << "\033[0m" //
+            << ", τ_max = " << print_real3(τ_max)                      //
+            << ",   #J = " << std::setw(6) << nJ
             << std::endl; // Flush for Python buffering
     };
     auto print_progress_n = [&](SolverStatus status) {
         *os << "└─ " << status << " ──"
             << std::endl; // Flush for Python buffering
     };
-    bool do_print  = false;
     bool did_print = false;
 
     // Start solving
@@ -143,12 +176,6 @@ auto LBFGSBSolver::operator()(
         }
         // Next iteration
         else if (task_sv.starts_with("NEW_X")) {
-            do_print =
-                params.print_interval != 0 &&
-                static_cast<unsigned>(num_iter) % params.print_interval == 0;
-            // Print info
-            if (std::exchange(did_print, do_print))
-                print_progress_2(τ_max, τ_rel, num_free_var);
             // Check termination
             if (proj_grad_norm <= opts.tolerance) {
                 s.status = SolverStatus::Converged;
@@ -167,9 +194,17 @@ auto LBFGSBSolver::operator()(
                 set_task("STOP: user request");
                 break;
             } else {
+                auto k        = static_cast<unsigned>(num_iter) - 1;
+                bool do_print = params.print_interval != 0 &&
+                                k % params.print_interval == 0;
                 // Print info
+                if (std::exchange(did_print, do_print))
+                    print_progress_2(q_norm, τ_max, τ_rel, num_free_var);
                 if (std::exchange(do_print, false))
-                    print_progress_1(num_iter - 1, ψ, grad_ψ, proj_grad_norm);
+                    print_progress_1(k, ψ, grad_ψ, proj_grad_norm);
+                // Progress callback
+                do_progress_cb(k, x, ψ, grad_ψ, τ_max, τ_rel, proj_grad_norm,
+                               SolverStatus::Busy);
             }
         }
         // Stop
@@ -179,24 +214,32 @@ auto LBFGSBSolver::operator()(
         }
         // Unexpected status
         else {
-            std::string_view task_trimmed = task_sv;
-            auto trim_pos                 = task_sv.find('\0');
-            trim_pos = task_sv.find_last_not_of(' ', trim_pos);
-            if (trim_pos != task_trimmed.npos)
-                task_trimmed.remove_suffix(task_trimmed.size() - trim_pos);
-            *os << "[LBFGSB] Unexpected task: '" << task_trimmed << "'"
-                << std::endl;
             s.status = SolverStatus::Exception;
             break;
         }
     }
 
+    // Print info
+    auto k = static_cast<unsigned>(num_iter) - 1;
     if (std::exchange(did_print, false))
-        print_progress_2(τ_max, τ_rel, num_free_var);
+        print_progress_2(q_norm, τ_max, τ_rel, num_free_var);
     else if (params.print_interval != 0)
-        print_progress_1(num_iter - 1, ψ, grad_ψ, proj_grad_norm);
+        print_progress_1(k, ψ, grad_ψ, proj_grad_norm);
+    // Error reporting
+    if (s.status == SolverStatus::Exception) {
+        std::string_view task_trimmed = task_sv;
+        auto trim_pos                 = task_sv.find('\0');
+        trim_pos                      = task_sv.find_last_not_of(' ', trim_pos);
+        if (trim_pos != task_trimmed.npos)
+            task_trimmed.remove_suffix(task_trimmed.size() - trim_pos);
+        *os << "│ \033[0;31mLBFGSB failure\033[0m: '\033[0;33m" << task_trimmed
+            << "\033[0m'" << std::endl;
+    }
     if (params.print_interval != 0)
         print_progress_n(s.status);
+
+    // Progress callback
+    do_progress_cb(k, x, ψ, grad_ψ, τ_max, τ_rel, proj_grad_norm, s.status);
 
     auto time_elapsed = clock::now() - start_time;
     s.elapsed_time    = duration_cast<nanoseconds>(time_elapsed);
