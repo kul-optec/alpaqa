@@ -138,6 +138,7 @@ inline void print_results(std::ostream &os, const BenchmarkResults &results) {
     using alpaqa::float_to_str;
     const auto &solstats = results.solver_results;
     const auto &kkterr   = results.error;
+    auto obj             = results.objective;
     auto time_s          = std::chrono::duration<double>(solstats.duration);
     os << '\n'
        << solstats.evals << '\n'
@@ -153,8 +154,8 @@ inline void print_results(std::ostream &os, const BenchmarkResults &results) {
        << "final step size  = " << float_to_str(solstats.γ) << '\n'
        << "penalty norm     = " << float_to_str(solstats.Σ) << '\n'
        << "nonsmooth objective = " << float_to_str(solstats.h) << '\n'
-       << "smooth objective    = " << float_to_str(results.objective) << '\n'
-       << "objective           = " << float_to_str(results.objective) << '\n'
+       << "smooth objective    = " << float_to_str(obj) << '\n'
+       << "objective           = " << float_to_str(obj + solstats.h) << '\n'
        << "stationarity     = " << float_to_str(kkterr.stationarity) << '\n'
        << "violation        = " << float_to_str(kkterr.constr_violation) << '\n'
        << "complementarity  = " << float_to_str(kkterr.complementarity) << '\n'
