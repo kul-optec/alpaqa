@@ -281,6 +281,9 @@ auto PANOCSolver<DirectionProviderT>::operator()(
             if (stop_status == SolverStatus::Converged ||
                 stop_status == SolverStatus::Interrupted ||
                 opts.always_overwrite_results) {
+                // Calculate ŷ
+                if (params.eager_gradient_eval)
+                    eval_ψx̂(*curr);
                 auto &ŷ = curr->ŷx̂;
                 if (err_z.size() > 0)
                     err_z = Σ.asDiagonal().inverse() * (ŷ - y);
