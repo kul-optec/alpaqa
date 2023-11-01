@@ -31,6 +31,9 @@ template <alpaqa::Config Conf>
 void register_panoc(py::module_ &m);
 
 template <alpaqa::Config Conf>
+void register_fista(py::module_ &m);
+
+template <alpaqa::Config Conf>
 void register_zerofpr(py::module_ &m);
 
 template <alpaqa::Config Conf>
@@ -62,6 +65,14 @@ template <alpaqa::Config Conf>
 void register_ocp(py::module_ &) {}
 #endif
 
+#if ALPAQA_WITH_LBFGSB
+template <alpaqa::Config Conf>
+void register_lbfgsb(py::module_ &m);
+#else
+template <alpaqa::Config Conf>
+void register_lbfgsb(py::module_ &) {}
+#endif
+
 template <alpaqa::Config Conf>
 void register_classes_for(py::module_ &m) {
     register_problems<Conf>(m);
@@ -72,6 +83,8 @@ void register_classes_for(py::module_ &m) {
     register_panoc_directions<Conf>(m);
     register_pantr_directions<Conf>(m);
     register_panoc<Conf>(m);
+    register_fista<Conf>(m);
+    register_lbfgsb<Conf>(m);
     register_panoc_ocp<Conf>(m);
     register_zerofpr<Conf>(m);
     register_pantr<Conf>(m);

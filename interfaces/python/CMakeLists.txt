@@ -23,6 +23,7 @@ pybind11_add_module(_alpaqa MODULE
     "src/counters.py.cpp"
     "src/enums.py.cpp"
     "src/inner/panoc.py.cpp"
+    "src/inner/fista.py.cpp"
     "src/inner/zerofpr.py.cpp"
     "src/inner/pantr.py.cpp"
     "src/inner/pantr-directions.py.cpp"
@@ -37,6 +38,7 @@ pybind11_add_module(_alpaqa MODULE
     "src/params/lbfgs-direction-params.cpp"
     "src/params/lbfgs-params.cpp"
     "src/params/panoc-params.cpp"
+    "src/params/fista-params.cpp"
     "src/params/zerofpr-params.cpp"
     "src/params/structured-lbfgs-direction-params.cpp"
     "src/params/structured-newton-direction-params.cpp"
@@ -52,6 +54,14 @@ if (ALPAQA_WITH_OCP)
         "src/params/panoc-ocp-params.cpp"
         "src/problem/control-problems.py.cpp"
     )
+endif()
+if (ALPAQA_WITH_LBFGSB)
+    target_sources(_alpaqa PRIVATE
+        "src/inner/lbfgsb.py.cpp"
+        "src/params/lbfgsb-params.cpp"
+    )
+    target_compile_definitions(_alpaqa PRIVATE ALPAQA_WITH_LBFGSB)
+    target_link_libraries(_alpaqa PRIVATE alpaqa::lbfgsb-adapter)
 endif()
 target_include_directories(_alpaqa PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(_alpaqa PRIVATE pybind11::pybind11 alpaqa::alpaqa)

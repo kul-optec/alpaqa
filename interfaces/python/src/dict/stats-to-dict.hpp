@@ -9,6 +9,10 @@
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
+#if ALPAQA_WITH_LBFGSB
+#include <alpaqa/lbfgsb/lbfgsb-adapter.hpp>
+#endif
+#include <alpaqa/inner/fista.hpp>
 #include <alpaqa/inner/panoc.hpp>
 #include <alpaqa/inner/pantr.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
@@ -71,6 +75,61 @@ py::dict stats_to_dict(const InnerStatsAccumulator<PANOCStats<Conf>> &s) {
         "final_φγ"_a               = s.final_φγ,
     };
 }
+
+template <Config Conf>
+py::dict stats_to_dict(const FISTAStats<Conf> &s) {
+    using namespace py::literals;
+    return py::dict{
+        "status"_a                 = s.status,
+        "ε"_a                      = s.ε,
+        "elapsed_time"_a           = s.elapsed_time,
+        "time_progress_callback"_a = s.time_progress_callback,
+        "iterations"_a             = s.iterations,
+        "stepsize_backtracks"_a    = s.stepsize_backtracks,
+        "final_γ"_a                = s.final_γ,
+        "final_ψ"_a                = s.final_ψ,
+        "final_h"_a                = s.final_h,
+    };
+}
+
+template <Config Conf>
+py::dict stats_to_dict(const InnerStatsAccumulator<FISTAStats<Conf>> &s) {
+    using namespace py::literals;
+    return py::dict{
+        "elapsed_time"_a = s.elapsed_time, "time_progress_callback"_a = s.time_progress_callback,
+        "iterations"_a = s.iterations,     "stepsize_backtracks"_a = s.stepsize_backtracks,
+        "final_γ"_a = s.final_γ,           "final_ψ"_a = s.final_ψ,
+        "final_h"_a = s.final_h,
+    };
+}
+
+#if ALPAQA_WITH_LBFGSB
+
+inline py::dict stats_to_dict(const lbfgsb::LBFGSBStats &s) {
+    using namespace py::literals;
+    return py::dict{
+        "status"_a                 = s.status,
+        "ε"_a                      = s.ε,
+        "elapsed_time"_a           = s.elapsed_time,
+        "time_progress_callback"_a = s.time_progress_callback,
+        "iterations"_a             = s.iterations,
+        "final_ψ"_a                = s.final_ψ,
+        "lbfgs_rejected"_a         = s.lbfgs_rejected,
+    };
+}
+
+inline py::dict stats_to_dict(const InnerStatsAccumulator<lbfgsb::LBFGSBStats> &s) {
+    using namespace py::literals;
+    return py::dict{
+        "iterations"_a             = s.iterations,
+        "elapsed_time"_a           = s.elapsed_time,
+        "time_progress_callback"_a = s.time_progress_callback,
+        "final_ψ"_a                = s.final_ψ,
+        "lbfgs_rejected"_a         = s.lbfgs_rejected,
+    };
+}
+
+#endif
 
 #if ALPAQA_WITH_OCP
 
