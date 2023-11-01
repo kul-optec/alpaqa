@@ -1,9 +1,11 @@
 #include "structured-newton-direction-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::StructuredNewtonRegularizationParams<Conf>, //
                  PARAMS_MEMBER(min_eig),                             //
                  PARAMS_MEMBER(print_eig),                           //
 );
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::StructuredNewtonDirectionParams<Conf>, //
                  PARAMS_MEMBER(hessian_vec_factor),             //
 );

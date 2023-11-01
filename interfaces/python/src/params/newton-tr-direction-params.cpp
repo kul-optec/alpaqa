@@ -1,5 +1,6 @@
 #include "newton-tr-direction-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::NewtonTRDirectionParams<Conf>, //
                  PARAMS_MEMBER(hessian_vec_factor),     //
                  PARAMS_MEMBER(finite_diff),            //

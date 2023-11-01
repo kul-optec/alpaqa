@@ -3,7 +3,9 @@
 #include <alpaqa/inner/directions/panoc/structured-newton.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::StructuredNewtonRegularizationParams<Conf>);
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::StructuredNewtonDirectionParams<Conf>);
 
 // clang-format off

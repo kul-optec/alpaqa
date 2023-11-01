@@ -3,6 +3,7 @@
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::StructuredLBFGSDirectionParams<Conf>);
 
 // clang-format off

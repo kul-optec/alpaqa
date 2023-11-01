@@ -3,6 +3,7 @@
 #include <alpaqa/accelerators/steihaugcg.hpp>
 #include <params/params.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::SteihaugCGParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::SteihaugCGParams<alpaqa::EigenConfigd>);

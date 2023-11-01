@@ -3,6 +3,7 @@
 #include <alpaqa/inner/panoc-ocp.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::PANOCOCPParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::PANOCOCPParams<alpaqa::EigenConfigd>);

@@ -3,6 +3,7 @@
 #include <alpaqa/inner/pantr.hpp>
 #include <params/params.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::PANTRParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::PANTRParams<alpaqa::EigenConfigd>);

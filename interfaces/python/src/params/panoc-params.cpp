@@ -1,5 +1,6 @@
 #include "panoc-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::PANOCParams<Conf>,                                     //
                  PARAMS_MEMBER(Lipschitz),                                      //
                  PARAMS_MEMBER(max_iter),                                       //
@@ -20,6 +21,7 @@ PARAMS_TABLE_DEF(alpaqa::PANOCParams<Conf>,                                     
                  PARAMS_MEMBER(eager_gradient_eval),                            //
 );
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::LipschitzEstimateParams<Conf>, //
                  PARAMS_MEMBER(L_0),                    //
                  PARAMS_MEMBER(δ),                      //

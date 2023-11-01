@@ -3,6 +3,7 @@
 #include <alpaqa/inner/zerofpr.hpp>
 #include <params/params.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::ZeroFPRParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::ZeroFPRParams<alpaqa::EigenConfigd>);

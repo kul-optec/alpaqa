@@ -3,6 +3,7 @@
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::LBFGSDirectionParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::LBFGSDirectionParams<alpaqa::EigenConfigd>);

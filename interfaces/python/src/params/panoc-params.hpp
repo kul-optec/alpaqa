@@ -3,7 +3,9 @@
 #include <alpaqa/inner/panoc.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::PANOCParams<Conf>);
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::LipschitzEstimateParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::PANOCParams<alpaqa::EigenConfigd>);

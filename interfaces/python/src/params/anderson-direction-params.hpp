@@ -3,6 +3,7 @@
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::AndersonDirectionParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::AndersonDirectionParams<alpaqa::EigenConfigd>);

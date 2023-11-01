@@ -4,6 +4,7 @@
 
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::ALMParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::ALMParams<alpaqa::EigenConfigd>);

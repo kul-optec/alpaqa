@@ -1,5 +1,6 @@
 #include "params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::ALMParams<Conf>,                       //
                  PARAMS_MEMBER(tolerance),                      //
                  PARAMS_MEMBER(dual_tolerance),                 //

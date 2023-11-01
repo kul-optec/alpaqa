@@ -3,6 +3,7 @@
 #include <alpaqa/inner/directions/pantr/newton-tr.hpp>
 #include <params/params.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::NewtonTRDirectionParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::NewtonTRDirectionParams<alpaqa::EigenConfigd>);

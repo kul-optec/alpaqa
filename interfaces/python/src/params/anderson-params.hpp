@@ -3,6 +3,7 @@
 #include <alpaqa/accelerators/anderson.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::AndersonAccelParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::AndersonAccelParams<alpaqa::EigenConfigd>);

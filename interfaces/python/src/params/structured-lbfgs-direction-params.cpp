@@ -1,5 +1,6 @@
 #include "structured-lbfgs-direction-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::StructuredLBFGSDirectionParams<Conf>,  //
                  PARAMS_MEMBER(hessian_vec_factor),             //
                  PARAMS_MEMBER(hessian_vec_finite_differences), //

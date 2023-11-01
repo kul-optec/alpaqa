@@ -141,7 +141,6 @@ T var_kwargs_to_struct(const params_or_dict<T> &p) {
 
 /// Helper macro to easily specialize @ref dict_to_struct_table.
 #define PARAMS_TABLE_DECL(type_)                                                                   \
-    template <alpaqa::Config Conf>                                                                 \
     struct dict_to_struct_table<type_> {                                                           \
         using type = type_;                                                                        \
         static const dict_to_struct_table_t<type> table;                                           \
@@ -154,7 +153,6 @@ T var_kwargs_to_struct(const params_or_dict<T> &p) {
 
 /// Helper macro to easily define a specialization @ref dict_to_struct_table.
 #define PARAMS_TABLE_DEF(type_, ...)                                                               \
-    template <alpaqa::Config Conf>                                                                 \
     const dict_to_struct_table_t<type_> dict_to_struct_table<type_>::table {                       \
         __VA_ARGS__                                                                                \
     }

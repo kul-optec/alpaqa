@@ -1,5 +1,6 @@
 #include "params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::AndersonDirectionParams<Conf>,       //
                  PARAMS_MEMBER(rescale_on_step_size_changes), //
 );

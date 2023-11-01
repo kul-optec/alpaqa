@@ -3,6 +3,7 @@
 #include <alpaqa/inner/inner-solve-options.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::InnerSolveOptions<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::InnerSolveOptions<alpaqa::EigenConfigd>);

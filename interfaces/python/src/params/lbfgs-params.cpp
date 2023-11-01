@@ -1,5 +1,6 @@
 #include "lbfgs-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::LBFGSParams<Conf>,    //
                  PARAMS_MEMBER(memory),        //
                  PARAMS_MEMBER(min_div_fac),   //
@@ -9,6 +10,7 @@ PARAMS_TABLE_DEF(alpaqa::LBFGSParams<Conf>,    //
                  PARAMS_MEMBER(stepsize),      //
 );
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::CBFGSParams<Conf>, //
                  PARAMS_MEMBER(α),          //
                  PARAMS_MEMBER(ϵ),          //

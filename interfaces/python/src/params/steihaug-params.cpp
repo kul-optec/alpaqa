@@ -1,5 +1,6 @@
 #include "steihaug-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::SteihaugCGParams<Conf>, //
                  PARAMS_MEMBER(tol_scale),       //
                  PARAMS_MEMBER(tol_scale_root),  //

@@ -1,5 +1,6 @@
 #include "params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::InnerSolveOptions<Conf>,
                  PARAMS_MEMBER(always_overwrite_results), //
                  PARAMS_MEMBER(max_time),                 //

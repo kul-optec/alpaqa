@@ -3,7 +3,9 @@
 #include <alpaqa/accelerators/lbfgs.hpp>
 #include <dict/kwargs-to-struct.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::LBFGSParams<Conf>);
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DECL(alpaqa::CBFGSParams<Conf>);
 
 extern PARAMS_TABLE_INST(alpaqa::LBFGSParams<alpaqa::EigenConfigd>);

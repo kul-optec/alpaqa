@@ -1,5 +1,6 @@
 #include <params/anderson-params.hpp>
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::AndersonAccelParams<Conf>, //
                  PARAMS_MEMBER(memory),             //
                  PARAMS_MEMBER(min_div_fac),        //

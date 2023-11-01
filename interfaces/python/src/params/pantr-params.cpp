@@ -1,5 +1,6 @@
 #include "pantr-params.hpp"
 
+template <alpaqa::Config Conf>
 PARAMS_TABLE_DEF(alpaqa::PANTRParams<Conf>,                                     //
                  PARAMS_MEMBER(Lipschitz),                                      //
                  PARAMS_MEMBER(max_iter),                                       //
