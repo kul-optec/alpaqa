@@ -144,7 +144,7 @@ auto FISTASolver<Conf>::operator()(
         i.pᵀp = i.p.squaredNorm();
         i.grad_ψᵀp = i.p.dot(i.grad_ψ);
     };
-    auto eval_ψx̂ = [&problem, &y, &Σ, &work_n1, this](Iterate &i) {
+    auto eval_ψx̂ = [&problem, &y, &Σ](Iterate &i) {
         i.ψx̂ = problem.eval_ψ(i.x̂, y, Σ, i.ŷx̂);
     };
     auto eval_grad_ψx̂ = [&problem, &work_n1](Iterate &i) {
