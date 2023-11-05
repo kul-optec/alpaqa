@@ -124,7 +124,8 @@ void sparse_matvec_add_transpose_masked_rows(const SpMat &S, const CVec &v,
             out(c) += r.value() * v(r.row());
 }
 
-#if __cpp_lib_ranges_zip >= 202110L && __cpp_lib_ranges_enumerate >= 202302L
+#if __cpp_lib_ranges_zip >= 202110L &&                                         \
+    __cpp_lib_ranges_enumerate >= 202302L && !defined(__clang__)
 #define ALPAQA_HAVE_COO_CSC_CONVERSIONS 1
 
 template <class I>
