@@ -9,6 +9,7 @@ using solver_free_func_t = SolverResults(LoadedProblem &, std::ostream &);
 using solver_func_t      = std::function<solver_free_func_t>;
 
 struct SolverWrapper {
+    virtual ~SolverWrapper() = default;
     [[nodiscard]] virtual bool has_statistics() const { return false; }
     virtual void write_statistics_to_stream(std::ostream &) {}
     SolverWrapper(solver_func_t run) : run(std::move(run)) {}
