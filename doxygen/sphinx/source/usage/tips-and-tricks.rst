@@ -106,7 +106,7 @@ argument to the ``compile()`` function.
 
 If you don't want to compile the problem at all (e.g. because no C compiler is
 available, or because the resulting C files are too large), you can use the
-The :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.build`
+:py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.build`
 method instead of :code:`compile()`.
 This will use CasADi's VM to evaluate the expressions.
 
