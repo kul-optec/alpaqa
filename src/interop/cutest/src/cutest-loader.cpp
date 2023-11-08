@@ -50,7 +50,11 @@ std::shared_ptr<void> load_lib(const char *so_filename) {
     if (auto *err = ::dlerror())
         throw std::runtime_error(err);
     assert(h);
+#if ALPAQA_NO_DLCLOSE
+    return std::shared_ptr<void>{h, +[](void *) {}};
+#else
     return std::shared_ptr<void>{h, &::dlclose};
+#endif
 }
 } // namespace
 

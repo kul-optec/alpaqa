@@ -14,6 +14,8 @@ option(ALPAQA_WITH_OCP
     "Enable solvers tailored for optimal control problems" On)
 option(ALPAQA_DEBUG_CHECKS_EIGEN
     "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
+option(ALPAQA_NO_DLCLOSE
+    "Never call dlclose when a shared library is no longer needed, leave it open instead. Useful for profiling using gperftools." Off)
 
 add_library(alpaqa
     "alpaqa/src/util/type-erasure.cpp"
@@ -68,6 +70,7 @@ target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:ALPAQA_WITH_QUAD_PRECISION>
     $<$<BOOL:${ALPAQA_WITH_SINGLE_PRECISION}>:ALPAQA_WITH_SINGLE_PRECISION>
     $<$<BOOL:${ALPAQA_WITH_LONG_DOUBLE}>:ALPAQA_WITH_LONG_DOUBLE>
+    $<$<BOOL:${ALPAQA_NO_DLCLOSE}>:ALPAQA_NO_DLCLOSE>
 )
 target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)

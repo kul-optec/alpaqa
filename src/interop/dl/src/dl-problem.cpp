@@ -44,7 +44,11 @@ std::shared_ptr<void> load_lib(const std::string &so_filename) {
     void *h = ::dlopen(so_filename.c_str(), RTLD_LOCAL | RTLD_NOW);
     if (auto *err = ::dlerror())
         throw std::runtime_error(err);
+#if ALPAQA_NO_DLCLOSE
+    return std::shared_ptr<void>{h, +[](void *) {}};
+#else
     return std::shared_ptr<void>{h, &::dlclose};
+#endif
 }
 
 template <class F>
