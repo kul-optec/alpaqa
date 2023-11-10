@@ -32,8 +32,17 @@ python/alpaqa/_alpaqa*
 a.out
 dynamics.c
 
+# Profiling
+perf.data*
+profile
+*.prof
+gmon.out
+callgrind.out.*
+heaptrack.*
+r[0-9][0-9][0-9]hs
+test.*.er
+
 # Other files
 *.mp4
 *.nope
 /old
-callgrind.out.*
