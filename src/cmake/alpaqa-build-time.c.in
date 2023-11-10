@@ -1,0 +1,3 @@
+const char *alpaqa_get_build_time(void) {
+    return "@ALPAQA_BUILD_TIME@";
+}

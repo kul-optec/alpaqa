@@ -6,3 +6,9 @@
 #define ALPAQA_VERSION_SUFFIX "@PY_VERSION_SUFFIX@"
 #define ALPAQA_VERSION "@PROJECT_VERSION@"
 #define ALPAQA_VERSION_FULL "@PROJECT_VERSION@@PY_VERSION_SUFFIX@"
+
+#ifdef __cplusplus
+extern "C" const char *alpaqa_get_build_time();
+#else
+const char *alpaqa_get_build_time(void);
+#endif

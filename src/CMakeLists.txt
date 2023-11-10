@@ -16,6 +16,8 @@ option(ALPAQA_DEBUG_CHECKS_EIGEN
     "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
 option(ALPAQA_NO_DLCLOSE
     "Never call dlclose when a shared library is no longer needed, leave it open instead. Useful for profiling using gperftools." Off)
+option(ALPAQA_WITH_ACCURATE_BUILD_TIME
+    "Update the build time on every build" On)
 
 add_library(alpaqa
     "alpaqa/src/util/type-erasure.cpp"
@@ -92,6 +94,24 @@ generate_export_header(alpaqa
     EXPORT_FILE_NAME export/alpaqa/export.h)
 target_include_directories(alpaqa PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+
+# Build time
+message(STATUS "Configuration time ${CONFIG_TIME}")
+if (ALPAQA_WITH_ACCURATE_BUILD_TIME)
+    set(ALPAQA_BUILD_TIME_C "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.c")
+    add_custom_target(alpaqa-build-time-generate
+        BYPRODUCTS ${ALPAQA_BUILD_TIME_C}
+        COMMAND ${CMAKE_COMMAND}
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/BuildTime.cmake
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+    add_library(alpaqa-build-time OBJECT ${ALPAQA_BUILD_TIME_C})
+    add_dependencies(alpaqa-build-time alpaqa-build-time-generate)
+else()
+    include(cmake/BuildTime.cmake)
+    set(ALPAQA_BUILD_TIME_C "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.c")
+    add_library(alpaqa-build-time OBJECT ${ALPAQA_BUILD_TIME_C})
+endif()
+target_link_libraries(alpaqa PRIVATE alpaqa-build-time)
 
 # CasADi
 if (ALPAQA_WITH_CASADI)
