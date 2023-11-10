@@ -5,7 +5,6 @@
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/util/timed.hpp>
 
-#include <functional>
 #include <type_traits>
 
 namespace alpaqa {
@@ -28,30 +27,30 @@ struct ProblemWithCounters {
     using Sparsity = sparsity::Sparsity<config_t>;
 
     // clang-format off
-    void eval_proj_diff_g(crvec z, rvec e) const { ++evaluations->proj_diff_g; return timed(evaluations->time.proj_diff_g, std::bind(&std::remove_cvref_t<Problem>::eval_proj_diff_g, &problem, z, e)); }
-    void eval_proj_multipliers(rvec y, real_t M) const { ++evaluations->proj_multipliers; return timed(evaluations->time.proj_multipliers, std::bind(&std::remove_cvref_t<Problem>::eval_proj_multipliers, &problem, y, M)); }
-    real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const { ++evaluations->prox_grad_step; return timed(evaluations->time.prox_grad_step, std::bind(&std::remove_cvref_t<Problem>::eval_prox_grad_step, &problem, γ, x, grad_ψ, x̂, p)); }
-    index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const requires requires { &std::remove_cvref_t<Problem>::eval_inactive_indices_res_lna; } { ++evaluations->inactive_indices_res_lna; return timed(evaluations->time.inactive_indices_res_lna, std::bind(&std::remove_cvref_t<Problem>::eval_inactive_indices_res_lna, &problem, γ, x, grad_ψ, J)); }
-    real_t eval_f(crvec x) const { ++evaluations->f; return timed(evaluations->time.f, std::bind(&std::remove_cvref_t<Problem>::eval_f, &problem, x)); }
-    void eval_grad_f(crvec x, rvec grad_fx) const { ++evaluations->grad_f; return timed(evaluations->time.grad_f, std::bind(&std::remove_cvref_t<Problem>::eval_grad_f, &problem, x, grad_fx)); }
-    void eval_g(crvec x, rvec gx) const { ++evaluations->g; return timed(evaluations->time.g, std::bind(&std::remove_cvref_t<Problem>::eval_g, &problem, x, gx)); }
-    void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const { ++evaluations->grad_g_prod; return timed(evaluations->time.grad_g_prod, std::bind(&std::remove_cvref_t<Problem>::eval_grad_g_prod, &problem, x, y, grad_gxy)); }
-    void eval_grad_gi(crvec x, index_t i, rvec grad_gi) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_gi; } { ++evaluations->grad_gi; return timed(evaluations->time.grad_gi, std::bind(&std::remove_cvref_t<Problem>::eval_grad_gi, &problem, x, i, grad_gi)); }
-    void eval_jac_g(crvec x, rvec J_values) const requires requires { &std::remove_cvref_t<Problem>::eval_jac_g; } { ++evaluations->jac_g; return timed(evaluations->time.jac_g, std::bind(&std::remove_cvref_t<Problem>::eval_jac_g, &problem, x, J_values)); }
-    Sparsity get_jac_g_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_jac_g_sparsity; } { return problem.get_jac_g_sparsity(); }
-    void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L_prod; } { ++evaluations->hess_L_prod; return timed(evaluations->time.hess_L_prod, std::bind(&std::remove_cvref_t<Problem>::eval_hess_L_prod, &problem, x, y, scale, v, Hv)); }
-    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L; } { ++evaluations->hess_L; return timed(evaluations->time.hess_L, std::bind(&std::remove_cvref_t<Problem>::eval_hess_L, &problem, x, y, scale, H_values)); }
-    Sparsity get_hess_L_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_hess_L_sparsity; } { return problem.get_hess_L_sparsity(); }
-    void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ_prod; } { ++evaluations->hess_ψ_prod; return timed(evaluations->time.hess_ψ_prod, std::bind(&std::remove_cvref_t<Problem>::eval_hess_ψ_prod, &problem, x, y, Σ, scale, v, Hv)); }
-    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ; } { ++evaluations->hess_ψ; return timed(evaluations->time.hess_ψ, std::bind(&std::remove_cvref_t<Problem>::eval_hess_ψ, &problem, x, y, Σ, scale, H_values)); }
-    Sparsity get_hess_ψ_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_hess_ψ_sparsity; } { return problem.get_hess_ψ_sparsity(); }
-    real_t eval_f_grad_f(crvec x, rvec grad_fx) const requires requires { &std::remove_cvref_t<Problem>::eval_f_grad_f; } { ++evaluations->f_grad_f; return timed(evaluations->time.f_grad_f, std::bind(&std::remove_cvref_t<Problem>::eval_f_grad_f, &problem, x, grad_fx)); }
-    real_t eval_f_g(crvec x, rvec g) const requires requires { &std::remove_cvref_t<Problem>::eval_f_g; } { ++evaluations->f_g; return timed(evaluations->time.f_g, std::bind(&std::remove_cvref_t<Problem>::eval_f_g, &problem, x, g)); }
-    void eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_f_grad_g_prod; } { ++evaluations->grad_f_grad_g_prod; return timed(evaluations->time.grad_f_grad_g_prod, std::bind(&std::remove_cvref_t<Problem>::eval_grad_f_grad_g_prod, &problem, x, y, grad_f, grad_gxy)); }
-    void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_L; } { ++evaluations->grad_L; return timed(evaluations->time.grad_L, std::bind(&std::remove_cvref_t<Problem>::eval_grad_L, &problem, x, y, grad_L, work_n)); }
-    real_t eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const requires requires { &std::remove_cvref_t<Problem>::eval_ψ; } { ++evaluations->ψ; return timed(evaluations->time.ψ, std::bind(&std::remove_cvref_t<Problem>::eval_ψ, &problem, x, y, Σ, ŷ)); }
-    void eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_ψ; } { ++evaluations->grad_ψ; return timed(evaluations->time.grad_ψ, std::bind(&std::remove_cvref_t<Problem>::eval_grad_ψ, &problem, x, y, Σ, grad_ψ, work_n, work_m)); }
-    real_t eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const requires requires { &std::remove_cvref_t<Problem>::eval_ψ_grad_ψ; } { ++evaluations->ψ_grad_ψ; return timed(evaluations->time.ψ_grad_ψ, std::bind(&std::remove_cvref_t<Problem>::eval_ψ_grad_ψ, &problem, x, y, Σ, grad_ψ, work_n, work_m)); }
+    [[gnu::always_inline]] void eval_proj_diff_g(crvec z, rvec e) const { ++evaluations->proj_diff_g; return timed(evaluations->time.proj_diff_g, [&] { return problem.eval_proj_diff_g(z, e); }); }
+    [[gnu::always_inline]] void eval_proj_multipliers(rvec y, real_t M) const { ++evaluations->proj_multipliers; return timed(evaluations->time.proj_multipliers, [&] { return problem.eval_proj_multipliers(y, M); }); }
+    [[gnu::always_inline]] real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const { ++evaluations->prox_grad_step; return timed(evaluations->time.prox_grad_step, [&] { return problem.eval_prox_grad_step(γ, x, grad_ψ, x̂, p); }); }
+    [[gnu::always_inline]] index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const requires requires { &std::remove_cvref_t<Problem>::eval_inactive_indices_res_lna; } { ++evaluations->inactive_indices_res_lna; return timed(evaluations->time.inactive_indices_res_lna, [&] { return problem.eval_inactive_indices_res_lna(γ, x, grad_ψ, J); }); }
+    [[gnu::always_inline]] real_t eval_f(crvec x) const { ++evaluations->f; return timed(evaluations->time.f, [&] { return problem.eval_f(x); }); }
+    [[gnu::always_inline]] void eval_grad_f(crvec x, rvec grad_fx) const { ++evaluations->grad_f; return timed(evaluations->time.grad_f, [&] { return problem.eval_grad_f(x, grad_fx); }); }
+    [[gnu::always_inline]] void eval_g(crvec x, rvec gx) const { ++evaluations->g; return timed(evaluations->time.g, [&] { return problem.eval_g(x, gx); }); }
+    [[gnu::always_inline]] void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const { ++evaluations->grad_g_prod; return timed(evaluations->time.grad_g_prod, [&] { return problem.eval_grad_g_prod(x, y, grad_gxy); }); }
+    [[gnu::always_inline]] void eval_grad_gi(crvec x, index_t i, rvec grad_gi) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_gi; } { ++evaluations->grad_gi; return timed(evaluations->time.grad_gi, [&] { return problem.eval_grad_gi(x, i, grad_gi); }); }
+    [[gnu::always_inline]] void eval_jac_g(crvec x, rvec J_values) const requires requires { &std::remove_cvref_t<Problem>::eval_jac_g; } { ++evaluations->jac_g; return timed(evaluations->time.jac_g, [&] { return problem.eval_jac_g(x, J_values); }); }
+    [[gnu::always_inline]] Sparsity get_jac_g_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_jac_g_sparsity; } { return problem.get_jac_g_sparsity(); }
+    [[gnu::always_inline]] void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L_prod; } { ++evaluations->hess_L_prod; return timed(evaluations->time.hess_L_prod, [&] { return problem.eval_hess_L_prod(x, y, scale, v, Hv); }); }
+    [[gnu::always_inline]] void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_L; } { ++evaluations->hess_L; return timed(evaluations->time.hess_L, [&] { return problem.eval_hess_L(x, y, scale, H_values); }); }
+    [[gnu::always_inline]] Sparsity get_hess_L_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_hess_L_sparsity; } { return problem.get_hess_L_sparsity(); }
+    [[gnu::always_inline]] void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ_prod; } { ++evaluations->hess_ψ_prod; return timed(evaluations->time.hess_ψ_prod, [&] { return problem.eval_hess_ψ_prod(x, y, Σ, scale, v, Hv); }); }
+    [[gnu::always_inline]] void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const requires requires { &std::remove_cvref_t<Problem>::eval_hess_ψ; } { ++evaluations->hess_ψ; return timed(evaluations->time.hess_ψ, [&] { return problem.eval_hess_ψ(x, y, Σ, scale, H_values); }); }
+    [[gnu::always_inline]] Sparsity get_hess_ψ_sparsity() const requires requires { &std::remove_cvref_t<Problem>::get_hess_ψ_sparsity; } { return problem.get_hess_ψ_sparsity(); }
+    [[gnu::always_inline]] real_t eval_f_grad_f(crvec x, rvec grad_fx) const requires requires { &std::remove_cvref_t<Problem>::eval_f_grad_f; } { ++evaluations->f_grad_f; return timed(evaluations->time.f_grad_f, [&] { return problem.eval_f_grad_f(x, grad_fx); }); }
+    [[gnu::always_inline]] real_t eval_f_g(crvec x, rvec g) const requires requires { &std::remove_cvref_t<Problem>::eval_f_g; } { ++evaluations->f_g; return timed(evaluations->time.f_g, [&] { return problem.eval_f_g(x, g); }); }
+    [[gnu::always_inline]] void eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_f_grad_g_prod; } { ++evaluations->grad_f_grad_g_prod; return timed(evaluations->time.grad_f_grad_g_prod, [&] { return problem.eval_grad_f_grad_g_prod(x, y, grad_f, grad_gxy); }); }
+    [[gnu::always_inline]] void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_L; } { ++evaluations->grad_L; return timed(evaluations->time.grad_L, [&] { return problem.eval_grad_L(x, y, grad_L, work_n); }); }
+    [[gnu::always_inline]] real_t eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const requires requires { &std::remove_cvref_t<Problem>::eval_ψ; } { ++evaluations->ψ; return timed(evaluations->time.ψ, [&] { return problem.eval_ψ(x, y, Σ, ŷ); }); }
+    [[gnu::always_inline]] void eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const requires requires { &std::remove_cvref_t<Problem>::eval_grad_ψ; } { ++evaluations->grad_ψ; return timed(evaluations->time.grad_ψ, [&] { return problem.eval_grad_ψ(x, y, Σ, grad_ψ, work_n, work_m); }); }
+    [[gnu::always_inline]] real_t eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const requires requires { &std::remove_cvref_t<Problem>::eval_ψ_grad_ψ; } { ++evaluations->ψ_grad_ψ; return timed(evaluations->time.ψ_grad_ψ, [&] { return problem.eval_ψ_grad_ψ(x, y, Σ, grad_ψ, work_n, work_m); }); }
     const Box &get_box_C() const requires requires { &std::remove_cvref_t<Problem>::get_box_C; } { return problem.get_box_C(); }
     const Box &get_box_D() const requires requires { &std::remove_cvref_t<Problem>::get_box_D; } { return problem.get_box_D(); }
     void check() const requires requires { &std::remove_cvref_t<Problem>::check; } { return problem.check(); }
@@ -107,7 +106,7 @@ struct ProblemWithCounters {
 
   private:
     template <class TimeT, class FunT>
-    static decltype(auto) timed(TimeT &time, FunT &&f) {
+    [[gnu::always_inline]] static decltype(auto) timed(TimeT &time, FunT &&f) {
         util::Timed timed{time};
         return std::forward<FunT>(f)();
     }
