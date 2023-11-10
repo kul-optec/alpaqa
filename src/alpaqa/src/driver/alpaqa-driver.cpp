@@ -39,6 +39,7 @@
 #include <tuple>
 #include <type_traits>
 namespace fs = std::filesystem;
+using namespace std::string_view_literals;
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
@@ -119,7 +120,8 @@ examples:
 void print_usage(const char *a0) {
     const auto *opts = " [<problem-type>:][<path>/]<name> [method=<solver>] "
                        "[<key>=<value>...]\n";
-    std::cout << "alpaqa-driver (" ALPAQA_VERSION_FULL ")\n\n"
+    std::cout << "alpaqa-driver " ALPAQA_VERSION_FULL " (" << alpaqa_build_time
+              << ")\n\n"
                  "    Command-line interface to the alpaqa solvers.\n"
                  "    alpaqa is published under the LGPL-3.0.\n"
                  "    https://github.com/kul-optec/alpaqa"
@@ -157,6 +159,10 @@ void print_usage(const char *a0) {
         << std::endl;
 }
 
+void print_version() {
+    std::cout << ALPAQA_VERSION_FULL " (" << ALPAQA_BUILD_TIME << ")\n";
+}
+
 /// Split the string @p s on the first occurrence of @p tok.
 /// Returns ("", s) if tok was not found.
 auto split_once(std::string_view s, char tok = '.') {
@@ -192,6 +198,28 @@ auto get_problem_path(const char *const *argv) {
     if (rel_to_exe)
         prob_path = fs::canonical(fs::path(argv[0])).parent_path() / prob_path;
     return std::make_tuple(std::move(prob_path), prob_type);
+}
+
+void print_problem_description(std::ostream &os, LoadedProblem &problem) {
+    os << "Loaded problem \"" << problem.name << "\"\n"
+       << "Number of variables:   " << problem.problem.get_n() << "\n"
+       << "Number of constraints: " << problem.problem.get_m() << "\n";
+    if (problem.box_constr_count)
+        os << "Box constraints:"
+           << "\n  Fixed variables:    " << problem.box_constr_count->eq
+           << "\n  Bilateral:          " << problem.box_constr_count->lbub
+           << "\n  Lower bound only:   " << problem.box_constr_count->lb
+           << "\n  Upper bound only:   " << problem.box_constr_count->ub
+           << "\n";
+    if (problem.general_constr_count)
+        os << "General constraints:"
+           << "\n  Equality:           " << problem.general_constr_count->eq
+           << "\n  Bilateral:          " << problem.general_constr_count->lbub
+           << "\n  Lower bound only:   " << problem.general_constr_count->lb
+           << "\n  Upper bound only:   " << problem.general_constr_count->ub
+           << "\n";
+    os << "Provided functions:\n";
+    alpaqa::print_provided_functions(os, problem.problem);
 }
 
 auto get_solver_builder(Options &opts) {
@@ -266,6 +294,11 @@ int main(int argc, const char *argv[]) try {
         return print_usage(argv[0]), 0;
     if (argc < 2)
         return print_usage(argv[0]), -1;
+    if (argv[1] == "-h"sv || argv[1] == "--help"sv || argv[1] == "?"sv)
+        return print_usage(argv[0]), 0;
+    if (argv[1] == "-v"sv || argv[1] == "--version"sv)
+        return print_version(), 0;
+
     std::span args{argv, static_cast<size_t>(argc)};
     Options opts{argc - 2, argv + 2};
 
@@ -286,12 +319,10 @@ int main(int argc, const char *argv[]) try {
     auto solver = solver_builder(direction, opts);
 
     // Load problem
-    os << "Loading problem " << prob_path << std::endl;
+    os << "Loading " << prob_path << " ..." << std::endl;
     auto problem = load_problem(prob_type, prob_path.parent_path(),
                                 prob_path.filename(), opts);
-    os << "Loaded problem \"" << problem.name << "\" from " << problem.path
-       << "\nProvided functions:\n";
-    alpaqa::print_provided_functions(os, problem.problem);
+    print_problem_description(os, problem);
     os << std::endl;
 
     // Check options

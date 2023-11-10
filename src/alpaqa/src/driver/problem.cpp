@@ -54,6 +54,35 @@ void load_initial_guess(Options &opts, LoadedProblem &problem) {
         problem.initial_guess_w = std::move(*w0.value);
 }
 
+void count_constr(LoadedProblem::ConstrCount &cnt,
+                  const alpaqa::Box<config_t> &C) {
+    const auto n = C.lowerbound.size();
+    cnt.lb       = 0;
+    cnt.ub       = 0;
+    cnt.lbub     = 0;
+    cnt.eq       = 0;
+    for (index_t i = 0; i < n; ++i) {
+        bool lb = C.lowerbound(i) > -alpaqa::inf<config_t>;
+        bool ub = C.upperbound(i) < +alpaqa::inf<config_t>;
+        bool eq = C.lowerbound(i) == C.upperbound(i);
+        if (eq)
+            ++cnt.eq;
+        else if (lb && ub)
+            ++cnt.lbub;
+        else if (lb)
+            ++cnt.lb;
+        else if (ub)
+            ++cnt.ub;
+    }
+}
+
+void count_problem(LoadedProblem &p) {
+    if (p.problem.provides_get_box_C())
+        count_constr(*p.box_constr_count = {}, p.problem.get_box_C());
+    if (p.problem.provides_get_box_D())
+        count_constr(*p.general_constr_count = {}, p.problem.get_box_D());
+}
+
 #if ALPAQA_HAVE_DL
 LoadedProblem load_dl_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
@@ -78,6 +107,7 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
     }
     problem.evaluations = cnt_problem.evaluations;
     load_initial_guess(opts, problem);
+    count_problem(problem);
     return problem;
 }
 #endif
@@ -111,6 +141,7 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
             std::to_string(cs_problem.param.size()) + ", should be " +
             std::to_string(param_size));
     load_initial_guess(opts, problem);
+    count_problem(problem);
     return problem;
 }
 #endif
@@ -143,6 +174,7 @@ LoadedProblem load_cu_problem(const fs::path &full_path,
     problem.initial_guess_x = std::move(cu_problem.x0);
     problem.initial_guess_y = std::move(cu_problem.y0);
     load_initial_guess(opts, problem);
+    count_problem(problem);
     return problem;
 }
 #endif

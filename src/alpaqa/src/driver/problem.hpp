@@ -8,6 +8,7 @@
 
 #include <filesystem>
 #include <memory>
+#include <optional>
 namespace fs = std::filesystem;
 
 struct LoadedProblem {
@@ -17,9 +18,17 @@ struct LoadedProblem {
     fs::path path;
     std::string name                                 = path.filename().string();
     std::shared_ptr<alpaqa::EvalCounter> evaluations = nullptr;
-    vec initial_guess_x = vec::Zero(problem.get_n()); /// Unknowns
-    vec initial_guess_y = vec::Zero(problem.get_m()); /// Multipliers g
-    vec initial_guess_w = alpaqa::null_vec<config_t>; /// Multipliers bounds
+    vec initial_guess_x = vec::Zero(problem.get_n()); ///< Unknowns
+    vec initial_guess_y = vec::Zero(problem.get_m()); ///< Multipliers g
+    vec initial_guess_w = alpaqa::null_vec<config_t>; ///< Multipliers bounds
+    struct ConstrCount {
+        length_t lb   = 0; ///< Number of variables with only lower bound
+        length_t ub   = 0; ///< Number of variables with only upper bound
+        length_t lbub = 0; ///< Number of variables with both bounds
+        length_t eq   = 0; ///< Number of variables with equal bounds
+    };
+    std::optional<ConstrCount> box_constr_count     = std::nullopt,
+                               general_constr_count = std::nullopt;
 };
 
 LoadedProblem load_problem(std::string_view type, const fs::path &dir,
