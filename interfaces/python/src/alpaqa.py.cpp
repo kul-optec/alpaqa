@@ -96,11 +96,11 @@ void register_classes_for(py::module_ &m) {
 PYBIND11_MODULE(MODULE_NAME, m) {
     m.doc()               = "Python interface to alpaqa's C++ implementation.";
     m.attr("__version__") = ALPAQA_VERSION_FULL;
-    m.attr("build_time")  = __DATE__ ", " __TIME__;
+    m.attr("build_time")  = ALPAQA_BUILD_TIME;
 #if ALPAQA_HAVE_CASADI
     m.attr("with_casadi") = true;
 #else
-    m.attr("with_casadi")     = false;
+    m.attr("with_casadi") = false;
 #endif
 #if ALPAQA_HAVE_CASADI_OCP
     m.attr("with_casadi_ocp") = true;

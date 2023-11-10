@@ -104,14 +104,13 @@ if (ALPAQA_WITH_ACCURATE_BUILD_TIME)
         COMMAND ${CMAKE_COMMAND}
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/BuildTime.cmake
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-    add_library(alpaqa-build-time OBJECT ${ALPAQA_BUILD_TIME_C})
-    add_dependencies(alpaqa-build-time alpaqa-build-time-generate)
+    target_sources(alpaqa PRIVATE ${ALPAQA_BUILD_TIME_C})
+    add_dependencies(alpaqa alpaqa-build-time-generate)
 else()
     include(cmake/BuildTime.cmake)
     set(ALPAQA_BUILD_TIME_C "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.c")
-    add_library(alpaqa-build-time OBJECT ${ALPAQA_BUILD_TIME_C})
+    target_sources(alpaqa PRIVATE ${ALPAQA_BUILD_TIME_C})
 endif()
-target_link_libraries(alpaqa PRIVATE alpaqa-build-time)
 
 # CasADi
 if (ALPAQA_WITH_CASADI)

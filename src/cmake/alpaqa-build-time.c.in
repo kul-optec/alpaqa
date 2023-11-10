@@ -1,3 +1,2 @@
-const char *alpaqa_get_build_time(void) {
-    return "@ALPAQA_BUILD_TIME@";
-}
+#include <alpaqa-version.h>
+const char *const alpaqa_build_time = "@ALPAQA_BUILD_TIME@";
