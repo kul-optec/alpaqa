@@ -17,6 +17,7 @@ add_executable(tests
     "util/test-type-erasure.cpp"
     "util/test-index-set.cpp"
     "util/test-print.cpp"
+    "util/test-string-util.cpp"
     "util/test-set-intersection.cpp"
     "util/test-sparse-ops.cpp"
     "util/io/test-csv.cpp"
