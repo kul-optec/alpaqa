@@ -11,6 +11,15 @@
 #include <optional>
 namespace fs = std::filesystem;
 
+struct ConstrCount {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    ConstrCount() = default;
+    length_t lb   = 0; ///< Number of variables with only lower bound
+    length_t ub   = 0; ///< Number of variables with only upper bound
+    length_t lbub = 0; ///< Number of variables with both bounds
+    length_t eq   = 0; ///< Number of variables with equal bounds
+};
+
 struct LoadedProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     alpaqa::TypeErasedProblem<config_t> problem;
@@ -21,13 +30,6 @@ struct LoadedProblem {
     vec initial_guess_x = vec::Zero(problem.get_n()); ///< Unknowns
     vec initial_guess_y = vec::Zero(problem.get_m()); ///< Multipliers g
     vec initial_guess_w = alpaqa::null_vec<config_t>; ///< Multipliers bounds
-    struct ConstrCount {
-        ConstrCount() = default;
-        length_t lb   = 0; ///< Number of variables with only lower bound
-        length_t ub   = 0; ///< Number of variables with only upper bound
-        length_t lbub = 0; ///< Number of variables with both bounds
-        length_t eq   = 0; ///< Number of variables with equal bounds
-    };
     std::optional<ConstrCount> box_constr_count     = std::nullopt,
                                general_constr_count = std::nullopt;
 };

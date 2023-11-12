@@ -54,8 +54,7 @@ void load_initial_guess(Options &opts, LoadedProblem &problem) {
         problem.initial_guess_w = std::move(*w0.value);
 }
 
-void count_constr(LoadedProblem::ConstrCount &cnt,
-                  const alpaqa::Box<config_t> &C) {
+void count_constr(ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
     const auto n = C.lowerbound.size();
     cnt.lb       = 0;
     cnt.ub       = 0;
