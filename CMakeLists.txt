@@ -17,6 +17,13 @@ if (CMAKE_C_COMPILER)
     enable_language(C)
 endif()
 
+# Determine compiler's C++23 support
+if ("cxx_std_23" IN_LIST CMAKE_CXX_COMPILE_FEATURES)
+    set(ALPAQA_WITH_CXX_23_DEFAULT On)
+else()
+    set(ALPAQA_WITH_CXX_23_DEFAULT Off)
+endif()
+
 # Options
 option(ALPAQA_WITH_QUAD_PRECISION
     "Support quad-precision floating point types" Off)
@@ -50,6 +57,8 @@ option(ALPAQA_WITH_IPOPT
     "Build the IPOPT adapter" Off)
 option(ALPAQA_WITH_JSON
     "Enable JSON (de)serialization of options" Off)
+option(ALPAQA_WITH_CXX_23
+    "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})
 set(ALPAQA_DOXYFILE "Doxyfile" CACHE STRING
     "The Doxyfile to use for the docs target")
 option(ALPAQA_ENABLE_PCH
@@ -71,7 +80,7 @@ if (ALPAQA_WITH_PYTHON)
     set(CMAKE_POSITION_INDEPENDENT_CODE On)
 endif()
 if (MSVC)
-    set(CMAKE_CXX_FLAGS "/utf-8 /Dnot=! /D__PRETTY_FUNCTION__=__FUNCSIG__ ${CMAKE_CXX_FLAGS} /bigobj /permissive-")
+    add_compile_options("/utf-8" "/bigobj")
 endif()
 set(CMAKE_RELEASE_POSTFIX "")
 set(CMAKE_DEBUG_POSTFIX "_d")
@@ -92,10 +101,8 @@ if (ALPAQA_WITH_COVERAGE)
         ${CMAKE_CXX_COMPILER_ID}
         ${CMAKE_CXX_COMPILER_VERSION}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage -fno-inline")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -fno-inline")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} --coverage")
+    add_compile_options("--coverage")
+    add_link_options("--coverage")
     add_dependencies(coverage alpaqa::tests)
 endif()
 
