@@ -240,6 +240,10 @@ if (ALPAQA_WITH_IPOPT)
         "interop/ipopt/src/ipopt-adapter.cpp"
         "interop/ipopt/src/ipopt-params.cpp"
     )
+    if (ALPAQA_WITH_JSON)
+        target_sources(ipopt-adapter PRIVATE
+            "interop/ipopt/src/ipopt-json.cpp")
+    endif()
     target_link_libraries(ipopt-adapter
         PUBLIC COIN::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(ipopt-adapter PUBLIC
@@ -326,6 +330,10 @@ if (ALPAQA_WITH_QPALM)
         "interop/qpalm/src/qpalm-adapter.cpp"
         "interop/qpalm/src/qpalm-params.cpp"
     )
+    if (ALPAQA_WITH_JSON)
+        target_sources(qpalm-adapter PRIVATE
+            "interop/qpalm/src/qpalm-json.cpp")
+    endif()
     target_link_libraries(qpalm-adapter
         PUBLIC QPALM::qpalm_cxx alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(qpalm-adapter PUBLIC

@@ -3,7 +3,7 @@
 
 namespace alpaqa::params {
 
-#include <alpaqa/lbfgsb/lbfgsb-params.ipp>
+#include <alpaqa/lbfgsb/lbfgsb-structs.ipp>
 
 template void LBFGSB_ADAPTER_EXPORT set_param(lbfgsb::LBFGSBSolver::Params &,
                                               ParamString);

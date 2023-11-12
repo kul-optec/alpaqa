@@ -1,6 +1,12 @@
 #include <alpaqa/implementation/params/json.tpp>
+
+#include <alpaqa/params/vec-from-file.hpp>
+#include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa/util/duration-parse.hpp>
+#include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/possible-alias.hpp>
+#include <algorithm>
+#include <fstream>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
@@ -82,6 +88,61 @@ void get_param(const Duration &t, json &s) {
         }
     }
     s = std::move(result);
+}
+
+template <>
+void ALPAQA_EXPORT set_param(alpaqa::vec<config_t> &v, const json &j) {
+    if (!j.is_array())
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(v)) +
+                                 "' (expected an array)");
+    v.resize(static_cast<length_t<config_t>>(j.size()));
+    auto convert = [](const json &j) -> real_t<config_t> {
+        try {
+            return j;
+        } catch (json::exception &e) {
+            throw invalid_json_param("Invalid vector element " + to_string(j) +
+                                     " (expected a number)");
+        }
+    };
+    std::ranges::transform(j, v.begin(), convert);
+}
+
+template <>
+void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
+    if (j.is_string()) {
+        std::string fpath{j};
+        std::ifstream f(fpath);
+        if (!f)
+            throw std::invalid_argument("Unable to open file '" + fpath +
+                                        "' for type '" +
+                                        demangled_typename(typeid(v)));
+        try {
+            auto r      = alpaqa::csv::read_row_std_vector<real_t<config_t>>(f);
+            auto r_size = static_cast<length_t<config_t>>(r.size());
+            if (v.expected_size >= 0 && r_size != v.expected_size)
+                throw std::invalid_argument(
+                    "Incorrect size in '" + fpath + "' (got " +
+                    std::to_string(r.size()) + ", expected " +
+                    std::to_string(v.expected_size) + ')');
+            v.value.emplace(cmvec<config_t>{r.data(), r_size});
+        } catch (alpaqa::csv::read_error &e) {
+            throw std::invalid_argument(
+                "Unable to read from file '" + fpath +
+                "': alpaqa::csv::read_error: " + e.what());
+        }
+    } else if (j.is_array()) {
+        alpaqa::params::set_param(v.value.emplace(), j);
+        if (v.expected_size >= 0 && v.value->size() != v.expected_size)
+            throw std::invalid_argument(
+                "Incorrect size in " + to_string(j) + "' (got " +
+                std::to_string(v.value->size()) + ", expected " +
+                std::to_string(v.expected_size) + ')');
+    } else {
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(v)) +
+                                 "' (expected string or array)");
+    }
 }
 
 template <class T>

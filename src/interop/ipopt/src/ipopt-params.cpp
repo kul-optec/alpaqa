@@ -3,8 +3,6 @@
 
 #include <IpIpoptApplication.hpp>
 
-#include <stdexcept>
-
 namespace alpaqa::params {
 
 template <class T>
@@ -35,7 +33,7 @@ void IPOPT_ADAPTER_EXPORT set_param(Ipopt::IpoptApplication &app,
     const auto &ipopt_opts = app.RegOptions()->RegisteredOptionsList();
     const auto regops_it   = ipopt_opts.find(std::string(opt_name));
     if (regops_it == ipopt_opts.end())
-        throw std::invalid_argument(
+        throw invalid_param(
             "Invalid key '" + std::string(opt_name) + "' for type '" +
             "IpoptApplication" + "' in '" + std::string(s.full_key) +
             "',\n  possible keys are: " + possible_keys(ipopt_opts));
@@ -62,13 +60,13 @@ void IPOPT_ADAPTER_EXPORT set_param(Ipopt::IpoptApplication &app,
         } break;
         case Ipopt::OT_Unknown:
         default: {
-            throw std::invalid_argument("Unknown type in '" +
-                                        std::string(s.full_key) + "'");
+            throw invalid_param("Unknown type in '" + std::string(s.full_key) +
+                                "'");
         }
     }
     if (!success)
-        throw std::invalid_argument("Invalid option in '" +
-                                    std::string(s.full_key) + "'");
+        throw invalid_param("Invalid option in '" + std::string(s.full_key) +
+                            "'");
 }
 
 } // namespace alpaqa::params

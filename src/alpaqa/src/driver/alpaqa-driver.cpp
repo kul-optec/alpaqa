@@ -183,8 +183,8 @@ std::ostream &get_output_stream(Options &opts, std::ofstream &out_fstream) {
     return out_fstream.is_open() ? out_fstream : std::cout;
 }
 
-std::string_view get_output_paths(Options &opts) {
-    std::string_view sol_path;
+std::string get_output_paths(Options &opts) {
+    std::string sol_path;
     set_params(sol_path, "sol", opts);
     return sol_path;
 }
@@ -223,7 +223,7 @@ void print_problem_description(std::ostream &os, LoadedProblem &problem) {
 }
 
 auto get_solver_builder(Options &opts) {
-    std::string_view method = "panoc", direction;
+    std::string method = "panoc", direction;
     set_params(method, "method", opts);
     std::tie(method, direction) = alpaqa::params::split_key(method, '.');
     // Dictionary of available solver builders

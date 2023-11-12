@@ -1,4 +1,5 @@
 #include <alpaqa/params/params.hpp>
+#include <alpaqa/params/vec-from-file.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/util/io/csv.hpp>
@@ -13,7 +14,6 @@
 #endif
 
 #include <filesystem>
-#include <fstream>
 #include <mutex>
 #include <optional>
 #include <span>

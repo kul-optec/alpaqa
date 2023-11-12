@@ -1,11 +1,12 @@
 #include <alpaqa/implementation/params/params.tpp>
 
+#include <alpaqa/params/vec-from-file.hpp>
 #include <alpaqa/util/duration-parse.hpp>
 #include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/possible-alias.hpp>
 #include <fstream>
 
-#include "from_chars-compat.ipp"
+#include <alpaqa/util/from_chars-wrapper.hpp>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
@@ -58,12 +59,17 @@ template <class T>
 void set_param(T &f, ParamString s) {
     assert_key_empty<T>(s);
     const auto *val_end = s.value.data() + s.value.size();
-    const auto *ptr     = set_param_float_int(f, s);
-    if (ptr != val_end)
-        throw std::invalid_argument("Invalid suffix '" +
-                                    std::string(ptr, val_end) + "' for type '" +
-                                    demangled_typename(typeid(T)) + "' in '" +
-                                    std::string(s.full_key) + "'");
+    auto res            = util::from_chars(s.value.data(), val_end, f);
+    if (res.ec != std::errc())
+        throw std::invalid_argument(
+            "Invalid value '" + std::string(s.value) + "' for type '" +
+            demangled_typename(typeid(T)) + "' in '" + std::string(s.full_key) +
+            "': " + std::make_error_code(res.ec).message());
+    if (res.ptr != val_end)
+        throw std::invalid_argument(
+            "Invalid suffix '" + std::string(res.ptr, val_end) +
+            "' for type '" + demangled_typename(typeid(T)) + "' in '" +
+            std::string(s.full_key) + "'");
 }
 
 #ifdef ALPAQA_WITH_QUAD_PRECISION
