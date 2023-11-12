@@ -78,9 +78,9 @@ void count_constr(LoadedProblem::ConstrCount &cnt,
 
 void count_problem(LoadedProblem &p) {
     if (p.problem.provides_get_box_C())
-        count_constr(*p.box_constr_count = {}, p.problem.get_box_C());
+        count_constr(p.box_constr_count.emplace(), p.problem.get_box_C());
     if (p.problem.provides_get_box_D())
-        count_constr(*p.general_constr_count = {}, p.problem.get_box_D());
+        count_constr(p.general_constr_count.emplace(), p.problem.get_box_D());
 }
 
 #if ALPAQA_HAVE_DL
