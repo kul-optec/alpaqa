@@ -226,6 +226,16 @@ class LBFGS {
     Params params;
 };
 
+inline constexpr const char *enum_name(LBFGSStepSize s) {
+    switch (s) {
+        case LBFGSStepSize::BasedOnExternalStepSize:
+            return "BasedOnExternalStepSize";
+        case LBFGSStepSize::BasedOnCurvature: return "BasedOnCurvature";
+        default:;
+    }
+    throw std::out_of_range("invalid value for alpaqa::LBFGSStepSize");
+}
+
 // clang-format off
 ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, CBFGSParams, EigenConfigd);
 ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, CBFGSParams, EigenConfigf);)

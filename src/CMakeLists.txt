@@ -56,6 +56,13 @@ endif()
 if (ALPAQA_WITH_DRIVERS)
     target_sources(alpaqa PRIVATE "alpaqa/src/params/params.cpp")
 endif()
+if (ALPAQA_WITH_JSON)
+    find_package(nlohmann_json REQUIRED)
+    target_sources(alpaqa PRIVATE
+        "alpaqa/src/params/json.cpp")
+    target_link_libraries(alpaqa PUBLIC nlohmann_json::nlohmann_json)
+endif()
+
 target_compile_features(alpaqa PUBLIC cxx_std_20)
 target_include_directories(alpaqa PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
@@ -73,6 +80,7 @@ target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_SINGLE_PRECISION}>:ALPAQA_WITH_SINGLE_PRECISION>
     $<$<BOOL:${ALPAQA_WITH_LONG_DOUBLE}>:ALPAQA_WITH_LONG_DOUBLE>
     $<$<BOOL:${ALPAQA_NO_DLCLOSE}>:ALPAQA_NO_DLCLOSE>
+    $<$<BOOL:${ALPAQA_WITH_JSON}>:ALPAQA_WITH_JSON>
 )
 target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)
@@ -288,6 +296,10 @@ if (ALPAQA_WITH_LBFGSB)
         "interop/lbfgsb/src/lbfgsb-params.cpp"
         "interop/lbfgsb/src/lbfgsb_c.F90"
     )
+    if (ALPAQA_WITH_JSON)
+        target_sources(lbfgsb-adapter PRIVATE
+            "interop/lbfgsb/src/lbfgsb-json.cpp")
+    endif()
     set_property(SOURCE "interop/lbfgsb/src/lbfgsb_c.F90"
                  PROPERTY Fortran_PREPROCESS On)
     target_link_libraries(lbfgsb-adapter

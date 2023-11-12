@@ -30,6 +30,7 @@ class AlpaqaRecipe(ConanFile):
         "with_qpalm": False,
         "with_lbfgsb": None,
         "with_ocp": False,
+        "with_json": False,
     }
     options = {
         "shared": [True, False],
@@ -59,6 +60,8 @@ class AlpaqaRecipe(ConanFile):
         self.test_requires("gtest/1.11.0")
         if self.options.with_casadi:
             self.requires("casadi/3.6.3@alpaqa")
+        if self.options.with_json:
+            self.requires("nlohmann_json/3.11.2")
 
     def config_options(self):
         if self.settings.os == "Windows":

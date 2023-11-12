@@ -48,6 +48,8 @@ option(ALPAQA_WITH_QPALM
     "Build the QPALM adapter" Off)
 option(ALPAQA_WITH_IPOPT
     "Build the IPOPT adapter" Off)
+option(ALPAQA_WITH_JSON
+    "Enable JSON (de)serialization of options" Off)
 set(ALPAQA_DOXYFILE "Doxyfile" CACHE STRING
     "The Doxyfile to use for the docs target")
 option(ALPAQA_ENABLE_PCH
