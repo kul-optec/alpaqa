@@ -4,6 +4,12 @@
 
 // split
 
+TEST(durationparse, single0) {
+    std::chrono::milliseconds v{};
+    alpaqa::util::parse_duration(v, "0");
+    EXPECT_EQ(v.count(), 0);
+}
+
 TEST(durationparse, single1) {
     std::chrono::milliseconds v{};
     alpaqa::util::parse_duration(v, "1234ms");

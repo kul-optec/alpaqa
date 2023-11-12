@@ -27,7 +27,7 @@ template <class Rep, class Period>
 std::string_view parse_single_duration(std::chrono::duration<Rep, Period> &t,
                                        std::string_view s) {
     using Duration = std::remove_cvref_t<decltype(t)>;
-    auto trim      = s.find_first_not_of("+ ");
+    auto trim      = s.find_first_not_of("+0 ");
     if (trim == std::string_view::npos)
         return {};
     s.remove_prefix(trim);
