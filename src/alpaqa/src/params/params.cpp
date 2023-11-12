@@ -1,3 +1,12 @@
+#include <alpaqa/implementation/params/params.tpp>
+
+#include <alpaqa/util/duration-parse.hpp>
+#include <alpaqa/util/io/csv.hpp>
+#include <alpaqa/util/possible-alias.hpp>
+#include <fstream>
+
+#include "from_chars-compat.ipp"
+
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
@@ -10,16 +19,9 @@
 #include <alpaqa/inner/pantr.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
 #include <alpaqa/outer/alm.hpp>
-#include <alpaqa/util/io/csv.hpp>
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
-
-#include <alpaqa/implementation/params/params.tpp>
-
-#include <fstream>
-
-#include "from_chars-compat.ipp"
 
 namespace alpaqa::params {
 
@@ -51,7 +53,8 @@ void ALPAQA_EXPORT set_param(std::string &v, ParamString s) {
 }
 
 template <class T>
-    requires((std::floating_point<T> || std::integral<T>) && !std::is_enum_v<T>)
+    requires((std::floating_point<T> || std::integral<T>) &&
+             !std::is_enum_v<T> && !std::is_same_v<T, bool>)
 void set_param(T &f, ParamString s) {
     assert_key_empty<T>(s);
     const auto *val_end = s.value.data() + s.value.size();
@@ -117,48 +120,28 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, ParamString s) {
     }
 }
 
+template <class T>
+inline constexpr bool is_duration = false;
 template <class Rep, class Period>
-void set_param(std::chrono::duration<Rep, Period> &t, ParamString s) {
-    using Duration = std::remove_cvref_t<decltype(t)>;
+inline constexpr bool is_duration<std::chrono::duration<Rep, Period>> = true;
+
+template <class Duration>
+    requires is_duration<Duration>
+void set_param(Duration &t, ParamString s) {
     assert_key_empty<Duration>(s);
-    const auto *val_end = s.value.data() + s.value.size();
-    double value;
-#if ALPAQA_USE_FROM_CHARS_FLOAT
-    auto [ptr, ec] = std::from_chars(s.value.data(), val_end, value);
-    if (ec != std::errc())
-        throw std::invalid_argument("Invalid value '" +
-                                    std::string(ptr, val_end) + "' for type '" +
-                                    demangled_typename(typeid(Duration)) +
-                                    "' in '" + std::string(s.full_key) +
-                                    "': " + std::make_error_code(ec).message());
-#else
-    size_t end_index;
     try {
-        value = std::stod(std::string(s.value), &end_index);
-    } catch (std::exception &e) {
-        throw std::invalid_argument(
+        util::parse_duration(t = {}, s.value);
+    } catch (util::invalid_duration_value &e) {
+        throw invalid_param(
             "Invalid value '" + std::string(s.value) + "' for type '" +
-            demangled_typename(typeid(Duration)) + "' in '" +
-            std::string(s.full_key) + "': " + e.what());
+            demangled_typename(typeid(Duration)) + "': error at '" +
+            std::string(std::string_view(s.value.data(), e.result.ptr)));
+    } catch (util::invalid_duration_units &e) {
+        throw invalid_param("Invalid units '" + std::string(e.units) +
+                            "' for type '" +
+                            demangled_typename(typeid(Duration)) + "' in '" +
+                            std::string(s.value) + "'");
     }
-    const char *ptr = s.value.data() + end_index;
-#endif
-    std::string_view units{ptr, val_end};
-    auto cast = [](auto t) { return std::chrono::duration_cast<Duration>(t); };
-    if (units == "s" || units.empty())
-        t = cast(std::chrono::duration<double, std::ratio<1, 1>>{value});
-    else if (units == "ms")
-        t = cast(std::chrono::duration<double, std::ratio<1, 1000>>{value});
-    else if (units == "us" || units == "µs")
-        t = cast(std::chrono::duration<double, std::ratio<1, 1000000>>{value});
-    else if (units == "ns")
-        t = cast(
-            std::chrono::duration<double, std::ratio<1, 1000000000>>{value});
-    else if (units == "min")
-        t = cast(std::chrono::duration<double, std::ratio<60, 1>>{value});
-    else
-        throw std::invalid_argument("Invalid units '" + std::string(units) +
-                                    "' in '" + std::string(s.full_key) + "'");
 }
 
 template <>
@@ -201,222 +184,14 @@ void ALPAQA_EXPORT set_param(PANOCStopCrit &t, ParamString s) {
                                     std::string(s.full_key) + "'");
 }
 
-PARAMS_TABLE(LBFGSParams<config_t>,        //
-             PARAMS_MEMBER(memory),        //
-             PARAMS_MEMBER(min_div_fac),   //
-             PARAMS_MEMBER(min_abs_s),     //
-             PARAMS_MEMBER(cbfgs),         //
-             PARAMS_MEMBER(force_pos_def), //
-             PARAMS_MEMBER(stepsize),      //
-);
-
-PARAMS_TABLE(AndersonAccelParams<config_t>, //
-             PARAMS_MEMBER(memory),         //
-             PARAMS_MEMBER(min_div_fac),    //
-);
-
-PARAMS_TABLE(CBFGSParams<config_t>, //
-             PARAMS_MEMBER(α),      //
-             PARAMS_MEMBER(ϵ),      //
-);
-
-PARAMS_TABLE(LipschitzEstimateParams<config_t>, //
-             PARAMS_MEMBER(L_0),                //
-             PARAMS_MEMBER(δ),                  //
-             PARAMS_MEMBER(ε),                  //
-             PARAMS_MEMBER(Lγ_factor),          //
-);
-
-PARAMS_TABLE(PANTRParams<config_t>,                                         //
-             PARAMS_MEMBER(Lipschitz),                                      //
-             PARAMS_MEMBER(max_iter),                                       //
-             PARAMS_MEMBER(max_time),                                       //
-             PARAMS_MEMBER(L_min),                                          //
-             PARAMS_MEMBER(L_max),                                          //
-             PARAMS_MEMBER(stop_crit),                                      //
-             PARAMS_MEMBER(max_no_progress),                                //
-             PARAMS_MEMBER(print_interval),                                 //
-             PARAMS_MEMBER(print_precision),                                //
-             PARAMS_MEMBER(quadratic_upperbound_tolerance_factor),          //
-             PARAMS_MEMBER(TR_tolerance_factor),                            //
-             PARAMS_MEMBER(ratio_threshold_acceptable),                     //
-             PARAMS_MEMBER(ratio_threshold_good),                           //
-             PARAMS_MEMBER(radius_factor_rejected),                         //
-             PARAMS_MEMBER(radius_factor_acceptable),                       //
-             PARAMS_MEMBER(radius_factor_good),                             //
-             PARAMS_MEMBER(initial_radius),                                 //
-             PARAMS_MEMBER(min_radius),                                     //
-             PARAMS_MEMBER(compute_ratio_using_new_stepsize),               //
-             PARAMS_MEMBER(update_direction_on_prox_step),                  //
-             PARAMS_MEMBER(recompute_last_prox_step_after_direction_reset), //
-             PARAMS_MEMBER(disable_acceleration),                           //
-             PARAMS_MEMBER(ratio_approx_fbe_quadratic_model),               //
-);
-
-PARAMS_TABLE(PANOCParams<config_t>,                                         //
-             PARAMS_MEMBER(Lipschitz),                                      //
-             PARAMS_MEMBER(max_iter),                                       //
-             PARAMS_MEMBER(max_time),                                       //
-             PARAMS_MEMBER(min_linesearch_coefficient),                     //
-             PARAMS_MEMBER(force_linesearch),                               //
-             PARAMS_MEMBER(linesearch_strictness_factor),                   //
-             PARAMS_MEMBER(L_min),                                          //
-             PARAMS_MEMBER(L_max),                                          //
-             PARAMS_MEMBER(stop_crit),                                      //
-             PARAMS_MEMBER(max_no_progress),                                //
-             PARAMS_MEMBER(print_interval),                                 //
-             PARAMS_MEMBER(print_precision),                                //
-             PARAMS_MEMBER(quadratic_upperbound_tolerance_factor),          //
-             PARAMS_MEMBER(linesearch_tolerance_factor),                    //
-             PARAMS_MEMBER(update_direction_in_candidate),                  //
-             PARAMS_MEMBER(recompute_last_prox_step_after_stepsize_change), //
-             PARAMS_MEMBER(eager_gradient_eval),                            //
-);
-
-PARAMS_TABLE(FISTAParams<config_t>,                                //
-             PARAMS_MEMBER(Lipschitz),                             //
-             PARAMS_MEMBER(max_iter),                              //
-             PARAMS_MEMBER(max_time),                              //
-             PARAMS_MEMBER(L_min),                                 //
-             PARAMS_MEMBER(L_max),                                 //
-             PARAMS_MEMBER(stop_crit),                             //
-             PARAMS_MEMBER(max_no_progress),                       //
-             PARAMS_MEMBER(print_interval),                        //
-             PARAMS_MEMBER(print_precision),                       //
-             PARAMS_MEMBER(quadratic_upperbound_tolerance_factor), //
-             PARAMS_MEMBER(disable_acceleration),                  //
-);
-
-PARAMS_TABLE(ZeroFPRParams<config_t>,                                       //
-             PARAMS_MEMBER(Lipschitz),                                      //
-             PARAMS_MEMBER(max_iter),                                       //
-             PARAMS_MEMBER(max_time),                                       //
-             PARAMS_MEMBER(min_linesearch_coefficient),                     //
-             PARAMS_MEMBER(force_linesearch),                               //
-             PARAMS_MEMBER(linesearch_strictness_factor),                   //
-             PARAMS_MEMBER(L_min),                                          //
-             PARAMS_MEMBER(L_max),                                          //
-             PARAMS_MEMBER(stop_crit),                                      //
-             PARAMS_MEMBER(max_no_progress),                                //
-             PARAMS_MEMBER(print_interval),                                 //
-             PARAMS_MEMBER(print_precision),                                //
-             PARAMS_MEMBER(quadratic_upperbound_tolerance_factor),          //
-             PARAMS_MEMBER(linesearch_tolerance_factor),                    //
-             PARAMS_MEMBER(update_direction_in_candidate),                  //
-             PARAMS_MEMBER(recompute_last_prox_step_after_stepsize_change), //
-             PARAMS_MEMBER(update_direction_from_prox_step),                //
-);
-
-PARAMS_TABLE(LBFGSDirectionParams<config_t>,              //
-             PARAMS_MEMBER(rescale_on_step_size_changes), //
-);
-
-PARAMS_TABLE(AndersonDirectionParams<config_t>,           //
-             PARAMS_MEMBER(rescale_on_step_size_changes), //
-);
-
-PARAMS_TABLE(StructuredLBFGSDirectionParams<config_t>,      //
-             PARAMS_MEMBER(hessian_vec_factor),             //
-             PARAMS_MEMBER(hessian_vec_finite_differences), //
-             PARAMS_MEMBER(full_augmented_hessian),         //
-);
-
-PARAMS_TABLE(NewtonTRDirectionParams<config_t>,   //
-             PARAMS_MEMBER(hessian_vec_factor),   //
-             PARAMS_MEMBER(finite_diff),          //
-             PARAMS_MEMBER(finite_diff_stepsize), //
-);
-
-PARAMS_TABLE(SteihaugCGParams<config_t>,     //
-             PARAMS_MEMBER(tol_scale),       //
-             PARAMS_MEMBER(tol_scale_root),  //
-             PARAMS_MEMBER(tol_max),         //
-             PARAMS_MEMBER(max_iter_factor), //
-);
-
-PARAMS_TABLE(StructuredNewtonRegularizationParams<config_t>, //
-             PARAMS_MEMBER(min_eig),                         //
-             PARAMS_MEMBER(print_eig),                       //
-);
-
-PARAMS_TABLE(StructuredNewtonDirectionParams<config_t>, //
-             PARAMS_MEMBER(hessian_vec_factor),         //
-);
-
-PARAMS_TABLE(ALMParams<config_t>,                           //
-             PARAMS_MEMBER(tolerance),                      //
-             PARAMS_MEMBER(dual_tolerance),                 //
-             PARAMS_MEMBER(penalty_update_factor),          //
-             PARAMS_MEMBER(initial_penalty),                //
-             PARAMS_MEMBER(initial_penalty_factor),         //
-             PARAMS_MEMBER(initial_tolerance),              //
-             PARAMS_MEMBER(tolerance_update_factor),        //
-             PARAMS_MEMBER(rel_penalty_increase_threshold), //
-             PARAMS_MEMBER(max_multiplier),                 //
-             PARAMS_MEMBER(max_penalty),                    //
-             PARAMS_MEMBER(min_penalty),                    //
-             PARAMS_MEMBER(max_iter),                       //
-             PARAMS_MEMBER(max_time),                       //
-             PARAMS_MEMBER(print_interval),                 //
-             PARAMS_MEMBER(print_precision),                //
-             PARAMS_MEMBER(single_penalty_factor),          //
-);
-
-#if ALPAQA_WITH_OCP
-PARAMS_TABLE(PANOCOCPParams<config_t>,
-             PARAMS_MEMBER(Lipschitz),                             //
-             PARAMS_MEMBER(max_iter),                              //
-             PARAMS_MEMBER(max_time),                              //
-             PARAMS_MEMBER(min_linesearch_coefficient),            //
-             PARAMS_MEMBER(linesearch_strictness_factor),          //
-             PARAMS_MEMBER(L_min),                                 //
-             PARAMS_MEMBER(L_max),                                 //
-             PARAMS_MEMBER(L_max_inc),                             //
-             PARAMS_MEMBER(stop_crit),                             //
-             PARAMS_MEMBER(max_no_progress),                       //
-             PARAMS_MEMBER(gn_interval),                           //
-             PARAMS_MEMBER(gn_sticky),                             //
-             PARAMS_MEMBER(reset_lbfgs_on_gn_step),                //
-             PARAMS_MEMBER(lqr_factor_cholesky),                   //
-             PARAMS_MEMBER(lbfgs_params),                          //
-             PARAMS_MEMBER(print_interval),                        //
-             PARAMS_MEMBER(print_precision),                       //
-             PARAMS_MEMBER(quadratic_upperbound_tolerance_factor), //
-             PARAMS_MEMBER(linesearch_tolerance_factor),           //
-             PARAMS_MEMBER(disable_acceleration),                  //
-);
-#endif
-
-namespace detail {
-
-/// Check if @p A is equal to any of @p Bs.
-template <class A, class... Bs>
-constexpr bool any_is_same() {
-    return (std::is_same_v<A, Bs> || ...);
-}
-
-/// Unused unique type tag for template specializations that were rejected
-/// because some types were not distinct.
-template <class...>
-struct _dummy;
-
-/// If @p NewAlias is not the same type as any of @p PossibleAliases, the result
-/// is @p NewAlias. If @p NewAlias is not distinct from @p PossibleAliases, the
-/// result is a dummy type, uniquely determined by @p NewAlias and
-/// @p PossibleAliases.
-template <class NewAlias, class... PossibleAliases>
-using possible_alias_t =
-    std::conditional_t<any_is_same<NewAlias, PossibleAliases...>(),
-                       _dummy<NewAlias, PossibleAliases...>, NewAlias>;
-
-} // namespace detail
+#include <alpaqa/params/structs.ipp>
 
 template <class... Ts>
-void set_param(detail::_dummy<Ts...> &, ParamString) {}
+void set_param(util::detail::dummy<Ts...> &, ParamString) {}
 
 #define ALPAQA_SET_PARAM_INST(...)                                             \
     template void ALPAQA_EXPORT set_param(                                     \
-        detail::possible_alias_t<__VA_ARGS__> &, ParamString)
+        util::possible_alias_t<__VA_ARGS__> &, ParamString)
 
 ALPAQA_SET_PARAM_INST(float);
 ALPAQA_SET_PARAM_INST(double, float);

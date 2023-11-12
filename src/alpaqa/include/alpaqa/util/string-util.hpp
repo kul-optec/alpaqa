@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <numeric>
 #include <ranges>
 #include <string>
@@ -87,6 +88,17 @@ std::string join_quote(std::ranges::input_range auto strings,
     auto result = std::accumulate(next(begin), end, std::move(first), combine);
     result += opt.quote_right;
     return result;
+}
+
+/// Sort the given range of strings in-place in a case-insensitive manner.
+void sort_case_insensitive(auto &range) {
+    auto cmp = [](const auto &a, const auto &b) {
+        auto toupper = [](unsigned char c) { return std::toupper(c); };
+        return std::ranges::lexicographical_compare(
+            std::views::transform(a, toupper),
+            std::views::transform(b, toupper));
+    };
+    std::ranges::sort(range, cmp);
 }
 
 } // namespace alpaqa::util

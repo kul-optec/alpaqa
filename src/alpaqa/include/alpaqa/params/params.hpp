@@ -40,7 +40,7 @@ inline auto split_key(std::string_view full, char tok = '.') {
 
 /// Update/overwrite the first argument based on the option in @p s.
 template <class T>
-void set_param(T &, ParamString); /* deliberately undefined */
+void ALPAQA_EXPORT set_param(T &, ParamString); /* deliberately undefined */
 
 /// Overwrites @p t based on the @p options that start with @p prefix.
 /// If @p used is not `nullopt`, sets corresponding flag of the options that
