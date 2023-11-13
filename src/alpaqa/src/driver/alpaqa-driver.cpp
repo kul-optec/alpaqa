@@ -97,6 +97,12 @@ options:
     The prefix @ can be added to the values of x0, mul_g0 and mul_x0 to read
     the values from the given CSV file.
 
+    Options can be loaded from a JSON file by using an @ prefix. For example,
+    an argument @options.json loads the options from a file options.json in the
+    current directory. Multiple JSON files are processed in the order they
+    appear in the command line arguments. Options specified on the command line
+    always have precedence over options in a JSON file, regardless of order.
+
 examples:
     alpaqa-driver problem.so \
         problem.register=register_alpaqa_problem \
@@ -108,6 +114,7 @@ examples:
         x0=@/some/file.csv
 
     alpaqa-driver cs:build/casadi_problem.so \
+        @options/default.json \
         problem.param=1,2,3 \
         method=ipopt \
         solver.tol=1e-8 solver.constr_viol_tol=1e-8 \
