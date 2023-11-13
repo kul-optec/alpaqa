@@ -1,12 +1,18 @@
 #pragma once
 
-#define ALPAQA_VERSION_MAJOR @PROJECT_VERSION_MAJOR @
-#define ALPAQA_VERSION_MINOR @PROJECT_VERSION_MINOR @
-#define ALPAQA_VERSION_PATCH @PROJECT_VERSION_PATCH @
+#define ALPAQA_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define ALPAQA_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define ALPAQA_VERSION_PATCH @PROJECT_VERSION_PATCH@
 #define ALPAQA_VERSION_SUFFIX "@PY_VERSION_SUFFIX@"
 #define ALPAQA_VERSION "@PROJECT_VERSION@"
 #define ALPAQA_VERSION_FULL "@PROJECT_VERSION@@PY_VERSION_SUFFIX@"
 #define ALPAQA_BUILD_TIME alpaqa_build_time
 
 #include <alpaqa/export.h>
-ALPAQA_EXPORT extern const char *const alpaqa_build_time;
+ALPAQA_EXPORT
+#ifdef __cplusplus
+extern "C"
+#else
+extern
+#endif
+const char *const alpaqa_build_time;

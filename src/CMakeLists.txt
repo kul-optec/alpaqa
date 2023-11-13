@@ -106,18 +106,18 @@ target_include_directories(alpaqa PUBLIC
 # Build time
 message(STATUS "Configuration time ${CONFIG_TIME}")
 if (ALPAQA_WITH_ACCURATE_BUILD_TIME)
-    set(ALPAQA_BUILD_TIME_C "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.c")
+    set(ALPAQA_BUILD_TIME_CPP "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.cpp")
     add_custom_target(alpaqa-build-time-generate
-        BYPRODUCTS ${ALPAQA_BUILD_TIME_C}
+        BYPRODUCTS ${ALPAQA_BUILD_TIME_CPP}
         COMMAND ${CMAKE_COMMAND}
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/BuildTime.cmake
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-    target_sources(alpaqa PRIVATE ${ALPAQA_BUILD_TIME_C})
+    target_sources(alpaqa PRIVATE ${ALPAQA_BUILD_TIME_CPP})
     add_dependencies(alpaqa alpaqa-build-time-generate)
 else()
     include(cmake/BuildTime.cmake)
-    set(ALPAQA_BUILD_TIME_C "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.c")
-    target_sources(alpaqa PRIVATE ${ALPAQA_BUILD_TIME_C})
+    set(ALPAQA_BUILD_TIME_CPP "${CMAKE_CURRENT_BINARY_DIR}/alpaqa-build-time.cpp")
+    target_sources(alpaqa PRIVATE ${ALPAQA_BUILD_TIME_CPP})
 endif()
 
 # CasADi
