@@ -6,6 +6,7 @@
 #include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/possible-alias.hpp>
 #include <algorithm>
+#include <concepts>
 #include <fstream>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
@@ -114,27 +115,26 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
         std::string fpath{j};
         std::ifstream f(fpath);
         if (!f)
-            throw std::invalid_argument("Unable to open file '" + fpath +
-                                        "' for type '" +
-                                        demangled_typename(typeid(v)));
+            throw invalid_json_param("Unable to open file '" + fpath +
+                                     "' for type '" +
+                                     demangled_typename(typeid(v)));
         try {
             auto r      = alpaqa::csv::read_row_std_vector<real_t<config_t>>(f);
             auto r_size = static_cast<length_t<config_t>>(r.size());
             if (v.expected_size >= 0 && r_size != v.expected_size)
-                throw std::invalid_argument(
-                    "Incorrect size in '" + fpath + "' (got " +
-                    std::to_string(r.size()) + ", expected " +
-                    std::to_string(v.expected_size) + ')');
+                throw invalid_json_param("Incorrect size in '" + fpath +
+                                         "' (got " + std::to_string(r.size()) +
+                                         ", expected " +
+                                         std::to_string(v.expected_size) + ')');
             v.value.emplace(cmvec<config_t>{r.data(), r_size});
         } catch (alpaqa::csv::read_error &e) {
-            throw std::invalid_argument(
-                "Unable to read from file '" + fpath +
-                "': alpaqa::csv::read_error: " + e.what());
+            throw invalid_json_param("Unable to read from file '" + fpath +
+                                     "': alpaqa::csv::read_error: " + e.what());
         }
     } else if (j.is_array()) {
         alpaqa::params::set_param(v.value.emplace(), j);
         if (v.expected_size >= 0 && v.value->size() != v.expected_size)
-            throw std::invalid_argument(
+            throw invalid_json_param(
                 "Incorrect size in " + to_string(j) + "' (got " +
                 std::to_string(v.value->size()) + ", expected " +
                 std::to_string(v.expected_size) + ')');
@@ -149,6 +149,14 @@ template <class T>
     requires(std::integral<T> || std::floating_point<T> ||
              std::same_as<T, bool> || std::same_as<T, std::string>)
 void set_param(T &t, const nlohmann::json &j) {
+    if (std::unsigned_integral<T> && !j.is_number_unsigned())
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(T)) +
+                                 "' (expected unsigned integer)");
+    if (std::integral<T> && !j.is_number_integer())
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(T)) +
+                                 "' (expected integer)");
     t = j;
 }
 
@@ -166,8 +174,8 @@ void ALPAQA_EXPORT set_param(LBFGSStepSize &t, const json &j) {
     else if (j == "BasedOnCurvature")
         t = LBFGSStepSize::BasedOnCurvature;
     else
-        throw std::invalid_argument("Invalid value " + to_string(j) +
-                                    " for type 'LBFGSStepSize'");
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type 'LBFGSStepSize'");
 }
 
 template <>
@@ -198,8 +206,8 @@ void ALPAQA_EXPORT set_param(PANOCStopCrit &t, const json &j) {
     else if (j == "LBFGSBpp")
         t = PANOCStopCrit::LBFGSBpp;
     else
-        throw std::invalid_argument("Invalid value " + to_string(j) +
-                                    " for type 'PANOCStopCrit'");
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type 'PANOCStopCrit'");
 }
 
 template <>

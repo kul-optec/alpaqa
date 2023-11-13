@@ -83,9 +83,20 @@ class Options {
 template <class T>
 decltype(auto) set_params(T &t, std::string_view prefix, Options &opts) {
 #if ALPAQA_WITH_JSON
-    for (const auto &j : opts.json_data())
-        if (j.contains(prefix))
-            alpaqa::params::set_param(t, j[prefix]);
+    auto json_data = opts.json_data();
+    for (size_t i = 0; i < json_data.size(); ++i)
+        try {
+            if (auto j = json_data[i].find(prefix); j != json_data[i].end())
+                alpaqa::params::set_param(t, *j);
+        } catch (alpaqa::params::invalid_json_param &e) {
+            throw std::invalid_argument(
+                "Error in JSON options '" +
+                std::string(opts.json_flags()[i].substr(1)) + "': " + e.what());
+        } catch (nlohmann::json::exception &e) {
+            throw std::invalid_argument(
+                "Error in JSON file '" +
+                std::string(opts.json_flags()[i].substr(1)) + "': " + e.what());
+        }
 #endif
     return alpaqa::params::set_params(t, prefix, opts.options(), opts.used());
 }
