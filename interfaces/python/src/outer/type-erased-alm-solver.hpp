@@ -72,9 +72,9 @@ struct ALMSolverVTable : util::BasicVTable {
             auto &self       = *std::launder(reinterpret_cast<T *>(self_));
             auto call_solver = [&]<class P>(const P *p) -> py::tuple {
                 if constexpr (!std::is_same_v<P, typename T::Problem>)
-                    throw std::invalid_argument(
-                        "Unsupported problem type (got '" + demangled_typename(typeid(P)) +
-                        "', expected '" + demangled_typename(typeid(typename T::Problem)) + "')");
+                    throw std::invalid_argument("Unsupported problem type (expected '" +
+                                                demangled_typename(typeid(typename T::Problem)) +
+                                                "', got '" + demangled_typename(typeid(P)) + "')");
                 else
                     return safe_call_solver(self, p, x, y, async, suppress_interrupt);
             };
@@ -121,7 +121,7 @@ class TypeErasedALMSolver : public util::TypeErased<ALMSolverVTable<Conf>, Alloc
         return TypeErased::template make<TypeErasedALMSolver, T>(std::forward<Args>(args)...);
     }
 
-    decltype(auto) operator()(const Problem &p, std::optional<vec> x, std::optional<vec> y,
+    decltype(auto) operator()(const Problem & p, std::optional<vec> x, std::optional<vec> y,
                               bool async, bool suppress_interrupt) {
         return call(vtable.call, p, x, y, async, suppress_interrupt);
     }
