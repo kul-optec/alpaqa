@@ -15,7 +15,10 @@ struct ScopedMallocChecker {
 };
 #else
 template <bool>
-struct [[maybe_unused]] ScopedMallocChecker {};
+struct [[maybe_unused]] ScopedMallocChecker {
+    // Empty constructor suppresses MSVC /we4101 (unreferenced local variable)
+    ScopedMallocChecker() noexcept {} // NOLINT(*-use-equals-default)
+};
 #endif
 struct [[maybe_unused]] ScopedMallocBlocker : ScopedMallocChecker<false> {};
 struct [[maybe_unused]] ScopedMallocAllower : ScopedMallocChecker<true> {};
