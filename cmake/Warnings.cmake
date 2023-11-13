@@ -116,7 +116,7 @@ function(add_warnings_target tgt_name warnings_as_errors)
         elseif (CMAKE_${LANG}_COMPILER_ID MATCHES "Intel")
             target_compile_options(${tgt_name} INTERFACE
             $<$<COMPILE_LANGUAGE:${LANG}>:$<BUILD_INTERFACE:${INTEL_WARNINGS_${LANG}}>>)
-        else()
+        elseif (CMAKE_${LANG}_COMPILER_ID)
             message(WARNING "No known warnings for this ${LANG} compiler")
         endif()
     endforeach()
