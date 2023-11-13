@@ -1,8 +1,10 @@
 #pragma once
 
 #include <alpaqa/params/params.hpp>
+#include <alpaqa/util/string-util.hpp>
 
 #include <algorithm>
+#include <ranges>
 #include <span>
 #include <stdexcept>
 #include <string_view>
@@ -89,13 +91,20 @@ decltype(auto) set_params(T &t, std::string_view prefix, Options &opts) {
             if (auto j = json_data[i].find(prefix); j != json_data[i].end())
                 alpaqa::params::set_param(t, *j);
         } catch (alpaqa::params::invalid_json_param &e) {
+            std::string fname{opts.json_flags()[i].substr(1)};
             throw std::invalid_argument(
-                "Error in JSON options '" +
-                std::string(opts.json_flags()[i].substr(1)) + "': " + e.what());
+                "Error in JSON file '" + fname + "' at '" +
+                std::string(prefix) +
+                alpaqa::util::join_quote(std::views::reverse(e.backtrace),
+                                         {.sep         = "",
+                                          .empty       = "",
+                                          .quote_left  = ".",
+                                          .quote_right = ""}) +
+                "': " + e.what());
         } catch (nlohmann::json::exception &e) {
-            throw std::invalid_argument(
-                "Error in JSON file '" +
-                std::string(opts.json_flags()[i].substr(1)) + "': " + e.what());
+            std::string fname{opts.json_flags()[i].substr(1)};
+            throw std::invalid_argument("Error in JSON file '" + fname +
+                                        "': " + e.what());
         }
 #endif
     return alpaqa::params::set_params(t, prefix, opts.options(), opts.used());

@@ -4,6 +4,8 @@
 #include <alpaqa/params/structs.hpp>
 #include <nlohmann/json_fwd.hpp>
 #include <functional>
+#include <string>
+#include <vector>
 
 namespace alpaqa::params {
 
@@ -30,6 +32,7 @@ struct attribute_accessor<T, json> {
 /// Custom parameter parsing exception.
 struct ALPAQA_EXPORT invalid_json_param : std::invalid_argument {
     using std::invalid_argument::invalid_argument;
+    std::vector<std::string> backtrace;
 };
 
 } // namespace alpaqa::params

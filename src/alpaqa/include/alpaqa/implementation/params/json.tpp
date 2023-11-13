@@ -14,7 +14,10 @@ template <class T>
     requires requires { attribute_table<T, nlohmann::json>::table; }
 void set_param(T &t, const nlohmann::json &j) {
     if (!j.is_object())
-        throw std::runtime_error("should be object");
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(T)) +
+                                 "' (expected object, but got " +
+                                 j.type_name() + ')');
     const auto &m = attribute_table<T, nlohmann::json>::table;
     for (auto &&el : j.items()) {
         const auto &key = el.key();
@@ -28,7 +31,12 @@ void set_param(T &t, const nlohmann::json &j) {
                 demangled_typename(typeid(T)) + "',\n  possible keys are: " +
                 util::join(sorted_keys, {.sep = ", ", .empty = "∅"}));
         }
-        it->second.set(t, el.value());
+        try {
+            it->second.set(t, el.value());
+        } catch (invalid_json_param &e) {
+            e.backtrace.push_back(key);
+            throw;
+        }
     }
 }
 
