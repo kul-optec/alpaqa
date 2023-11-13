@@ -13,7 +13,7 @@ try {
     mkdir -fo $srcdir
     pushd $srcdir
 
-    if ( -not (Test-Path googletest) ) {
+    if ( -not (Test-Path eigen) ) {
         git clone --single-branch --depth=1 --branch master `
             "https://gitlab.com/libeigen/eigen"
     }
