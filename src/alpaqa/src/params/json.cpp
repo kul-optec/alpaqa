@@ -6,8 +6,10 @@
 #include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/possible-alias.hpp>
 #include <algorithm>
+#include <cmath>
 #include <concepts>
 #include <fstream>
+#include <limits>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
@@ -96,14 +98,16 @@ void ALPAQA_EXPORT set_param(alpaqa::vec<config_t> &v, const json &j) {
     if (!j.is_array())
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(v)) +
-                                 "' (expected an array)");
+                                 "' (expected an array, but got " +
+                                 j.type_name() + ')');
     v.resize(static_cast<length_t<config_t>>(j.size()));
     auto convert = [](const json &j) -> real_t<config_t> {
         try {
             return j;
         } catch (json::exception &e) {
             throw invalid_json_param("Invalid vector element " + to_string(j) +
-                                     " (expected a number)");
+                                     " (expected a number, but got " +
+                                     j.type_name() + ')');
         }
     };
     std::ranges::transform(j, v.begin(), convert);
@@ -122,10 +126,10 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
             auto r      = alpaqa::csv::read_row_std_vector<real_t<config_t>>(f);
             auto r_size = static_cast<length_t<config_t>>(r.size());
             if (v.expected_size >= 0 && r_size != v.expected_size)
-                throw invalid_json_param("Incorrect size in '" + fpath +
-                                         "' (got " + std::to_string(r.size()) +
-                                         ", expected " +
-                                         std::to_string(v.expected_size) + ')');
+                throw invalid_json_param(
+                    "Incorrect size in '" + fpath + "' (expected " +
+                    std::to_string(v.expected_size) + ", but got " +
+                    std::to_string(r.size()) + ")");
             v.value.emplace(cmvec<config_t>{r.data(), r_size});
         } catch (alpaqa::csv::read_error &e) {
             throw invalid_json_param("Unable to read from file '" + fpath +
@@ -135,36 +139,96 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
         alpaqa::params::set_param(v.value.emplace(), j);
         if (v.expected_size >= 0 && v.value->size() != v.expected_size)
             throw invalid_json_param(
-                "Incorrect size in " + to_string(j) + "' (got " +
-                std::to_string(v.value->size()) + ", expected " +
-                std::to_string(v.expected_size) + ')');
+                "Incorrect size in " + to_string(j) + "' (expected " +
+                std::to_string(v.expected_size) + ", but got " +
+                std::to_string(v.value->size()) + ')');
     } else {
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(v)) +
-                                 "' (expected string or array)");
+                                 "' (expected string or array, but got " +
+                                 j.type_name() + ')');
     }
 }
 
-template <class T>
-    requires(std::integral<T> || std::floating_point<T> ||
-             std::same_as<T, bool> || std::same_as<T, std::string>)
+template <>
+void ALPAQA_EXPORT set_param(bool &t, const nlohmann::json &j) {
+    if (!j.is_boolean())
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(t)) +
+                                 "' (expected boolean, but got " +
+                                 j.type_name() + ')');
+    t = j;
+}
+
+template <>
+void ALPAQA_EXPORT set_param(std::string &t, const nlohmann::json &j) {
+    if (!j.is_string())
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(t)) +
+                                 "' (expected string, but got " +
+                                 j.type_name() + ')');
+    t = j;
+}
+
+template <std::integral T>
+    requires(!std::same_as<T, bool>)
 void set_param(T &t, const nlohmann::json &j) {
     if (std::unsigned_integral<T> && !j.is_number_unsigned())
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(T)) +
-                                 "' (expected unsigned integer)");
-    if (std::integral<T> && !j.is_number_integer())
+                                 "' (expected unsigned integer, but got " +
+                                 j.type_name() + ')');
+    if (!j.is_number_integer())
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(T)) +
-                                 "' (expected integer)");
+                                 "' (expected integer, but got " +
+                                 j.type_name() + ')');
     t = j;
 }
 
+template <std::floating_point T>
+void set_param(T &t, const nlohmann::json &j) {
+    if (j.is_string()) {
+        if (j == "nan") {
+            t = std::numeric_limits<T>::quiet_NaN();
+        } else if (j == "inf" || j == "+inf") {
+            t = std::numeric_limits<T>::infinity();
+        } else if (j == "-inf") {
+            t = -std::numeric_limits<T>::infinity();
+        } else {
+            throw invalid_json_param("Invalid value " + to_string(j) +
+                                     " for type '" +
+                                     demangled_typename(typeid(T)) +
+                                     "' (expected number or any of "
+                                     "\"nan\", \"inf\", \"+inf\", \"-inf\")");
+        }
+    } else if (j.is_number()) {
+        t = j;
+    } else {
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for type '" + demangled_typename(typeid(T)) +
+                                 "' (expected number, but got " +
+                                 j.type_name() + ')');
+    }
+}
+
 template <class T>
-    requires(std::integral<T> || std::floating_point<T> ||
-             std::same_as<T, bool> || std::same_as<T, std::string>)
+    requires(std::integral<T> || std::same_as<T, bool> ||
+             std::same_as<T, std::string>)
 void get_param(const T &t, nlohmann::json &j) {
     j = t;
+}
+
+template <std::floating_point T>
+void get_param(const T &t, nlohmann::json &j) {
+    if (std::isnan(t))
+        j = "nan";
+    else if (t == +std::numeric_limits<T>::infinity())
+        j = "inf";
+    else if (t == -std::numeric_limits<T>::infinity())
+        j = "-inf";
+    else
+        j = t;
 }
 
 template <>
@@ -222,27 +286,31 @@ void set_param(util::detail::dummy<Ts...> &, const json &) {}
 template <class... Ts>
 void get_param(const util::detail::dummy<Ts...> &, json &) {}
 
-#define ALPAQA_SET_PARAM_INST(...)                                             \
+#define ALPAQA_GET_PARAM_INST(...)                                             \
+    template void ALPAQA_EXPORT get_param(                                     \
+        const util::possible_alias_t<__VA_ARGS__> &, json &)
+#define ALPAQA_GETSET_PARAM_INST(...)                                          \
     template void ALPAQA_EXPORT set_param(                                     \
         util::possible_alias_t<__VA_ARGS__> &, const json &);                  \
     template void ALPAQA_EXPORT get_param(                                     \
         const util::possible_alias_t<__VA_ARGS__> &, json &)
 
-ALPAQA_SET_PARAM_INST(std::string);
+ALPAQA_GET_PARAM_INST(std::string);
 
-ALPAQA_SET_PARAM_INST(bool);
-ALPAQA_SET_PARAM_INST(float);
-ALPAQA_SET_PARAM_INST(double, float);
-ALPAQA_SET_PARAM_INST(long double, double, float);
+ALPAQA_GET_PARAM_INST(bool);
 
-ALPAQA_SET_PARAM_INST(int8_t);
-ALPAQA_SET_PARAM_INST(uint8_t);
-ALPAQA_SET_PARAM_INST(int16_t);
-ALPAQA_SET_PARAM_INST(uint16_t);
-ALPAQA_SET_PARAM_INST(int32_t);
-ALPAQA_SET_PARAM_INST(int64_t);
-ALPAQA_SET_PARAM_INST(uint32_t);
-ALPAQA_SET_PARAM_INST(uint64_t);
+ALPAQA_GETSET_PARAM_INST(float);
+ALPAQA_GETSET_PARAM_INST(double, float);
+ALPAQA_GETSET_PARAM_INST(long double, double, float);
+
+ALPAQA_GETSET_PARAM_INST(int8_t);
+ALPAQA_GETSET_PARAM_INST(uint8_t);
+ALPAQA_GETSET_PARAM_INST(int16_t);
+ALPAQA_GETSET_PARAM_INST(uint16_t);
+ALPAQA_GETSET_PARAM_INST(int32_t);
+ALPAQA_GETSET_PARAM_INST(int64_t);
+ALPAQA_GETSET_PARAM_INST(uint32_t);
+ALPAQA_GETSET_PARAM_INST(uint64_t);
 
 // Here, we would like to instantiate alpaqa::params::set_param for all standard
 // integer types, but the issue is that they might not be distinct types:
@@ -250,48 +318,48 @@ ALPAQA_SET_PARAM_INST(uint64_t);
 // on other platforms, it could be a distinct type.
 // To resolve this issue, we use some metaprogramming to ensure distinct
 // instantiations with unique dummy types.
-#define ALPAQA_SET_PARAM_INST_INT(...)                                         \
-    ALPAQA_SET_PARAM_INST(__VA_ARGS__, int8_t, uint8_t, int16_t, uint16_t,     \
-                          int32_t, int64_t, uint32_t, uint64_t)
+#define ALPAQA_GETSET_PARAM_INST_INT(...)                                      \
+    ALPAQA_GETSET_PARAM_INST(__VA_ARGS__, int8_t, uint8_t, int16_t, uint16_t,  \
+                             int32_t, int64_t, uint32_t, uint64_t)
 
-ALPAQA_SET_PARAM_INST_INT(short);
-ALPAQA_SET_PARAM_INST_INT(int, short);
-ALPAQA_SET_PARAM_INST_INT(long, int, short);
-ALPAQA_SET_PARAM_INST_INT(long long, long, int, short);
-ALPAQA_SET_PARAM_INST_INT(ptrdiff_t, long long, long, int, short);
-ALPAQA_SET_PARAM_INST_INT(unsigned short);
-ALPAQA_SET_PARAM_INST_INT(unsigned int, unsigned short);
-ALPAQA_SET_PARAM_INST_INT(unsigned long, unsigned int, unsigned short);
-ALPAQA_SET_PARAM_INST_INT(unsigned long long, unsigned long, unsigned int,
-                          unsigned short);
-ALPAQA_SET_PARAM_INST_INT(size_t, unsigned long long, unsigned long,
-                          unsigned int, unsigned short);
+ALPAQA_GETSET_PARAM_INST_INT(short);
+ALPAQA_GETSET_PARAM_INST_INT(int, short);
+ALPAQA_GETSET_PARAM_INST_INT(long, int, short);
+ALPAQA_GETSET_PARAM_INST_INT(long long, long, int, short);
+ALPAQA_GETSET_PARAM_INST_INT(ptrdiff_t, long long, long, int, short);
+ALPAQA_GETSET_PARAM_INST_INT(unsigned short);
+ALPAQA_GETSET_PARAM_INST_INT(unsigned int, unsigned short);
+ALPAQA_GETSET_PARAM_INST_INT(unsigned long, unsigned int, unsigned short);
+ALPAQA_GETSET_PARAM_INST_INT(unsigned long long, unsigned long, unsigned int,
+                             unsigned short);
+ALPAQA_GETSET_PARAM_INST_INT(size_t, unsigned long long, unsigned long,
+                             unsigned int, unsigned short);
 
-ALPAQA_SET_PARAM_INST(std::chrono::nanoseconds);
-ALPAQA_SET_PARAM_INST(std::chrono::microseconds);
-ALPAQA_SET_PARAM_INST(std::chrono::milliseconds);
-ALPAQA_SET_PARAM_INST(std::chrono::seconds);
-ALPAQA_SET_PARAM_INST(std::chrono::minutes);
-ALPAQA_SET_PARAM_INST(std::chrono::hours);
+ALPAQA_GETSET_PARAM_INST(std::chrono::nanoseconds);
+ALPAQA_GETSET_PARAM_INST(std::chrono::microseconds);
+ALPAQA_GETSET_PARAM_INST(std::chrono::milliseconds);
+ALPAQA_GETSET_PARAM_INST(std::chrono::seconds);
+ALPAQA_GETSET_PARAM_INST(std::chrono::minutes);
+ALPAQA_GETSET_PARAM_INST(std::chrono::hours);
 
-ALPAQA_SET_PARAM_INST(CBFGSParams<config_t>);
-ALPAQA_SET_PARAM_INST(LipschitzEstimateParams<config_t>);
-ALPAQA_SET_PARAM_INST(PANOCParams<config_t>);
-ALPAQA_SET_PARAM_INST(FISTAParams<config_t>);
-ALPAQA_SET_PARAM_INST(ZeroFPRParams<config_t>);
-ALPAQA_SET_PARAM_INST(PANTRParams<config_t>);
-ALPAQA_SET_PARAM_INST(LBFGSParams<config_t>);
-ALPAQA_SET_PARAM_INST(AndersonAccelParams<config_t>);
-ALPAQA_SET_PARAM_INST(LBFGSDirectionParams<config_t>);
-ALPAQA_SET_PARAM_INST(AndersonDirectionParams<config_t>);
-ALPAQA_SET_PARAM_INST(StructuredLBFGSDirectionParams<config_t>);
-ALPAQA_SET_PARAM_INST(NewtonTRDirectionParams<config_t>);
-ALPAQA_SET_PARAM_INST(SteihaugCGParams<config_t>);
-ALPAQA_SET_PARAM_INST(StructuredNewtonRegularizationParams<config_t>);
-ALPAQA_SET_PARAM_INST(StructuredNewtonDirectionParams<config_t>);
-ALPAQA_SET_PARAM_INST(ALMParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(CBFGSParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(LipschitzEstimateParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(PANOCParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(FISTAParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(ZeroFPRParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(PANTRParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(LBFGSParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(AndersonAccelParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(LBFGSDirectionParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(AndersonDirectionParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(StructuredLBFGSDirectionParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(NewtonTRDirectionParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(SteihaugCGParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(StructuredNewtonRegularizationParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(StructuredNewtonDirectionParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(ALMParams<config_t>);
 #if ALPAQA_WITH_OCP
-ALPAQA_SET_PARAM_INST(PANOCOCPParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(PANOCOCPParams<config_t>);
 #endif
 
 } // namespace alpaqa::params

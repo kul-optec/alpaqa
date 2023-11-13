@@ -107,8 +107,8 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, ParamString s) {
             if (v.expected_size >= 0 && r_size != v.expected_size)
                 throw std::invalid_argument(
                     "Incorrect size in '" + std::string(s.full_key) +
-                    "' (got " + std::to_string(r.size()) + ", expected " +
-                    std::to_string(v.expected_size) + ')');
+                    "' (expected " + std::to_string(v.expected_size) +
+                    ", but got " + std::to_string(r.size()) + ')');
             v.value.emplace(cmvec<config_t>{r.data(), r_size});
         } catch (alpaqa::csv::read_error &e) {
             throw std::invalid_argument(
@@ -120,9 +120,9 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, ParamString s) {
         alpaqa::params::set_param(v.value.emplace(), s);
         if (v.expected_size >= 0 && v.value->size() != v.expected_size)
             throw std::invalid_argument(
-                "Incorrect size in '" + std::string(s.full_key) + "' (got " +
-                std::to_string(v.value->size()) + ", expected " +
-                std::to_string(v.expected_size) + ')');
+                "Incorrect size in '" + std::string(s.full_key) +
+                "' (expected " + std::to_string(v.expected_size) +
+                ", but got " + std::to_string(v.value->size()) + ')');
     }
 }
 
