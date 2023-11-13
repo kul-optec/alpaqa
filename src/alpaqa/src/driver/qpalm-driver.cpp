@@ -79,18 +79,19 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
     // Initial guess
     vec initial_guess_mult;
     if (auto sz = problem.initial_guess_x.size(); sz != n)
-        throw std::invalid_argument("Invalid size for initial_guess_x (got " +
-                                    std::to_string(sz) + ", expected " +
-                                    std::to_string(n) + ")");
+        throw std::invalid_argument(
+            "Invalid size for initial_guess_x (expected " + std::to_string(n) +
+            ", but got " + std::to_string(sz) + ")");
     if (auto sz = problem.initial_guess_y.size(); sz != m)
-        throw std::invalid_argument("Invalid size for initial_guess_y (got " +
-                                    std::to_string(sz) + ", expected " +
-                                    std::to_string(m) + ")");
+        throw std::invalid_argument(
+            "Invalid size for initial_guess_y (expected " + std::to_string(m) +
+            ", but got " + std::to_string(sz) + ")");
     if (auto sz = problem.initial_guess_w.size(); sz > 0) {
         if (sz != n * 2)
             throw std::invalid_argument(
-                "Invalid size for initial_guess_w (got " + std::to_string(sz) +
-                ", expected " + std::to_string(n * 2) + ")");
+                "Invalid size for initial_guess_w (expected " +
+                std::to_string(n * 2) + ", but got " + std::to_string(sz) +
+                ")");
         initial_guess_mult.resize(static_cast<length_t>(qp.m));
         compress_multipliers_bounds(n, m, qp, problem.initial_guess_w,
                                     initial_guess_mult);

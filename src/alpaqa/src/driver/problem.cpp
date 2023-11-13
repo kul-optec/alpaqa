@@ -136,9 +136,9 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
     alpaqa::params::set_params(cs_problem.param, "param", prob_opts);
     if (cs_problem.param.size() != param_size)
         throw alpaqa::params::invalid_param(
-            "Incorrect problem parameter size: got " +
-            std::to_string(cs_problem.param.size()) + ", should be " +
-            std::to_string(param_size));
+            "Incorrect problem parameter size (expected " +
+            std::to_string(param_size) + ", but got " +
+            std::to_string(cs_problem.param.size()) + ")");
     load_initial_guess(opts, problem);
     count_problem(problem);
     return problem;
