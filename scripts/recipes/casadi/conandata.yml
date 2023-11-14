@@ -15,3 +15,7 @@ sources:
     url: "https://github.com/casadi/casadi/archive/refs/tags/3.6.3.zip"
     sha256: "ae1e9c06cf571af38bc3c7effad8e360996744a8fefa7a0e1956858a8cd00141"
     strip_root: true
+  "3.6.4":
+    url: "https://github.com/casadi/casadi/archive/refs/tags/3.6.4.zip"
+    sha256: "c80407ba4325fe643a1f468d9c53bbb347e5684f5d53fc4a9ab842bca9cb743b"
+    strip_root: true

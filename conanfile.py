@@ -61,7 +61,7 @@ class AlpaqaRecipe(ConanFile):
         self.requires("eigen/3.4.0")
         self.test_requires("gtest/1.11.0")
         if self.options.with_casadi:
-            self.requires("casadi/3.6.3@alpaqa")
+            self.requires("casadi/3.6.4@alpaqa")
         if self.options.with_json:
             self.requires("nlohmann_json/3.11.2")
         if self.options.with_matlab:
