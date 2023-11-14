@@ -15,21 +15,21 @@ inline auto split(std::string_view full, std::string_view tok) {
     auto tok_pos = full.find(tok);
     if (tok_pos == full.npos)
         return std::make_tuple(full, std::string_view{});
-    std::string_view::size_type tok_len = tok.size();
-    std::string_view key{full.begin(), full.begin() + tok_pos};
-    std::string_view rem{full.begin() + tok_pos + tok_len, full.end()};
+    auto tok_len         = tok.size();
+    std::string_view key = full.substr(0, tok_pos);
+    std::string_view rem = full.substr(tok_pos + tok_len);
     return std::make_tuple(key, rem);
 }
 
 /// Split the string @p s on the first occurrence of @p tok.
 /// Returns `("", s)` if tok was not found.
-inline auto split_second(std::string_view s, std::string_view tok) {
-    auto tok_pos = s.find(tok);
-    if (tok_pos == s.npos)
-        return std::make_tuple(std::string_view{}, s);
-    std::string_view::size_type tok_len = tok.size();
-    std::string_view key{s.begin(), s.begin() + tok_pos};
-    std::string_view rem{s.begin() + tok_pos + tok_len, s.end()};
+inline auto split_second(std::string_view full, std::string_view tok) {
+    auto tok_pos = full.find(tok);
+    if (tok_pos == full.npos)
+        return std::make_tuple(std::string_view{}, full);
+    auto tok_len         = tok.size();
+    std::string_view key = full.substr(0, tok_pos);
+    std::string_view rem = full.substr(tok_pos + tok_len);
     return std::make_tuple(key, rem);
 }
 
