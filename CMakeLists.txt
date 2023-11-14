@@ -33,6 +33,8 @@ option(ALPAQA_WITH_LONG_DOUBLE
     "Support long double floating point types" Off)
 option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
+option(ALPAQA_WITH_MATLAB
+    "Build the MATLAB MEX interface" Off)
 option(ALPAQA_WARNINGS_AS_ERRORS
     "Enable -Werror or /WX" Off)
 option(ALPAQA_WITH_OPENMP
@@ -76,7 +78,7 @@ set(CMAKE_CXX_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
 set(CMAKE_C_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
 
 # Compiler options
-if (ALPAQA_WITH_PYTHON)
+if (ALPAQA_WITH_PYTHON OR ALPAQA_WITH_MATLAB)
     set(CMAKE_POSITION_INDEPENDENT_CODE On)
 endif()
 if (MSVC)
