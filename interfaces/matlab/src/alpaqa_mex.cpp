@@ -1,13 +1,15 @@
 #include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa-mex-types.hpp>
 
+#include <functional>
 #include <span>
 #include <string>
 #include <string_view>
 
 namespace alpaqa::mex {
 SolverResults minimize(std::span<const double> x0, std::span<const double> y0,
-                       std::string_view method, const Options &options);
+                       std::string_view method, const Options &options,
+                       std::function<void(std::string_view)> write_utf8);
 std::u16string utf8to16(std::string_view in);
 std::string utf16to8(std::u16string_view in);
 } // namespace alpaqa::mex
@@ -36,6 +38,16 @@ class MexFunction : public Function {
         matlabPtr->feval(u"error", 0,
                          std::vector<Array>({factory.createCharArray(
                              std::move(errorMessage))}));
+    }
+
+    // Get a function that writes to the MATLAB console.
+    [[nodiscard]] auto utf8_writer() const {
+        return [matlabPtr{matlabPtr}](std::string_view in) {
+            ArrayFactory factory;
+            matlabPtr->feval(u"fprintf", 0,
+                             std::vector<Array>({factory.createCharArray(
+                                 alpaqa::mex::utf8to16(in))}));
+        };
     }
 
     // Main entry-point for the MEX-file.
@@ -93,7 +105,7 @@ class MexFunction : public Function {
         auto options    = nlohmann::json::parse(params_str);
 
         // Run solver
-        auto results = minimize(x0vec, y0vec, method, options);
+        auto results = minimize(x0vec, y0vec, method, options, utf8_writer());
 
         // Return output
         ArrayFactory factory;
