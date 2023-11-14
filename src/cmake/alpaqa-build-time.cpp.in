@@ -1,2 +1,3 @@
 #include <alpaqa-version.h>
 const char *const alpaqa_build_time = "@ALPAQA_BUILD_TIME@";
+const char *const alpaqa_commit_hash = "@ALPAQA_COMMIT_HASH@";

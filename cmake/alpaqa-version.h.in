@@ -7,11 +7,14 @@
 #define ALPAQA_VERSION "@PROJECT_VERSION@"
 #define ALPAQA_VERSION_FULL "@PROJECT_VERSION@@PY_VERSION_SUFFIX@"
 #define ALPAQA_BUILD_TIME alpaqa_build_time
+#define ALPAQA_COMMIT_HASH alpaqa_commit_hash
 
 #include <alpaqa/export.h>
 #ifdef __cplusplus
-extern "C"
-#else
-extern
+extern "C" {
 #endif
-    ALPAQA_EXPORT const char *const alpaqa_build_time;
+extern ALPAQA_EXPORT const char *const alpaqa_build_time;
+extern ALPAQA_EXPORT const char *const alpaqa_commit_hash;
+#ifdef __cplusplus
+}
+#endif
