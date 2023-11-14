@@ -46,13 +46,16 @@ add_library(alpaqa
     "alpaqa/src/inner/directions/panoc/structured-lbfgs.cpp"
     "alpaqa/src/inner/directions/panoc/structured-newton.cpp"
     "alpaqa/src/inner/internal/panoc-helpers.cpp"
-    "alpaqa/src/params/params.cpp"
 )
 if (ALPAQA_WITH_OCP)
     target_sources(alpaqa PRIVATE
         "alpaqa/src/inner/panoc-ocp.cpp"
         "alpaqa/src/problem/ocproblem.cpp"
     )
+endif()
+if (ALPAQA_WITH_DRIVERS)
+    target_sources(alpaqa PRIVATE
+        "alpaqa/src/params/params.cpp")
 endif()
 if (ALPAQA_WITH_JSON)
     find_package(nlohmann_json REQUIRED)
@@ -235,10 +238,11 @@ endif()
 if (ALPAQA_WITH_IPOPT)
     find_package(Ipopt)
     message(STATUS "Compiling Ipopt problem adapter")
-    add_library(ipopt-adapter
-        "interop/ipopt/src/ipopt-adapter.cpp"
-        "interop/ipopt/src/ipopt-params.cpp"
-    )
+    add_library(ipopt-adapter "interop/ipopt/src/ipopt-adapter.cpp")
+    if (ALPAQA_WITH_DRIVERS)
+        target_sources(ipopt-adapter PRIVATE
+            "interop/ipopt/src/ipopt-params.cpp")
+    endif()
     if (ALPAQA_WITH_JSON)
         target_sources(ipopt-adapter PRIVATE
             "interop/ipopt/src/ipopt-json.cpp")
@@ -296,9 +300,12 @@ if (ALPAQA_WITH_LBFGSB)
     list(APPEND ALPAQA_INSTALL_TARGETS lbfgsb-fortran)
     add_library(lbfgsb-adapter
         "interop/lbfgsb/src/lbfgsb-adapter.cpp"
-        "interop/lbfgsb/src/lbfgsb-params.cpp"
         "interop/lbfgsb/src/lbfgsb_c.F90"
     )
+    if (ALPAQA_WITH_DRIVERS)
+        target_sources(lbfgsb-adapter PRIVATE
+            "interop/lbfgsb/src/lbfgsb-params.cpp")
+    endif()
     if (ALPAQA_WITH_JSON)
         target_sources(lbfgsb-adapter PRIVATE
             "interop/lbfgsb/src/lbfgsb-json.cpp")
@@ -325,10 +332,11 @@ endif()
 if (ALPAQA_WITH_QPALM)
     message(STATUS "Compiling QPALM solver adapter")
     find_package(QPALM_cxx REQUIRED)
-    add_library(qpalm-adapter
-        "interop/qpalm/src/qpalm-adapter.cpp"
-        "interop/qpalm/src/qpalm-params.cpp"
-    )
+    add_library(qpalm-adapter "interop/qpalm/src/qpalm-adapter.cpp")
+    if (ALPAQA_WITH_DRIVERS)
+        target_sources(qpalm-adapter PRIVATE
+            "interop/qpalm/src/qpalm-params.cpp")
+    endif()
     if (ALPAQA_WITH_JSON)
         target_sources(qpalm-adapter PRIVATE
             "interop/qpalm/src/qpalm-json.cpp")
