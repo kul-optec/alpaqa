@@ -8,7 +8,6 @@
 #include "extra-stats.hpp"
 #include "lbfgsb-driver.hpp"
 #include "solver-driver.hpp"
-#include "util.hpp"
 
 namespace {
 

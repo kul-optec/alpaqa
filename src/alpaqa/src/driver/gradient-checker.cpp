@@ -11,7 +11,6 @@
 
 #include "options.hpp"
 #include "problem.hpp"
-#include "util.hpp"
 
 #include <Eigen/Sparse>
 

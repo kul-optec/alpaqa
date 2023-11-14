@@ -8,12 +8,6 @@
 #include "problem.hpp"
 #include "results.hpp"
 
-#ifdef ALPAQA_WITH_JSON
-#include <alpaqa/params/json.hpp>
-#include <nlohmann/json.hpp>
-#include <iomanip>
-#endif
-
 template <class InnerSolver>
 auto make_alm_solver(InnerSolver &&inner_solver, Options &opts) {
     // Settings for the ALM solver
@@ -61,13 +55,6 @@ auto make_inner_solver(Options &opts) {
 template <class Solver>
 SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
                              std::ostream &os, unsigned N_exp) {
-
-#ifdef ALPAQA_WITH_JSON
-    alpaqa::params::json json_solver_param = alpaqa::params::json::object();
-    alpaqa::params::get_param(solver.inner_solver.get_params(),
-                              json_solver_param["solver"]);
-    os << std::setw(4) << json_solver_param << std::endl;
-#endif
 
     solver.os = &os;
 

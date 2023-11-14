@@ -5,7 +5,6 @@
 #include "cancel.hpp"
 #include "fista-driver.hpp"
 #include "solver-driver.hpp"
-#include "util.hpp"
 
 namespace {
 

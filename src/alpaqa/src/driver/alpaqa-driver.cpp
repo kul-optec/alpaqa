@@ -7,6 +7,7 @@
 #include <alpaqa/problem/kkt-error.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa/util/print.hpp>
+#include <alpaqa/util/string-util.hpp>
 #include <alpaqa-version.h>
 
 #include "fista-driver.hpp"
@@ -18,7 +19,6 @@
 #include "qpalm-driver.hpp"
 #include "results.hpp"
 #include "solver-driver.hpp"
-#include "util.hpp"
 
 #ifdef ALPAQA_HAVE_CASADI
 #include <casadi/config.h>
@@ -246,7 +246,8 @@ auto get_solver_builder(Options &opts) {
         throw std::invalid_argument(
             "Unknown solver '" + std::string(method) + "'\n" +
             "  Available solvers: " +
-            format_string_list(solvers, [](const auto &x) { return x.first; }));
+            alpaqa::util::join(std::views::keys(solvers)));
+    ;
     return std::make_tuple(std::move(solver_it->second), direction);
 }
 

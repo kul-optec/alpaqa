@@ -1,12 +1,12 @@
 #include <alpaqa/inner/directions/pantr/newton-tr.hpp>
 #include <alpaqa/inner/pantr.hpp>
+#include <alpaqa/util/string-util.hpp>
 
 #include "alm-driver.hpp"
 #include "cancel.hpp"
 #include "extra-stats.hpp"
 #include "pantr-driver.hpp"
 #include "solver-driver.hpp"
-#include "util.hpp"
 
 namespace {
 
@@ -57,8 +57,7 @@ SharedSolverWrapper make_pantr_like_solver(std::string_view direction,
         throw std::invalid_argument(
             "Unknown direction '" + std::string(direction) + "'\n" +
             "  Available directions: " +
-            format_string_list(builders,
-                               [](const auto &x) { return x.first; }));
+            alpaqa::util::join(std::views::keys(builders)));
 }
 
 } // namespace

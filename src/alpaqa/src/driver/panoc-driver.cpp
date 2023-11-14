@@ -3,13 +3,13 @@
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/panoc.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
+#include <alpaqa/util/string-util.hpp>
 
 #include "alm-driver.hpp"
 #include "cancel.hpp"
 #include "extra-stats.hpp"
 #include "panoc-driver.hpp"
 #include "solver-driver.hpp"
-#include "util.hpp"
 
 namespace {
 
@@ -64,8 +64,7 @@ SharedSolverWrapper make_panoc_like_driver(std::string_view direction,
         throw std::invalid_argument(
             "Unknown direction '" + std::string(direction) + "'\n" +
             "  Available directions: " +
-            format_string_list(builders,
-                               [](const auto &x) { return x.first; }));
+            alpaqa::util::join(std::views::keys(builders)));
 }
 
 } // namespace
