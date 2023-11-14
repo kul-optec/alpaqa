@@ -1,5 +1,6 @@
 #include <alpaqa/util/demangled-typename.hpp>
 #include <MatlabDataArray/ArrayType.hpp>
+#include <alpaqa-version.h>
 #include <alpaqa-mex-types.hpp>
 
 #include <mex.hpp>
@@ -45,24 +46,18 @@ class MexFunction : public matlab::mex::Function {
 
     // Main entry-point for the MEX-file.
     void operator()(ArgumentList outputs, ArgumentList inputs) override {
-        std::u16string command;
         // Check arguments
-        if (inputs.size() < 1) {
+        if (inputs.size() < 1)
             displayError(u"At least one input required.");
-        }
-        if (outputs.size() > 3) {
-            displayError(u"Too many outputs specified.");
-        }
-        if (inputs[0].getType() == ArrayType::CHAR) {
-            command = static_cast<CharArray>(inputs[0]).toUTF16();
-        } else {
+        if (inputs[0].getType() != ArrayType::CHAR)
             displayError(u"First argument must be a character array.");
-        }
+        auto command = static_cast<CharArray>(inputs[0]).toUTF16();
 
         // First argument is a string that determines action to take
         using handler_t = void (MexFunction::*)(ArgumentList, ArgumentList);
         std::map<std::u16string_view, handler_t> handlers{
             {u"minimize", &MexFunction::call_minimize},
+            {u"version", &MexFunction::call_version},
         };
         if (auto handler = handlers.find(command); handler != handlers.end())
             (this->*handler->second)(outputs, inputs);
@@ -71,9 +66,26 @@ class MexFunction : public matlab::mex::Function {
     }
 
     // Solve the given minimization problem.
+    void call_version(ArgumentList outputs, ArgumentList) noexcept {
+        if (outputs.size() > 3)
+            displayError(u"version returns at most three outputs.");
+        ArrayFactory factory;
+        if (outputs.size() >= 1)
+            outputs[0] = factory.createCharArray(ALPAQA_VERSION_FULL);
+        if (outputs.size() >= 2)
+            outputs[1] = factory.createCharArray(alpaqa_build_time);
+        if (outputs.size() >= 3)
+            outputs[2] = factory.createCharArray(alpaqa_commit_hash);
+    }
+
+    // Solve the given minimization problem.
     void call_minimize(ArgumentList outputs, ArgumentList inputs) try {
         using namespace alpaqa::mex;
         using nlohmann::json;
+        if (inputs.size() < 6)
+            displayError(u"minimize requires six arguments.");
+        if (outputs.size() > 3)
+            displayError(u"minimize returns at most three outputs.");
         // problem
         if (inputs[1].getType() != ArrayType::STRUCT ||
             inputs[1].getNumberOfElements() != 1) {
@@ -119,20 +131,17 @@ class MexFunction : public matlab::mex::Function {
         matlab::data::TypedArray<double> x0a = std::move(inputs[2]);
         std::vector<double> x0(x0a.begin(), x0a.end());
         // y0
-        if (inputs[3].getType() != ArrayType::DOUBLE) {
+        if (inputs[3].getType() != ArrayType::DOUBLE)
             displayError(u"Fourth argument (y0) must be an array of double.");
-        }
         matlab::data::TypedArray<double> y0a = std::move(inputs[3]);
         std::vector<double> y0(y0a.begin(), y0a.end());
         // method
-        if (inputs[4].getType() != ArrayType::CHAR) {
+        if (inputs[4].getType() != ArrayType::CHAR)
             displayError(u"Fifth argument (method) must be a character array.");
-        }
         auto method = utf16to8(static_cast<CharArray>(inputs[4]).toUTF16());
         // params
-        if (inputs[5].getType() != ArrayType::CHAR) {
+        if (inputs[5].getType() != ArrayType::CHAR)
             displayError(u"Sixth argument (params) must be a character array.");
-        }
         auto params_str = utf16to8(static_cast<CharArray>(inputs[5]).toUTF16());
         auto opts       = json::parse(params_str);
 

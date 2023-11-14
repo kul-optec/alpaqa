@@ -1,3 +1,5 @@
+[version, build_time] = alpaqa.version
+
 %% Build the problem (CasADi code, independent of alpaqa)
 import casadi.*
 
@@ -51,8 +53,11 @@ y0 = [0.0, 0.0];  % Lagrange multipliers for g(x)
     problem, x0, y0, method=solver, params=params);
 
 %% Print the results
-disp(stats.status)
+disp('Stats:');
+disp(stats);
+disp(stats.inner);
 disp('Solution:');
 disp(x_sol);
 disp('Multipliers:');
 disp(y_sol);
+disp(stats.status)

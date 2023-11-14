@@ -30,7 +30,7 @@ endif()
 
 # Install the final MEX file
 install(FILES $<TARGET_FILE:alpaqa_mex>
-        "minimize.m" "Problem.m"
+        "minimize.m" "version.m" "Problem.m"
         EXCLUDE_FROM_ALL
         COMPONENT mex_interface
         DESTINATION "+alpaqa")
