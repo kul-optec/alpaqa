@@ -46,15 +46,13 @@ add_library(alpaqa
     "alpaqa/src/inner/directions/panoc/structured-lbfgs.cpp"
     "alpaqa/src/inner/directions/panoc/structured-newton.cpp"
     "alpaqa/src/inner/internal/panoc-helpers.cpp"
+    "alpaqa/src/params/params.cpp"
 )
 if (ALPAQA_WITH_OCP)
     target_sources(alpaqa PRIVATE
         "alpaqa/src/inner/panoc-ocp.cpp"
         "alpaqa/src/problem/ocproblem.cpp"
     )
-endif()
-if (ALPAQA_WITH_DRIVERS)
-    target_sources(alpaqa PRIVATE "alpaqa/src/params/params.cpp")
 endif()
 if (ALPAQA_WITH_JSON)
     find_package(nlohmann_json REQUIRED)
