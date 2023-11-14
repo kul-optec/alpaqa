@@ -9,6 +9,11 @@
 #include <map>
 #include <string>
 
+// Forward declaration
+namespace casadi {
+class Function;
+} // namespace casadi
+
 namespace alpaqa {
 namespace casadi_loader {
 template <Config>
@@ -17,6 +22,10 @@ struct CasADiFunctionsWithParam;
 
 struct SerializedCasADiFunctions {
     std::map<std::string, std::string> functions;
+};
+
+struct CasADiFunctions {
+    std::map<std::string, casadi::Function> functions;
 };
 
 /// Problem definition for a CasADi problem, loaded from a DLL.
@@ -45,6 +54,8 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
     CasADiProblem(const std::string &filename);
     /// Create a problem from a collection of serialized CasADi functions.
     CasADiProblem(const SerializedCasADiFunctions &functions);
+    /// Create a problem from a collection of CasADi functions.
+    CasADiProblem(const CasADiFunctions &functions);
     ~CasADiProblem();
 
     CasADiProblem(const CasADiProblem &);
@@ -88,6 +99,14 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
     void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const;
     // clang-format on
 
+    /// @see @ref TypeErasedProblem::provides_eval_grad_L
+    [[nodiscard]] bool provides_eval_grad_L() const;
+    /// @see @ref TypeErasedProblem::provides_eval_ψ
+    [[nodiscard]] bool provides_eval_ψ() const;
+    /// @see @ref TypeErasedProblem::provides_eval_grad_ψ
+    [[nodiscard]] bool provides_eval_grad_ψ() const;
+    /// @see @ref TypeErasedProblem::provides_eval_ψ_grad_ψ
+    [[nodiscard]] bool provides_eval_ψ_grad_ψ() const;
     /// @see @ref TypeErasedProblem::provides_eval_grad_gi
     [[nodiscard]] bool provides_eval_grad_gi() const;
     /// @see @ref TypeErasedProblem::provides_eval_jac_g

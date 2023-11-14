@@ -4,10 +4,8 @@
 #include <alpaqa/util/demangled-typename.hpp>
 #include <casadi/core/casadi_types.hpp>
 #include <array>
-#include <exception>
 #include <optional>
 #include <stdexcept>
-#include <string>
 #include <utility>
 
 namespace alpaqa::casadi_loader {

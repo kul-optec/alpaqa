@@ -15,7 +15,6 @@
 #include <memory>
 #include <optional>
 #include <stdexcept>
-#include <type_traits>
 
 namespace alpaqa {
 
@@ -29,21 +28,19 @@ struct CasADiFunctionsWithParam {
     length_t n, m, p;
     CasADiFunctionEvaluator<Conf, 2, 1> f;
     CasADiFunctionEvaluator<Conf, 2, 2> f_grad_f;
-    // CasADiFunctionEvaluator<6, 1> grad_ψ;
-    CasADiFunctionEvaluator<Conf, 6, 2> ψ_grad_ψ;
-    struct ConstrFun {
-        CasADiFunctionEvaluator<Conf, 2, 1> g;
-        CasADiFunctionEvaluator<Conf, 3, 1> grad_L;
-        CasADiFunctionEvaluator<Conf, 6, 2> ψ;
-    };
-    std::optional<ConstrFun> constr = std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> g = std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 3, 1>> grad_g_prod =
+        std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> jac_g  = std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 3, 1>> grad_L = std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 5, 1>> hess_L_prod =
         std::nullopt;
-    std::optional<CasADiFunctionEvaluator<Conf, 4, 1>> hess_L = std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 4, 1>> hess_L   = std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 6, 2>> ψ        = std::nullopt;
+    std::optional<CasADiFunctionEvaluator<Conf, 6, 2>> ψ_grad_ψ = std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 8, 1>> hess_ψ_prod =
         std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 7, 1>> hess_ψ = std::nullopt;
-    std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> jac_g  = std::nullopt;
 
     template <class Loader>
         requires requires(Loader &&loader, const char *name) {
@@ -90,8 +87,8 @@ struct CasADiFunctionsWithParam {
 
         auto g = wrap_load(loader, "g", load_g);
 
-        auto self =
-            std::make_unique<CasADiFunctionsWithParam>(CasADiFunctionsWithParam{
+        return std::make_unique<CasADiFunctionsWithParam>(
+            CasADiFunctionsWithParam{
                 .n = n,
                 .m = m,
                 .p = p,
@@ -99,32 +96,28 @@ struct CasADiFunctionsWithParam {
                     loader, "f", dims(n, p), dims(1)),
                 .f_grad_f = wrapped_load<CasADiFunctionEvaluator<Conf, 2, 2>>(
                     loader, "f_grad_f", dims(n, p), dims(1, n)),
-                // .grad_ψ = wrapped_load<CasADiFunctionEvaluator<6, 1>>(
-                //     loader, "grad_psi", dims(n, p, m, m, m, m), dims(n)),
-                .ψ_grad_ψ = wrapped_load<CasADiFunctionEvaluator<Conf, 6, 2>>(
-                    loader, "psi_grad_psi", dims(n, p, m, m, m, m), dims(1, n)),
-            });
-
-        if (g)
-            self->constr = {
-                std::move(*g),
-                wrapped_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                .g           = std::move(g),
+                .grad_g_prod = try_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
+                    loader, "grad_g_prod", dims(n, p, m), dims(n)),
+                .jac_g = try_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
+                    loader, "jacobian_g", dims(n, p), dims(dim(m, n))),
+                .grad_L = try_load<CasADiFunctionEvaluator<Conf, 3, 1>>(
                     loader, "grad_L", dims(n, p, m), dims(n)),
-                wrapped_load<CasADiFunctionEvaluator<Conf, 6, 2>>(
+                .hess_L_prod = try_load<CasADiFunctionEvaluator<Conf, 5, 1>>(
+                    loader, "hess_L_prod", dims(n, p, m, 1, n), dims(n)),
+                .hess_L = try_load<CasADiFunctionEvaluator<Conf, 4, 1>>(
+                    loader, "hess_L", dims(n, p, m, 1), dims(dim(n, n))),
+                .ψ = try_load<CasADiFunctionEvaluator<Conf, 6, 2>>(
                     loader, "psi", dims(n, p, m, m, m, m), dims(1, m)),
-            };
-
-        self->hess_L_prod = try_load<CasADiFunctionEvaluator<Conf, 5, 1>>(
-            loader, "hess_L_prod", dims(n, p, m, 1, n), dims(n));
-        self->hess_L = try_load<CasADiFunctionEvaluator<Conf, 4, 1>>(
-            loader, "hess_L", dims(n, p, m, 1), dims(dim(n, n)));
-        self->hess_ψ_prod = try_load<CasADiFunctionEvaluator<Conf, 8, 1>>(
-            loader, "hess_psi_prod", dims(n, p, m, m, 1, m, m, n), dims(n));
-        self->hess_ψ = try_load<CasADiFunctionEvaluator<Conf, 7, 1>>(
-            loader, "hess_psi", dims(n, p, m, m, 1, m, m), dims(dim(n, n)));
-        self->jac_g = try_load<CasADiFunctionEvaluator<Conf, 2, 1>>(
-            loader, "jacobian_g", dims(n, p), dims(dim(m, n)));
-        return self;
+                .ψ_grad_ψ = try_load<CasADiFunctionEvaluator<Conf, 6, 2>>(
+                    loader, "psi_grad_psi", dims(n, p, m, m, m, m), dims(1, n)),
+                .hess_ψ_prod = try_load<CasADiFunctionEvaluator<Conf, 8, 1>>(
+                    loader, "hess_psi_prod", dims(n, p, m, m, 1, m, m, n),
+                    dims(n)),
+                .hess_ψ = try_load<CasADiFunctionEvaluator<Conf, 7, 1>>(
+                    loader, "hess_psi", dims(n, p, m, m, 1, m, m),
+                    dims(dim(n, n))),
+            });
     }
 };
 
@@ -175,6 +168,28 @@ CasADiProblem<Conf>::CasADiProblem(const SerializedCasADiFunctions &functions)
         }
         auto format_name(const std::string &name) const {
             return "SerializedCasADiFunctions['" + name + "']";
+        }
+    } loader{functions};
+    impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
+
+    this->n     = impl->n;
+    this->m     = impl->m;
+    this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
+    this->C     = Box<config_t>{impl->n};
+    this->D     = Box<config_t>{impl->m};
+}
+
+template <Config Conf>
+CasADiProblem<Conf>::CasADiProblem(const CasADiFunctions &functions)
+    : BoxConstrProblem<Conf>{0, 0} {
+
+    struct {
+        const CasADiFunctions &functions;
+        auto operator()(const std::string &name) const {
+            return functions.functions.at(name);
+        }
+        auto format_name(const std::string &name) const {
+            return "CasADiFunctions['" + name + "']";
         }
     } loader{functions};
     impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
@@ -271,18 +286,29 @@ auto CasADiProblem<Conf>::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t {
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_g(crvec x, rvec g) const {
-    if (impl->constr)
-        impl->constr->g({x.data(), param.data()}, {g.data()});
+    if (impl->m == 0)
+        return;
+    if (impl->g)
+        (*impl->g)({x.data(), param.data()}, {g.data()});
+    else
+        throw not_implemented_error("CasADiProblem::eval_g");
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_grad_g_prod(crvec, crvec, rvec) const {
-    throw not_implemented_error("CasADiProblem::eval_grad_g_prod"); // TODO
+void CasADiProblem<Conf>::eval_grad_g_prod(crvec x, crvec y, rvec gxy) const {
+    if (impl->m == 0) {
+        gxy.setZero();
+        return;
+    }
+    if (impl->grad_g_prod)
+        (*impl->grad_g_prod)({x.data(), param.data(), y.data()}, {gxy.data()});
+    else
+        throw not_implemented_error("CasADiProblem::eval_grad_g_prod"); // TODO
 }
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ,
-                                      rvec, rvec) const {
+                                      rvec work_n, rvec work_m) const {
 #if 0
     impl->grad_ψ({x.data(), param.data(), y.data(), Σ.data(),
                   this->D.lowerbound.data(), this->D.upperbound.data()},
@@ -290,10 +316,7 @@ void CasADiProblem<Conf>::eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ,
 #else
     // This seems to be faster than having a specialized function. Possibly
     // cache-related?
-    real_t ψ;
-    impl->ψ_grad_ψ({x.data(), param.data(), y.data(), Σ.data(),
-                    this->D.lowerbound.data(), this->D.upperbound.data()},
-                   {&ψ, grad_ψ.data()});
+    eval_ψ_grad_ψ(x, y, Σ, grad_ψ, work_n, work_m);
 #endif
 }
 
@@ -301,33 +324,32 @@ template <Config Conf>
 typename CasADiProblem<Conf>::real_t
 CasADiProblem<Conf>::eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec,
                                    rvec) const {
+    if (!impl->ψ_grad_ψ)
+        throw std::logic_error("CasADiProblem::eval_ψ_grad_ψ");
     real_t ψ;
-    impl->ψ_grad_ψ({x.data(), param.data(), y.data(), Σ.data(),
-                    this->D.lowerbound.data(), this->D.upperbound.data()},
-                   {&ψ, grad_ψ.data()});
+    (*impl->ψ_grad_ψ)({x.data(), param.data(), y.data(), Σ.data(),
+                       this->D.lowerbound.data(), this->D.upperbound.data()},
+                      {&ψ, grad_ψ.data()});
     return ψ;
 }
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_grad_L(crvec x, crvec y, rvec grad_L,
                                       rvec) const {
-    if (impl->constr)
-        impl->constr->grad_L({x.data(), param.data(), y.data()},
-                             {grad_L.data()});
-    else
-        eval_f_grad_f(x, grad_L);
+    if (!impl->grad_L)
+        throw std::logic_error("CasADiProblem::eval_grad_L");
+    (*impl->grad_L)({x.data(), param.data(), y.data()}, {grad_L.data()});
 }
 
 template <Config Conf>
 typename CasADiProblem<Conf>::real_t
 CasADiProblem<Conf>::eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const {
+    if (!impl->ψ)
+        throw std::logic_error("CasADiProblem::eval_ψ");
     real_t ψ;
-    if (impl->constr)
-        impl->constr->ψ({x.data(), param.data(), y.data(), Σ.data(),
-                         this->D.lowerbound.data(), this->D.upperbound.data()},
-                        {&ψ, ŷ.data()});
-    else
-        impl->f({x.data(), param.data()}, {&ψ});
+    (*impl->ψ)({x.data(), param.data(), y.data(), Σ.data(),
+                this->D.lowerbound.data(), this->D.upperbound.data()},
+               {&ψ, ŷ.data()});
     return ψ;
 }
 
@@ -360,7 +382,7 @@ auto CasADiProblem<Conf>::get_jac_g_sparsity() const -> Sparsity {
     };
     if (!impl->jac_g.has_value())
         return dense;
-    auto &&sp = impl->jac_g->fun.sparsity_out(0);
+    const auto &sp = impl->jac_g->fun.sparsity_out(0); // Reference!
     return sp.is_dense()
                ? Sparsity{dense}
                : convert_csc<config_t>(sp, sparsity::Symmetry::Unsymmetric);
@@ -368,14 +390,16 @@ auto CasADiProblem<Conf>::get_jac_g_sparsity() const -> Sparsity {
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_jac_g(crvec x, rvec J_values) const {
-    assert(impl->jac_g.has_value());
+    if (!impl->jac_g)
+        throw std::logic_error("CasADiProblem::eval_jac_g");
     (*impl->jac_g)({x.data(), param.data()}, {J_values.data()});
 }
 
 template <Config Conf>
 void CasADiProblem<Conf>::eval_hess_L_prod(crvec x, crvec y, real_t scale,
                                            crvec v, rvec Hv) const {
-    assert(impl->hess_L_prod.has_value());
+    if (!impl->hess_L_prod)
+        throw std::logic_error("CasADiProblem::eval_ψ");
     (*impl->hess_L_prod)({x.data(), param.data(), y.data(), &scale, v.data()},
                          {Hv.data()});
 }
@@ -389,7 +413,7 @@ auto CasADiProblem<Conf>::get_hess_L_sparsity() const -> Sparsity {
     };
     if (!impl->hess_L.has_value())
         return dense;
-    auto &&sp = impl->hess_L->fun.sparsity_out(0);
+    const auto &sp = impl->hess_L->fun.sparsity_out(0); // Reference!
     return sp.is_dense() ? Sparsity{dense}
                          : convert_csc<config_t>(sp, sparsity::Symmetry::Upper);
 }
@@ -397,7 +421,8 @@ auto CasADiProblem<Conf>::get_hess_L_sparsity() const -> Sparsity {
 template <Config Conf>
 void CasADiProblem<Conf>::eval_hess_L(crvec x, crvec y, real_t scale,
                                       rvec H_values) const {
-    assert(impl->hess_L.has_value());
+    if (!impl->hess_L)
+        throw std::logic_error("CasADiProblem::eval_hess_L");
     (*impl->hess_L)({x.data(), param.data(), y.data(), &scale},
                     {H_values.data()});
 }
@@ -406,7 +431,8 @@ template <Config Conf>
 void CasADiProblem<Conf>::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ,
                                            real_t scale, crvec v,
                                            rvec Hv) const {
-    assert(impl->hess_ψ_prod.has_value());
+    if (!impl->hess_ψ_prod)
+        throw std::logic_error("CasADiProblem::eval_hess_ψ_prod");
     (*impl->hess_ψ_prod)({x.data(), param.data(), y.data(), Σ.data(), &scale,
                           this->D.lowerbound.data(), this->D.upperbound.data(),
                           v.data()},
@@ -422,7 +448,7 @@ auto CasADiProblem<Conf>::get_hess_ψ_sparsity() const -> Sparsity {
     };
     if (!impl->hess_ψ.has_value())
         return dense;
-    auto &&sp = impl->hess_ψ->fun.sparsity_out(0);
+    const auto &sp = impl->hess_ψ->fun.sparsity_out(0); // Reference!
     return sp.is_dense() ? Sparsity{dense}
                          : convert_csc<config_t>(sp, sparsity::Symmetry::Upper);
 }
@@ -430,7 +456,8 @@ auto CasADiProblem<Conf>::get_hess_ψ_sparsity() const -> Sparsity {
 template <Config Conf>
 void CasADiProblem<Conf>::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale,
                                       rvec H_values) const {
-    assert(impl->hess_ψ.has_value());
+    if (!impl->hess_ψ)
+        throw std::logic_error("CasADiProblem::eval_hess_ψ");
     (*impl->hess_ψ)({x.data(), param.data(), y.data(), Σ.data(), &scale,
                      this->D.lowerbound.data(), this->D.upperbound.data()},
                     {H_values.data()});
@@ -439,6 +466,22 @@ void CasADiProblem<Conf>::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale,
 template <Config Conf>
 bool CasADiProblem<Conf>::provides_eval_grad_gi() const {
     return false; // TODO
+}
+template <Config Conf>
+bool CasADiProblem<Conf>::provides_eval_ψ() const {
+    return impl->ψ.has_value();
+}
+template <Config Conf>
+bool CasADiProblem<Conf>::provides_eval_grad_ψ() const {
+    return impl->ψ_grad_ψ.has_value();
+}
+template <Config Conf>
+bool CasADiProblem<Conf>::provides_eval_ψ_grad_ψ() const {
+    return impl->ψ_grad_ψ.has_value();
+}
+template <Config Conf>
+bool CasADiProblem<Conf>::provides_eval_grad_L() const {
+    return impl->grad_L.has_value();
 }
 template <Config Conf>
 bool CasADiProblem<Conf>::provides_eval_jac_g() const {

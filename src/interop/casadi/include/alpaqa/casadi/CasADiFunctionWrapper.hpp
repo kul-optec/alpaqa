@@ -29,6 +29,19 @@ class CasADiFunctionEvaluator {
     CasADiFunctionEvaluator(casadi::Function &&f)
         : fun(std::move(f)), iwork(fun.sz_iw()), dwork(fun.sz_w()),
           arg_work(fun.sz_arg()), res_work(fun.sz_res()) {
+        validate_num_args(fun);
+    }
+
+    /// @throws invalid_argument_dimensions
+    CasADiFunctionEvaluator(casadi::Function &&f,
+                            const std::array<casadi_dim, N_in> &dim_in,
+                            const std::array<casadi_dim, N_out> &dim_out)
+        : CasADiFunctionEvaluator{std::move(f)} {
+        validate_dimensions(dim_in, dim_out);
+    }
+
+    /// @throws invalid_argument_dimensions
+    static void validate_num_args(const casadi::Function &fun) {
         using namespace std::literals::string_literals;
         if (N_in != fun.n_in())
             throw invalid_argument_dimensions(
@@ -43,16 +56,9 @@ class CasADiFunctionEvaluator {
     }
 
     /// @throws invalid_argument_dimensions
-    CasADiFunctionEvaluator(casadi::Function &&f,
-                            const std::array<casadi_dim, N_in> &dim_in,
-                            const std::array<casadi_dim, N_out> &dim_out)
-        : CasADiFunctionEvaluator{std::move(f)} {
-        validate_dimensions(dim_in, dim_out);
-    }
-
-    /// @throws invalid_argument_dimensions
-    void
-    validate_dimensions(const std::array<casadi_dim, N_in> &dim_in   = {},
+    static void
+    validate_dimensions(const casadi::Function &fun,
+                        const std::array<casadi_dim, N_in> &dim_in   = {},
                         const std::array<casadi_dim, N_out> &dim_out = {}) {
         using namespace std::literals::string_literals;
         static constexpr std::array count{"first",   "second", "third",
@@ -80,6 +86,13 @@ class CasADiFunctionEvaluator {
                     " output argument: got " + to_string(fun.size_out(cs_n)) +
                     ", should be " + to_string(dim_out[n]) + ".");
         }
+    }
+
+    /// @throws invalid_argument_dimensions
+    void
+    validate_dimensions(const std::array<casadi_dim, N_in> &dim_in   = {},
+                        const std::array<casadi_dim, N_out> &dim_out = {}) {
+        validate_dimensions(fun, dim_in, dim_out);
     }
 
   protected:
