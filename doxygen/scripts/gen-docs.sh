@@ -5,7 +5,7 @@ repodir="$PWD"/../..
 set -x
 cd "$repodir"
 
-mainbranch="main"
+mainbranch="develop"
 output_folder="${1:-/tmp}"
 mkdir -p "$output_folder"
 

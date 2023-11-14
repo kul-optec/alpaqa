@@ -9,7 +9,7 @@ repodir="$PWD"/../..
 set -x
 cd "$repodir"
 
-mainbranch="main"
+mainbranch="develop"
 
 set +x
 
