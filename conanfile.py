@@ -1,6 +1,7 @@
 import os
 
 from conan import ConanFile
+from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 
 
@@ -67,8 +68,16 @@ class AlpaqaRecipe(ConanFile):
             self.requires("utfcpp/4.0.1")
 
     def config_options(self):
-        if self.settings.os == "Windows":
-            del self.options.fPIC
+        if self.settings.get_safe("os") == "Windows":
+            self.options.rm_safe("fPIC")
+
+    def validate(self):
+        if self.options.with_matlab and not self.options.with_json:
+            msg = "MATLAB MEX interface requires JSON. Set 'with_json=True'."
+            raise ConanInvalidConfiguration(msg)
+        if self.options.with_matlab and not self.options.with_casadi:
+            msg = "MATLAB MEX interface requires CasADi. Set 'with_casadi=True'."
+            raise ConanInvalidConfiguration(msg)
 
     def layout(self):
         cmake_layout(self)
