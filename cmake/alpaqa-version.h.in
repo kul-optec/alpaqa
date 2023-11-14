@@ -9,10 +9,9 @@
 #define ALPAQA_BUILD_TIME alpaqa_build_time
 
 #include <alpaqa/export.h>
-ALPAQA_EXPORT
 #ifdef __cplusplus
 extern "C"
 #else
 extern
 #endif
-const char *const alpaqa_build_time;
+    ALPAQA_EXPORT const char *const alpaqa_build_time;
