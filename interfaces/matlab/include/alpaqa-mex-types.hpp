@@ -1,14 +1,12 @@
 #pragma once
 
-#include <alpaqa/config/config.hpp>
 #include <nlohmann/json.hpp>
+#include <vector>
 
 namespace alpaqa::mex {
 
-USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
-
 struct SolverResults {
-    vec x, y;
+    std::vector<double> x, y;
     nlohmann::json stats;
 };
 

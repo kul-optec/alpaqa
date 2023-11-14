@@ -1,5 +1,6 @@
 // This is a stripped-down version of src/alpaqa/src/driver
 
+#include <alpaqa/config/config.hpp>
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
@@ -16,6 +17,8 @@
 #include <alpaqa-mex-types.hpp>
 
 namespace alpaqa::mex {
+
+USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
 namespace {
 
@@ -141,8 +144,8 @@ SolverResults run_alm_solver(typename Solver::Problem &problem, crvec x0,
         inner["direction_update_rejected"] =
             static_cast<index_t>(s.inner.direction_update_rejected);
     return {
-        .x     = std::move(x),
-        .y     = std::move(y),
+        .x     = std::vector(x.begin(), x.end()),
+        .y     = std::vector(y.begin(), y.end()),
         .stats = std::move(stats),
     };
 }

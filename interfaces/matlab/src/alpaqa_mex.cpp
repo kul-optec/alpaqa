@@ -1,9 +1,13 @@
 #include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa-mex-types.hpp>
 
+#include <span>
+#include <string>
+#include <string_view>
+
 namespace alpaqa::mex {
-SolverResults minimize(crvec x0, crvec y0, std::string_view method,
-                       const Options &options);
+SolverResults minimize(std::span<const double> x0, std::span<const double> y0,
+                       std::string_view method, const Options &options);
 std::u16string utf8to16(std::string_view in);
 std::string utf16to8(std::u16string_view in);
 } // namespace alpaqa::mex
@@ -15,7 +19,6 @@ std::string utf16to8(std::u16string_view in);
 #include <map>
 #include <memory>
 #include <string>
-#include <string_view>
 
 using namespace matlab::mex;
 using namespace matlab::data;
@@ -70,15 +73,13 @@ class MexFunction : public Function {
             displayError(u"Third argument (x0) must be an array of double.");
         }
         matlab::data::TypedArray<double> x0 = std::move(inputs[2]);
-        alpaqa::mex::vec x0vec(x0.getNumberOfElements());
-        std::copy(x0.begin(), x0.end(), x0vec.begin());
+        std::vector<double> x0vec(x0.begin(), x0.end());
         // y0
         if (inputs[3].getType() != ArrayType::DOUBLE) {
             displayError(u"Fourth argument (y0) must be an array of double.");
         }
         matlab::data::TypedArray<double> y0 = std::move(inputs[3]);
-        alpaqa::mex::vec y0vec(y0.getNumberOfElements());
-        std::copy(y0.begin(), y0.end(), y0vec.begin());
+        std::vector<double> y0vec(y0.begin(), y0.end());
         // method
         if (inputs[4].getType() != ArrayType::CHAR) {
             displayError(u"Fifth argument (method) must be a character array.");

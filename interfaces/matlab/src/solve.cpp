@@ -1,3 +1,6 @@
+// In separate file, because MATLAB operators clash with Eigen
+// (could probably be resolved by removing the using namespace matlab::data).
+
 #include <solver-builder.ipp>
 
 #include <alpaqa/casadi/CasADiProblem.hpp>
@@ -7,18 +10,22 @@
 
 namespace alpaqa::mex {
 
-SolverResults minimize(crvec x0, crvec y0, std::string_view method,
-                       const Options &options) {
+SolverResults minimize(std::span<const double> x0, std::span<const double> y0,
+                       std::string_view method, const Options &options) {
     // TODO
     alpaqa::CasADiProblem<config_t> problem{
         "/home/pieter/GitHub/alpaqa/.venv/cache/alpaqa/cache/"
         "bcd8a11e-7e4b-11ee-9892-0f8255cce6e0/lib/alpaqa_problem.so"};
     alpaqa::TypeErasedProblem<config_t> te_problem(&problem);
 
+    // Map inputs to Eigen vectors
+    cmvec x0m{x0.data(), static_cast<length_t>(x0.size())};
+    cmvec y0m{y0.data(), static_cast<length_t>(y0.size())};
+
     std::ostringstream os;
     auto [builder, direction] = get_solver_builder(method, options);
     auto solver               = builder(direction, options);
-    return solver(te_problem, x0, y0, os);
+    return solver(te_problem, x0m, y0m, os);
 }
 
 } // namespace alpaqa::mex
