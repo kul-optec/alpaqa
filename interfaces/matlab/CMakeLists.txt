@@ -1,11 +1,23 @@
 # Find the Matlab MEX compiler:
 find_package(Matlab REQUIRED COMPONENTS MEX_COMPILER)
 
+# Matlab uses UTF-16 for all its strings, so we need to convert back and forth
+find_package(utf8cpp REQUIRED)
+
+# Matlab interface requires CasADi and JSON
+if (NOT TARGET alpaqa::casadi-loader)
+    message(FATAL_ERROR "MATLAB MEX interface requires CasADi")
+endif()
+if (NOT ALPAQA_WITH_JSON)
+    message(FATAL_ERROR "MATLAB MEX interface requires JSON")
+endif()
+
 # Create a target for compiling a MEX function:
-matlab_add_mex(
-    NAME alpaqa_mex                                 # Name for use in Matlab
-    SRC "src/alpaqa_mex.cpp" "src/solve.cpp"        # Source files to compile
-    LINK_TO alpaqa::casadi-loader                   # Dependencies
+matlab_add_mex(NAME alpaqa_mex
+    SRC
+        "src/alpaqa_mex.cpp" "src/solve.cpp" "src/unicode.cpp"
+    LINK_TO
+        alpaqa::alpaqa alpaqa::casadi-loader utf8cpp::utf8cpp
 )
 target_include_directories(alpaqa_mex PRIVATE include)
 if (NOT WIN32 AND NOT APPLE)
