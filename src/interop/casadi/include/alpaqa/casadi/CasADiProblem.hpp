@@ -26,6 +26,7 @@ struct SerializedCasADiFunctions {
 
 struct CasADiFunctions {
     std::map<std::string, casadi::Function> functions;
+    ~CasADiFunctions();
 };
 
 /// Problem definition for a CasADi problem, loaded from a DLL.

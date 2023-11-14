@@ -125,6 +125,7 @@ if (ALPAQA_WITH_CASADI)
     # Normal NLPs
     add_library(casadi-loader
         "interop/casadi/src/CasADiProblem.cpp"
+        "interop/casadi/src/CompleteCasADiProblem.cpp"
         "interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp")
     target_include_directories(alpaqa PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
