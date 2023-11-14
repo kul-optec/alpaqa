@@ -18,7 +18,7 @@ find_package(Matlab REQUIRED COMPONENTS MEX_COMPILER)
 # Create a target for compiling a MEX function:
 matlab_add_mex(NAME alpaqa_mex
     SRC
-        "src/alpaqa_mex.cpp" "src/solve.cpp" "src/unicode.cpp"
+        "src/alpaqa_mex.cpp" "src/minimize.cpp" "src/unicode.cpp"
     LINK_TO
         alpaqa::alpaqa alpaqa::casadi-loader utf8cpp::utf8cpp alpaqa::warnings
 )
