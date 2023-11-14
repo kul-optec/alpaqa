@@ -1,39 +1,79 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/params/json.hpp>
-#include <alpaqa/params/params.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa/util/string-util.hpp>
 
 #include <nlohmann/json.hpp>
+#include <stdexcept>
 
 namespace alpaqa::params {
 
 using config_t = DefaultConfig;
 
+namespace detail {
+std::string join_sorted_keys(const auto &members) {
+    auto keys = std::views::keys(members);
+    std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
+    util::sort_case_insensitive(sorted_keys);
+    return util::join(sorted_keys, {.sep = ", ", .empty = "∅"});
+}
+} // namespace detail
+
 template <class T>
-    requires requires { attribute_table<T, nlohmann::json>::table; }
-void set_param(T &t, const nlohmann::json &j) {
+    requires requires { attribute_table<T, json>::table; }
+void set_param(T &t, const json &j) {
     if (!j.is_object())
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(T)) +
                                  "' (expected object, but got " +
                                  j.type_name() + ')');
-    const auto &m = attribute_table<T, nlohmann::json>::table;
+    // Dictionary of members
+    const auto &members = attribute_table<T, json>::table;
+    // Loop over all items in the JSON object
     for (auto &&el : j.items()) {
         const auto &key = el.key();
-        auto it         = m.find(key);
-        if (it == m.end()) {
-            auto keys = std::views::keys(m);
-            std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
-            util::sort_case_insensitive(sorted_keys);
-            throw invalid_json_param(
-                "Invalid key '" + key + "' for type '" +
-                demangled_typename(typeid(T)) + "',\n  possible keys are: " +
-                util::join(sorted_keys, {.sep = ", ", .empty = "∅"}));
+        auto it         = members.find(key);
+        // If member was not found
+        if (it == members.end()) {
+            // Perhaps it's an alias to another member?
+            if constexpr (requires { attribute_alias_table<T, json>::table; }) {
+                const auto &aliases = attribute_alias_table<T, json>::table;
+                auto alias_it       = aliases.find(key);
+                // If it's not an alias either, raise an error
+                if (alias_it == aliases.end()) {
+                    throw invalid_json_param(
+                        "Invalid key '" + key + "' for type '" +
+                        demangled_typename(typeid(T)) +
+                        "',\n  possible keys are: " +
+                        detail::join_sorted_keys(members) + " (aliases: " +
+                        detail::join_sorted_keys(aliases) + ")");
+                }
+                // Resolve the alias and make sure that the target exists
+                it = members.find(alias_it->second);
+                if (it == members.end())
+                    throw std::logic_error(
+                        "Alias '" + std::string(alias_it->first) +
+                        "' refers to nonexistent option '" +
+                        std::string(alias_it->second) + "' in '" +
+                        demangled_typename(typeid(T)) + "'");
+            }
+            // If there are no aliases, then it's always an error
+            else {
+                auto keys = std::views::keys(members);
+                std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
+                util::sort_case_insensitive(sorted_keys);
+                throw invalid_json_param("Invalid key '" + key +
+                                         "' for type '" +
+                                         demangled_typename(typeid(T)) +
+                                         "',\n  possible keys are: " +
+                                         detail::join_sorted_keys(members));
+            }
         }
+        // Member was found, invoke its setter (and possibly recurse)
         try {
             it->second.set(t, el.value());
         } catch (invalid_json_param &e) {
+            // Keep a backtrace of the JSON keys for error reporting
             e.backtrace.push_back(key);
             throw;
         }
@@ -41,10 +81,10 @@ void set_param(T &t, const nlohmann::json &j) {
 }
 
 template <class T>
-    requires requires { attribute_table<T, nlohmann::json>::table; }
-void get_param(const T &t, nlohmann::json &s) {
-    s             = nlohmann::json::object();
-    const auto &m = attribute_table<T, nlohmann::json>::table;
+    requires requires { attribute_table<T, json>::table; }
+void get_param(const T &t, json &s) {
+    s             = json::object();
+    const auto &m = attribute_table<T, json>::table;
     for (auto &&[k, v] : m)
         v.get(t, s[k]);
 }

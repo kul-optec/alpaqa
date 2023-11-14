@@ -16,12 +16,21 @@ PARAMS_TABLE(CBFGSParams<config_t>, //
              PARAMS_MEMBER(α),      //
              PARAMS_MEMBER(ϵ),      //
 );
+PARAMS_ALIAS_TABLE(CBFGSParams<config_t>,           //
+                   PARAMS_MEMBER_ALIAS(alpha, α),   //
+                   PARAMS_MEMBER_ALIAS(epsilon, ϵ), //
+);
 
 PARAMS_TABLE(LipschitzEstimateParams<config_t>, //
              PARAMS_MEMBER(L_0),                //
              PARAMS_MEMBER(δ),                  //
              PARAMS_MEMBER(ε),                  //
              PARAMS_MEMBER(Lγ_factor),          //
+);
+PARAMS_ALIAS_TABLE(LipschitzEstimateParams<config_t>,              //
+                   PARAMS_MEMBER_ALIAS(delta, δ),                  //
+                   PARAMS_MEMBER_ALIAS(epsilon, ε),                //
+                   PARAMS_MEMBER_ALIAS(L_gamma_factor, Lγ_factor), //
 );
 
 PARAMS_TABLE(PANTRParams<config_t>,                                         //

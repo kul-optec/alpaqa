@@ -31,4 +31,28 @@ struct attribute_table;
 #define PARAMS_MEMBER(name)                                                    \
     { #name, &type::name }
 
+/// Dictionary that maps struct attribute names to type-erased functions that
+/// set those attributes.
+template <class T, class S>
+using attribute_alias_table_t = std::map<std::string_view, std::string_view>;
+
+/// Specialize this type to define the alternative attribute name to attribute
+/// setters dictionaries for a struct type @p T.
+template <class T, class S>
+struct attribute_alias_table;
+
+/// Helper macro to easily specialize @ref alpaqa::params::attribute_alias_table.
+#define PARAMS_ALIAS_TABLE(type_, ...)                                         \
+    template <class S>                                                         \
+    struct attribute_alias_table<type_, S> {                                   \
+        using type = type_;                                                    \
+        inline static const attribute_alias_table_t<type, S> table{            \
+            __VA_ARGS__};                                                      \
+    }
+
+/// Helper macro to easily initialize a
+/// @ref alpaqa::params::attribute_alias_table_t.
+#define PARAMS_MEMBER_ALIAS(alias, name)                                       \
+    { #alias, #name }
+
 } // namespace alpaqa::params
