@@ -96,24 +96,24 @@ class CasADiControlProblem {
     void eval_add_gn_hess_constr_N(crvec x, crvec M, rmat out) const;
 
     void check() const {
-        util::check_dim_msg<config_t>(U.lowerbound, nu,
-                                      "Length of problem.U.lowerbound does not "
-                                      "match problem size problem.nu");
-        util::check_dim_msg<config_t>(U.upperbound, nu,
-                                      "Length of problem.U.upperbound does not "
-                                      "match problem size problem.nu");
-        util::check_dim_msg<config_t>(D.lowerbound, nc,
-                                      "Length of problem.D.lowerbound does not "
-                                      "match problem size problem.nc");
-        util::check_dim_msg<config_t>(D.upperbound, nc,
-                                      "Length of problem.D.upperbound does not "
-                                      "match problem size problem.nc");
-        util::check_dim_msg<config_t>(D_N.lowerbound, nc_N,
-                                      "Length of problem.D_N.lowerbound does "
-                                      "not match problem size problem.nc_N");
-        util::check_dim_msg<config_t>(D_N.upperbound, nc_N,
-                                      "Length of problem.D_N.upperbound does "
-                                      "not match problem size problem.nc_N");
+        util::check_dim_msg(U.lowerbound, nu,
+                            "Length of problem.U.lowerbound does not "
+                            "match problem size problem.nu");
+        util::check_dim_msg(U.upperbound, nu,
+                            "Length of problem.U.upperbound does not "
+                            "match problem size problem.nu");
+        util::check_dim_msg(D.lowerbound, nc,
+                            "Length of problem.D.lowerbound does not "
+                            "match problem size problem.nc");
+        util::check_dim_msg(D.upperbound, nc,
+                            "Length of problem.D.upperbound does not "
+                            "match problem size problem.nc");
+        util::check_dim_msg(D_N.lowerbound, nc_N,
+                            "Length of problem.D_N.lowerbound does "
+                            "not match problem size problem.nc_N");
+        util::check_dim_msg(D_N.upperbound, nc_N,
+                            "Length of problem.D_N.upperbound does "
+                            "not match problem size problem.nc_N");
         if (penalty_alm_split < 0 || penalty_alm_split > nc)
             throw std::invalid_argument("Invalid penalty_alm_split");
         if (penalty_alm_split_N < 0 || penalty_alm_split > nc_N)

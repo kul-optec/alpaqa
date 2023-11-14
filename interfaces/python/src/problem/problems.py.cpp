@@ -558,8 +558,7 @@ void register_problems(py::module_ &m) {
         casadi_problem.def_property(
             "param", [](CasADiProblem &p) -> rvec { return p.param; },
             [](CasADiProblem &p, crvec param) {
-                alpaqa::util::check_dim_msg<config_t>(param, p.param.size(),
-                                                      "Invalid parameter size");
+                alpaqa::util::check_dim_msg(param, p.param.size(), "Invalid parameter size");
                 p.param = param;
             },
             "Parameter vector :math:`p` of the problem");

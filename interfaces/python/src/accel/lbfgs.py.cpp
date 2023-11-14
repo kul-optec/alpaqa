@@ -36,19 +36,19 @@ void register_lbfgs(py::module_ &m) {
 
     auto safe_lbfgs_update = [](LBFGS &self, crvec xk, crvec xkp1, crvec pk, crvec pkp1,
                                 LBFGSSign sign, bool forced) {
-        alpaqa::util::check_dim<config_t>("xk", xk, self.n());
-        alpaqa::util::check_dim<config_t>("xkp1", xkp1, self.n());
-        alpaqa::util::check_dim<config_t>("pk", pk, self.n());
-        alpaqa::util::check_dim<config_t>("pkp1", pkp1, self.n());
+        alpaqa::util::check_dim("xk", xk, self.n());
+        alpaqa::util::check_dim("xkp1", xkp1, self.n());
+        alpaqa::util::check_dim("pk", pk, self.n());
+        alpaqa::util::check_dim("pkp1", pkp1, self.n());
         return self.update(xk, xkp1, pk, pkp1, sign, forced);
     };
     auto safe_lbfgs_update_sy = [](LBFGS &self, crvec sk, crvec yk, real_t pkp1Tpkp1, bool forced) {
-        alpaqa::util::check_dim<config_t>("sk", sk, self.n());
-        alpaqa::util::check_dim<config_t>("yk", yk, self.n());
+        alpaqa::util::check_dim("sk", sk, self.n());
+        alpaqa::util::check_dim("yk", yk, self.n());
         return self.update_sy(sk, yk, pkp1Tpkp1, forced);
     };
     auto safe_lbfgs_apply = [](LBFGS &self, rvec q, real_t γ) {
-        alpaqa::util::check_dim<config_t>("q", q, self.n());
+        alpaqa::util::check_dim("q", q, self.n());
         return self.apply(q, γ);
     };
 

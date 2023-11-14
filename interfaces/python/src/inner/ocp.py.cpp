@@ -33,13 +33,13 @@ void register_ocp(py::module_ &m) {
             auto nc   = eval.vars.nc();
             auto nc_N = eval.vars.nc_N();
             if (y)
-                alpaqa::util::check_dim<config_t>("y", *y, nc * N + nc_N);
+                alpaqa::util::check_dim("y", *y, nc * N + nc_N);
             else if (nc * N + nc_N == 0)
                 y = vec{};
             else
                 throw std::invalid_argument("Missing argument y");
             if (μ)
-                alpaqa::util::check_dim<config_t>("μ", *μ, nc * N + nc_N);
+                alpaqa::util::check_dim("μ", *μ, nc * N + nc_N);
             else if (nc * N + nc_N == 0)
                 μ = vec{};
             else

@@ -211,20 +211,16 @@ class BoxConstrProblem {
 
     /// @see @ref TypeErasedProblem::check
     void check() const {
-        util::check_dim_msg<config_t>(
-            C.lowerbound, n,
-            "Length of problem.C.lowerbound does not match problem size problem.n");
-        util::check_dim_msg<config_t>(
-            C.upperbound, n,
-            "Length of problem.C.upperbound does not match problem size problem.n");
-        util::check_dim_msg<config_t>(
-            D.lowerbound, m,
-            "Length of problem.D.lowerbound does not match problem size problem.m");
-        util::check_dim_msg<config_t>(
-            D.upperbound, m,
-            "Length of problem.D.upperbound does not match problem size problem.m");
+        util::check_dim_msg(C.lowerbound, n,
+                            "Length of problem.C.lowerbound does not match problem size problem.n");
+        util::check_dim_msg(C.upperbound, n,
+                            "Length of problem.C.upperbound does not match problem size problem.n");
+        util::check_dim_msg(D.lowerbound, m,
+                            "Length of problem.D.lowerbound does not match problem size problem.m");
+        util::check_dim_msg(D.upperbound, m,
+                            "Length of problem.D.upperbound does not match problem size problem.m");
         if (l1_reg.size() > 1)
-            util::check_dim_msg<config_t>(
+            util::check_dim_msg(
                 l1_reg, n,
                 "Length of problem.l1_reg does not match problem size problem.n, 1 or 0");
         if (penalty_alm_split < 0 || penalty_alm_split > m)
