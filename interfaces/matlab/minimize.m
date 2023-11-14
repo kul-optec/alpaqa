@@ -14,8 +14,21 @@ else
     params_str = convertStringsToChars(options.params);
 end
 
+f = casadi.Function('f', {problem.x', problem.param'}, {problem.f});
+g = casadi.Function('g', {problem.x', problem.param'}, {problem.g'});
+
+problem_struct = struct
+problem_struct.f = f.serialize()
+problem_struct.g = g.serialize()
+problem_struct.C_lb = problem.C_lowerbound
+problem_struct.C_ub = problem.C_upperbound
+problem_struct.D_lb = problem.D_lowerbound
+problem_struct.D_ub = problem.D_upperbound
+problem_struct.l1_reg = problem.l1_regularization
+problem_struct.param = problem.param_value
+
 [varargout{1:nargout}] = alpaqa.alpaqa_mex('minimize', ...
-    problem, x0, y0, convertStringsToChars(options.method), params_str);
+    problem_struct, x0, y0, convertStringsToChars(options.method), params_str);
 
 end
 

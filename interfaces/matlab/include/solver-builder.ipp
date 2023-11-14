@@ -20,8 +20,6 @@ namespace alpaqa::mex {
 
 USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
-namespace {
-
 using solver_runner_func =
     std::function<SolverResults(alpaqa::TypeErasedProblem<config_t> &problem,
                                 crvec x0, crvec y0, std::ostream &os)>;
@@ -237,7 +235,8 @@ solver_runner_func make_pantr_driver(std::string_view direction,
     return make_pantr_like_solver<alpaqa::PANTRSolver>(direction, opts);
 }
 
-auto get_solver_builder(std::string_view method, const Options &opts) {
+auto get_solver_builder(std::string_view method,
+                        [[maybe_unused]] const Options &opts) {
     std::string direction;
     if (method.empty())
         method = "panoc.struclbfgs";
@@ -263,5 +262,4 @@ auto get_solver_builder(std::string_view method, const Options &opts) {
     return std::make_tuple(std::move(solver_it->second), direction);
 }
 
-} // namespace
 } // namespace alpaqa::mex

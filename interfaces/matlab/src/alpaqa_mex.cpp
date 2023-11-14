@@ -1,18 +1,6 @@
 #include <alpaqa/util/demangled-typename.hpp>
+#include <MatlabDataArray/ArrayType.hpp>
 #include <alpaqa-mex-types.hpp>
-
-#include <functional>
-#include <span>
-#include <string>
-#include <string_view>
-
-namespace alpaqa::mex {
-SolverResults minimize(std::span<const double> x0, std::span<const double> y0,
-                       std::string_view method, const Options &options,
-                       std::function<void(std::string_view)> write_utf8);
-std::u16string utf8to16(std::string_view in);
-std::string utf16to8(std::u16string_view in);
-} // namespace alpaqa::mex
 
 #include <mex.hpp>
 #include <mexAdapter.hpp>
@@ -22,10 +10,15 @@ std::string utf16to8(std::u16string_view in);
 #include <memory>
 #include <string>
 
-using namespace matlab::mex;
-using namespace matlab::data;
+using matlab::data::Array;
+using matlab::data::ArrayFactory;
+using matlab::data::ArrayType;
+using matlab::data::CharArray;
+using matlab::data::StructArray;
+using matlab::data::TypedArray;
+using matlab::mex::ArgumentList;
 
-class MexFunction : public Function {
+class MexFunction : public matlab::mex::Function {
   private:
     std::shared_ptr<matlab::engine::MATLABEngine> matlabPtr;
 
@@ -80,18 +73,57 @@ class MexFunction : public Function {
     // Solve the given minimization problem.
     void call_minimize(ArgumentList outputs, ArgumentList inputs) try {
         using namespace alpaqa::mex;
+        using nlohmann::json;
+        // problem
+        if (inputs[1].getType() != ArrayType::STRUCT ||
+            inputs[1].getNumberOfElements() != 1) {
+            displayError(u"Second argument (problem) must be a scalar struct");
+        }
+        auto problem_structs = static_cast<StructArray>(inputs[1]);
+        auto fields          = problem_structs.getFieldNames();
+        auto get_field       = [&](const std::string &name, ArrayType type) {
+            auto found = std::find(fields.begin(), fields.end(), name);
+            if (found == fields.end())
+                displayError(u"Missing field " + utf8to16(name));
+            if (problem_structs[0][*found].getType() != type)
+                displayError(u"Incorrect type for field " + utf8to16(name));
+            return problem_structs[0][*found];
+        };
+        ProblemDescription problem;
+        problem.f =
+            static_cast<CharArray>(get_field("f", ArrayType::CHAR)).toAscii();
+        problem.g =
+            static_cast<CharArray>(get_field("g", ArrayType::CHAR)).toAscii();
+        auto C_lb = static_cast<TypedArray<double>>(
+            get_field("C_lb", ArrayType::DOUBLE));
+        problem.C_lb = std::vector(C_lb.begin(), C_lb.end());
+        auto C_ub    = static_cast<TypedArray<double>>(
+            get_field("C_ub", ArrayType::DOUBLE));
+        problem.C_ub = std::vector(C_ub.begin(), C_ub.end());
+        auto D_lb    = static_cast<TypedArray<double>>(
+            get_field("D_lb", ArrayType::DOUBLE));
+        problem.D_lb = std::vector(D_lb.begin(), D_lb.end());
+        auto D_ub    = static_cast<TypedArray<double>>(
+            get_field("D_ub", ArrayType::DOUBLE));
+        problem.D_ub = std::vector(D_ub.begin(), D_ub.end());
+        auto l1_reg  = static_cast<TypedArray<double>>(
+            get_field("l1_reg", ArrayType::DOUBLE));
+        problem.l1_reg = std::vector(l1_reg.begin(), l1_reg.end());
+        auto param     = static_cast<TypedArray<double>>(
+            get_field("param", ArrayType::DOUBLE));
+        problem.param = std::vector(param.begin(), param.end());
         // x0
         if (inputs[2].getType() != ArrayType::DOUBLE) {
             displayError(u"Third argument (x0) must be an array of double.");
         }
-        matlab::data::TypedArray<double> x0 = std::move(inputs[2]);
-        std::vector<double> x0vec(x0.begin(), x0.end());
+        matlab::data::TypedArray<double> x0a = std::move(inputs[2]);
+        std::vector<double> x0(x0a.begin(), x0a.end());
         // y0
         if (inputs[3].getType() != ArrayType::DOUBLE) {
             displayError(u"Fourth argument (y0) must be an array of double.");
         }
-        matlab::data::TypedArray<double> y0 = std::move(inputs[3]);
-        std::vector<double> y0vec(y0.begin(), y0.end());
+        matlab::data::TypedArray<double> y0a = std::move(inputs[3]);
+        std::vector<double> y0(y0a.begin(), y0a.end());
         // method
         if (inputs[4].getType() != ArrayType::CHAR) {
             displayError(u"Fifth argument (method) must be a character array.");
@@ -102,10 +134,10 @@ class MexFunction : public Function {
             displayError(u"Sixth argument (params) must be a character array.");
         }
         auto params_str = utf16to8(static_cast<CharArray>(inputs[5]).toUTF16());
-        auto options    = nlohmann::json::parse(params_str);
+        auto opts       = json::parse(params_str);
 
         // Run solver
-        auto results = minimize(x0vec, y0vec, method, options, utf8_writer());
+        auto results = minimize(problem, x0, y0, method, opts, utf8_writer());
 
         // Return output
         ArrayFactory factory;

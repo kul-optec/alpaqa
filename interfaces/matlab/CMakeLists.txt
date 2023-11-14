@@ -20,7 +20,7 @@ matlab_add_mex(NAME alpaqa_mex
     SRC
         "src/alpaqa_mex.cpp" "src/solve.cpp" "src/unicode.cpp"
     LINK_TO
-        alpaqa::alpaqa alpaqa::casadi-loader utf8cpp::utf8cpp
+        alpaqa::alpaqa alpaqa::casadi-loader utf8cpp::utf8cpp alpaqa::warnings
 )
 target_include_directories(alpaqa_mex PRIVATE include)
 if (NOT WIN32 AND NOT APPLE)
