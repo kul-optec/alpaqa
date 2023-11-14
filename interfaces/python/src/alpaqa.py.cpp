@@ -97,6 +97,7 @@ PYBIND11_MODULE(MODULE_NAME, m) {
     m.doc()               = "Python interface to alpaqa's C++ implementation.";
     m.attr("__version__") = ALPAQA_VERSION_FULL;
     m.attr("build_time")  = ALPAQA_BUILD_TIME;
+    m.attr("commit_hash") = ALPAQA_COMMIT_HASH;
 #if ALPAQA_HAVE_CASADI
     m.attr("with_casadi") = true;
 #else
