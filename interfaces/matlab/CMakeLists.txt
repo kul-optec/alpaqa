@@ -31,6 +31,10 @@ if (NOT WIN32 AND NOT APPLE)
     # Matlab's C++ standard library is too old, so link it statically
     target_link_options(alpaqa_mex PUBLIC -static-libstdc++ -static-libgcc)
 endif()
+# Get MSVC to report the correct value for __cplusplus
+if (MSVC)
+    target_compile_options(alpaqa_mex PRIVATE /Zc:__cplusplus)
+endif()
 
 # Don't use any filename postfixes for the MEX file
 set_target_properties(alpaqa_mex PROPERTIES
