@@ -8,7 +8,7 @@ from conan.tools.build import can_run
 
 class AlpaqaRecipe(ConanFile):
     name = "alpaqa"
-    version = "1.0.0-alpha.14"
+    version = "1.0.0-alpha.15"
 
     # Optional metadata
     license = "LGPLv3"
