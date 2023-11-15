@@ -138,14 +138,15 @@ jobs:
           - os: macos-13
             name: macos-intel
             matlab-version: 'R2021a'
-          - os: macos-13-arm64
-            name: macos-arm64
-            matlab-version: 'R2023b'
+          # - os: macos-13-arm64
+          #   name: macos-arm64
+          #   matlab-version: 'R2023b'
     runs-on: ${{ matrix.os }}
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       DEVELOPER_DIR: /Applications/Xcode_15.0.1.app/Contents/Developer
+      FC: NOTFOUND
     steps:
     # Git clone
     - uses: actions/checkout@v3
@@ -207,6 +208,8 @@ jobs:
         tools.build:cxxflags+=["-march=skylake"]
         tools.build:cflags+=["-march=skylake"]
         tools.cmake.cmaketoolchain:generator=Ninja
+        [buildenv]
+        FC=NOTFOUND
         EOF
         conan config install skylake.profile -tf profiles
     # Dependencies
@@ -230,6 +233,103 @@ jobs:
       run: cmake --build --preset conan-release -j -t alpaqa_mex -v
     - name: Install
       run: cmake --install build-matlab/build/Release --prefix staging --component mex_interface
+    - name: Package
+      run: zip -r ../alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip ./*
+      working-directory: staging
+    # Upload
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}
+        path: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
+    - name: Release
+      if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+      uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
+      with:
+        files: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
+
+  build-windows:
+    strategy:
+      matrix:
+        include:
+          - os: windows-2022
+            name: windows-x64
+            matlab-version: 'R2021a'
+    runs-on: ${{ matrix.os }}
+    env:
+      FC: NOTFOUND
+    steps:
+    # Git clone
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    # Tools
+    - uses: actions/setup-python@v4
+      id: python
+      name: Install Python
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    # Matlab
+    - name: Set up MATLAB
+      uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
+      with:
+        release: ${{ matrix.matlab-version }}
+    # Conan
+    - name: Install Conan, Ninja
+      id: conan
+      run: |
+        python -m pip install -U pip conan ninja
+        echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
+      shell: bash
+    - name: Cache Conan
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.conan.outputs.conan-home }}
+        key: ${{ runner.os }}-matlab-conan-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-conan
+    - name: Conan detect
+      run: |
+        conan --version
+        conan profile detect --force
+    - name: Conan config
+      run: |
+        cat > settings_user.yml << EOF
+        microarch: [avx2]
+        EOF
+        conan config install settings_user.yml
+        cat > avx2.profile << EOF
+        include(default)
+        [settings]
+        microarch=avx2
+        [conf]
+        tools.build:cxxflags+=["/arch:AVX2"]
+        tools.build:cflags+=["/arch:AVX2"]
+        [buildenv]
+        FC=NOTFOUND
+        EOF
+        conan config install avx2.profile -tf profiles
+      shell: bash
+    # Dependencies
+    - name: Conan create CasADi
+      run: >
+        conan create scripts/recipes/casadi
+        -pr:h avx2.profile
+        --build=missing
+    - name: Conan install
+      run: >
+        conan install .
+        -pr:h avx2.profile
+        --build=missing
+        -s build_type=Release
+        -of build-matlab
+        -o with_matlab=True -o with_json=True -o with_casadi=True
+    # Build
+    - name: Configure
+      run: cmake --preset conan-default
+    - name: Build
+      run: cmake --build --preset conan-release -j -t alpaqa_mex -v
+    - name: Install
+      run: cmake --install build-matlab/build --prefix staging --component mex_interface
     - name: Package
       run: zip -r ../alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip ./*
       working-directory: staging
