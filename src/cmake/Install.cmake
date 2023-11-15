@@ -88,8 +88,7 @@ configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in"
     "${PROJECT_BINARY_DIR}/alpaqaConfig.cmake"
     INSTALL_DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}"
-    NO_SET_AND_CHECK_MACRO
-    NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+    NO_SET_AND_CHECK_MACRO)
 write_basic_package_version_file(
     "${PROJECT_BINARY_DIR}/alpaqaConfigVersion.cmake"
     VERSION "${PROJECT_VERSION}"
