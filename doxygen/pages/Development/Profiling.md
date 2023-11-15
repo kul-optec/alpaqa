@@ -142,7 +142,7 @@ firefox http://localhost:5000
 - https://sourceware.org/binutils/docs-2.41/gprofng.html
 - https://www.gnu.org/software/binutils/
 
-### Install
+### Installation
 
 ```sh
 wget https://ftp.gnu.org/gnu/binutils/binutils-2.41.tar.xz -O- | tar xJ -C ~/Downloads
