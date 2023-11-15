@@ -23,6 +23,9 @@
 #ifdef ALPAQA_HAVE_CASADI
 #include <casadi/config.h>
 #endif
+#ifdef ALPAQA_WITH_JSON
+#include <nlohmann/json_fwd.hpp>
+#endif
 #ifdef WITH_IPOPT
 #include <IpoptConfig.h>
 #endif
@@ -135,35 +138,41 @@ void print_usage(const char *a0) {
                  "\n\n"
                  "    Usage: "
               << a0 << opts << docs << std::endl;
-    std::cout
-        << "Third-party libraries:\n"
-        << "  * Eigen " << EIGEN_WORLD_VERSION << '.' << EIGEN_MAJOR_VERSION
-        << '.' << EIGEN_MINOR_VERSION
-        << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
+    std::cout << "Third-party libraries:\n"
+              << "  * Eigen " << EIGEN_WORLD_VERSION << '.'
+              << EIGEN_MAJOR_VERSION << '.' << EIGEN_MINOR_VERSION
+              << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
 #ifdef ALPAQA_HAVE_CASADI
-        << "  * CasADi " CASADI_VERSION_STRING
-           " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
+              << "  * CasADi " CASADI_VERSION_STRING
+                 " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
 #endif
 #ifdef ALPAQA_HAVE_CUTEST
-        << "  * CUTEst"
-           " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
+              << "  * CUTEst"
+                 " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
 #endif
 #ifdef WITH_LBFGSB
-        << "  * L-BFGS-B 3.0 "
-           "(http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) - "
-           "BSD-3-Clause\n"
+              << "  * L-BFGS-B 3.0 "
+                 "(http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) - "
+                 "BSD-3-Clause\n"
 #endif
 #ifdef WITH_IPOPT
-        << "  * Ipopt " IPOPT_VERSION
-           " (https://github.com/coin-or/Ipopt) - EPL-2.0\n"
-        << "  * MUMPS (https://mumps-solver.org) - CECILL-C\n"
-        << "  * OpenBLAS (https://github.com/xianyi/OpenBLAS) - BSD-3-Clause\n"
+              << "  * Ipopt " IPOPT_VERSION
+                 " (https://github.com/coin-or/Ipopt) - EPL-2.0\n"
+              << "  * MUMPS (https://mumps-solver.org) - CECILL-C\n"
+              << "  * OpenBLAS (https://github.com/OpenMathLib/OpenBLAS) - "
+                 "BSD-3-Clause\n"
 #endif
 #ifdef WITH_QPALM
-        << "  * QPALM " QPALM_VERSION_STR
-           " (https://github.com/kul-optec/QPALM) - LGPL-3.0\n"
+              << "  * QPALM " QPALM_VERSION_STR
+                 " (https://github.com/kul-optec/QPALM) - LGPL-3.0\n"
 #endif
-        << std::endl;
+#ifdef ALPAQA_WITH_JSON
+              << "  * nlohmann/json " << NLOHMANN_JSON_VERSION_MAJOR << '.'
+              << NLOHMANN_JSON_VERSION_MINOR << '.'
+              << NLOHMANN_JSON_VERSION_PATCH
+              << " (https://github.com/nlohmann/json) - MIT\n"
+#endif
+              << std::endl;
 }
 
 void print_version() {
