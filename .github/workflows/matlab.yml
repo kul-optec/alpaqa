@@ -315,32 +315,32 @@ jobs:
         conan create scripts/recipes/casadi
         -pr:h avx2.profile
         --build=missing
-    - name: Conan install
-      run: >
-        conan install .
-        -pr:h avx2.profile
-        --build=missing
-        -s build_type=Release
-        -of build-matlab
-        -o with_matlab=True -o with_json=True -o with_casadi=True
-    # Build
-    - name: Configure
-      run: cmake --preset conan-default
-    - name: Build
-      run: cmake --build --preset conan-release -j -t alpaqa_mex -v
-    - name: Install
-      run: cmake --install build-matlab/build --prefix staging --component mex_interface
-    - name: Package
-      run: zip -r ../alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip ./*
-      working-directory: staging
-    # Upload
-    - name: Upload
-      uses: actions/upload-artifact@v3
-      with:
-        name: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}
-        path: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
-    - name: Release
-      if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
-      uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
-      with:
-        files: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
+    # - name: Conan install
+    #   run: >
+    #     conan install .
+    #     -pr:h avx2.profile
+    #     --build=missing
+    #     -s build_type=Release
+    #     -of build-matlab
+    #     -o with_matlab=True -o with_json=True -o with_casadi=True
+    # # Build
+    # - name: Configure
+    #   run: cmake --preset conan-default
+    # - name: Build
+    #   run: cmake --build --preset conan-release -j -t alpaqa_mex -v
+    # - name: Install
+    #   run: cmake --install build-matlab/build --prefix staging --component mex_interface
+    # - name: Package
+    #   run: zip -r ../alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip ./*
+    #   working-directory: staging
+    # # Upload
+    # - name: Upload
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}
+    #     path: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
+    # - name: Release
+    #   if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+    #   uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
+    #   with:
+    #     files: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
