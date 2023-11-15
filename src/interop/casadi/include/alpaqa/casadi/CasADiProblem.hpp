@@ -20,11 +20,11 @@ template <Config>
 struct CasADiFunctionsWithParam;
 } // namespace casadi_loader
 
-struct SerializedCasADiFunctions {
+struct CASADI_LOADER_EXPORT SerializedCasADiFunctions {
     std::map<std::string, std::string> functions;
 };
 
-struct CasADiFunctions {
+struct CASADI_LOADER_EXPORT CasADiFunctions {
     std::map<std::string, casadi::Function> functions;
     ~CasADiFunctions();
 };
