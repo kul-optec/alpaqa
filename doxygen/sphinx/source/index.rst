@@ -42,5 +42,6 @@ The package can be easily installed using:
    examples/index.rst
    reference/python-api.rst
    reference/cpp-api.rst
+   reference/matlab-api.rst
    contribution/*
    changelog
