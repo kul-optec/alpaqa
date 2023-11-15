@@ -1,17 +1,27 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(Eigen3 REQUIRED CONFIG)
+find_dependency(Eigen3 CONFIG)
 if (@ALPAQA_WITH_CASADI@)
     find_package(casadi CONFIG)
 endif()
+if (@ALPAQA_WITH_OPENMP@)
+    find_dependency(OpenMP COMPONENTS CXX)
+endif()
+if (@ALPAQA_WITH_JSON@)
+    find_dependency(nlohmann_json)
+endif()
 
+set(ALPAQA_WITH_QUAD_PRECISION @ALPAQA_WITH_QUAD_PRECISION@ CACHE INTERNAL "")
+set(ALPAQA_WITH_SINGLE_PRECISION @ALPAQA_WITH_SINGLE_PRECISION@ CACHE INTERNAL "")
+set(ALPAQA_WITH_LONG_DOUBLE @ALPAQA_WITH_LONG_DOUBLE@ CACHE INTERNAL "")
+set(ALPAQA_WITH_DRIVERS @ALPAQA_WITH_DRIVERS@ CACHE INTERNAL "")
 set(ALPAQA_WITH_OCP @ALPAQA_WITH_OCP@ CACHE INTERNAL "")
 
 include("${CMAKE_CURRENT_LIST_DIR}/alpaqaTargets.cmake")
 
 if(NOT _@PROJECT_NAME@_PRINTED)
     get_target_property(ALPAQA_CONFIG alpaqa::alpaqa IMPORTED_CONFIGURATIONS)
-    message(STATUS "Found @PROJECT_NAME@ @PROJECT_VERSION@: ${CMAKE_CURRENT_LIST_DIR} (available configs: ${ALPAQA_CONFIG})")
+    message(STATUS "Found @PROJECT_NAME@ @PROJECT_VERSION@: ${CMAKE_CURRENT_LIST_DIR} (available configs: ${ALPAQA_CONFIG}, available targets: @ALPAQA_INSTALL_TARGETS@)")
     set(_@PROJECT_NAME@_PRINTED On CACHE INTERNAL "")
 endif()
