@@ -1,14 +1,4 @@
-include(GNUInstallDirs)
 include(${PROJECT_SOURCE_DIR}/cmake/Debug.cmake)
-
-set(ALPAQA_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/alpaqa"
-    CACHE STRING "Installation directory for CMake configuration files")
-set(ALPAQA_INSTALL_BINDIR "${CMAKE_INSTALL_BINDIR}"
-    CACHE STRING "Installation directory for binaries and DLLs")
-set(ALPAQA_INSTALL_LIBDIR "${CMAKE_INSTALL_LIBDIR}"
-    CACHE STRING "Installation directory for archives and libraries")
-set(ALPAQA_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}"
-    CACHE STRING "Installation directory for headers")
 
 # Set the runtime linker/loader search paths to make alpaqa stand-alone
 if (ALPAQA_STANDALONE)

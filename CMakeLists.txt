@@ -68,6 +68,17 @@ option(ALPAQA_ENABLE_PCH
 option(ALPAQA_STANDALONE
     "Install with relative RPATH to locate its own shared libraries" On)
 
+# Installation paths
+include(GNUInstallDirs)
+set(ALPAQA_INSTALL_LIBDIR "${CMAKE_INSTALL_LIBDIR}"
+    CACHE PATH "Installation directory for archives and libraries")
+set(ALPAQA_INSTALL_CMAKEDIR "${ALPAQA_INSTALL_LIBDIR}/cmake/alpaqa"
+    CACHE PATH "Installation directory for CMake configuration files")
+set(ALPAQA_INSTALL_BINDIR "${CMAKE_INSTALL_BINDIR}"
+    CACHE PATH "Installation directory for binaries and DLLs")
+set(ALPAQA_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}"
+    CACHE PATH "Installation directory for headers")
+
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 
 # Compiler warnings
@@ -145,13 +156,14 @@ set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/README.md")
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Pieter Pas <pieter.p.dev@outlook.com>")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/kul-optec/alpaqa")
 # Package components
-set(CPACK_COMPONENTS_ALL "shlib;dev;dl_dev;debug;bin")
+set(CPACK_COMPONENTS_ALL "shlib;dev;dl_dev;debug;bin;matlab")
 set(CPACK_DEB_COMPONENT_INSTALL On)
 set(CPACK_DEBIAN_SHLIB_PACKAGE_NAME "libalpaqa")
 set(CPACK_DEBIAN_DEV_PACKAGE_NAME "libalpaqa-dev")
 set(CPACK_DEBIAN_DL_DEV_PACKAGE_NAME "libalpaqa-dl-dev")
 set(CPACK_DEBIAN_DEBUG_PACKAGE_NAME "libalpaqa-debug")
 set(CPACK_DEBIAN_BIN_PACKAGE_NAME "libalpaqa-tools")
+set(CPACK_DEBIAN_MATLAB_PACKAGE_NAME "libalpaqa-matlab")
 # Package dependencies
 set(CPACK_DEBIAN_SHLIB_PACKAGE_DEPENDS "libc6 (>= 2.17), libgfortran5 (>= 10), libquadmath0 (>= 10)")
 set(CPACK_DEBIAN_DEV_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX}), libalpaqa-dl-dev (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
@@ -160,4 +172,5 @@ set(CPACK_DEBIAN_DL_DEV_PACKAGE_DEPENDS "")
 set(CPACK_DEBIAN_DL_DEV_PACKAGE_SUGGESTS "libalpaqa-dev (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
 set(CPACK_DEBIAN_DEBUG_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
 set(CPACK_DEBIAN_BIN_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
+set(CPACK_DEBIAN_MATLAB_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
 include(CPack)
