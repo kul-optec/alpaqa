@@ -14,7 +14,7 @@ env:
   MATLAB_VERSION: 'R2021a'
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
@@ -45,8 +45,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.ccache.outputs.ccache-dir }}
-        key: ${{ runner.os }}-matlab-${{ matrix.host }}-ccache-${{ github.run_id }}
-        restore-keys: ${{ runner.os }}-matlab-${{ matrix.host }}-ccache
+        key: ${{ runner.os }}-matlab-${{ env.HOST }}-ccache-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-${{ env.HOST }}-ccache
     # Matlab
     - name: Set up MATLAB
       uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
@@ -62,8 +62,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ${{ steps.conan.outputs.conan-home }}
-        key: ${{ runner.os }}-matlab-${{ matrix.host }}-conan-${{ github.run_id }}
-        restore-keys: ${{ runner.os }}-matlab-${{ matrix.host }}-conan
+        key: ${{ runner.os }}-matlab-${{ env.HOST }}-conan-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-${{ env.HOST }}-conan
     - name: Conan detect
       run: |
         conan --version
@@ -104,7 +104,6 @@ jobs:
         conan install .
         -pr:h ${{ env.HOST }}.profile
         --build=missing
-        -c tools.cmake.cmaketoolchain:generator="Ninja"
         -s build_type=Release
         -of build-matlab
         -o with_matlab=True -o with_json=True -o with_casadi=True
@@ -131,3 +130,107 @@ jobs:
       uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
       with:
         files: alpaqa-matlab-linux.zip
+
+  build-macos:
+    runs-on: macos-13
+    env:
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+    steps:
+    # Git clone
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    # Tools
+    - uses: actions/setup-python@v4
+      id: python
+      name: Install Python
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    - name: Install ccache
+      run: brew install ccache && ccache --version
+    # Ccache
+    - name: Prepare ccache directory
+      id: ccache
+      run: |
+        echo "CCACHE_DIR=${{ runner.temp }}/.ccache" >> "$GITHUB_ENV"
+        echo "ccache-dir=${{ runner.temp }}/.ccache" >> "$GITHUB_OUTPUT"
+        mkdir -p "${{ runner.temp }}/.ccache"
+    - name: Cache ccache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.ccache.outputs.ccache-dir }}
+        key: ${{ runner.os }}-matlab-ccache-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-ccache
+    # Matlab
+    - name: Set up MATLAB
+      uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
+      with:
+        release: ${{ env.MATLAB_VERSION }}
+    # Conan
+    - name: Install Conan, Ninja
+      id: conan
+      run: |
+        python${{ env.PYTHON_VERSION }} -m pip install -U pip conan ninja
+        echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
+    - name: Cache Conan
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.conan.outputs.conan-home }}
+        key: ${{ runner.os }}-matlab-conan-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-conan
+    - name: Conan detect
+      run: |
+        conan --version
+        conan profile detect --force
+    - name: Conan config
+      run: |
+        cat > settings_user.yml << EOF
+        arch: [skylake]
+        EOF
+        conan config install settings_user.yml
+        cat > skylake.profile << EOF
+        include(default)
+        [settings]
+        arch=skylake
+        [conf]
+        tools.build:cxxflags+=["-march=skylake"]
+        tools.build:cflags+=["-march=skylake"]
+        tools.cmake.cmaketoolchain:generator=Ninja
+        EOF
+        conan config install skylake.profile -tf profiles
+    # Dependencies
+    - name: Conan create CasADi
+      run: >
+        conan create scripts/recipes/casadi
+        -pr:h skylake.profile
+        --build=missing
+    - name: Conan install
+      run: >
+        conan install .
+        -pr:h skylake.profile
+        --build=missing
+        -s build_type=Release
+        -of build-matlab
+        -o with_matlab=True -o with_json=True -o with_casadi=True
+    # Build
+    - name: Configure
+      run: cmake --preset conan-release
+    - name: Build
+      run: cmake --build --preset conan-release -j -t alpaqa_mex -v
+    - name: Install
+      run: cmake --install build-matlab/build/Release --prefix staging --component mex_interface
+    - name: Package
+      run: zip -r ../alpaqa-matlab-macos-intel.zip ./*
+      working-directory: staging
+    # Upload
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: alpaqa-matlab-macos-intel
+        path: alpaqa-matlab-macos-intel.zip
+    - name: Release
+      if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+      uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
+      with:
+        files: alpaqa-matlab-macos-intel.zip
