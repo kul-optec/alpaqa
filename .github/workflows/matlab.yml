@@ -11,7 +11,6 @@ on:
 
 env:
   PYTHON_VERSION: '3.11'
-  MATLAB_VERSION: 'R2021a'
 
 jobs:
   build-linux:
@@ -20,6 +19,7 @@ jobs:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       HOST: x86_64-centos7-linux-gnu
+      MATLAB_VERSION: 'R2021a'
     steps:
     # Git clone
     - uses: actions/checkout@v3
@@ -117,22 +117,31 @@ jobs:
     - name: Install
       run: cmake --install build-matlab/build/Release --prefix staging --component mex_interface
     - name: Package
-      run: zip -r ../alpaqa-matlab-linux.zip ./*
+      run: zip -r ../alpaqa-matlab-${{ env.MATLAB_VERSION }}-linux.zip ./*
       working-directory: staging
     # Upload
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-        name: alpaqa-matlab-linux
-        path: alpaqa-matlab-linux.zip
+        name: alpaqa-matlab-${{ env.MATLAB_VERSION }}-linux
+        path: alpaqa-matlab-${{ env.MATLAB_VERSION }}-linux.zip
     - name: Release
       if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
       uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
       with:
-        files: alpaqa-matlab-linux.zip
+        files: alpaqa-matlab-${{ env.MATLAB_VERSION }}-linux.zip
 
   build-macos:
-    runs-on: macos-13
+    strategy:
+      matrix:
+        include:
+          - os: macos-13
+            name: macos-intel
+            matlab-version: 'R2021a'
+          - os: macos-13-arm64
+            name: macos-arm64
+            matlab-version: 'R2023b'
+    runs-on: ${{ matrix.os }}
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
@@ -167,7 +176,7 @@ jobs:
     - name: Set up MATLAB
       uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
       with:
-        release: ${{ env.MATLAB_VERSION }}
+        release: ${{ matrix.matlab-version }}
     # Conan
     - name: Install Conan, Ninja
       id: conan
@@ -222,16 +231,16 @@ jobs:
     - name: Install
       run: cmake --install build-matlab/build/Release --prefix staging --component mex_interface
     - name: Package
-      run: zip -r ../alpaqa-matlab-macos-intel.zip ./*
+      run: zip -r ../alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip ./*
       working-directory: staging
     # Upload
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-        name: alpaqa-matlab-macos-intel
-        path: alpaqa-matlab-macos-intel.zip
+        name: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}
+        path: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
     - name: Release
       if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
       uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
       with:
-        files: alpaqa-matlab-macos-intel.zip
+        files: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
