@@ -1,9 +1,12 @@
 # Installation instructions {#installation}
 
-This page contains detailed instructions for building and installing all of
-alpaqa from scratch.
-For the installation of the Python package without building it from source,
-please see [these instructions](../Sphinx/install/installation.html).
+> **Note**  
+> This page contains detailed instructions for building and installing all of
+> alpaqa from source.
+> For the installation of the Python package without building it from source,
+> as well as installation instructions for pre-built, released binaries of the
+> C++ library and the MATLAB interface, please see [these instructions](../Sphinx/install/installation.html)
+> instead.
 
 ## Linux
 
@@ -106,7 +109,7 @@ switching to an optimized version later.
 The instructions for Windows are quite similar to the ones for Linux. To install
 the dependencies, you can use the Powershell scripts instead of the Bash scripts:
 
-```ps1
+```ps
 ./scripts/install-casadi-static.ps1
 ./scripts/install-gtest.ps1
 ./scripts/install-eigen.ps1
@@ -162,23 +165,23 @@ target_link_libraries(main PRIVATE alpaqa::alpaqa)
 ```
 
 Different targets are available. Depending on your needs, you might want to
-link against:
+link to:
 
-* ``alpaqa::alpaqa``: the core alpaqa library and solvers
-* ``alpaqa::casadi-loader``: provides the ``CasADiProblem`` class that allows
+ - `alpaqa::alpaqa`: the core alpaqa library and solvers
+ - `alpaqa::casadi-loader`: provides the `CasADiProblem` class that allows
     the solvers to interface with problems formulated using CasADi
-* ``alpaqa::casadi-ocp-loader``: experimental optimal-control specific CasADi
+ - `alpaqa::casadi-ocp-loader`: experimental optimal-control specific CasADi
     problem specification
-* ``alpaqa::dl-api``: the stand-alone C API for formulating problems that can be
-    loaded dynamically by alpaqa (``alpaqa/dl/dl-problem.h``)
-* ``alpaqa::dl-loader``: provides the ``DLProblem`` class to load such problems
-* ``alpaqa::cutest-interface``: provides the ``CUTEstProblem`` class for loading
+ - `alpaqa::dl-api`: the stand-alone C API for formulating problems that can be
+    loaded dynamically by alpaqa (`alpaqa/dl/dl-problem.h`)
+ - `alpaqa::dl-loader`: provides the `DLProblem` class to load such problems
+ - `alpaqa::cutest-interface`: provides the `CUTEstProblem` class for loading
     problems formulated using SIF/CUTEst
-* ``alpaqa::ipopt-adapter``: allows passing any alpaqa problem to the Ipopt
+ - `alpaqa::ipopt-adapter`: allows passing any alpaqa problem to the Ipopt
     solver
-* ``alpaqa::lbfgsb-adapter``: allows passing any alpaqa problem to the L-BFGS-B
+ - `alpaqa::lbfgsb-adapter`: allows passing any alpaqa problem to the L-BFGS-B
     solver
-* ``alpaqa::qpalm-adapter``: allows passing any alpaqa problem to the QPALM
+ - `alpaqa::qpalm-adapter`: allows passing any alpaqa problem to the QPALM
     solver
 
 # Python
@@ -207,13 +210,12 @@ conan profile detect --force
 conan create scripts/recipes/casadi --build=missing
 conan install . \
     --build=missing \
-    -c tools.cmake.cmaketoolchain:generator="Ninja" \
-    -s build_type=Release \
+    -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config" \
     -of build-matlab \
     -o with_matlab=True -o with_json=True -o with_casadi=True
-cmake --preset conan-release
+cmake --preset conan-default
 cmake --build --preset conan-release -j -t alpaqa_mex
-cmake --install build-matlab/build/Release \
+cmake --install build-matlab/build \
     --prefix ~/Documents/MATLAB --component mex_interface
 ```
 
@@ -225,7 +227,6 @@ conan profile detect --force
 conan create scripts/recipes/casadi --build=missing
 conan install . \
     --build=missing \
-    -s build_type=Release \
     -of build-matlab \
     -o with_matlab=True -o with_json=True -o with_casadi=True
 cmake --preset conan-default
@@ -236,8 +237,8 @@ cmake --install build-matlab/build \
 
 ## Uninstall
 
-To uninstall the alpaqa MATLAB/MEX interface, run the following command in the
-MATLAB command window:
+To uninstall the alpaqa MATLAB/MEX interface, simply remove the `+alpaqa`
+directory, e.g. by running the following command in the MATLAB command window:
 
 ```
 rmdir(fullfile(userpath, '+alpaqa'), 's')
