@@ -65,3 +65,21 @@ following additional runtime dependencies:
 
 * ``libgfortran5`` (GFortran 10 or later)
 * ``libquadmath0``
+
+MATLAB interface
+----------------
+
+The experimental MATLAB/MEX interface can be installed by running the following
+command in the MATLAB command window:
+
+.. code-block:: matlab
+
+    unzip(['https://github.com/kul-optec/alpaqa/releases/download/1.0.0a14.dev0/alpaqa-matlab-' computer('arch') '.zip'], userpath)
+
+You need CasADi to be installed as well: https://web.casadi.org/get
+
+To uninstall the alpaqa MATLAB interface, simply remove the ``+alpaqa`` folder:
+
+.. code-block:: matlab
+
+    rmdir(fullfile(userpath, '+alpaqa'), 's');

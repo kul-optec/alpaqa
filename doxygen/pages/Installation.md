@@ -161,6 +161,26 @@ add_executable(main main.cpp)
 target_link_libraries(main PRIVATE alpaqa::alpaqa)
 ```
 
+Different targets are available. Depending on your needs, you might want to
+link against:
+
+* ``alpaqa::alpaqa``: the core alpaqa library and solvers
+* ``alpaqa::casadi-loader``: provides the ``CasADiProblem`` class that allows
+    the solvers to interface with problems formulated using CasADi
+* ``alpaqa::casadi-ocp-loader``: experimental optimal-control specific CasADi
+    problem specification
+* ``alpaqa::dl-api``: the stand-alone C API for formulating problems that can be
+    loaded dynamically by alpaqa (``alpaqa/dl/dl-problem.h``)
+* ``alpaqa::dl-loader``: provides the ``DLProblem`` class to load such problems
+* ``alpaqa::cutest-interface``: provides the ``CUTEstProblem`` class for loading
+    problems formulated using SIF/CUTEst
+* ``alpaqa::ipopt-adapter``: allows passing any alpaqa problem to the Ipopt
+    solver
+* ``alpaqa::lbfgsb-adapter``: allows passing any alpaqa problem to the L-BFGS-B
+    solver
+* ``alpaqa::qpalm-adapter``: allows passing any alpaqa problem to the QPALM
+    solver
+
 # Python
 
 After creating the virtual environment and installing the dependencies, you can
@@ -172,4 +192,53 @@ To build the Python package without installing, you can use:
 ```sh
 pip install build
 python3 -m build .
+```
+
+# Matlab
+
+The previous steps are not required to install the MATLAB/MEX interface. We'll
+use [Conan](https://conan.io/) to manage and build the necessary dependencies.
+
+## Linux and macOS
+
+```sh
+python3 -m pip install -U conan cmake ninja
+conan profile detect --force
+conan create scripts/recipes/casadi --build=missing
+conan install . \
+    --build=missing \
+    -c tools.cmake.cmaketoolchain:generator="Ninja" \
+    -s build_type=Release \
+    -of build-matlab \
+    -o with_matlab=True -o with_json=True -o with_casadi=True
+cmake --preset conan-release
+cmake --build --preset conan-release -j -t alpaqa_mex
+cmake --install build-matlab/build/Release \
+    --prefix ~/Documents/MATLAB --component mex_interface
+```
+
+## Windows
+
+```sh
+python -m pip install -U conan cmake ninja
+conan profile detect --force
+conan create scripts/recipes/casadi --build=missing
+conan install . \
+    --build=missing \
+    -s build_type=Release \
+    -of build-matlab \
+    -o with_matlab=True -o with_json=True -o with_casadi=True
+cmake --preset conan-default
+cmake --build --preset conan-release -j -t alpaqa_mex
+cmake --install build-matlab/build \
+    --prefix "$env:USERPROFILE\Documents\MATLAB" --component mex_interface
+```
+
+## Uninstall
+
+To uninstall the alpaqa MATLAB/MEX interface, run the following command in the
+MATLAB command window:
+
+```
+rmdir(fullfile(userpath, '+alpaqa'), 's')
 ```
