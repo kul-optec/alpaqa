@@ -34,7 +34,7 @@ For Debian-based systems, the .deb packages can be installed using
 .. code-block:: sh
 
     sudo apt update
-    sudo apt install ./libalpaqa*_1.0.0a14.dev0_amd64.deb
+    sudo apt install ./libalpaqa*_1.0.0a14_amd64.deb
 
 Different components are available:
 
@@ -58,7 +58,7 @@ Alternatively, the .tar.gz file can be extracted and installed manually.
 
 .. code-block:: sh
 
-    sudo tar xzf alpaqa-1.0.0a14.dev0-Linux-x86_64.tar.gz -C /usr/local --strip-components=1
+    sudo tar xzf alpaqa-1.0.0a14-Linux-x86_64.tar.gz -C /usr/local --strip-components=1
 
 This requires glibc 2.17 or later. You may need to install or pre-load the
 following additional runtime dependencies:
@@ -74,7 +74,7 @@ command in the MATLAB command window:
 
 .. code-block:: matlab
 
-    unzip(['https://github.com/kul-optec/alpaqa/releases/download/1.0.0a14.dev0/alpaqa-matlab-' computer('arch') '.zip'], userpath)
+    unzip(['https://github.com/kul-optec/alpaqa/releases/download/1.0.0a14/alpaqa-matlab-' computer('arch') '.zip'], userpath)
 
 You need CasADi to be installed as well: https://web.casadi.org/get
 
