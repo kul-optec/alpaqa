@@ -3,6 +3,7 @@ import os
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
+from conan.tools.build import can_run
 
 
 class AlpaqaRecipe(ConanFile):
@@ -89,6 +90,8 @@ class AlpaqaRecipe(ConanFile):
             value = getattr(self.options, k, None)
             if value is not None and value.value is not None:
                 tc.variables["ALPAQA_" + k.upper()] = bool(value)
+        if can_run(self):
+            tc.variables["ALPAQA_FORCE_TEST_DISCOVERY"] = True
         tc.generate()
 
     def build(self):
