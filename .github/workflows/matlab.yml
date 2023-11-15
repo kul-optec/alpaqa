@@ -1,0 +1,133 @@
+name: Matlab Package
+on:
+  workflow_dispatch:
+  push:
+    tags-ignore:
+      - '**'
+    branches:
+      - '**'
+  release:
+    types: ['released', 'prereleased']
+
+env:
+  PYTHON_VERSION: '3.11'
+  MATLAB_VERSION: 'R2021a'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CMAKE_C_COMPILER_LAUNCHER: ccache
+      CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      HOST: x86_64-centos7-linux-gnu
+    steps:
+    # Git clone
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    # Tools
+    - name: Install tools
+      id: tools
+      uses: ./.github/workflows/toolchain
+      with:
+        host: ${{ env.HOST }}
+        python-version: ${{ env.PYTHON_VERSION }}
+        sudo: 'sudo'
+        root-path: ${{ runner.temp }}
+    # Ccache
+    - name: Prepare ccache directory
+      id: ccache
+      run: |
+        echo "CCACHE_DIR=${{ runner.temp }}/.ccache" >> "$GITHUB_ENV"
+        echo "ccache-dir=${{ runner.temp }}/.ccache" >> "$GITHUB_OUTPUT"
+        mkdir -p "${{ runner.temp }}/.ccache"
+    - name: Cache ccache
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.ccache.outputs.ccache-dir }}
+        key: ${{ runner.os }}-matlab-${{ matrix.host }}-ccache-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-${{ matrix.host }}-ccache
+    # Matlab
+    - name: Set up MATLAB
+      uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
+      with:
+        release: ${{ env.MATLAB_VERSION }}
+    # Conan
+    - name: Install Conan
+      id: conan
+      run: |
+        python${{ env.PYTHON_VERSION }} -m pip install -U pip conan
+        echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
+    - name: Cache Conan
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.conan.outputs.conan-home }}
+        key: ${{ runner.os }}-matlab-${{ matrix.host }}-conan-${{ github.run_id }}
+        restore-keys: ${{ runner.os }}-matlab-${{ matrix.host }}-conan
+    - name: Conan detect
+      run: |
+        conan --version
+        conan profile detect --force
+    - name: Conan config
+      run: |
+        cat > settings_user.yml << EOF
+        os:
+          Linux:
+            glibc: [null, ANY]
+        arch: [skylake]
+        static-libcxx: [null, true, false]
+        EOF
+        conan config install settings_user.yml
+        cat > ${{ env.HOST }}.profile << EOF
+        include(${{ steps.tools.outputs.conan-profile }})
+        [settings]
+        os.glibc=2.17
+        arch=skylake
+        static-libcxx=True
+        [conf]
+        tools.build.cross_building:can_run=True
+        tools.build:cxxflags+=["-march=skylake", "-static-libstdc++", "-static-libgcc"]
+        tools.build:cflags+=["-march=skylake", "-static-libgcc"]
+        tools.build:sharedlinkflags+=["-static-libstdc++", "-static-libgcc"]
+        tools.build:exelinkflags+=["-static-libstdc++", "-static-libgcc"]
+        tools.cmake.cmaketoolchain:generator=Ninja
+        EOF
+        conan config install ${{ env.HOST }}.profile -tf profiles
+    # Dependencies
+    - name: Conan create CasADi
+      run: >
+        conan create scripts/recipes/casadi
+        -pr:h ${{ env.HOST }}.profile
+        --build=missing
+    - name: Conan install
+      run: >
+        conan install .
+        -pr:h ${{ env.HOST }}.profile
+        --build=missing
+        -c tools.cmake.cmaketoolchain:generator="Ninja"
+        -s build_type=Release
+        -of build-matlab
+        -o with_matlab=True -o with_json=True -o with_casadi=True
+    - name: Patch Conan toolchain file
+      run: sed -i 's/CMAKE_PREFIX_PATH/CMAKE_FIND_ROOT_PATH/g' build-matlab/build/Release/generators/conan_toolchain.cmake
+    # Build
+    - name: Configure
+      run: cmake --preset conan-release -D CMAKE_FIND_ROOT_PATH="/usr/local/MATLAB/${{ env.MATLAB_VERSION }}"
+    - name: Build
+      run: cmake --build --preset conan-release -j -t alpaqa_mex -v
+    - name: Install
+      run: cmake --install build-matlab/build/Release --prefix staging --component mex_interface
+    - name: Package
+      run: zip -r ../alpaqa-matlab-linux.zip ./*
+      working-directory: staging
+    # Upload
+    - name: Upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: alpaqa-matlab-linux
+        path: alpaqa-matlab-linux.zip
+    - name: Release
+      if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
+      uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
+      with:
+        files: alpaqa-matlab-linux.zip
