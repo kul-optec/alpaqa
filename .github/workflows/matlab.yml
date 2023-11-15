@@ -331,8 +331,8 @@ jobs:
     - name: Install
       run: cmake --install build-matlab/build --prefix staging --component mex_interface
     - name: Package
-      run: zip -r ../alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip ./*
-      working-directory: staging
+      shell: pwsh
+      run: Compress-Archive -Path staging\* alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
     # Upload
     - name: Upload
       uses: actions/upload-artifact@v3
