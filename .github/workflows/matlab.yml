@@ -281,12 +281,12 @@ jobs:
         python -m pip install -U pip conan ninja
         echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
       shell: bash
-    - name: Cache Conan
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.conan.outputs.conan-home }}
-        key: ${{ runner.os }}-matlab-conan-${{ github.run_id }}
-        restore-keys: ${{ runner.os }}-matlab-conan
+    # - name: Cache Conan
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: ${{ steps.conan.outputs.conan-home }}
+    #     key: ${{ runner.os }}-matlab-conan-${{ github.run_id }}
+    #     restore-keys: ${{ runner.os }}-matlab-conan
     - name: Conan detect
       run: |
         conan --version
@@ -344,3 +344,6 @@ jobs:
       uses: softprops/action-gh-release@17cd0d34deddf848fc0e7d9be5202c148c270a0a
       with:
         files: alpaqa-matlab-${{ matrix.matlab-version }}-${{ matrix.name }}.zip
+    # Cleanup
+    - name: Conan cache clean
+      run: conan cache clean
