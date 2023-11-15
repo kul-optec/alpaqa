@@ -12,7 +12,7 @@ inputs:
     type: string
   tools-version:
     required: false
-    default: '0.1.0'
+    default: '0.1.1-beta'
     type: string
   tools-url:
     required: false
@@ -24,8 +24,27 @@ inputs:
     type: string
   pypy-version:
     required: false
-    default: '7.3.11'
+    default: '7.3.13'
     type: string
+  sudo:
+    required: false
+    default: ''
+    type: string
+  root-path:
+    required: false
+    default: ''
+    type: string
+outputs:
+  cmake-toolchain:
+    description: "Path to the CMake toolchain"
+    value: ${{ steps.out.outputs.cmake-toolchain }}
+  conan-profile:
+    description: "Path to the Conan profile"
+    value: ${{ steps.out.outputs.conan-profile }}
+  install-dir:
+    description: "Path to the installed tools"
+    value: ${{ steps.out.outputs.install-dir }}
+
 
 runs:
   using: composite
@@ -34,45 +53,45 @@ runs:
     - name: Install tools
       shell: bash
       run: |
-        apt -y update
-        apt -y install --no-install-recommends \
+        ${{ inputs.sudo }} apt -y update
+        ${{ inputs.sudo }} apt -y install --no-install-recommends \
           wget bzip2 xz-utils ccache ninja-build pkg-config ca-certificates libquadmath0
     # Cache
     - name: Cache tools
       id: cache-tools
       uses: actions/cache@v3
       with:
-        path: /opt
+        path: ${{ inputs.root-path }}/opt
         key: ${{ runner.os }}-${{ inputs.pypy }}${{ inputs.python-version }}-${{ inputs.host }}-tools-${{ inputs.tools-version }}-${{ inputs.cmake-version }}
     # CMake
     - name: Install CMake
       if: ${{ steps.cache-tools.outputs.cache-hit != 'true' }}
       shell: bash
       run: |
-        version=${{ inputs.cmake-version }}; cd /tmp; mkdir -p /opt/cmake
+        version=${{ inputs.cmake-version }}; cd ${{ inputs.root-path }}; mkdir -p ${{ inputs.root-path }}/opt/cmake
         wget https://github.com/Kitware/CMake/releases/download/v$version/cmake-$version-Linux-x86_64.sh
-        bash cmake-$version-*.sh --skip-license --prefix="/opt/cmake"
+        bash cmake-$version-*.sh --skip-license --prefix="${{ inputs.root-path }}/opt/cmake"
     - name: Add CMake to PATH
       shell: bash
-      run: echo "/opt/cmake/bin" >> $GITHUB_PATH
+      run: echo "${{ inputs.root-path }}/opt/cmake/bin" >> $GITHUB_PATH
     # Python
     - name: Install Python
       if: ${{ steps.cache-tools.outputs.cache-hit != 'true' && !inputs.pypy }}
       shell: bash
-      run: wget "${{ inputs.tools-url }}/${{ inputs.tools-version }}/build-python-${{ inputs.python-version }}.tar.xz" -O- | tar xJ -C /opt
+      run: wget "${{ inputs.tools-url }}/${{ inputs.tools-version }}/build-python-${{ inputs.python-version }}.tar.xz" -O- | tar xJ -C ${{ inputs.root-path }}/opt
     - name: Add Python to PATH
       if: ${{ !inputs.pypy }}
       shell: bash
-      run: echo "/opt/build-python-${{ inputs.python-version }}/usr/local/bin" >> $GITHUB_PATH
+      run: echo "${{ inputs.root-path }}/opt/build-python-${{ inputs.python-version }}/usr/local/bin" >> $GITHUB_PATH
     # PyPy
     - name: Install PyPy
       if: ${{ inputs.pypy }}
       shell: bash
-      run: wget "https://downloads.python.org/pypy/pypy${{ inputs.python-version }}-v${{ inputs.pypy-version }}-linux64.tar.bz2" -O- | tar xj -C /opt
+      run: wget "https://downloads.python.org/pypy/pypy${{ inputs.python-version }}-v${{ inputs.pypy-version }}-linux64.tar.bz2" -O- | tar xj -C ${{ inputs.root-path }}/opt
     - name: Add PyPy to PATH
       if: ${{ inputs.pypy }}
       shell: bash
-      run: echo "/opt/pypy${{ inputs.python-version }}-v${{ inputs.pypy-version }}-linux64/bin" >> $GITHUB_PATH
+      run: echo "${{ inputs.root-path }}/opt/pypy${{ inputs.python-version }}-v${{ inputs.pypy-version }}-linux64/bin" >> $GITHUB_PATH
     # Pip
     - name: Install Pip
       shell: bash
@@ -81,12 +100,20 @@ runs:
     - name: Download toolchains
       if: steps.cache-tools.outputs.cache-hit != 'true'
       shell: bash
-      run: wget "${{ inputs.tools-url }}/${{ inputs.tools-version }}/full-${{ inputs.host }}.tar.xz" -O- | tar xJ -C /opt
+      run: wget "${{ inputs.tools-url }}/${{ inputs.tools-version }}/full-${{ inputs.host }}.tar.xz" -O- | tar xJ -C ${{ inputs.root-path }}/opt
     # Install runtime libraries
     - name: Install runtime libraries
       if: ${{ inputs.host == 'x86_64-centos7-linux-gnu' }}
       shell: bash
       run: |
-        cp /opt/${{ inputs.host }}/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libgfortran.so.*.*.* /usr/local/lib
-        cp /opt/${{ inputs.host }}/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libstdc++.so.*.*.* /usr/local/lib
-        ldconfig
+        ${{ inputs.sudo }} cp ${{ inputs.root-path }}/opt/${{ inputs.host }}/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libgfortran.so.*.*.* /usr/local/lib
+        ${{ inputs.sudo }} cp ${{ inputs.root-path }}/opt/${{ inputs.host }}/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libstdc++.so.*.*.* /usr/local/lib
+        ${{ inputs.sudo }} ldconfig
+    # Save output paths
+    - name: Write outputs
+      id: out
+      shell: bash
+      run: |
+        echo "cmake-toolchain=${{ inputs.root-path }}/opt/${{ inputs.host }}/${{ inputs.host }}.toolchain.cmake" >> $GITHUB_OUTPUT
+        echo "conan-profile=${{ inputs.root-path }}/opt/${{ inputs.host }}/${{ inputs.host }}.conan.profile" >> $GITHUB_OUTPUT
+        echo "install-dir=${{ inputs.root-path }}/opt/${{ inputs.host }}" >> $GITHUB_OUTPUT
