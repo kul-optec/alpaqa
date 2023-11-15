@@ -91,39 +91,32 @@ class MexFunction : public matlab::mex::Function {
             inputs[1].getNumberOfElements() != 1) {
             displayError(u"Second argument (problem) must be a scalar struct");
         }
-        auto problem_structs = static_cast<StructArray>(inputs[1]);
-        auto fields          = problem_structs.getFieldNames();
-        auto get_field       = [&](const std::string &name, ArrayType type) {
+        StructArray problem_structs = inputs[1];
+        auto fields                 = problem_structs.getFieldNames();
+        auto get_field = [&](const std::string &name, ArrayType type) {
             auto found = std::find(fields.begin(), fields.end(), name);
             if (found == fields.end())
                 displayError(u"Missing field " + utf8to16(name));
-            if (problem_structs[0][*found].getType() != type)
+            Array field = problem_structs[0][*found];
+            if (field.getType() != type)
                 displayError(u"Incorrect type for field " + utf8to16(name));
-            return problem_structs[0][*found];
+            return field;
         };
         ProblemDescription problem;
-        problem.f =
-            static_cast<CharArray>(get_field("f", ArrayType::CHAR)).toAscii();
-        problem.g =
-            static_cast<CharArray>(get_field("g", ArrayType::CHAR)).toAscii();
-        auto C_lb = static_cast<TypedArray<double>>(
-            get_field("C_lb", ArrayType::DOUBLE));
-        problem.C_lb = std::vector(C_lb.begin(), C_lb.end());
-        auto C_ub    = static_cast<TypedArray<double>>(
-            get_field("C_ub", ArrayType::DOUBLE));
-        problem.C_ub = std::vector(C_ub.begin(), C_ub.end());
-        auto D_lb    = static_cast<TypedArray<double>>(
-            get_field("D_lb", ArrayType::DOUBLE));
-        problem.D_lb = std::vector(D_lb.begin(), D_lb.end());
-        auto D_ub    = static_cast<TypedArray<double>>(
-            get_field("D_ub", ArrayType::DOUBLE));
-        problem.D_ub = std::vector(D_ub.begin(), D_ub.end());
-        auto l1_reg  = static_cast<TypedArray<double>>(
-            get_field("l1_reg", ArrayType::DOUBLE));
-        problem.l1_reg = std::vector(l1_reg.begin(), l1_reg.end());
-        auto param     = static_cast<TypedArray<double>>(
-            get_field("param", ArrayType::DOUBLE));
-        problem.param = std::vector(param.begin(), param.end());
+        problem.f = CharArray{get_field("f", ArrayType::CHAR)}.toAscii();
+        problem.g = CharArray{get_field("g", ArrayType::CHAR)}.toAscii();
+        TypedArray<double> C_lb   = get_field("C_lb", ArrayType::DOUBLE);
+        problem.C_lb              = std::vector(C_lb.begin(), C_lb.end());
+        TypedArray<double> C_ub   = get_field("C_ub", ArrayType::DOUBLE);
+        problem.C_ub              = std::vector(C_ub.begin(), C_ub.end());
+        TypedArray<double> D_lb   = get_field("D_lb", ArrayType::DOUBLE);
+        problem.D_lb              = std::vector(D_lb.begin(), D_lb.end());
+        TypedArray<double> D_ub   = get_field("D_ub", ArrayType::DOUBLE);
+        problem.D_ub              = std::vector(D_ub.begin(), D_ub.end());
+        TypedArray<double> l1_reg = get_field("l1_reg", ArrayType::DOUBLE);
+        problem.l1_reg            = std::vector(l1_reg.begin(), l1_reg.end());
+        TypedArray<double> param  = get_field("param", ArrayType::DOUBLE);
+        problem.param             = std::vector(param.begin(), param.end());
         // x0
         if (inputs[2].getType() != ArrayType::DOUBLE) {
             displayError(u"Third argument (x0) must be an array of double.");
