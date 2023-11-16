@@ -1,4 +1,4 @@
-name: Matlab Package
+name: 'CI: Matlab'
 on:
   workflow_dispatch:
   push:

@@ -1,4 +1,4 @@
-name: Python Wheels tests
+name: 'CI Tests: Python'
 
 on:
   push:
