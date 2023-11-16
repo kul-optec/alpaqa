@@ -31,7 +31,7 @@ keywords:
   - proximal algorithms
 license: LGPL-3.0
 preferred-citation:
-  type: article
+  type: conference-paper
   authors:
     - given-names: Pieter
       family-names: Pas
@@ -48,10 +48,11 @@ preferred-citation:
     Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex
     optimization
   year: 2022
+  collection-title: 2022 European Control Conference (ECC)
   conference:
     name: 2022 European Control Conference (ECC)
     city: London
-    country: GB
+    country: UK
     date-start: 2022-07-12
     date-end: 2022-07-15
   start: 417
