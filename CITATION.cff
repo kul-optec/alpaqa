@@ -1,0 +1,60 @@
+cff-version: 1.2.0
+title: alpaqa
+message: >-
+  If alpaqa proves useful in your research, please cite the
+  following paper.
+type: software
+authors:
+  - given-names: Pieter
+    family-names: Pas
+    orcid: 'https://orcid.org/0000-0002-7004-2447'
+    affiliation: KU Leuven
+  - given-names: Mathijs
+    family-names: Schuurmans
+    affiliation: KU Leuven
+    orcid: 'https://orcid.org/0000-0001-8695-6473'
+  - given-names: Alexander
+    family-names: Bodard
+    affiliation: KU Leuven
+    orcid: 'https://orcid.org/0000-0001-7558-8249'
+  - given-names: Panagiotis
+    family-names: Patrinos
+    affiliation: KU Leuven
+repository-code: 'https://github.com/kul-optec/alpaqa'
+url: 'https://kul-optec.github.io/alpaqa'
+repository-artifact: 'https://pypi.org/project/alpaqa/'
+keywords:
+  - optimization
+  - model predictive control
+  - augmented lagrangian method
+  - panoc
+  - proximal algorithms
+license: LGPL-3.0
+preferred-citation:
+  type: article
+  authors:
+    - given-names: Pieter
+      family-names: Pas
+      orcid: 'https://orcid.org/0000-0002-7004-2447'
+      affiliation: KU Leuven
+    - given-names: Mathijs
+      family-names: Schuurmans
+      affiliation: KU Leuven
+      orcid: 'https://orcid.org/0000-0001-8695-6473'
+    - given-names: Panagiotis
+      family-names: Patrinos
+      affiliation: KU Leuven
+  title: >-
+    Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex
+    optimization
+  year: 2022
+  conference:
+    name: 2022 European Control Conference (ECC)
+    city: London
+    country: GB
+    date-start: 2022-07-12
+    date-end: 2022-07-15
+  start: 417
+  end: 422
+  doi: 10.23919/ECC55457.2022.9838172
+  url: 'https://arxiv.org/abs/2112.02370'

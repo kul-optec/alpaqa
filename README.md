@@ -1,10 +1,20 @@
+[![CI Tests: C++](https://github.com/kul-optec/alpaqa/actions/workflows/linux.yml/badge.svg)](https://github.com/kul-optec/alpaqa/actions/workflows/linux.yml)
+[![CI Tests: Python](https://github.com/kul-optec/alpaqa/actions/workflows/wheel-short-test.yml/badge.svg)](https://github.com/kul-optec/alpaqa/actions/workflows/wheel-short-test.yml)
+[![CI: Matlab](https://github.com/kul-optec/alpaqa/actions/workflows/matlab.yml/badge.svg)](https://github.com/kul-optec/alpaqa/actions/workflows/matlab.yml)
+[![Docs](https://img.shields.io/badge/Documentation-1.0.0a14-blue?logo=sphinx)](https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/index.html)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/alpaqa?label=PyPI&logo=python)](https://pypi.org/project/alpaqa)
+[![GitHub all releases](https://img.shields.io/github/downloads/kul-optec/alpaqa/total?label=Downloads&logo=cplusplus)](https://github.com/kul-optec/alpaqa/releases)
+[![GitHub License](https://img.shields.io/github/license/kul-optec/alpaqa?label=License&logo=gnu)](https://github.com/kul-optec/alpaqa/blob/develop/LICENSE)
+<!-- ![GitHub top language](https://img.shields.io/github/languages/top/kul-optec/alpaqa) -->
+
 # alpaqa
 
 `alpaqa` is an efficient implementation of an augmented Lagrangian method for
 general nonlinear programming problems, which uses the first-order, matrix-free
-PANOC algorithm as an inner solver.
+PANOC algorithm as an inner solver.  
 The numerical algorithms themselves are implemented in C++ for optimal
-performance, and they are exposed as an easy-to-use Python package.
+performance, and they are exposed as an easy-to-use Python package. An
+experimental MATLAB interface is available as well.
 
 The solvers in this library solve minimization problems of the following form:
 
@@ -22,10 +32,11 @@ $$
 
 ## Documentation
 
-- [**Sphinx documentation**](https://kul-optec.github.io/alpaqa/develop/Sphinx/index.html)
-- [**Python examples**](https://kul-optec.github.io/alpaqa/develop/Sphinx/examples/index.html)
-- [**Doxygen documentation**](https://kul-optec.github.io/alpaqa/develop/Doxygen/index.html)
-- [**C++ examples**](https://kul-optec.github.io/alpaqa/develop/Doxygen/examples.html)
+- [**Documentation** (Sphinx)](https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/index.html)
+- [**Python examples**](https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/examples/index.html)
+- [**C++ documentation** (Doxygen)](https://kul-optec.github.io/alpaqa/1.0.0a14/Doxygen/index.html)
+- [**C++ examples**](https://kul-optec.github.io/alpaqa/1.0.0a14/Doxygen/examples.html)
+- [**Matlab documentation**](https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/reference/matlab-api.html)
 
 ## Installation
 
@@ -36,8 +47,8 @@ python3 -m pip install --upgrade --pre alpaqa
 ```
 
 For more information, please see the full
-[installation instructions](https://kul-optec.github.io/alpaqa/develop/Sphinx/install/installation.html).
+[installation instructions](https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/install/installation.html).
 
 ## Publications
 
-- [P. Pas, M. Schuurmans, and P. Patrinos, “Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex optimization,” _20th European Control Conference (ECC)_, Jul. 2022 (arXiv)](https://arxiv.org/abs/2112.02370)
+> Pieter Pas, Mathijs Schuurmans, and Panagiotis Patrinos. [Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex optimization](https://ieeexplore.ieee.org/document/9838172/). In _2022 European Control Conference (ECC)_, pages 417–422, 2022. 

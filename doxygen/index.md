@@ -3,7 +3,8 @@
 `alpaqa` is an efficient implementation of an Augmented Lagrangian method for general nonlinear programming problems.
 It makes use of the first-order, matrix-free PANOC algorithm as an inner solver.
 The numerical algorithms themselves are implemented in C++ for optimal 
-performance, and they are also exposed as an easy-to-use Python package.
+performance, and they are also exposed as an easy-to-use Python package. An
+experimental MATLAB interface is available as well.
 
 The solvers in this library solve minimization problems of the following form:
 @f[
@@ -18,8 +19,9 @@ The solvers in this library solve minimization problems of the following form:
 
 ## Documentation
 
-[**Sphinx documentation**](../Sphinx/index.html)  
-[**Doxygen documentation**](./index.html)  
+[**Documentation** (Sphinx)](../Sphinx/index.html)  
+[**C++ Documentation** (Doxygen)](./index.html)  
+[**Matlab documentation**](../Sphinx/reference/matlab-api.html)  
 
 For the Python interface, it is recommended to consult the [Sphinx documentation](../Sphinx/index.html), whereas the Doxygen documentation provides
 the best overview of the C++ API (see especially the [**Topics**](./topics.html)
@@ -55,10 +57,11 @@ python3 -m pip install --upgrade --pre alpaqa
 ```
 
 For more information, please see the full
-[installation instructions](../Sphinx/install/installation.html).
+[installation instructions](../Sphinx/install/installation.html). To build
+`alpaqa` or any of its interfaces from source, see [these instructions](./installation.md).
 
 ## Citations
 
 If you use this software in your research, please cite the following publication: @cite pas2022alpaqa
 
-> Pieter Pas, Mathijs Schuurmans, and Panagiotis Patrinos. [Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex optimization](https://ieeexplore.ieee.org/document/9838172/). In _2022 European Control Conference (ECC)_, pages 417–422, 2022. 
+> Pieter Pas, Mathijs Schuurmans, and Panagiotis Patrinos. [Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex optimization](https://ieeexplore.ieee.org/document/9838172/). In _2022 European Control Conference (ECC)_, pages 417–422, 2022.

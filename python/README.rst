@@ -5,7 +5,8 @@ alpaqa
 general nonlinear programming problems, which uses the first-order, matrix-free
 PANOC algorithm as an inner solver.
 The numerical algorithms themselves are implemented in C++ for optimal
-performance, and they are exposed as an easy-to-use Python package.
+performance, and they are exposed as an easy-to-use Python package. An
+experimental MATLAB interface is available as well.
 
 The solvers in this library solve minimization problems of the following form:
 
@@ -22,10 +23,11 @@ The solvers in this library solve minimization problems of the following form:
 Documentation
 -------------
 
-- `Sphinx documentation <https://kul-optec.github.io/alpaqa/develop/Sphinx/index.html>`_
-- `Python examples <https://kul-optec.github.io/alpaqa/develop/Sphinx/examples/index.html>`_
-- `Doxygen documentation <https://kul-optec.github.io/alpaqa/develop/Doxygen/index.html>`_
-- `C++ examples <https://kul-optec.github.io/alpaqa/develop/Doxygen/examples.html>`_
+- `Documentation (Sphinx) <https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/index.html>`_
+- `Python examples <https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/examples/index.html>`_
+- `Documentation (Doxygen) <https://kul-optec.github.io/alpaqa/1.0.0a14/Doxygen/index.html>`_
+- `C++ examples <https://kul-optec.github.io/alpaqa/1.0.0a14/Doxygen/examples.html>`_
+- `Matlab documentation <https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/reference/matlab-api.html>`_
 
 Installation
 ------------
@@ -37,7 +39,7 @@ The Python interface can be installed directly from PyPI:
     python3 -m pip install --upgrade --pre alpaqa
 
 For more information, please see the full
-`installation instructions <https://kul-optec.github.io/alpaqa/develop/Sphinx/install/installation.html>`_.
+`installation instructions <https://kul-optec.github.io/alpaqa/1.0.0a14/Sphinx/install/installation.html>`_.
 
 Publications
 ------------
