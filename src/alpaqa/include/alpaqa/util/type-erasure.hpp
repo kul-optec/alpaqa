@@ -61,10 +61,8 @@ struct BasicVTable {
     struct required_function<R(Args...)> {
         using type = R (*)(void *self, Args...);
     };
-    template <class>
-    struct required_const_function; // undefined
     template <class R, class... Args>
-    struct required_const_function<R(Args...)> {
+    struct required_function<R(Args...) const> {
         using type = R (*)(const void *self, Args...);
     };
     template <class, class VTable = BasicVTable>
@@ -73,33 +71,22 @@ struct BasicVTable {
     struct optional_function<R(Args...), VTable> {
         using type = R (*)(void *self, Args..., const VTable &);
     };
-    template <class, class VTable = BasicVTable>
-    struct optional_const_function; // undefined
     template <class R, class... Args, class VTable>
-    struct optional_const_function<R(Args...), VTable> {
+    struct optional_function<R(Args...) const, VTable> {
         using type = R (*)(const void *self, Args..., const VTable &);
     };
     /// A required function includes a void pointer to self, in addition to the
     /// arguments of @p F.
     template <class F>
     using required_function_t = typename required_function<F>::type;
-    /// @copydoc required_function_t
-    /// For const-qualified member functions.
-    template <class F>
-    using required_const_function_t = typename required_const_function<F>::type;
     /// An optional function includes a void pointer to self, the arguments of
     /// @p F, and an additional reference to the VTable, so that it can be
     /// implemented in terms of other functions.
     template <class F, class VTable = BasicVTable>
     using optional_function_t = typename optional_function<F, VTable>::type;
-    /// @copydoc optional_function_t
-    /// For const-qualified member functions.
-    template <class F, class VTable = BasicVTable>
-    using optional_const_function_t =
-        typename optional_const_function<F, VTable>::type;
-
+    
     /// Copy-construct a new instance into storage.
-    required_const_function_t<void(void *storage)> copy = nullptr;
+    required_function_t<void(void *storage) const> copy = nullptr;
     /// Move-construct a new instance into storage.
     required_function_t<void(void *storage)> move = nullptr;
     /// Destruct the given instance.

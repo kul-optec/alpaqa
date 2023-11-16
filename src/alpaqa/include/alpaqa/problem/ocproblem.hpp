@@ -36,70 +36,67 @@ struct ControlProblemVTable : util::BasicVTable {
 
     template <class F>
     using optional_function_t = util::BasicVTable::optional_function_t<F, ControlProblemVTable>;
-    template <class F>
-    using optional_const_function_t =
-        util::BasicVTable::optional_const_function_t<F, ControlProblemVTable>;
 
     // clang-format off
-    required_const_function_t<void(crvec z, rvec e)>
+    required_function_t<void(crvec z, rvec e) const>
         eval_proj_diff_g;
-    required_const_function_t<void(rvec y, real_t M)>
+    required_function_t<void(rvec y, real_t M) const>
         eval_proj_multipliers;
-    required_const_function_t<void(Box &U)>
+    required_function_t<void(Box &U) const>
         get_U;
-    optional_const_function_t<void(Box &D)>
+    optional_function_t<void(Box &D) const>
         get_D = nullptr;
-    optional_const_function_t<void(Box &D)>
+    optional_function_t<void(Box &D) const>
         get_D_N = &default_get_D_N;
-    required_const_function_t<void(rvec x_init)>
+    required_function_t<void(rvec x_init) const>
         get_x_init;
-    required_const_function_t<void(index_t timestep, crvec x, crvec u, rvec fxu)>
+    required_function_t<void(index_t timestep, crvec x, crvec u, rvec fxu) const>
         eval_f;
-    required_const_function_t<void(index_t timestep, crvec x, crvec u, rmat J_fxu)>
+    required_function_t<void(index_t timestep, crvec x, crvec u, rmat J_fxu) const>
         eval_jac_f;
-    required_const_function_t<void(index_t timestep, crvec x, crvec u, crvec p, rvec grad_fxu_p)>
+    required_function_t<void(index_t timestep, crvec x, crvec u, crvec p, rvec grad_fxu_p) const>
         eval_grad_f_prod;
-    optional_const_function_t<void(index_t timestep, crvec x, crvec u, rvec h)>
+    optional_function_t<void(index_t timestep, crvec x, crvec u, rvec h) const>
         eval_h = nullptr;
-    optional_const_function_t<void(crvec x, rvec h)>
+    optional_function_t<void(crvec x, rvec h) const>
         eval_h_N = nullptr;
-    required_const_function_t<real_t(index_t timestep, crvec h)>
+    required_function_t<real_t(index_t timestep, crvec h) const>
         eval_l;
-    required_const_function_t<real_t(crvec h)>
+    required_function_t<real_t(crvec h) const>
         eval_l_N;
-    required_const_function_t<void(index_t timestep, crvec xu, crvec h, rvec qr)>
+    required_function_t<void(index_t timestep, crvec xu, crvec h, rvec qr) const>
         eval_qr;
-    required_const_function_t<void(crvec x, crvec h, rvec q)>
+    required_function_t<void(crvec x, crvec h, rvec q) const>
         eval_q_N;
-    required_const_function_t<void(index_t timestep, crvec xu, crvec h, rmat Q)>
+    required_function_t<void(index_t timestep, crvec xu, crvec h, rmat Q) const>
         eval_add_Q;
-    optional_const_function_t<void(crvec x, crvec h, rmat Q)>
+    optional_function_t<void(crvec x, crvec h, rmat Q) const>
         eval_add_Q_N = &default_eval_add_Q_N;
-    required_const_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask, rmat R, rvec work)>
+    required_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask, rmat R, rvec work) const>
         eval_add_R_masked;
-    required_const_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask, rmat S, rvec work)>
+    required_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask, rmat S, rvec work) const>
         eval_add_S_masked;
-    optional_const_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask_J, crindexvec mask_K, crvec v, rvec out, rvec work)>
+    optional_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask_J, crindexvec mask_K, crvec v, rvec out, rvec work) const>
         eval_add_R_prod_masked = &default_eval_add_R_prod_masked;
-    optional_const_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask_K, crvec v, rvec out, rvec work)>
+    optional_function_t<void(index_t timestep, crvec xu, crvec h, crindexvec mask_K, crvec v, rvec out, rvec work) const>
         eval_add_S_prod_masked = &default_eval_add_S_prod_masked;
-    optional_const_function_t<length_t()>
+    optional_function_t<length_t() const>
         get_R_work_size = &default_get_R_work_size;
-    optional_const_function_t<length_t()>
+    optional_function_t<length_t() const>
         get_S_work_size = &default_get_S_work_size;
-    optional_const_function_t<void(index_t timestep, crvec x, rvec c)>
+    optional_function_t<void(index_t timestep, crvec x, rvec c) const>
         eval_constr = nullptr;
-    optional_const_function_t<void(crvec x, rvec c)>
+    optional_function_t<void(crvec x, rvec c) const>
         eval_constr_N = &default_eval_constr_N;
-    optional_const_function_t<void(index_t timestep, crvec x, crvec p, rvec grad_cx_p)>
+    optional_function_t<void(index_t timestep, crvec x, crvec p, rvec grad_cx_p) const>
         eval_grad_constr_prod = nullptr;
-    optional_const_function_t<void(crvec x, crvec p, rvec grad_cx_p)>
+    optional_function_t<void(crvec x, crvec p, rvec grad_cx_p) const>
         eval_grad_constr_prod_N = &default_eval_grad_constr_prod_N;
-    optional_const_function_t<void(index_t timestep, crvec x, crvec M, rmat out)>
+    optional_function_t<void(index_t timestep, crvec x, crvec M, rmat out) const>
         eval_add_gn_hess_constr = nullptr;
-    optional_const_function_t<void(crvec x, crvec M, rmat out)>
+    optional_function_t<void(crvec x, crvec M, rmat out) const>
         eval_add_gn_hess_constr_N = &default_eval_add_gn_hess_constr_N;
-    required_const_function_t<void()>
+    required_function_t<void() const>
         check;
     // clang-format on
 

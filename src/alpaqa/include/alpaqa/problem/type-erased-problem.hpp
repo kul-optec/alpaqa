@@ -28,76 +28,73 @@ struct ProblemVTable : util::BasicVTable {
 
     template <class F>
     using optional_function_t = util::BasicVTable::optional_function_t<F, ProblemVTable>;
-    template <class F>
-    using optional_const_function_t =
-        util::BasicVTable::optional_const_function_t<F, ProblemVTable>;
 
     // clang-format off
 
     // Required
-    required_const_function_t<void(crvec z, rvec e)>
+    required_function_t<void(crvec z, rvec e) const>
         eval_proj_diff_g;
-    required_const_function_t<void(rvec y, real_t M)>
+    required_function_t<void(rvec y, real_t M) const>
         eval_proj_multipliers;
-    required_const_function_t<real_t(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p)>
+    required_function_t<real_t(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const>
         eval_prox_grad_step;
-    required_const_function_t<real_t(crvec x)>
+    required_function_t<real_t(crvec x) const>
         eval_f;
-    required_const_function_t<void(crvec x, rvec grad_fx)>
+    required_function_t<void(crvec x, rvec grad_fx) const>
         eval_grad_f;
-    required_const_function_t<void(crvec x, rvec gx)>
+    required_function_t<void(crvec x, rvec gx) const>
         eval_g;
-    required_const_function_t<void(crvec x, crvec y, rvec grad_gxy)>
+    required_function_t<void(crvec x, crvec y, rvec grad_gxy) const>
         eval_grad_g_prod;
-    optional_const_function_t<index_t(real_t γ, crvec x, crvec grad_ψ, rindexvec J)>
+    optional_function_t<index_t(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const>
         eval_inactive_indices_res_lna = default_eval_inactive_indices_res_lna;
 
     // Second order
-    optional_const_function_t<void(crvec x, rvec J_values)>
+    optional_function_t<void(crvec x, rvec J_values) const>
         eval_jac_g = default_eval_jac_g;
-    optional_const_function_t<Sparsity()>
+    optional_function_t<Sparsity() const>
         get_jac_g_sparsity = default_get_jac_g_sparsity;
-    optional_const_function_t<void(crvec x, index_t i, rvec grad_gi)>
+    optional_function_t<void(crvec x, index_t i, rvec grad_gi) const>
         eval_grad_gi = default_eval_grad_gi;
-    optional_const_function_t<void(crvec x, crvec y, real_t scale, crvec v, rvec Hv)>
+    optional_function_t<void(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const>
         eval_hess_L_prod = default_eval_hess_L_prod;
-    optional_const_function_t<void(crvec x, crvec y, real_t scale, rvec H_values)>
+    optional_function_t<void(crvec x, crvec y, real_t scale, rvec H_values) const>
         eval_hess_L = default_eval_hess_L;
-    optional_const_function_t<Sparsity()>
+    optional_function_t<Sparsity() const>
         get_hess_L_sparsity = default_get_hess_L_sparsity;
-    optional_const_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv)>
+    optional_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const>
         eval_hess_ψ_prod = default_eval_hess_ψ_prod;
-    optional_const_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values)>
+    optional_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const>
         eval_hess_ψ = default_eval_hess_ψ;
-    optional_const_function_t<Sparsity()>
+    optional_function_t<Sparsity() const>
         get_hess_ψ_sparsity = default_get_hess_ψ_sparsity;
 
     // Combined evaluations
-    optional_const_function_t<real_t(crvec x, rvec grad_fx)>
+    optional_function_t<real_t(crvec x, rvec grad_fx) const>
         eval_f_grad_f = default_eval_f_grad_f;
-    optional_const_function_t<real_t(crvec x, rvec g)>
+    optional_function_t<real_t(crvec x, rvec g) const>
         eval_f_g = default_eval_f_g;
-    optional_const_function_t<void(crvec x, crvec y, rvec grad_f, rvec grad_gxy)>
+    optional_function_t<void(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const>
         eval_grad_f_grad_g_prod = default_eval_grad_f_grad_g_prod;
 
     // Lagrangian and augmented lagrangian evaluations
-    optional_const_function_t<void(crvec x, crvec y, rvec grad_L, rvec work_n)>
+    optional_function_t<void(crvec x, crvec y, rvec grad_L, rvec work_n) const>
         eval_grad_L = default_eval_grad_L;
-    optional_const_function_t<real_t(crvec x, crvec y, crvec Σ, rvec ŷ)>
+    optional_function_t<real_t(crvec x, crvec y, crvec Σ, rvec ŷ) const>
         eval_ψ = default_eval_ψ;
-    optional_const_function_t<void(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m)>
+    optional_function_t<void(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const>
         eval_grad_ψ = default_eval_grad_ψ;
-    optional_const_function_t<real_t(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m)>
+    optional_function_t<real_t(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const>
         eval_ψ_grad_ψ = default_eval_ψ_grad_ψ;
 
     // Constraint sets
-    optional_const_function_t<const Box &()>
+    optional_function_t<const Box &() const>
         get_box_C = default_get_box_C;
-    optional_const_function_t<const Box &()>
+    optional_function_t<const Box &() const>
         get_box_D = default_get_box_D;
 
     // Check
-    optional_const_function_t<void()>
+    optional_function_t<void() const>
         check = default_check;
 
     // clang-format on

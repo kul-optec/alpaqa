@@ -24,7 +24,7 @@ struct InnerSolverVTable : util::BasicVTable {
         call = nullptr;
     required_function_t<void()>
         stop = nullptr;
-    required_const_function_t<std::string()>
+    required_function_t<std::string() const>
         get_name = nullptr;
     // clang-format on
 

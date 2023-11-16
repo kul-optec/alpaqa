@@ -27,17 +27,17 @@ struct TRDirectionVTable : util::BasicVTable {
         initialize = nullptr;
     required_function_t<bool(real_t γₖ, real_t γₙₑₓₜ, crvec xₖ, crvec xₙₑₓₜ, crvec pₖ, crvec pₙₑₓₜ, crvec grad_ψxₖ, crvec grad_ψxₙₑₓₜ)>
         update = nullptr;
-    required_const_function_t<bool()>
+    required_function_t<bool() const>
         has_initial_direction = nullptr;
-    required_const_function_t<real_t(real_t γₖ, crvec xₖ, crvec x̂ₖ, crvec pₖ, crvec grad_ψxₖ, real_t radius, rvec qₖ)>
+    required_function_t<real_t(real_t γₖ, crvec xₖ, crvec x̂ₖ, crvec pₖ, crvec grad_ψxₖ, real_t radius, rvec qₖ) const>
         apply = nullptr;
     required_function_t<void(real_t γₖ, real_t old_γₖ)>
         changed_γ = nullptr;
     required_function_t<void()>
         reset = nullptr;
-    required_const_function_t<py::object()>
+    required_function_t<py::object() const>
         get_params = nullptr;
-    required_const_function_t<std::string()>
+    required_function_t<std::string() const>
         get_name = nullptr;
     // clang-format on
 

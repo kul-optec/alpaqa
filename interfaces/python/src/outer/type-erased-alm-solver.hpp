@@ -47,11 +47,11 @@ struct ALMSolverVTable : util::BasicVTable {
         call = nullptr;
     required_function_t<void()>
         stop = nullptr;
-    required_const_function_t<std::string()>
+    required_function_t<std::string() const>
         get_name = nullptr;
-    required_const_function_t<py::object()>
+    required_function_t<py::object() const>
         get_params = nullptr;
-    required_const_function_t<py::object()>
+    required_function_t<py::object() const>
         get_inner_solver = nullptr;
     // clang-format on
 
