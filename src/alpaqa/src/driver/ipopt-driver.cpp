@@ -1,4 +1,4 @@
-#ifdef WITH_IPOPT
+#ifdef ALPAQA_WITH_IPOPT
 
 #include <alpaqa/ipopt/ipopt-adapter.hpp>
 #include <alpaqa/ipopt/ipopt-enums.hpp>

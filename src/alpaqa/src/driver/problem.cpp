@@ -3,13 +3,13 @@
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/util/io/csv.hpp>
-#if ALPAQA_HAVE_DL
+#if ALPAQA_WITH_DL
 #include <alpaqa/dl/dl-problem.hpp>
 #endif
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
 #include <alpaqa/casadi/CasADiProblem.hpp>
 #endif
-#ifdef ALPAQA_HAVE_CUTEST
+#ifdef ALPAQA_WITH_CUTEST
 #include <alpaqa/cutest/cutest-loader.hpp>
 #endif
 
@@ -82,7 +82,7 @@ void count_problem(LoadedProblem &p) {
         count_constr(p.general_constr_count.emplace(), p.problem.get_box_D());
 }
 
-#if ALPAQA_HAVE_DL
+#if ALPAQA_WITH_DL
 LoadedProblem load_dl_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
                               Options &opts) {
@@ -111,7 +111,7 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
 }
 #endif
 
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
 template <bool = true>
 LoadedProblem load_cs_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
@@ -145,7 +145,7 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
 }
 #endif
 
-#ifdef ALPAQA_HAVE_CUTEST
+#ifdef ALPAQA_WITH_CUTEST
 template <bool = true>
 LoadedProblem load_cu_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
@@ -197,14 +197,14 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
     // Load problem
     auto full_path = dir / file;
     if (type == "dl" || type.empty()) {
-#if ALPAQA_HAVE_DL
+#if ALPAQA_WITH_DL
         return load_dl_problem(full_path, prob_opts, opts);
 #else
         throw std::logic_error("This version of alpaqa was compiled without "
                                "support for dynamic problem loading");
 #endif
     } else if (type == "cs") {
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
         if constexpr (std::is_same_v<config_t, alpaqa::EigenConfigd>)
             return load_cs_problem(full_path, prob_opts, opts);
         else
@@ -214,7 +214,7 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
             "This version of alpaqa was compiled without CasADi support");
 #endif
     } else if (type == "cu") {
-#ifdef ALPAQA_HAVE_CUTEST
+#ifdef ALPAQA_WITH_CUTEST
         if constexpr (std::is_same_v<config_t, alpaqa::EigenConfigd>)
             return load_cu_problem(full_path, prob_opts, opts);
         else

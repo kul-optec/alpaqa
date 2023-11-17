@@ -20,13 +20,13 @@
 #include "results.hpp"
 #include "solver-driver.hpp"
 
-#ifdef ALPAQA_HAVE_CASADI
+#ifdef ALPAQA_WITH_CASADI
 #include <casadi/config.h>
 #endif
 #ifdef ALPAQA_WITH_JSON
 #include <nlohmann/json_fwd.hpp>
 #endif
-#ifdef WITH_IPOPT
+#ifdef ALPAQA_WITH_IPOPT
 #include <IpoptConfig.h>
 #endif
 
@@ -142,27 +142,27 @@ void print_usage(const char *a0) {
               << "  * Eigen " << EIGEN_WORLD_VERSION << '.'
               << EIGEN_MAJOR_VERSION << '.' << EIGEN_MINOR_VERSION
               << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
-#ifdef ALPAQA_HAVE_CASADI
+#ifdef ALPAQA_WITH_CASADI
               << "  * CasADi " CASADI_VERSION_STRING
                  " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
 #endif
-#ifdef ALPAQA_HAVE_CUTEST
+#ifdef ALPAQA_WITH_CUTEST
               << "  * CUTEst"
                  " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
 #endif
-#ifdef WITH_LBFGSB
+#ifdef ALPAQA_WITH_LBFGSB
               << "  * L-BFGS-B 3.0 "
                  "(http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) - "
                  "BSD-3-Clause\n"
 #endif
-#ifdef WITH_IPOPT
+#ifdef ALPAQA_WITH_IPOPT
               << "  * Ipopt " IPOPT_VERSION
                  " (https://github.com/coin-or/Ipopt) - EPL-2.0\n"
               << "  * MUMPS (https://mumps-solver.org) - CECILL-C\n"
               << "  * OpenBLAS (https://github.com/OpenMathLib/OpenBLAS) - "
                  "BSD-3-Clause\n"
 #endif
-#ifdef WITH_QPALM
+#ifdef ALPAQA_WITH_QPALM
               << "  * QPALM " QPALM_VERSION_STR
                  " (https://github.com/kul-optec/QPALM) - LGPL-3.0\n"
 #endif

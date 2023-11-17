@@ -14,10 +14,10 @@
 
 #include <Eigen/Sparse>
 
-#ifdef ALPAQA_HAVE_CASADI
+#ifdef ALPAQA_WITH_CASADI
 #include <casadi/config.h>
 #endif
-#ifdef WITH_IPOPT
+#ifdef ALPAQA_WITH_IPOPT
 #include <IpoptConfig.h>
 #endif
 
@@ -72,11 +72,11 @@ void print_usage(const char *a0) {
               << "  * Eigen " << EIGEN_WORLD_VERSION << '.'
               << EIGEN_MAJOR_VERSION << '.' << EIGEN_MINOR_VERSION
               << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
-#ifdef ALPAQA_HAVE_CASADI
+#ifdef ALPAQA_WITH_CASADI
               << "  * CasADi " CASADI_VERSION_STRING
                  " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
 #endif
-#ifdef ALPAQA_HAVE_CUTEST
+#ifdef ALPAQA_WITH_CUTEST
               << "  * CUTEst"
                  " (https://github.com/ralna/CUTEst) - BSD-3-Clause\n"
 #endif

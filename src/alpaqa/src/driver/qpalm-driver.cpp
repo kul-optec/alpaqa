@@ -1,4 +1,4 @@
-#ifdef WITH_QPALM
+#ifdef ALPAQA_WITH_QPALM
 
 #include <alpaqa/qpalm/qpalm-adapter.hpp>
 #include <qpalm/constants.h>

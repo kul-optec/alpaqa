@@ -17,13 +17,13 @@ using namespace py::literals;
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/problem/unconstr-problem.hpp>
 #include <alpaqa/util/check-dim.hpp>
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
 #include <alpaqa/casadi/CasADiProblem.hpp>
 #endif
-#if ALPAQA_HAVE_CUTEST
+#if ALPAQA_WITH_CUTEST
 #include <alpaqa/cutest/cutest-loader.hpp>
 #endif
-#if ALPAQA_HAVE_DL
+#if ALPAQA_WITH_DL
 #include <alpaqa/dl/dl-problem.hpp>
 #endif
 
@@ -528,7 +528,7 @@ void register_problems(py::module_ &m) {
     };
 
     if constexpr (std::is_same_v<typename Conf::real_t, double>) {
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
         using CasADiProblem      = alpaqa::CasADiProblem<config_t>;
         auto load_CasADi_problem = [](const char *so_name) {
             return std::make_unique<CasADiProblem>(so_name);
@@ -553,7 +553,7 @@ void register_problems(py::module_ &m) {
             "C++ documentation: :cpp:class:`alpaqa::CasADiProblem`\n\n"
             "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
         default_copy_methods(casadi_problem);
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
         problem_methods(casadi_problem);
         casadi_problem.def_property(
             "param", [](CasADiProblem &p) -> rvec { return p.param; },
@@ -572,7 +572,7 @@ void register_problems(py::module_ &m) {
         m.def("deserialize_casadi_problem", deserialize_CasADi_problem, "functions"_a,
               "Deserialize a CasADi problem from the given serialized functions.\n\n");
 
-#if ALPAQA_HAVE_CASADI
+#if ALPAQA_WITH_CASADI
         m.def(
             "problem_with_counters", [](CasADiProblem &p) { return te_pwc(p); },
             py::keep_alive<0, 1>(), "problem"_a,
@@ -582,7 +582,7 @@ void register_problems(py::module_ &m) {
             "         * Counters for wrapped problem.\n\n");
 #endif
 
-#if ALPAQA_HAVE_CUTEST
+#if ALPAQA_WITH_CUTEST
         using alpaqa::CUTEstProblem;
         py::class_<CUTEstProblem, BoxConstrProblem> cutest_problem(
             m, "CUTEstProblem",
@@ -627,7 +627,7 @@ void register_problems(py::module_ &m) {
         te_problem.def(py::init<const CUTEstProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<CUTEstProblem, TEProblem>();
 #endif
-#if ALPAQA_HAVE_DL
+#if ALPAQA_WITH_DL
         using alpaqa::dl::DLProblem;
         py::class_<DLProblem, BoxConstrProblem> dl_problem(
             m, "DLProblem",

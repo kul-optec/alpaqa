@@ -10,15 +10,6 @@ function(alpaqa_configure_visibility target)
     endif()
 endfunction()
 
-option(ALPAQA_WITH_OCP
-    "Enable solvers tailored for optimal control problems" On)
-option(ALPAQA_DEBUG_CHECKS_EIGEN
-    "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
-option(ALPAQA_NO_DLCLOSE
-    "Never call dlclose when a shared library is no longer needed, leave it open instead. Useful for profiling using gperftools." Off)
-option(ALPAQA_WITH_ACCURATE_BUILD_TIME
-    "Update the build time on every build" On)
-
 add_library(alpaqa
     "alpaqa/src/util/type-erasure.cpp"
     "alpaqa/src/util/demangled-typename.cpp"
@@ -50,8 +41,7 @@ add_library(alpaqa
 if (ALPAQA_WITH_OCP)
     target_sources(alpaqa PRIVATE
         "alpaqa/src/inner/panoc-ocp.cpp"
-        "alpaqa/src/problem/ocproblem.cpp"
-    )
+        "alpaqa/src/problem/ocproblem.cpp")
 endif()
 if (ALPAQA_WITH_DRIVERS)
     target_sources(alpaqa PRIVATE
@@ -67,7 +57,7 @@ endif()
 target_compile_features(alpaqa PUBLIC cxx_std_20)
 target_include_directories(alpaqa PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
-    $<INSTALL_INTERFACE:include>)
+    $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
 if (ALPAQA_DEBUG_CHECKS_EIGEN)
     target_compile_definitions(alpaqa PUBLIC
         $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
@@ -82,9 +72,8 @@ target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_LONG_DOUBLE}>:ALPAQA_WITH_LONG_DOUBLE>
     $<$<BOOL:${ALPAQA_NO_DLCLOSE}>:ALPAQA_NO_DLCLOSE>
     $<$<BOOL:${ALPAQA_WITH_JSON}>:ALPAQA_WITH_JSON>
+    $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>
 )
-target_compile_definitions(alpaqa PUBLIC
-    $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>)
 target_link_libraries(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:quadmath>)
 if (ALPAQA_WITH_OPENMP)
@@ -130,9 +119,10 @@ if (ALPAQA_WITH_CASADI)
         "interop/casadi/src/CasADiProblem.cpp"
         "interop/casadi/src/CompleteCasADiProblem.cpp"
         "interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp")
-    target_include_directories(alpaqa PUBLIC
+    target_include_directories(casadi-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(casadi-loader PUBLIC ALPAQA_WITH_CASADI)
     set_property(TARGET casadi-loader
         PROPERTY OUTPUT_NAME alpaqa-casadi-loader)
     target_link_libraries(casadi-loader
@@ -152,23 +142,13 @@ else()
     message(STATUS "Compiling WITHOUT CasADi support")
 endif()
 
-set(ALPAQA_WITH_CASADI_OCP_SUPPORTED ${ALPAQA_WITH_OCP})
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND
-    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 16.0.0)
-    set(ALPAQA_WITH_CASADI_OCP_SUPPORTED Off)
-endif()
-
-include(CMakeDependentOption)
-cmake_dependent_option(ALPAQA_WITH_CASADI_OCP
-    "Build the CasADi loader for optimal control problems"
-    ${ALPAQA_WITH_CASADI_OCP_SUPPORTED} "ALPAQA_WITH_CASADI" OFF)
-
 # Optimal control problems
 if (ALPAQA_WITH_OCP AND ALPAQA_WITH_CASADI_OCP)
     add_library(casadi-ocp-loader "interop/casadi/src/CasADiControlProblem.cpp")
     target_include_directories(casadi-ocp-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(casadi-ocp-loader PUBLIC ALPAQA_WITH_CASADI_OCP)
     set_property(TARGET casadi-ocp-loader
         PROPERTY OUTPUT_NAME alpaqa-casadi-ocp-loader)
     target_link_libraries(casadi-ocp-loader
@@ -188,13 +168,14 @@ if (CMAKE_DL_LIBS)
     add_library(dl-api INTERFACE)
     target_include_directories(dl-api INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
     add_library(alpaqa::dl-api ALIAS dl-api)
     list(APPEND ALPAQA_INSTALL_TARGETS dl-api)
     add_library(dl-loader "interop/dl/src/dl-problem.cpp")
     target_include_directories(dl-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(dl-loader PUBLIC ALPAQA_WITH_DL)
     set_property(TARGET dl-loader
         PROPERTY OUTPUT_NAME alpaqa-dl-loader)
     target_link_libraries(dl-loader
@@ -212,13 +193,16 @@ if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
     add_library(cutest-interface "interop/cutest/src/cutest-loader.cpp")
     target_include_directories(cutest-interface PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/cutest/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    set_property(TARGET cutest-interface
+        PROPERTY OUTPUT_NAME alpaqa-cutest-interface)
     target_link_libraries(cutest-interface
         PUBLIC alpaqa::alpaqa
         PRIVATE ${CMAKE_DL_LIBS} alpaqa::warnings)
     if (NOT ALPAQA_WITH_CXX_23)
         message(FATAL_ERROR "ALPAQA_WITH_CUTEST requires C++23 support")
     endif()
+    target_compile_definitions(cutest-interface PUBLIC ALPAQA_WITH_CUTEST)
     target_compile_features(alpaqa PUBLIC cxx_std_23)
     alpaqa_configure_visibility(cutest-interface)
     set_target_properties(cutest-interface PROPERTIES SOVERSION ${PROJECT_VERSION})
@@ -236,7 +220,7 @@ else()
 endif()
 
 if (ALPAQA_WITH_IPOPT)
-    find_package(Ipopt)
+    find_package(Ipopt REQUIRED)
     message(STATUS "Compiling Ipopt problem adapter")
     add_library(ipopt-adapter "interop/ipopt/src/ipopt-adapter.cpp")
     if (ALPAQA_WITH_DRIVERS)
@@ -251,7 +235,8 @@ if (ALPAQA_WITH_IPOPT)
         PUBLIC COIN::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(ipopt-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/ipopt/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(ipopt-adapter PUBLIC ALPAQA_WITH_IPOPT)
     set_property(TARGET ipopt-adapter
         PROPERTY OUTPUT_NAME alpaqa-ipopt-adapter)
     alpaqa_configure_visibility(ipopt-adapter)
@@ -272,7 +257,7 @@ if (TARGET lbfgspp)
         PUBLIC lbfgspp alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(lbfgspp-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgspp/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
     set_property(TARGET lbfgspp-adapter
         PROPERTY OUTPUT_NAME alpaqa-lbfgspp-adapter)
     alpaqa_configure_visibility(lbfgspp-adapter)
@@ -284,9 +269,6 @@ if (TARGET lbfgspp)
     target_include_directories(lbfgspp-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
 endif()
-
-cmake_dependent_option(ALPAQA_WITH_LBFGSB
-    "Include the L-BFGS-B solver" ON ALPAQA_HAVE_FORTRAN OFF)
 
 if (ALPAQA_WITH_LBFGSB)
     message(STATUS "Compiling L-BFGS-B solver adapter")
@@ -316,7 +298,8 @@ if (ALPAQA_WITH_LBFGSB)
         PUBLIC lbfgsb-fortran alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(lbfgsb-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgsb/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(lbfgsb-adapter PUBLIC ALPAQA_WITH_LBFGSB)
     set_property(TARGET lbfgsb-adapter
         PROPERTY OUTPUT_NAME alpaqa-lbfgsb-adapter)
     alpaqa_configure_visibility(lbfgsb-adapter)
@@ -345,7 +328,8 @@ if (ALPAQA_WITH_QPALM)
         PUBLIC QPALM::qpalm_cxx alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(qpalm-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/qpalm/include>
-        $<INSTALL_INTERFACE:include>)
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(qpalm-adapter PUBLIC ALPAQA_WITH_QPALM)
     set_property(TARGET qpalm-adapter
         PROPERTY OUTPUT_NAME alpaqa-qpalm-adapter)
     alpaqa_configure_visibility(qpalm-adapter)
@@ -382,31 +366,25 @@ if (ALPAQA_WITH_DRIVERS)
     add_executable(alpaqa::driver ALIAS driver)
     list(APPEND ALPAQA_INSTALL_EXE driver)
     if (TARGET alpaqa::dl-loader)
-        target_link_libraries(driver PUBLIC alpaqa::dl-loader)
-        target_compile_definitions(driver PUBLIC ALPAQA_HAVE_DL)
+        target_link_libraries(driver PRIVATE alpaqa::dl-loader)
     endif()
     if (TARGET alpaqa::casadi-loader)
-        target_link_libraries(driver PUBLIC alpaqa::casadi-loader casadi)
-        target_compile_definitions(driver PUBLIC ALPAQA_HAVE_CASADI)
+        target_link_libraries(driver PRIVATE alpaqa::casadi-loader casadi)
     endif()
     if (TARGET alpaqa::cutest-interface)
-        target_link_libraries(driver PUBLIC alpaqa::cutest-interface)
-        target_compile_definitions(driver PUBLIC ALPAQA_HAVE_CUTEST)
+        target_link_libraries(driver PRIVATE alpaqa::cutest-interface)
     endif()
     if (TARGET alpaqa::casadi-ocp-loader)
-        target_link_libraries(driver PUBLIC alpaqa::casadi-ocp-loader)
+        target_link_libraries(driver PRIVATE alpaqa::casadi-ocp-loader)
     endif()
     if (TARGET alpaqa::ipopt-adapter)
-        target_link_libraries(driver PUBLIC alpaqa::ipopt-adapter)
-        target_compile_definitions(driver PUBLIC WITH_IPOPT)
+        target_link_libraries(driver PRIVATE alpaqa::ipopt-adapter)
     endif()
     if (TARGET alpaqa::lbfgsb-adapter)
-        target_link_libraries(driver PUBLIC alpaqa::lbfgsb-adapter)
-        target_compile_definitions(driver PUBLIC WITH_LBFGSB)
+        target_link_libraries(driver PRIVATE alpaqa::lbfgsb-adapter)
     endif()
     if (TARGET alpaqa::qpalm-adapter)
-        target_link_libraries(driver PUBLIC alpaqa::qpalm-adapter)
-        target_compile_definitions(driver PUBLIC WITH_QPALM)
+        target_link_libraries(driver PRIVATE alpaqa::qpalm-adapter)
     endif()
 
     # Gradient checker tool
@@ -426,19 +404,16 @@ if (ALPAQA_WITH_DRIVERS)
     add_executable(alpaqa::gradient-checker ALIAS gradient-checker)
     list(APPEND ALPAQA_INSTALL_EXE gradient-checker)
     if (TARGET alpaqa::dl-loader)
-        target_link_libraries(gradient-checker PUBLIC alpaqa::dl-loader)
-        target_compile_definitions(gradient-checker PUBLIC ALPAQA_HAVE_DL)
+        target_link_libraries(gradient-checker PRIVATE alpaqa::dl-loader)
     endif()
     if (TARGET alpaqa::casadi-loader)
-        target_link_libraries(gradient-checker PUBLIC alpaqa::casadi-loader casadi)
-        target_compile_definitions(gradient-checker PUBLIC ALPAQA_HAVE_CASADI)
+        target_link_libraries(gradient-checker PRIVATE alpaqa::casadi-loader casadi)
     endif()
     if (TARGET alpaqa::cutest-interface)
-        target_link_libraries(gradient-checker PUBLIC alpaqa::cutest-interface)
-        target_compile_definitions(gradient-checker PUBLIC ALPAQA_HAVE_CUTEST)
+        target_link_libraries(gradient-checker PRIVATE alpaqa::cutest-interface)
     endif()
     if (TARGET alpaqa::casadi-ocp-loader)
-        target_link_libraries(gradient-checker PUBLIC alpaqa::casadi-ocp-loader)
+        target_link_libraries(gradient-checker PRIVATE alpaqa::casadi-ocp-loader)
     endif()
 endif()
 

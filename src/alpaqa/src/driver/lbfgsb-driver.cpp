@@ -1,4 +1,4 @@
-#if WITH_LBFGSB
+#if ALPAQA_WITH_LBFGSB
 
 #include <alpaqa/implementation/outer/alm.tpp>
 #include <alpaqa/lbfgsb/lbfgsb-adapter.hpp>

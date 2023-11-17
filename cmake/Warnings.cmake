@@ -57,6 +57,7 @@ function(add_warnings_target tgt_name warnings_as_errors)
         -Wunreachable-code-aggressive
         -Wno-error=self-assign-overloaded
         -Wno-non-c-typedef-for-linkage
+        -Wno-return-type-c-linkage
     )
     # Flang
     set(FLANG_WARNINGS_Fortran

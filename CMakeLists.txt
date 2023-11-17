@@ -1,54 +1,35 @@
 cmake_minimum_required(VERSION 3.24)
 project(alpaqa VERSION 1.0.0 LANGUAGES CXX)
 set(PY_VERSION_SUFFIX "a15.dev0")
+include(CTest)
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 
-# Look for a C and Fortran compiler (optional)
-include(CheckLanguage)
-set(ALPAQA_HAVE_FORTRAN Off)
-check_language(Fortran)
-if (CMAKE_Fortran_COMPILER)
-    set(ALPAQA_HAVE_FORTRAN On)
-    enable_language(Fortran)
-endif()
-set(ALPAQA_HAVE_C Off)
-check_language(C)
-if (CMAKE_C_COMPILER)
-    set(ALPAQA_HAVE_C On)
-    enable_language(C)
-endif()
-
-# Determine compiler's C++23 support
-if ("cxx_std_23" IN_LIST CMAKE_CXX_COMPILE_FEATURES)
-    set(ALPAQA_WITH_CXX_23_DEFAULT On)
-else()
-    set(ALPAQA_WITH_CXX_23_DEFAULT Off)
-endif()
+# Detect compiler features
+include(cmake/DetectFeatures.cmake)
 
 # Options
-option(ALPAQA_WITH_QUAD_PRECISION
-    "Support quad-precision floating point types" Off)
-option(ALPAQA_WITH_SINGLE_PRECISION
-    "Support single-precision floating point types" Off)
-option(ALPAQA_WITH_LONG_DOUBLE
-    "Support long double floating point types" Off)
+include(CMakeDependentOption)
+
+# Enable/disable interfaces to other programming languages
 option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
 option(ALPAQA_WITH_MATLAB
     "Build the MATLAB MEX interface" Off)
-option(ALPAQA_WARNINGS_AS_ERRORS
-    "Enable -Werror or /WX" Off)
-option(ALPAQA_WITH_OPENMP
-    "Enable parallelization using OpenMP" Off)
-option(BUILD_TESTING
-    "Build tests (for Conan integration)" On)
+# Enable/disable optional components
 option(ALPAQA_WITH_TESTS
     "Build the tests" ${BUILD_TESTING})
 option(ALPAQA_WITH_EXAMPLES
     "Build the examples" On)
 option(ALPAQA_WITH_DRIVERS
-    "Build the solver drivers" On)
-option(ALPAQA_WITH_COVERAGE
-    "Generate coverage information" Off)
+    "Build the solver driver programs" On)
+option(ALPAQA_WITH_OCP
+    "Enable solvers tailored for optimal control problems" On)
+cmake_dependent_option(ALPAQA_WITH_CASADI_OCP
+    "Build the CasADi loader for optimal control problems"
+    ${ALPAQA_WITH_CASADI_OCP_SUPPORTED} "ALPAQA_WITH_CASADI;ALPAQA_WITH_OCP" Off)
+option(ALPAQA_WITH_CXX_23
+    "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})
+# Enable/disable optional dependencies
 option(ALPAQA_WITH_CASADI
     "Build the CasADi loader" On)
 option(ALPAQA_WITH_CUTEST
@@ -56,17 +37,36 @@ option(ALPAQA_WITH_CUTEST
 option(ALPAQA_WITH_QPALM
     "Build the QPALM adapter" Off)
 option(ALPAQA_WITH_IPOPT
-    "Build the IPOPT adapter" Off)
+    "Build the Ipopt adapter" Off)
 option(ALPAQA_WITH_JSON
     "Enable JSON (de)serialization of options" Off)
-option(ALPAQA_WITH_CXX_23
-    "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})
-set(ALPAQA_DOXYFILE "Doxyfile" CACHE STRING
-    "The Doxyfile to use for the docs target")
+cmake_dependent_option(ALPAQA_WITH_LBFGSB
+    "Include the L-BFGS-B solver" On "ALPAQA_HAVE_FORTRAN" Off)
+# Optimization and parallelization
+option(ALPAQA_WITH_OPENMP
+    "Enable parallelization using OpenMP" Off)
+# Enable/disable floating point types
+option(ALPAQA_WITH_QUAD_PRECISION
+    "Support quad-precision floating point types" Off)
+option(ALPAQA_WITH_SINGLE_PRECISION
+    "Support single-precision floating point types" Off)
+option(ALPAQA_WITH_LONG_DOUBLE
+    "Support long double floating point types" Off)
+# Developer options
+option(ALPAQA_WARNINGS_AS_ERRORS
+    "Enable -Werror or /WX" Off)
+option(ALPAQA_WITH_COVERAGE
+    "Generate coverage information" Off)
 option(ALPAQA_ENABLE_PCH
     "Enable precompiled headers" Off)
-option(ALPAQA_STANDALONE
-    "Install with relative RPATH to locate its own shared libraries" On)
+set(ALPAQA_DOXYFILE "Doxyfile" CACHE FILEPATH
+    "The Doxyfile to use for the docs target")
+option(ALPAQA_DEBUG_CHECKS_EIGEN
+    "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
+option(ALPAQA_NO_DLCLOSE
+    "Never call dlclose when a shared library is no longer needed, leave it open instead. Useful for profiling using gperftools." Off)
+option(ALPAQA_WITH_ACCURATE_BUILD_TIME
+    "Update the build time on every build" On)
 
 # Installation paths
 include(GNUInstallDirs)
@@ -78,17 +78,17 @@ set(ALPAQA_INSTALL_BINDIR "${CMAKE_INSTALL_BINDIR}"
     CACHE PATH "Installation directory for binaries and DLLs")
 set(ALPAQA_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}"
     CACHE PATH "Installation directory for headers")
-
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
+option(ALPAQA_STANDALONE
+    "Install with relative RPATH to locate its own shared libraries" On)
 
 # Compiler warnings
 include(cmake/Warnings.cmake)
 add_warnings_target(warnings ${ALPAQA_WARNINGS_AS_ERRORS})
 add_library(alpaqa::warnings ALIAS warnings)
-set(CMAKE_CXX_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
-set(CMAKE_C_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
 
 # Compiler options
+set(CMAKE_CXX_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
+set(CMAKE_C_EXTENSIONS ${ALPAQA_WITH_QUAD_PRECISION})
 if (ALPAQA_WITH_PYTHON OR ALPAQA_WITH_MATLAB)
     set(CMAKE_POSITION_INDEPENDENT_CODE On)
 endif()
@@ -100,10 +100,6 @@ set(CMAKE_DEBUG_POSTFIX "_d")
 set(CMAKE_RELWITHDEBINFO_POSTFIX "_rd")
 set(CMAKE_MINSIZEREL_POSTFIX "_rs")
 
-configure_file(cmake/alpaqa-version.h.in
-    ${PROJECT_BINARY_DIR}/include/alpaqa-version.h @ONLY)
-include_directories(${PROJECT_BINARY_DIR}/include)
-
 # Sanitizers
 include(cmake/Sanitizers.cmake)
 
@@ -111,8 +107,7 @@ include(cmake/Sanitizers.cmake)
 if (ALPAQA_WITH_COVERAGE)
     add_custom_target(coverage
         ${CMAKE_CURRENT_LIST_DIR}/scripts/coverage.sh
-        ${CMAKE_CXX_COMPILER_ID}
-        ${CMAKE_CXX_COMPILER_VERSION}
+        ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
     add_compile_options("--coverage")
     add_link_options("--coverage")
@@ -122,10 +117,14 @@ endif()
 # Documentation
 find_package(Doxygen)
 if (DOXYGEN_FOUND)
-    add_custom_target(docs
-        Doxygen::doxygen ${ALPAQA_DOXYFILE}
+    add_custom_target(docs Doxygen::doxygen ${ALPAQA_DOXYFILE}
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/doxygen)
 endif()
+
+# Save the project version to a generated file
+configure_file(cmake/alpaqa-version.h.in
+    ${PROJECT_BINARY_DIR}/include/alpaqa-version.h @ONLY)
+include_directories(${PROJECT_BINARY_DIR}/include)
 
 # Libraries
 add_subdirectory(src)
@@ -145,32 +144,4 @@ if (ALPAQA_WITH_EXAMPLES)
 endif()
 
 # Packaging
-include(InstallRequiredSystemLibraries)
-set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}${PY_VERSION_SUFFIX}")
-set(CPACK_SYSTEM_NAME "${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
-set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
-set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/README.md")
-SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Pieter Pas <pieter.p.dev@outlook.com>")
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/kul-optec/alpaqa")
-# Package components
-set(CPACK_COMPONENTS_ALL "shlib;dev;dl_dev;debug;bin;matlab")
-set(CPACK_DEB_COMPONENT_INSTALL On)
-set(CPACK_DEBIAN_SHLIB_PACKAGE_NAME "libalpaqa")
-set(CPACK_DEBIAN_DEV_PACKAGE_NAME "libalpaqa-dev")
-set(CPACK_DEBIAN_DL_DEV_PACKAGE_NAME "libalpaqa-dl-dev")
-set(CPACK_DEBIAN_DEBUG_PACKAGE_NAME "libalpaqa-debug")
-set(CPACK_DEBIAN_BIN_PACKAGE_NAME "libalpaqa-tools")
-set(CPACK_DEBIAN_MATLAB_PACKAGE_NAME "libalpaqa-matlab")
-# Package dependencies
-set(CPACK_DEBIAN_SHLIB_PACKAGE_DEPENDS "libc6 (>= 2.17), libgfortran5 (>= 10), libquadmath0 (>= 10)")
-set(CPACK_DEBIAN_DEV_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX}), libalpaqa-dl-dev (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
-set(CPACK_DEBIAN_DEV_PACKAGE_SUGGESTS "libeigen3-dev (>= 3.4.0), libeigen3-dev (<< 3.4.1)")
-set(CPACK_DEBIAN_DL_DEV_PACKAGE_DEPENDS "")
-set(CPACK_DEBIAN_DL_DEV_PACKAGE_SUGGESTS "libalpaqa-dev (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
-set(CPACK_DEBIAN_DEBUG_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
-set(CPACK_DEBIAN_BIN_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
-set(CPACK_DEBIAN_MATLAB_PACKAGE_DEPENDS "libalpaqa (= ${PROJECT_VERSION}${PY_VERSION_SUFFIX})")
-include(CPack)
+include(cmake/Packaging.cmake)

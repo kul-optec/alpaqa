@@ -11,7 +11,7 @@ using namespace py::literals;
 
 #include <alpaqa/problem/ocproblem.hpp>
 #include <alpaqa/util/check-dim.hpp>
-#if ALPAQA_HAVE_CASADI_OCP
+#if ALPAQA_WITH_CASADI_OCP
 #include <alpaqa/casadi/CasADiControlProblem.hpp>
 #endif
 
@@ -37,7 +37,7 @@ void register_control_problems(py::module_ &m) {
         .def_readonly("evaluations", &ControlProblemWithCounters::evaluations);
     if constexpr (std::is_same_v<typename Conf::real_t, double>) {
 
-#if ALPAQA_HAVE_CASADI_OCP
+#if ALPAQA_WITH_CASADI_OCP
         static constexpr auto te_pwc = []<class P>(P &&p) -> ControlProblemWithCounters {
             using PwC = alpaqa::ControlProblemWithCounters<P>;
             auto te_p = ControlProblem::template make<PwC>(std::forward<P>(p));
@@ -62,7 +62,7 @@ void register_control_problems(py::module_ &m) {
             "C++ documentation: :cpp:class:`alpaqa::CasADiControlProblem`\n\n"
             "See :py:class:`alpaqa._alpaqa.float64.TEControlProblem` for the full documentation.");
         default_copy_methods(casadi_ctrl_prblm);
-#if ALPAQA_HAVE_CASADI_OCP
+#if ALPAQA_WITH_CASADI_OCP
         casadi_ctrl_prblm //
             .def_readonly("N", &CasADiControlProblem::N)
             .def_readonly("nx", &CasADiControlProblem::nx)
@@ -102,7 +102,7 @@ void register_control_problems(py::module_ &m) {
         m.def("load_casadi_control_problem", load_CasADi_control_problem, "so_name"_a, "N"_a,
               "Load a compiled CasADi optimal control problem.\n\n");
 
-#if ALPAQA_HAVE_CASADI_OCP
+#if ALPAQA_WITH_CASADI_OCP
         m.def(
             "control_problem_with_counters", [](CasADiControlProblem &p) { return te_pwc(p); },
             py::keep_alive<0, 1>(), "problem"_a,
