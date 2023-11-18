@@ -51,7 +51,9 @@ if (ALPAQA_WITH_JSON)
     find_package(nlohmann_json REQUIRED)
     target_sources(alpaqa PRIVATE
         "alpaqa/src/params/json.cpp")
-    target_link_libraries(alpaqa PUBLIC nlohmann_json::nlohmann_json)
+    target_link_libraries(alpaqa
+        PUBLIC $<BUILD_INTERFACE:nlohmann_json::nlohmann_json>
+        PRIVATE $<INSTALL_INTERFACE:nlohmann_json::nlohmann_json>)
 endif()
 
 target_compile_features(alpaqa PUBLIC cxx_std_20)

@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.24)
-project(alpaqa VERSION 1.0.0 LANGUAGES CXX)
+project(alpaqa
+    VERSION 1.0.0
+    DESCRIPTION "alpaqa augmented Lagrangian nonlinear programming solver"
+    HOMEPAGE_URL "https://github.com/kul-optec/alpaqa"
+    LANGUAGES CXX
+)
 set(PY_VERSION_SUFFIX "a15.dev0")
 include(CTest)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")

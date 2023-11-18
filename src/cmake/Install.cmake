@@ -11,55 +11,82 @@ if (ALPAQA_STANDALONE)
     endforeach()
 endif()
 
-# Add the alpaqa library to the "export-set", install the library files
+# Install everything
 message(STATUS "Targets to install: ${ALPAQA_INSTALL_TARGETS};${ALPAQA_INSTALL_EXE}")
-install(TARGETS ${ALPAQA_INSTALL_TARGETS} warnings
-    EXPORT alpaqaTargets
-    RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
-        COMPONENT shlib
-    LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
-        COMPONENT shlib
-        NAMELINK_COMPONENT dev
-    ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}" 
-        COMPONENT dev)
-# Executables
-install(TARGETS ${ALPAQA_INSTALL_EXE}
-    EXPORT alpaqaTargets
-    RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
-        COMPONENT bin)
+set(ALPAQA_COMPONENT_alpaqa "lib")
+set(ALPAQA_COMPONENT_casadi-loader "casadi")
+set(ALPAQA_COMPONENT_casadi-ocp-loader "casadi")
+set(ALPAQA_COMPONENT_dl-api "dl_dev")
+set(ALPAQA_COMPONENT_dl-loader "dl")
+set(ALPAQA_COMPONENT_cutest-interface "extra")
+set(ALPAQA_COMPONENT_ipopt-adapter "extra")
+set(ALPAQA_COMPONENT_lbfgsb-fortran "extra")
+set(ALPAQA_COMPONENT_lbfgsb-adapter "extra")
+set(ALPAQA_COMPONENT_qpalm-adapter "extra")
+set(ALPAQA_COMPONENT_driver "bin")
+set(ALPAQA_COMPONENT_gradient-checker "bin")
+# set(ALPAQA_OPTIONAL_COMPONENTS "lib;casadi;dl_dev;dl;extra;bin")
+# set(ALPAQA_COMPONENT_casadi_DEPENDS "lib")
+# set(ALPAQA_COMPONENT_dl_DEPENDS "lib;dl_dev")
+# set(ALPAQA_COMPONENT_extra_DEPENDS "lib")
+# set(ALPAQA_COMPONENT_bin_DEPENDS "lib")
+
+# Install the dummy targets
+install(TARGETS warnings
+        EXPORT alpaqa-Targets)
+# Install the actual targets
+foreach(TGT IN LISTS ALPAQA_INSTALL_TARGETS ALPAQA_INSTALL_EXE)
+    set(COMP "${ALPAQA_COMPONENT_${TGT}}")
+    if (NOT COMP)
+        message(FATAL_ERROR "Unknown component for target ${TGT}")
+    endif()
+    # Install the target files
+    install(TARGETS ${TGT}
+        EXPORT alpaqa-${COMP}Targets
+        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+            COMPONENT ${COMP}
+        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+            COMPONENT ${COMP}
+            NAMELINK_COMPONENT dev
+        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+            COMPONENT dev)
+    list(APPEND ALPAQA_ALL_COMPONENTS ${COMP})
+endforeach()
+list(REMOVE_DUPLICATES ALPAQA_ALL_COMPONENTS)
+list(APPEND ALPAQA_ALL_COMPONENTS "")
+foreach(COMP IN LISTS ALPAQA_ALL_COMPONENTS)
+    # Install the target CMake definitions
+    install(EXPORT alpaqa-${COMP}Targets
+        FILE alpaqa-${COMP}Targets.cmake
+        DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}"
+            COMPONENT dev
+        NAMESPACE alpaqa::)
+    # Add all targets to the build tree export set
+    export(EXPORT alpaqa-${COMP}Targets
+        FILE "${PROJECT_BINARY_DIR}/alpaqa-${COMP}Targets.cmake"
+        NAMESPACE alpaqa::)
+endforeach()
 
 # Install the header files
-install(FILES "${PROJECT_BINARY_DIR}/include/alpaqa-version.h"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev)
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/alpaqa/include/"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/interop/casadi/include/"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/interop/ipopt/include/"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/interop/lbfgsb/include/"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/interop/dl/include/"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
+set(ALPAQA_INCLUDE_DIRS
+    "${PROJECT_BINARY_DIR}/include/"
+    "${PROJECT_SOURCE_DIR}/src/alpaqa/include/"
+    "${PROJECT_SOURCE_DIR}/src/interop/casadi/include/"
+    "${PROJECT_SOURCE_DIR}/src/interop/ipopt/include/"
+    "${PROJECT_SOURCE_DIR}/src/interop/lbfgsb/include/"
+    "${PROJECT_SOURCE_DIR}/src/interop/dl/include/"
+    "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa"
+)
+foreach(DIR IN LISTS ALPAQA_INCLUDE_DIRS)
+    install(DIRECTORY ${DIR}
+        DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
+            COMPONENT dev
+        FILES_MATCHING REGEX "/.*\\.(h|[hti]pp)$")
+endforeach()
 install(DIRECTORY "${PROJECT_SOURCE_DIR}/src/interop/dl-api/include/"
     DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
         COMPONENT dl_dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
-install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa"
-    DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
-        COMPONENT dev
-    FILES_MATCHING REGEX "/.*\.(h|[hti]pp)$")
+    FILES_MATCHING REGEX "/.*\\.(h|[hti]pp)$")
 
 # Install the debug files
 foreach(target IN LISTS ALPAQA_INSTALL_TARGETS ALPAQA_INSTALL_EXE)
@@ -74,13 +101,6 @@ foreach(target IN LISTS ALPAQA_INSTALL_TARGETS ALPAQA_INSTALL_EXE)
                                   ${ALPAQA_INSTALL_BINDIR})
     endif()
 endforeach()
-
-# Install the export set for use with the install tree
-install(EXPORT alpaqaTargets 
-    FILE alpaqaTargets.cmake
-    DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}" 
-        COMPONENT dev
-    NAMESPACE alpaqa::)
 
 # Generate the config file that includes the exports
 include(CMakePackageConfigHelpers)
@@ -98,10 +118,5 @@ write_basic_package_version_file(
 install(FILES
     "${PROJECT_BINARY_DIR}/alpaqaConfig.cmake"
     "${PROJECT_BINARY_DIR}/alpaqaConfigVersion.cmake"
-    DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}" 
+    DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}"
         COMPONENT dev)
-
-# Add all targets to the build tree export set
-export(EXPORT alpaqaTargets
-    FILE "${PROJECT_BINARY_DIR}/alpaqaTargets.cmake"
-    NAMESPACE alpaqa::)
