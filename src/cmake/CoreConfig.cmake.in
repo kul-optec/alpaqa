@@ -1,0 +1,14 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Eigen3 CONFIG)
+# if (@ALPAQA_WITH_JSON)
+#     find_dependency(nlohmann_json CONFIG)
+# endif()
+if (@ALPAQA_WITH_OPENMP@)
+    find_dependency(OpenMP COMPONENTS CXX)
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/alpaqaCoreTargets.cmake")
+
+check_required_components(alpaqaCore)

@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(alpaqaCore CONFIG)
+find_dependency(casadi)
+
+include("${CMAKE_CURRENT_LIST_DIR}/alpaqaCasADiTargets.cmake")
+
+check_required_components(alpaqaCasADi)

@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+find_dependency(alpaqaCore CONFIG)
+
+include("${CMAKE_CURRENT_LIST_DIR}/alpaqaExtraTargets.cmake")
+
+check_required_components(alpaqaExtra)

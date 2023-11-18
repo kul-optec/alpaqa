@@ -166,13 +166,14 @@ if (ALPAQA_WITH_OCP AND ALPAQA_WITH_CASADI_OCP)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
 endif()
 
+add_library(dl-api INTERFACE)
+target_include_directories(dl-api INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include>
+    $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+add_library(alpaqa::dl-api ALIAS dl-api)
+list(APPEND ALPAQA_INSTALL_TARGETS dl-api)
+
 if (CMAKE_DL_LIBS)
-    add_library(dl-api INTERFACE)
-    target_include_directories(dl-api INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
-    add_library(alpaqa::dl-api ALIAS dl-api)
-    list(APPEND ALPAQA_INSTALL_TARGETS dl-api)
     add_library(dl-loader "interop/dl/src/dl-problem.cpp")
     target_include_directories(dl-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl/include>

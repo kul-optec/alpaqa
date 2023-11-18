@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(alpaqa
     VERSION 1.0.0
-    DESCRIPTION "alpaqa augmented Lagrangian nonlinear programming solver"
+    DESCRIPTION "alpaqa augmented Lagrangian nonlinear programming solvers."
     HOMEPAGE_URL "https://github.com/kul-optec/alpaqa"
     LANGUAGES CXX
 )
