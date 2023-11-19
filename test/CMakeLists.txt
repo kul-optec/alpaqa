@@ -6,7 +6,7 @@ include(GoogleTest)
 # Dependencies
 find_package(GTest REQUIRED)
 if (NOT TARGET alpaqa::alpaqa)
-    find_package(alpaqa REQUIRED CONFIG COMPONENTS all)
+    find_package(alpaqa REQUIRED OPTIONAL_COMPONENTS CasADi Dl Extra)
 endif()
 
 add_executable(tests
@@ -30,9 +30,8 @@ add_executable(tests
 target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_definitions(tests PRIVATE _CRT_SECURE_NO_WARNINGS)
 target_link_libraries(tests PRIVATE alpaqa::alpaqa alpaqa::warnings
-                                    GTest::gtest_main 
-                                    GTest::gmock)
-if (ALPAQA_WITH_CXX_23)
+                                    GTest::gtest_main GTest::gmock)
+if (ALPAQA_WITH_CXX_23 AND "cxx_std_23" IN_LIST CMAKE_CXX_COMPILE_FEATURES)
     target_compile_features(tests PRIVATE cxx_std_23)
     target_compile_definitions(tests PRIVATE ALPAQA_WITH_CXX23_TESTS)
 endif()

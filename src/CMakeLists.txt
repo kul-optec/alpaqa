@@ -53,10 +53,17 @@ if (ALPAQA_WITH_JSON)
         "alpaqa/src/params/json.cpp")
     target_link_libraries(alpaqa
         PUBLIC $<BUILD_INTERFACE:nlohmann_json::nlohmann_json>
+        # Disable in the install interface, enabled again in 
+        # cmake/CoreConfig.cmake.in
         PRIVATE $<INSTALL_INTERFACE:nlohmann_json::nlohmann_json>)
 endif()
 
 target_compile_features(alpaqa PUBLIC cxx_std_20)
+if (ALPAQA_WITH_CXX_23)
+    # Use C++23 to build everything, but don't require C++23 for installed
+    # versions of the library (see cmake/CoreConfig.cmake.in)
+    target_compile_features(alpaqa PUBLIC $<BUILD_INTERFACE:cxx_std_23>)
+endif()
 target_include_directories(alpaqa PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
     $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
@@ -206,7 +213,6 @@ if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
         message(FATAL_ERROR "ALPAQA_WITH_CUTEST requires C++23 support")
     endif()
     target_compile_definitions(cutest-interface PUBLIC ALPAQA_WITH_CUTEST)
-    target_compile_features(alpaqa PUBLIC cxx_std_23)
     alpaqa_configure_visibility(cutest-interface)
     set_target_properties(cutest-interface PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::cutest-interface ALIAS cutest-interface)

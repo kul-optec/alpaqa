@@ -13,10 +13,9 @@ if (CMAKE_C_COMPILER)
     enable_language(C)
 endif()
 # Determine compiler's C++23 support
+set(ALPAQA_WITH_CXX_23_DEFAULT Off)
 if ("cxx_std_23" IN_LIST CMAKE_CXX_COMPILE_FEATURES)
     set(ALPAQA_WITH_CXX_23_DEFAULT On)
-else()
-    set(ALPAQA_WITH_CXX_23_DEFAULT Off)
 endif()
 # Check if the compiler is new enough for the CasADi OCP interface
 set(ALPAQA_WITH_CASADI_OCP_SUPPORTED On)
