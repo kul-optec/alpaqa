@@ -2,6 +2,7 @@
 
 include(CMakeFindDependencyMacro)
 find_dependency(Eigen3 CONFIG)
+find_dependency(alpaqaDl CONFIG)
 if (@ALPAQA_WITH_OPENMP@)
     find_dependency(OpenMP COMPONENTS CXX)
 endif()
