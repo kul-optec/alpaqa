@@ -53,7 +53,9 @@ struct iter_range_adapter {
     auto begin() && -> std::input_or_output_iterator auto {
         return iter_t{std::forward<It>(it)};
     }
-    auto end() const -> std::sentinel_for<iter_t> auto { return sentinel_t{}; }
+    auto end() const /* -> std::sentinel_for<iter_t> auto */ {
+        return sentinel_t{};
+    }
 };
 
 } // namespace alpaqa::util
