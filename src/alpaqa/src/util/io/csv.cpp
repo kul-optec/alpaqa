@@ -4,6 +4,8 @@
 namespace alpaqa::csv {
 
 template void ALPAQA_EXPORT //
+read_row_impl(std::istream &, Eigen::Ref<Eigen::VectorX<Eigen::Index>>, char);
+template void ALPAQA_EXPORT //
 read_row_impl(std::istream &, Eigen::Ref<Eigen::VectorX<float>>, char);
 template void ALPAQA_EXPORT //
 read_row_impl(std::istream &, Eigen::Ref<Eigen::VectorX<double>>, char);
@@ -14,6 +16,8 @@ template void ALPAQA_EXPORT //
 read_row_impl(std::istream &, Eigen::Ref<Eigen::VectorX<__float128>>, char);
 #endif
 
+template std::vector<Eigen::Index> ALPAQA_EXPORT //
+read_row_std_vector(std::istream &, char);
 template std::vector<float> ALPAQA_EXPORT //
 read_row_std_vector(std::istream &, char);
 template std::vector<double> ALPAQA_EXPORT //

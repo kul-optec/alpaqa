@@ -13,7 +13,8 @@
 
 namespace alpaqa::csv {
 
-template <std::floating_point F>
+template <class F>
+    requires(std::floating_point<F> || std::integral<F>)
 struct CSVReader {
     static constexpr std::streamsize bufmaxsize = 64;
     std::array<char, bufmaxsize + 1> s;
@@ -74,6 +75,15 @@ struct CSVReader {
     static void strtod_ovl(const char *str, char **str_end, long double &v) {
         v = std::strtold(str, str_end);
     }
+    static void strtod_ovl(const char *str, char **str_end, long long &v) {
+        v = std::strtoll(str, str_end, 10);
+    }
+    static void strtod_ovl(const char *str, char **str_end, long &v) {
+        v = std::strtol(str, str_end, 10);
+    }
+    static void strtod_ovl(const char *str, char **str_end, int &v) {
+        v = static_cast<int>(std::strtol(str, str_end, 10));
+    }
     static const char *read_single(const char *bufbegin, char *bufend, F &v) {
         *bufend = '\0';
         char *ptr;
@@ -110,7 +120,8 @@ const char *CSVReader<__float128>::read_single(const char *bufbegin,
 }
 #endif
 
-template <std::floating_point F>
+template <class F>
+    requires(std::floating_point<F> || std::integral<F>)
 void read_row_impl(std::istream &is, Eigen::Ref<Eigen::VectorX<F>> v,
                    char sep) {
     CSVReader<F> reader;
@@ -119,7 +130,8 @@ void read_row_impl(std::istream &is, Eigen::Ref<Eigen::VectorX<F>> v,
     reader.check_end(is);
 }
 
-template <std::floating_point F>
+template <class F>
+    requires(std::floating_point<F> || std::integral<F>)
 std::vector<F> read_row_std_vector(std::istream &is, char sep) {
     CSVReader<F> reader;
     std::vector<F> v;

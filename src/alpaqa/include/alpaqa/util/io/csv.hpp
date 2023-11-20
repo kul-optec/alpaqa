@@ -2,6 +2,7 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/export.h>
+#include <concepts>
 #include <iosfwd>
 #include <stdexcept>
 #include <vector>
@@ -12,12 +13,14 @@ struct ALPAQA_EXPORT read_error : std::runtime_error {
     using std::runtime_error::runtime_error;
 };
 
-template <std::floating_point F>
+template <class F>
+    requires(std::floating_point<F> || std::integral<F>)
 void ALPAQA_EXPORT read_row_impl(std::istream &is,
                                  Eigen::Ref<Eigen::VectorX<F>> v,
                                  char sep = ',');
 
-template <std::floating_point F>
+template <class F>
+    requires(std::floating_point<F> || std::integral<F>)
 std::vector<F> ALPAQA_EXPORT read_row_std_vector(std::istream &is,
                                                  char sep = ',');
 
@@ -31,6 +34,7 @@ std::vector<F> ALPAQA_EXPORT read_row_std_vector(std::istream &is,
         return read_row_impl<type>(is, v);                                     \
     }
 
+ALPAQA_READ_ROW_OVL(Eigen::Index)
 ALPAQA_READ_ROW_OVL(float)
 ALPAQA_READ_ROW_OVL(double)
 ALPAQA_READ_ROW_OVL(long double)

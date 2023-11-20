@@ -314,3 +314,29 @@ TEST(csv, stdvecReadInvalidCharSuffix) {
     EXPECT_THROW(alpaqa::csv::read_row_std_vector<real_t>(is),
                  alpaqa::csv::read_error);
 }
+
+TEST(csv, readIndex) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{"1,"
+                          "+2,"
+                          "-3,"
+                          "4,"
+                          "5\n"};
+    indexvec v(5);
+    alpaqa::csv::read_row(is, rindexvec{v});
+    indexvec expected(5);
+    expected << 1, +2, -3, 4, 5;
+    EXPECT_THAT(v, EigenEqual(expected));
+}
+
+TEST(csv, readIndexInvalid) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{"1.23,"
+                          "+2,"
+                          "-3,"
+                          "4,"
+                          "5\n"};
+    indexvec v(5);
+    EXPECT_THROW(alpaqa::csv::read_row(is, rindexvec{v}),
+                 alpaqa::csv::read_error);
+}
