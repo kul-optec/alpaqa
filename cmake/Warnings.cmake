@@ -92,8 +92,7 @@ function(add_warnings_target tgt_name warnings_as_errors)
 
     # Add target that defines all the warning options in its interface.
     add_library(${tgt_name} INTERFACE)
-    target_compile_options(${tgt_name} INTERFACE ${${PROJECT}_WARNNGS})
-    
+
     foreach (LANG C CXX Fortran)
         # Enable warnings as errors
         if (warnings_as_errors)
@@ -117,8 +116,8 @@ function(add_warnings_target tgt_name warnings_as_errors)
         elseif (CMAKE_${LANG}_COMPILER_ID MATCHES "Intel")
             target_compile_options(${tgt_name} INTERFACE
             $<$<COMPILE_LANGUAGE:${LANG}>:$<BUILD_INTERFACE:${INTEL_WARNINGS_${LANG}}>>)
-        elseif (CMAKE_${LANG}_COMPILER_ID)
-            message(WARNING "No known warnings for this ${LANG} compiler")
+        elseif (DEFINED CMAKE_${LANG}_COMPILER_ID)
+            message(WARNING "No known warnings for this ${LANG} compiler (${CMAKE_${LANG}_COMPILER_ID})")
         endif()
     endforeach()
 
