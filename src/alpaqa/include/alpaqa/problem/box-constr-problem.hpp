@@ -29,6 +29,10 @@ class BoxConstrProblem {
     BoxConstrProblem(length_t n, ///< Number of decision variables
                      length_t m) ///< Number of constraints
         : n{n}, m{m} {}
+    /// @copybrief BoxConstrProblem(length_t, length_t)
+    /// @param dims Number of variables and number of constraints.
+    BoxConstrProblem(std::tuple<length_t, length_t> dims)
+        : BoxConstrProblem{get<0>(dims), get<1>(dims)} {}
 
     BoxConstrProblem(Box C, Box D, vec l1_reg = vec(0), index_t penalty_alm_split = 0)
         : n{C.lowerbound.size()}, m{D.lowerbound.size()}, C{std::move(C)}, D{std::move(D)},
@@ -38,7 +42,8 @@ class BoxConstrProblem {
     /// number of constaints).
     /// Destructive: resizes and/or resets the members @ref C, @ref D,
     /// @ref l1_reg and @ref penalty_alm_split.
-    void resize(length_t n, length_t m) {
+    void resize(length_t n,   ///< Number of decision variables
+                length_t m) { ///< Number of constraints
         if (std::exchange(this->n, n) != n) {
             C = Box{n};
             if (l1_reg.size() > 1)
