@@ -5,9 +5,14 @@
 
 namespace alpaqa::functions {
 
+#if EIGEN_VERSION_AT_LEAST(3, 4, 1)
 template <Config Conf>
 using DefaultSVD = Eigen::BDCSVD<typename Conf::mat,
                                  Eigen::ComputeThinU | Eigen::ComputeThinV>;
+#else
+template <Config Conf>
+using DefaultSVD = Eigen::BDCSVD<typename Conf::mat>;
+#endif
 
 /// Nuclear norm (ℓ₁-norm of singular values).
 /// @ingroup grp_Functions
@@ -22,7 +27,12 @@ struct NuclearNorm {
     }
     /// Construct with pre-allocation.
     NuclearNorm(real_t λ, length_t rows, length_t cols)
-        : λ{λ}, rows{rows}, cols{cols}, svd{rows, cols},
+        : λ{λ}, rows{rows}, cols{cols},
+#if EIGEN_VERSION_AT_LEAST(3, 4, 1)
+          svd{rows, cols},
+#else
+          svd{rows, cols, Eigen::ComputeThinU | Eigen::ComputeThinV},
+#endif
           singular_values{std::min(rows, cols)} {
         if (λ < 0 || !std::isfinite(λ))
             throw std::invalid_argument("NuclearNorm::λ must be nonnegative");
