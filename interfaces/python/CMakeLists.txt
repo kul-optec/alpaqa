@@ -112,11 +112,15 @@ if (ALPAQA_ENABLE_PCH)
         <pybind11/stl.h>)
 endif()
 
-# Install the Python module
+# Install the Python module (py-build-cmake)
 install(TARGETS _alpaqa
         EXCLUDE_FROM_ALL
         COMPONENT python_modules
         DESTINATION ${PY_BUILD_CMAKE_MODULE_NAME})
+# Standard installation
+install(TARGETS _alpaqa
+        COMPONENT python
+        DESTINATION ${ALPAQA_INSTALL_LIBDIR}/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages/${PY_BUILD_CMAKE_MODULE_NAME})
 
 # Strip and install debug information
 include(${PROJECT_SOURCE_DIR}/cmake/Debug.cmake)

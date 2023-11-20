@@ -22,23 +22,25 @@ class AlpaqaRecipe(ConanFile):
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
     bool_alpaqa_options = {
-        "with_quad_precision": False,
-        "with_single_precision": False,
-        "with_long_double": False,
-        "with_openmp": False,
+        "with_python": False,
+        "with_matlab": False,
         "with_drivers": True,
         "with_casadi": False,
         "with_cutest": False,
         "with_qpalm": False,
-        "with_lbfgsb": None,
-        "with_ocp": False,
         "with_json": False,
-        "with_matlab": False,
+        "with_lbfgsb": False,
+        "with_ocp": False,
+        "with_casadi_ocp": False,
+        "with_openmp": False,
+        "with_quad_precision": False,
+        "with_single_precision": False,
+        "with_long_double": False,
     }
     options = {
         "shared": [True, False],
         "fPIC": [True, False],
-    } | {k: [True, False, None] for k in bool_alpaqa_options}
+    } | {k: [True, False] for k in bool_alpaqa_options}
     default_options = {
         "shared": False,
         "fPIC": True,
@@ -65,6 +67,8 @@ class AlpaqaRecipe(ConanFile):
             self.requires("casadi/3.6.4@alpaqa")
         if self.options.with_json:
             self.requires("nlohmann_json/3.11.2")
+        if self.options.with_python:
+            self.requires("pybind11/2.10.1")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.1")
 
@@ -90,6 +94,8 @@ class AlpaqaRecipe(ConanFile):
             value = getattr(self.options, k, None)
             if value is not None and value.value is not None:
                 tc.variables["ALPAQA_" + k.upper()] = bool(value)
+        if self.options.with_python:
+            tc.variables["USE_GLOBAL_PYBIND11"] = True
         if can_run(self):
             tc.variables["ALPAQA_FORCE_TEST_DISCOVERY"] = True
         tc.generate()

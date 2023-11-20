@@ -20,6 +20,19 @@ option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
 option(ALPAQA_WITH_MATLAB
     "Build the MATLAB MEX interface" Off)
+# Enable/disable optional dependencies
+option(ALPAQA_WITH_CASADI
+    "Build the CasADi loader" On)
+cmake_dependent_option(ALPAQA_WITH_CUTEST
+    "Build the CUTEst loader" On "ALPAQA_WITH_CXX_23" Off)
+option(ALPAQA_WITH_QPALM
+    "Build the QPALM adapter" Off)
+option(ALPAQA_WITH_IPOPT
+    "Build the Ipopt adapter" Off)
+option(ALPAQA_WITH_JSON
+    "Enable JSON (de)serialization of options" Off)
+cmake_dependent_option(ALPAQA_WITH_LBFGSB
+    "Include the L-BFGS-B solver" On "ALPAQA_HAVE_FORTRAN" Off)
 # Enable/disable optional components
 option(ALPAQA_WITH_TESTS
     "Build the tests" ${BUILD_TESTING})
@@ -34,19 +47,6 @@ cmake_dependent_option(ALPAQA_WITH_CASADI_OCP
     ${ALPAQA_WITH_CASADI_OCP_SUPPORTED} "ALPAQA_WITH_CASADI;ALPAQA_WITH_OCP" Off)
 option(ALPAQA_WITH_CXX_23
     "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})
-# Enable/disable optional dependencies
-option(ALPAQA_WITH_CASADI
-    "Build the CasADi loader" On)
-option(ALPAQA_WITH_CUTEST
-    "Build the CUTEst loader" Off)
-option(ALPAQA_WITH_QPALM
-    "Build the QPALM adapter" Off)
-option(ALPAQA_WITH_IPOPT
-    "Build the Ipopt adapter" Off)
-option(ALPAQA_WITH_JSON
-    "Enable JSON (de)serialization of options" Off)
-cmake_dependent_option(ALPAQA_WITH_LBFGSB
-    "Include the L-BFGS-B solver" On "ALPAQA_HAVE_FORTRAN" Off)
 # Optimization and parallelization
 option(ALPAQA_WITH_OPENMP
     "Enable parallelization using OpenMP" Off)
