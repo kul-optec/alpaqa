@@ -4,7 +4,7 @@ alpaqa
 
 |pylib_name| is an efficient implementation of an augmented Lagrangian method for
 general nonlinear programming problems, which uses the first-order, matrix-free
-PANOC algorithm as an inner solver.  
+PANOC algorithm as an inner solver.
 The numerical algorithms themselves are implemented in C++ for optimal
 performance, and they are exposed as an easy-to-use Python package.
 
@@ -30,6 +30,13 @@ The package can be easily installed using:
 .. code-block:: sh
 
     python3 -m pip install --upgrade --pre alpaqa
+
+More the details can be found on the :ref:`installation` page.
+
+The Sphinx pages you are currently viewing contain most of the documentation
+for the Python and Matlab interfaces.
+Detailed documentation of the underlying C++ library and some more examples can
+be found in the `Doxygen pages <../Doxygen/index.html>`_.
 
 
 .. toctree::

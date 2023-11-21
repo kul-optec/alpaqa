@@ -1,6 +1,6 @@
 # Examples {#examples}
 
-The following is a list of examples demonstrating how to use the alpaqa library. More Python examples can be found in the <a href='../Sphinx/examples'>Sphinx documentation</a>. An example and tips on how to structure a C++ project that uses alpaqa can be found in <a href='https://github.com/kul-optec/alpaqa/tree/develop/examples/CMake/Solver'>examples/CMake/Solver</a>.
+The following is a list of examples demonstrating how to use the alpaqa library. More Python examples can be found in the [Sphinx documentation](../Sphinx/examples/index.html). An example and tips on how to structure a C++ project that uses alpaqa can be found in [examples/CMake/Solver](https://github.com/kul-optec/alpaqa/tree/develop/examples/CMake/Solver).
 
 ## C++ examples {#cpp_examples}
 
@@ -21,8 +21,8 @@ The following is a list of examples demonstrating how to use the alpaqa library.
 
 - @ref Python/simple_optimization/getting-started.py : Define and solve a simple nonlinear program in Python
 - @ref Python/simple_optimization/rosenbrock.py : Similar, but also includes a visualization of the iterates
-- More examples in the <a href='../Sphinx/examples/index.html'>Sphinx documentation</a> ...
+- More examples in the [**Sphinx documentation**](../Sphinx/examples/index.html) ...
 
 ## Matlab examples {#matlab_examples}
 
-- <a href='../Sphinx/reference/matlab-api.html#example'>Matlab/getting_started.m</a>
+- [**Matlab/getting_started.m**](../Sphinx/reference/matlab-api.html#example)
