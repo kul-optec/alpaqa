@@ -7,6 +7,8 @@
 > as well as installation instructions for pre-built, released binaries of the
 > C++ library and the MATLAB interface, please see [these instructions](../Sphinx/install/installation.html)
 > instead.
+> For instructions on how to get alpaqa through the [Conan](https://conan.io/)
+> package manager, see the @ref cmake_examples.
 
 ## Linux
 

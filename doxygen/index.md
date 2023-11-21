@@ -58,7 +58,7 @@ python3 -m pip install --upgrade --pre alpaqa
 
 For more information, please see the full
 [installation instructions](../Sphinx/install/installation.html). To build
-`alpaqa` or any of its interfaces from source, see [these instructions](./installation.md).
+`alpaqa` or any of its interfaces from source, see [these instructions](@ref installation).
 
 ## Citations
 

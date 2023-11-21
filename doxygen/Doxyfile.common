@@ -947,6 +947,7 @@ WARN_LOGFILE           =
 INPUT                  = ../src/ \
                          ../examples/examples.dox \
                          pages/Installation.md \
+                         pages/Examples.md \
                          pages/Math.md \
                          pages/External-Resources.md \
                          pages/Problem-formulations.md \
