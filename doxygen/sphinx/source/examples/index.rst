@@ -11,6 +11,7 @@ see the :ref:`getting started` page.
 
    ./*
    ./mpc/index.rst
+   ./advanced/index.rst
 
 
 More examples can be found in the `Doxygen documentation <../../Doxygen/examples.html>`_.
