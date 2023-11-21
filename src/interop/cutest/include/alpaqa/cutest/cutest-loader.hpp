@@ -22,6 +22,9 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     using Sparsity = alpaqa::Sparsity<config_t>;
 
     /// Load a CUTEst problem from the given shared library and OUTSDIF.d file.
+    /// If @p so_fname points to a directory, `"PROBLEM.so"` is appended
+    /// automatically. If @p outsdif_fname is `nullptr`, the same directory as
+    /// @p so_fname is used.
     CUTEstProblem(const char *so_fname, const char *outsdif_fname = nullptr,
                   bool sparse = false);
     CUTEstProblem(const CUTEstProblem &);

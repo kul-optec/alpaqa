@@ -114,16 +114,19 @@ class CUTEstLoader {
 
   public:
     CUTEstLoader(const char *so_fname, const char *outsdif_fname) {
+        namespace fs = std::filesystem;
+        auto path    = fs::path(so_fname);
+        if (fs::is_directory(path))
+            path /= "PROBLEM.so";
         // Open the shared library
-        so_handle = load_lib(so_fname);
+        so_handle = load_lib(path.c_str());
 
         // Open the OUTSDIF.d file
         if (outsdif_fname && *outsdif_fname)
-            cleanup_outsdif = load_outsdif(outsdif_fname);
+            path = outsdif_fname;
         else
-            cleanup_outsdif = load_outsdif(std::filesystem::path(so_fname)
-                                               .replace_filename("OUTSDIF.d")
-                                               .c_str());
+            path.replace_filename("OUTSDIF.d");
+        cleanup_outsdif = load_outsdif(path.c_str());
 
         // Get the dimensions of the problem
         integer status;
