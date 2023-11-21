@@ -25,8 +25,8 @@ Problem::Problem(const std::filesystem::path &problem_dir)
             alpaqa::csv::read_row(file, rvec{Q.col(r)}); // Assume symmetric
     }
     {
-        std::ifstream file{problem_dir / "q.csv"};
-        alpaqa::csv::read_row(file, rvec{q});
+        std::ifstream file{problem_dir / "c.csv"};
+        alpaqa::csv::read_row(file, rvec{c});
     }
     {
         std::ifstream file{problem_dir / "A.csv"};
@@ -51,9 +51,9 @@ Problem::Problem(const std::filesystem::path &problem_dir)
 
 auto Problem::eval_f(crvec x) const -> real_t {
     Qx.noalias() = Q * x;
-    return 0.5 * x.dot(Qx) + q.dot(x);
+    return 0.5 * x.dot(Qx) + c.dot(x);
 }
-void Problem::eval_grad_f(crvec x, rvec gr) const { gr.noalias() = Q * x + q; }
+void Problem::eval_grad_f(crvec x, rvec gr) const { gr.noalias() = Q * x + c; }
 void Problem::eval_g(crvec x, rvec g) const { g.noalias() = A * x; }
 void Problem::eval_grad_g_prod(crvec x, crvec y, rvec gr) const {
     (void)x;

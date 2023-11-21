@@ -6,13 +6,13 @@
 
 /// Problem formulation
 ///
-///     minimize  ½ xᵀQx + qᵀx
+///     minimize  ½ xᵀQx + cᵀx
 ///      s.t.     Ax ≤ b
 struct Problem : alpaqa::BoxConstrProblem<alpaqa::DefaultConfig> {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
     mat Q{n, n};       ///< Hessian matrix
-    vec q{n};          ///< Gradient vextor
+    vec c{n};          ///< Gradient vextor
     mat A{m, n};       ///< Constraint matrix
     mutable vec Qx{n}; ///< Temporary work vector
 
