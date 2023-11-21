@@ -1,0 +1,7 @@
+[requires]
+alpaqa/1.0.0-alpha.15
+[generators]
+CMakeDeps
+CMakeToolchain
+[layout]
+cmake_layout
