@@ -18,7 +18,7 @@ struct PANOCOCPParams {
     USING_ALPAQA_CONFIG(Conf);
 
     /// Parameters related to the Lipschitz constant estimate and step size.
-    LipschitzEstimateParams<config_t> Lipschitz;
+    LipschitzEstimateParams<config_t> Lipschitz{};
     /// Maximum number of inner PANOC iterations.
     unsigned max_iter = 100;
     /// Maximum duration.
