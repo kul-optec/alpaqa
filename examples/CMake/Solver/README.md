@@ -69,7 +69,7 @@ Conan options:
 ```sh
 conan create alpaqa -o shared=True
 cd alpaqa/examples/CMake/Solver
-conan install . --options='alpaqa/*:shared=True'
+conan install . -o 'alpaqa/*:shared=True'
 ```
 
 ### ABI issues
@@ -87,13 +87,13 @@ For example, changing the architecture flags (e.g. `-march=skylake`) can change
 the Eigen ABI, because different CPUs with different vector extensions require
 different alignments.
 
-### CasADi
+### CasADi (and other optional components)
 
 If you need optional alpaqa features, e.g. the CasADi interface, you'll have to
 specify them explicitly.
 
-For example, to enable CasADi, first build CasADi itself, and then rebuild
-alpaqa with CasADi support enabled:
+For example, to enable CasADi, first build and package CasADi itself, and then
+rebuild alpaqa with CasADi support enabled:
 ```sh
 conan create alpaqa/scripts/recipes/casadi
 conan create alpaqa -o with_casadi=True
@@ -102,7 +102,7 @@ conan create alpaqa -o with_casadi=True
 Then add the following options at the bottom of your project's `conanfile.txt`:
 ```conanfile
 [options]
-alpaqa*:with_casadi=True
+alpaqa/*:with_casadi=True
 ```
 
 In your project's `CMakeLists.txt`, enable the optional CasADi component:
@@ -125,6 +125,27 @@ rm -rf build # or rm -r -Fo build on Windows
 conan install .
 cmake --preset conan-release # or conan-default on Windows
 cmake --build --preset conan-release -j
+```
+
+The available components are:
+
+| Component | Description | Targets |
+|:----------|:------------|:--------|
+| `Core`    | The main alpaqa solvers and other core functionality. If no components are specified, this is the default. | `alpaqa` |
+| `Dl`      | The dynamic loading C API headers for creating problems that can be loaded by the alpaqa solvers. | `dl-api` |
+| `CasADi`  | Classes for loading and building problem definitions using CasADi. | `casadi-loader`, `casadi-ocp-loader` |
+| `Extra`   | Additional solvers and problem loaders that fall outside of the core library. | `dl-loader`, `cutest-interface`, `ipopt-adapter`, `lbfgsb-adapter`, `qpalm-adapter` ... |
+| `Tools`   | Command-line tools for invoking the solvers. | `driver`, `gradient-checker` |
+
+Some interfaces require third-party packages to be installed, and need to be
+enabled when building the Conan package (using the `-o` option).
+
+To check whether a certain target is available, you can use:
+
+```cmake
+if (TARGET alpaqa::qpalm-adapter)
+    # ...
+endif()
 ```
 
 ### Disabling tests
