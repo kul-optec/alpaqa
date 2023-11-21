@@ -32,6 +32,8 @@ struct LoadedProblem {
     vec initial_guess_w = alpaqa::null_vec<config_t>; ///< Multipliers bounds
     std::optional<ConstrCount> box_constr_count     = std::nullopt,
                                general_constr_count = std::nullopt;
+    std::optional<length_t> nnz_jac_g = std::nullopt, nnz_hess_L = std::nullopt,
+                            nnz_hess_ψ = std::nullopt;
 };
 
 LoadedProblem load_problem(std::string_view type, const fs::path &dir,

@@ -80,6 +80,12 @@ void count_problem(LoadedProblem &p) {
         count_constr(p.box_constr_count.emplace(), p.problem.get_box_C());
     if (p.problem.provides_get_box_D())
         count_constr(p.general_constr_count.emplace(), p.problem.get_box_D());
+    if (p.problem.provides_get_jac_g_sparsity())
+        p.nnz_jac_g = get_nnz(p.problem.get_jac_g_sparsity());
+    if (p.problem.provides_get_hess_L_sparsity())
+        p.nnz_hess_L = get_nnz(p.problem.get_hess_L_sparsity());
+    if (p.problem.provides_get_hess_ψ_sparsity())
+        p.nnz_hess_ψ = get_nnz(p.problem.get_hess_ψ_sparsity());
 }
 
 #if ALPAQA_WITH_DL

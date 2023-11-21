@@ -220,6 +220,12 @@ void print_problem_description(std::ostream &os, LoadedProblem &problem) {
     os << "Loaded problem \"" << problem.name << "\"\n"
        << "Number of variables:   " << problem.problem.get_n() << "\n"
        << "Number of constraints: " << problem.problem.get_m() << "\n";
+    if (problem.nnz_jac_g)
+        os << "Nonzeros in Jg:  " << *problem.nnz_jac_g << "\n";
+    if (problem.nnz_hess_L)
+        os << "Nonzeros in ∇²L: " << *problem.nnz_hess_L << "\n";
+    if (problem.nnz_hess_ψ)
+        os << "Nonzeros in ∇²ψ: " << *problem.nnz_hess_ψ << "\n";
     if (problem.box_constr_count)
         os << "Box constraints:"
            << "\n  Fixed variables:    " << problem.box_constr_count->eq
