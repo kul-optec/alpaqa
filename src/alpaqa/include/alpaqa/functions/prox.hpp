@@ -165,6 +165,18 @@ struct prox_step_fn {
  * @return      The value of the function evaluated in the output,
  *              @f$ h(\hat x) @f$.
  * @ingroup grp_Functions
+ *
+ * This function can be used to implement the @ref TypeErasedProblem::eval_prox_grad_step function:
+ *
+ * ```cpp
+ * struct Problem {
+ *     alpaqa::functions::NuclearNorm<config_t> h{λ, rows, cols};
+ *     real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
+ *         return alpaqa::prox_step(h, x, grad_ψ, x̂, p, γ, -γ);
+ *     }
+ * };
+ * ```
+ * Note the negative sign for the forward step size.
  */
 inline constexpr prox_step;
 
