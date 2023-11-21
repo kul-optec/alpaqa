@@ -61,6 +61,8 @@ macro(alpaqa_install_headers DIR COMP)
         FILES_MATCHING REGEX "/.*\\.(h|[hti]pp)$")
 endmacro()
 
+set(ALPAQA_INSTALLED_TARGETS_MSG "\nSummary of alpaqa components and targets to install:\n\n")
+
 # Install the alpaqa core libraries
 install(TARGETS warnings alpaqa
     EXPORT alpaqaCoreTargets
@@ -75,6 +77,7 @@ alpaqa_install_config(Core dev)
 alpaqa_install_headers("${PROJECT_BINARY_DIR}/include/" dev)
 alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/alpaqa/include/" dev)
 alpaqa_install_headers("${CMAKE_CURRENT_BINARY_DIR}/export/" dev)
+string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Core:   alpaqa\n")
 
 # Install the CasADi interface
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_CASADI_TARGETS "casadi-loader")
@@ -91,6 +94,8 @@ if (ALPAQA_COMPONENT_CASADI_TARGETS)
             COMPONENT casadi_dev)
     alpaqa_install_config(CasADi casadi_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/casadi/include/" casadi_dev)
+    list(JOIN ALPAQA_COMPONENT_CASADI_TARGETS ", " TGTS)
+    string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * CasADi: ${TGTS}\n")
 endif()
 
 # Install the DL API
@@ -98,6 +103,7 @@ install(TARGETS dl-api
     EXPORT alpaqaDlTargets)
 alpaqa_install_config(Dl dl_dev)
 alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl-api/include/" dl_dev)
+string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Dl:     dl-api\n")
 
 # Install everything else
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "dl-loader")
@@ -106,7 +112,6 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "ipopt-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-fortran")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "qpalm-adapter")
-message(STATUS "ALPAQA_COMPONENT_EXTRA_TARGETS: ${ALPAQA_COMPONENT_EXTRA_TARGETS}")
 if (ALPAQA_COMPONENT_EXTRA_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_EXTRA_TARGETS}
         EXPORT alpaqaExtraTargets
@@ -123,12 +128,13 @@ if (ALPAQA_COMPONENT_EXTRA_TARGETS)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/lbfgsb/include/" extra_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl/include/" extra_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/qpalm/include/" extra_dev)
+    list(JOIN ALPAQA_COMPONENT_EXTRA_TARGETS ", " TGTS)
+    string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Extra:  ${TGTS}\n")
 endif()
 
 # Install the tools
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_TOOLS_TARGETS "driver")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_TOOLS_TARGETS "gradient-checker")
-message(STATUS "ALPAQA_COMPONENT_TOOLS_TARGETS: ${ALPAQA_COMPONENT_TOOLS_TARGETS}")
 if (ALPAQA_COMPONENT_TOOLS_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_TOOLS_TARGETS}
         EXPORT alpaqaToolsTargets
@@ -140,6 +146,8 @@ if (ALPAQA_COMPONENT_TOOLS_TARGETS)
         ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
             COMPONENT bin)
     alpaqa_install_config(Tools bin)
+    list(JOIN ALPAQA_COMPONENT_TOOLS_TARGETS ", " TGTS)
+    string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Tools:  ${TGTS}\n")
 endif()
 
 # Install the debug files
@@ -166,9 +174,12 @@ write_basic_package_version_file(
     "${PROJECT_BINARY_DIR}/alpaqaConfigVersion.cmake"
     VERSION "${PROJECT_VERSION}"
     COMPATIBILITY SameMinorVersion)
-# Install the alpaqaConfig.cmake and alpaqaConfigVersion.cmake
+# Install the main alpaqaConfig.cmake and alpaqaConfigVersion.cmake files
 install(FILES
     "${PROJECT_BINARY_DIR}/alpaqaConfig.cmake"
     "${PROJECT_BINARY_DIR}/alpaqaConfigVersion.cmake"
     DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}"
         COMPONENT dev)
+
+# Print the components and targets we're going to install
+message(${ALPAQA_INSTALLED_TARGETS_MSG})
