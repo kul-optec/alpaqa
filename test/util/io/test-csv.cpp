@@ -18,6 +18,87 @@ TEST(csv, read) {
     EXPECT_THAT(v, EigenEqual(expected));
 }
 
+TEST(csv, readMultiplePerBuffer) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{"1.00,"
+                          "+2.0,"
+                          "-3.00000000000000000,"
+                          "4.00,"
+                          "5.00000000000000000\n"};
+    vec v(5);
+    alpaqa::csv::read_row(is, rvec{v});
+    vec expected(5);
+    expected << 1, +2, -3, 4, 5;
+    EXPECT_THAT(v, EigenEqual(expected));
+}
+
+TEST(csv, readCharsPastEnd) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{"1.00000000000000000,"
+                          "+2.00000000000000000,"
+                          "-3.00000000000000000,"
+                          "4.00000000000000000,"
+                          "5.00000000000000000\nfoobar"};
+    vec v(5);
+    alpaqa::csv::read_row(is, rvec{v});
+    vec expected(5);
+    expected << 1, +2, -3, 4, 5;
+    EXPECT_THAT(v, EigenEqual(expected));
+}
+
+TEST(csv, readComment1) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{"# This is a comment\n"
+                          "1.00000000000000000,"
+                          "+2.00000000000000000,"
+                          "-3.00000000000000000,"
+                          "4.00000000000000000,"
+                          "5.00000000000000000\nfoobar"};
+    vec v(5);
+    alpaqa::csv::read_row(is, rvec{v});
+    vec expected(5);
+    expected << 1, +2, -3, 4, 5;
+    EXPECT_THAT(v, EigenEqual(expected));
+}
+
+TEST(csv, readComment2) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{"# This is a comment\n"
+                          "# This is a second comment\n"
+                          "1.00000000000000000,"
+                          "+2.00000000000000000,"
+                          "-3.00000000000000000,"
+                          "4.00000000000000000,"
+                          "5.00000000000000000\nfoobar"};
+    vec v(5);
+    alpaqa::csv::read_row(is, rvec{v});
+    vec expected(5);
+    expected << 1, +2, -3, 4, 5;
+    EXPECT_THAT(v, EigenEqual(expected));
+}
+
+TEST(csv, readCommentLong) {
+    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    std::istringstream is{
+        "# This is a very long comment "
+        "1234567890123456789012345678901234567890123456789012345678901234567890"
+        "1234567890123456789012345678901234567890123456789012345678901234567890"
+        "1234567890123456789012345678901234567890123456789012345678901234567890"
+        "1234567890123456789012345678901234567890123456789012345678901234567890"
+        "12345678901234567890\n"
+        "# This is a second comment\n"
+        "1.00000000000000000,"
+        "+2.00000000000000000,"
+        "-3.00000000000000000,"
+        "4.00000000000000000,"
+        "5.00000000000000000\nfoobar"};
+    vec v(5);
+    alpaqa::csv::read_row(is, rvec{v});
+    vec expected(5);
+    expected << 1, +2, -3, 4, 5;
+    EXPECT_THAT(v, EigenEqual(expected));
+}
+
 TEST(csv, readEOF) {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     std::istringstream is{"1.00000000000000000,"

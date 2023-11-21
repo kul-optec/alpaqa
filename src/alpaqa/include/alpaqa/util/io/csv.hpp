@@ -44,4 +44,11 @@ ALPAQA_READ_ROW_OVL(__float128)
 
 #undef ALPAQA_READ_ROW_OVL
 
+#ifdef DOXYGEN
+/// Read one line of comma-separated values from @p is and write it to the
+/// vector @p v. Lines that start with a `#` are skipped.
+inline void read_row(std::istream &is, Eigen::Ref<Eigen::VectorX<type>> v,
+                     char sep = ',');
+#endif
+
 } // namespace alpaqa::csv

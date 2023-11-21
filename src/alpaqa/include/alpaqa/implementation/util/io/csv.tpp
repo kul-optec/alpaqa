@@ -24,16 +24,8 @@ struct CSVReader {
 
     [[nodiscard]] F read(std::istream &is, char sep) {
         // Get some characters to process
-        if (keep_reading) {
-            if (!is.get(s.data() + bufidx, bufmaxsize - bufidx, end))
-                throw read_error("csv::read_row extraction failed: " +
-                                 std::to_string(is.bad()) + " " +
-                                 std::to_string(is.fail()) + " " +
-                                 std::to_string(is.eof()));
-            bufidx += is.gcount();
-            keep_reading = is.peek() != end && !is.eof();
-            assert(bufidx < bufmaxsize);
-        }
+        if (keep_reading)
+            read_chunk(is);
         // Parse a number
         F v;
         char *bufend    = s.data() + bufidx;
@@ -50,6 +42,41 @@ struct CSVReader {
             bufidx = 0;
         }
         return v;
+    }
+
+    void read_chunk(std::istream &is) {
+        if (!is)
+            throw read_error(
+                "csv::read_row invalid stream: " + std::to_string(is.bad()) +
+                " " + std::to_string(is.fail()) + " " +
+                std::to_string(is.eof()));
+        if (bufmaxsize == bufidx)
+            return;
+        if (!is.get(s.data() + bufidx, bufmaxsize - bufidx + 1, end))
+            throw read_error(
+                "csv::read_row extraction failed: " + std::to_string(is.bad()) +
+                " " + std::to_string(is.fail()) + " " +
+                std::to_string(is.eof()));
+        bufidx += is.gcount();
+        keep_reading = is.peek() != end && !is.eof();
+        assert(bufidx <= bufmaxsize);
+    }
+
+    void skip_comments(std::istream &is) {
+        assert(bufidx == 0);
+        if (is.eof() || is.peek() == end)
+            return;
+        while (!is.eof()) {
+            read_chunk(is);
+            if (bufidx == 0 || s.front() != '#')
+                break;
+            while (keep_reading) {
+                bufidx = 0;
+                read_chunk(is);
+            }
+            bufidx = 0;
+            next_line(is);
+        }
     }
 
 #if __cpp_lib_to_chars
@@ -97,8 +124,8 @@ struct CSVReader {
     }
 #endif
 
-    void check_end(std::istream &is) const {
-        if (bufidx > 0 || (is.get() != end && is))
+    void next_line(std::istream &is) const {
+        if (bufidx > 0 || (!is.eof() && is.get() != end))
             throw read_error("csv::read_row line not fully consumed");
     }
 
@@ -125,9 +152,10 @@ template <class F>
 void read_row_impl(std::istream &is, Eigen::Ref<Eigen::VectorX<F>> v,
                    char sep) {
     CSVReader<F> reader;
+    reader.skip_comments(is);
     for (auto &vv : v)
         vv = reader.read(is, sep);
-    reader.check_end(is);
+    reader.next_line(is);
 }
 
 template <class F>
@@ -135,9 +163,10 @@ template <class F>
 std::vector<F> read_row_std_vector(std::istream &is, char sep) {
     CSVReader<F> reader;
     std::vector<F> v;
+    reader.skip_comments(is);
     while (!reader.done(is))
         v.push_back(reader.read(is, sep));
-    reader.check_end(is);
+    reader.next_line(is);
     return v;
 }
 
