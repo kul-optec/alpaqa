@@ -61,12 +61,12 @@ class AlpaqaRecipe(ConanFile):
     generators = ("CMakeDeps",)
 
     def requirements(self):
-        self.requires("eigen/3.4.0")
+        self.requires("eigen/3.4.0", transitive_headers=True)
         self.test_requires("gtest/1.11.0")
         if self.options.with_casadi:
-            self.requires("casadi/3.6.4@alpaqa")
+            self.requires("casadi/3.6.4@alpaqa", transitive_headers=True)
         if self.options.with_json:
-            self.requires("nlohmann_json/3.11.2")
+            self.requires("nlohmann_json/3.11.2", transitive_headers=True)
         if self.options.with_python:
             self.requires("pybind11/2.10.1")
         if self.options.with_matlab:
