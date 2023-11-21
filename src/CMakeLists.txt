@@ -85,6 +85,9 @@ target_compile_definitions(alpaqa PUBLIC
 )
 target_link_libraries(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:quadmath>)
+if (MSVC)
+    target_compile_options(alpaqa PUBLIC "/utf-8")
+endif()
 if (ALPAQA_WITH_OPENMP)
     find_package(OpenMP REQUIRED COMPONENTS CXX)
     target_link_libraries(alpaqa PUBLIC OpenMP::OpenMP_CXX)
