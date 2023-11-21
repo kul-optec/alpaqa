@@ -42,8 +42,9 @@ class BoxConstrProblem {
     /// number of constaints).
     /// Destructive: resizes and/or resets the members @ref C, @ref D,
     /// @ref l1_reg and @ref penalty_alm_split.
-    void resize(length_t n,   ///< Number of decision variables
-                length_t m) { ///< Number of constraints
+    void resize(length_t n, ///< Number of decision variables
+                length_t m) ///< Number of constraints
+    {
         if (std::exchange(this->n, n) != n) {
             C = Box{n};
             if (l1_reg.size() > 1)
