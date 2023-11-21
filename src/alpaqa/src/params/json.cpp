@@ -107,7 +107,7 @@ void ALPAQA_EXPORT set_param(alpaqa::vec<config_t> &v, const json &j) {
         } catch (json::exception &e) {
             throw invalid_json_param("Invalid vector element " + to_string(j) +
                                      " (expected a number, but got " +
-                                     j.type_name() + ')');
+                                     j.type_name() + "): " + e.what());
         }
     };
     std::ranges::transform(j, v.begin(), convert);
