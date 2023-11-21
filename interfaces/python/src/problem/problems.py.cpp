@@ -551,7 +551,7 @@ void register_problems(py::module_ &m) {
         py::class_<CasADiProblem, BoxConstrProblem> casadi_problem(
             m, "CasADiProblem",
             "C++ documentation: :cpp:class:`alpaqa::CasADiProblem`\n\n"
-            "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
+            "See :py:class:`alpaqa.Problem` for the full documentation.");
         default_copy_methods(casadi_problem);
 #if ALPAQA_WITH_CASADI
         problem_methods(casadi_problem);
@@ -587,7 +587,7 @@ void register_problems(py::module_ &m) {
         py::class_<CUTEstProblem, BoxConstrProblem> cutest_problem(
             m, "CUTEstProblem",
             "C++ documentation: :cpp:class:`alpaqa::CUTEstProblem`\n\n"
-            "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
+            "See :py:class:`alpaqa.Problem` for the full documentation.");
         cutest_problem.def(
             py::init<const char *, const char *, bool>(), "so_filename"_a,
             "outsdiff_filename"_a = nullptr, "sparse"_a = false,
@@ -632,7 +632,7 @@ void register_problems(py::module_ &m) {
         py::class_<DLProblem, BoxConstrProblem> dl_problem(
             m, "DLProblem",
             "C++ documentation: :cpp:class:`alpaqa::dl::DLProblem`\n\n"
-            "See :py:class:`alpaqa._alpaqa.float64.Problem` for the full documentation.");
+            "See :py:class:`alpaqa.Problem` for the full documentation.");
         dl_problem.def(
             py::init([](const std::string &so_filename, py::args args, std::string function_name,
                         bool user_param_str, py::kwargs kwargs) {

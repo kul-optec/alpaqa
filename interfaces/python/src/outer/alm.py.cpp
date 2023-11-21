@@ -102,7 +102,7 @@ void register_alm(py::module_ &m) {
              ":param suppress_interrupt: If the solver is interrupted by a ``KeyboardInterrupt``, "
              "don't propagate this exception back to the Python interpreter, but stop the solver "
              "early, and return a solution with the status set to "
-             ":py:data:`alpaqa._alpaqa.SolverStatus.Interrupted`.\n"
+             ":py:data:`alpaqa.SolverStatus.Interrupted`.\n"
              ":return: * Solution :math:`x`\n"
              "         * Lagrange multipliers :math:`y` at the solution\n"
              "         * Statistics\n\n")

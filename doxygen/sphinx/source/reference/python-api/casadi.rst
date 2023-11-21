@@ -13,8 +13,8 @@ documented here.
 .. automodule:: alpaqa.casadi_loader
     :noindex:
 
-.. autofunction:: alpaqa._alpaqa.float64.load_casadi_problem
+.. autofunction:: alpaqa.load_casadi_problem
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.CasADiProblem
+.. autoclass:: alpaqa.CasADiProblem
     :noindex:

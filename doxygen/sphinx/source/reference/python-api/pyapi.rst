@@ -9,34 +9,34 @@ expressions.
 For examples, see the :ref:`lasso <lasso example>` and
 :ref:`nonlinear regression <nonlinear regression example>` examples.
 
-.. autofunction:: alpaqa.pyapi.minimize.minimize
+.. autofunction:: alpaqa.minimize
     :noindex:
 
-.. autoclass:: alpaqa.pyapi.minimize.MinimizationProblemDescription
+.. autoclass:: alpaqa.MinimizationProblemDescription
     :noindex:
     :no-members:
     :no-special-members:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.subject_to_box
+    .. automethod:: alpaqa.MinimizationProblemDescription.subject_to_box
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.subject_to
+    .. automethod:: alpaqa.MinimizationProblemDescription.subject_to
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.subject_to_penalty
+    .. automethod:: alpaqa.MinimizationProblemDescription.subject_to_penalty
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.with_l1_regularizer
+    .. automethod:: alpaqa.MinimizationProblemDescription.with_l1_regularizer
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.with_param
+    .. automethod:: alpaqa.MinimizationProblemDescription.with_param
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.with_param_value
+    .. automethod:: alpaqa.MinimizationProblemDescription.with_param_value
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.compile
+    .. automethod:: alpaqa.MinimizationProblemDescription.compile
         :noindex:
 
-    .. automethod:: alpaqa.pyapi.minimize.MinimizationProblemDescription.build
+    .. automethod:: alpaqa.MinimizationProblemDescription.build
         :noindex:

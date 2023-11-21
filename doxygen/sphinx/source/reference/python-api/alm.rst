@@ -1,8 +1,8 @@
 Outer ALM Solver
 ================
 
-.. autoclass:: alpaqa._alpaqa.float64.ALMSolver
+.. autoclass:: alpaqa.ALMSolver
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.ALMParams
+.. autoclass:: alpaqa.ALMParams
     :noindex:

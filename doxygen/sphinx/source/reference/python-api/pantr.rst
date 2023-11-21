@@ -1,20 +1,20 @@
 Inner PANTR Solver
 ==================
 
-.. autoclass:: alpaqa._alpaqa.float64.PANTRSolver
+.. autoclass:: alpaqa.PANTRSolver
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.PANTRParams
+.. autoclass:: alpaqa.PANTRParams
     :noindex:
 
 Accelerators
 ------------
 
-.. autoclass:: alpaqa._alpaqa.float64.NewtonTRDirection
+.. autoclass:: alpaqa.NewtonTRDirection
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.SteihaugCGParams
+.. autoclass:: alpaqa.SteihaugCGParams
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.NewtonTRDirectionParams
+.. autoclass:: alpaqa.NewtonTRDirectionParams
     :noindex:

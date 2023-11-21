@@ -60,7 +60,7 @@ void register_control_problems(py::module_ &m) {
         py::class_<CasADiControlProblem> casadi_ctrl_prblm(
             m, "CasADiControlProblem",
             "C++ documentation: :cpp:class:`alpaqa::CasADiControlProblem`\n\n"
-            "See :py:class:`alpaqa._alpaqa.float64.TEControlProblem` for the full documentation.");
+            "See :py:class:`alpaqa.ControlProblem` for the full documentation.");
         default_copy_methods(casadi_ctrl_prblm);
 #if ALPAQA_WITH_CASADI_OCP
         casadi_ctrl_prblm //

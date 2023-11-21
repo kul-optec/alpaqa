@@ -163,7 +163,7 @@ class MinimizationProblemDescription:
         A C compiler is required (e.g. GCC or Clang on Linux, Xcode on macOS, or
         Visual Studio on Windows).
         If no compiler is available, you could use the
-        :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.build`
+        :py:meth:`alpaqa.MinimizationProblemDescription.build`
         method instead.
 
         :param \\**kwargs:
@@ -206,7 +206,7 @@ class MinimizationProblemDescription:
         used by the solvers.
 
         This method is usually not recommended: the
-        :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.compile`
+        :py:meth:`alpaqa.MinimizationProblemDescription.compile`
         method is preferred because it pre-compiles the problem for better
         performance.
 

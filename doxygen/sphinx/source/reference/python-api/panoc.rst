@@ -4,19 +4,19 @@ Inner PANOC and ZeroFPR Solvers
 PANOC
 -----
 
-.. autoclass:: alpaqa._alpaqa.float64.PANOCSolver
+.. autoclass:: alpaqa.PANOCSolver
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.PANOCParams
+.. autoclass:: alpaqa.PANOCParams
     :noindex:
 
 ZeroFPR
 -------
 
-.. autoclass:: alpaqa._alpaqa.float64.ZeroFPRSolver
+.. autoclass:: alpaqa.ZeroFPRSolver
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.ZeroFPRParams
+.. autoclass:: alpaqa.ZeroFPRParams
     :noindex:
 
 Accelerators
@@ -25,24 +25,24 @@ Accelerators
 L-BFGS
 ^^^^^^
 
-.. autoclass:: alpaqa._alpaqa.float64.LBFGSDirection
+.. autoclass:: alpaqa.LBFGSDirection
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.LBFGS.Params
+.. autoclass:: alpaqa.LBFGS.Params
     :noindex:
 
 Structured L-BFGS
 ^^^^^^^^^^^^^^^^^
 
-.. autoclass:: alpaqa._alpaqa.float64.StructuredLBFGSDirection
+.. autoclass:: alpaqa.StructuredLBFGSDirection
     :noindex:
 
 Anderson acceleration
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. autoclass:: alpaqa._alpaqa.float64.AndersonDirection
+.. autoclass:: alpaqa.AndersonDirection
     :noindex:
 
-.. autoclass:: alpaqa._alpaqa.float64.AndersonAccel.Params
+.. autoclass:: alpaqa.AndersonAccel.Params
     :noindex:
 

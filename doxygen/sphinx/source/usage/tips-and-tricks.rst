@@ -91,7 +91,7 @@ An example of using CasADi to build the problem generation is given on the
 Compilation
 """""""""""
 
-The :py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.compile`
+The :py:meth:`alpaqa.MinimizationProblemDescription.compile`
 method generates C code for the problem functions and their derivatives, and
 compiles them into an optimized binary. Since |pylib_name| solvers spend most
 of their time inside of problem function evaluations, this compilation can have
@@ -106,7 +106,7 @@ argument to the ``compile()`` function.
 
 If you don't want to compile the problem at all (e.g. because no C compiler is
 available, or because the resulting C files are too large), you can use the
-:py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.build`
+:py:meth:`alpaqa.MinimizationProblemDescription.build`
 method instead of :code:`compile()`.
 This will use CasADi's VM to evaluate the expressions.
 

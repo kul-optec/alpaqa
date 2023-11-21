@@ -1,11 +1,11 @@
 Functions and operators
 =======================
 
-.. automodule:: alpaqa._alpaqa.float64.functions
+.. automodule:: alpaqa.functions
     :noindex:
 
-.. autofunction:: alpaqa._alpaqa.float64.prox
+.. autofunction:: alpaqa.prox
     :noindex:
 
-.. autofunction:: alpaqa._alpaqa.float64.prox_step
+.. autofunction:: alpaqa.prox_step
     :noindex:

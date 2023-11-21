@@ -1,18 +1,18 @@
 Problem formulation
 ===================
 
-.. autoclass:: alpaqa._alpaqa.float64.BoxConstrProblem
+.. autoclass:: alpaqa.BoxConstrProblem
     :noindex:
     :inherited-members:
 
-.. autoclass:: alpaqa._alpaqa.float64.Problem
+.. autoclass:: alpaqa.Problem
     :noindex:
     :inherited-members:
 
-.. autoclass:: alpaqa._alpaqa.float64.CUTEstProblem
+.. autoclass:: alpaqa.CUTEstProblem
     :noindex:
     :inherited-members:
 
-.. autoclass:: alpaqa._alpaqa.float64.DLProblem
+.. autoclass:: alpaqa.DLProblem
     :noindex:
     :inherited-members:

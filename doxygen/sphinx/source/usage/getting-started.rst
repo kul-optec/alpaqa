@@ -106,12 +106,12 @@ decision variables and an optional parameter vector.
     D = [-cs.inf, -cs.inf], [0, 0]  #         g1 <= 0,           g2 <= 0
 
 Next, we construct the alpaqa-specific minimization problem, using the
-:py:func:`alpaqa.pyapi.minimize.minimize` function.
+:py:func:`alpaqa.minimize` function.
 The gradients of the problem functions are computed using CasADi, and they are
 compiled as efficient C functions. All of this happens inside of the
-:py:meth:`alpaqa.pyapi.minimize.MinimizationProblemDescription.compile`
+:py:meth:`alpaqa.MinimizationProblemDescription.compile`
 function, which returns an instance of
-:py:class:`alpaqa._alpaqa.float64.CasADiProblem` that can later be passed to a
+:py:class:`alpaqa.CasADiProblem` that can later be passed to a
 solver.
 
 .. testcode::

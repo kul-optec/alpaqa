@@ -53,7 +53,7 @@ inline const char *checked_inner_solve_doc() {
            ":param suppress_interrupt: If the solver is interrupted by a ``KeyboardInterrupt``, "
            "don't propagate this exception back to the Python interpreter, but stop the solver "
            "early, and return a solution with the status set to "
-           ":py:data:`alpaqa._alpaqa.SolverStatus.Interrupted`.\n"
+           ":py:data:`alpaqa.SolverStatus.Interrupted`.\n"
            ":return: * Solution :math:`u`\n"
            "         * Updated Lagrange multipliers (only if parameter ``y`` was not ``None``)\n"
            "         * Constraint violation (only if parameter ``y`` was not ``None``)\n"

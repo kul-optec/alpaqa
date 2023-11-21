@@ -16,14 +16,8 @@ Python API Reference
 Index
 -----
 
-.. automodule:: alpaqa._alpaqa
-
-.. automodule:: alpaqa._alpaqa.float64
-
-.. automodule:: alpaqa._alpaqa.float64.functions
+.. automodule:: alpaqa
 
 .. automodule:: alpaqa.casadi_generator
 
 .. automodule:: alpaqa.casadi_loader
-
-.. automodule:: alpaqa.pyapi.minimize
