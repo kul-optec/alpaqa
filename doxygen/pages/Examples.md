@@ -21,7 +21,7 @@ The following is a list of examples demonstrating how to use the alpaqa library.
 
 - @ref Python/simple_optimization/getting-started.py : Define and solve a simple nonlinear program in Python
 - @ref Python/simple_optimization/rosenbrock.py : Similar, but also includes a visualization of the iterates
-- More examples in the <a href='../Sphinx/examples'>Sphinx documentation</a> ...
+- More examples in the <a href='../Sphinx/examples/index.html'>Sphinx documentation</a> ...
 
 ## Matlab examples {#matlab_examples}
 
