@@ -52,3 +52,4 @@ be found in the `Doxygen pages <../Doxygen/index.html>`_.
    reference/matlab-api.rst
    contribution/*
    changelog
+   doxygen.rst
