@@ -153,6 +153,14 @@ jobs:
           python${{ matrix.python-version }} -m build -w . \
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
               -C--cross="$staging/$host.py-build-cmake.cross.toml"
+        env:
+          CFLAGS: '-static-libgcc'
+          CXXFLAGS: '-static-libgcc -static-libstdc++'
+      - name: Build debug wheels
+        if: ${{ matrix.host == 'x86_64-centos7-linux-gnu' }}
+        run: |
+          host="${{ matrix.host }}"
+          staging="/opt/$host"
           python${{ matrix.python-version }} -m build -w python/alpaqa-debug \
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
               -C--cross="$staging/$host.py-build-cmake.cross.toml" \
@@ -168,6 +176,7 @@ jobs:
           retention-days: 1
           path: dist/*.whl
       - name: Upload debug Wheels
+        if: ${{ matrix.host == 'x86_64-centos7-linux-gnu' }}
         uses: actions/upload-artifact@v3
         with:
           name: whl-debug-linux
