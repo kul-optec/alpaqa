@@ -14,7 +14,7 @@ try {
     pushd $srcdir
 
     if ( -not (Test-Path casadi) ) {
-        git clone --branch "3.6.3" --depth 1 --recursive `
+        git clone --branch "3.6.4" --depth 1 --recursive `
             https://github.com/casadi/casadi
     }
     pushd casadi
