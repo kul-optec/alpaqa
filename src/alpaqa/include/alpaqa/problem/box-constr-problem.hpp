@@ -178,6 +178,13 @@ class BoxConstrProblem {
     /// @see @ref TypeErasedProblem::get_box_D
     const Box &get_box_D() const { return D; }
 
+    /// Only supported if the ℓ₁-regularization term is zero.
+    /// @see @ref TypeErasedProblem::provides_get_box_C
+    [[nodiscard]] bool provides_get_box_C() const {
+        const auto nλ = l1_reg.size();
+        return nλ == 0 || (nλ == 1 && l1_reg(0) == 0);
+    }
+
     /// @see @ref TypeErasedProblem::eval_inactive_indices_res_lna
     index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const {
         index_t nJ = 0;
