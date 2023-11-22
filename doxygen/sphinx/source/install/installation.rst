@@ -47,9 +47,19 @@ Different components are available:
   specifications that can be dynamically loaded by alpaqa.
 * ``libalpaqa-dev`` contains all development files such as headers and CMake
   configuration files needed to compile software that invokes alpaqa solvers.
+* ``libalpaqa-extra`` contains additional solvers and problem loaders that fall
+  outside of the core library.
+* ``libalpaqa-extra-dev`` contains all development files for the extra
+  libraries.
+* ``libalpaqa-casadi`` contains classes for loading and building problem
+  definitions using CasADi.
+* ``libalpaqa-casadi-dev`` contains classes development files for those classes.
 * ``libalpaqa-tools`` contains command line utilities such as alpaqa-driver,
   which can be used to invoke the solvers directly, without the need to write
   any C++ code.
+
+More information about the different components of alpaqa can be found in the
+`CMake example <https://github.com/kul-optec/alpaqa/tree/develop/examples/CMake/Solver>`_.
 
 The following distributions are tested:
 
@@ -67,6 +77,12 @@ following additional runtime dependencies:
 
 * ``libgfortran5`` (GFortran 10 or later)
 * ``libquadmath0``
+
+When using the development packages, it is important to use the correct version
+of Eigen (currently 3.4.0) to avoid ABI incompatibilities.
+Adding architecture-specific flags (e.g. ``-march=skylake``, ``-mavx512f``) can
+also affect ABI, and building from source for optimal performance may be
+advisable.
 
 MATLAB interface
 ----------------
