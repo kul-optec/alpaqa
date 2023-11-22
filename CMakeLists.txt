@@ -20,6 +20,9 @@ option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
 option(ALPAQA_WITH_MATLAB
     "Build the MATLAB MEX interface" Off)
+# Compiler support
+option(ALPAQA_WITH_CXX_23
+    "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})
 # Enable/disable optional dependencies
 option(ALPAQA_WITH_CASADI
     "Build the CasADi loader" On)
@@ -45,8 +48,6 @@ option(ALPAQA_WITH_OCP
 cmake_dependent_option(ALPAQA_WITH_CASADI_OCP
     "Build the CasADi loader for optimal control problems"
     ${ALPAQA_WITH_CASADI_OCP_SUPPORTED} "ALPAQA_WITH_CASADI;ALPAQA_WITH_OCP" Off)
-option(ALPAQA_WITH_CXX_23
-    "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})
 # Optimization and parallelization
 option(ALPAQA_WITH_OPENMP
     "Enable parallelization using OpenMP" Off)
