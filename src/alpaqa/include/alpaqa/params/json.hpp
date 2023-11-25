@@ -22,11 +22,17 @@ void ALPAQA_EXPORT get_param(const T &, json &j); /* deliberately undefined */
 template <class T>
 struct attribute_accessor<T, json> {
     template <class T_actual, class A>
-    attribute_accessor(A T_actual::*attr)
+    attribute_accessor(A T_actual::*attr, std::string_view = "")
         : set([attr](T &t, const json &s) { return set_param(t.*attr, s); }),
           get([attr](const T &t, json &s) { return get_param(t.*attr, s); }) {}
     std::function<void(T &, const json &)> set;
     std::function<void(const T &, json &)> get;
+};
+
+template <class T>
+struct enum_accessor<T, json> {
+    enum_accessor(T value, std::string_view = "") : value{value} {}
+    T value;
 };
 
 /// Custom parameter parsing exception.

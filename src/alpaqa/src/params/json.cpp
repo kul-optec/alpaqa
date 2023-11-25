@@ -231,54 +231,6 @@ void get_param(const T &t, nlohmann::json &j) {
         j = t;
 }
 
-template <>
-void ALPAQA_EXPORT set_param(LBFGSStepSize &t, const json &j) {
-    if (j == "BasedOnExternalStepSize")
-        t = LBFGSStepSize::BasedOnExternalStepSize;
-    else if (j == "BasedOnCurvature")
-        t = LBFGSStepSize::BasedOnCurvature;
-    else
-        throw invalid_json_param("Invalid value " + to_string(j) +
-                                 " for type 'LBFGSStepSize'");
-}
-
-template <>
-void ALPAQA_EXPORT get_param(const LBFGSStepSize &t, json &s) {
-    s = enum_name(t);
-}
-
-template <>
-void ALPAQA_EXPORT set_param(PANOCStopCrit &t, const json &j) {
-    if (j == "ApproxKKT")
-        t = PANOCStopCrit::ApproxKKT;
-    else if (j == "ApproxKKT2")
-        t = PANOCStopCrit::ApproxKKT2;
-    else if (j == "ProjGradNorm")
-        t = PANOCStopCrit::ProjGradNorm;
-    else if (j == "ProjGradNorm2")
-        t = PANOCStopCrit::ProjGradNorm2;
-    else if (j == "ProjGradUnitNorm")
-        t = PANOCStopCrit::ProjGradUnitNorm;
-    else if (j == "ProjGradUnitNorm2")
-        t = PANOCStopCrit::ProjGradUnitNorm2;
-    else if (j == "FPRNorm")
-        t = PANOCStopCrit::FPRNorm;
-    else if (j == "FPRNorm2")
-        t = PANOCStopCrit::FPRNorm2;
-    else if (j == "Ipopt")
-        t = PANOCStopCrit::Ipopt;
-    else if (j == "LBFGSBpp")
-        t = PANOCStopCrit::LBFGSBpp;
-    else
-        throw invalid_json_param("Invalid value " + to_string(j) +
-                                 " for type 'PANOCStopCrit'");
-}
-
-template <>
-void ALPAQA_EXPORT get_param(const PANOCStopCrit &t, json &s) {
-    s = enum_name(t);
-}
-
 #include <alpaqa/params/structs.ipp>
 
 template <class... Ts>
@@ -342,6 +294,8 @@ ALPAQA_GETSET_PARAM_INST(std::chrono::seconds);
 ALPAQA_GETSET_PARAM_INST(std::chrono::minutes);
 ALPAQA_GETSET_PARAM_INST(std::chrono::hours);
 
+ALPAQA_GETSET_PARAM_INST(PANOCStopCrit);
+ALPAQA_GETSET_PARAM_INST(LBFGSStepSize);
 ALPAQA_GETSET_PARAM_INST(CBFGSParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(LipschitzEstimateParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(PANOCParams<config_t>);

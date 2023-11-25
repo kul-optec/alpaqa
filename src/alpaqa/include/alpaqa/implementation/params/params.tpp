@@ -33,11 +33,17 @@ void unsupported_type(T &, [[maybe_unused]] ParamString s) {
 template <class T>
 struct attribute_accessor<T, ParamString> {
     template <class T_actual, class A>
-    attribute_accessor(A T_actual::*attr)
+    attribute_accessor(A T_actual::*attr, std::string_view = "")
         : set([attr](T &t, const ParamString &s) {
               return set_param(t.*attr, s);
           }) {}
     std::function<void(T &, const ParamString &)> set;
+};
+
+template <class T>
+struct enum_accessor<T, ParamString> {
+    enum_accessor(T value, std::string_view = "") : value{value} {}
+    T value;
 };
 
 /// Use @p s to index into the struct type @p T and overwrite the attribute
@@ -60,6 +66,26 @@ void set_param(T &t, ParamString s) {
     }
     s.key = remainder;
     it->second.set(t, s);
+}
+
+/// Set @p t to the value of @p s.value.
+template <class T>
+    requires requires { enum_table<T, ParamString>::table; }
+void set_param(T &t, ParamString s) {
+    assert_key_empty<T>(s);
+    const auto &m = enum_table<T, ParamString>::table;
+    auto it       = m.find(s.value);
+    if (it == m.end()) {
+        auto vals = std::views::keys(m);
+        std::vector<std::string> sorted_vals{vals.begin(), vals.end()};
+        util::sort_case_insensitive(sorted_vals);
+        throw invalid_param(
+            "Invalid value '" + std::string(s.value) + "' for enum '" +
+            demangled_typename(typeid(T)) + "' in '" + std::string(s.full_key) +
+            "',\n  possible value are: " +
+            util::join(sorted_vals, {.sep = ", ", .empty = "∅"}));
+    }
+    t = it->second.value;
 }
 
 } // namespace alpaqa::params

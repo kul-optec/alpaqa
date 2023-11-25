@@ -1,3 +1,19 @@
+ENUM_TABLE(PANOCStopCrit,                  //
+           ENUM_MEMBER(ApproxKKT),         //
+           ENUM_MEMBER(ApproxKKT2),        //
+           ENUM_MEMBER(ProjGradNorm),      //
+           ENUM_MEMBER(ProjGradNorm2),     //
+           ENUM_MEMBER(ProjGradUnitNorm),  //
+           ENUM_MEMBER(ProjGradUnitNorm2), //
+           ENUM_MEMBER(FPRNorm),           //
+           ENUM_MEMBER(FPRNorm2),          //
+);
+
+ENUM_TABLE(LBFGSStepSize,                        //
+           ENUM_MEMBER(BasedOnExternalStepSize), //
+           ENUM_MEMBER(BasedOnCurvature),        //
+);
+
 PARAMS_TABLE(LBFGSParams<config_t>,        //
              PARAMS_MEMBER(memory),        //
              PARAMS_MEMBER(min_div_fac),   //

@@ -59,9 +59,6 @@ void set_param(T &t, const json &j) {
             }
             // If there are no aliases, then it's always an error
             else {
-                auto keys = std::views::keys(members);
-                std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
-                util::sort_case_insensitive(sorted_keys);
                 throw invalid_json_param("Invalid key '" + key +
                                          "' for type '" +
                                          demangled_typename(typeid(T)) +
@@ -78,6 +75,33 @@ void set_param(T &t, const json &j) {
             throw;
         }
     }
+}
+
+template <class T>
+    requires requires { enum_table<T, json>::table; }
+void set_param(T &t, const json &j) {
+    if (!j.is_string())
+        throw invalid_json_param("Invalid value " + to_string(j) +
+                                 " for enum '" + demangled_typename(typeid(T)) +
+                                 "' (expected string, but got " +
+                                 j.type_name() + ')');
+    // Dictionary of members
+    const auto &m     = enum_table<T, json>::table;
+    std::string value = j;
+    auto it           = m.find(value);
+    if (it == m.end()) {
+        throw invalid_json_param(
+            "Invalid value '" + value + "' for enum '" +
+            demangled_typename(typeid(T)) +
+            "',\n  possible values are: " + detail::join_sorted_keys(m));
+    }
+    t = it->second.value;
+}
+
+template <class T>
+    requires requires { enum_table<T, json>::table; }
+void get_param(const T &t, json &j) {
+    j = enum_name(t);
 }
 
 template <class T>

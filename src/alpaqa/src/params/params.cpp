@@ -150,46 +150,6 @@ void set_param(Duration &t, ParamString s) {
     }
 }
 
-template <>
-void ALPAQA_EXPORT set_param(LBFGSStepSize &t, ParamString s) {
-    if (s.value == "BasedOnExternalStepSize")
-        t = LBFGSStepSize::BasedOnExternalStepSize;
-    else if (s.value == "BasedOnCurvature")
-        t = LBFGSStepSize::BasedOnCurvature;
-    else
-        throw std::invalid_argument("Invalid value '" + std::string(s.value) +
-                                    "' for type 'LBFGSStepSize' in '" +
-                                    std::string(s.full_key) + "'");
-}
-
-template <>
-void ALPAQA_EXPORT set_param(PANOCStopCrit &t, ParamString s) {
-    if (s.value == "ApproxKKT")
-        t = PANOCStopCrit::ApproxKKT;
-    else if (s.value == "ApproxKKT2")
-        t = PANOCStopCrit::ApproxKKT2;
-    else if (s.value == "ProjGradNorm")
-        t = PANOCStopCrit::ProjGradNorm;
-    else if (s.value == "ProjGradNorm2")
-        t = PANOCStopCrit::ProjGradNorm2;
-    else if (s.value == "ProjGradUnitNorm")
-        t = PANOCStopCrit::ProjGradUnitNorm;
-    else if (s.value == "ProjGradUnitNorm2")
-        t = PANOCStopCrit::ProjGradUnitNorm2;
-    else if (s.value == "FPRNorm")
-        t = PANOCStopCrit::FPRNorm;
-    else if (s.value == "FPRNorm2")
-        t = PANOCStopCrit::FPRNorm2;
-    else if (s.value == "Ipopt")
-        t = PANOCStopCrit::Ipopt;
-    else if (s.value == "LBFGSBpp")
-        t = PANOCStopCrit::LBFGSBpp;
-    else
-        throw std::invalid_argument("Invalid value '" + std::string(s.value) +
-                                    "' for type 'PANOCStopCrit' in '" +
-                                    std::string(s.full_key) + "'");
-}
-
 #include <alpaqa/params/structs.ipp>
 
 template <class... Ts>
@@ -242,6 +202,8 @@ ALPAQA_SET_PARAM_INST(std::chrono::seconds);
 ALPAQA_SET_PARAM_INST(std::chrono::minutes);
 ALPAQA_SET_PARAM_INST(std::chrono::hours);
 
+ALPAQA_SET_PARAM_INST(PANOCStopCrit);
+ALPAQA_SET_PARAM_INST(LBFGSStepSize);
 ALPAQA_SET_PARAM_INST(PANOCParams<config_t>);
 ALPAQA_SET_PARAM_INST(FISTAParams<config_t>);
 ALPAQA_SET_PARAM_INST(ZeroFPRParams<config_t>);
