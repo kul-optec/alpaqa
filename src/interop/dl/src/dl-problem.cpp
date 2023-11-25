@@ -257,7 +257,7 @@ bool DLProblem::provides_eval_grad_L() const { return functions->eval_grad_L != 
 bool DLProblem::provides_eval_ψ() const { return functions->eval_ψ != nullptr; }
 bool DLProblem::provides_eval_grad_ψ() const { return functions->eval_grad_ψ != nullptr; }
 bool DLProblem::provides_eval_ψ_grad_ψ() const { return functions->eval_ψ_grad_ψ != nullptr; }
-bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_step == nullptr; }
+bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_step == nullptr && BoxConstrProblem::provides_get_box_C(); }
 // clang-format on
 
 #if ALPAQA_WITH_OCP
