@@ -84,6 +84,12 @@ set(ALPAQA_INSTALL_BINDIR "${CMAKE_INSTALL_BINDIR}"
     CACHE PATH "Installation directory for binaries and DLLs")
 set(ALPAQA_INSTALL_INCLUDEDIR "${CMAKE_INSTALL_INCLUDEDIR}"
     CACHE PATH "Installation directory for headers")
+set(ALPAQA_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}"
+    CACHE PATH "Installation directory for read-only architecture-independent data (share)")
+set(ALPAQA_INSTALL_ZSHCOMPLETEDIR "${ALPAQA_INSTALL_DATADIR}/zsh/site-functions"
+    CACHE PATH "Installation directory for Zsh completion scripts")
+set(ALPAQA_INSTALL_BASHCOMPLETEDIR "${ALPAQA_INSTALL_DATADIR}/bash-completion/completions"
+    CACHE PATH "Installation directory for Bash completion scripts")
 option(ALPAQA_STANDALONE
     "Install with relative RPATH to locate its own shared libraries" On)
 

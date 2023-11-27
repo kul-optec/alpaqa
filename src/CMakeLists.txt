@@ -365,6 +365,7 @@ if (ALPAQA_WITH_DRIVERS)
         "alpaqa/src/driver/lbfgsb-driver.cpp"
         "alpaqa/src/driver/qpalm-driver.cpp"
         "alpaqa/src/driver/problem.cpp"
+        "alpaqa/src/driver/param-complete.cpp"
     )
     set_target_properties(driver PROPERTIES
         OUTPUT_NAME "alpaqa-driver"

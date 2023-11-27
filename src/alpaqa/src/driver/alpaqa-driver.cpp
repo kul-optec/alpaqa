@@ -16,6 +16,7 @@
 #include "options.hpp"
 #include "panoc-driver.hpp"
 #include "pantr-driver.hpp"
+#include "param-complete.hpp"
 #include "qpalm-driver.hpp"
 #include "results.hpp"
 #include "solver-driver.hpp"
@@ -321,6 +322,12 @@ int main(int argc, const char *argv[]) try {
         return print_usage(argv[0]), 0;
     if (argv[1] == "-v"sv || argv[1] == "--version"sv)
         return print_version(), 0;
+    if (argv[1] == "--complete"sv) {
+        if (argc < 4)
+            return -1;
+        print_completion(argv[2], argv[3]);
+        return 0;
+    }
 
     std::span args{argv, static_cast<size_t>(argc)};
     Options opts{argc - 2, argv + 2};
