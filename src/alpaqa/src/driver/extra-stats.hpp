@@ -3,10 +3,9 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/util/print.tpp>
 #include "solver-driver.hpp"
-#include <map>
+
+#include <chrono>
 #include <memory>
-#include <string>
-#include <variant>
 
 template <alpaqa::Config Conf>
 struct AlpaqaSolverStatsCollector {
@@ -14,15 +13,21 @@ struct AlpaqaSolverStatsCollector {
     static constexpr real_t NaN = alpaqa::NaN<Conf>;
     struct Record {
         unsigned outer_iter, inner_iter;
+        double time;
         real_t gamma = NaN, eps = NaN, delta = NaN, psi = NaN, psi_hat = NaN,
                fbe = NaN, tau = NaN, radius = NaN, rho = NaN;
     };
     std::vector<Record> stats{};
+    std::chrono::steady_clock::time_point t0;
 
     void update_iter(const auto &progress_info) {
+        auto t = std::chrono::steady_clock::now();
+        if (progress_info.outer_iter == 0 && progress_info.k == 0)
+            t0 = t;
         Record r{
             .outer_iter = progress_info.outer_iter,
             .inner_iter = progress_info.k,
+            .time       = std::chrono::duration<double>{t - t0}.count(),
         };
         if constexpr (requires { progress_info.γ; })
             r.gamma = progress_info.γ;
@@ -65,10 +70,11 @@ struct AlpaqaSolverWrapperStats : SolverWrapper {
     }
     void write_statistics_to_stream(std::ostream &os) override {
         std::array<char, 64> buf;
-        os << "outer_iter,inner_iter,gamma,eps,delta,psi,psi_hat,fbe,tau,"
+        os << "outer_iter,inner_iter,time,gamma,eps,delta,psi,psi_hat,fbe,tau,"
               "radius,rho\n";
         for (const auto &r : collector->stats) {
             os << r.outer_iter << ',' << r.inner_iter << ','
+               << alpaqa::float_to_str_vw(buf, r.time) << ','
                << alpaqa::float_to_str_vw(buf, r.gamma) << ','
                << alpaqa::float_to_str_vw(buf, r.eps) << ','
                << alpaqa::float_to_str_vw(buf, r.delta) << ','
