@@ -14,16 +14,16 @@ rm -rf archdefs
 rm -rf sifdecode
 rm -rf cutest
 [ -d archdefs ] || git clone https://github.com/ralna/ARCHDefs --depth 1 --single-branch ./archdefs
-[ -d sifdecode ] || git clone https://github.com/ralna/SIFDecode --depth 1 --single-branch ./sifdecode
+[ -d sifdecode ] || git clone https://github.com/ralna/SIFDecode --depth 1 --single-branch ./sifdecode --branch v2.0.6
 [ -d cutest ] || git clone https://github.com/ralna/CUTEst --depth 1 --single-branch ./cutest
 # [ -d sif ] || git clone https://bitbucket.org/optrove/sif --depth 1 --single-branch ./sif
-[ -d optrove-sif-* ] || {
+[ -d sif ] || {
     wget https://bitbucket.org/optrove/sif/get/master.tar.bz2 -O- | \
     tar xj && ln -s optrove-sif-* sif ; }
-[ -d optrove-maros-meszaros* ] || {
+[ -d maros-meszaros ] || {
     wget https://bitbucket.org/optrove/maros-meszaros/get/master.tar.bz2 -O- | \
     tar xj && ln -s optrove-maros-meszaros-* maros-meszaros ; }
-[ -d optrove-netlib-lp* ] || {
+[ -d netlib-lp ] || {
     wget https://bitbucket.org/optrove/netlib-lp/get/master.tar.bz2 -O- | \
     tar xj && ln -s optrove-netlib-lp-* netlib-lp ; }
 
@@ -45,8 +45,8 @@ source $ARCH/system.$OS
 source $ARCH/$COMPILER
 source $ARCH/$CCOMPILER
 
-OPTIMIZATION='-O3 -march=skylake'
-CXXOPT='-O3 -march=skylake'
+OPTIMIZATION='-O3 -march=native'
+CXXOPT='-O3 -march=native'
 
 if [ -n "$CROSS_COMPILE" ]; then
     AR="$(which ${CROSS_COMPILE}ar)"
