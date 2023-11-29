@@ -26,7 +26,7 @@ std::string_view
 float_to_str_vw(auto &buf, F value,
                 int precision = std::numeric_limits<F>::max_digits10) {
     auto begin = buf.data();
-    if (!std::signbit(value))
+    if (!std::signbit(value) && !std::isnan(value))
         *begin++ = '+';
     auto [end, _] = std::to_chars(begin, buf.data() + buf.size(), value,
                                   std::chars_format::scientific, precision);
