@@ -278,6 +278,61 @@ template <class>
 struct TypeErasedTest : public testing::Test {};
 TYPED_TEST_SUITE_P(TypeErasedTest);
 
+TYPED_TEST_P(TypeErasedTest, as) {
+    auto a = TypeParam::template make<Noisy>("test-as");
+    EXPECT_STREQ(a.get_msg(), "test-as");
+    a.template as<Noisy>().set_msg("a-replace");
+    EXPECT_STREQ(a.get_msg(), "a-replace");
+}
+
+TYPED_TEST_P(TypeErasedTest, getPtr) {
+    auto a = TypeParam::template make<Noisy>("test-ptr");
+    EXPECT_EQ(a.get_pointer(), &a.template as<Noisy>());
+}
+
+TYPED_TEST_P(TypeErasedTest, getConstPtr) {
+    auto a = TypeParam::template make<Noisy>("test-ptr");
+    EXPECT_EQ(a.get_const_pointer(), &a.template as<Noisy>());
+}
+
+TYPED_TEST_P(TypeErasedTest, getPtrPtr) {
+    Noisy n{"test-ptr"};
+    auto a = TypeParam{&n};
+    EXPECT_EQ(a.get_pointer(), &a.template as<Noisy>());
+}
+
+TYPED_TEST_P(TypeErasedTest, getConstPtrConstPtr) {
+    Noisy n{"test-ptr"};
+    auto a = TypeParam{&std::as_const(n)};
+    EXPECT_EQ(a.get_const_pointer(), &a.template as<const Noisy>());
+}
+
+TYPED_TEST_P(TypeErasedTest, getPtrConstPtrWrong) {
+    Noisy n{"test-ptr"};
+    auto a = TypeParam{&std::as_const(n)};
+    EXPECT_THROW(static_cast<void>(a.get_pointer()),
+                 alpaqa::util::bad_type_erased_constness);
+}
+
+TYPED_TEST_P(TypeErasedTest, asWrongType) {
+    auto a = TypeParam::template make<Noisy>("test-as");
+    EXPECT_THROW(static_cast<void>(a.template as<std::vector<Noisy>>()),
+                 alpaqa::util::bad_type_erased_type);
+}
+
+TYPED_TEST_P(TypeErasedTest, asWrongConst) {
+    Noisy n{"test-ptr"};
+    auto a = TypeParam{&std::as_const(n)};
+    EXPECT_THROW(static_cast<void>(a.template as<Noisy>()),
+                 alpaqa::util::bad_type_erased_constness);
+}
+
+TYPED_TEST_P(TypeErasedTest, asConst) {
+    Noisy n{"test-ptr"};
+    auto a = TypeParam{&n};
+    EXPECT_EQ(a.get_const_pointer(), &a.template as<const Noisy>());
+}
+
 TYPED_TEST_P(TypeErasedTest, copyConstruct) {
     auto a = TypeParam::template make<Noisy>("test-copy");
     auto b{a};
@@ -615,10 +670,12 @@ TYPED_TEST_P(TypeErasedTest, throwingCtor) {
 }
 
 REGISTER_TYPED_TEST_SUITE_P(
-    TypeErasedTest, copyConstruct, copyConstructPtr, copyConstructPtrConst,
-    copy, copyPtr, copyFromEmpty, copyToEmpty, copySelf, copyEmptyToEmpty,
-    copyEmptySelf, copyConstructFromEmpty, moveConstruct, moveConstructPtr,
-    move, movePtr, moveFromEmpty, moveToEmpty, moveSelf, moveEmptyToEmpty,
+    TypeErasedTest, as, getPtr, getConstPtr, getPtrPtr, getConstPtrConstPtr,
+    getPtrConstPtrWrong, asWrongType, asWrongConst, asConst, copyConstruct,
+    copyConstructPtr, copyConstructPtrConst, copy, copyPtr, copyFromEmpty,
+    copyToEmpty, copySelf, copyEmptyToEmpty, copyEmptySelf,
+    copyConstructFromEmpty, moveConstruct, moveConstructPtr, move, movePtr,
+    moveFromEmpty, moveToEmpty, moveSelf, moveEmptyToEmpty,
     moveConstructFromEmpty, moveConstructAllocAware, moveConstructAllocAwarePtr,
     moveConstructFromEmptyAllocAware, copyConstructAllocAware,
     copyConstructAllocAwarePtr, copyConstructFromEmptyAllocAware,

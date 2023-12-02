@@ -84,7 +84,7 @@ struct BasicVTable {
     /// implemented in terms of other functions.
     template <class F, class VTable = BasicVTable>
     using optional_function_t = typename optional_function<F, VTable>::type;
-    
+
     /// Copy-construct a new instance into storage.
     required_function_t<void(void *storage) const> copy = nullptr;
     /// Move-construct a new instance into storage.
@@ -103,11 +103,17 @@ struct BasicVTable {
         };
         // TODO: require that move constructor is noexcept?
         move = [](void *self, void *storage) noexcept {
-            new (storage)
-                T(std::move(*std::launder(reinterpret_cast<T *>(self))));
+            if constexpr (std::is_const_v<T>)
+                std::terminate();
+            else
+                new (storage)
+                    T(std::move(*std::launder(reinterpret_cast<T *>(self))));
         };
         destroy = [](void *self) {
-            std::launder(reinterpret_cast<T *>(self))->~T();
+            if constexpr (std::is_const_v<T>)
+                std::terminate();
+            else
+                std::launder(reinterpret_cast<T *>(self))->~T();
         };
         type = &typeid(T);
     }
@@ -440,26 +446,33 @@ class TypeErased {
         return *vtable.type;
     }
 
-    /// Convert the type-erased object to the given type. The type is checked
-    /// in debug builds only, use with caution.
+    /// Convert the type-erased object to the given type.
+    /// @throws alpaqa::util::bad_type_erased_type
+    ///         If T does not match the stored type.
     template <class T>
-    T &as() & {
+        requires(!std::is_const_v<T>)
+    [[nodiscard]] T &as() & {
+        if (typeid(T) != type())
+            throw bad_type_erased_type(type(), typeid(T));
+        if (referenced_object_is_const())
+            throw bad_type_erased_constness();
+        return *reinterpret_cast<T *>(self);
+    }
+    /// @copydoc as()
+    template <class T>
+        requires(std::is_const_v<T>)
+    [[nodiscard]] T &as() const & {
         if (typeid(T) != type())
             throw bad_type_erased_type(type(), typeid(T));
         return *reinterpret_cast<T *>(self);
     }
     /// @copydoc as()
     template <class T>
-    const T &as() const & {
+    [[nodiscard]] T &&as() && {
         if (typeid(T) != type())
             throw bad_type_erased_type(type(), typeid(T));
-        return *reinterpret_cast<const T *>(self);
-    }
-    /// @copydoc as()
-    template <class T>
-    const T &&as() && {
-        if (typeid(T) != type())
-            throw bad_type_erased_type(type(), typeid(T));
+        if (!std::is_const_v<T> && referenced_object_is_const())
+            throw bad_type_erased_constness();
         return std::move(*reinterpret_cast<T *>(self));
     }
 
