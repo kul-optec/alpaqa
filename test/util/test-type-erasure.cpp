@@ -4,6 +4,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <memory>
 #include <string_view>
 
 #define PF() (std::printf("%s: %s\n", __PRETTY_FUNCTION__, msg))
@@ -127,6 +128,8 @@ void dump_buf(const auto &buffer) {
         std::cout << '\n';
     }
 }
+
+static_assert(std::uses_allocator_v<PMRCTE, pmr_alloc>);
 
 TEST(TypeErasure, TypeErased) {
     std::array<std::byte, 256> buffer{};
