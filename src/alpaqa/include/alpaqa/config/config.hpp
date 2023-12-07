@@ -3,6 +3,7 @@
 #include <alpaqa/util/quadmath/quadmath-print.hpp>
 #include <alpaqa/util/quadmath/quadmath.hpp>
 
+#include <complex>
 #include <limits>
 #include <type_traits>
 
@@ -35,6 +36,7 @@ struct is_config<EigenConfigq> : std::true_type {};
 
 #define USING_ALPAQA_CONFIG_NO_TYPENAME(Conf)                                  \
     using real_t [[maybe_unused]]     = Conf::real_t;                          \
+    using cplx_t [[maybe_unused]]     = Conf::cplx_t;                          \
     using vec [[maybe_unused]]        = Conf::vec;                             \
     using mvec [[maybe_unused]]       = Conf::mvec;                            \
     using cmvec [[maybe_unused]]      = Conf::cmvec;                           \
@@ -45,6 +47,11 @@ struct is_config<EigenConfigq> : std::true_type {};
     using cmmat [[maybe_unused]]      = Conf::cmmat;                           \
     using rmat [[maybe_unused]]       = Conf::rmat;                            \
     using crmat [[maybe_unused]]      = Conf::crmat;                           \
+    using cmat [[maybe_unused]]       = Conf::cmat;                            \
+    using mcmat [[maybe_unused]]      = Conf::mcmat;                           \
+    using cmcmat [[maybe_unused]]     = Conf::cmcmat;                          \
+    using rcmat [[maybe_unused]]      = Conf::rcmat;                           \
+    using crcmat [[maybe_unused]]     = Conf::crcmat;                          \
     using length_t [[maybe_unused]]   = Conf::length_t;                        \
     using index_t [[maybe_unused]]    = Conf::index_t;                         \
     using indexvec [[maybe_unused]]   = Conf::indexvec;                        \
@@ -63,6 +70,7 @@ struct is_config<EigenConfigq> : std::true_type {};
 
 // clang-format off
 template <Config Conf = DefaultConfig> using real_t = typename Conf::real_t;
+template <Config Conf = DefaultConfig> using cplx_t = typename Conf::cplx_t;
 template <Config Conf = DefaultConfig> using vec = typename Conf::vec;
 template <Config Conf = DefaultConfig> using mvec = typename Conf::mvec;
 template <Config Conf = DefaultConfig> using cmvec = typename Conf::cmvec;
@@ -73,6 +81,11 @@ template <Config Conf = DefaultConfig> using mmat = typename Conf::mmat;
 template <Config Conf = DefaultConfig> using cmmat = typename Conf::cmmat;
 template <Config Conf = DefaultConfig> using rmat = typename Conf::rmat;
 template <Config Conf = DefaultConfig> using crmat = typename Conf::crmat;
+template <Config Conf = DefaultConfig> using cmat = typename Conf::cmat;
+template <Config Conf = DefaultConfig> using mcmat = typename Conf::mcmat;
+template <Config Conf = DefaultConfig> using cmcmat = typename Conf::cmcmat;
+template <Config Conf = DefaultConfig> using rcmat = typename Conf::rcmat;
+template <Config Conf = DefaultConfig> using crcmat = typename Conf::crcmat;
 template <Config Conf = DefaultConfig> using length_t = typename Conf::length_t;
 template <Config Conf = DefaultConfig> using index_t = typename Conf::index_t;
 template <Config Conf = DefaultConfig> using indexvec = typename Conf::indexvec;
@@ -91,6 +104,8 @@ template <class RealT>
 struct EigenConfig {
     /// Real scalar element type.
     using real_t = RealT;
+    /// Complex scalar element type.
+    using cplx_t = std::complex<real_t>;
     /// Dynamic vector type.
     using vec = Eigen::VectorX<real_t>;
     /// Map of vector type.
@@ -111,6 +126,16 @@ struct EigenConfig {
     using rmat = Eigen::Ref<mat>;
     /// Reference to immutable matrix.
     using crmat = Eigen::Ref<const mat>;
+    /// Dynamic complex matrix type.
+    using cmat = Eigen::MatrixX<cplx_t>;
+    /// Map of complex matrix type.
+    using mcmat = Eigen::Map<cmat>;
+    /// Immutable map of complex matrix type.
+    using cmcmat = Eigen::Map<const cmat>;
+    /// Reference to mutable complex matrix.
+    using rcmat = Eigen::Ref<cmat>;
+    /// Reference to immutable complex matrix.
+    using crcmat = Eigen::Ref<const cmat>;
     /// Type for lengths and sizes.
     using length_t = Eigen::Index;
     /// Type for vector and matrix indices.
