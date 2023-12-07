@@ -91,7 +91,8 @@ endif()
 if (ALPAQA_WITH_OPENMP)
     find_package(OpenMP REQUIRED COMPONENTS CXX)
     target_link_libraries(alpaqa PUBLIC OpenMP::OpenMP_CXX)
-else()
+endif()
+if (ALPAQA_DONT_PARALLELIZE_EIGEN)
     target_compile_definitions(alpaqa PUBLIC EIGEN_DONT_PARALLELIZE)
 endif()
 set_target_properties(alpaqa PROPERTIES SOVERSION ${PROJECT_VERSION})
@@ -366,6 +367,7 @@ if (ALPAQA_WITH_DRIVERS)
         "alpaqa/src/driver/qpalm-driver.cpp"
         "alpaqa/src/driver/problem.cpp"
         "alpaqa/src/driver/param-complete.cpp"
+        "alpaqa/src/driver/openmp.cpp"
     )
     set_target_properties(driver PROPERTIES
         OUTPUT_NAME "alpaqa-driver"

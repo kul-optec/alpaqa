@@ -36,6 +36,9 @@ class AlpaqaRecipe(ConanFile):
         "with_quad_precision": False,
         "with_single_precision": False,
         "with_long_double": False,
+        "debug_checks_eigen": False,
+        "dont_parallelize_eigen": True,
+        "no_dlclose": False,
     }
     options = {
         "shared": [True, False],
