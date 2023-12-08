@@ -71,6 +71,8 @@ option(ALPAQA_DEBUG_CHECKS_EIGEN
     "Initialize Eigen matrices to NaN, and raise an assertion error if memory (re)allocation is used in the inner loops of the algorithms" Off)
 option(ALPAQA_DONT_PARALLELIZE_EIGEN
     "Add the EIGEN_DONT_PARALLELIZE option" On)
+option(ALPAQA_WITH_BLAS
+    "Enable use of BLAS and enable EIGEN_USE_BLAS" Off)
 option(ALPAQA_NO_DLCLOSE
     "Never call dlclose when a shared library is no longer needed, leave it open instead. Useful for profiling using gperftools." Off)
 option(ALPAQA_WITH_ACCURATE_BUILD_TIME

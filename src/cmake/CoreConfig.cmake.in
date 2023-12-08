@@ -22,5 +22,8 @@ if (@ALPAQA_WITH_JSON@)
             INTERFACE nlohmann_json::nlohmann_json)
     endif()
 endif()
+if (@ALPAQA_WITH_BLAS@)
+    find_dependency(BLAS)
+endif()
 
 check_required_components(alpaqaCore)

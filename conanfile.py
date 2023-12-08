@@ -39,6 +39,7 @@ class AlpaqaRecipe(ConanFile):
         "debug_checks_eigen": False,
         "dont_parallelize_eigen": True,
         "no_dlclose": False,
+        "with_blas": False,
     }
     options = {
         "shared": [True, False],
@@ -74,6 +75,8 @@ class AlpaqaRecipe(ConanFile):
             self.requires("pybind11/2.10.1")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.1")
+        if self.options.with_blas:
+            self.requires("openblas/0.3.24")
 
     def config_options(self):
         if self.settings.get_safe("os") == "Windows":
