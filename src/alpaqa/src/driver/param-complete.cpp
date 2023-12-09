@@ -136,6 +136,7 @@ PARAMS_TABLE(Struct);
 
 } // namespace alpaqa::params
 
+using alpaqa::params::get_members;
 using alpaqa::params::MemberGetter;
 using alpaqa::params::Result;
 
