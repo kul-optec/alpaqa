@@ -6,6 +6,7 @@
 #include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
 
+#include <filesystem>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -97,7 +98,7 @@ class DLProblem : public BoxConstrProblem<DefaultConfig> {
     /// Load a problem from a shared library.
     DLProblem(
         /// Filename of the shared library to load.
-        const std::string &so_filename,
+        const std::filesystem::path &so_filename,
         /// Name of the problem registration function.
         /// Should have signature `alpaqa_problem_register_t(void *)`.
         const std::string &function_name = "register_alpaqa_problem",
@@ -203,7 +204,7 @@ class DLControlProblem {
     /// Load a problem from a shared library.
     DLControlProblem(
         /// Filename of the shared library to load.
-        const std::string &so_filename,
+        const std::filesystem::path &so_filename,
         /// Name of the problem registration function.
         /// Should have signature `alpaqa_control_problem_register_t(void *)`.
         const std::string &function_name = "register_alpaqa_control_problem",

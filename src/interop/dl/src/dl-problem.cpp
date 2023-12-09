@@ -58,11 +58,11 @@ std::shared_ptr<char> get_last_error_msg() {
     }
 }
 
-std::shared_ptr<void> load_lib(const std::string &so_filename) {
+std::shared_ptr<void> load_lib(const std::filesystem::path &so_filename) {
     assert(!so_filename.empty());
-    void *h = LoadLibraryA(so_filename.c_str());
+    void *h = LoadLibraryW(so_filename.c_str());
     if (!h)
-        throw std::runtime_error("Unable to load \"" + so_filename +
+        throw std::runtime_error("Unable to load \"" + so_filename.string() +
                                  "\": " + get_last_error_msg().get());
 #if ALPAQA_NO_DLCLOSE
     return std::shared_ptr<void>{h, +[](void *) {}};
@@ -83,7 +83,7 @@ F *load_func(void *handle, const std::string &name) {
     return reinterpret_cast<F *>(h);
 }
 #else
-std::shared_ptr<void> load_lib(const std::string &so_filename) {
+std::shared_ptr<void> load_lib(const std::filesystem::path &so_filename) {
     assert(!so_filename.empty());
     ::dlerror();
     void *h = ::dlopen(so_filename.c_str(), RTLD_LOCAL | RTLD_NOW);
@@ -199,9 +199,11 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
 
 } // namespace
 
-DLProblem::DLProblem(const std::string &so_filename,
+DLProblem::DLProblem(const std::filesystem::path &so_filename,
                      const std::string &function_name, void *user_param)
     : BoxConstrProblem{0, 0} {
+    if (so_filename.empty())
+        throw std::invalid_argument("Invalid problem filename");
     handle = load_lib(so_filename);
     auto *register_func =
         load_func<problem_register_t(void *)>(handle.get(), function_name);
@@ -308,9 +310,11 @@ bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_st
 
 #if ALPAQA_WITH_OCP
 
-DLControlProblem::DLControlProblem(const std::string &so_filename,
+DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
                                    const std::string &function_name,
                                    void *user_param) {
+    if (so_filename.empty())
+        throw std::invalid_argument("Invalid problem filename");
     handle              = load_lib(so_filename);
     auto *register_func = load_func<control_problem_register_t(void *)>(
         handle.get(), function_name);
