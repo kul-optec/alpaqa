@@ -2,8 +2,6 @@
 
 #if defined(__GNUC__)
 #define ALPAQA_USED [[gnu::used]]
-#elif defined(_MSC_VER)
-#define ALPAQA_USED __declspec(selectany)
 #else
 #define ALPAQA_USED
 #endif
