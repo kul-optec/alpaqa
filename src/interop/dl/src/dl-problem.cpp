@@ -44,15 +44,31 @@ void check_abi_version(uint64_t abi_version) {
 }
 
 #if _WIN32
+std::shared_ptr<char> get_last_error_msg() {
+    char *err = nullptr;
+    auto opt  = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER |
+               FORMAT_MESSAGE_IGNORE_INSERTS;
+    auto lang = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT);
+    if (FormatMessage(opt, NULL, GetLastError(), lang,
+                      reinterpret_cast<char *>(&err), 0, NULL) != 0) {
+        return std::shared_ptr<char>{err, [](char *e) { LocalFree(e); }};
+    } else {
+        static char msg[] = "(failed to get error message)";
+        return std::shared_ptr<char>{msg, [](char *) {}};
+    }
+}
+
 std::shared_ptr<void> load_lib(const std::string &so_filename) {
     assert(!so_filename.empty());
     void *h = LoadLibraryA(so_filename.c_str());
     if (!h)
-        throw std::runtime_error("Unable to load \"" + so_filename + "\"");
+        throw std::runtime_error("Unable to load \"" + so_filename +
+                                 "\": " + get_last_error_msg().get());
 #if ALPAQA_NO_DLCLOSE
     return std::shared_ptr<void>{h, +[](void *) {}};
 #else
-    return std::shared_ptr<void>{h, +[](void *h) { FreeLibrary(static_cast<HMODULE>(h)); }};
+    return std::shared_ptr<void>{
+        h, +[](void *h) { FreeLibrary(static_cast<HMODULE>(h)); }};
 #endif
 }
 
@@ -61,7 +77,8 @@ F *load_func(void *handle, const std::string &name) {
     assert(handle);
     auto *h = GetProcAddress(static_cast<HMODULE>(handle), name.c_str());
     if (!h)
-        throw std::runtime_error("Unable to load function '" + name + "'");
+        throw std::runtime_error("Unable to load function '" + name +
+                                 "': " + get_last_error_msg().get());
     // We can only hope that the user got the signature right ...
     return reinterpret_cast<F *>(h);
 }
