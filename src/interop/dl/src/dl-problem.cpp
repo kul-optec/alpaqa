@@ -3,7 +3,6 @@
 #include <alpaqa/dl/dl-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
 
-#include <dlfcn.h>
 #include <algorithm>
 #include <cassert>
 #include <charconv>
@@ -11,6 +10,12 @@
 #include <memory>
 #include <mutex>
 #include <stdexcept>
+
+#if _WIN32
+#include <windows.h>
+#else
+#include <dlfcn.h>
+#endif
 
 namespace alpaqa::dl {
 
@@ -38,6 +43,29 @@ void check_abi_version(uint64_t abi_version) {
     }
 }
 
+#if _WIN32
+std::shared_ptr<void> load_lib(const std::string &so_filename) {
+    assert(!so_filename.empty());
+    void *h = LoadLibraryA(so_filename.c_str());
+    if (!h)
+        throw std::runtime_error("Unable to load \"" + so_filename + "\"");
+#if ALPAQA_NO_DLCLOSE
+    return std::shared_ptr<void>{h, +[](void *) {}};
+#else
+    return std::shared_ptr<void>{h, +[](void *h) { FreeLibrary(static_cast<HMODULE>(h)); }};
+#endif
+}
+
+template <class F>
+F *load_func(void *handle, const std::string &name) {
+    assert(handle);
+    auto *h = GetProcAddress(static_cast<HMODULE>(handle), name.c_str());
+    if (!h)
+        throw std::runtime_error("Unable to load function '" + name + "'");
+    // We can only hope that the user got the signature right ...
+    return reinterpret_cast<F *>(h);
+}
+#else
 std::shared_ptr<void> load_lib(const std::string &so_filename) {
     assert(!so_filename.empty());
     ::dlerror();
@@ -62,6 +90,7 @@ F *load_func(void *handle, const std::string &name) {
     // We can only hope that the user got the signature right ...
     return reinterpret_cast<F *>(h);
 }
+#endif
 
 std::mutex leaked_modules_mutex;
 std::list<std::shared_ptr<void>> leaked_modules;

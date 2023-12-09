@@ -186,10 +186,13 @@ add_library(dl-api INTERFACE)
 target_include_directories(dl-api INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include>
     $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+if (MSVC)
+    target_compile_options(dl-api INTERFACE "/utf-8")
+endif()
 add_library(alpaqa::dl-api ALIAS dl-api)
 list(APPEND ALPAQA_INSTALL_TARGETS dl-api)
 
-if (CMAKE_DL_LIBS)
+if (ALPAQA_WITH_DL)
     add_library(dl-loader "interop/dl/src/dl-problem.cpp")
     target_include_directories(dl-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl/include>
@@ -203,9 +206,6 @@ if (CMAKE_DL_LIBS)
     set_target_properties(dl-loader PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::dl-loader ALIAS dl-loader)
     list(APPEND ALPAQA_INSTALL_TARGETS dl-loader)
-    message(STATUS "Compiling WITH dl support")
-else()
-    message(STATUS "Compiling WITHOUT dl support")
 endif()
 
 if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)

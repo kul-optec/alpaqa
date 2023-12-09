@@ -98,8 +98,8 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
     auto register_name = get_reg_name_option(prob_opts);
     std::any dl_opt    = prob_opts;
     LoadedProblem problem{
-        .problem = TEProblem::make<CntProblem>(std::in_place, full_path.c_str(),
-                                               register_name, &dl_opt),
+        .problem = TEProblem::make<CntProblem>(
+            std::in_place, full_path.string().c_str(), register_name, &dl_opt),
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };
@@ -108,7 +108,7 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
         using sig_t  = std::string(const DLProblem::instance_t *);
         problem.name = cnt_problem.problem.call_extra_func<sig_t>("get_name");
     } catch (std::out_of_range &) {
-        problem.name = problem.path.filename();
+        problem.name = problem.path.filename().string();
     }
     problem.evaluations = cnt_problem.evaluations;
     load_initial_guess(opts, problem);

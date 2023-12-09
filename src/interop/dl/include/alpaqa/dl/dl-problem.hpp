@@ -37,7 +37,7 @@ class ExtraFuncs {
                                     name + '"');
         try {
             return std::any_cast<const std::function<Signature> &>(it->second);
-        } catch (const std::bad_any_cast &e) {
+        } catch (const std::bad_any_cast &) {
             throw std::logic_error(
                 "DLProblem: incorrect type for extra function \"" + name +
                 "\" (stored type: " + demangled_typename(it->second.type()) +
