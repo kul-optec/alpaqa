@@ -137,7 +137,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
                 .symmetry = static_cast<Symmetry>(sp.sparse_csc.symmetry),
                 .inner_idx = typename SparseCSC::index_vector_map_t{sp.sparse_csc.inner_idx, sp.sparse_csc.nnz},
                 .outer_ptr = typename SparseCSC::index_vector_map_t{sp.sparse_csc.outer_ptr, sp.sparse_csc.cols + 1},
-                .order = static_cast<SparseCSC::Order>(sp.sparse_csc.order),
+                .order = static_cast<typename SparseCSC::Order>(sp.sparse_csc.order),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_csc_l:
             using SparseCSCl = sparsity::SparseCSC<config_t, long>;
@@ -147,7 +147,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
                 .symmetry = static_cast<Symmetry>(sp.sparse_csc_l.symmetry),
                 .inner_idx = typename SparseCSCl::index_vector_map_t{sp.sparse_csc_l.inner_idx, sp.sparse_csc_l.nnz},
                 .outer_ptr = typename SparseCSCl::index_vector_map_t{sp.sparse_csc_l.outer_ptr, sp.sparse_csc_l.cols + 1},
-                .order = static_cast<SparseCSCl::Order>(sp.sparse_csc_l.order),
+                .order = static_cast<typename SparseCSCl::Order>(sp.sparse_csc_l.order),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_csc_ll:
             using SparseCSCll = sparsity::SparseCSC<config_t, long long>;
@@ -157,7 +157,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
                 .symmetry = static_cast<Symmetry>(sp.sparse_csc_ll.symmetry),
                 .inner_idx = typename SparseCSCll::index_vector_map_t{sp.sparse_csc_ll.inner_idx, sp.sparse_csc_ll.nnz},
                 .outer_ptr = typename SparseCSCll::index_vector_map_t{sp.sparse_csc_ll.outer_ptr, sp.sparse_csc_ll.cols + 1},
-                .order = static_cast<SparseCSCll::Order>(sp.sparse_csc_ll.order),
+                .order = static_cast<typename SparseCSCll::Order>(sp.sparse_csc_ll.order),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo:
             using SparseCOO  = sparsity::SparseCOO<config_t, int>;
@@ -167,7 +167,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
                 .symmetry = static_cast<Symmetry>(sp.sparse_coo.symmetry),
                 .row_indices = typename SparseCOO::index_vector_map_t{sp.sparse_coo.row_indices, sp.sparse_coo.nnz},
                 .col_indices = typename SparseCOO::index_vector_map_t{sp.sparse_coo.col_indices, sp.sparse_coo.nnz},
-                .order = static_cast<SparseCOO::Order>(sp.sparse_coo.order),
+                .order = static_cast<typename SparseCOO::Order>(sp.sparse_coo.order),
                 .first_index = sp.sparse_coo.first_index,
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo_l:
@@ -178,7 +178,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
                 .symmetry = static_cast<Symmetry>(sp.sparse_coo_l.symmetry),
                 .row_indices = typename SparseCOOl::index_vector_map_t{sp.sparse_coo_l.row_indices, sp.sparse_coo_l.nnz},
                 .col_indices = typename SparseCOOl::index_vector_map_t{sp.sparse_coo_l.col_indices, sp.sparse_coo_l.nnz},
-                .order = static_cast<SparseCOOl::Order>(sp.sparse_coo_l.order),
+                .order = static_cast<typename SparseCOOl::Order>(sp.sparse_coo_l.order),
                 .first_index = sp.sparse_coo_l.first_index,
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo_ll:
@@ -189,7 +189,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
                 .symmetry = static_cast<Symmetry>(sp.sparse_coo_ll.symmetry),
                 .row_indices = typename SparseCOOll::index_vector_map_t{sp.sparse_coo_ll.row_indices, sp.sparse_coo_ll.nnz},
                 .col_indices = typename SparseCOOll::index_vector_map_t{sp.sparse_coo_ll.col_indices, sp.sparse_coo_ll.nnz},
-                .order = static_cast<SparseCOOll::Order>(sp.sparse_coo_ll.order),
+                .order = static_cast<typename SparseCOOll::Order>(sp.sparse_coo_ll.order),
                 .first_index = sp.sparse_coo_ll.first_index,
             };
         default: throw std::invalid_argument("Invalid sparsity kind");
