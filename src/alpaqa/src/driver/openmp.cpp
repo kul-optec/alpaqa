@@ -2,12 +2,14 @@
 
 #if defined(__GNUC__)
 #define ALPAQA_USED [[gnu::used]]
+#elif defined(_MSC_VER)
+#define ALPAQA_USED __declspec(dllexport)
 #else
 #define ALPAQA_USED
 #endif
 
 namespace alpaqa::detail {
-ALPAQA_USED inline void openmp_dummy() {
+void ALPAQA_USED openmp_dummy() {
 #pragma omp parallel
     {
         [[maybe_unused]] const char *volatile msg =
