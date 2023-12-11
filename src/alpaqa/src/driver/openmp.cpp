@@ -9,7 +9,7 @@
 #endif
 
 namespace alpaqa::detail {
-void ALPAQA_USED openmp_dummy() {
+ALPAQA_USED void openmp_dummy() {
 #pragma omp parallel
     {
         [[maybe_unused]] const char *volatile msg =
