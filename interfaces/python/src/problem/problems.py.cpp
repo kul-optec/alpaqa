@@ -662,11 +662,12 @@ void register_problems(py::module_ &m) {
         dl_problem.def(
             "call_extra_func",
             [](DLProblem &self, const std::string &name, py::args args, py::kwargs kwargs) {
-                return self.call_extra_func<py::object(py::args, py::kwargs)>(name, std::move(args),
-                                                                              std::move(kwargs));
+                using instance_t = alpaqa::dl::ExtraFuncs::instance_t;
+                return self.call_extra_func<py::object(instance_t *, py::args, py::kwargs)>(
+                    name, std::move(args), std::move(kwargs));
             },
             "name"_a,
-            "Call the given extra function registered by the problem, with the signature "
+            "Call the given extra member function registered by the problem, with the signature "
             "``pybind11::object(pybind11::args, pybind11::kwargs)``.");
         te_problem.def(py::init<const DLProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<DLProblem, TEProblem>();
