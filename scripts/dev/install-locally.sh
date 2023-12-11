@@ -76,16 +76,16 @@ EOF
 pip install -U pip build
 develop=false
 if $develop; then
-    LDFLAGS='-static-libgcc -static-libstdc++' \
+    LDFLAGS='-static-libstdc++' \
     pip install -e ".[test]" -v \
         --config-settings=--cross="$pfx/$triple.py-build-cmake.cross.toml" \
         --config-settings=--local="$PWD/$config"
 else
-    LDFLAGS='-static-libgcc -static-libstdc++' \
+    LDFLAGS='-static-libstdc++' \
     python -m build -w "." -o staging \
         -C--cross="$pfx/$triple.py-build-cmake.cross.toml" \
         -C--local="$PWD/$config"
-    LDFLAGS='-static-libgcc -static-libstdc++' \
+    LDFLAGS='-static-libstdc++' \
     python -m build -w "python/alpaqa-debug" -o staging \
         -C--cross="$pfx/$triple.py-build-cmake.cross.toml" \
         -C--local="$PWD/$config"

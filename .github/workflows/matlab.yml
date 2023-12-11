@@ -91,10 +91,10 @@ jobs:
         static-libcxx=True
         [conf]
         tools.build.cross_building:can_run=True
-        tools.build:cxxflags+=["-march=skylake", "-static-libstdc++", "-static-libgcc"]
-        tools.build:cflags+=["-march=skylake", "-static-libgcc"]
-        tools.build:sharedlinkflags+=["-static-libstdc++", "-static-libgcc"]
-        tools.build:exelinkflags+=["-static-libstdc++", "-static-libgcc"]
+        tools.build:cxxflags+=["-march=skylake", "-static-libstdc++"]
+        tools.build:cflags+=["-march=skylake"]
+        tools.build:sharedlinkflags+=["-static-libstdc++"]
+        tools.build:exelinkflags+=["-static-libstdc++"]
         tools.cmake.cmaketoolchain:generator=Ninja
         EOF
         conan config install ${{ matrix.host }}.profile -tf profiles

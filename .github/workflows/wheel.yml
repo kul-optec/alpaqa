@@ -154,8 +154,7 @@ jobs:
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
               -C--cross="$staging/$host.py-build-cmake.cross.toml"
         env:
-          CFLAGS: '-static-libgcc'
-          CXXFLAGS: '-static-libgcc -static-libstdc++'
+          CXXFLAGS: '-static-libstdc++'
       - name: Build debug wheels
         if: ${{ matrix.host == 'x86_64-centos7-linux-gnu' }}
         run: |
@@ -166,8 +165,7 @@ jobs:
               -C--cross="$staging/$host.py-build-cmake.cross.toml" \
               -o dist-debug
         env:
-          CFLAGS: '-static-libgcc'
-          CXXFLAGS: '-static-libgcc -static-libstdc++'
+          CXXFLAGS: '-static-libstdc++'
       # Upload
       - name: Upload Wheels
         uses: actions/upload-artifact@v3
@@ -226,8 +224,7 @@ jobs:
               -C--cross="$PWD/ninja-debug.cross.toml" \
               -C--cross="$staging/$host.py-build-cmake.cross.toml"
         env:
-          CFLAGS: '-static-libgcc'
-          CXXFLAGS: '-static-libgcc -static-libstdc++'
+          CXXFLAGS: '-static-libstdc++'
       # Upload
       - name: Upload source
         uses: actions/upload-artifact@v3

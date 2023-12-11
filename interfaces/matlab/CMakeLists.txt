@@ -29,7 +29,7 @@ target_include_directories(alpaqa_mex PRIVATE include)
 alpaqa_configure_visibility(alpaqa_mex)
 if (NOT WIN32 AND NOT APPLE)
     # Matlab's C++ standard library is too old, so link it statically
-    target_link_options(alpaqa_mex PUBLIC -static-libstdc++ -static-libgcc)
+    target_link_options(alpaqa_mex PUBLIC -static-libstdc++)
 endif()
 # Get MSVC to report the correct value for __cplusplus
 if (MSVC)
