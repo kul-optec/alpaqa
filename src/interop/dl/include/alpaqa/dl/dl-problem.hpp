@@ -162,6 +162,7 @@ class DLProblem : public BoxConstrProblem<DefaultConfig> {
     [[nodiscard]] bool provides_eval_grad_ψ() const;
     [[nodiscard]] bool provides_eval_ψ_grad_ψ() const;
     [[nodiscard]] bool provides_get_box_C() const;
+    [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const;
     // clang-format on
 
     using instance_t = ExtraFuncs::instance_t;
