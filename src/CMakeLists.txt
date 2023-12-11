@@ -406,8 +406,10 @@ if (ALPAQA_WITH_DRIVERS)
     if (TARGET alpaqa::qpalm-adapter)
         target_link_libraries(driver PRIVATE alpaqa::qpalm-adapter)
     endif()
+endif()
 
-    # Gradient checker tool
+# Gradient checker tool
+if (ALPAQA_WITH_GRADIENT_CHECKER)
     add_executable(gradient-checker
         "alpaqa/src/driver/gradient-checker.cpp"
         "alpaqa/src/driver/problem.cpp"

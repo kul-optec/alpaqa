@@ -43,6 +43,8 @@ option(ALPAQA_WITH_EXAMPLES
     "Build the examples" On)
 option(ALPAQA_WITH_DRIVERS
     "Build the solver driver programs" On)
+option(ALPAQA_WITH_GRADIENT_CHECKER
+    "Build the solver driver programs" Off)
 option(ALPAQA_WITH_OCP
     "Enable solvers tailored for optimal control problems" On)
 cmake_dependent_option(ALPAQA_WITH_CASADI_OCP

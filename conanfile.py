@@ -25,6 +25,7 @@ class AlpaqaRecipe(ConanFile):
         "with_python": False,
         "with_matlab": False,
         "with_drivers": True,
+        "with_gradient_checker": False,
         "with_casadi": False,
         "with_cutest": False,
         "with_qpalm": False,
