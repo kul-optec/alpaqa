@@ -480,22 +480,22 @@ void register_problems(py::module_ &m) {
         const Box &get_box_C() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; C = py::cast<Box>(o.attr("get_box_C")()); return C; }
         const Box &get_box_D() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; D = py::cast<Box>(o.attr("get_box_D")()); return D; }
 
-        [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_inactive_indices_res_lna"); }
-        [[nodiscard]] bool provides_eval_grad_gi() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_gi"); }
-        [[nodiscard]] bool provides_eval_hess_L_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_L_prod"); }
-        // [[nodiscard]] bool provides_eval_hess_L() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_L"); }
-        [[nodiscard]] bool provides_eval_hess_ψ_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_ψ_prod"); }
-        // [[nodiscard]] bool provides_eval_hess_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_ψ"); }
-        [[nodiscard]] bool provides_eval_f_grad_f() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_f_grad_f"); }
-        [[nodiscard]] bool provides_eval_f_g() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_f_g"); }
-        [[nodiscard]] bool provides_eval_grad_f_grad_g_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_f_grad_g_prod"); }
-        [[nodiscard]] bool provides_eval_grad_L() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_L"); }
-        [[nodiscard]] bool provides_eval_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ"); }
-        [[nodiscard]] bool provides_eval_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_ψ"); }
-        [[nodiscard]] bool provides_eval_ψ_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ_grad_ψ"); }
-        [[nodiscard]] bool provides_check() const { py::gil_scoped_acquire gil; return py::hasattr(o, "check"); }
-        [[nodiscard]] bool provides_get_box_C() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_C"); }
-        [[nodiscard]] bool provides_get_box_D() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_D"); }
+        [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_inactive_indices_res_lna") && (!py::hasattr(o, "provides_eval_inactive_indices_res_lna") || py::cast<bool>(o.attr("provides_eval_inactive_indices_res_lna")())); }
+        [[nodiscard]] bool provides_eval_grad_gi() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_gi") && (!py::hasattr(o, "provides_eval_grad_gi") || py::cast<bool>(o.attr("provides_eval_grad_gi")())); }
+        [[nodiscard]] bool provides_eval_hess_L_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_L_prod") && (!py::hasattr(o, "provides_eval_hess_L_prod") || py::cast<bool>(o.attr("provides_eval_hess_L_prod")())); }
+        // [[nodiscard]] bool provides_eval_hess_L() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_L") && (!py::hasattr(o, "provides_eval_hess_L") || py::cast<bool>(o.attr("provides_eval_hess_L")())); }
+        [[nodiscard]] bool provides_eval_hess_ψ_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_ψ_prod") && (!py::hasattr(o, "provides_eval_hess_ψ_prod") || py::cast<bool>(o.attr("provides_eval_hess_ψ_prod")())); }
+        // [[nodiscard]] bool provides_eval_hess_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_ψ") && (!py::hasattr(o, "provides_eval_hess_ψ") || py::cast<bool>(o.attr("provides_eval_hess_ψ")())); }
+        [[nodiscard]] bool provides_eval_f_grad_f() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_f_grad_f") && (!py::hasattr(o, "provides_eval_f_grad_f") || py::cast<bool>(o.attr("provides_eval_f_grad_f")())); }
+        [[nodiscard]] bool provides_eval_f_g() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_f_g") && (!py::hasattr(o, "provides_eval_f_g") || py::cast<bool>(o.attr("provides_eval_f_g")())); }
+        [[nodiscard]] bool provides_eval_grad_f_grad_g_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_f_grad_g_prod") && (!py::hasattr(o, "provides_eval_grad_f_grad_g_prod") || py::cast<bool>(o.attr("provides_eval_grad_f_grad_g_prod")())); }
+        [[nodiscard]] bool provides_eval_grad_L() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_L") && (!py::hasattr(o, "provides_eval_grad_L") || py::cast<bool>(o.attr("provides_eval_grad_L")())); }
+        [[nodiscard]] bool provides_eval_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ") && (!py::hasattr(o, "provides_eval_ψ") || py::cast<bool>(o.attr("provides_eval_ψ")())); }
+        [[nodiscard]] bool provides_eval_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_ψ") && (!py::hasattr(o, "provides_eval_grad_ψ") || py::cast<bool>(o.attr("provides_eval_grad_ψ")())); }
+        [[nodiscard]] bool provides_eval_ψ_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ_grad_ψ") && (!py::hasattr(o, "provides_eval_ψ_grad_ψ") || py::cast<bool>(o.attr("provides_eval_ψ_grad_ψ")())); }
+        [[nodiscard]] bool provides_check() const { py::gil_scoped_acquire gil; return py::hasattr(o, "check") && (!py::hasattr(o, "provides_check") || py::cast<bool>(o.attr("provides_check")())); }
+        [[nodiscard]] bool provides_get_box_C() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_C") && (!py::hasattr(o, "provides_get_box_C") || py::cast<bool>(o.attr("provides_get_box_C")())); }
+        [[nodiscard]] bool provides_get_box_D() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_D") && (!py::hasattr(o, "provides_get_box_D") || py::cast<bool>(o.attr("provides_get_box_D")())); }
 
         length_t get_n() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("n")); }
         length_t get_m() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("m")); }
@@ -626,6 +626,13 @@ void register_problems(py::module_ &m) {
             .def_readonly("name", &CUTEstProblem::name, "CUTEst problem name.");
         te_problem.def(py::init<const CUTEstProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<CUTEstProblem, TEProblem>();
+        m.def(
+            "problem_with_counters", [](CUTEstProblem &p) { return te_pwc(p); },
+            py::keep_alive<0, 1>(), "problem"_a,
+            "Wrap the problem to count all function evaluations.\n\n"
+            ":param problem: The original problem to wrap. Copied.\n"
+            ":return: * Wrapped problem.\n"
+            "         * Counters for wrapped problem.\n\n");
 #endif
 #if ALPAQA_WITH_DL
         using alpaqa::dl::DLProblem;
@@ -671,6 +678,13 @@ void register_problems(py::module_ &m) {
             "``pybind11::object(pybind11::args, pybind11::kwargs)``.");
         te_problem.def(py::init<const DLProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<DLProblem, TEProblem>();
+        m.def(
+            "problem_with_counters", [](DLProblem &p) { return te_pwc(p); }, py::keep_alive<0, 1>(),
+            "problem"_a,
+            "Wrap the problem to count all function evaluations.\n\n"
+            ":param problem: The original problem to wrap. Copied.\n"
+            ":return: * Wrapped problem.\n"
+            "         * Counters for wrapped problem.\n\n");
 #endif
     }
     m.def(
