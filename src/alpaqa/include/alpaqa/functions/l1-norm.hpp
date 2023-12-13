@@ -122,8 +122,8 @@ struct L1NormComplex {
                 return 0;
             }
             auto soft_thres = [γλ{γ * λ}](cplx_t x) {
-                auto mag = std::abs(x), arg = std::arg(x);
-                return mag <= γλ ? 0 : std::polar(mag - γλ, arg);
+                auto mag2 = x.real() * x.real() + x.imag() * x.imag();
+                return mag2 <= γλ * γλ ? 0 : x * (1 - γλ / std::sqrt(mag2));
             };
             out = in.unaryExpr(soft_thres);
             return λ * out.template lpNorm<1>();
@@ -136,8 +136,8 @@ struct L1NormComplex {
             assert((λ.array() >= 0).all());
             auto soft_thres = [γ](cplx_t x, real_t λ) {
                 real_t γλ = γ * λ;
-                auto mag = std::abs(x), arg = std::arg(x);
-                return mag <= γλ ? 0 : std::polar(mag - γλ, arg);
+                auto mag2 = x.real() * x.real() + x.imag() * x.imag();
+                return mag2 <= γλ * γλ ? 0 : x * (1 - γλ / std::sqrt(mag2));
             };
             out = in.binaryExpr(λ, soft_thres);
             return out.cwiseProduct(λ).template lpNorm<1>();
