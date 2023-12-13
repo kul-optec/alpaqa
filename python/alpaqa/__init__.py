@@ -1,7 +1,7 @@
 """
 Augmented Lagrangian and PANOC solvers for nonconvex numerical optimization.
 """
-__version__ = "1.0.0a16"
+__version__ = "1.0.0a17.dev0"
 
 from .alpaqa import *
 from .alpaqa import __c_version__
