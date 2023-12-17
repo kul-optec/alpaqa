@@ -263,6 +263,15 @@ auto DLProblem::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
     return BoxConstrProblem<config_t>::eval_prox_grad_step(γ, x, grad_ψ, x̂, p);
 }
 
+auto DLProblem::eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,
+                                              rindexvec J) const -> index_t {
+    if (functions->eval_inactive_indices_res_lna)
+        return functions->eval_inactive_indices_res_lna(
+            instance.get(), γ, x.data(), grad_ψ.data(), J.data());
+    return BoxConstrProblem<config_t>::eval_inactive_indices_res_lna(γ, x,
+                                                                     grad_ψ, J);
+}
+
 // clang-format off
 auto DLProblem::eval_f(crvec x) const -> real_t { return functions->eval_f(instance.get(), x.data()); }
 auto DLProblem::eval_grad_f(crvec x, rvec grad_fx) const -> void { return functions->eval_grad_f(instance.get(), x.data(), grad_fx.data()); }
@@ -306,7 +315,7 @@ bool DLProblem::provides_eval_ψ() const { return functions->eval_ψ != nullptr;
 bool DLProblem::provides_eval_grad_ψ() const { return functions->eval_grad_ψ != nullptr; }
 bool DLProblem::provides_eval_ψ_grad_ψ() const { return functions->eval_ψ_grad_ψ != nullptr; }
 bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_step == nullptr && BoxConstrProblem::provides_get_box_C(); }
-bool DLProblem::provides_eval_inactive_indices_res_lna() const { return functions->eval_prox_grad_step == nullptr; }
+bool DLProblem::provides_eval_inactive_indices_res_lna() const { return functions->eval_prox_grad_step == nullptr || functions->eval_inactive_indices_res_lna != nullptr; }
 // clang-format on
 
 #if ALPAQA_WITH_OCP

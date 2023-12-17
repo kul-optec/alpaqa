@@ -120,6 +120,7 @@ class DLProblem : public BoxConstrProblem<DefaultConfig> {
   public:
     // clang-format off
     real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const;
+    index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const;
     real_t eval_f(crvec x) const;
     void eval_grad_f(crvec x, rvec grad_fx) const;
     void eval_g(crvec x, rvec gx) const;

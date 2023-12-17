@@ -4,9 +4,8 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <string.h>
 
-#define ALPAQA_DL_ABI_VERSION 0xA1A000000002
+#define ALPAQA_DL_ABI_VERSION 0xA1A000000003
 
 #ifdef __cplusplus
 extern "C" {
@@ -330,6 +329,12 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *grad_ψ,
         alpaqa_real_t *x̂,
         alpaqa_real_t *p) ALPAQA_DEFAULT(nullptr);
+    alpaqa_index_t (*eval_inactive_indices_res_lna)(
+        void *instance,
+        alpaqa_real_t γ,
+        const alpaqa_real_t *x,
+        const alpaqa_real_t *grad_ψ,
+        alpaqa_index_t *J) ALPAQA_DEFAULT(nullptr);
     /// Provide the initial values for the bounds of
     /// @ref alpaqa::BoxConstrProblem::C, i.e. the constraints on the decision
     /// variables.
@@ -582,11 +587,11 @@ alpaqa_control_problem_register_init(alpaqa_control_problem_register_t *self) {
 /// Available in C only (unnecessary in C++).
 /// @param  self
 ///         A pointer to the instance to initialize.
-#define ALPAQA_PROBLEM_REGISTER_INIT(self)                                     \
-    _Generic((self), alpaqa_problem_register_t *                               \
-             : alpaqa_problem_register_init,                                   \
-               alpaqa_control_problem_register_t *                             \
-             : alpaqa_control_problem_register_init)(self)
+#define ALPAQA_PROBLEM_REGISTER_INIT(self)                                          \
+    _Generic((self),                                                                \
+        alpaqa_problem_register_t *: alpaqa_problem_register_init,                  \
+        alpaqa_control_problem_register_t *: alpaqa_control_problem_register_init)( \
+        self)
 #endif
 
 #if defined(__cplusplus) &&                                                    \
@@ -674,7 +679,7 @@ static auto member_caller(Ret (Class::*)(Args...)) {
 /// @see @ref alpaqa::member_caller
 template <auto Member, class Class, class Ret, class... Args>
 static auto member_caller(Ret (Class::*)(Args...) const) {
-    return []<class Self>(Self * self_, Args... args) -> Ret
+    return []<class Self>(Self *self_, Args... args) -> Ret
                requires std::is_void_v<Self>
     {
         const auto *self = reinterpret_cast<const Class *>(self_);
@@ -685,7 +690,7 @@ static auto member_caller(Ret (Class::*)(Args...) const) {
 /// @see @ref alpaqa::member_caller
 template <auto Member, class Class, class Ret>
 static auto member_caller(Ret Class::*) {
-    return []<class Self>(Self * self_) -> decltype(auto)
+    return []<class Self>(Self *self_) -> decltype(auto)
                requires std::is_void_v<Self>
     {
         using CClass = std::conditional_t<std::is_const_v<Self>,
