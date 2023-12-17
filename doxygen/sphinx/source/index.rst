@@ -49,6 +49,7 @@ be found in the `Doxygen pages <../Doxygen/index.html>`_.
    examples/index.rst
    reference/python-api.rst
    reference/cpp-api.rst
+   reference/cmake-api.rst
    reference/matlab-api.rst
    contribution/*
    changelog

@@ -127,26 +127,8 @@ cmake --preset conan-release # or conan-default on Windows
 cmake --build --preset conan-release -j
 ```
 
-The available components are:
-
-| Component | Description | Targets |
-|:----------|:------------|:--------|
-| `Core`    | The main alpaqa solvers and other core functionality. If no components are specified, this is the default. | `alpaqa` |
-| `Dl`      | The dynamic loading C API headers for creating problems that can be loaded by the alpaqa solvers. | `dl-api` |
-| `CasADi`  | Classes for loading and building problem definitions using CasADi. | `casadi-loader`, `casadi-ocp-loader` |
-| `Extra`   | Additional solvers and problem loaders that fall outside of the core library. | `dl-loader`, `cutest-interface`, `ipopt-adapter`, `lbfgsb-adapter`, `qpalm-adapter` ... |
-| `Tools`   | Command-line tools for invoking the solvers. | `driver`, `gradient-checker` |
-
-Some interfaces require third-party packages to be installed, and need to be
-enabled when building the Conan package (using the `-o` option).
-
-To check whether a certain target is available, you can use:
-
-```cmake
-if (TARGET alpaqa::qpalm-adapter)
-    # ...
-endif()
-```
+A complete list of the available components and targets can be found on the
+[CMake API Reference](https://kul-optec.github.io/alpaqa/1.0.0a16/Sphinx/reference/cmake-api.html) page.
 
 ### Disabling tests
 

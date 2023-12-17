@@ -46,6 +46,7 @@ extensions = [
     'matplotlib.sphinxext.plot_directive',
     'sphinxcontrib.matlab',
     'sphinx_tabs.tabs',
+    'sphinxcontrib.moderncmakedomain',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
