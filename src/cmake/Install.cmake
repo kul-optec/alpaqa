@@ -61,6 +61,13 @@ macro(alpaqa_install_headers DIR COMP)
         FILES_MATCHING REGEX "/.*\\.(h|[hti]pp)$")
 endmacro()
 
+macro(alpaqa_install_cmake FILES COMP)
+    # Install a CMake script
+    install(FILES ${FILES}
+        DESTINATION "${ALPAQA_INSTALL_CMAKEDIR}"
+            COMPONENT ${COMP})
+endmacro()
+
 set(ALPAQA_INSTALLED_TARGETS_MSG "\nSummary of alpaqa components and targets to install:\n\n")
 
 # Install the alpaqa core libraries
@@ -103,6 +110,7 @@ install(TARGETS dl-api
     EXPORT alpaqaDlTargets)
 alpaqa_install_config(Dl dl_dev)
 alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl-api/include/" dl_dev)
+alpaqa_install_cmake("${CMAKE_CURRENT_SOURCE_DIR}/cmake/dl-problem.cmake" dl_dev)
 string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Dl:     dl-api\n")
 
 # Install everything else

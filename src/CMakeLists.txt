@@ -190,6 +190,7 @@ if (MSVC)
     target_compile_options(dl-api INTERFACE "/utf-8")
 endif()
 add_library(alpaqa::dl-api ALIAS dl-api)
+include(cmake/dl-problem.cmake)
 list(APPEND ALPAQA_INSTALL_TARGETS dl-api)
 
 if (ALPAQA_WITH_DL)

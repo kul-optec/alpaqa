@@ -1,4 +1,4 @@
-#include <sparse-logistic-regression-export.h>
+#include <sparse-logistic-regression/export.h>
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/dl/dl-problem.h>
