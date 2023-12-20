@@ -107,9 +107,8 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
     auto t0 = std::chrono::steady_clock::now();
     warm_start();
     solver.solve();
-    auto t1    = std::chrono::steady_clock::now();
-    auto evals = *problem.evaluations;
-    auto info  = solver.get_info();
+    auto t1   = std::chrono::steady_clock::now();
+    auto info = solver.get_info();
     vec sol_x = solver.get_solution().x, sol_y = solver.get_solution().y;
 
     // Solve the problems again to average runtimes
@@ -126,6 +125,7 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
     }
     os.clear();
     avg_duration /= (N_exp + 1);
+    auto evals = *problem.evaluations;
 
     // Results
     SolverResults results{

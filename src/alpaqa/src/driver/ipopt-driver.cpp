@@ -52,7 +52,6 @@ SolverResults run_ipopt_solver(auto &problem,
     auto t0     = std::chrono::steady_clock::now();
     auto status = solver->OptimizeTNLP(nlp);
     auto t1     = std::chrono::steady_clock::now();
-    auto evals  = *problem.evaluations;
 
     // Solve the problems again to average runtimes
     using ns          = std::chrono::nanoseconds;
@@ -69,6 +68,7 @@ SolverResults run_ipopt_solver(auto &problem,
     }
     os.clear();
     avg_duration /= (N_exp + 1);
+    auto evals = *problem.evaluations;
 
     // Results
     auto &nlp_res = my_nlp->results;

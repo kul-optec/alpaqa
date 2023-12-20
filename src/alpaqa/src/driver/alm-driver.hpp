@@ -66,9 +66,6 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
     // Solve the problem
     auto stats = solver(problem.problem, x, y, Σ);
 
-    // Store the evaluation counters
-    auto evals = *problem.evaluations;
-
     // Solve the problems again to average runtimes
     auto avg_duration = stats.elapsed_time;
     os.setstate(std::ios_base::badbit); // suppress output
@@ -88,6 +85,9 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
     avg_duration /= (N_exp + 1);
 
     solver.os = &std::cout;
+
+    // Store the evaluation counters
+    auto evals = *problem.evaluations;
 
     // Results
     real_t final_γ = 0, final_h = 0;
