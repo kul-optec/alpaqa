@@ -59,7 +59,8 @@ struct NewtonTRDirection {
                     [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
         if (!direction_params.finite_diff &&
-            !problem.provides_eval_hess_ψ_prod())
+            !problem.provides_eval_hess_ψ_prod() &&
+            !(problem.provides_eval_hess_L_prod() && problem.get_m() == 0))
             throw std::invalid_argument("NewtonTR without finite differences "
                                         "requires Problem::eval_hess_ψ_prod()");
         if (!problem.provides_eval_inactive_indices_res_lna())
