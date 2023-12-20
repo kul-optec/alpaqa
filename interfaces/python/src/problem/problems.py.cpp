@@ -666,16 +666,26 @@ void register_problems(py::module_ &m) {
             "``std::any`` containing a ``std::span<std::string_view>``.");
         default_copy_methods(dl_problem);
         problem_methods(dl_problem);
-        dl_problem.def(
-            "call_extra_func",
-            [](DLProblem &self, const std::string &name, py::args args, py::kwargs kwargs) {
-                using instance_t = alpaqa::dl::ExtraFuncs::instance_t;
-                return self.call_extra_func<py::object(instance_t *, py::args, py::kwargs)>(
-                    name, std::move(args), std::move(kwargs));
-            },
-            "name"_a,
-            "Call the given extra member function registered by the problem, with the signature "
-            "``pybind11::object(pybind11::args, pybind11::kwargs)``.");
+        dl_problem
+            .def(
+                "call_extra_func",
+                [](DLProblem &self, const std::string &name, py::args args, py::kwargs kwargs) {
+                    using instance_t = alpaqa::dl::ExtraFuncs::instance_t;
+                    return self.call_extra_func<py::object(instance_t *, py::args, py::kwargs)>(
+                        name, std::move(args), std::move(kwargs));
+                },
+                "name"_a,
+                "Call the given extra member function registered by the problem, with the "
+                "signature "
+                "``pybind11::object(pybind11::args, pybind11::kwargs)``.")
+            .def("__str__", [](DLProblem &self) -> py::str {
+                try {
+                    using instance_t = alpaqa::dl::ExtraFuncs::instance_t;
+                    return self.call_extra_func<std::string(const instance_t *)>("get_name");
+                } catch (std::out_of_range &) {
+                    return py::repr(py::cast(self));
+                }
+            });
         te_problem.def(py::init<const DLProblem &>(), "problem"_a, "Explicit conversion.");
         py::implicitly_convertible<DLProblem, TEProblem>();
         m.def(
