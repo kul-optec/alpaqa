@@ -179,7 +179,7 @@ int main(int argc, const char *argv[]) try {
     return -1;
 }
 
-vec finite_diff(const std::function<real_t(crvec)> &f, crvec x) {
+auto finite_diff(const std::function<real_t(crvec)> &f, crvec x) {
     const auto n = x.size();
     vec grad(n);
     vec h           = vec::Zero(n);
@@ -192,7 +192,7 @@ vec finite_diff(const std::function<real_t(crvec)> &f, crvec x) {
         grad.coeffRef(i) = (f(x + h) - fx) / hh;
         h(i)             = 0;
     }
-    return grad;
+    return std::make_tuple(fx, std::move(grad));
 }
 
 auto finite_diff_hess_sparse(const std::function<void(crvec, rvec)> &grad_L,
@@ -244,12 +244,12 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
 
     auto x0 = lproblem.initial_guess_x;
     auto y0 = lproblem.initial_guess_y;
-    auto sc = x0.norm();
+    auto sc = 1e-2 + x0.norm();
     auto n = te_problem.get_n(), m = te_problem.get_m();
 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     vec Σ = 1.5 * vec::Random(m).array() + 2;
-    vec y = y0 + y0.norm() * vec::Random(m);
+    vec y = y0 + (1e-2 + y0.norm()) * vec::Random(m);
     vec x = x0 + sc * vec::Random(n);
     vec v = 5e-6 * sc * vec::Random(n);
     vec gx(m);
@@ -262,34 +262,62 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         log << "  abs error = " << alpaqa::float_to_str(abs_err) << '\n';
         log << "  rel error = " << alpaqa::float_to_str(rel_err) << '\n';
         if (opts.print_full) {
-            alpaqa::print_matlab(log << "  fd = ", fd);
-            alpaqa::print_matlab(log << "  ad = ", ad) << std::endl;
+            alpaqa::print_python(log << "  fd = ", fd);
+            alpaqa::print_python(log << "  ad = ", ad) << std::endl;
+        }
+    };
+    auto print_compare_scal = [&log, &opts](const auto &fd, const auto &ad) {
+        auto abs_err = std::abs(fd - ad);
+        auto rel_err = abs_err / std::abs(fd);
+        log << "  abs error = " << alpaqa::float_to_str(abs_err) << '\n';
+        log << "  rel error = " << alpaqa::float_to_str(rel_err) << '\n';
+        if (opts.print_full) {
+            log << "  fd = " << alpaqa::float_to_str(fd) << '\n';
+            log << "  ad = " << alpaqa::float_to_str(ad) << '\n' << std::endl;
         }
     };
 
     auto f = [&](crvec x) { return te_problem.eval_f(x); };
     log << "Gradient verification: ∇f(x)\n";
-    vec fd_grad_f = finite_diff(f, x);
+    auto [fx, fd_grad_f] = finite_diff(f, x);
     vec grad_f(n);
     te_problem.eval_grad_f(x, grad_f);
     print_compare(fd_grad_f, grad_f);
+
+    if (te_problem.provides_eval_f_grad_f()) {
+        log << "Gradient verification: ∇f(x) (f_grad_f)\n";
+        vec f_grad_f(n);
+        auto f2 = te_problem.eval_f_grad_f(x, f_grad_f);
+        print_compare(fd_grad_f, f_grad_f);
+        log << "Function verification: f(x) (f_grad_f)\n";
+        print_compare_scal(fx, f2);
+    }
 
     log << "Gradient verification: ∇L(x)\n";
     auto L = [&](crvec x) {
         te_problem.eval_g(x, gx);
         return te_problem.eval_f(x) + gx.dot(y);
     };
-    vec fd_grad_L = finite_diff(L, x);
+    auto [Lx, fd_grad_L] = finite_diff(L, x);
     vec grad_L(n);
     te_problem.eval_grad_L(x, y, grad_L, wn);
     print_compare(fd_grad_L, grad_L);
 
     log << "Gradient verification: ∇ψ(x)\n";
-    auto ψ        = [&](crvec x) { return te_problem.eval_ψ(x, y, Σ, wm); };
-    vec fd_grad_ψ = finite_diff(ψ, x);
+    auto ψ = [&](crvec x) { return te_problem.eval_ψ(x, y, Σ, wm); };
+    auto [ψx, fd_grad_ψ] = finite_diff(ψ, x);
     vec grad_ψ(n);
     te_problem.eval_grad_ψ(x, y, Σ, grad_ψ, wn, wm);
     print_compare(fd_grad_ψ, grad_ψ);
+
+    if (te_problem.provides_eval_ψ_grad_ψ()) {
+        log << "Gradient verification: ∇ψ(x) (ψ_grad_ψ)\n";
+        vec ψ_grad_ψ(n);
+        real_t ψ2 = te_problem.eval_ψ_grad_ψ(x, y, Σ, ψ_grad_ψ, wn, wm);
+        log << "Function verification: f(x) (f_grad_f)\n";
+        print_compare(fd_grad_f, ψ_grad_ψ);
+        print_compare_scal(ψx, ψ2);
+    }
 
     if (te_problem.provides_eval_hess_L_prod()) {
         log << "Hessian product verification: ∇²L(x)\n";
