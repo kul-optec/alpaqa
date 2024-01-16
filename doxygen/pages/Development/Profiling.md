@@ -109,6 +109,7 @@ docker build -t flamescope ~/opt/flamescope
 LBR mode for Intel CPUs (but does not seem to be 100% accurate).
 ```sh
 echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
+mkdir -p profile
 perf record --call-graph lbr -- ./build/src/Release/alpaqa-driver \
     cs:"$(alpaqa cache path)/bcd8a11e-7e4b-11ee-9892-0f8255cce6e0/lib/alpaqa_problem.so" \
     alm.print_interval=0 num_exp=2000
@@ -120,6 +121,7 @@ correct results. Increase the stack dump size to fix this. This increased dump
 size may require decreasing the sampling rate (using the `-F` flag).
 ```sh
 echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
+mkdir -p profile
 perf record --call-graph dwarf,65528 -F 100 -- ./build/src/Release/alpaqa-driver \
     cs:"$(alpaqa cache path)/bcd8a11e-7e4b-11ee-9892-0f8255cce6e0/lib/alpaqa_problem.so" \
     alm.print_interval=0 num_exp=2000
