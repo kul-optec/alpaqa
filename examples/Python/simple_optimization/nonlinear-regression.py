@@ -1,7 +1,6 @@
 # %% alpaqa nonlinear regression example
 
 import alpaqa as pa
-import alpaqa.casadi_loader as cl
 import casadi as cs
 import numpy as np
 from pprint import pprint
@@ -22,7 +21,7 @@ model = cs.Function("model", [x, p], [p[0] * cs.sin(p[1] * x) + p[2]])
 sample_error = cs.Function("err", [x, y, p], [y - model(x, p)])
 sum_sq_error = cs.sumsqr(sample_error.map(N_data)(data_x.T, data_y.T, p))
 
-# %% Generate and compile C-code for the objective and constraints using alpaqa
+# %% Generate and compile C code for the objective and constraints using alpaqa
 
 # Compile and load the problem (without general constraints)
 problem = (

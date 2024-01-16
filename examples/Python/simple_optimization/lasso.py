@@ -1,7 +1,6 @@
 # %% alpaqa lasso example
 
 import alpaqa as pa
-import alpaqa.casadi_loader as cl
 import casadi as cs
 import numpy as np
 from pprint import pprint
@@ -27,7 +26,7 @@ x = cs.MX.sym("x", n)
 # Objective function is squared norm of Ax - b
 f = 0.5 * cs.sumsqr(A @ x - b)
 
-# %% Generate and compile C-code for the objective and constraints using alpaqa
+# %% Generate and compile C code for the objective and constraints using alpaqa
 
 # Compile and load the problem
 problem = (
