@@ -43,12 +43,12 @@ auto checked_inner_solve() {
 }
 
 inline const char *checked_inner_solve_doc() {
-    return "Solve.\n\n"
+    return "Solve the given problem.\n\n"
            ":param problem: Problem to solve\n"
-           ":param opts: Options\n"
-           ":param u: Initial guess\n"
-           ":param y: Lagrange multipliers\n"
-           ":param Σ: Penalty factors\n"
+           ":param opts: Options (such as desired tolerance)\n"
+           ":param x: Optional initial guess for the decision variables\n"
+           ":param y: Lagrange multipliers (when used as ALM inner solver)\n"
+           ":param Σ: Penalty factors (when used as ALM inner solver)\n"
            ":param asynchronous: Release the GIL and run the solver on a separate thread\n"
            ":param suppress_interrupt: If the solver is interrupted by a ``KeyboardInterrupt``, "
            "don't propagate this exception back to the Python interpreter, but stop the solver "
