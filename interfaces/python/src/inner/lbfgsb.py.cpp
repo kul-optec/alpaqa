@@ -30,8 +30,8 @@ void register_lbfgsb(py::module_ &m) {
 
         // ----------------------------------------------------------------------------------------- //
         using LBFGSBParams = alpaqa::lbfgsb::LBFGSBParams;
-        register_dataclass<LBFGSBParams>(m, "LBFGSBParams",
-                                         "C++ documentation: :cpp:class:`alpaqa::LBFGSBParams`");
+        auto params        = register_dataclass<LBFGSBParams>(
+            m, "LBFGSBParams", "C++ documentation: :cpp:class:`alpaqa::LBFGSBParams`");
 
         // ----------------------------------------------------------------------------------------- //
         using LBFGSBProgressInfo = alpaqa::lbfgsb::LBFGSBProgressInfo;
@@ -66,7 +66,9 @@ void register_lbfgsb(py::module_ &m) {
                      return LBFGSBSolver{var_kwargs_to_struct(params)};
                  }),
                  "lbfgsb_params"_a = py::dict{},
-                 "Create a LBFGSB solver using structured L-BFGS directions.");
+                 "Create a LBFGSB solver using structured L-BFGS directions.")
+            .def_property_readonly_static(
+                "Params", [p{py::object{params}}](const py::object &) { return p; });
         register_inner_solver_methods<LBFGSBSolver, Problem, InnerSolver>(lbfgsb_solver);
     }
 }

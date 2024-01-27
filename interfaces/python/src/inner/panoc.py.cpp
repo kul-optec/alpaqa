@@ -47,8 +47,8 @@ void register_panoc(py::module_ &m) {
         "C++ documentation: :cpp:class:`alpaqa::LipschitzEstimateParams`");
 
     using PANOCParams = alpaqa::PANOCParams<config_t>;
-    register_dataclass<PANOCParams>(m, "PANOCParams",
-                                    "C++ documentation: :cpp:class:`alpaqa::PANOCParams`");
+    auto params       = register_dataclass<PANOCParams>(
+        m, "PANOCParams", "C++ documentation: :cpp:class:`alpaqa::PANOCParams`");
 
     // ----------------------------------------------------------------------------------------- //
     using PANOCProgressInfo = alpaqa::PANOCProgressInfo<config_t>;
@@ -108,7 +108,9 @@ void register_panoc(py::module_ &m) {
                                         typename PANOCSolver::Direction{direction}};
                  }),
              "panoc_params"_a, "direction"_a, "Create a PANOC solver using a custom direction.")
-        .def_property_readonly("direction", member_ref<&PANOCSolver::direction>());
+        .def_property_readonly("direction", member_ref<&PANOCSolver::direction>())
+        .def_property_readonly_static("Params",
+                                      [p{py::object{params}}](const py::object &) { return p; });
     register_inner_solver_methods<PANOCSolver, Problem, InnerSolver>(panoc_solver);
 }
 

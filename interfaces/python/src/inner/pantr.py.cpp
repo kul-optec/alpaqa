@@ -37,8 +37,8 @@ void register_pantr(py::module_ &m) {
 
     // ----------------------------------------------------------------------------------------- //
     using PANTRParams = alpaqa::PANTRParams<config_t>;
-    register_dataclass<PANTRParams>(m, "PANTRParams",
-                                    "C++ documentation: :cpp:class:`alpaqa::PANTRParams`");
+    auto params       = register_dataclass<PANTRParams>(
+        m, "PANTRParams", "C++ documentation: :cpp:class:`alpaqa::PANTRParams`");
 
     // ----------------------------------------------------------------------------------------- //
     using PANTRProgressInfo = alpaqa::PANTRProgressInfo<config_t>;
@@ -100,7 +100,9 @@ void register_pantr(py::module_ &m) {
                                         typename PANTRSolver::Direction{direction}};
                  }),
              "pantr_params"_a, "direction"_a, "Create a PANTR solver using a custom direction.")
-        .def_property_readonly("direction", member_ref<&PANTRSolver::direction>());
+        .def_property_readonly("direction", member_ref<&PANTRSolver::direction>())
+        .def_property_readonly_static("Params",
+                                      [p{py::object{params}}](const py::object &) { return p; });
     register_inner_solver_methods<PANTRSolver, Problem, InnerSolver>(pantr_solver);
 }
 
