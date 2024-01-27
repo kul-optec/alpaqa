@@ -34,8 +34,8 @@ void register_zerofpr(py::module_ &m) {
 
     // ----------------------------------------------------------------------------------------- //
     using ZeroFPRParams = alpaqa::ZeroFPRParams<config_t>;
-    register_dataclass<ZeroFPRParams>(m, "ZeroFPRParams",
-                                      "C++ documentation: :cpp:class:`alpaqa::ZeroFPRParams`");
+    auto params         = register_dataclass<ZeroFPRParams>(
+        m, "ZeroFPRParams", "C++ documentation: :cpp:class:`alpaqa::ZeroFPRParams`");
 
     // ----------------------------------------------------------------------------------------- //
     using ZeroFPRProgressInfo = alpaqa::ZeroFPRProgressInfo<config_t>;
@@ -96,7 +96,9 @@ void register_zerofpr(py::module_ &m) {
                                       typename ZeroFPRSolver::Direction{direction}};
              }),
              "zerofpr_params"_a, "direction"_a, "Create a ZeroFPR solver using a custom direction.")
-        .def_property_readonly("direction", member_ref<&ZeroFPRSolver::direction>());
+        .def_property_readonly("direction", member_ref<&ZeroFPRSolver::direction>())
+        .def_property_readonly_static("Params",
+                                      [p{py::object{params}}](const py::object &) { return p; });
     register_inner_solver_methods<ZeroFPRSolver, Problem, InnerSolver>(zfpr_solver);
 }
 

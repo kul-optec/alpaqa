@@ -29,8 +29,8 @@ void register_fista(py::module_ &m) {
 
     // ----------------------------------------------------------------------------------------- //
     using FISTAParams = alpaqa::FISTAParams<config_t>;
-    register_dataclass<FISTAParams>(m, "FISTAParams",
-                                    "C++ documentation: :cpp:class:`alpaqa::FISTAParams`");
+    auto params       = register_dataclass<FISTAParams>(
+        m, "FISTAParams", "C++ documentation: :cpp:class:`alpaqa::FISTAParams`");
 
     // ----------------------------------------------------------------------------------------- //
     using FISTAProgressInfo = alpaqa::FISTAProgressInfo<config_t>;
@@ -76,7 +76,9 @@ void register_fista(py::module_ &m) {
                  return FISTASolver{var_kwargs_to_struct(params)};
              }),
              "fista_params"_a = py::dict{},
-             "Create a FISTA solver using structured L-BFGS directions.");
+             "Create a FISTA solver using structured L-BFGS directions.")
+        .def_property_readonly_static("Params",
+                                      [p{py::object{params}}](const py::object &) { return p; });
     register_inner_solver_methods<FISTASolver, Problem, InnerSolver>(fista_solver);
 }
 

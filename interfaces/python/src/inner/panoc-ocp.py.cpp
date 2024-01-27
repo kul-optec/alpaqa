@@ -29,8 +29,8 @@ void register_panoc_ocp(py::module_ &m) {
 
     // ----------------------------------------------------------------------------------------- //
     using PANOCOCPParams = alpaqa::PANOCOCPParams<config_t>;
-    register_dataclass<PANOCOCPParams>(m, "PANOCOCPParams",
-                                       "C++ documentation: :cpp:class:`alpaqa::PANOCOCPParams`");
+    auto params          = register_dataclass<PANOCOCPParams>(
+        m, "PANOCOCPParams", "C++ documentation: :cpp:class:`alpaqa::PANOCOCPParams`");
 
     using PANOCOCPProgressInfo = alpaqa::PANOCOCPProgressInfo<config_t>;
     py::class_<PANOCOCPProgressInfo>(m, "PANOCOCPProgressInfo",
@@ -77,7 +77,9 @@ void register_panoc_ocp(py::module_ &m) {
         .def(py::init([](params_or_dict<PANOCOCPParams> params) {
                  return PANOCOCPSolver{var_kwargs_to_struct(params)};
              }),
-             "panoc_params"_a, "Create a PANOC solver.");
+             "panoc_params"_a, "Create a PANOC solver.")
+        .def_property_readonly_static("Params",
+                                      [p{py::object{params}}](const py::object &) { return p; });
     register_inner_solver_methods<PANOCOCPSolver, ControlProblem, InnerOCPSolver>(panoc_ocp_solver);
 }
 
