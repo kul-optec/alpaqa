@@ -76,6 +76,12 @@ set_target_properties(_alpaqa PROPERTIES
     RELWITHDEBINFO_POSTFIX ""
     MINSIZEREL_POSTFIX ""
 )
+include(GenerateExportHeader)
+generate_export_header(_alpaqa
+    BASE_NAME alpaqa_python
+    EXPORT_FILE_NAME export-python/alpaqa-python/export.h)
+target_include_directories(_alpaqa PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export-python>)
 set(ALPAQA_PYTHON_DEBUG_CONFIG "Debug" CACHE STRING "")
 set_property(CACHE ALPAQA_PYTHON_DEBUG_CONFIG PROPERTY STRINGS
     ${CMAKE_CONFIGURATION_TYPES})

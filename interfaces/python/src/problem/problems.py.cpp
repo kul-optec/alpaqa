@@ -1,4 +1,5 @@
 #include <alpaqa/config/config.hpp>
+#include <alpaqa-python/export.h>
 #include <pybind11/eigen.h>
 #include <pybind11/functional.h>
 #include <pybind11/pybind11.h>
@@ -25,6 +26,12 @@ using namespace py::literals;
 #endif
 #if ALPAQA_WITH_DL
 #include <alpaqa/dl/dl-problem.hpp>
+#endif
+
+// Export RTTI for types passed by std::any
+#if ALPAQA_WITH_DL
+template class ALPAQA_PYTHON_EXPORT std::span<std::string_view>;
+template class ALPAQA_PYTHON_EXPORT std::tuple<py::args, py::kwargs>;
 #endif
 
 #include <util/copy.hpp>
