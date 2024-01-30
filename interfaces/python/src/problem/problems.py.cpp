@@ -32,6 +32,8 @@ using namespace py::literals;
 #if ALPAQA_WITH_DL
 template class ALPAQA_PYTHON_EXPORT std::span<std::string_view>;
 template class ALPAQA_PYTHON_EXPORT std::tuple<py::args, py::kwargs>;
+template class ALPAQA_PYTHON_EXPORT
+    alpaqa::detail::function_wrapper_t<py::object(void *, py::args, py::kwargs)>;
 #endif
 
 #include <util/copy.hpp>

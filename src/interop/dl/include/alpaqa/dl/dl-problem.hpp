@@ -39,7 +39,8 @@ class ExtraFuncs {
             throw std::out_of_range("DLProblem: no extra function named \"" +
                                     name + '"');
         try {
-            return std::any_cast<const std::function<Signature> &>(it->second);
+            using func_t = detail::function_wrapper_t<Signature>;
+            return std::any_cast<const func_t &>(it->second).function;
         } catch (const std::bad_any_cast &) {
             throw std::logic_error(
                 "DLProblem: incorrect type for extra function \"" + name +
