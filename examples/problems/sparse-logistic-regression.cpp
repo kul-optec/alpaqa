@@ -223,11 +223,13 @@ struct Problem {
 /// Main entry point of this file, it is called by the
 /// @ref alpaqa::dl::DLProblem class.
 extern "C" SPARSE_LOGISTIC_REGRESSION_EXPORT alpaqa_problem_register_t
-register_alpaqa_problem(void *user_data_v) noexcept try {
+register_alpaqa_problem(alpaqa_register_arg_t user_data_v) noexcept try {
     // Check and convert user arguments
-    if (!user_data_v)
+    if (!user_data_v.data)
         throw std::invalid_argument("Missing user data");
-    const auto &user_data = *reinterpret_cast<std::any *>(user_data_v);
+    if (user_data_v.type != alpaqa_register_arg_t::alpaqa_register_arg_std_any)
+        throw std::invalid_argument("Invalid user data type");
+    const auto &user_data = *reinterpret_cast<std::any *>(user_data_v.data);
     using param_t         = std::span<std::string_view>;
     auto opts             = std::any_cast<param_t>(user_data);
     std::vector<unsigned> used(opts.size());

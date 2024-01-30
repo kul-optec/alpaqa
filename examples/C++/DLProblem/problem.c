@@ -68,7 +68,7 @@ static void initialize_box_D(void *instance, real_t *lb, real_t *ub) {
     ub[0] = -1;
 }
 
-static struct ProblemData *create_problem(void *user_data) {
+static struct ProblemData *create_problem(alpaqa_register_arg_t user_data) {
     (void)user_data;
     struct ProblemData *problem = malloc(sizeof(*problem));
     size_t n = 2, m = 1;
@@ -105,7 +105,7 @@ static void cleanup_problem(void *instance) {
 }
 
 PROBLEM_C_EXPORT alpaqa_problem_register_t
-register_alpaqa_problem(void *user_data) {
+register_alpaqa_problem(alpaqa_register_arg_t user_data) {
     struct ProblemData *problem = create_problem(user_data);
     alpaqa_problem_register_t result;
     ALPAQA_PROBLEM_REGISTER_INIT(&result);

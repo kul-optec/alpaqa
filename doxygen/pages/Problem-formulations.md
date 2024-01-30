@@ -226,8 +226,8 @@ problem instance, and a pointer to a struct of type
 @ref alpaqa_problem_functions_t, which contains function pointers to all problem
 functions.
 
-Additional user-defined arguments can be passed through a void pointer parameter
-of the `register_alpaqa_problem` function.
+Additional user-defined arguments can be passed through a parameter with type
+@ref alpaqa_register_arg_t of the `register_alpaqa_problem` function.
 
 In C++, you could register a problem like this:
 
@@ -264,7 +264,7 @@ struct Problem {
 
 /// Main entry point: called by the @ref alpaqa::dl::DLProblem class.
 extern "C" alpaqa_problem_register_t
-register_alpaqa_problem(void *user_data_v) noexcept try {
+register_alpaqa_problem(alpaqa_register_arg_t user_data) noexcept try {
     auto problem = std::make_unique<Problem>(/* ... */);
     alpaqa_problem_register_t result;
     alpaqa::register_member_function(result, "get_name", &Problem::get_name);
