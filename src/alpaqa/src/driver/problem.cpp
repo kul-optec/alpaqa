@@ -104,7 +104,7 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
     std::any dl_opt    = prob_opts;
     LoadedProblem problem{
         .problem  = TEProblem::make<CntProblem>(std::in_place, full_path,
-                                               register_name, &dl_opt),
+                                               register_name, dl_opt),
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };

@@ -9,6 +9,7 @@
 
 #include <filesystem>
 #include <memory>
+#include <span>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -101,10 +102,31 @@ class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
         /// Filename of the shared library to load.
         const std::filesystem::path &so_filename,
         /// Name of the problem registration function.
-        /// Should have signature `alpaqa_problem_register_t(void *)`.
+        /// Should have signature
+        /// `alpaqa_problem_register_t(alpaqa_register_arg_t user_param)`.
         const std::string &function_name = "register_alpaqa_problem",
         /// Pointer to custom user data to pass to the registration function.
-        void *user_param = nullptr);
+        alpaqa_register_arg_t user_param = {});
+    /// Load a problem from a shared library.
+    DLProblem(
+        /// Filename of the shared library to load.
+        const std::filesystem::path &so_filename,
+        /// Name of the problem registration function.
+        /// Should have signature
+        /// `alpaqa_problem_register_t(alpaqa_register_arg_t user_param)`.
+        const std::string &function_name,
+        /// Custom user data to pass to the registration function.
+        std::any &user_param);
+    /// Load a problem from a shared library.
+    DLProblem(
+        /// Filename of the shared library to load.
+        const std::filesystem::path &so_filename,
+        /// Name of the problem registration function.
+        /// Should have signature
+        /// `alpaqa_problem_register_t(alpaqa_register_arg_t user_param)`.
+        const std::string &function_name,
+        /// Custom string arguments to pass to the registration function.
+        std::span<std::string_view> user_param);
 
   private:
     /// Handle to the shared module defining the problem.
@@ -209,10 +231,11 @@ class DL_LOADER_EXPORT DLControlProblem {
         /// Filename of the shared library to load.
         const std::filesystem::path &so_filename,
         /// Name of the problem registration function.
-        /// Should have signature `alpaqa_control_problem_register_t(void *)`.
+        /// Should have signature
+        /// `alpaqa_control_problem_register_t(alpaqa_register_arg_t user_param)`.
         const std::string &function_name = "register_alpaqa_control_problem",
         /// Pointer to custom user data to pass to the registration function.
-        void *user_param = nullptr);
+        alpaqa_register_arg_t user_param = {});
 
   private:
     /// Handle to the shared module defining the problem.

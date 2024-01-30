@@ -200,13 +200,14 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
 } // namespace
 
 DLProblem::DLProblem(const std::filesystem::path &so_filename,
-                     const std::string &function_name, void *user_param)
+                     const std::string &function_name,
+                     alpaqa_register_arg_t user_param)
     : BoxConstrProblem{0, 0} {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle = load_lib(so_filename);
-    auto *register_func =
-        load_func<problem_register_t(void *)>(handle.get(), function_name);
+    handle              = load_lib(so_filename);
+    auto *register_func = load_func<problem_register_t(alpaqa_register_arg_t)>(
+        handle.get(), function_name);
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};
@@ -254,6 +255,21 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
         }
     }
 }
+
+DLProblem::DLProblem(const std::filesystem::path &so_filename,
+                     const std::string &function_name, std::any &user_param)
+    : DLProblem{so_filename, function_name,
+                alpaqa_register_arg_t{
+                    reinterpret_cast<void *>(&user_param),
+                    alpaqa_register_arg_t::alpaqa_register_arg_std_any}} {}
+
+DLProblem::DLProblem(const std::filesystem::path &so_filename,
+                     const std::string &function_name,
+                     std::span<std::string_view> user_param)
+    : DLProblem{so_filename, function_name,
+                alpaqa_register_arg_t{
+                    reinterpret_cast<void *>(&user_param),
+                    alpaqa_register_arg_t::alpaqa_register_arg_strings}} {}
 
 auto DLProblem::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
                                     rvec p) const -> real_t {
@@ -322,12 +338,13 @@ bool DLProblem::provides_eval_inactive_indices_res_lna() const { return function
 
 DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
                                    const std::string &function_name,
-                                   void *user_param) {
+                                   alpaqa_register_arg_t user_param) {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle              = load_lib(so_filename);
-    auto *register_func = load_func<control_problem_register_t(void *)>(
-        handle.get(), function_name);
+    handle = load_lib(so_filename);
+    auto *register_func =
+        load_func<control_problem_register_t(alpaqa_register_arg_t)>(
+            handle.get(), function_name);
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};

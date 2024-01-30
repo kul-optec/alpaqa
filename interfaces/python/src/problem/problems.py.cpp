@@ -650,17 +650,28 @@ void register_problems(py::module_ &m) {
         dl_problem.def(
             py::init([](const std::string &so_filename, py::args args, std::string function_name,
                         bool user_param_str, py::kwargs kwargs) {
-                std::any user_param;
-                std::vector<std::string_view> str_opts;
                 if (user_param_str) {
+                    std::vector<std::string_view> str_opts;
                     str_opts.resize(args.size());
                     std::transform(args.begin(), args.end(), str_opts.begin(),
                                    [](const auto &e) { return py::cast<std::string_view>(e); });
-                    user_param = std::span<std::string_view>(str_opts);
+                    std::span<std::string_view> user_param{str_opts};
+                    return DLProblem{
+                        so_filename,
+                        std::move(function_name),
+                        user_param,
+                    };
                 } else {
-                    user_param = std::make_tuple(std::move(args), std::move(kwargs));
+                    std::tuple<py::args, py::kwargs> user_param{
+                        std::move(args),
+                        std::move(kwargs),
+                    };
+                    return DLProblem{
+                        so_filename,
+                        std::move(function_name),
+                        {&user_param, alpaqa_register_arg_t::alpaqa_register_arg_py_args},
+                    };
                 }
-                return DLProblem{so_filename, std::move(function_name), &user_param};
             }),
             "so_filename"_a, py::kw_only{}, "function_name"_a = "register_alpaqa_problem",
             "user_param_str"_a = false,
