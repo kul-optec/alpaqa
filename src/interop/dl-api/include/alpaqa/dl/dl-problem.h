@@ -7,6 +7,18 @@
 
 #define ALPAQA_DL_ABI_VERSION 0xA1A000000004
 
+#ifdef _WIN32
+#ifdef ALPAQA_DL_PROBLEM_EXPORTS // TODO: what's the right approach on Windows?
+#define ALPAQA_DL_PROBLEM_EXPORT __declspec(dllexport)
+#else
+#define ALPAQA_DL_PROBLEM_EXPORT __declspec(dllimport)
+#endif
+#elif defined(__GNUC__)
+#define ALPAQA_DL_PROBLEM_EXPORT __attribute__((visibility("default")))
+#else
+#define ALPAQA_DL_PROBLEM_EXPORT
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #define ALPAQA_BEGIN_STRUCT(name) struct name
@@ -654,6 +666,13 @@ using control_problem_register_t  = alpaqa_control_problem_register_t;
 using problem_functions_t         = alpaqa_problem_functions_t;
 using control_problem_functions_t = alpaqa_control_problem_functions_t;
 
+namespace detail {
+template <class Signature>
+struct ALPAQA_DL_PROBLEM_EXPORT function_wrapper_t {
+    std::function<Signature> function;
+};
+} // namespace detail
+
 /// Make the given function available to alpaqa.
 /// @see @ref alpaqa::dl::DLProblem::call_extra_func
 /// @see @ref alpaqa::dl::DLControlProblem::call_extra_func
@@ -663,7 +682,8 @@ void register_function(function_dict_t *&extra_functions, std::string name,
     if (extra_functions == nullptr)
         extra_functions = new function_dict_t{};
     extra_functions->dict.insert_or_assign(
-        std::move(name), std::function{std::forward<Func>(func)});
+        std::move(name),
+        detail::function_wrapper_t{std::function{std::forward<Func>(func)}});
 }
 
 template <class Func>
