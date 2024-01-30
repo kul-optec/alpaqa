@@ -1,3 +1,4 @@
+#include <alpaqa/export.h>
 #include <alpaqa/params/params.hpp>
 #include <alpaqa/params/vec-from-file.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
@@ -19,11 +20,15 @@
 #include <span>
 #include <stdexcept>
 #include <string>
+namespace fs = std::filesystem;
 
 #include "options.hpp"
 #include "problem.hpp"
 
-namespace fs = std::filesystem;
+// Export RTTI for types passed by std::any
+#if ALPAQA_WITH_DL
+template class ALPAQA_EXPORT std::span<std::string_view>;
+#endif
 
 namespace {
 
