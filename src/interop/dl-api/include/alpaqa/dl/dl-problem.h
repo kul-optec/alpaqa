@@ -7,12 +7,9 @@
 
 #define ALPAQA_DL_ABI_VERSION 0xA1A000000004
 
-#ifdef _WIN32
-#ifdef ALPAQA_DL_PROBLEM_EXPORTS // TODO: what's the right approach on Windows?
-#define ALPAQA_DL_PROBLEM_EXPORT __declspec(dllexport)
-#else
-#define ALPAQA_DL_PROBLEM_EXPORT __declspec(dllimport)
-#endif
+#ifdef ALPAQA_DL_PROBLEM_EXPORT
+#elif defined(_WIN32)
+#define ALPAQA_DL_PROBLEM_EXPORT
 #elif defined(__GNUC__)
 #define ALPAQA_DL_PROBLEM_EXPORT __attribute__((visibility("default")))
 #else
