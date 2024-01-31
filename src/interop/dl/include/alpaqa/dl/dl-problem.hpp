@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/dl-loader-export.h>
 #include <alpaqa/dl/dl-problem.h>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
@@ -90,7 +91,7 @@ class ExtraFuncs {
 /// @see @ref   TypeErasedProblem
 /// @see @ref   alpaqa_problem_functions_t
 /// @see @ref   alpaqa_problem_register_t
-class DLProblem : public BoxConstrProblem<DefaultConfig> {
+class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
   public:
     USING_ALPAQA_CONFIG(DefaultConfig);
     using Sparsity = alpaqa::Sparsity<config_t>;
@@ -198,7 +199,7 @@ class DLProblem : public BoxConstrProblem<DefaultConfig> {
 ///
 /// @ingroup    grp_Problems
 /// @see @ref   TypeErasedControlProblem
-class DLControlProblem {
+class DL_LOADER_EXPORT DLControlProblem {
   public:
     USING_ALPAQA_CONFIG(DefaultConfig);
     using Box = alpaqa::Box<config_t>;

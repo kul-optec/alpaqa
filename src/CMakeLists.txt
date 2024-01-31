@@ -204,9 +204,14 @@ if (ALPAQA_WITH_DL)
     target_link_libraries(dl-loader
         PUBLIC alpaqa::alpaqa alpaqa::dl-api
         PRIVATE ${CMAKE_DL_LIBS} alpaqa::warnings)
+    alpaqa_configure_visibility(dl-loader)
     set_target_properties(dl-loader PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::dl-loader ALIAS dl-loader)
     list(APPEND ALPAQA_INSTALL_TARGETS dl-loader)
+    generate_export_header(dl-loader
+        EXPORT_FILE_NAME export/alpaqa/dl-loader-export.h)
+    target_include_directories(dl-loader PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
 endif()
 
 if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
