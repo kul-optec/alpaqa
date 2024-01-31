@@ -664,10 +664,14 @@ using problem_functions_t         = alpaqa_problem_functions_t;
 using control_problem_functions_t = alpaqa_control_problem_functions_t;
 
 namespace detail {
+/// Custom type for which we can export the RTTI to support std::any across
+/// shared library boundaries when using libc++.
 template <class Signature>
 struct ALPAQA_DL_PROBLEM_EXPORT function_wrapper_t {
     std::function<Signature> function;
 };
+template <class Signature>
+function_wrapper_t(std::function<Signature>) -> function_wrapper_t<Signature>;
 } // namespace detail
 
 /// Make the given function available to alpaqa.
