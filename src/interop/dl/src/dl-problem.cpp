@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cassert>
 #include <charconv>
+#include <iostream>
 #include <list>
 #include <memory>
 #include <mutex>
@@ -35,7 +36,7 @@ void check_abi_version(uint64_t abi_version) {
     if (abi_version != ALPAQA_DL_ABI_VERSION) {
         auto prob_version   = format_abi_version(abi_version);
         auto alpaqa_version = format_abi_version(ALPAQA_DL_ABI_VERSION);
-        throw std::runtime_error(
+        throw invalid_abi_error(
             "alpaqa::dl::DLProblem::DLProblem: "
             "Incompatible problem definition (problem ABI version 0x" +
             prob_version + ", this version of alpaqa supports 0x" +
@@ -62,8 +63,8 @@ std::shared_ptr<void> load_lib(const std::filesystem::path &so_filename) {
     assert(!so_filename.empty());
     void *h = LoadLibraryW(so_filename.c_str());
     if (!h)
-        throw std::runtime_error("Unable to load \"" + so_filename.string() +
-                                 "\": " + get_last_error_msg().get());
+        throw function_load_error("Unable to load \"" + so_filename.string() +
+                                  "\": " + get_last_error_msg().get());
 #if ALPAQA_NO_DLCLOSE
     return std::shared_ptr<void>{h, +[](void *) {}};
 #else
@@ -77,8 +78,8 @@ F *load_func(void *handle, const std::string &name) {
     assert(handle);
     auto *h = GetProcAddress(static_cast<HMODULE>(handle), name.c_str());
     if (!h)
-        throw std::runtime_error("Unable to load function '" + name +
-                                 "': " + get_last_error_msg().get());
+        throw function_load_error("Unable to load function '" + name +
+                                  "': " + get_last_error_msg().get());
     // We can only hope that the user got the signature right ...
     return reinterpret_cast<F *>(h);
 }
@@ -88,7 +89,7 @@ std::shared_ptr<void> load_lib(const std::filesystem::path &so_filename) {
     ::dlerror();
     void *h = ::dlopen(so_filename.c_str(), RTLD_LOCAL | RTLD_NOW);
     if (auto *err = ::dlerror())
-        throw std::runtime_error(err);
+        throw function_load_error(err);
 #if ALPAQA_NO_DLCLOSE
     return std::shared_ptr<void>{h, +[](void *) {}};
 #else
@@ -102,8 +103,8 @@ F *load_func(void *handle, const std::string &name) {
     ::dlerror();
     auto *h = ::dlsym(handle, name.c_str());
     if (auto *err = ::dlerror())
-        throw std::runtime_error("Unable to load function '" + name +
-                                 "': " + err);
+        throw function_load_error("Unable to load function '" + name +
+                                  "': " + err);
     // We can only hope that the user got the signature right ...
     return reinterpret_cast<F *>(h);
 }
@@ -205,7 +206,17 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
     : BoxConstrProblem{0, 0} {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle              = load_lib(so_filename);
+    handle = load_lib(so_filename);
+    try {
+        auto *version_func = load_func<alpaqa_dl_abi_version_t(void)>(
+            handle.get(), function_name + "_version");
+        check_abi_version(version_func());
+    } catch (const function_load_error &) {
+        std::cerr << "Warning: problem " << so_filename
+                  << " does not provide a function to query the ABI version, "
+                     "alpaqa_dl_abi_version_t "
+                  << function_name << "_version(void)\n";
+    }
     auto *register_func = load_func<problem_register_t(alpaqa_register_arg_t)>(
         handle.get(), function_name);
     auto r = register_func(user_param);
@@ -342,6 +353,16 @@ DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
     handle = load_lib(so_filename);
+    try {
+        auto *version_func = load_func<alpaqa_dl_abi_version_t(void)>(
+            handle.get(), function_name + "_version");
+        check_abi_version(version_func());
+    } catch (const function_load_error &) {
+        std::cerr << "Warning: problem " << so_filename
+                  << " does not provide a function to query the ABI version, "
+                     "alpaqa_dl_abi_version_t "
+                  << function_name << "_version(void)\n";
+    }
     auto *register_func =
         load_func<control_problem_register_t(alpaqa_register_arg_t)>(
             handle.get(), function_name);

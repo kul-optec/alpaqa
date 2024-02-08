@@ -275,6 +275,10 @@ register_alpaqa_problem(alpaqa_register_arg_t user_data) noexcept try {
 } catch (...) {
     return {.exception = new alpaqa_exception_ptr_t{std::current_exception()}};
 }
+
+/// Used by @ref alpaqa::dl::DLProblem to ensure binary compatibility.
+extern "C" alpaqa_dl_abi_version_t
+register_alpaqa_problem_version() { return ALPAQA_DL_ABI_VERSION; }
 ```
 
 A full example can be found in @ref problems/sparse-logistic-regression.cpp.

@@ -187,7 +187,7 @@
  * problem, and a pointer to the provided functions (the `funcs` member from
  * earlier).
  *
- * The entry point also accepts a pointer to type-erased user data. You can
+ * The entry point also accepts an argument with type-erased user data. You can
  * use this to pass any additional data to the problem constructor, such as
  * problem parameters. When using the `alpaqa-driver` program, the type of this
  * user data is always `std::any *`. Inside of the `std::any`, there is a span
