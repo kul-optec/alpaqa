@@ -9,11 +9,15 @@ function(alpaqa_configure_dl_problem_visibility target)
     if (CMAKE_SYSTEM_NAME MATCHES "Linux")
         set(VERSION_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/${target}-export.lds")
         file(WRITE ${VERSION_SCRIPT}
-            "{ local: *;"
-            " global: ${ALPAQA_CONFIG_VIS_FUNCTION_NAME};"
-            " global: ${ALPAQA_CONFIG_VIS_FUNCTION_NAME}_version;"
-            " global: _ZTI*;"
-            " global: _ZTS*; };")
+            "{\n"
+            "  global:\n"
+            "    ${ALPAQA_CONFIG_VIS_FUNCTION_NAME};\n"
+            "    ${ALPAQA_CONFIG_VIS_FUNCTION_NAME}_version;\n"
+            "    _ZTI*;\n"
+            "    _ZTS*;\n\n"
+            "  local:\n"
+            "    *;\n"
+            "};")
         target_link_options(${target} PRIVATE
             "LINKER:--version-script=${VERSION_SCRIPT}"
             "LINKER:--exclude-libs,ALL")
