@@ -260,3 +260,11 @@ register_alpaqa_problem(alpaqa_register_arg_t user_data_v) noexcept try {
 } catch (...) {
     return {.exception = new alpaqa_exception_ptr_t{std::current_exception()}};
 }
+
+/// Returns the alpaqa DL ABI version. This version is verified for
+/// compatibility by the @ref alpaqa::dl::DLProblem constructor before
+/// registering the problem.
+extern "C" SPARSE_LOGISTIC_REGRESSION_EXPORT alpaqa_dl_abi_version_t
+register_alpaqa_problem_version() {
+    return ALPAQA_DL_ABI_VERSION;
+}

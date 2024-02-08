@@ -31,6 +31,7 @@ extern "C" {
 typedef double alpaqa_real_t;
 typedef ptrdiff_t alpaqa_length_t;
 typedef alpaqa_length_t alpaqa_index_t;
+typedef uint64_t alpaqa_dl_abi_version_t;
 
 /// User-provided argument that is passed to the problem registration functions.
 ALPAQA_BEGIN_STRUCT(alpaqa_register_arg_t) {
@@ -418,7 +419,7 @@ typedef struct alpaqa_exception_ptr_s alpaqa_exception_ptr_t;
 ALPAQA_BEGIN_STRUCT(alpaqa_problem_register_t) {
     /// To check whether the loaded problem is compatible with the version of
     /// the solver.
-    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
+    alpaqa_dl_abi_version_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     /// Owning pointer.
     void *instance ALPAQA_DEFAULT(nullptr);
     /// Non-owning pointer, lifetime at least as long as @ref instance.
@@ -594,7 +595,7 @@ ALPAQA_END_STRUCT(alpaqa_control_problem_functions_t);
 ALPAQA_BEGIN_STRUCT(alpaqa_control_problem_register_t) {
     /// To check whether the loaded problem is compatible with the version of
     /// the solver.
-    uint64_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
+    alpaqa_dl_abi_version_t abi_version ALPAQA_DEFAULT(ALPAQA_DL_ABI_VERSION);
     /// Owning pointer.
     void *instance ALPAQA_DEFAULT(nullptr);
     /// Non-owning pointer, lifetime at least as long as @ref instance.

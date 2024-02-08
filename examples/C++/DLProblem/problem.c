@@ -1,5 +1,5 @@
 #include <alpaqa/dl/dl-problem.h>
-#include <problem-c-export.h>
+#include <problem-c/export.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -113,4 +113,8 @@ register_alpaqa_problem(alpaqa_register_arg_t user_data) {
     result.cleanup   = &cleanup_problem;
     result.functions = &problem->functions;
     return result;
+}
+
+PROBLEM_C_EXPORT alpaqa_dl_abi_version_t register_alpaqa_problem_version(void) {
+    return ALPAQA_DL_ABI_VERSION;
 }

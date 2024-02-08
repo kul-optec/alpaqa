@@ -17,6 +17,14 @@
 
 namespace alpaqa::dl {
 
+struct DL_LOADER_EXPORT invalid_abi_error : std::runtime_error {
+    using std::runtime_error::runtime_error;
+};
+
+struct DL_LOADER_EXPORT function_load_error : std::runtime_error {
+    using std::runtime_error::runtime_error;
+};
+
 class ExtraFuncs {
   public:
     /// Unique type for calling an extra function that is a member function.
