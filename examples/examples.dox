@@ -190,8 +190,9 @@
  * The entry point also accepts an argument with type-erased user data. You can
  * use this to pass any additional data to the problem constructor, such as
  * problem parameters. When using the `alpaqa-driver` program, the type of this
- * user data is always `std::any *`. Inside of the `std::any`, there is a span
- * of string views containing the problem-specific command line options.  
+ * user data is always a span of string views containing the problem-specific
+ * command line options (indicated by @ref alpaqa_register_arg_t::type being set
+ * to @ref alpaqa_register_arg_strings).  
  * In this example, the `datafile` and `λ_factor` options are supported.
  * The former selects the CSV file to load the data from, the latter controls
  * the regularization parameter.
