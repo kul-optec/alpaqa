@@ -46,7 +46,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a7
+        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a11
       # Build
       - name: Native build
         run: |
@@ -127,7 +127,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a7
+        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a11
       # Download stubs
       - name: Download stubs
         uses: actions/download-artifact@v3
@@ -146,7 +146,7 @@ jobs:
           config = ["Debug", "Release"]
           generator = "Ninja Multi-Config"
           [cmake.options]
-          CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
+          CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.11.1;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           ALPAQA_WITH_CUTEST = "On"
           EOF
@@ -216,7 +216,7 @@ jobs:
           config = ["Debug"]
           generator = "Ninja Multi-Config"
           [cmake.options]
-          CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
+          CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.11.1;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           ALPAQA_WITH_CUTEST = "On"
           EOF
@@ -309,7 +309,7 @@ jobs:
         run: |
           cat > py-build-cmake.local.toml <<- EOF
           [cmake.options]
-          CMAKE_Fortran_COMPILER = ""
+          CMAKE_Fortran_COMPILER = "NOTFOUND"
           EOF
         shell: bash
       - name: Build wheels

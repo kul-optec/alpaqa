@@ -40,8 +40,8 @@ alpaqa = "alpaqa.__main__:main"
 
 [build-system]
 requires = [
-    "py-build-cmake~=0.2.0a7",
-    "pybind11>=2.10.1,!=2.10.2,!=2.10.3,!=2.10.4,!=2.11.*",
+    "py-build-cmake~=0.2.0a11",
+    "pybind11==2.11.1",
     "pybind11-stubgen~=0.16.2",
 ]
 build-backend = "py_build_cmake.build"
@@ -81,6 +81,7 @@ install_components = ["python_modules", "python_stubs"]
 "ALPAQA_WITH_UBSAN_DEBUG:BOOL" = "Off"
 "ALPAQA_WITH_ASAN_DEBUG:BOOL" = "Off"
 "ALPAQA_DEBUG_CHECKS_EIGEN:BOOL" = "On"
+"CMAKE_BUILD_TYPE" = "Debug"  # Forces pybind11 to keep debug symbols (https://github.com/pybind/pybind11/issues/4454)
 
 [tool.py-build-cmake.linux.cmake]
 config = ["Debug", "Release"]

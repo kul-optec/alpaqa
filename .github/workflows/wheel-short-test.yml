@@ -63,7 +63,7 @@ jobs:
           config = ["${{ matrix.config }}"]
           generator = "Ninja Multi-Config"
           [cmake.options]
-          CMAKE_FIND_ROOT_PATH = "$staging/pybind11;$staging/eigen-master;$staging/casadi"
+          CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.11.1;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           ALPAQA_WITH_CUTEST = "On"
           EOF
@@ -203,7 +203,7 @@ jobs:
         run: |
           cat > py-build-cmake.local.toml <<- EOF
           [cmake.options]
-          CMAKE_Fortran_COMPILER = ""
+          CMAKE_Fortran_COMPILER = "NOTFOUND"
           EOF
         shell: bash
       - name: Build wheels
