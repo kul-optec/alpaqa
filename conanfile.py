@@ -73,7 +73,7 @@ class AlpaqaRecipe(ConanFile):
         if self.options.with_json:
             self.requires("nlohmann_json/3.11.2", transitive_headers=True)
         if self.options.with_python:
-            self.requires("pybind11/2.10.1")
+            self.requires("pybind11/2.11.1")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.1")
         if self.options.with_blas:

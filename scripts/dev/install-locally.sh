@@ -7,7 +7,7 @@ set -ex
 triple="x86_64-centos7-linux-gnu"
 
 # Download compiler
-download_url="https://github.com/tttapa/cross-python/releases/download/0.1.0"
+download_url="https://github.com/tttapa/cross-python/releases/download/0.1.2"
 tools_dir="$PWD/toolchains"
 pfx="$tools_dir/$triple"
 mkdir -p "$tools_dir"
@@ -18,10 +18,10 @@ fi
 
 # Install QPALM
 if [ ! -d "$pfx/qpalm" ]; then
-    qpalm_download="https://github.com/kul-optec/QPALM/releases/download/1.2.1"
-    wget "$qpalm_download/QPALM-1.2.1-Linux.tar.gz" -O- | \
+    qpalm_download="https://github.com/kul-optec/QPALM/releases/download/1.2.2"
+    wget "$qpalm_download/QPALM-1.2.2-Linux.tar.gz" -O- | \
         tar xz -C "$pfx"
-    mv "$pfx/QPALM-1.2.1-Linux" "$pfx/qpalm"
+    mv "$pfx/QPALM-1.2.2-Linux" "$pfx/qpalm"
 fi
 
 # Use ccache to cache compilation
@@ -66,7 +66,7 @@ cat <<- EOF > "$config"
 config = ["Debug", "Release"]
 generator = "Ninja Multi-Config"
 [cmake.options]
-CMAKE_FIND_ROOT_PATH = "$pfx/pybind11-master;$pfx/casadi;$pfx/eigen-master"
+CMAKE_FIND_ROOT_PATH = "$pfx/pybind11-2.11.1;$pfx/casadi;$pfx/eigen-master"
 USE_GLOBAL_PYBIND11 = "On"
 ALPAQA_PYTHON_DEBUG_CONFIG = "Debug"
 ALPAQA_WITH_PY_STUBS = "On"
