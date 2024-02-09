@@ -68,8 +68,6 @@ struct LBFGSParams {
     /// You probably want to keep this as the default.
     /// @see LBFGSStepSize
     LBFGSStepSize stepsize = LBFGSStepSize::BasedOnCurvature;
-    /// Compute dot products and other vector operations in parallel.
-    bool parallel = false;
 };
 
 /// Layout:

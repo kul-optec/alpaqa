@@ -21,7 +21,6 @@ PARAMS_TABLE(LBFGSParams<config_t>,            //
              PARAMS_MEMBER(cbfgs, ""),         //
              PARAMS_MEMBER(force_pos_def, ""), //
              PARAMS_MEMBER(stepsize, ""),      //
-             PARAMS_MEMBER(parallel, ""),      //
 );
 
 PARAMS_TABLE(AndersonAccelParams<config_t>,  //
