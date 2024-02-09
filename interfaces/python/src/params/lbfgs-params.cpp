@@ -8,6 +8,7 @@ PARAMS_TABLE_DEF(alpaqa::LBFGSParams<Conf>,    //
                  PARAMS_MEMBER(cbfgs),         //
                  PARAMS_MEMBER(force_pos_def), //
                  PARAMS_MEMBER(stepsize),      //
+                 PARAMS_MEMBER(parallel),      //
 );
 
 template <alpaqa::Config Conf>
