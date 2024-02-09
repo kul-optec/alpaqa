@@ -33,38 +33,42 @@ typedef ptrdiff_t alpaqa_length_t;
 typedef alpaqa_length_t alpaqa_index_t;
 typedef uint64_t alpaqa_dl_abi_version_t;
 
+typedef enum {
+    /// No type was specified (discouraged).
+    alpaqa_register_arg_unspecified = 0,
+    /// The @ref alpaqa_register_arg_t::data pointer points to a C++ `std::any`
+    /// object. Use `reinterpret_cast<std::any *>(data)` to convert back.
+    /// Then use `std::any_cast` to get the actual value out.
+    /// @warning `std::any` relies on RTTI that is included in both the
+    ///          dynamically loaded problem module and in the code that
+    ///          actually loads that module. Types that need to be passed
+    ///          between the loading and loaded code need to be exported as
+    ///          public classes to ensure that only a single symbol ends up
+    ///          in the final application. If the RTTI symbols are private,
+    ///          each library will end up with its own local copy, and the
+    ///          type information won't compare equal when using libc++,
+    ///          causing `std::any_cast` to fail.
+    alpaqa_register_arg_std_any = 1,
+    /// The @ref alpaqa_register_arg_t::data pointer points to a dynamic C++
+    /// `std::span` of `std::string_view`.
+    /// Use `reinterpret_cast<std::span<std::string_view> *>(data)` to
+    /// convert back.
+    alpaqa_register_arg_strings = 2,
+    /// The @ref alpaqa_register_arg_t::data pointer points to a C++ tuple of
+    /// `pybind11::args` and `pybind11::kwargs`.
+    /// Use `reinterpret_cast<std::tuple<pybind11::args, pybind11::kwargs> *>(data)`
+    /// to convert back.
+    alpaqa_register_arg_py_args = 3,
+} alpaqa_register_arg_type_t;
+
 /// User-provided argument that is passed to the problem registration functions.
 ALPAQA_BEGIN_STRUCT(alpaqa_register_arg_t) {
     /// Pointer to the user-provided argument passed to the problem registration
     /// functions. Use the @ref type member to determine its type.
     void *data ALPAQA_DEFAULT(nullptr);
-    enum {
-        /// No type was specified (discouraged).
-        alpaqa_register_arg_unspecified = 0,
-        /// The @ref data pointer points to a C++ `std::any` object.
-        /// Use `reinterpret_cast<std::any *>(data)` to convert back.
-        /// Then use `std::any_cast` to get the actual value out.
-        /// @warning `std::any` relies on RTTI that is included in both the
-        ///          dynamically loaded problem module and in the code that
-        ///          actually loads that module. Types that need to be passed
-        ///          between the loading and loaded code need to be exported as
-        ///          public classes to ensure that only a single symbol ends up
-        ///          in the final application. If the RTTI symbols are private,
-        ///          each library will end up with its own local copy, and the
-        ///          type information won't compare equal when using libc++,
-        ///          causing `std::any_cast` to fail.
-        alpaqa_register_arg_std_any = 1,
-        /// The @ref data pointer points to a dynamic C++ `std::span` of
-        /// `std::string_view`.
-        /// Use `reinterpret_cast<std::span<std::string_view> *>(data)` to
-        /// convert back.
-        alpaqa_register_arg_strings = 2,
-        /// The @ref data pointer points to a C++ tuple of `pybind11::args` and
-        /// `pybind11::kwargs`.
-        /// Use `reinterpret_cast<std::tuple<pybind11::args, pybind11::kwargs> *>(data)`
-        /// to convert back.
-        alpaqa_register_arg_py_args = 3,
-    } type ALPAQA_DEFAULT(alpaqa_register_arg_unspecified);
+    /// Specifies the type of the data pointed to by @ref data.
+    alpaqa_register_arg_type_t type ALPAQA_DEFAULT(
+        alpaqa_register_arg_unspecified);
 }
 ALPAQA_END_STRUCT(alpaqa_register_arg_t);
 

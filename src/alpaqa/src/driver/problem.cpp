@@ -25,11 +25,6 @@ namespace fs = std::filesystem;
 #include "options.hpp"
 #include "problem.hpp"
 
-// Export RTTI for types passed by std::any
-#if ALPAQA_WITH_DL
-template class ALPAQA_EXPORT std::span<std::string_view>;
-#endif
-
 namespace {
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
@@ -101,10 +96,9 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
     using DLProblem    = alpaqa::dl::DLProblem;
     using CntProblem   = alpaqa::ProblemWithCounters<DLProblem>;
     auto register_name = get_reg_name_option(prob_opts);
-    std::any dl_opt    = prob_opts;
     LoadedProblem problem{
         .problem  = TEProblem::make<CntProblem>(std::in_place, full_path,
-                                               register_name, dl_opt),
+                                               register_name, prob_opts),
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };

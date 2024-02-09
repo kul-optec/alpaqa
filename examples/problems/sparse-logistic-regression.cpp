@@ -227,11 +227,10 @@ register_alpaqa_problem(alpaqa_register_arg_t user_data_v) noexcept try {
     // Check and convert user arguments
     if (!user_data_v.data)
         throw std::invalid_argument("Missing user data");
-    if (user_data_v.type != alpaqa_register_arg_t::alpaqa_register_arg_std_any)
+    if (user_data_v.type != alpaqa_register_arg_strings)
         throw std::invalid_argument("Invalid user data type");
-    const auto &user_data = *reinterpret_cast<std::any *>(user_data_v.data);
-    using param_t         = std::span<std::string_view>;
-    auto opts             = std::any_cast<param_t>(user_data);
+    using param_t    = std::span<std::string_view>;
+    const auto &opts = *reinterpret_cast<param_t *>(user_data_v.data);
     std::vector<unsigned> used(opts.size());
     // CSV file to load dataset from
     std::string_view datafilename;

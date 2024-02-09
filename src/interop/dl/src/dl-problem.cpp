@@ -270,17 +270,15 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
 DLProblem::DLProblem(const std::filesystem::path &so_filename,
                      const std::string &function_name, std::any &user_param)
     : DLProblem{so_filename, function_name,
-                alpaqa_register_arg_t{
-                    reinterpret_cast<void *>(&user_param),
-                    alpaqa_register_arg_t::alpaqa_register_arg_std_any}} {}
+                alpaqa_register_arg_t{reinterpret_cast<void *>(&user_param),
+                                      alpaqa_register_arg_std_any}} {}
 
 DLProblem::DLProblem(const std::filesystem::path &so_filename,
                      const std::string &function_name,
                      std::span<std::string_view> user_param)
     : DLProblem{so_filename, function_name,
-                alpaqa_register_arg_t{
-                    reinterpret_cast<void *>(&user_param),
-                    alpaqa_register_arg_t::alpaqa_register_arg_strings}} {}
+                alpaqa_register_arg_t{reinterpret_cast<void *>(&user_param),
+                                      alpaqa_register_arg_strings}} {}
 
 auto DLProblem::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
                                     rvec p) const -> real_t {

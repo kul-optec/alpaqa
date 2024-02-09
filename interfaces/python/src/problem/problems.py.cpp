@@ -671,7 +671,7 @@ void register_problems(py::module_ &m) {
                     return DLProblem{
                         so_filename,
                         std::move(function_name),
-                        {&user_param, alpaqa_register_arg_t::alpaqa_register_arg_py_args},
+                        {&user_param, alpaqa_register_arg_py_args},
                     };
                 }
             }),
@@ -679,11 +679,10 @@ void register_problems(py::module_ &m) {
             "user_param_str"_a = false,
             "Load a problem from the given shared library file.\n"
             "By default, extra arguments are passed to the problem as a void pointer "
-            "to a ``std::any`` which contains a "
-            "``std::tuple<pybind11::args, pybind11::kwargs>``.\n"
+            "to a ``std::tuple<pybind11::args, pybind11::kwargs>``.\n"
             "If the keyword argument ``user_param_str=True`` is used, the ``args`` "
             "is converted to a list of strings, and passed as a void pointer to a "
-            "``std::any`` containing a ``std::span<std::string_view>``.");
+            "``std::span<std::string_view>``.");
         default_copy_methods(dl_problem);
         problem_methods(dl_problem);
         dl_problem
