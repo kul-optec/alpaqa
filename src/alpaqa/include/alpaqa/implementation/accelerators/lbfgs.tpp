@@ -1,7 +1,9 @@
 #pragma once
 
 #include <alpaqa/accelerators/lbfgs.hpp>
+#include <alpaqa/util/parallel.hpp>
 
+#include <atomic>
 #include <cmath>
 #include <limits>
 #include <stdexcept>
@@ -84,8 +86,29 @@ bool LBFGS<Conf>::apply(rvec q, real_t γ) const {
     }
 
     foreach_rev([&](index_t i) {
-        α(i) = ρ(i) * s(i).dot(q);
-        q -= α(i) * y(i);
+        constexpr static bool atomic_supported =
+            requires(std::atomic<real_t> a, real_t t) { a.fetch_add(t); };
+        if constexpr (atomic_supported) {
+            if (params.parallel) {
+                std::atomic<real_t> sq{0};
+                util::in_parallel(
+                    n(), 32 / sizeof(real_t), [&](index_t j, index_t l) {
+                        sq.fetch_add(s(i).segment(j, l).dot(q.segment(j, l)),
+                                     std::memory_order_relaxed);
+                    });
+                α(i) = ρ(i) * sq.load(std::memory_order_relaxed);
+                util::in_parallel(
+                    n(), 32 / sizeof(real_t), [&](index_t j, index_t l) {
+                        q.segment(j, l) -= α(i) * y(i).segment(j, l);
+                    });
+            } else {
+                α(i) = ρ(i) * s(i).dot(q);
+                q -= α(i) * y(i);
+            }
+        } else {
+            α(i) = ρ(i) * s(i).dot(q);
+            q -= α(i) * y(i);
+        }
     });
 
     // r ← H_0 q
