@@ -121,7 +121,7 @@ jobs:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /tmp/.ccache
-      MACOSX_DEPLOYMENT_TARGET: '10.9'
+      MACOSX_DEPLOYMENT_TARGET: '10.15'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -159,7 +159,7 @@ jobs:
         run: |
           source ./py-venv/bin/activate
           CMAKE_PREFIX_PATH="$VIRTUAL_ENV:$CMAKE_PREFIX_PATH" \
-          _PYTHON_HOST_PLATFORM='macosx-10.9-universal2' \
+          _PYTHON_HOST_PLATFORM='macosx-10.15-universal2' \
           ARCHFLAGS='-arch arm64 -arch x86_64' \
               python -m build -w .
       - name: Upload
