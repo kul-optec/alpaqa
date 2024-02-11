@@ -5,9 +5,9 @@ function(add_warnings_target tgt_name warnings_as_errors)
         -fdiagnostics-show-option
         -Wall
         -Wextra
-        -pedantic
-        -Wpedantic
-        -pedantic-errors
+        # -pedantic
+        # -Wpedantic
+        # -pedantic-errors
         -Wdouble-promotion
         -Wswitch-default
         -Wswitch-enum
@@ -28,9 +28,9 @@ function(add_warnings_target tgt_name warnings_as_errors)
         -fdiagnostics-show-option
         -Wall
         -Wextra
-        -pedantic
-        -Wpedantic
-        -pedantic-errors
+        # -pedantic
+        # -Wpedantic
+        # -pedantic-errors
         -Wimplicit-fallthrough
         -Wuninitialized
         -Wconversion

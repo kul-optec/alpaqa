@@ -1,0 +1,14 @@
+[
+    {
+        "name": "RPi Pico ─ tttapa/arm-pico-eabi",
+        "toolchainFile": "${workspaceFolder}/cmake/toolchain/pico.cmake",
+        "environmentVariables": {
+            "PICO_SDK_PATH": "${env:HOME}/pico/pico-sdk",
+            "PICO_GCC_TRIPLE": "arm-pico-eabi",
+            "PICO_TOOLCHAIN_PATH": "${env:HOME}/opt/x-tools/arm-pico-eabi/bin"
+        },
+        "cmakeSettings": {
+            "Eigen3_DIR": "${workspaceFolder}/staging/share/eigen3/cmake"
+        }
+    }
+]

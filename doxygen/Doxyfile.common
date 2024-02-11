@@ -946,6 +946,7 @@ WARN_LOGFILE           =
 
 INPUT                  = ../src/ \
                          ../examples/examples.dox \
+                         pages/Pico.md \
                          pages/Installation.md \
                          pages/Examples.md \
                          pages/Math.md \

@@ -6,6 +6,17 @@ project(alpaqa
     LANGUAGES CXX
 )
 set(PY_VERSION_SUFFIX "a17.dev0")
+
+# Raspberry Pi Pico support
+if (DEFINED PICO_SDK_VERSION_STRING)
+    if (PICO_SDK_VERSION_STRING VERSION_LESS "1.5.0")
+    message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.5.0 (or later) "
+                        "required. Your version is ${PICO_SDK_VERSION_STRING}")
+    endif()
+    message(STATUS "Initializing Pico SDK ${PICO_SDK_VERSION_STRING}")
+    pico_sdk_init() # Initialize the SDK
+endif()
+
 include(CTest)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 
