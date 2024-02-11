@@ -1,3 +1,4 @@
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <alpaqa/inner/panoc.hpp>
 #include <alpaqa/outer/alm.hpp>
@@ -10,6 +11,7 @@
 namespace fs = std::filesystem;
 
 int main(int argc, char *argv[]) {
+    alpaqa::init_stdout();
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     // Find the problem to load

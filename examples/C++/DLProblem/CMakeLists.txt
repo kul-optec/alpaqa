@@ -19,6 +19,7 @@ target_link_libraries(dl-problem-example
 target_compile_definitions(dl-problem-example PRIVATE
     DLPROBLEM_DLL=\"$<TARGET_FILE_NAME:problem-c>\")
 add_dependencies(dl-problem-example problem-c)
+alpaqa_register_example(dl-problem-example)
 
 add_executable(test-matmul "test-matmul.c")
 target_link_libraries(test-matmul PRIVATE alpaqa::dl-api alpaqa::warnings)

@@ -1,3 +1,4 @@
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/functions/l1-norm.hpp>
 #include <alpaqa/util/print.hpp>
 USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
@@ -27,6 +28,8 @@ auto build_problem() {
 }
 
 int main() {
+    alpaqa::init_stdout();
+
     // Least squares problem
     auto [A, x_exact, b, λ] = build_problem();
     // ℓ₁ regularizer

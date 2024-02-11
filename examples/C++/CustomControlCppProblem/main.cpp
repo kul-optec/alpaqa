@@ -1,4 +1,5 @@
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/inner/panoc-ocp.hpp>
 #include <alpaqa/problem/ocproblem.hpp>
 #include <alpaqa/util/print.hpp>
@@ -182,6 +183,7 @@ struct Problem {
 };
 
 int main() {
+    alpaqa::init_stdout();
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
     // Problem

@@ -1,3 +1,4 @@
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/panoc-alm.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/problem/unconstr-problem.hpp>
@@ -31,7 +32,9 @@ struct RosenbrockProblem : alpaqa::UnconstrProblem<alpaqa::DefaultConfig> {
 };
 
 int main() {
+    alpaqa::init_stdout();
     USING_ALPAQA_CONFIG(RosenbrockProblem::config_t);
+
     // Instantiate a problem
     RosenbrockProblem problem;
 

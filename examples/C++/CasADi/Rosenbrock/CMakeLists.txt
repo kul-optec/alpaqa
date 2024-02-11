@@ -8,3 +8,4 @@ casadi_function_codegen_python(rosenbrock_functions "codegen-rosenbrock.py")
 target_compile_definitions(casadi-rosenbrock PRIVATE
     ROSENBROCK_FUNC_DLL=\"$<TARGET_FILE_NAME:rosenbrock_functions>\")
 add_dependencies(casadi-rosenbrock rosenbrock_functions)
+alpaqa_register_example(casadi-rosenbrock)

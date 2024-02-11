@@ -1,3 +1,4 @@
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/structured-panoc-alm.hpp>
@@ -32,6 +33,8 @@ struct FortranProblem : alpaqa::BoxConstrProblem<config_t> {
 };
 
 int main() {
+    alpaqa::init_stdout();
+
     // Instantiate a problem
     FortranProblem problem{problem_get_num_vars(), problem_get_num_constr()};
     // Wrap the problem to count the function evaluations

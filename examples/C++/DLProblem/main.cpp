@@ -1,4 +1,5 @@
 #include <alpaqa/dl/dl-problem.hpp>
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/structured-panoc-alm.hpp>
 
@@ -11,6 +12,8 @@ namespace fs = std::filesystem;
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
 int main(int argc, char *argv[]) {
+    alpaqa::init_stdout();
+
     // Find the problem to load
     fs::path so_name = DLPROBLEM_DLL;
     if (argc > 1)

@@ -1,3 +1,4 @@
+#include <alpaqa/example-util.hpp>
 #include <alpaqa/panoc-alm.hpp>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
@@ -5,6 +6,7 @@
 #include <iostream>
 
 int main() {
+    alpaqa::init_stdout();
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
     // Problem specification
