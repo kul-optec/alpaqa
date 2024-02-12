@@ -196,6 +196,7 @@ TEST(TypeErasure, allocatorAware) {
 
     // As part of allocator aware container.
     std::pmr::vector<PMRCTE> v{&mbr};
+    v.reserve(2);
     v.emplace_back<Noisy>("noisy-a");
     v.emplace_back<Noisy>("noisy-b");
     ASSERT_TRUE(v[0]);
@@ -219,6 +220,8 @@ TEST(TypeErasure, allocatorAware) {
     EXPECT_STREQ(v_move[0].get_msg(), "noisy-a");
     EXPECT_STREQ(v_move[1].get_msg(), "noisy-b");
 }
+
+// TODO: add test where Noisy itself is also allocator aware
 
 TEST(TypeErasure, moveDifferentAllocators) {
     std::array<std::byte, 256> buffer_1{};

@@ -182,13 +182,6 @@ inline constexpr size_t required_te_buffer_size_for() {
     return *std::max_element(std::begin(sizes), std::end(sizes));
 }
 
-/// Similar to `std::in_place_t`.
-template <class T>
-struct te_in_place_t {};
-/// Convenience instance of @ref te_in_place_t.
-template <class T>
-inline constexpr te_in_place_t<T> te_in_place;
-
 /// Class for polymorphism through type erasure. Saves the entire vtable, and
 /// uses small buffer optimization.
 ///
@@ -235,21 +228,29 @@ class TypeErased {
 
   public:
     /// Default constructor.
-    TypeErased() noexcept(noexcept(allocator_type())) = default;
+    TypeErased() noexcept(noexcept(allocator_type()) && noexcept(VTable())) =
+        default;
     /// Default constructor (allocator aware).
     template <class Alloc>
     TypeErased(std::allocator_arg_t, const Alloc &alloc) : allocator{alloc} {}
+
     /// Copy constructor.
     TypeErased(const TypeErased &other)
         : allocator{allocator_traits::select_on_container_copy_construction(
-              other.allocator)} {
+              other.allocator)},
+          vtable{other.vtable} {
         do_copy_assign<false>(other);
     }
     /// Copy constructor (allocator aware).
-    TypeErased(const TypeErased &other, allocator_type alloc)
-        : allocator{std::move(alloc)} {
+    TypeErased(const TypeErased &other, const allocator_type &alloc)
+        : allocator{alloc}, vtable{other.vtable} {
         do_copy_assign<false>(other);
     }
+    /// Copy constructor (allocator aware).
+    TypeErased(std::allocator_arg_t, const allocator_type &alloc,
+               const TypeErased &other)
+        : TypeErased{other, alloc} {}
+
     /// Copy assignment.
     TypeErased &operator=(const TypeErased &other) {
         // Check for self-assignment
@@ -257,18 +258,22 @@ class TypeErased {
             return *this;
         // Delete our own storage before assigning a new value
         cleanup();
+        vtable = other.vtable;
         do_copy_assign<true>(other);
         return *this;
     }
 
     /// Move constructor.
     TypeErased(TypeErased &&other) noexcept
-        : allocator{std::move(other.allocator)} {
-        size   = other.size;
-        vtable = std::move(other.vtable);
-        // If dynamically allocated, simply steal storage, or if not owned,
-        // simply move the pointer
-        if (size > small_buffer_size || !other.owns_referenced_object()) {
+        : allocator{std::move(other.allocator)},
+          vtable{std::move(other.vtable)} {
+        size = other.size;
+        // If not owned, or if dynamically allocated, simply steal storage,
+        // simply move the pointer.
+        // TODO: is it safe to assume that we can simply move the pointer
+        // without performing a move if we moved the allocator? What if the
+        // allocator has a small buffer?
+        if (!other.owns_referenced_object() || size > small_buffer_size) {
             // We stole the allocator, so we can steal the storage as well
             self = std::exchange(other.self, nullptr);
         }
@@ -279,17 +284,21 @@ class TypeErased {
             vtable.destroy(other.self);    // nothing to deallocate
             other.self = nullptr;
         }
+        other.size = invalid_size;
     }
     /// Move constructor (allocator aware).
     TypeErased(TypeErased &&other, const allocator_type &alloc) noexcept
-        : allocator{alloc} {
+        : allocator{alloc}, vtable{std::move(other.vtable)} {
         // Only continue if other actually contains a value
         if (other.self == nullptr)
             return;
-        size   = other.size;
-        vtable = std::move(other.vtable);
+        size = other.size;
+        // If not owned, simply move the pointer
+        if (!other.owns_referenced_object()) {
+            self = std::exchange(other.self, nullptr);
+        }
         // If dynamically allocated, simply steal other's storage
-        if (size > small_buffer_size) {
+        else if (size > small_buffer_size) {
             // Can we steal the storage because of equal allocators?
             if (allocator == other.allocator) {
                 self = std::exchange(other.self, nullptr);
@@ -304,10 +313,6 @@ class TypeErased {
                 other.deallocate();
             }
         }
-        // If not owned, simply move the pointer
-        else if (!other.owns_referenced_object()) {
-            self = std::exchange(other.self, nullptr);
-        }
         // Otherwise, use the small buffer and do an explicit move
         else if (other.self) {
             self = small_buffer.data();
@@ -318,6 +323,11 @@ class TypeErased {
         }
         other.size = invalid_size;
     }
+    /// Move constructor (allocator aware).
+    TypeErased(std::allocator_arg_t, const allocator_type &alloc,
+               TypeErased &&other) noexcept
+        : TypeErased{std::move(other), alloc} {}
+
     /// Move assignment.
     TypeErased &operator=(TypeErased &&other) noexcept {
         // Check for self-assignment
@@ -336,9 +346,16 @@ class TypeErased {
 
         size   = other.size;
         vtable = std::move(other.vtable);
+        // If not owned, simply move the pointer
+        if (!other.owns_referenced_object()) {
+            self = std::exchange(other.self, nullptr);
+        }
         // If dynamically allocated, simply steal other's storage
-        if (size > small_buffer_size) {
+        else if (size > small_buffer_size) {
             // Can we steal the storage because of equal allocators?
+            // TODO: is it safe to assume that we can simply move the pointer
+            // without performing a move if we moved the allocator? What if the
+            // allocator has a small buffer?
             if (prop_alloc || allocator == other.allocator) {
                 self = std::exchange(other.self, nullptr);
             }
@@ -356,10 +373,6 @@ class TypeErased {
                 other.self = nullptr;
             }
         }
-        // If not owned, simply move the pointer
-        else if (!owns_referenced_object()) {
-            self = std::exchange(other.self, nullptr);
-        }
         // Otherwise, use the small buffer and do an explicit move
         else if (other.self) {
             self = small_buffer.data();
@@ -376,6 +389,7 @@ class TypeErased {
 
     /// Main constructor that type-erases the given argument.
     template <class T, class Alloc>
+        requires no_child_of_ours<T>
     explicit TypeErased(std::allocator_arg_t, const Alloc &alloc, T &&d)
         : allocator{alloc} {
         construct_inplace<std::remove_cvref_t<T>>(std::forward<T>(d));
@@ -384,7 +398,7 @@ class TypeErased {
     /// argument.
     template <class T, class Alloc, class... Args>
     explicit TypeErased(std::allocator_arg_t, const Alloc &alloc,
-                        te_in_place_t<T>, Args &&...args)
+                        std::in_place_type_t<T>, Args &&...args)
         : allocator{alloc} {
         construct_inplace<std::remove_cvref_t<T>>(std::forward<Args>(args)...);
     }
@@ -399,7 +413,7 @@ class TypeErased {
     /// Main constructor that type-erases the object constructed from the given
     /// argument.
     template <class T, class... Args>
-    explicit TypeErased(te_in_place_t<T>, Args &&...args) {
+    explicit TypeErased(std::in_place_type_t<T>, Args &&...args) {
         construct_inplace<std::remove_cvref_t<T>>(std::forward<Args>(args)...);
     }
 
@@ -553,7 +567,6 @@ class TypeErased {
             allocator = other.allocator;
         if (!other)
             return;
-        vtable = other.vtable;
         if (!other.owns_referenced_object()) {
             // Non-owning: simply copy the pointer.
             size = other.size;
@@ -585,7 +598,14 @@ class TypeErased {
             auto storage_guard = allocate(sizeof(T));
             // Construct the stored object
             using destroyer = std::unique_ptr<T, noop_delete<T>>;
+#if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION < 160000
+            // TODO: remove when we drop libc++ 15 support
             destroyer obj_guard{new (self) T{std::forward<Args>(args)...}};
+#else
+            destroyer obj_guard{std::uninitialized_construct_using_allocator(
+                reinterpret_cast<T *>(self), allocator,
+                std::forward<Args>(args)...)};
+#endif
             vtable = VTable{std::in_place, static_cast<T &>(*obj_guard.get())};
             obj_guard.release();
             storage_guard.release();

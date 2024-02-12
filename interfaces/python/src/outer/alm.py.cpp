@@ -58,33 +58,33 @@ void register_alm(py::module_ &m) {
         // Default constructor
         .def(py::init([] {
                  return std::make_unique<TEALMSolver>(
-                     alpaqa::util::te_in_place<ALMSolver>, ALMParams{},
+                     std::in_place_type<ALMSolver>, ALMParams{},
                      InnerSolver::template make<DefaultInnerSolver>(
                          alpaqa::PANOCParams<config_t>{}));
              }),
              "Build an ALM solver using Structured PANOC as inner solver.")
         // Solver only
         .def(py::init([](const InnerSolver &inner) {
-                 return std::make_unique<TEALMSolver>(alpaqa::util::te_in_place<ALMSolver>,
-                                                      ALMParams{}, inner);
+                 return std::make_unique<TEALMSolver>(std::in_place_type<ALMSolver>, ALMParams{},
+                                                      inner);
              }),
              "inner_solver"_a, "Build an ALM solver using the given inner solver.")
 #if ALPAQA_WITH_OCP
         .def(py::init([](const InnerOCPSolver &inner) {
-                 return std::make_unique<TEALMSolver>(alpaqa::util::te_in_place<ALMOCPSolver>,
-                                                      ALMParams{}, inner);
+                 return std::make_unique<TEALMSolver>(std::in_place_type<ALMOCPSolver>, ALMParams{},
+                                                      inner);
              }),
              "inner_solver"_a, "Build an ALM solver using the given inner solver.")
 #endif
         // Params and solver
         .def(py::init([](params_or_dict<ALMParams> params, const InnerSolver &inner) {
-                 return std::make_unique<TEALMSolver>(alpaqa::util::te_in_place<ALMSolver>,
+                 return std::make_unique<TEALMSolver>(std::in_place_type<ALMSolver>,
                                                       var_kwargs_to_struct(params), inner);
              }),
              "alm_params"_a, "inner_solver"_a, "Build an ALM solver using the given inner solver.")
 #if ALPAQA_WITH_OCP
         .def(py::init([](params_or_dict<ALMParams> params, const InnerOCPSolver &inner) {
-                 return std::make_unique<TEALMSolver>(alpaqa::util::te_in_place<ALMOCPSolver>,
+                 return std::make_unique<TEALMSolver>(std::in_place_type<ALMOCPSolver>,
                                                       var_kwargs_to_struct(params), inner);
              }),
              "alm_params"_a, "inner_solver"_a, "Build an ALM solver using the given inner solver.")
