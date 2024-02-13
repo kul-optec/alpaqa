@@ -151,6 +151,7 @@ jobs:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       DEVELOPER_DIR: /Applications/Xcode_15.0.1.app/Contents/Developer
+      MACOSX_DEPLOYMENT_TARGET: '10.15'
       FC: NOTFOUND
     steps:
     # Git clone
