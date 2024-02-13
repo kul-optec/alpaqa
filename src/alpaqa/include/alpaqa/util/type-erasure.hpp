@@ -19,6 +19,7 @@
 
 namespace alpaqa::util {
 
+#if ALPAQA_WITH_RTTI
 class ALPAQA_EXPORT bad_type_erased_type : public std::logic_error {
   public:
     bad_type_erased_type(const std::type_info &actual_type,
@@ -43,6 +44,7 @@ class ALPAQA_EXPORT bad_type_erased_type : public std::logic_error {
     const std::type_info &requested_type;
     mutable std::string message;
 };
+#endif
 
 class ALPAQA_EXPORT bad_type_erased_constness : public std::logic_error {
   public:
@@ -92,8 +94,10 @@ struct BasicVTable {
     required_function_t<void(void *storage)> move = nullptr;
     /// Destruct the given instance.
     required_function_t<void()> destroy = nullptr;
+#if ALPAQA_WITH_RTTI
     /// The original type of the stored object.
     const std::type_info *type = &typeid(void);
+#endif
 
     BasicVTable() = default;
 
@@ -116,7 +120,9 @@ struct BasicVTable {
             else
                 std::launder(reinterpret_cast<T *>(self))->~T();
         };
+#if ALPAQA_WITH_RTTI
         type = &typeid(T);
+#endif
     }
 };
 
@@ -467,8 +473,10 @@ class TypeErased {
     template <class T>
         requires(!std::is_const_v<T>)
     [[nodiscard]] T &as() & {
+#if ALPAQA_WITH_RTTI
         if (typeid(T) != type())
             throw bad_type_erased_type(type(), typeid(T));
+#endif
         if (referenced_object_is_const())
             throw bad_type_erased_constness();
         return *reinterpret_cast<T *>(self);
@@ -477,15 +485,19 @@ class TypeErased {
     template <class T>
         requires(std::is_const_v<T>)
     [[nodiscard]] T &as() const & {
+#if ALPAQA_WITH_RTTI
         if (typeid(T) != type())
             throw bad_type_erased_type(type(), typeid(T));
+#endif
         return *reinterpret_cast<T *>(self);
     }
     /// @copydoc as()
     template <class T>
     [[nodiscard]] T &&as() && {
+#if ALPAQA_WITH_RTTI
         if (typeid(T) != type())
             throw bad_type_erased_type(type(), typeid(T));
+#endif
         if (!std::is_const_v<T> && referenced_object_is_const())
             throw bad_type_erased_constness();
         return std::move(*reinterpret_cast<T *>(self));
