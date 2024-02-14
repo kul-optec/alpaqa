@@ -12,6 +12,7 @@
 #include <limits>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
+#include <alpaqa/inner/directions/panoc/convex-newton.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-newton.hpp>
@@ -311,6 +312,8 @@ ALPAQA_GETSET_PARAM_INST(NewtonTRDirectionParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(SteihaugCGParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(StructuredNewtonRegularizationParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(StructuredNewtonDirectionParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(ConvexNewtonRegularizationParams<config_t>);
+ALPAQA_GETSET_PARAM_INST(ConvexNewtonDirectionParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(ALMParams<config_t>);
 #if ALPAQA_WITH_OCP
 ALPAQA_GETSET_PARAM_INST(PANOCOCPParams<config_t>);

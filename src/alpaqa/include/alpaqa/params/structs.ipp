@@ -168,6 +168,17 @@ PARAMS_TABLE(StructuredNewtonDirectionParams<config_t>, //
              PARAMS_MEMBER(hessian_vec_factor, ""),     //
 );
 
+PARAMS_TABLE(ConvexNewtonRegularizationParams<config_t>, //
+             PARAMS_MEMBER(ζ, ""),                       //
+             PARAMS_MEMBER(ν, ""),                       //
+             PARAMS_MEMBER(ldlt, ""),                    //
+);
+
+PARAMS_TABLE(ConvexNewtonDirectionParams<config_t>, //
+             PARAMS_MEMBER(hessian_vec_factor, ""), //
+             PARAMS_MEMBER(quadratic, ""),          //
+);
+
 PARAMS_TABLE(ALMParams<config_t>,                               //
              PARAMS_MEMBER(tolerance, ""),                      //
              PARAMS_MEMBER(dual_tolerance, ""),                 //

@@ -1,4 +1,5 @@
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
+#include <alpaqa/inner/directions/panoc/convex-newton.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/panoc.hpp>
@@ -54,6 +55,8 @@ SharedSolverWrapper make_panoc_like_driver(std::string_view direction,
          builder(tag_t<alpaqa::AndersonDirection<config_t>>())},
         {"struclbfgs", //
          builder(tag_t<alpaqa::StructuredLBFGSDirection<config_t>>())},
+        {"convex-newton", //
+         builder(tag_t<alpaqa::ConvexNewtonDirection<config_t>>())},
     };
     if (direction.empty())
         direction = "lbfgs";

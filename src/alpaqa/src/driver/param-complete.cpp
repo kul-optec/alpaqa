@@ -6,6 +6,7 @@
 
 // For parameters
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
+#include <alpaqa/inner/directions/panoc/convex-newton.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/directions/panoc/structured-newton.hpp>

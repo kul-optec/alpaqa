@@ -73,7 +73,7 @@ struct StructuredNewtonDirection {
             throw std::invalid_argument(
                 "Structured Newton only supports box-constrained problems");
         // TODO: support eval_inactive_indices_res_lna
-        if (!problem.provides_eval_hess_ψ())
+        if (!problem.supports_eval_hess_ψ())
             throw std::invalid_argument("Structured Newton requires hess_ψ");
         // Store references to problem and ALM variables
         this->problem = &problem;
@@ -235,19 +235,6 @@ ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigd);
 ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigf);)
 ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigl);)
 ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, StructuredNewtonDirection, EigenConfigq);)
-// clang-format on
-
-} // namespace alpaqa
-
-#include <alpaqa/inner/panoc.hpp>
-
-namespace alpaqa {
-
-// clang-format off
-ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigd>);
-ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigf>);)
-ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigl>);)
-ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(class, PANOCSolver, StructuredNewtonDirection<EigenConfigq>);)
 // clang-format on
 
 } // namespace alpaqa
