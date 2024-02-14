@@ -6,6 +6,7 @@ import pytest
 import os
 
 
+@pytest.mark.skipif(not pa.with_casadi, reason="requires CasADi")
 def test_alm_threaded():
     valgrind = 'valgrind' in os.getenv('LD_PRELOAD', '')
 
