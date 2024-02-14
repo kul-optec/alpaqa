@@ -128,8 +128,9 @@ void register_panoc_directions(py::module_ &m) {
     py::implicitly_convertible<StructuredNewtonDir, TypeErasedPANOCDirection>();
 
     // ----------------------------------------------------------------------------------------- //
-    using ConvexNewtonDir       = alpaqa::ConvexNewtonDirection<config_t>;
-    using ConvexNewtonDirParams = alpaqa::ConvexNewtonDirectionParams<config_t>;
+    using ConvexNewtonDir         = alpaqa::ConvexNewtonDirection<config_t>;
+    using ConvexNewtonDirParams   = typename ConvexNewtonDir::DirectionParams;
+    using ConvexNewtonAccelParams = typename ConvexNewtonDir::AcceleratorParams;
 
     py::class_<ConvexNewtonDir> convex_newton(
         m, "ConvexNewtonDirection",
@@ -137,11 +138,16 @@ void register_panoc_directions(py::module_ &m) {
     register_dataclass<ConvexNewtonDirParams>(
         convex_newton, "DirectionParams",
         "C++ documentation: :cpp:class:`alpaqa::ConvexNewtonDirection::DirectionParams`");
+    register_dataclass<ConvexNewtonAccelParams>(
+        convex_newton, "AcceleratorParams",
+        "C++ documentation: :cpp:class:`alpaqa::ConvexNewtonDirection::AcceleratorParams`");
     convex_newton //
-        .def(py::init([](params_or_dict<ConvexNewtonDirParams> direction_params) {
-                 return ConvexNewtonDir{{.direction = var_kwargs_to_struct(direction_params)}};
+        .def(py::init([](params_or_dict<ConvexNewtonAccelParams> newton_params,
+                         params_or_dict<ConvexNewtonDirParams> direction_params) {
+                 return ConvexNewtonDir{{.accelerator = var_kwargs_to_struct(newton_params),
+                                         .direction   = var_kwargs_to_struct(direction_params)}};
              }),
-             "direction_params"_a = py::dict{})
+             "newton_params"_a = py::dict{}, "direction_params"_a = py::dict{})
         .def_property_readonly("params",
                                py::cpp_function(&ConvexNewtonDir::get_params,
                                                 py::return_value_policy::reference_internal))
