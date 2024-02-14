@@ -410,7 +410,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
 
             // Line search condition
             if (τ > 0 && linesearch_violated(*curr, *next)) {
-                τ /= 2;
+                τ *= params.linesearch_coefficient_update_factor;
                 if (τ < params.min_linesearch_coefficient)
                     τ = 0;
                 ++s.linesearch_backtracks;

@@ -81,6 +81,7 @@ PARAMS_TABLE(PANOCParams<config_t>,                                    //
              PARAMS_MEMBER(max_iter, ""),                              //
              PARAMS_MEMBER(max_time, ""),                              //
              PARAMS_MEMBER(min_linesearch_coefficient, ""),            //
+             PARAMS_MEMBER(linesearch_coefficient_update_factor, ""),  //
              PARAMS_MEMBER(force_linesearch, ""),                      //
              PARAMS_MEMBER(linesearch_strictness_factor, ""),          //
              PARAMS_MEMBER(L_min, ""),                                 //
