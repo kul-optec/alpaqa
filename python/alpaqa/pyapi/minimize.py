@@ -32,7 +32,9 @@ class MinimizationProblemDescription:
             caller_frame = inspect.getouterframes(inspect.currentframe())[1]
             raise ValueError(f"{caller_frame.function} cannot be called twice")
 
-    def subject_to_box(self, C: Tuple[np.ndarray, np.ndarray]):
+    def subject_to_box(
+        self, C: Tuple[np.ndarray, np.ndarray]
+    ) -> "MinimizationProblemDescription":
         """
         Add box constraints :math:`x \\in C` on the problem variables.
         """
@@ -45,7 +47,7 @@ class MinimizationProblemDescription:
         self,
         g: Union[cs.SX, cs.MX],
         D: Optional[Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]] = None,
-    ):
+    ) -> "MinimizationProblemDescription":
         """
         Add general constraints :math:`g(x) \\in D`, handled using an augmented
         Lagrangian method.
@@ -63,7 +65,7 @@ class MinimizationProblemDescription:
         self,
         g: Union[cs.SX, cs.MX],
         D: Optional[Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]] = None,
-    ):
+    ) -> "MinimizationProblemDescription":
         """
         Add general constraints :math:`g(x) \\in D`, handled using a quadratic
         penalty method.
@@ -77,7 +79,9 @@ class MinimizationProblemDescription:
         ret.penalty_constraints_bounds = D
         return ret
 
-    def with_l1_regularizer(self, λ: Union[float, np.ndarray]):
+    def with_l1_regularizer(
+        self, λ: Union[float, np.ndarray]
+    ) -> "MinimizationProblemDescription":
         """
         Add an :math:`\\ell_1`-regularization term :math:`\\|\\lambda x\\|_1`
         to the objective.
@@ -87,7 +91,9 @@ class MinimizationProblemDescription:
         ret.regularizer = λ
         return ret
 
-    def with_param(self, p: Union[cs.SX, cs.MX], value: np.ndarray = None):
+    def with_param(
+        self, p: Union[cs.SX, cs.MX], value: np.ndarray = None
+    ) -> "MinimizationProblemDescription":
         """
         Make the problem depend on a symbolic parameter, with an optional
         default value. The value can be changed after the problem has been
@@ -100,7 +106,7 @@ class MinimizationProblemDescription:
             ret.parameter_value = value
         return ret
 
-    def with_param_value(self, value: np.ndarray):
+    def with_param_value(self, value: np.ndarray) -> "MinimizationProblemDescription":
         """
         Explicitly change the parameter value for the parameter added by
         :py:func:`with_param`.
