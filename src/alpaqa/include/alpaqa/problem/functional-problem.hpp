@@ -60,6 +60,9 @@ class FunctionalProblem : public BoxConstrProblem<Conf> {
     /// @see @ref TypeErasedProblem::provides_eval_hess_ψ
     [[nodiscard]] bool provides_eval_hess_ψ() const { return bool{hess_ψ}; }
 
+    /// @see @ref TypeErasedProblem::get_name
+    [[nodiscard]] std::string get_name() const { return "FunctionalProblem"; }
+
     FunctionalProblem(const FunctionalProblem &)                = default;
     FunctionalProblem &operator=(const FunctionalProblem &)     = default;
     FunctionalProblem(FunctionalProblem &&) noexcept            = default;

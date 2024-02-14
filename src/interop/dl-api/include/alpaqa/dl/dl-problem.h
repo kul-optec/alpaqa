@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define ALPAQA_DL_ABI_VERSION 0xA1A000000004
+#define ALPAQA_DL_ABI_VERSION 0xA1A000000005
 
 #ifdef ALPAQA_DL_PROBLEM_EXPORT
 #elif defined(_WIN32)
@@ -214,6 +214,9 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
     /// Number of constraints.
     /// @see @ref alpaqa::TypeErasedProblem::get_m()
     alpaqa_length_t m ALPAQA_DEFAULT(0);
+    /// Name of the problem.
+    /// @see @ref alpaqa::TypeErasedProblem::get_name()
+    const char *name ALPAQA_DEFAULT(nullptr);
 
     // clang-format off
     /// Cost function.
@@ -240,6 +243,41 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_gxy) ALPAQA_DEFAULT(nullptr);
+
+    /// Difference between point and its projection onto the general constraint
+    /// set D.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_proj_diff_g()
+    void (*eval_proj_diff_g)(
+        void *instance,
+        const alpaqa_real_t *z,
+        alpaqa_real_t *e) ALPAQA_DEFAULT(nullptr);
+    /// Project the Lagrange multipliers.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_proj_multipliers()
+    void (*eval_proj_multipliers)(
+        void *instance,
+        alpaqa_real_t *y, alpaqa_real_t M);
+    /// Proximal gradient step.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_prox_grad_step()
+    /// If not set, the default implementation from
+    /// @ref alpaqa::BoxConstrProblem is used.
+    alpaqa_real_t (*eval_prox_grad_step)(
+        void *instance,
+        alpaqa_real_t γ,
+        const alpaqa_real_t *x,
+        const alpaqa_real_t *grad_ψ,
+        alpaqa_real_t *x̂,
+        alpaqa_real_t *p) ALPAQA_DEFAULT(nullptr);
+    /// Active indices for proximal operator.
+    /// @see @ref alpaqa::TypeErasedProblem::eval_inactive_indices_res_lna()
+    /// If not set, the default implementation from
+    /// @ref alpaqa::BoxConstrProblem is used.
+    alpaqa_index_t (*eval_inactive_indices_res_lna)(
+        void *instance,
+        alpaqa_real_t γ,
+        const alpaqa_real_t *x,
+        const alpaqa_real_t *grad_ψ,
+        alpaqa_index_t *J) ALPAQA_DEFAULT(nullptr);
+
     /// Jacobian of the constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_jac_g()
     void (*eval_jac_g)(
@@ -305,6 +343,7 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
     /// @see @ref alpaqa::TypeErasedProblem::get_hess_ψ_sparsity()
     alpaqa_sparsity_t (*get_hess_ψ_sparsity)(
         void *instance) ALPAQA_DEFAULT(nullptr);
+
     /// Cost and its gradient.
     /// @see @ref alpaqa::TypeErasedProblem::eval_f_grad_f()
     alpaqa_real_t (*eval_f_grad_f)(
@@ -333,6 +372,7 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_L,
         alpaqa_real_t *work_n) ALPAQA_DEFAULT(nullptr);
+
     /// Augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_ψ()
     alpaqa_real_t (*eval_ψ)(
@@ -367,23 +407,7 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         alpaqa_real_t *grad_ψ,
         alpaqa_real_t *work_n,
         alpaqa_real_t *work_m) ALPAQA_DEFAULT(nullptr);
-    /// Proximal gradient step.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_prox_grad_step()
-    /// If not set, the default implementation from
-    /// @ref alpaqa::BoxConstrProblem is used.
-    alpaqa_real_t (*eval_prox_grad_step)(
-        void *instance,
-        alpaqa_real_t γ,
-        const alpaqa_real_t *x,
-        const alpaqa_real_t *grad_ψ,
-        alpaqa_real_t *x̂,
-        alpaqa_real_t *p) ALPAQA_DEFAULT(nullptr);
-    alpaqa_index_t (*eval_inactive_indices_res_lna)(
-        void *instance,
-        alpaqa_real_t γ,
-        const alpaqa_real_t *x,
-        const alpaqa_real_t *grad_ψ,
-        alpaqa_index_t *J) ALPAQA_DEFAULT(nullptr);
+
     /// Provide the initial values for the bounds of
     /// @ref alpaqa::BoxConstrProblem::C, i.e. the constraints on the decision
     /// variables.

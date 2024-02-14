@@ -155,6 +155,7 @@ void problem_methods(py::class_<T, Args...> &cls) {
     cls.def_property_readonly("m", &T::get_m,
                               "Number of general constraints, dimension of :math:`g(x)`");
     // clang-format off
+    cls.def("__str__", &T::get_name);
     cls.def("eval_proj_diff_g", &T::eval_proj_diff_g, "z"_a, "e"_a);
     cls.def("eval_proj_multipliers", &T::eval_proj_multipliers, "y"_a, "M"_a);
     cls.def("eval_prox_grad_step", &T::eval_prox_grad_step, "γ"_a, "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a);
@@ -486,6 +487,7 @@ void register_problems(py::module_ &m) {
         void eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; o.attr("eval_grad_ψ")(x, y, Σ, grad_ψ, work_n, work_m); }
         real_t eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_ψ_grad_ψ")(x, y, Σ, grad_ψ, work_n, work_m)); }
         void check() const { py::gil_scoped_acquire gil; if (auto ch = py::getattr(o, "check", py::none()); !ch.is_none()) ch(); }
+        std::string get_name() const { py::gil_scoped_acquire gil; return py::str(o); }
         const Box &get_box_C() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; C = py::cast<Box>(o.attr("get_box_C")()); return C; }
         const Box &get_box_D() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; D = py::cast<Box>(o.attr("get_box_D")()); return D; }
 

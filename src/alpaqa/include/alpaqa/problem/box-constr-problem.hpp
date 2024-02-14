@@ -235,6 +235,9 @@ class BoxConstrProblem {
         if (penalty_alm_split < 0 || penalty_alm_split > m)
             throw std::invalid_argument("Invalid penalty_alm_split");
     }
+
+    /// @see @ref TypeErasedProblem::get_name
+    [[nodiscard]] std::string get_name() const { return "BoxConstrProblem"; }
 };
 
 } // namespace alpaqa

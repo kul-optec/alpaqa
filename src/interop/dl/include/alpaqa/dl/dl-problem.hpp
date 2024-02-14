@@ -138,6 +138,8 @@ class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
         std::span<std::string_view> user_param);
 
   private:
+    /// Path to the shared module file.
+    std::filesystem::path file;
     /// Handle to the shared module defining the problem.
     std::shared_ptr<void> handle;
     /// Problem instance created by the registration function, including the
@@ -151,6 +153,8 @@ class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
 
   public:
     // clang-format off
+    void eval_proj_diff_g(crvec z, rvec e) const;
+    void eval_proj_multipliers(rvec y, real_t M) const;
     real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const;
     index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const;
     real_t eval_f(crvec x) const;
@@ -173,6 +177,7 @@ class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
     real_t eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const;
     void eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const;
     real_t eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const;
+    std::string get_name() const;
 
     [[nodiscard]] bool provides_eval_f() const;
     [[nodiscard]] bool provides_eval_grad_f() const;
@@ -195,6 +200,7 @@ class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
     [[nodiscard]] bool provides_eval_grad_ψ() const;
     [[nodiscard]] bool provides_eval_ψ_grad_ψ() const;
     [[nodiscard]] bool provides_get_box_C() const;
+    [[nodiscard]] bool provides_get_box_D() const;
     [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const;
     // clang-format on
 

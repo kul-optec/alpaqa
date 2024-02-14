@@ -208,6 +208,7 @@ def generate_and_compile_casadi_problem_no_load(
                     param,
                     l1_reg,
                     penalty_alm_split,
+                    name,
                 )
                 return Path(sofile)
             except:
@@ -235,6 +236,7 @@ def generate_and_compile_casadi_problem_no_load(
             param,
             l1_reg,
             penalty_alm_split,
+            name,
         )
         return Path(sofile)
 

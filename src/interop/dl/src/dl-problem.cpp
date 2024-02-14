@@ -280,6 +280,18 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
                 alpaqa_register_arg_t{reinterpret_cast<void *>(&user_param),
                                       alpaqa_register_arg_strings}} {}
 
+auto DLProblem::eval_proj_diff_g(crvec z, rvec e) const -> void {
+    if (functions->eval_proj_diff_g)
+        return functions->eval_proj_diff_g(instance.get(), z.data(), e.data());
+    return BoxConstrProblem<config_t>::eval_proj_diff_g(z, e);
+}
+
+auto DLProblem::eval_proj_multipliers(rvec y, real_t M) const -> void {
+    if (functions->eval_proj_multipliers)
+        return functions->eval_proj_multipliers(instance.get(), y.data(), M);
+    return BoxConstrProblem<config_t>::eval_proj_multipliers(y, M);
+}
+
 auto DLProblem::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
                                     rvec p) const -> real_t {
     if (functions->eval_prox_grad_step)
@@ -295,6 +307,12 @@ auto DLProblem::eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,
             instance.get(), γ, x.data(), grad_ψ.data(), J.data());
     return BoxConstrProblem<config_t>::eval_inactive_indices_res_lna(γ, x,
                                                                      grad_ψ, J);
+}
+
+auto DLProblem::get_name() const -> std::string {
+    if (functions->name)
+        return functions->name;
+    return file.filename().string();
 }
 
 // clang-format off
@@ -340,6 +358,7 @@ bool DLProblem::provides_eval_ψ() const { return functions->eval_ψ != nullptr;
 bool DLProblem::provides_eval_grad_ψ() const { return functions->eval_grad_ψ != nullptr; }
 bool DLProblem::provides_eval_ψ_grad_ψ() const { return functions->eval_ψ_grad_ψ != nullptr; }
 bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_step == nullptr && BoxConstrProblem::provides_get_box_C(); }
+bool DLProblem::provides_get_box_D() const { return functions->eval_proj_diff_g == nullptr; }
 bool DLProblem::provides_eval_inactive_indices_res_lna() const { return functions->eval_prox_grad_step == nullptr || functions->eval_inactive_indices_res_lna != nullptr; }
 // clang-format on
 
