@@ -54,6 +54,7 @@ struct ProblemWithCounters {
     const Box &get_box_C() const requires requires { &std::remove_cvref_t<Problem>::get_box_C; } { return problem.get_box_C(); }
     const Box &get_box_D() const requires requires { &std::remove_cvref_t<Problem>::get_box_D; } { return problem.get_box_D(); }
     void check() const requires requires { &std::remove_cvref_t<Problem>::check; } { return problem.check(); }
+    [[nodiscard]] std::string get_name() const requires requires { &std::remove_cvref_t<Problem>::get_name; } { return problem.get_name(); }
 
     [[nodiscard]] bool provides_eval_grad_gi() const requires requires (Problem p) { { p.provides_eval_grad_gi() } -> std::convertible_to<bool>; } { return problem.provides_eval_grad_gi(); }
     [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const requires requires (Problem p) { { p.provides_eval_inactive_indices_res_lna() } -> std::convertible_to<bool>; } { return problem.provides_eval_inactive_indices_res_lna(); }
@@ -75,6 +76,7 @@ struct ProblemWithCounters {
     [[nodiscard]] bool provides_get_box_C() const requires requires (Problem p) { { p.provides_get_box_C() } -> std::convertible_to<bool>; } { return problem.provides_get_box_C(); }
     [[nodiscard]] bool provides_get_box_D() const requires requires (Problem p) { { p.provides_get_box_D() } -> std::convertible_to<bool>; } { return problem.provides_get_box_D(); }
     [[nodiscard]] bool provides_check() const requires requires (Problem p) { { p.provides_check() } -> std::convertible_to<bool>; } { return problem.provides_check(); }
+    [[nodiscard]] bool provides_get_name() const requires requires (Problem p) { { p.provides_get_name() } -> std::convertible_to<bool>; } { return problem.provides_get_name(); }
     // clang-format on
 
     [[nodiscard]] length_t get_n() const { return problem.get_n(); }

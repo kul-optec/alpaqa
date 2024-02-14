@@ -75,6 +75,7 @@ static struct ProblemData *create_problem(alpaqa_register_arg_t user_data) {
     problem->functions = (alpaqa_problem_functions_t){
         .n                = (length_t)n,
         .m                = (length_t)m,
+        .name             = "example problem",
         .eval_f           = &eval_f,
         .eval_grad_f      = &eval_grad_f,
         .eval_g           = &eval_g,

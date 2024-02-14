@@ -209,4 +209,9 @@ auto ProblemVTable<Conf>::default_get_box_D(const void *, const ProblemVTable &)
 template <Config Conf>
 void ProblemVTable<Conf>::default_check(const void *, const ProblemVTable &) {}
 
+template <Config Conf>
+std::string ProblemVTable<Conf>::default_get_name(const void *, const ProblemVTable &) {
+    return "unknown problem";
+}
+
 } // namespace alpaqa

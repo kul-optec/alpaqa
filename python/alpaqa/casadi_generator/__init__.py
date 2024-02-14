@@ -523,7 +523,7 @@ def generate_casadi_control_problem(
 
     return cg
 
-def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split):
+def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split, name):
     """Write the CSV file with constant data for the problem."""
     if all(i is None for i in (C, D, param, l1_reg, penalty_alm_split)):
         return
@@ -545,6 +545,7 @@ def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split):
         writerow(param)
         writerow(l1_reg)
         f.write(str(penalty_alm_split))
+        f.write(name)
 
 def write_casadi_control_problem_data(
     sofile, U, D, D_N, x_init, param, penalty_alm_split=0, penalty_alm_split_N=None

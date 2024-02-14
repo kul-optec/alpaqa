@@ -107,6 +107,7 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     [[nodiscard]] real_t eval_f_grad_f(crvec x, rvec grad_fx) const;
     [[nodiscard]] real_t eval_f_g(crvec x, rvec g) const;
     void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const;
+    [[nodiscard]] std::string get_name() const { return name; }
 };
 
 } // namespace alpaqa

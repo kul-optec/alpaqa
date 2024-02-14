@@ -96,6 +96,8 @@ struct ProblemVTable : util::BasicVTable {
     // Check
     optional_function_t<void() const>
         check = default_check;
+    optional_function_t<std::string() const>
+        get_name = default_get_name;
 
     // clang-format on
 
@@ -140,6 +142,7 @@ struct ProblemVTable : util::BasicVTable {
     ALPAQA_EXPORT static const Box &default_get_box_C(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static const Box &default_get_box_D(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static void default_check(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT static std::string default_get_name(const void *, const ProblemVTable &);
 
     length_t n, m;
 
@@ -182,6 +185,7 @@ struct ProblemVTable : util::BasicVTable {
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_D, p);
         // Check
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, check, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_name, p);
 
         // Dimensions
         vtable.n = p.get_n();
@@ -553,6 +557,15 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
 
     /// @}
 
+    /// @name Metadata
+    /// @{
+
+    /// **[Optional]**
+    /// Get a descriptive name for the problem.
+    [[nodiscard]] std::string get_name() const;
+
+    /// @}
+
     /// @name Querying specialized implementations
     /// @{
 
@@ -651,6 +664,10 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     }
     /// Returns true if the problem provides an implementation of @ref check.
     [[nodiscard]] bool provides_check() const { return vtable.check != vtable.default_check; }
+    /// Returns true if the problem provides an implementation of @ref get_name.
+    [[nodiscard]] bool provides_get_name() const {
+        return vtable.get_name != vtable.default_get_name;
+    }
 
     /// @}
 
@@ -840,6 +857,10 @@ template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::check() const {
     return call(vtable.check);
 }
+template <Config Conf, class Allocator>
+std::string TypeErasedProblem<Conf, Allocator>::get_name() const {
+    return call(vtable.get_name);
+}
 
 /// @addtogroup grp_Problems
 /// @{
@@ -862,7 +883,8 @@ void print_provided_functions(std::ostream &os, const TypeErasedProblem<Conf> &p
        << "                ψ_grad_ψ: " << problem.provides_eval_ψ_grad_ψ() << '\n'
        << "               get_box_C: " << problem.provides_get_box_C() << '\n'
        << "               get_box_D: " << problem.provides_get_box_D() << '\n'
-       << "                   check: " << problem.provides_check() << '\n';
+       << "                   check: " << problem.provides_check() << '\n'
+       << "                get_name: " << problem.provides_get_name() << '\n';
 }
 
 /// @}

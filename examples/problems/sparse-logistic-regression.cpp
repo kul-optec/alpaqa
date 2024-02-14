@@ -31,6 +31,7 @@ struct Problem {
     vec Aᵀb;            ///< Work vector (n)
     mutable vec Ax;     ///< Work vector (m)
     fs::path data_file; ///< File we loaded the data from
+    std::string name;   ///< Name of the problem
 
     /// φ(x) = ∑ ln(1 + exp(-b x))
     real_t logistic_loss(crvec x) const {
@@ -185,10 +186,8 @@ struct Problem {
         // Read the data
         for (length_t i = 0; i < n; ++i)
             alpaqa::csv::read_row(csv_file, A.col(i));
-    }
-
-    std::string get_name() const {
-        return "sparse logistic regression (\"" + data_file.string() + "\")";
+        // Name of the problem
+        name = "sparse logistic regression (\"" + data_file.string() + "\")";
     }
 
     /// Constructor loads CSV data file and exposes the problem functions by
@@ -205,6 +204,7 @@ struct Problem {
         using alpaqa::member_caller;
         funcs.n                = n;
         funcs.m                = 0;
+        funcs.name             = name.c_str();
         funcs.eval_f           = member_caller<&P::eval_f>();
         funcs.eval_grad_f      = member_caller<&P::eval_grad_f>();
         funcs.eval_f_grad_f    = member_caller<&P::eval_f_grad_f>();
@@ -249,7 +249,6 @@ register_alpaqa_problem(alpaqa_register_arg_t user_data_v) noexcept try {
     // Build and expose problem
     auto problem = std::make_unique<Problem>(datafilename, λ_factor);
     alpaqa_problem_register_t result;
-    alpaqa::register_member_function(result, "get_name", &Problem::get_name);
     result.functions = &problem->funcs;
     result.instance  = problem.release();
     result.cleanup   = [](void *instance) {

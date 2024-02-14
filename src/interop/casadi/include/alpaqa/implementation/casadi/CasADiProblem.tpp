@@ -248,6 +248,8 @@ void CasADiProblem<Conf>::load_numerical_data(
     wrap_data_load("l1_reg", this->l1_reg, false);
     // Penalty/ALM split is a single integer
     read_single("penalty_alm_split", this->penalty_alm_split);
+    // Name is a string
+    data_file >> name;
 }
 
 template <Config Conf>
@@ -502,6 +504,11 @@ bool CasADiProblem<Conf>::provides_eval_hess_ψ_prod() const {
 template <Config Conf>
 bool CasADiProblem<Conf>::provides_eval_hess_ψ() const {
     return impl->hess_ψ.has_value();
+}
+
+template <Config Conf>
+std::string CasADiProblem<Conf>::get_name() const {
+    return name;
 }
 
 } // namespace alpaqa

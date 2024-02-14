@@ -10,8 +10,6 @@ import os
 def test_alm_threaded():
     valgrind = 'valgrind' in os.getenv('LD_PRELOAD', '')
 
-    import alpaqa.casadi_loader as cl
-
     pp = pa.PANOCParams(max_no_progress=100, max_iter=100)
     lbfgs = pa.LBFGSDirection()
     panoc = pa.PANOCSolver(pp, lbfgs)
@@ -25,15 +23,12 @@ def test_alm_threaded():
     x = cs.SX.sym("x", n)
 
     Q = np.array([[1.5, 0.5], [0.5, 1.5]])
-    f_ = 0.5 * x.T @ Q @ x
-    g_ = x
-    f = cs.Function("f", [x], [f_])
-    g = cs.Function("g", [x], [g_])
+    f = 0.5 * x.T @ Q @ x
+    g = x
+    D = [-np.inf, 0.5], [+np.inf, +np.inf]
 
     name = "testproblem"
-    p = cl.generate_and_compile_casadi_problem(f, g, name=name)
-    p.D.lowerbound = [-np.inf, 0.5]
-    p.D.upperbound = [+np.inf, +np.inf]
+    p = pa.minimize(f, x).subject_to(g, D).with_name(name).compile()
     p = pa.Problem(p)
 
     def good_experiment():
@@ -64,7 +59,7 @@ def test_alm_threaded():
             run(bad_experiment1)
         print(e.value)
         with pytest.raises(
-            RuntimeError, match=r"^Same instance of type (class )?alpaqa::TypeErasedProblem"
+            RuntimeError, match=r"^Same instance of testproblem used in multiple threads"
         ) as e:
             run(bad_experiment2)
         print(e.value)

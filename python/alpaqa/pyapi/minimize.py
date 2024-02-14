@@ -25,6 +25,7 @@ class MinimizationProblemDescription:
     bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None
     constraints_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None
     penalty_constraints_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None
+    name: str = "alpaqa_casadi_problem"
 
     @staticmethod
     def _assert_not_set_before(value):
@@ -117,6 +118,14 @@ class MinimizationProblemDescription:
         ret.parameter_value = value
         return ret
 
+    def with_name(self, name: str) -> "MinimizationProblemDescription":
+        """
+        Set the name of the problem.
+        """
+        ret = copy(self)
+        ret.name = name
+        return ret
+
     def _convert_parts(self) -> dict:
         """
         Build a dictionary with all necessary components to build an alpaqa
@@ -160,6 +169,7 @@ class MinimizationProblemDescription:
             param=num_param,
             l1_reg=λ,
             penalty_alm_split=m_qpm,
+            name=self.name,
         )
 
     def compile(self, **kwargs) -> CasADiProblem:

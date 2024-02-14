@@ -102,13 +102,8 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };
-    auto &cnt_problem = problem.problem.as<CntProblem>();
-    try {
-        using sig_t  = std::string(const DLProblem::instance_t *);
-        problem.name = cnt_problem.problem.call_extra_func<sig_t>("get_name");
-    } catch (std::out_of_range &) {
-        problem.name = problem.path.filename().string();
-    }
+    auto &cnt_problem   = problem.problem.as<CntProblem>();
+    problem.name        = cnt_problem.problem.get_name();
     problem.evaluations = cnt_problem.evaluations;
     load_initial_guess(opts, problem);
     count_problem(problem);
@@ -135,7 +130,7 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
     lck.unlock();
     auto &cnt_problem   = problem.problem.as<CntProblem>();
     auto &cs_problem    = cnt_problem.problem;
-    problem.name        = problem.path.filename().string();
+    problem.name        = cs_problem.get_name();
     problem.evaluations = cnt_problem.evaluations;
     auto param_size     = cs_problem.param.size();
     alpaqa::params::set_params(cs_problem.param, "param", prob_opts);
@@ -173,7 +168,7 @@ LoadedProblem load_cu_problem(const fs::path &full_path,
     lck.unlock();
     auto &cnt_problem       = problem.problem.as<CntProblem>();
     auto &cu_problem        = cnt_problem.problem;
-    problem.name            = cu_problem.name;
+    problem.name            = cu_problem.get_name();
     problem.evaluations     = cnt_problem.evaluations;
     problem.initial_guess_x = std::move(cu_problem.x0);
     problem.initial_guess_y = std::move(cu_problem.y0);

@@ -66,6 +66,9 @@ class UnconstrProblem {
         std::iota(J.begin(), J.end(), index_t{0});
         return J.size();
     }
+
+    /// @see @ref TypeErasedProblem::get_name
+    [[nodiscard]] std::string get_name() const { return "UnconstrProblem"; }
 };
 
 } // namespace alpaqa
