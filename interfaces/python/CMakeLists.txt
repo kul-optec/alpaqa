@@ -42,6 +42,7 @@ pybind11_add_module(_alpaqa MODULE
     "src/params/zerofpr-params.cpp"
     "src/params/structured-lbfgs-direction-params.cpp"
     "src/params/structured-newton-direction-params.cpp"
+    "src/params/convex-newton-direction-params.cpp"
     "src/params/newton-tr-direction-params.cpp"
     "src/params/pantr-params.cpp"
     "src/params/steihaug-params.cpp"

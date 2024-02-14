@@ -654,6 +654,20 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
 
     /// @}
 
+    /// @name Querying available functions
+    /// @{
+
+    /// Returns true if @ref eval_hess_ψ_prod can be called.
+    [[nodiscard]] bool supports_eval_hess_ψ_prod() const {
+        return provides_eval_hess_ψ_prod() || (vtable.m == 0 && provides_eval_hess_L_prod());
+    }
+    /// Returns true if @ref eval_hess_ψ can be called.
+    [[nodiscard]] bool supports_eval_hess_ψ() const {
+        return provides_eval_hess_ψ() || (vtable.m == 0 && provides_eval_hess_L());
+    }
+
+    /// @}
+
     /// @name Helpers
     /// @{
 

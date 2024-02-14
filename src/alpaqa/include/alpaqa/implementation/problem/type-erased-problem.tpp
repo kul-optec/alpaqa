@@ -79,7 +79,7 @@ template <Config Conf>
 void ProblemVTable<Conf>::default_eval_hess_ψ_prod(const void *self, crvec x, crvec y, crvec,
                                                    real_t scale, crvec v, rvec Hv,
                                                    const ProblemVTable &vtable) {
-    if (y.size() == 0 && vtable.eval_hess_L_prod != ProblemVTable<Conf>::default_eval_hess_L_prod)
+    if (vtable.m == 0 && vtable.eval_hess_L_prod != ProblemVTable<Conf>::default_eval_hess_L_prod)
         return vtable.eval_hess_L_prod(self, x, y, scale, v, Hv, vtable);
     throw not_implemented_error("eval_hess_ψ_prod");
 }
@@ -88,14 +88,16 @@ template <Config Conf>
 void ProblemVTable<Conf>::default_eval_hess_ψ(const void *self, crvec x, crvec y, crvec,
                                               real_t scale, rvec H_values,
                                               const ProblemVTable &vtable) {
-    if (y.size() == 0 && vtable.eval_hess_L != default_eval_hess_L)
+    if (vtable.m == 0 && vtable.eval_hess_L != default_eval_hess_L)
         return vtable.eval_hess_L(self, x, y, scale, H_values, vtable);
     throw not_implemented_error("eval_hess_ψ");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_hess_ψ_sparsity(const void *, const ProblemVTable &vtable)
+auto ProblemVTable<Conf>::default_get_hess_ψ_sparsity(const void *self, const ProblemVTable &vtable)
     -> Sparsity {
+    if (vtable.m == 0 && vtable.get_hess_L_sparsity != default_get_hess_L_sparsity)
+        return vtable.get_hess_L_sparsity(self, vtable);
     return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
 

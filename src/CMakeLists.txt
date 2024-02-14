@@ -27,15 +27,18 @@ add_library(alpaqa
     "alpaqa/src/inner/zerofpr.cpp"
     "alpaqa/src/inner/pantr.cpp"
     "alpaqa/src/panoc-alm.cpp"
+    "alpaqa/src/panoc-convex-newton-alm.cpp"
     "alpaqa/src/panoc-anderson-alm.cpp"
     "alpaqa/src/structured-panoc-alm.cpp"
     "alpaqa/src/structured-zerofpr-alm.cpp"
     "alpaqa/src/zerofpr-alm.cpp"
+    "alpaqa/src/zerofpr-convex-newton-alm.cpp"
     "alpaqa/src/zerofpr-anderson-alm.cpp"
     "alpaqa/src/newton-tr-pantr-alm.cpp"
     "alpaqa/src/inner/internal/solverstatus.cpp"
     "alpaqa/src/inner/directions/panoc/structured-lbfgs.cpp"
     "alpaqa/src/inner/directions/panoc/structured-newton.cpp"
+    "alpaqa/src/inner/directions/panoc/convex-newton.cpp"
     "alpaqa/src/inner/internal/panoc-helpers.cpp"
 )
 if (ALPAQA_WITH_OCP)

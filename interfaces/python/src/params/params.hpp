@@ -13,6 +13,7 @@
 #include "steihaug-params.hpp"
 #include "structured-lbfgs-direction-params.hpp"
 #include "structured-newton-direction-params.hpp"
+#include "convex-newton-direction-params.hpp"
 #include "zerofpr-params.hpp"
 #if ALPAQA_WITH_LBFGSB
 #include "lbfgsb-params.hpp"
