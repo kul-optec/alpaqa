@@ -1,6 +1,7 @@
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/convex-newton.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
+#include <alpaqa/inner/directions/panoc/noop.hpp>
 #include <alpaqa/inner/directions/panoc/structured-lbfgs.hpp>
 #include <alpaqa/inner/panoc.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
@@ -57,6 +58,8 @@ SharedSolverWrapper make_panoc_like_driver(std::string_view direction,
          builder(tag_t<alpaqa::StructuredLBFGSDirection<config_t>>())},
         {"convex-newton", //
          builder(tag_t<alpaqa::ConvexNewtonDirection<config_t>>())},
+        {"noop", //
+         builder(tag_t<alpaqa::NoopDirection<config_t>>())},
     };
     if (direction.empty())
         direction = "lbfgs";
@@ -81,3 +84,14 @@ SharedSolverWrapper make_zerofpr_driver(std::string_view direction,
                                         Options &opts) {
     return make_panoc_like_driver<alpaqa::ZeroFPRSolver>(direction, opts);
 }
+
+#include <alpaqa/implementation/inner/panoc.tpp>
+#include <alpaqa/implementation/inner/zerofpr.tpp>
+#include <alpaqa/implementation/outer/alm.tpp>
+
+namespace alpaqa {
+template class PANOCSolver<NoopDirection<EigenConfigd>>;
+template class ALMSolver<PANOCSolver<NoopDirection<EigenConfigd>>>;
+template class ZeroFPRSolver<NoopDirection<EigenConfigd>>;
+template class ALMSolver<ZeroFPRSolver<NoopDirection<EigenConfigd>>>;
+} // namespace alpaqa
