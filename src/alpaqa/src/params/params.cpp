@@ -5,6 +5,8 @@
 #include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/possible-alias.hpp>
 #include <fstream>
+#include <stdexcept>
+#include <variant>
 
 #include <alpaqa/util/from_chars-wrapper.hpp>
 
@@ -26,6 +28,11 @@
 #endif
 
 namespace alpaqa::params {
+
+template <>
+void ALPAQA_EXPORT set_param(std::monostate &, ParamString) {
+    throw std::invalid_argument("Cannot set value of std::monostate");
+}
 
 template <>
 void ALPAQA_EXPORT set_param(bool &b, ParamString s) {
