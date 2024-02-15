@@ -10,6 +10,7 @@
 #include <concepts>
 #include <fstream>
 #include <limits>
+#include <variant>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/convex-newton.hpp>
@@ -149,6 +150,11 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
                                  "' (expected string or array, but got " +
                                  j.type_name() + ')');
     }
+}
+
+template <>
+void ALPAQA_EXPORT set_param(std::monostate &, const nlohmann::json &) {
+    throw invalid_json_param("Cannot set value of std::monostate");
 }
 
 template <>

@@ -2,6 +2,7 @@
 
 #include <alpaqa/inner/directions/panoc-direction-update.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
+#include <variant>
 
 namespace alpaqa {
 
@@ -12,10 +13,17 @@ struct NoopDirection {
     USING_ALPAQA_CONFIG(Conf);
 
     using Problem           = TypeErasedProblem<config_t>;
-    using AcceleratorParams = void;
-    using DirectionParams   = void;
+    using AcceleratorParams = std::monostate;
+    using DirectionParams   = std::monostate;
+
+    struct Params {
+        AcceleratorParams accelerator = {};
+        DirectionParams direction     = {};
+    };
 
     NoopDirection() = default;
+    NoopDirection(Params) {}
+    NoopDirection(AcceleratorParams, DirectionParams) {}
 
     /// @see @ref PANOCDirection::initialize
     void initialize([[maybe_unused]] const Problem &problem,
