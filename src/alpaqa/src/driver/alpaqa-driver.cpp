@@ -97,6 +97,7 @@ options:
     num_exp: Repeat the experiment this many times for more accurate timings.
     extra_stats: Log more per-iteration solver statistics, such as step sizes,
                  Newton step acceptance, and residuals. Requires `sol' to be set.
+    show_funcs: Print an overview of the functions provided by the problem.
 
     The prefix @ can be added to the values of x0, mul_g0 and mul_x0 to read
     the values from the given CSV file.
@@ -217,7 +218,8 @@ auto get_problem_path(const char *const *argv) {
     return std::make_tuple(std::move(prob_path), prob_type);
 }
 
-void print_problem_description(std::ostream &os, LoadedProblem &problem) {
+void print_problem_description(std::ostream &os, LoadedProblem &problem,
+                               bool show_funcs) {
     os << "Loaded problem \"" << problem.name << "\"\n"
        << "Number of variables:   " << problem.problem.get_n() << "\n"
        << "Number of constraints: " << problem.problem.get_m() << "\n";
@@ -241,8 +243,10 @@ void print_problem_description(std::ostream &os, LoadedProblem &problem) {
            << "\n  Lower bound only:   " << problem.general_constr_count->lb
            << "\n  Upper bound only:   " << problem.general_constr_count->ub
            << "\n";
-    os << "Provided functions:\n";
-    alpaqa::print_provided_functions(os, problem.problem);
+    if (show_funcs) {
+        os << "Provided functions:\n";
+        alpaqa::print_provided_functions(os, problem.problem);
+    }
 }
 
 auto get_solver_builder(Options &opts) {
@@ -361,7 +365,10 @@ int main(int argc, const char *argv[]) try {
     os << "Loading " << prob_path << " ..." << std::endl;
     auto problem = load_problem(prob_type, prob_path.parent_path(),
                                 prob_path.filename(), opts);
-    print_problem_description(os, problem);
+    // Print problem information
+    bool show_funcs = false;
+    set_params(show_funcs, "show_funcs", opts);
+    print_problem_description(os, problem, show_funcs);
     os << std::endl;
 
     // Check options
