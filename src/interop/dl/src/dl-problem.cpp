@@ -203,7 +203,7 @@ Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
 DLProblem::DLProblem(const std::filesystem::path &so_filename,
                      const std::string &function_name,
                      alpaqa_register_arg_t user_param)
-    : BoxConstrProblem{0, 0} {
+    : BoxConstrProblem{0, 0}, file{so_filename} {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
     handle = load_lib(so_filename);

@@ -246,7 +246,8 @@ struct Problem {
     void initialize_box_C(real_t *lb_, real_t *ub_) const;
     void initialize_box_D(real_t *lb_, real_t *ub_) const;
 
-    std::string get_name() const { return "example problem"; }
+    /// Custom function that's also exposed through @ref alpaqa::dl::DLProblem.
+    std::string get_extra_info() const { return "..."; }
 
     /// Constructor initializes the problem and exposes the problem functions.
     Problem(/* ... */) {
@@ -267,7 +268,7 @@ extern "C" alpaqa_problem_register_t
 register_alpaqa_problem(alpaqa_register_arg_t user_data) noexcept try {
     auto problem = std::make_unique<Problem>(/* ... */);
     alpaqa_problem_register_t result;
-    alpaqa::register_member_function(result, "get_name", &Problem::get_name);
+    alpaqa::register_member_function(result, "get_extra_info", &Problem::get_extra_info);
     result.functions = &problem->funcs;
     result.instance  = problem.release();
     result.cleanup   = [](void *instance) { delete static_cast<Problem *>(instance); };
