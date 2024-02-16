@@ -39,7 +39,12 @@ def main():
     args = parser.parse_args()
 
     if args.version:
-        print(__version__)
+        from .alpaqa import build_time, commit_hash
+
+        if commit_hash:
+            print(f"{__version__} ({commit_hash}:{build_time})")
+        else:
+            print(f"{__version__} ({build_time})")
     elif args.command == 'cache':
         if args.cachecommand == 'clean':
             interactive_clean(args)
