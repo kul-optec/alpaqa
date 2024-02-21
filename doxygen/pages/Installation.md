@@ -132,9 +132,7 @@ export CXX=clang++-16
 rm build/CMakeCache.txt  # Remove cache to trigger a fresh CMake configuration
 ```
 
-If your Clang installation is older than version 16, you'll have to disable the
-optional OCP component, by using the `-D ALPAQA_WITH_OCP=Off` CMake option.
-This should work for Clang 14 and later.
+Xcode 15 or later include Clang 16 and are known to work.
 
 ***
 
