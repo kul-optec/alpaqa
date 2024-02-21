@@ -25,7 +25,7 @@ jobs:
       # Git clone
       - name: Install git
         run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       # Tools
@@ -39,7 +39,7 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache-${{ github.run_id }}
@@ -65,7 +65,7 @@ jobs:
           tar cf stubs.tar -C "$PWD/staging" python
       # Upload
       - name: Upload stubs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: stubs
           retention-days: 1
@@ -105,7 +105,7 @@ jobs:
       # Git clone
       - name: Install git
         run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       # Tools
@@ -120,7 +120,7 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache-${{ github.run_id }}
@@ -130,7 +130,7 @@ jobs:
         run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a12
       # Download stubs
       - name: Download stubs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: stubs
       - name: Extract stubs
@@ -168,14 +168,14 @@ jobs:
           CXXFLAGS: '-static-libstdc++'
       # Upload
       - name: Upload Wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-linux
           retention-days: 1
           path: dist/*.whl
       - name: Upload debug Wheels
         if: ${{ matrix.host == 'x86_64-centos7-linux-gnu' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-debug-linux
           retention-days: 1
@@ -192,7 +192,7 @@ jobs:
       # Git clone
       - name: Install git
         run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       # Tools
@@ -227,7 +227,7 @@ jobs:
           CXXFLAGS: '-static-libstdc++'
       # Upload
       - name: Upload source
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: src-dist
           retention-days: 1
@@ -241,10 +241,10 @@ jobs:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-linux
           path: dist
@@ -277,12 +277,12 @@ jobs:
       CFLAGS: "/bigobj"
       PYTHONUTF8: 1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Cache dependencies
         id: cache-dep
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: deps
           key: deps-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('scripts/install-eigen.ps1', 'scripts/install-casadi-static.ps1') }}
@@ -299,7 +299,7 @@ jobs:
       # Download stubs
       - name: Download stubs
         if: ${{ matrix.arch == 'ARM64' }}
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: stubs
       - name: Extract stubs
@@ -322,7 +322,7 @@ jobs:
           CIBW_TEST_SKIP: "*-{win32,win_arm64} pp*" # no CasADi binaries
           CMAKE_PREFIX_PATH: ${{ github.workspace }}/deps
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-windows
           retention-days: 1
@@ -341,10 +341,10 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_15.2.app/Contents/Developer
       MACOSX_DEPLOYMENT_TARGET: '10.15'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         id: python
         name: Install Python
         with:
@@ -354,14 +354,14 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-${{ matrix.python-version }}-ccache-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-${{ matrix.python-version }}-ccache
       - name: Cache Virtual Environment
         id: cache-venv
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: py-venv
           key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('scripts/install-eigen.sh', 'scripts/install-casadi-static.sh') }}
@@ -381,7 +381,7 @@ jobs:
           ARCHFLAGS='-arch arm64 -arch x86_64' \
               python -m build -w .
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-macos
           retention-days: 1
@@ -394,14 +394,14 @@ jobs:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         name: Install Python
         with: 
           python-version: ${{ matrix.python-version }}
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-macos
           path: dist
@@ -418,8 +418,8 @@ jobs:
     runs-on: ubuntu-latest
     container: python:3.11-bullseye
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
           name: whl-linux
           path: dist
@@ -440,25 +440,25 @@ jobs:
     permissions:
       id-token: write  # mandatory for trusted publishing
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-linux
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-debug-linux
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-windows
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-macos
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: src-dist
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@b7f401de30cb6434a1e19f805ff006643653240e
+        uses: pypa/gh-action-pypi-publish@2f6f737ca5f74c637829c0f5c3acd0e29ea5e8bf

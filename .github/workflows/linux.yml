@@ -27,7 +27,7 @@ jobs:
       # Git clone
       - name: Install git
         run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       # Tools
@@ -40,7 +40,7 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-linux-bin-${{ matrix.host }}-ccache-${{ github.run_id }}
@@ -88,7 +88,7 @@ jobs:
           cpack -G 'TGZ;DEB' -C "RelWithDebInfo;Debug"
         working-directory: package
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: alpaqa-${{ matrix.host }}
           retention-days: 1
@@ -111,11 +111,11 @@ jobs:
           apt -y update && apt -y install --no-install-recommends
           git ca-certificates g++ gfortran cmake ninja-build pkg-config 
           python3-pip libeigen3-dev libgtest-dev libgmock-dev
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Download
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: alpaqa-${{ matrix.host }}
           path: package
@@ -132,7 +132,7 @@ jobs:
             -G "Ninja Multi-Config"
           cmake --build build-tests -j --config ${{ matrix.config }}
       - name: Upload (${{ matrix.config }})
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: alpaqa-${{ matrix.host }}-test-examples-${{ matrix.config }}
           retention-days: 1
@@ -194,7 +194,7 @@ jobs:
           - 'ubuntu:rolling'
     steps:
       - name: Download
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: alpaqa-${{ matrix.host }}
           path: package
@@ -214,7 +214,7 @@ jobs:
         host: [x86_64-centos7-linux-gnu, aarch64-rpi3-linux-gnu]
     steps:
     - name: Download
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: alpaqa-${{ matrix.host }}
         path: package
