@@ -110,7 +110,7 @@ struct attribute_accessor<json> {
 
 template <class T>
     requires requires { attribute_table<T, json>::table; }
-void set_param(T &t, const json &j) {
+void set_param_default(T &t, const json &j) {
     // Dictionary of members
     const auto &members = attribute_table<T, json>::table;
     if constexpr (requires { attribute_alias_table<T, json>::table; })
@@ -124,7 +124,7 @@ void set_param(T &t, const json &j) {
 
 template <class T>
     requires requires { enum_table<T, json>::table; }
-void set_param(T &t, const json &j) {
+void set_param_default(T &t, const json &j) {
     if (!j.is_string())
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for enum '" + demangled_typename(typeid(T)) +
@@ -145,13 +145,13 @@ void set_param(T &t, const json &j) {
 
 template <class T>
     requires requires { enum_table<T, json>::table; }
-void get_param(const T &t, json &j) {
+void get_param_default(const T &t, json &j) {
     j = enum_name(t);
 }
 
 template <class T>
     requires requires { attribute_table<T, json>::table; }
-void get_param(const T &t, json &s) {
+void get_param_default(const T &t, json &s) {
     s             = json::object();
     const auto &m = attribute_table<T, json>::table;
     for (auto &&[k, v] : m)

@@ -64,7 +64,7 @@ void ALPAQA_EXPORT set_param(std::string &v, ParamString s) {
 template <class T>
     requires((std::floating_point<T> || std::integral<T>) &&
              !std::is_enum_v<T> && !std::is_same_v<T, bool>)
-void set_param(T &f, ParamString s) {
+void set_param_default(T &f, ParamString s) {
     assert_key_empty<T>(s);
     const auto *val_end = s.value.data() + s.value.size();
     auto res            = util::from_chars(s.value.data(), val_end, f);
@@ -141,7 +141,7 @@ inline constexpr bool is_duration<std::chrono::duration<Rep, Period>> = true;
 
 template <class Duration>
     requires is_duration<Duration>
-void set_param(Duration &t, ParamString s) {
+void set_param_default(Duration &t, ParamString s) {
     assert_key_empty<Duration>(s);
     try {
         util::parse_duration(t = {}, s.value);
@@ -159,6 +159,15 @@ void set_param(Duration &t, ParamString s) {
 }
 
 #include <alpaqa/params/structs.ipp>
+
+// Because of the new name mangling for concepts (https://reviews.llvm.org/D147655)
+// we need this to be an unconstrained function template. The actual constraints
+// are in set_param_default, which is not exported. Fully specialized
+// instantiations of set_param are still allowed.
+template <class T>
+void set_param(T &t, ParamString s) {
+    set_param_default(t, s);
+}
 
 template <class... Ts>
 void set_param(util::detail::dummy<Ts...> &, ParamString) {}

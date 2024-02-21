@@ -38,7 +38,7 @@ inline constexpr bool is_duration<std::chrono::duration<Rep, Period>> = true;
 
 template <class Duration>
     requires is_duration<Duration>
-void set_param(Duration &t, const json &j) {
+void set_param_default(Duration &t, const json &j) {
     if (!j.is_string())
         throw invalid_json_param(
             "Invalid value " + to_string(j) + " for type '" +
@@ -60,7 +60,7 @@ void set_param(Duration &t, const json &j) {
 
 template <class Duration>
     requires is_duration<Duration>
-void get_param(const Duration &t, json &s) {
+void get_param_default(const Duration &t, json &s) {
     namespace chr = std::chrono;
     auto dur      = t;
     std::string result;
@@ -179,7 +179,7 @@ void ALPAQA_EXPORT set_param(std::string &t, const nlohmann::json &j) {
 
 template <std::integral T>
     requires(!std::same_as<T, bool>)
-void set_param(T &t, const nlohmann::json &j) {
+void set_param_default(T &t, const nlohmann::json &j) {
     if (std::unsigned_integral<T> && !j.is_number_unsigned())
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(T)) +
@@ -194,7 +194,7 @@ void set_param(T &t, const nlohmann::json &j) {
 }
 
 template <std::floating_point T>
-void set_param(T &t, const nlohmann::json &j) {
+void set_param_default(T &t, const nlohmann::json &j) {
     if (j.is_string()) {
         if (j == "nan") {
             t = std::numeric_limits<T>::quiet_NaN();
@@ -222,12 +222,12 @@ void set_param(T &t, const nlohmann::json &j) {
 template <class T>
     requires(std::integral<T> || std::same_as<T, bool> ||
              std::same_as<T, std::string>)
-void get_param(const T &t, nlohmann::json &j) {
+void get_param_default(const T &t, nlohmann::json &j) {
     j = t;
 }
 
 template <std::floating_point T>
-void get_param(const T &t, nlohmann::json &j) {
+void get_param_default(const T &t, nlohmann::json &j) {
     if (std::isnan(t))
         j = "nan";
     else if (t == +std::numeric_limits<T>::infinity())
@@ -239,6 +239,19 @@ void get_param(const T &t, nlohmann::json &j) {
 }
 
 #include <alpaqa/params/structs.ipp>
+
+// Because of the new name mangling for concepts (https://reviews.llvm.org/D147655)
+// we need this to be an unconstrained function template. The actual constraints
+// are in set_param_default, which is not exported. Fully specialized
+// instantiations of set_param are still allowed.
+template <class T>
+void set_param(T &t, const json &j) {
+    set_param_default(t, j);
+}
+template <class T>
+void get_param(const T &t, json &j) {
+    get_param_default(t, j);
+}
 
 template <class... Ts>
 void set_param(util::detail::dummy<Ts...> &, const json &) {}
