@@ -69,6 +69,15 @@ mpc_cost = mpc_y_cost + mpc_u_cost + mpc_terminal_cost
 # Box constraints on the actuator force:
 C = -F_max * np.ones(N_horiz), +F_max * np.ones(N_horiz)
 
+# Initial state of the system
+state_0 = np.array([-np.pi, 0, 0.2, 0])
+
+# Initial parameter value
+Q = [10, 1e-2, 1, 1e-2]
+Qf = np.array([10, 1e-1, 1000, 1e-1])
+R = [1e-1]
+param_0 = np.concatenate((state_0, Q, Qf, R))
+
 # Compile into an alpaqa problem
 import alpaqa
 
@@ -77,7 +86,7 @@ import alpaqa
 problem = (
     alpaqa.minimize(mpc_cost, cs.vec(mpc_u))  # objective and variables
     .subject_to_box(C)  #                       box constraints on the variables
-    .with_param(mpc_param)  #                   parameters to be changed later
+    .with_param(mpc_param, param_0)  #          parameters to be changed later
 ).compile(sym=cs.MX.sym)
 
 from datetime import timedelta
@@ -144,14 +153,6 @@ class MPCController:
 
 
 # %% Simulate the system using the MPC controller
-
-state_0 = np.array([-np.pi, 0, 0.2, 0])  # Initial state of the system
-
-# Parameters
-Q = [10, 1e-2, 1, 1e-2]
-Qf = np.array([10, 1e-1, 1000, 1e-1])
-R = [1e-1]
-problem.param = np.concatenate((state_0, Q, Qf, R))
 
 # Simulation
 mpc_states = np.empty((nx, N_sim + 1))
