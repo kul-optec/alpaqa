@@ -17,19 +17,19 @@ dim = 2  # Dimension (2D or 3D)
 model = HangingChain(N, dim, Ts)
 y_null, u_null = model.initial_state()  # Initial states and control inputs
 
-param = [0.03, 1.6, 0.033 / N]  # Concrete parameters m, D, L
+model_param = [0.03, 1.6, 0.033 / N]  # Concrete parameters m, D, L
 
 # %% Apply an initial control input to disturb the system
 
 N_dist = 3  # Number of time steps to apply the disturbance for
 u_dist = [-0.5, 0.5, 0.5] if dim == 3 else [-0.5, 0.5]  # Disturbance input
-y_dist = model.simulate(N_dist, y_null, u_dist, param)  # Model states
+y_dist = model.simulate(N_dist, y_null, u_dist, model_param)  # Model states
 y_dist = np.hstack((np.array([y_null]).T, y_dist))  # (including initial state)
 
 # %% Simulate the system without a controller
 
 N_sim = 180  # Number of time steps to simulate for
-y_sim = model.simulate(N_sim, y_dist[:, -1], u_null, param)  # Model states
+y_sim = model.simulate(N_sim, y_dist[:, -1], u_null, model_param)  # States
 y_sim = np.hstack((y_dist, y_sim))  # (including disturbed and initial states)
 
 # %% Define MPC cost and constraints
@@ -80,6 +80,12 @@ C = -1 * np.ones(num_var), +1 * np.ones(num_var)  # lower bound, upper bound
 # Constant term of the cubic state constraints as a one-sided box:
 D = constr_lb * np.ones(num_constr), +np.inf * np.ones(num_constr)
 
+# Initial parameter value
+
+y_n = np.array(y_dist[:, -1]).ravel()  # Initial state of the chain
+n_state = y_n.shape[0]
+param_0 = np.concatenate((y_n, model_param, constr_coeff))
+
 # %% NLP formulation
 
 import alpaqa
@@ -91,6 +97,7 @@ problem = (
     .subject_to_box(C)  #           box constraints on variables    x ∊ C
     .subject_to(mpc_constr, D)  #   general constraints             g(x; p) ∊ D
     .with_param(mpc_param)  #       parameter to be changed later   p
+    .with_param_value(param_0)  # initial parameter value
 ).compile(sym=cs.MX.sym)
 
 # %% NLP solver
@@ -159,9 +166,7 @@ class MPCController:
 
 # %% Simulate the system using the MPC controller
 
-y_n = np.array(y_dist[:, -1]).ravel()  # Initial state for controller
-n_state = y_n.shape[0]
-problem.param = np.concatenate((y_n, param, constr_coeff))
+problem.param = param_0
 
 y_mpc = np.empty((n_state, N_sim))
 controller = MPCController(model, problem)
@@ -170,7 +175,7 @@ for n in range(N_sim):
     u_n = controller(y_n)
     # Apply the first optimal control input to the system and simulate for
     # one time step, then update the state:
-    y_n = model.simulate(1, y_n, u_n, param).T
+    y_n = model.simulate(1, y_n, u_n, model_param).T
     y_mpc[:, n] = y_n
 y_mpc = np.hstack((y_dist, y_mpc))
 
