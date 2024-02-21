@@ -68,7 +68,7 @@ auto find_param(const attribute_table_t<S> &m, std::string_view key,
 /// given by @p s.key.
 template <class T>
     requires requires { attribute_table<T, ParamString>::table; }
-void set_param(T &t, ParamString s) {
+void set_param_default(T &t, ParamString s) {
     const auto &m         = attribute_table<T, ParamString>::table;
     auto [key, remainder] = split_key(s.key);
     std::string error_msg;
@@ -85,7 +85,7 @@ void set_param(T &t, ParamString s) {
 /// Set @p t to the value of @p s.value.
 template <class T>
     requires requires { enum_table<T, ParamString>::table; }
-void set_param(T &t, ParamString s) {
+void set_param_default(T &t, ParamString s) {
     assert_key_empty<T>(s);
     const auto &m = enum_table<T, ParamString>::table;
     auto it       = m.find(s.value);
