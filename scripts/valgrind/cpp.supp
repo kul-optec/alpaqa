@@ -27,6 +27,13 @@
    ...
 }
 {
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   ...
+   fun:_ZNSt10filesystem7__cxx114pathD1Ev
+   ...
+}
+{
    Conditional jump or move depends on uninitialised value(s)
    Memcheck:Cond
    fun:convert_sparsity
