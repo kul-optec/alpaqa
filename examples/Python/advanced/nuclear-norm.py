@@ -122,7 +122,7 @@ import matplotlib.pyplot as plt
 
 plt.figure()
 plt.semilogy(residuals, ".-")
-plt.title("PANOC lasso example: residuals")
+plt.title("PANOC nuclear norm example: residuals")
 plt.xlabel("Iteration")
 plt.tight_layout()
 
@@ -132,7 +132,7 @@ if m * n <= 5000:
     plt.plot((A @ X_true).ravel(), "x:", label="True solution $ AX $")
     plt.plot(B.ravel(), "*-", label="Constant $ B $")
     plt.legend()
-    plt.title("PANOC lasso example: solution")
+    plt.title("PANOC nuclear norm example: solution")
     plt.tight_layout()
 
 plt.show()
