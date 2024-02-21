@@ -6,10 +6,6 @@
 #include <type_traits>
 #include <utility>
 
-#if defined(__clang_major__) && __clang_major__ <= 15 && !defined(__clangd__)
-#error "Better ranges support required"
-#endif
-
 namespace alpaqa::util {
 
 template <class It>
