@@ -54,7 +54,7 @@ jobs:
         restore-keys: ${{ runner.os }}-matlab-${{ matrix.host }}-ccache
     # Matlab
     - name: Set up MATLAB
-      uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
+      uses: matlab-actions/setup-matlab@28eae5f73a73638a8a34c9dd26785c65ff0cf976
       with:
         release: ${{ matrix.matlab-version }}
     # Conan
@@ -181,7 +181,7 @@ jobs:
         restore-keys: ${{ runner.os }}-matlab-ccache
     # Matlab
     - name: Set up MATLAB
-      uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
+      uses: matlab-actions/setup-matlab@28eae5f73a73638a8a34c9dd26785c65ff0cf976
       with:
         release: ${{ matrix.matlab-version }}
     # Conan
@@ -277,7 +277,7 @@ jobs:
         python-version: ${{ env.PYTHON_VERSION }}
     # Matlab
     - name: Set up MATLAB
-      uses: matlab-actions/setup-matlab@e6b241a42928104e9e489fcc63aa2915df01565f
+      uses: matlab-actions/setup-matlab@28eae5f73a73638a8a34c9dd26785c65ff0cf976
       with:
         release: ${{ matrix.matlab-version }}
     # Conan
