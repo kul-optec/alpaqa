@@ -65,7 +65,7 @@ auto select_rows_in_col_iota(const SpMat &sp_mat, MaskVec &mask, auto column) {
         util::iter_set_intersection(std::move(col_range), std::move(iota_mask),
                                     std::less{}, proj_row, proj_mask);
     // Extract the iterator to the matrix element and the index into the mask:
-    auto extract_eigen_iter_and_index = []<class T>(T && tup)
+    auto extract_eigen_iter_and_index = []<class T>(T &&tup)
         requires(std::is_rvalue_reference_v<T &&>)
     {
         auto &[eigen_iter, enum_tup] = tup;
@@ -124,8 +124,7 @@ void sparse_matvec_add_transpose_masked_rows(const SpMat &S, const CVec &v,
             out(c) += r.value() * v(r.row());
 }
 
-#if __cpp_lib_ranges_zip >= 202110L &&                                         \
-    __cpp_lib_ranges_enumerate >= 202302L && !defined(__clang__)
+#if __cpp_lib_ranges_zip >= 202110L && __cpp_lib_ranges_enumerate >= 202302L
 #define ALPAQA_HAVE_COO_CSC_CONVERSIONS 1
 
 template <class I>
