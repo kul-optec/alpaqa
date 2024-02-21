@@ -27,7 +27,7 @@ jobs:
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
     steps:
     # Git clone
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     # Tools
@@ -47,7 +47,7 @@ jobs:
         echo "ccache-dir=${{ runner.temp }}/.ccache" >> "$GITHUB_OUTPUT"
         mkdir -p "${{ runner.temp }}/.ccache"
     - name: Cache ccache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.ccache.outputs.ccache-dir }}
         key: ${{ runner.os }}-matlab-${{ matrix.host }}-ccache-${{ github.run_id }}
@@ -64,7 +64,7 @@ jobs:
         python${{ env.PYTHON_VERSION }} -m pip install -U pip conan
         echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
     - name: Cache Conan
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.conan.outputs.conan-home }}
         key: ${{ runner.os }}-matlab-${{ matrix.host }}-conan-${{ github.run_id }}
@@ -126,7 +126,7 @@ jobs:
       working-directory: staging
     # Upload
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: alpaqa-matlab-${{ matrix.name }}
         path: alpaqa-matlab-${{ matrix.name }}.zip
@@ -155,11 +155,11 @@ jobs:
       FC: NOTFOUND
     steps:
     # Git clone
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     # Tools
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       id: python
       name: Install Python
       with:
@@ -174,7 +174,7 @@ jobs:
         echo "ccache-dir=${{ runner.temp }}/.ccache" >> "$GITHUB_OUTPUT"
         mkdir -p "${{ runner.temp }}/.ccache"
     - name: Cache ccache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.ccache.outputs.ccache-dir }}
         key: ${{ runner.os }}-matlab-ccache-${{ github.run_id }}
@@ -191,7 +191,7 @@ jobs:
         python${{ env.PYTHON_VERSION }} -m pip install -U pip conan ninja
         echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
     - name: Cache Conan
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.conan.outputs.conan-home }}
         key: ${{ runner.os }}-matlab-conan-${{ github.run_id }}
@@ -244,7 +244,7 @@ jobs:
       working-directory: staging
     # Upload
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: alpaqa-matlab-${{ matrix.name }}
         path: alpaqa-matlab-${{ matrix.name }}.zip
@@ -266,11 +266,11 @@ jobs:
       FC: NOTFOUND
     steps:
     # Git clone
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     # Tools
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       id: python
       name: Install Python
       with:
@@ -288,7 +288,7 @@ jobs:
         echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
       shell: bash
     # - name: Cache Conan
-    #   uses: actions/cache@v3
+    #   uses: actions/cache@v4
     #   with:
     #     path: ${{ steps.conan.outputs.conan-home }}
     #     key: ${{ runner.os }}-matlab-conan-${{ github.run_id }}
@@ -341,7 +341,7 @@ jobs:
       run: Compress-Archive -Path staging\* alpaqa-matlab-${{ matrix.name }}.zip
     # Upload
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: alpaqa-matlab-${{ matrix.name }}
         path: alpaqa-matlab-${{ matrix.name }}.zip

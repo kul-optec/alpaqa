@@ -30,7 +30,7 @@ jobs:
       # Git clone
       - name: Install git
         run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       # Tools
@@ -44,7 +44,7 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-${{ matrix.config }}-ccache-${{ github.run_id }}
@@ -75,7 +75,7 @@ jobs:
           CXXFLAGS: "-fstack-protector-all -mshstk -fcf-protection=full -D_FORTIFY_SOURCE=${{ matrix.config != 'Debug' && '3' || '0' }} -fdiagnostics-color -static-libstdc++"
       # Upload
       - name: Upload Wheels
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
           retention-days: 1
@@ -89,10 +89,10 @@ jobs:
       matrix:
         config: [RelWithDebInfo, Debug]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-${{ env.PYTHON_VERSION }}-${{ matrix.config }}-linux-test
           path: dist
@@ -124,10 +124,10 @@ jobs:
       DEVELOPER_DIR: /Applications/Xcode_15.2.app/Contents/Developer
       MACOSX_DEPLOYMENT_TARGET: '10.15'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         id: python
         name: Install Python
         with:
@@ -137,14 +137,14 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-ccache-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-ccache
       - name: Cache Virtual Environment
         id: cache-venv
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: py-venv
           key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('scripts/install-eigen.sh', 'scripts/install-casadi-static.sh') }}
@@ -164,7 +164,7 @@ jobs:
           ARCHFLAGS='-arch arm64 -arch x86_64' \
               python -m build -w .
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-macos
           retention-days: 1
@@ -181,12 +181,12 @@ jobs:
       CFLAGS: "/bigobj"
       PYTHONUTF8: 1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Cache dependencies
         id: cache-dep
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: deps
           key: deps-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('scripts/install-eigen.ps1', 'scripts/install-casadi-static.ps1') }}
@@ -217,7 +217,7 @@ jobs:
           CIBW_TEST_SKIP: "*-{win32,win_arm64} pp*" # no CasADi binaries
           CMAKE_PREFIX_PATH: ${{ github.workspace }}/deps
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: whl-windows
           retention-days: 1
@@ -243,7 +243,7 @@ jobs:
               libcapture-tiny-perl libdatetime-perl libdevel-cover-perl \
               libdigest-md5-file-perl libjson-xs-perl perl
       # Git clone
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
       - run: git config --global --add safe.directory $GITHUB_WORKSPACE
@@ -270,7 +270,7 @@ jobs:
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-docs-ccache-${{ github.run_id }}
@@ -288,7 +288,7 @@ jobs:
           { git checkout --orphan gh-pages && git rm -rf . && git clean -fxd ; }
           echo -e 'bib*.aux\ncitelist.doc*' > .gitignore
       # Download and install package, Install dependencies for generating docs
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: whl-${{ env.PYTHON_VERSION }}-RelWithDebInfo-linux-test
           path: dist
