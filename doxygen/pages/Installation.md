@@ -20,7 +20,7 @@ install the `venv` module to create virtual environments).
 sudo apt install g++ gcc git python3-venv python3-dev
 ```
 The alpaqa package requires a relatively recent compiler
-(tested using GCC 10-13, Clang 14-16).
+(tested using GCC 10-13, Clang (libc++) 16-17, or Clang (libstdc++) 17).
 
 To install GCC 11 on older versions of Ubuntu, you can use
 ```sh
