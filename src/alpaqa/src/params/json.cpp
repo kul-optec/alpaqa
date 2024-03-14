@@ -157,7 +157,7 @@ void ALPAQA_EXPORT set_param(bool &t, const nlohmann::json &j) {
                                  " for type '" + demangled_typename(typeid(t)) +
                                  "' (expected boolean, but got " +
                                  j.type_name() + ')');
-    t = j;
+    t = static_cast<bool>(j);
 }
 
 template <>
@@ -167,7 +167,7 @@ void ALPAQA_EXPORT set_param(std::string &t, const nlohmann::json &j) {
                                  " for type '" + demangled_typename(typeid(t)) +
                                  "' (expected string, but got " +
                                  j.type_name() + ')');
-    t = j;
+    t = static_cast<std::string>(j);
 }
 
 template <std::integral T>
@@ -183,7 +183,7 @@ void set_param(T &t, const nlohmann::json &j) {
                                  " for type '" + demangled_typename(typeid(T)) +
                                  "' (expected integer, but got " +
                                  j.type_name() + ')');
-    t = j;
+    t = static_cast<T>(j);
 }
 
 template <std::floating_point T>
@@ -203,7 +203,7 @@ void set_param(T &t, const nlohmann::json &j) {
                                      "\"nan\", \"inf\", \"+inf\", \"-inf\")");
         }
     } else if (j.is_number()) {
-        t = j;
+        t = static_cast<T>(j);
     } else {
         throw invalid_json_param("Invalid value " + to_string(j) +
                                  " for type '" + demangled_typename(typeid(T)) +
