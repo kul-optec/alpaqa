@@ -30,14 +30,15 @@ void unsupported_type(T &, [[maybe_unused]] ParamString s) {
 
 /// Function wrapper to set attributes of a struct, type-erasing the type of the
 /// attribute.
-template <class T>
-struct attribute_accessor<T, ParamString> {
-    template <class T_actual, class A>
-    attribute_accessor(A T_actual::*attr, std::string_view = "")
-        : set([attr](T &t, const ParamString &s) {
-              return set_param(t.*attr, s);
-          }) {}
-    std::function<void(T &, const ParamString &)> set;
+template <>
+struct attribute_accessor<ParamString> {
+    template <class T, class T_actual, class A>
+    static attribute_accessor make(A T_actual::*attr, std::string_view = "") {
+        return {{[attr](const any_ptr &t, const ParamString &s) {
+            return set_param(t.template cast<T>()->*attr, s);
+        }}};
+    }
+    std::function<void(const any_ptr &, const ParamString &)> set;
 };
 
 template <class T>
@@ -46,6 +47,23 @@ struct enum_accessor<T, ParamString> {
     T value;
 };
 
+namespace detail {
+template <class S>
+auto find_param(const attribute_table_t<S> &m, std::string_view key,
+                std::string &error_msg)
+    -> std::optional<typename attribute_table_t<S>::const_iterator> {
+    auto it = m.find(key);
+    if (it == m.end()) {
+        auto keys = std::views::keys(m);
+        std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
+        util::sort_case_insensitive(sorted_keys);
+        error_msg = util::join(sorted_keys, {.sep = ", ", .empty = "∅"});
+        return std::nullopt;
+    }
+    return std::make_optional(it);
+}
+} // namespace detail
+
 /// Use @p s to index into the struct type @p T and overwrite the attribute
 /// given by @p s.key.
 template <class T>
@@ -53,19 +71,15 @@ template <class T>
 void set_param(T &t, ParamString s) {
     const auto &m         = attribute_table<T, ParamString>::table;
     auto [key, remainder] = split_key(s.key);
-    auto it               = m.find(key);
-    if (it == m.end()) {
-        auto keys = std::views::keys(m);
-        std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
-        util::sort_case_insensitive(sorted_keys);
-        throw invalid_param(
-            "Invalid key '" + std::string(key) + "' for type '" +
-            demangled_typename(typeid(T)) + "' in '" + std::string(s.full_key) +
-            "',\n  possible keys are: " +
-            util::join(sorted_keys, {.sep = ", ", .empty = "∅"}));
-    }
+    std::string error_msg;
+    auto param = detail::find_param(m, key, error_msg);
+    if (!param)
+        throw invalid_param("Invalid key '" + std::string(key) +
+                            "' for type '" + demangled_typename(typeid(T)) +
+                            "' in '" + std::string(s.full_key) +
+                            "',\n  possible keys are: " + error_msg);
     s.key = remainder;
-    it->second.set(t, s);
+    (*param)->second.set(&t, s);
 }
 
 /// Set @p t to the value of @p s.value.

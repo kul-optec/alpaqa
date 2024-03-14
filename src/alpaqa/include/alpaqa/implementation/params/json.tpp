@@ -4,6 +4,7 @@
 #include <alpaqa/util/string-util.hpp>
 
 #include <nlohmann/json.hpp>
+#include <functional>
 #include <stdexcept>
 
 namespace alpaqa::params {
@@ -18,6 +19,23 @@ std::string join_sorted_keys(const auto &members) {
     return util::join(sorted_keys, {.sep = ", ", .empty = "∅"});
 }
 } // namespace detail
+
+template <>
+struct attribute_accessor<json> {
+    template <class T, class T_actual, class A>
+    static attribute_accessor make(A T_actual::*attr, std::string_view = "") {
+        return {
+            .set{[attr](const any_ptr &t, const json &s) {
+                return set_param(t.template cast<T>()->*attr, s);
+            }},
+            .get{[attr](const any_ptr &t, json &s) {
+                return get_param(t.template cast<const T>()->*attr, s);
+            }},
+        };
+    }
+    std::function<void(const any_ptr &, const json &)> set;
+    std::function<void(const any_ptr &, json &)> get;
+};
 
 template <class T>
     requires requires { attribute_table<T, json>::table; }
@@ -68,7 +86,7 @@ void set_param(T &t, const json &j) {
         }
         // Member was found, invoke its setter (and possibly recurse)
         try {
-            it->second.set(t, el.value());
+            it->second.set(&t, el.value());
         } catch (invalid_json_param &e) {
             // Keep a backtrace of the JSON keys for error reporting
             e.backtrace.push_back(key);
@@ -110,7 +128,7 @@ void get_param(const T &t, json &s) {
     s             = json::object();
     const auto &m = attribute_table<T, json>::table;
     for (auto &&[k, v] : m)
-        v.get(t, s[k]);
+        v.get(&t, s[std::string{k}]);
 }
 
 } // namespace alpaqa::params

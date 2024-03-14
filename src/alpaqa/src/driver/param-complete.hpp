@@ -35,12 +35,17 @@ Result get_members(const MemberGetter &s); /* deliberately undefined */
 template <class T>
 bool is_leaf(); /* deliberately undefined */
 
-template <class T>
-struct attribute_accessor<T, MemberGetter> {
-    template <class T_actual, class A>
-    attribute_accessor(A T_actual::*, std::string_view doc = "")
-        : get([](const auto &s) { return get_members<A>(s); }), doc(doc),
-          leaf(is_leaf<A>()) {}
+template <>
+struct attribute_accessor<MemberGetter> {
+    template <class T, class T_actual, class A>
+    static attribute_accessor make(A T_actual::*, std::string_view doc = "") {
+        return {
+            .get{[](const auto &s) { return get_members<A>(s); }},
+            .doc{doc},
+            .leaf{is_leaf<A>()},
+        };
+    }
+
     using get_members_func_t = Result(const MemberGetter &);
     get_members_func_t *get;
     std::string_view doc;
