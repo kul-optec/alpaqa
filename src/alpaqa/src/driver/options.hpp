@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/params/params.hpp>
+#include <alpaqa/params/vec-from-file.hpp>
 #include <alpaqa/util/string-util.hpp>
 
 #include <algorithm>
@@ -25,6 +26,7 @@ class Options {
     size_t num_json;
 #if ALPAQA_WITH_JSON
     std::vector<nlohmann::json> json_storage;
+    nlohmann::json json_out;
 #endif
 
   public:
@@ -60,9 +62,16 @@ class Options {
     }
     [[nodiscard]] std::span<unsigned> used() { return used_storage; }
 
+    template <class T>
+    void set_params(T &t, std::string_view prefix);
+
 #if ALPAQA_WITH_JSON
     [[nodiscard]] std::span<const nlohmann::json> json_data() const {
         return json_storage;
+    }
+
+    [[nodiscard]] const nlohmann::json &get_json_out() const {
+        return json_out;
     }
 
   private:
@@ -83,15 +92,15 @@ class Options {
 };
 
 template <class T>
-decltype(auto) set_params(T &t, std::string_view prefix, Options &opts) {
+void Options::set_params(T &t, std::string_view prefix) {
 #if ALPAQA_WITH_JSON
-    auto json_data = opts.json_data();
+    auto json_data = this->json_data();
     for (size_t i = 0; i < json_data.size(); ++i)
         try {
             if (auto j = json_data[i].find(prefix); j != json_data[i].end())
                 alpaqa::params::set_param(t, *j);
         } catch (alpaqa::params::invalid_json_param &e) {
-            std::string fname{opts.json_flags()[i].substr(1)};
+            std::string fname{this->json_flags()[i].substr(1)};
             throw std::invalid_argument(
                 "Error in JSON file '" + fname + "' at '" +
                 std::string(prefix) +
@@ -102,10 +111,20 @@ decltype(auto) set_params(T &t, std::string_view prefix, Options &opts) {
                                           .quote_right = ""}) +
                 "': " + e.what());
         } catch (nlohmann::json::exception &e) {
-            std::string fname{opts.json_flags()[i].substr(1)};
+            std::string fname{this->json_flags()[i].substr(1)};
             throw std::invalid_argument("Error in JSON file '" + fname +
                                         "': " + e.what());
         }
 #endif
-    return alpaqa::params::set_params(t, prefix, opts.options(), opts.used());
+    alpaqa::params::set_params(t, prefix, this->options(), this->used());
+#if ALPAQA_WITH_JSON
+    using vec_from_file = alpaqa::params::vec_from_file<alpaqa::DefaultConfig>;
+    if constexpr (!std::is_same_v<T, vec_from_file>)
+        alpaqa::params::get_param(t, this->json_out[std::string{prefix}]);
+#endif
+}
+
+template <class T>
+void set_params(T &t, std::string_view prefix, Options &opts) {
+    opts.set_params(t, prefix);
 }
