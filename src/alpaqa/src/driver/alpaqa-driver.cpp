@@ -269,6 +269,7 @@ auto get_solver_builder(Options &opts) {
 
 void store_solution(const fs::path &sol_output_dir, std::ostream &os,
                     BenchmarkResults &results, auto &solver,
+                    [[maybe_unused]] const Options &opts,
                     std::span<const char *> argv) {
     const auto &sol_res = results.solver_results;
     auto timestamp_str  = std::to_string(results.timestamp);
@@ -305,6 +306,14 @@ void store_solution(const fs::path &sol_output_dir, std::ostream &os,
         std::ofstream output_file(pth);
         solver->write_statistics_to_stream(output_file);
     }
+#if ALPAQA_WITH_JSON
+    {
+        auto pth = sol_output_dir / ("options" + suffix + ".json");
+        os << "Writing options to " << pth << std::endl;
+        std::ofstream output_file(pth);
+        output_file << opts.get_json_out() << '\n';
+    }
+#endif
 }
 
 int main(int argc, const char *argv[]) try {
@@ -385,7 +394,7 @@ int main(int argc, const char *argv[]) try {
 
     // Store solution
     if (!sol_output_dir.empty())
-        store_solution(sol_output_dir, os, results, solver, args);
+        store_solution(sol_output_dir, os, results, solver, opts, args);
 
 } catch (std::exception &e) {
     std::cerr << "Error: " << demangled_typename(typeid(e)) << ":\n  "
