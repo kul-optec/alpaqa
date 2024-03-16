@@ -29,7 +29,7 @@ class AlpaqaRecipe(ConanFile):
         "with_casadi": False,
         "with_cutest": False,
         "with_qpalm": False,
-        "with_json": False,
+        "with_json": True,
         "with_lbfgsb": False,
         "with_ocp": False,
         "with_casadi_ocp": False,
