@@ -570,7 +570,10 @@ TYPED_TEST_P(TypeErasedTest, moveSelf) {
     auto a = TypeParam::template make<Noisy>("test-move");
     ASSERT_TRUE(a);
     EXPECT_STREQ(a.get_msg(), "test-move");
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wself-move"
     a = std::move(a);
+#pragma GCC diagnostic pop
     ASSERT_TRUE(a);
     EXPECT_STREQ(a.get_msg(), "test-move");
 }
