@@ -34,6 +34,13 @@
    ...
 }
 {
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   ...
+   fun:~unique_ptr
+   ...
+}
+{
    Conditional jump or move depends on uninitialised value(s)
    Memcheck:Cond
    fun:convert_sparsity
