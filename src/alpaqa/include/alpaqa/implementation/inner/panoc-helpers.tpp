@@ -33,11 +33,11 @@ struct PANOCHelpers {
         // g(x̂)
         p.eval_g(x̂, err_z);
         // ζ = g(x̂) + Σ⁻¹y
-        err_z += Σ.asDiagonal().inverse() * y;
+        err_z += y.cwiseQuotient(Σ);
         // ẑ = Π(ζ, D)
         p.eval_proj_diff_g(err_z, err_z);
         // g(x) - ẑ
-        err_z -= Σ.asDiagonal().inverse() * y;
+        err_z -= y.cwiseQuotient(Σ);
         // TODO: catastrophic cancellation?
     }
 
@@ -72,12 +72,14 @@ struct PANOCHelpers {
         rvec work_n1,  ///<       Workspace of dimension n
         rvec work_n2   ///<       Workspace of dimension n
     ) {
+        using vec_util::norm_1;
+        using vec_util::norm_inf;
         switch (crit) {
             case PANOCStopCrit::ApproxKKT: {
                 auto err = (1 / γ) * pₖ + (grad_ψₖ - grad_̂ψₖ);
                 // These parentheses     ^^^               ^^^     are important
                 // to prevent catastrophic cancellation when the step is small
-                return vec_util::norm_inf(err);
+                return norm_inf(err);
             }
             case PANOCStopCrit::ApproxKKT2: {
                 auto err = (1 / γ) * pₖ + (grad_ψₖ - grad_̂ψₖ);
@@ -86,7 +88,7 @@ struct PANOCHelpers {
                 return err.norm();
             }
             case PANOCStopCrit::ProjGradNorm: {
-                return vec_util::norm_inf(pₖ);
+                return norm_inf(pₖ);
             }
             case PANOCStopCrit::ProjGradNorm2: {
                 return pₖ.norm();
@@ -94,7 +96,7 @@ struct PANOCHelpers {
             case PANOCStopCrit::ProjGradUnitNorm: {
                 problem.eval_prox_grad_step(real_t(1), xₖ, grad_ψₖ, work_n1,
                                             work_n2);
-                return vec_util::norm_inf(work_n2);
+                return norm_inf(work_n2);
             }
             case PANOCStopCrit::ProjGradUnitNorm2: {
                 problem.eval_prox_grad_step(real_t(1), xₖ, grad_ψₖ, work_n1,
@@ -102,7 +104,7 @@ struct PANOCHelpers {
                 return work_n2.norm();
             }
             case PANOCStopCrit::FPRNorm: {
-                return vec_util::norm_inf(pₖ) / γ;
+                return norm_inf(pₖ) / γ;
             }
             case PANOCStopCrit::FPRNorm2: {
                 return pₖ.norm() / γ;
@@ -111,14 +113,14 @@ struct PANOCHelpers {
                 // work_n2 ← x̂ₖ - Π_C(x̂ₖ - ∇ψ(x̂ₖ))
                 problem.eval_prox_grad_step(real_t(1), x̂ₖ, grad_̂ψₖ, work_n1,
                                             work_n2);
-                auto err = vec_util::norm_inf(work_n2);
+                auto err = norm_inf(work_n2);
                 auto n   = 2 * (ŷₖ.size() + x̂ₖ.size());
                 if (n == 0)
                     return err;
                 // work_n2 ← x̂ₖ - ∇ψ(x̂ₖ) - Π_C(x̂ₖ - ∇ψ(x̂ₖ))
                 work_n2 -= grad_̂ψₖ;
-                auto C_lagr_mult   = vec_util::norm_1(work_n2);
-                auto D_lagr_mult   = vec_util::norm_1(ŷₖ);
+                auto C_lagr_mult   = norm_1(work_n2);
+                auto D_lagr_mult   = norm_1(ŷₖ);
                 const real_t s_max = 100;
                 const real_t s_n   = static_cast<real_t>(n);
                 real_t s_d =
@@ -128,8 +130,7 @@ struct PANOCHelpers {
             case PANOCStopCrit::LBFGSBpp: {
                 problem.eval_prox_grad_step(real_t(1), xₖ, grad_ψₖ, work_n1,
                                             work_n2);
-                return vec_util::norm_inf(work_n2) /
-                       std::fmax(real_t(1), xₖ.norm());
+                return norm_inf(work_n2) / std::fmax(real_t(1), xₖ.norm());
             }
             default:;
         }
@@ -319,9 +320,9 @@ struct PANOCHelpers {
         ψ = problem.eval_ψ_grad_ψ(x, y, Σ, /* in ⟹ out */ grad_ψ, work_n,
                                   work_m);
         // Select a small step h for finite differences
-        auto h        = grad_ψ.unaryExpr([&](real_t g) {
-            return g > 0 ? std::max(g * ε, δ) : std::min(g * ε, -δ);
-        });
+        auto h =
+            (grad_ψ.array() > 0)
+                .select((ε * grad_ψ).cwiseMax(δ), (ε * grad_ψ).cwiseMin(-δ));
         work_x        = x - h;
         real_t norm_h = h.norm();
         // Calculate ∇ψ(x₀ - h)

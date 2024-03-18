@@ -60,7 +60,8 @@ struct NuclearNorm {
         const length_t n = svd.singularValues().size();
         auto step        = vec::Constant(n, λ * γ);
         singular_values  = vec::Zero(n).cwiseMax(svd.singularValues() - step);
-        real_t value     = λ * singular_values.template lpNorm<1>();
+        using vec_util::norm_1;
+        real_t value = λ * norm_1(singular_values);
         auto it0 = std::find(singular_values.begin(), singular_values.end(), 0);
         index_t rank = it0 - singular_values.begin();
         using Eigen::placeholders::all, Eigen::seqN;

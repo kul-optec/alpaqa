@@ -214,16 +214,17 @@ auto PANOCOCPSolver<Conf>::operator()(
                                     real_t γ, crvec xuₖ, crvec grad_ψₖ,
                                     crvec pₖ, real_t pₖᵀpₖ, rvec work_xu,
                                     rvec work_p) {
+        using vec_util::norm_inf;
         switch (params.stop_crit) {
             case PANOCStopCrit::ProjGradNorm: {
-                return vec_util::norm_inf(pₖ);
+                return norm_inf(pₖ);
             }
             case PANOCStopCrit::ProjGradNorm2: {
                 return std::sqrt(pₖᵀpₖ);
             }
             case PANOCStopCrit::ProjGradUnitNorm: {
                 eval_prox_impl(1, xuₖ, grad_ψₖ, work_xu, work_p);
-                return vec_util::norm_inf(work_p);
+                return norm_inf(work_p);
             }
             case PANOCStopCrit::ProjGradUnitNorm2: {
                 auto [pTp, gTp] =
@@ -231,7 +232,7 @@ auto PANOCOCPSolver<Conf>::operator()(
                 return std::sqrt(pTp);
             }
             case PANOCStopCrit::FPRNorm: {
-                return vec_util::norm_inf(pₖ) / γ;
+                return norm_inf(pₖ) / γ;
             }
             case PANOCStopCrit::FPRNorm2: {
                 return std::sqrt(pₖᵀpₖ) / γ;

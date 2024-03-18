@@ -286,9 +286,9 @@ auto PANOCSolver<DirectionProviderT>::operator()(
                     eval_ψx̂(*curr);
                 auto &ŷ = curr->ŷx̂;
                 if (err_z.size() > 0)
-                    err_z = Σ.asDiagonal().inverse() * (ŷ - y);
-                x = std::move(curr->x̂);
-                y = std::move(curr->ŷx̂);
+                    err_z = (ŷ - y).cwiseQuotient(Σ);
+                x = curr->x̂;
+                y = curr->ŷx̂;
             }
             s.iterations   = k;
             s.ε            = εₖ;

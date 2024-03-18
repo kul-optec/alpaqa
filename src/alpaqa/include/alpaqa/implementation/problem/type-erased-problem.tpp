@@ -18,7 +18,7 @@ auto ProblemVTable<Conf>::calc_ŷ_dᵀŷ(const void *self, rvec g_ŷ, crvec y, c
         return dᵀŷ;
     } else {
         // ζ = g(x) + Σ⁻¹y
-        g_ŷ += Σ.asDiagonal().inverse() * y;
+        g_ŷ += y.cwiseQuotient(Σ);
         // d = ζ - Π(ζ, D)
         vtable.eval_proj_diff_g(self, g_ŷ, g_ŷ);
         // dᵀŷ, ŷ = Σ d
