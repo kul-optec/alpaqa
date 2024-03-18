@@ -416,7 +416,7 @@ void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
     auto &&ŷ = impl->work2.topRows(impl->ncon);
     // ζ = g(x) + Σ⁻¹y
     eval_g(x, ζ);
-    ζ += Σ.asDiagonal().inverse() * y;
+    ζ += y.cwiseQuotient(Σ);
     // d = ζ - Π(ζ, D)
     this->eval_proj_diff_g(ζ, ŷ);
     // ŷ = Σ d

@@ -47,6 +47,7 @@ struct L1Norm {
         assert(in.cols() == 1);
         assert(out.cols() == 1);
         assert(in.size() == out.size());
+        using vec_util::norm_1;
         const length_t n = in.size();
         if constexpr (scalar_weight) {
             assert(λ >= 0);
@@ -56,7 +57,7 @@ struct L1Norm {
             }
             auto step = vec::Constant(n, λ * γ);
             out       = vec::Zero(n).cwiseMax(in - step).cwiseMin(in + step);
-            return λ * out.template lpNorm<1>();
+            return λ * norm_1(out.reshaped());
         } else {
             if constexpr (std::is_same_v<weight_t, vec>)
                 if (λ.size() == 0)
@@ -66,7 +67,7 @@ struct L1Norm {
             assert((λ.array() >= 0).all());
             auto step = λ * γ;
             out       = vec::Zero(n).cwiseMax(in - step).cwiseMin(in + step);
-            return out.cwiseProduct(λ).template lpNorm<1>();
+            return norm_1(out.cwiseProduct(λ).reshaped());
         }
     }
 
@@ -114,6 +115,7 @@ struct L1NormComplex {
         assert(in.cols() == 1);
         assert(out.cols() == 1);
         assert(in.size() == out.size());
+        using vec_util::norm_1;
         const length_t n = in.size();
         if constexpr (scalar_weight) {
             assert(λ >= 0);
@@ -126,7 +128,7 @@ struct L1NormComplex {
                 return mag2 <= γλ * γλ ? 0 : x * (1 - γλ / std::sqrt(mag2));
             };
             out = in.unaryExpr(soft_thres);
-            return λ * out.template lpNorm<1>();
+            return λ * norm_1(out);
         } else {
             if constexpr (std::is_same_v<weight_t, vec>)
                 if (λ.size() == 0)
@@ -140,7 +142,7 @@ struct L1NormComplex {
                 return mag2 <= γλ * γλ ? 0 : x * (1 - γλ / std::sqrt(mag2));
             };
             out = in.binaryExpr(λ, soft_thres);
-            return out.cwiseProduct(λ).template lpNorm<1>();
+            return norm_1(out.cwiseProduct(λ));
         }
     }
 

@@ -122,7 +122,8 @@ class BoxConstrProblem {
     static real_t eval_prox_grad_step_box_l1(const Box &C, const auto &λ, real_t γ, crvec x,
                                              crvec grad_ψ, rvec x̂, rvec p) {
         eval_prox_grad_step_box_l1_impl(C, λ, γ, x, grad_ψ, x̂, p);
-        return vec_util::norm_1(x̂.cwiseProduct(λ));
+        using vec_util::norm_1;
+        return norm_1(x̂.cwiseProduct(λ));
     }
 
     /// @copydoc eval_prox_grad_step_box_l1_impl
@@ -131,7 +132,8 @@ class BoxConstrProblem {
         auto n     = x.size();
         auto λ_vec = vec::Constant(n, λ);
         eval_prox_grad_step_box_l1_impl(C, λ_vec, γ, x, grad_ψ, x̂, p);
-        return λ * vec_util ::norm_1(x̂);
+        using vec_util::norm_1;
+        return λ * norm_1(x̂);
     }
 
     /// @see @ref TypeErasedProblem::eval_prox_grad_step
@@ -149,23 +151,17 @@ class BoxConstrProblem {
 
     static void eval_proj_multipliers_box(const Box &D, rvec y, real_t M,
                                           index_t penalty_alm_split) {
-        // If there's no lower bound, the multipliers can only be positive
-        auto max_lb = [M](real_t y, real_t z_lb) {
-            real_t y_lb = z_lb == -alpaqa::inf<config_t> ? 0 : -M;
-            return std::max(y, y_lb);
-        };
-        // If there's no upper bound, the multipliers can only be negative
-        auto min_ub = [M](real_t y, real_t z_ub) {
-            real_t y_ub = z_ub == alpaqa::inf<config_t> ? 0 : M;
-            return std::min(y, y_ub);
-        };
-        auto num_alm    = y.size() - penalty_alm_split;
-        auto &&y_qpm    = y.topRows(penalty_alm_split);
-        auto &&y_alm    = y.bottomRows(num_alm);
-        auto &&z_alm_lb = D.lowerbound.bottomRows(num_alm);
-        auto &&z_alm_ub = D.upperbound.bottomRows(num_alm);
+        auto num_alm  = y.size() - penalty_alm_split;
+        auto y_qpm    = y.topRows(penalty_alm_split);
+        auto y_alm    = y.bottomRows(num_alm);
+        auto z_alm_lb = D.lowerbound.bottomRows(num_alm);
+        auto z_alm_ub = D.upperbound.bottomRows(num_alm);
         y_qpm.setZero();
-        y_alm = y_alm.binaryExpr(z_alm_lb, max_lb).binaryExpr(z_alm_ub, min_ub);
+        // If there's no lower bound, the multipliers can only be positive
+        auto y_alm_lb = (z_alm_lb.array() == -alpaqa::inf<config_t>).select(vec::Zero(num_alm), -M);
+        // If there's no upper bound, the multipliers can only be negative
+        auto y_alm_ub = (z_alm_ub.array() == +alpaqa::inf<config_t>).select(vec::Zero(num_alm), +M);
+        y_alm         = y_alm.cwiseMax(y_alm_lb).cwiseMin(y_alm_ub);
     }
 
     /// @see @ref TypeErasedProblem::eval_proj_multipliers

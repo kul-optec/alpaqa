@@ -87,7 +87,7 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     x << 5, -7;
     vec y(2);
     y << 0.3, 0.7;
-    vec invΣy = Σ.asDiagonal().inverse() * y;
+    vec invΣy = y.cwiseQuotient(Σ);
 
     auto ψ_fun = [&op, &f, &g, &Σ, &invΣy](crvec x) -> real_t {
         return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.D, Σ);
@@ -97,7 +97,7 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     vec ζ     = g(x) + invΣy;
     vec ẑ     = project(ζ, op.D);
     vec d     = ζ - ẑ;
-    vec ŷ     = Σ.asDiagonal() * d;
+    vec ŷ     = Σ.cwiseProduct(d);
     real_t ψ  = f(x) + 0.5 * d.dot(ŷ);
     real_t ψ2 = ψ_fun(x);
 
@@ -248,7 +248,7 @@ TEST(PANOC, hessian) {
     x << -0.9, 3.1;
     vec y(2);
     y << 0.3, 0.7;
-    vec invΣy = Σ.asDiagonal().inverse() * y;
+    vec invΣy = y.cwiseQuotient(Σ);
 
     auto ψ_fun = [&op, &f, &g, &Σ, &invΣy](crvec x) -> real_t {
         return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.D, Σ);
@@ -258,7 +258,7 @@ TEST(PANOC, hessian) {
     vec ζ     = g(x) + invΣy;
     vec ẑ     = project(ζ, op.D);
     vec d     = ζ - ẑ;
-    vec ŷ     = Σ.asDiagonal() * d;
+    vec ŷ     = Σ.cwiseProduct(d);
     real_t ψ  = f(x) + 0.5 * d.dot(ŷ);
     real_t ψ2 = ψ_fun(x);
 

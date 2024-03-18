@@ -49,7 +49,7 @@ struct ALMHelpers {
                    std::max(real_t(1), std::abs(f0)) /
                    std::max(real_t(1), real_t(0.5) * g0.squaredNorm());
         σ = std::clamp(σ, params.min_penalty, params.max_penalty);
-        Σ.fill(σ);
+        Σ.setConstant(σ);
     }
 
 #if ALPAQA_WITH_OCP
@@ -58,7 +58,7 @@ struct ALMHelpers {
         const ALMParams<config_t> &params, [[maybe_unused]] crvec x0, rvec Σ) {
         real_t σ = 1;
         σ        = std::clamp(σ, params.min_penalty, params.max_penalty);
-        Σ.fill(σ);
+        Σ.setConstant(σ);
     }
 #endif
 };

@@ -21,6 +21,7 @@ struct AlpaqaSolverStatsCollector {
     std::chrono::steady_clock::time_point t0;
 
     void update_iter(const auto &progress_info) {
+        using alpaqa::vec_util::norm_inf;
         auto t = std::chrono::steady_clock::now();
         if (progress_info.outer_iter == 0 && progress_info.k == 0)
             t0 = t;
@@ -50,9 +51,8 @@ struct AlpaqaSolverStatsCollector {
                           progress_info.ŷ;
                           progress_info.Σ;
                       })
-            r.delta = (progress_info.Σ.asDiagonal().inverse() *
-                       (progress_info.ŷ - progress_info.y))
-                          .template lpNorm<Eigen::Infinity>();
+            r.delta = norm_inf((progress_info.ŷ - progress_info.y)
+                                   .cwiseQuotient(progress_info.Σ));
         stats.push_back(r);
     }
 };

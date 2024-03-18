@@ -72,7 +72,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
     }
     // Initialize the penalty weights
     else if (params.initial_penalty > 0) {
-        Σ_curr.fill(params.initial_penalty);
+        Σ_curr.setConstant(params.initial_penalty);
     }
     // Initial penalty weights from problem
     else {
@@ -107,7 +107,8 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
         s.inner_convergence_failures += not inner_converged;
         s.inner += ps;
         // Compute the constraint violation
-        norm_e = vec_util::norm_inf(error);
+        using vec_util::norm_inf;
+        norm_e = norm_inf(error);
 
         time_elapsed     = std::chrono::steady_clock::now() - start_time;
         bool out_of_time = time_elapsed > params.max_time;

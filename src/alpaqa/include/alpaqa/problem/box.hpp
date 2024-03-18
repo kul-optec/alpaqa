@@ -75,7 +75,7 @@ inline auto dist_squared(const auto &v,        ///< [in] The vector to project
     // TODO: Does this allocate?
     //       Does it have dangling references to temporaries?
     auto d = v - project(v, box);
-    return d.dot(Σ.asDiagonal() * d);
+    return d.dot(Σ.cwiseProduct(d));
 }
 
 } // namespace sets

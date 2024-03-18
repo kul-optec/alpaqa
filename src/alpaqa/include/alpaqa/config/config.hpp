@@ -19,6 +19,11 @@ inline constexpr bool is_config_v = is_config<T>::value;
 template <class Conf>
 concept Config = is_config_v<Conf>;
 
+template <class T>
+struct is_eigen_config : std::false_type {};
+template <class T>
+inline constexpr bool is_eigen_config_v = is_eigen_config<T>::value;
+
 struct EigenConfigd;
 struct EigenConfigf;
 struct EigenConfigl;
@@ -33,6 +38,15 @@ template <>
 struct is_config<EigenConfigl> : std::true_type {};
 template <>
 struct is_config<EigenConfigq> : std::true_type {};
+
+template <>
+struct is_eigen_config<EigenConfigf> : std::true_type {};
+template <>
+struct is_eigen_config<EigenConfigd> : std::true_type {};
+template <>
+struct is_eigen_config<EigenConfigl> : std::true_type {};
+template <>
+struct is_eigen_config<EigenConfigq> : std::true_type {};
 
 #define USING_ALPAQA_CONFIG_NO_TYPENAME(Conf)                                  \
     using real_t [[maybe_unused]]     = Conf::real_t;                          \

@@ -255,7 +255,7 @@ auto LBFGSBSolver::operator()(
         auto &ŷ   = work_m;
         s.final_ψ = problem.eval_ψ(x_solve, y, Σ, ŷ);
         if (err_z.size() > 0)
-            err_z = Σ.asDiagonal().inverse() * (ŷ - y);
+            err_z = (ŷ - y).cwiseQuotient(Σ);
         x = x_solve;
         y = ŷ;
     }
