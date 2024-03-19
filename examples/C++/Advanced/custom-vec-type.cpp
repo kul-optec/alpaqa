@@ -9,8 +9,6 @@
 struct CustomConfig {
     /// Real scalar element type.
     using real_t = double;
-    /// Complex scalar element type.
-    using cplx_t = std::complex<real_t>;
     /// Dynamic vector type.
     using vec = custom::CustomVector<real_t>;
     /// Reference to mutable vector.
@@ -26,6 +24,8 @@ struct CustomConfig {
     /// Dummy type to indicate that index vectors and matrices are unsupported.
     struct unsupported {};
 
+    /// Complex scalar element type.
+    using cplx_t = unsupported;
     /// Map of vector type.
     using mvec = unsupported;
     /// Immutable map of vector type.
@@ -83,6 +83,7 @@ struct Problem : alpaqa::BoxConstrProblem<config_t> {
     alpaqa::vec<alpaqa::EigenConfigd> b{num_constraints};
     mutable alpaqa::vec<alpaqa::EigenConfigd> Qx{num_variables};
     mutable alpaqa::vec<alpaqa::EigenConfigd> Ax{num_constraints};
+    using eigen_map = alpaqa::cmvec<alpaqa::EigenConfigd>;
 
     Problem() : alpaqa::BoxConstrProblem<config_t>{2, 1} {
         // Initialize problem matrices
@@ -100,24 +101,23 @@ struct Problem : alpaqa::BoxConstrProblem<config_t> {
 
     // Evaluate the cost
     real_t eval_objective(crvec x) const {
-        Qx = Q * alpaqa::cmvec<alpaqa::EigenConfigd>{x.data(), x.size()};
+        Qx = Q * eigen_map{x.data(), x.size()};
         return 0.5 * x.dot(crvec{Qx.data(), Qx.size()});
     }
     // Evaluat the gradient of the cost
     void eval_objective_gradient(crvec x, rvec gr) const {
-        Qx = Q * alpaqa::cmvec<alpaqa::EigenConfigd>{x.data(), x.size()};
+        Qx = Q * eigen_map{x.data(), x.size()};
         gr = crvec{Qx.data(), Qx.size()};
     }
     // Evaluate the constraints
     void eval_constraints(crvec x, rvec g) const {
-        Ax = A * alpaqa::cmvec<alpaqa::EigenConfigd>{x.data(), x.size()};
+        Ax = A * eigen_map{x.data(), x.size()};
         g  = crvec{Ax.data(), Ax.size()};
     }
     // Evaluate a matrix-vector product with the gradient of the constraints
     void eval_constraints_gradient_product(crvec x, crvec y, rvec gr) const {
         (void)x;
-        Qx = A.transpose() *
-             alpaqa::cmvec<alpaqa::EigenConfigd>{y.data(), y.size()};
+        Qx = A.transpose() * eigen_map{y.data(), y.size()};
         gr = crvec{Qx.data(), Qx.size()};
     }
 };
@@ -131,9 +131,9 @@ int main() {
         {.print_interval = 1},
         {{.max_iter = 500, .print_interval = 50}, {}},
     };
-    vec x = vec::Zero(2), y = vec::Zero(1);
 
     Problem problem;
+    vec x = vec::Zero(2), y = vec::Zero(1);
     auto stats = solver(problem, x, y);
 
     return stats.status == alpaqa::SolverStatus::Converged ? 0 : 1;
