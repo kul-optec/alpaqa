@@ -188,7 +188,7 @@ jobs:
     - name: Install Conan, Ninja
       id: conan
       run: |
-        python${{ env.PYTHON_VERSION }} -m pip install -U pip conan ninja
+        python${{ env.PYTHON_VERSION }} -m pip install -U pip conan==2.1.0 ninja
         echo "conan-home=$(conan config home)" >> "$GITHUB_OUTPUT"
     - name: Cache Conan
       uses: actions/cache@v4
