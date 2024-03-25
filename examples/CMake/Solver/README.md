@@ -28,7 +28,7 @@ pip install -U conan cmake
 Export the alpaqa library to Conan:
 
 ```sh
-git clone https://github.com/kul-optec/alpaqa --branch=1.0.0a16 --single-branch
+git clone https://github.com/kul-optec/alpaqa --branch=1.0.0a17 --single-branch
 conan export alpaqa
 ```
 
@@ -135,7 +135,7 @@ cmake --build --preset conan-release -j
 ```
 
 A complete list of the available components and targets can be found on the
-[CMake API Reference](https://kul-optec.github.io/alpaqa/1.0.0a16/Sphinx/reference/cmake-api.html) page.
+[CMake API Reference](https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/reference/cmake-api.html) page.
 
 ### Disabling tests
 

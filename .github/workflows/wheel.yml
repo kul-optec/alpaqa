@@ -6,7 +6,7 @@ on:
     types: ['released', 'prereleased']
 
 env:
-  PACKAGE_VERSION: "1.0.0a17.dev0"
+  PACKAGE_VERSION: "1.0.0a17"
   PACKAGE_NAME: alpaqa
   C_EXTENSIONS: _alpaqa
 
