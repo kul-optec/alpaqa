@@ -14,10 +14,11 @@ try {
     pushd $srcdir
 
     if ( -not (Test-Path eigen) ) {
-        git clone --single-branch --depth=1 --branch master `
+        git clone --single-branch --branch master `
             "https://gitlab.com/libeigen/eigen"
     }
     pushd eigen
+    git checkout 75e273afcc86c4580aae12fb4e6e68c252cc2af0
     if (Test-Path build/CMakeCache.txt) {
         rm build/CMakeCache.txt
     }
