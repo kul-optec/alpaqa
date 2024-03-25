@@ -14,7 +14,8 @@ The project itself is very simple:
 
 ## Before you start
 
-You'll need a C++ compiler (e.g. GCC, Clang, MSVC), CMake and Conan.
+You'll need a recent C++ compiler (e.g. GCC >= 10, Clang >= 16, MSVC >= 19.30),
+CMake (>= 3.24) and Conan.
 
 The latter two can be installed using Pip:
 
@@ -24,18 +25,18 @@ pip install -U conan cmake
 
 ## Instructions
 
-Build and package alpaqa:
+Export the alpaqa library to Conan:
 
 ```sh
-git clone https://github.com/kul-optec/alpaqa
-conan create alpaqa
+git clone https://github.com/kul-optec/alpaqa --branch=1.0.0a16 --single-branch
+conan export alpaqa
 ```
 
-Install the dependencies for the example project:
+Build and install the dependencies for the example project:
 
 ```sh
 cd alpaqa/examples/CMake/Solver
-conan install .
+conan install . --build=missing
 ```
 
 Configure and build the example project:
@@ -67,9 +68,14 @@ To link to the alpaqa shared libraries instead of statically, use the following
 Conan options:
 
 ```sh
-conan create alpaqa -o shared=True
-cd alpaqa/examples/CMake/Solver
-conan install . -o 'alpaqa/*:shared=True'
+conan install . --build=missing -o 'alpaqa/*:shared=True'
+```
+
+Remove the CMake cache to ensure that this new version of alpaqa is picked up.
+
+```sh
+rm build/Release/CMakeCache.txt  # single-configuration generator
+rm build/CMakeCache.txt  # multi-configuration generator
 ```
 
 ### ABI issues
@@ -92,14 +98,15 @@ different alignments.
 If you need optional alpaqa features, e.g. the CasADi interface, you'll have to
 specify them explicitly.
 
-For example, to enable CasADi, first build and package CasADi itself, and then
-rebuild alpaqa with CasADi support enabled:
+For example, to enable CasADi, first export CasADi itself, and then rebuild
+alpaqa with CasADi support enabled:
 ```sh
-conan create alpaqa/scripts/recipes/casadi
-conan create alpaqa -o with_casadi=True
+conan export ../../../scripts/recipes/casadi
+conan install . --build=missing -o 'alpaqa/*:with_casadi=True'
 ```
 
-Then add the following options at the bottom of your project's `conanfile.txt`:
+If your project always requires CasADi, add the following options at the bottom
+of your project's `conanfile.txt`:
 ```conanfile
 [options]
 alpaqa/*:with_casadi=True
@@ -136,5 +143,5 @@ By default, the `conan create` command will also build and run alpaqa's unit
 tests. To speed up the process, you may decide to disable them:
 
 ```sh
-conan create alpaqa -c tools.build:skip_test=True
+conan install . --build=missing -c tools.build:skip_test=True
 ```
