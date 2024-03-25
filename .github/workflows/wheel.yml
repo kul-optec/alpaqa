@@ -261,7 +261,7 @@ jobs:
     strategy:
       matrix:
         arch: ['AMD64', 'ARM64', 'x86']
-        python-id: ['cp38-*', 'cp39-*', 'cp310-*', 'cp311-*', 'cp312']
+        python-id: ['cp38-*', 'cp39-*', 'cp310-*', 'cp311-*', 'cp312-*']
         include:
           - arch: 'AMD64'
             python-id: 'pp38-*'
@@ -313,7 +313,7 @@ jobs:
           EOF
         shell: bash
       - name: Build wheels
-        uses: pypa/cibuildwheel@ce3fb7832089eb3e723a0a99cab7f3eaccf074fd
+        uses: pypa/cibuildwheel@8d945475ac4b1aac4ae08b2fd27db9917158b6ce
         with:
           output-dir: dist
         env:
