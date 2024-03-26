@@ -21,7 +21,7 @@
 #include "results.hpp"
 #include "solver-driver.hpp"
 
-#ifdef ALPAQA_WITH_CASADI
+#ifdef ALPAQA_WITH_EXTERNAL_CASADI
 #include <casadi/config.h>
 #endif
 #ifdef ALPAQA_WITH_JSON
@@ -144,7 +144,7 @@ void print_usage(const char *a0) {
               << "  * Eigen " << EIGEN_WORLD_VERSION << '.'
               << EIGEN_MAJOR_VERSION << '.' << EIGEN_MINOR_VERSION
               << " (https://gitlab.com/libeigen/eigen) - MPL-2.0\n"
-#ifdef ALPAQA_WITH_CASADI
+#ifdef ALPAQA_WITH_EXTERNAL_CASADI
               << "  * CasADi " CASADI_VERSION_STRING
                  " (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n"
 #endif

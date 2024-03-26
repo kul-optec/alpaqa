@@ -207,12 +207,12 @@ use [Conan](https://conan.io/) to manage and build the necessary dependencies.
 ```sh
 python3 -m pip install -U conan cmake ninja
 conan profile detect --force
-conan create scripts/recipes/casadi --build=missing
+conan export scripts/recipes/casadi
 conan install . \
     --build=missing \
     -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config" \
     -of build-matlab \
-    -o with_matlab=True -o with_json=True -o with_casadi=True
+    -o with_matlab=True -o with_external_casadi=True
 cmake --preset conan-default
 cmake --build --preset conan-release -j -t alpaqa_mex
 cmake --install build-matlab/build \
@@ -224,11 +224,11 @@ cmake --install build-matlab/build \
 ```sh
 python -m pip install -U conan cmake ninja
 conan profile detect --force
-conan create scripts/recipes/casadi --build=missing
+conan export scripts/recipes/casadi
 conan install . \
     --build=missing \
     -of build-matlab \
-    -o with_matlab=True -o with_json=True -o with_casadi=True
+    -o with_matlab=True -o with_external_casadi=True
 cmake --preset conan-default
 cmake --build --preset conan-release -j -t alpaqa_mex
 cmake --install build-matlab/build \

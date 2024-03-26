@@ -1,0 +1,7 @@
+#pragma once
+
+#if ALPAQA_WITH_EXTERNAL_CASADI
+#define ALPAQA_CASADI_LOADER_NAMESPACE external
+#else
+#define ALPAQA_CASADI_LOADER_NAMESPACE builtin
+#endif

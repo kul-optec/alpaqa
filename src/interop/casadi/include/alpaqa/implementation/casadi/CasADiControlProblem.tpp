@@ -2,6 +2,7 @@
 
 #include <alpaqa/casadi/CasADiControlProblem.hpp>
 #include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
+#include <alpaqa/casadi/casadi-namespace.hpp>
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/not-implemented.hpp>
@@ -9,14 +10,18 @@
 #include "CasADiLoader-util.hpp"
 
 #include <Eigen/Sparse>
-#include <casadi/core/external.hpp>
 
+#if ALPAQA_WITH_EXTERNAL_CASADI
+#include <casadi/core/external.hpp>
+#endif
+
+#include <fstream>
 #include <memory>
 #include <optional>
 #include <stdexcept>
 #include <type_traits>
 
-namespace alpaqa {
+namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE {
 
 namespace fs = std::filesystem;
 
@@ -655,4 +660,4 @@ void CasADiControlProblem<Conf>::eval_add_gn_hess_constr_N(crvec x, crvec M,
         };
 }
 
-} // namespace alpaqa
+} // namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE

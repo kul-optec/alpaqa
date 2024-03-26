@@ -26,6 +26,8 @@ option(ALPAQA_WITH_CXX_23
 # Enable/disable optional dependencies
 option(ALPAQA_WITH_CASADI
     "Build the CasADi loader" On)
+cmake_dependent_option(ALPAQA_WITH_EXTERNAL_CASADI
+    "Link to the CasADi C++ library. When enabled, CasADi functions can be used to initialize alpaqa problems, otherwise, only pre-compiled CasADi functions can be loaded" Off "ALPAQA_WITH_CASADI" Off)
 cmake_dependent_option(ALPAQA_WITH_CUTEST
     "Build the CUTEst loader" On "ALPAQA_WITH_CXX_23" Off)
 option(ALPAQA_WITH_QPALM

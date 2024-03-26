@@ -41,6 +41,11 @@ add_library(alpaqa
     "alpaqa/src/inner/directions/panoc/convex-newton.cpp"
     "alpaqa/src/inner/internal/panoc-helpers.cpp"
 )
+if (ALPAQA_WITH_DL OR ALPAQA_WITH_CASADI)
+    target_sources(alpaqa PRIVATE
+        "alpaqa/src/util/dl.cpp")
+    target_link_libraries(alpaqa PRIVATE ${CMAKE_DL_LIBS})
+endif()
 if (ALPAQA_WITH_OCP)
     target_sources(alpaqa PRIVATE
         "alpaqa/src/inner/panoc-ocp.cpp"
@@ -133,22 +138,34 @@ endif()
 
 # CasADi
 if (ALPAQA_WITH_CASADI)
-    find_package(casadi REQUIRED)
-    find_package(Threads REQUIRED)
+    if (ALPAQA_WITH_EXTERNAL_CASADI)
+        find_package(casadi REQUIRED)
+        find_package(Threads REQUIRED)
+    endif()
     # Normal NLPs
     add_library(casadi-loader
         "interop/casadi/src/CasADiProblem.cpp"
-        "interop/casadi/src/CompleteCasADiProblem.cpp"
         "interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp")
     target_include_directories(casadi-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
         $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
-    target_compile_definitions(casadi-loader PUBLIC ALPAQA_WITH_CASADI)
+    target_compile_definitions(casadi-loader PUBLIC
+        $<$<BOOL:${ALPAQA_WITH_CASADI}>:ALPAQA_WITH_CASADI>
+        $<$<BOOL:${ALPAQA_WITH_EXTERNAL_CASADI}>:ALPAQA_WITH_EXTERNAL_CASADI>)
     set_property(TARGET casadi-loader
         PROPERTY OUTPUT_NAME alpaqa-casadi-loader)
     target_link_libraries(casadi-loader
         PUBLIC  alpaqa::alpaqa
-        PRIVATE casadi Threads::Threads alpaqa::warnings)
+        PRIVATE alpaqa::warnings)
+    if (ALPAQA_WITH_EXTERNAL_CASADI)
+        target_sources(casadi-loader PRIVATE
+            "interop/casadi/src/CompleteCasADiProblem.cpp")
+        target_link_libraries(casadi-loader PRIVATE casadi Threads::Threads)
+    else()
+        target_sources(casadi-loader PRIVATE
+            "interop/casadi/src/casadi-external-function.cpp"
+            "interop/casadi/src/casadi-external-function.cpp")
+    endif()
     alpaqa_configure_visibility(casadi-loader)
     set_target_properties(casadi-loader PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::casadi-loader ALIAS casadi-loader)
@@ -174,7 +191,10 @@ if (ALPAQA_WITH_OCP AND ALPAQA_WITH_CASADI_OCP)
         PROPERTY OUTPUT_NAME alpaqa-casadi-ocp-loader)
     target_link_libraries(casadi-ocp-loader
         PUBLIC  alpaqa::alpaqa
-        PRIVATE casadi Threads::Threads alpaqa::warnings)
+        PRIVATE alpaqa::warnings)
+    if (ALPAQA_WITH_EXTERNAL_CASADI)
+        target_link_libraries(casadi-ocp-loader PRIVATE casadi Threads::Threads)
+    endif()
     alpaqa_configure_visibility(casadi-ocp-loader)
     set_target_properties(casadi-ocp-loader PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::casadi-ocp-loader ALIAS casadi-ocp-loader)
@@ -206,7 +226,7 @@ if (ALPAQA_WITH_DL)
         PROPERTY OUTPUT_NAME alpaqa-dl-loader)
     target_link_libraries(dl-loader
         PUBLIC alpaqa::alpaqa alpaqa::dl-api
-        PRIVATE ${CMAKE_DL_LIBS} alpaqa::warnings)
+        PRIVATE alpaqa::warnings)
     alpaqa_configure_visibility(dl-loader)
     set_target_properties(dl-loader PROPERTIES SOVERSION ${PROJECT_VERSION})
     add_library(alpaqa::dl-loader ALIAS dl-loader)
@@ -398,7 +418,10 @@ if (ALPAQA_WITH_DRIVERS)
         target_link_libraries(driver PRIVATE alpaqa::dl-loader)
     endif()
     if (TARGET alpaqa::casadi-loader)
-        target_link_libraries(driver PRIVATE alpaqa::casadi-loader casadi)
+        target_link_libraries(driver PRIVATE alpaqa::casadi-loader)
+    endif()
+    if (ALPAQA_WITH_EXTERNAL_CASADI)
+        target_link_libraries(driver PRIVATE casadi)
     endif()
     if (TARGET alpaqa::cutest-interface)
         target_link_libraries(driver PRIVATE alpaqa::cutest-interface)
@@ -438,7 +461,10 @@ if (ALPAQA_WITH_GRADIENT_CHECKER)
         target_link_libraries(gradient-checker PRIVATE alpaqa::dl-loader)
     endif()
     if (TARGET alpaqa::casadi-loader)
-        target_link_libraries(gradient-checker PRIVATE alpaqa::casadi-loader casadi)
+        target_link_libraries(gradient-checker PRIVATE alpaqa::casadi-loader)
+    endif()
+    if (ALPAQA_WITH_EXTERNAL_CASADI)
+        target_link_libraries(gradient-checker PRIVATE casadi)
     endif()
     if (TARGET alpaqa::cutest-interface)
         target_link_libraries(gradient-checker PRIVATE alpaqa::cutest-interface)

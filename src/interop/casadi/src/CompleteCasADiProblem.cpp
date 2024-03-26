@@ -1,10 +1,11 @@
 #include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
 #include <alpaqa/casadi/CompleteCasADiProblem.hpp>
+#include <alpaqa/casadi/casadi-namespace.hpp>
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/casadi/CasADiLoader-util.hpp>
 #include <casadi/casadi.hpp>
 
-namespace alpaqa::casadi_loader {
+namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE::casadi_loader {
 
 template <class F>
 auto wrap(const char *name, F f) {
@@ -71,4 +72,4 @@ void complete_problem(CasADiFunctions &functions) {
         complete_constraints(g->second);
 }
 
-} // namespace alpaqa::casadi_loader
+} // namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE::casadi_loader

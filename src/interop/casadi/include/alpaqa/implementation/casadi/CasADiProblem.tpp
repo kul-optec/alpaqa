@@ -2,21 +2,24 @@
 
 #include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
 #include <alpaqa/casadi/CasADiProblem.hpp>
+#include <alpaqa/casadi/casadi-namespace.hpp>
 #include <alpaqa/util/io/csv.hpp>
 #include <alpaqa/util/not-implemented.hpp>
 #include "CasADiLoader-util.hpp"
+#include <tuple>
 
+#if ALPAQA_WITH_EXTERNAL_CASADI
 #include <casadi/core/external.hpp>
+#endif
 
 #include <algorithm>
-#include <cassert>
 #include <filesystem>
 #include <fstream>
 #include <memory>
 #include <optional>
 #include <stdexcept>
 
-namespace alpaqa {
+namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE {
 
 namespace fs = std::filesystem;
 
@@ -51,7 +54,7 @@ struct CasADiFunctionsWithParam {
         length_t n = 0, m = 0, p = 0;
         auto load_g =
             [&]() -> std::optional<CasADiFunctionEvaluator<Conf, 2, 1>> {
-            casadi::Function gfun = loader("g");
+            auto gfun = loader("g");
             using namespace std::literals::string_literals;
             if (gfun.n_in() != 2)
                 throw invalid_argument_dimensions(
@@ -160,7 +163,7 @@ CasADiProblem<Conf>::CasADiProblem(const std::string &filename)
 template <Config Conf>
 CasADiProblem<Conf>::CasADiProblem(const SerializedCasADiFunctions &functions)
     : BoxConstrProblem<Conf>{0, 0} {
-
+#if ALPAQA_WITH_EXTERNAL_CASADI
     struct {
         const SerializedCasADiFunctions &functions;
         auto operator()(const std::string &name) const {
@@ -177,6 +180,11 @@ CasADiProblem<Conf>::CasADiProblem(const SerializedCasADiFunctions &functions)
     this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
     this->C     = Box<config_t>{impl->n};
     this->D     = Box<config_t>{impl->m};
+#else
+    std::ignore = functions;
+    throw std::runtime_error(
+        "This version of alpaqa was compiled without the CasADi C++ library");
+#endif
 }
 
 template <Config Conf>
@@ -511,4 +519,4 @@ std::string CasADiProblem<Conf>::get_name() const {
     return name;
 }
 
-} // namespace alpaqa
+} // namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE

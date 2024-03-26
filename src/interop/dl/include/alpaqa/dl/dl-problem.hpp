@@ -6,6 +6,7 @@
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/demangled-typename.hpp>
+#include <alpaqa/util/dl.hpp>
 
 #include <filesystem>
 #include <memory>
@@ -17,12 +18,10 @@
 
 namespace alpaqa::dl {
 
-struct DL_LOADER_EXPORT invalid_abi_error : std::runtime_error {
-    using std::runtime_error::runtime_error;
-};
+using util::dynamic_load_error;
 
-struct DL_LOADER_EXPORT function_load_error : std::runtime_error {
-    using std::runtime_error::runtime_error;
+struct DL_LOADER_EXPORT invalid_abi_error : dynamic_load_error {
+    using dynamic_load_error::dynamic_load_error;
 };
 
 class ExtraFuncs {

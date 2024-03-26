@@ -102,14 +102,14 @@ For example, to enable CasADi, first export CasADi itself, and then rebuild
 alpaqa with CasADi support enabled:
 ```sh
 conan export ../../../scripts/recipes/casadi
-conan install . --build=missing -o 'alpaqa/*:with_casadi=True'
+conan install . --build=missing -o 'alpaqa/*:with_external_casadi=True'
 ```
 
 If your project always requires CasADi, add the following options at the bottom
 of your project's `conanfile.txt`:
 ```conanfile
 [options]
-alpaqa/*:with_casadi=True
+alpaqa/*:with_external_casadi=True
 ```
 
 In your project's `CMakeLists.txt`, enable the optional CasADi component:

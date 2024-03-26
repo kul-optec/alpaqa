@@ -1,13 +1,14 @@
 #pragma once
 
 #include <alpaqa/casadi-ocp-loader-export.hpp>
+#include <alpaqa/casadi/casadi-namespace.hpp>
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/box.hpp>
 #include <alpaqa/util/check-dim.hpp>
 #include <alpaqa/util/copyable_unique_ptr.hpp>
 #include <filesystem>
 
-namespace alpaqa {
+namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE {
 
 namespace casadi_loader {
 template <Config>
@@ -180,4 +181,4 @@ class CasADiControlProblem {
 CASADI_OCP_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiControlProblem,
                                          EigenConfigd);
 
-} // namespace alpaqa
+} // namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE

@@ -44,72 +44,6 @@ void check_abi_version(uint64_t abi_version) {
     }
 }
 
-#if _WIN32
-std::shared_ptr<char> get_last_error_msg() {
-    char *err = nullptr;
-    auto opt  = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER |
-               FORMAT_MESSAGE_IGNORE_INSERTS;
-    auto lang = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT);
-    if (FormatMessage(opt, NULL, GetLastError(), lang,
-                      reinterpret_cast<char *>(&err), 0, NULL) != 0) {
-        return std::shared_ptr<char>{err, [](char *e) { LocalFree(e); }};
-    } else {
-        static char msg[] = "(failed to get error message)";
-        return std::shared_ptr<char>{msg, [](char *) {}};
-    }
-}
-
-std::shared_ptr<void> load_lib(const std::filesystem::path &so_filename) {
-    assert(!so_filename.empty());
-    void *h = LoadLibraryW(so_filename.c_str());
-    if (!h)
-        throw function_load_error("Unable to load \"" + so_filename.string() +
-                                  "\": " + get_last_error_msg().get());
-#if ALPAQA_NO_DLCLOSE
-    return std::shared_ptr<void>{h, +[](void *) {}};
-#else
-    return std::shared_ptr<void>{
-        h, +[](void *h) { FreeLibrary(static_cast<HMODULE>(h)); }};
-#endif
-}
-
-template <class F>
-F *load_func(void *handle, const std::string &name) {
-    assert(handle);
-    auto *h = GetProcAddress(static_cast<HMODULE>(handle), name.c_str());
-    if (!h)
-        throw function_load_error("Unable to load function '" + name +
-                                  "': " + get_last_error_msg().get());
-    // We can only hope that the user got the signature right ...
-    return reinterpret_cast<F *>(h);
-}
-#else
-std::shared_ptr<void> load_lib(const std::filesystem::path &so_filename) {
-    assert(!so_filename.empty());
-    ::dlerror();
-    void *h = ::dlopen(so_filename.c_str(), RTLD_LOCAL | RTLD_NOW);
-    if (auto *err = ::dlerror())
-        throw function_load_error(err);
-#if ALPAQA_NO_DLCLOSE
-    return std::shared_ptr<void>{h, +[](void *) {}};
-#else
-    return std::shared_ptr<void>{h, &::dlclose};
-#endif
-}
-
-template <class F>
-F *load_func(void *handle, const std::string &name) {
-    assert(handle);
-    ::dlerror();
-    auto *h = ::dlsym(handle, name.c_str());
-    if (auto *err = ::dlerror())
-        throw function_load_error("Unable to load function '" + name +
-                                  "': " + err);
-    // We can only hope that the user got the signature right ...
-    return reinterpret_cast<F *>(h);
-}
-#endif
-
 std::mutex leaked_modules_mutex;
 std::list<std::shared_ptr<void>> leaked_modules;
 void leak_lib(std::shared_ptr<void> handle) {
@@ -206,19 +140,20 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
     : BoxConstrProblem{0, 0}, file{so_filename} {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle = load_lib(so_filename);
+    handle = util::load_lib(so_filename);
     try {
-        auto *version_func = load_func<alpaqa_dl_abi_version_t(void)>(
-            handle.get(), function_name + "_version");
+        auto *version_func = reinterpret_cast<alpaqa_dl_abi_version_t (*)()>(
+            util::load_func(handle.get(), function_name + "_version"));
         check_abi_version(version_func());
-    } catch (const function_load_error &) {
+    } catch (const dynamic_load_error &) {
         std::cerr << "Warning: problem " << so_filename
                   << " does not provide a function to query the ABI version, "
                      "alpaqa_dl_abi_version_t "
                   << function_name << "_version(void)\n";
     }
-    auto *register_func = load_func<problem_register_t(alpaqa_register_arg_t)>(
-        handle.get(), function_name);
+    auto *register_func =
+        reinterpret_cast<problem_register_t (*)(alpaqa_register_arg_t)>(
+            util::load_func(handle.get(), function_name));
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};
@@ -369,20 +304,20 @@ DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
                                    alpaqa_register_arg_t user_param) {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle = load_lib(so_filename);
+    handle = util::load_lib(so_filename);
     try {
-        auto *version_func = load_func<alpaqa_dl_abi_version_t(void)>(
-            handle.get(), function_name + "_version");
+        auto *version_func = reinterpret_cast<alpaqa_dl_abi_version_t (*)()>(
+            util::load_func(handle.get(), function_name + "_version"));
         check_abi_version(version_func());
-    } catch (const function_load_error &) {
+    } catch (const dynamic_load_error &) {
         std::cerr << "Warning: problem " << so_filename
                   << " does not provide a function to query the ABI version, "
                      "alpaqa_dl_abi_version_t "
                   << function_name << "_version(void)\n";
     }
     auto *register_func =
-        load_func<control_problem_register_t(alpaqa_register_arg_t)>(
-            handle.get(), function_name);
+        reinterpret_cast<control_problem_register_t (*)(alpaqa_register_arg_t)>(
+            util::load_func(handle.get(), function_name));
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};

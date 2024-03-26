@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/casadi-loader-export.hpp>
+#include <alpaqa/casadi/casadi-namespace.hpp>
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
@@ -9,12 +10,16 @@
 #include <map>
 #include <string>
 
+#if ALPAQA_WITH_EXTERNAL_CASADI
 // Forward declaration
 namespace casadi {
 class Function;
 } // namespace casadi
+#else
+#include <alpaqa/casadi/casadi-external-function.hpp>
+#endif
 
-namespace alpaqa {
+namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE {
 namespace casadi_loader {
 template <Config>
 struct CasADiFunctionsWithParam;
@@ -132,4 +137,4 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
 
 CASADI_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiProblem, EigenConfigd);
 
-} // namespace alpaqa
+} // namespace alpaqa::inline ALPAQA_CASADI_LOADER_NAMESPACE

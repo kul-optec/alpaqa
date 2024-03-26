@@ -103,6 +103,11 @@ PYBIND11_MODULE(MODULE_NAME, m) {
 #else
     m.attr("with_casadi") = false;
 #endif
+#if ALPAQA_WITH_EXTERNAL_CASADI
+    m.attr("with_external_casadi") = true;
+#else
+    m.attr("with_external_casadi") = false;
+#endif
 #if ALPAQA_WITH_CASADI_OCP
     m.attr("with_casadi_ocp") = true;
 #else

@@ -101,7 +101,7 @@ def test_alm_pyapi_compile():
     assert np.linalg.norm(y - [0, -2/3]) < 1e-5
 
 
-@pytest.mark.skipif(not pa.with_casadi, reason="requires CasADi")
+@pytest.mark.skipif(not pa.with_external_casadi, reason="requires CasADi")
 def test_alm_pyapi_build():
     import casadi as cs
 

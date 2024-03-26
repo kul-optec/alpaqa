@@ -26,7 +26,8 @@ class AlpaqaRecipe(ConanFile):
         "with_matlab": False,
         "with_drivers": True,
         "with_gradient_checker": False,
-        "with_casadi": False,
+        "with_casadi": True,
+        "with_external_casadi": False,
         "with_cutest": False,
         "with_qpalm": False,
         "with_json": True,
@@ -68,7 +69,7 @@ class AlpaqaRecipe(ConanFile):
     def requirements(self):
         self.requires("eigen/3.4.0", transitive_headers=True)
         self.test_requires("gtest/1.11.0")
-        if self.options.with_casadi:
+        if self.options.with_external_casadi:
             self.requires("casadi/3.6.4@alpaqa", transitive_headers=True)
         if self.options.with_json:
             self.requires("nlohmann_json/3.11.2", transitive_headers=True)
@@ -87,8 +88,8 @@ class AlpaqaRecipe(ConanFile):
         if self.options.with_matlab and not self.options.with_json:
             msg = "MATLAB MEX interface requires JSON. Set 'with_json=True'."
             raise ConanInvalidConfiguration(msg)
-        if self.options.with_matlab and not self.options.with_casadi:
-            msg = "MATLAB MEX interface requires CasADi. Set 'with_casadi=True'."
+        if self.options.with_matlab and not self.options.with_external_casadi:
+            msg = "MATLAB MEX interface requires CasADi. Set 'with_external_casadi=True'."
             raise ConanInvalidConfiguration(msg)
 
     def layout(self):
