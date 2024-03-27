@@ -1,0 +1,13 @@
+<map id="FISTAProgressInfo&lt; Conf &gt;" name="FISTAProgressInfo&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="145,2885,287,3325"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="12,1271,209,2823"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,2822,195,2869,190,2869,185,2823"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="5,213,211,1208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,1222,112,1270,106,1270,106,1222"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="49,5,167,151"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,151,111,197,105,197,105,151"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="235,1917,413,2177"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="322,2177,305,2489,290,2676,268,2862,267,2870,262,2869,263,2861,284,2675,300,2489,317,2177"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="235,641,413,781"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="327,781,327,1900,321,1900,321,781"/>
+</map>

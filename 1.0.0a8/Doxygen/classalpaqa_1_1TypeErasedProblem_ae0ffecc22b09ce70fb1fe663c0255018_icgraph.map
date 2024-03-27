@@ -1,0 +1,5 @@
+<map id="get_box_C" name="get_box_C">
+<area shape="rect" id="node1" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="244,45,335,70"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1StructuredNewtonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,5,196,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1IpoptAdapter.html#a6a12b21a35ced53a439bfa2510029237" title=" " alt="" coords="21,69,180,109"/>
+</map>

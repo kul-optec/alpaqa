@@ -1,0 +1,4 @@
+<map id="provides_eval_ψ" name="provides_eval_ψ">
+<area shape="rect" id="node1" title="Returns true if the problem provides a specialized implementation of eval_ψ, false if it uses the def..." alt="" coords="5,13,135,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#a102d32431ef5f11c24cc419ddaac50b2" title=" " alt="" coords="183,5,353,45"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="provides_get_box_C" name="provides_get_box_C">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="587,109,740,135"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="125,37,283,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="641,101,597,59,568,39,538,24,502,15,465,10,390,11,320,23,261,39,260,34,319,18,390,6,465,5,503,10,540,19,571,35,600,55,644,97"/>
+<area shape="rect" id="Node000004" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="353,59,533,113"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="573,110,533,103,534,98,574,105"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1StructuredNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="348,138,539,178"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="574,139,539,145,538,140,573,134"/>
+<area shape="rect" id="Node000006" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="359,202,527,242"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="631,144,540,192,509,204,507,199,538,187,629,139"/>
+<area shape="rect" id="Node000003" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,156,60,181"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,86,55,158,52,153,160,82"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="480,48,467,40,443,37,424,39,411,44,406,50,406,58,400,58,401,48,408,40,423,34,443,32,468,35,482,43"/>
+<area shape="rect" id="Node000007" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="177,160,231,185"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="345,204,231,181,232,175,346,199"/>
+<area shape="rect" id="Node000008" href="$alpaqa-driver_8cpp.html#aac67f64489af66b9fd58dcc6976f4d21" title=" " alt="" coords="108,209,300,235"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="346,225,300,225,300,219,346,219"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="134,208,107,200,59,182,61,177,109,195,135,203"/>
+</map>

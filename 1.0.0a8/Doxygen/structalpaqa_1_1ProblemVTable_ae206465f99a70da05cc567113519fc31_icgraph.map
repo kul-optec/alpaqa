@@ -1,0 +1,4 @@
+<map id="default_get_hess_ψ_num_nonzeros" name="default_get_hess_ψ_num_nonzeros">
+<area shape="rect" id="node1" title=" " alt="" coords="256,13,405,53"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a9e29ccdda3ba82e7c9b1a9345b2dc9f5" title="Returns true if the problem provides an implementation of get_hess_ψ_num_nonzeros." alt="" coords="5,5,208,60"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="eval_prox_grad_step_box_l1_impl" name="eval_prox_grad_step_box_l1_impl">
+<area shape="rect" id="node1" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="629,37,787,77"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1BoxConstrProblem.html#a1675a9050e69af2eed772e663bedc762" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="424,5,581,45"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1BoxConstrProblem.html#ad88ec4d005c833d5c2c889ca4bd530e8" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="424,69,581,109"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1BoxConstrProblem.html#acdbe943d1576c496e20286c3106c00b8" title=" " alt="" coords="219,45,376,70"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1dl_1_1DLProblem.html#a02bf998629ca590cf5a2e183cbf43444" title=" " alt="" coords="5,37,171,77"/>
+</map>

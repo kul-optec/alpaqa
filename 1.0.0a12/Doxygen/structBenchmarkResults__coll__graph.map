@@ -1,0 +1,19 @@
+<map id="BenchmarkResults" name="BenchmarkResults">
+<area shape="rect" id="Node000001" title=" " alt="" coords="247,3159,393,3304"/>
+<area shape="rect" id="Node000002" href="$problem_8hpp.html#structLoadedProblem" title=" " alt="" coords="83,2811,213,2996"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,2995,212,3064,248,3133,254,3144,250,3147,243,3136,207,3067,178,2997"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="11,1096,208,2648"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="141,2648,147,2794,141,2794,136,2648"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="5,213,208,1033"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="110,1047,110,1096,105,1096,105,1047"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="48,5,165,151"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="109,151,109,197,104,197,104,151"/>
+<area shape="rect" id="Node000006" href="$structSolverResults.html" title=" " alt="" coords="243,2711,397,3096"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="323,3096,323,3143,317,3143,317,3096"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1EvalCounter.html" title=" " alt="" coords="233,1639,421,2105"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="328,2105,324,2694,319,2694,322,2105"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1EvalCounter.html#structalpaqa_1_1EvalCounter_1_1EvalTimer" title=" " alt="" coords="233,391,421,856"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="329,856,329,1623,324,1623,324,856"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1KKTError.html" title=" " alt="" coords="421,2831,571,2976"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="490,2977,471,3056,455,3097,434,3136,407,3169,403,3166,430,3133,450,3095,465,3054,485,2975"/>
+</map>

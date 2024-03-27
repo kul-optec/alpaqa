@@ -1,0 +1,541 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="C++ API Reference" href="../cpp-api.html" /><link rel="prev" title="Problem formulation" href="problem.html" />
+
+    <link rel="shortcut icon" href="../../_static/alpaqa_favicon.png"/><!-- Generated with Sphinx 7.0.1 and Furo 2023.07.26 -->
+        <title>CasADi Interface - alpaqa documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">alpaqa  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/alpaqa_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">alpaqa  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/getting-started.html">Getting started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso.html">Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso-jax.html">Lasso JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/nonlinear-regression.html">Nonlinear regression</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/mpc/index.html">Model predictive control</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Model predictive control</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/hanging-chain.html">Hanging Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/inverted-pendulum.html">Inverted Pendulum</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../python-api.html">Python API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Python API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyapi.html">High-level problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="panoc.html">Inner PANOC and ZeroFPR Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pantr.html">Inner PANTR Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alm.html">Outer ALM Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problem.html">Problem formulation</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">CasADi Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../cpp-api.html">C++ API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribution/index.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="casadi-interface">
+<h1>CasADi Interface<a class="headerlink" href="#casadi-interface" title="Permalink to this heading">#</a></h1>
+<p>For most purposes, it is recommended to use the
+<a class="reference internal" href="pyapi.html#high-level-problem-formulation"><span class="std std-ref">the high-level problem API</span></a> to compose
+optimization problems using CasADi. However, in some cases, you may want access
+to the alpaqa─CasADi interface directly. This lower-level interface is
+documented here.</p>
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">alpaqa.casadi_generator.</span></span><span class="sig-name descname"><span class="pre">generate_casadi_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f:</span> <span class="pre">~casadi.casadi.Function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g:</span> <span class="pre">~casadi.casadi.Function</span> <span class="pre">|</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_order:</span> <span class="pre">~typing.Literal['no'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'full'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'prod'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'L'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'L_prod'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'psi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'psi_prod']</span> <span class="pre">=</span> <span class="pre">'no'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'alpaqa_problem'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sym:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">GenSX.sym&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CodeGenerator</span></span></span><a class="reference internal" href="../../_modules/alpaqa/casadi_generator.html#generate_casadi_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Convert the objective and constraint functions into a CasADi code
+generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – Objective function.</p></li>
+<li><p><strong>g</strong> – Constraint function.</p></li>
+<li><p><strong>second_order</strong> – Whether to generate functions for evaluating Hessians.</p></li>
+<li><p><strong>name</strong> – Optional string description of the problem (used for filename).</p></li>
+<li><p><strong>sym</strong> – Symbolic variable constructor, usually either <code class="docutils literal notranslate"><span class="pre">casadi.SX.sym</span></code>
+(default) or <code class="docutils literal notranslate"><span class="pre">casadi.MX.sym</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Code generator that generates the functions and derivatives used
+by the solvers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">alpaqa.casadi_generator.</span></span><span class="sig-name descname"><span class="pre">generate_casadi_control_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c_N</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'alpaqa_control_problem'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CodeGenerator</span></span></span><a class="reference internal" href="../../_modules/alpaqa/casadi_generator.html#generate_casadi_control_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Convert the dynamics and cost functions into a CasADi code generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – Dynamics.</p></li>
+<li><p><strong>name</strong> – Optional string description of the problem (used for filename).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Code generator that generates the functions and derivatives used by
+the solvers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">alpaqa.casadi_generator.</span></span><span class="sig-name descname"><span class="pre">write_casadi_problem_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sofile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1_reg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty_alm_split</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/alpaqa/casadi_generator.html#write_casadi_problem_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">alpaqa.casadi_generator.</span></span><span class="sig-name descname"><span class="pre">write_casadi_control_problem_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sofile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D_N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_init</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/alpaqa/casadi_generator.html#write_casadi_control_problem_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">alpaqa.casadi_loader.</span></span><span class="sig-name descname"><span class="pre">generate_and_compile_casadi_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">D</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l1_reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalty_alm_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">second_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'no'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'full'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'prod'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'L'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'L_prod'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'psi'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'psi_prod'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'no'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'alpaqa_problem'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">CasADiProblem</span></a></span></span><a class="reference internal" href="../../_modules/alpaqa/casadi_loader.html#generate_and_compile_casadi_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
+<dd><p>Compile the objective and constraint functions into a alpaqa Problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – Objective function f(x).</p></li>
+<li><p><strong>g</strong> – Constraint function g(x).</p></li>
+<li><p><strong>C</strong> – Bound constraints on x.</p></li>
+<li><p><strong>D</strong> – Bound constraints on g(x).</p></li>
+<li><p><strong>param</strong> – Problem parameter values.</p></li>
+<li><p><strong>l1_reg</strong> – L1-regularization on x.</p></li>
+<li><p><strong>penalty_alm_split</strong> – This many components at the beginning of g(x) are
+handled using a quadratic penalty method rather
+than an augmented Lagrangian method.</p></li>
+<li><p><strong>second_order</strong> – Whether to generate functions for evaluating Hessians.</p></li>
+<li><p><strong>name</strong> – Optional string description of the problem (used for filename).</p></li>
+<li><p><strong>kwargs</strong> – Parameters passed to 
+<code class="xref py py-func docutils literal notranslate"><span class="pre">casadi_generator.generate_casadi_problem()</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Problem specification that can be passed to the solvers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">alpaqa._alpaqa.float64.</span></span><span class="sig-name descname"><span class="pre">load_casadi_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">so_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></span></dt>
+<dd><p>Load a compiled CasADi problem.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">alpaqa._alpaqa.float64.</span></span><span class="sig-name descname"><span class="pre">CasADiProblem</span></span></dt>
+<dd><p>C++ documentation: <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa13CasADiProblemE" title="alpaqa::CasADiProblem"><code class="xref cpp cpp-class docutils literal notranslate"><span class="pre">alpaqa::CasADiProblem</span></code></a></p>
+<p>See <a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.Problem" title="alpaqa._alpaqa.float64.Problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">alpaqa._alpaqa.float64.Problem</span></code></a> for the full documentation.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd><p>Create a copy</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_f_grad_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_fx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_g</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_g(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], gx: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; None</p></li>
+<li><p>eval_g(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]]) -&gt; numpy.ndarray[numpy.float64[m, 1]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_grad_L</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">work_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_grad_f</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_grad_f(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], grad_fx: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; None</p></li>
+<li><p>eval_grad_f(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]]) -&gt; numpy.ndarray[numpy.float64[m, 1]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_grad_g_prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_grad_g_prod(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], grad_gxy: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; None</p></li>
+<li><p>eval_grad_g_prod(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]]) -&gt; numpy.ndarray[numpy.float64[m, 1]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_grad_gi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grad_gi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_grad_ψ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_grad_ψ(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], Σ: numpy.ndarray[numpy.float64[m, 1]], grad_ψ: numpy.ndarray[numpy.float64[m, 1], flags.writeable], work_n: numpy.ndarray[numpy.float64[m, 1], flags.writeable], work_m: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; None</p></li>
+<li><p>eval_grad_ψ(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], Σ: numpy.ndarray[numpy.float64[m, 1]]) -&gt; numpy.ndarray[numpy.float64[m, 1]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_hess_L_prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Hv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_hess_ψ_prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Σ</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Hv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_inactive_indices_res_lna</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_inactive_indices_res_lna(self: alpaqa._alpaqa.float64.CasADiProblem, γ: float, x: numpy.ndarray[numpy.float64[m, 1]], grad_ψ: numpy.ndarray[numpy.float64[m, 1]], J: numpy.ndarray[numpy.int64[m, 1], flags.writeable]) -&gt; int</p></li>
+<li><p>eval_inactive_indices_res_lna(self: alpaqa._alpaqa.float64.CasADiProblem, γ: float, x: numpy.ndarray[numpy.float64[m, 1]], grad_ψ: numpy.ndarray[numpy.float64[m, 1]]) -&gt; numpy.ndarray[numpy.int64[m, 1]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_proj_diff_g</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_proj_diff_g(self: alpaqa._alpaqa.float64.CasADiProblem, z: numpy.ndarray[numpy.float64[m, 1]], e: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; None</p></li>
+<li><p>eval_proj_diff_g(self: alpaqa._alpaqa.float64.CasADiProblem, z: numpy.ndarray[numpy.float64[m, 1]]) -&gt; numpy.ndarray[numpy.float64[m, 1]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_proj_multipliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">[</span></span><span class="pre">m</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">flags.writeable</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_prox_grad_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_prox_grad_step(self: alpaqa._alpaqa.float64.CasADiProblem, γ: float, x: numpy.ndarray[numpy.float64[m, 1]], grad_ψ: numpy.ndarray[numpy.float64[m, 1]], x̂: numpy.ndarray[numpy.float64[m, 1], flags.writeable], p: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; float</p></li>
+<li><p>eval_prox_grad_step(self: alpaqa._alpaqa.float64.CasADiProblem, γ: float, x: numpy.ndarray[numpy.float64[m, 1]], grad_ψ: numpy.ndarray[numpy.float64[m, 1]]) -&gt; Tuple[numpy.ndarray[numpy.float64[m, 1]], numpy.ndarray[numpy.float64[m, 1]], float]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_ψ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_ψ(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], Σ: numpy.ndarray[numpy.float64[m, 1]], ŷ: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; float</p></li>
+<li><p>eval_ψ(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], Σ: numpy.ndarray[numpy.float64[m, 1]]) -&gt; Tuple[float, numpy.ndarray[numpy.float64[m, 1]]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">eval_ψ_grad_ψ</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li><p>eval_ψ_grad_ψ(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], Σ: numpy.ndarray[numpy.float64[m, 1]], grad_ψ: numpy.ndarray[numpy.float64[m, 1], flags.writeable], work_n: numpy.ndarray[numpy.float64[m, 1], flags.writeable], work_m: numpy.ndarray[numpy.float64[m, 1], flags.writeable]) -&gt; float</p></li>
+<li><p>eval_ψ_grad_ψ(self: alpaqa._alpaqa.float64.CasADiProblem, x: numpy.ndarray[numpy.float64[m, 1]], y: numpy.ndarray[numpy.float64[m, 1]], Σ: numpy.ndarray[numpy.float64[m, 1]]) -&gt; Tuple[float, numpy.ndarray[numpy.float64[m, 1]]]</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_box_C</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.Box" title="alpaqa._alpaqa.float64.Box"><span class="pre">alpaqa._alpaqa.float64.Box</span></a></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_box_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.Box" title="alpaqa._alpaqa.float64.Box"><span class="pre">alpaqa._alpaqa.float64.Box</span></a></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">param</span></span></dt>
+<dd><p>Parameter vector <span class="math notranslate nohighlight">\(p\)</span> of the problem</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">provides_eval_grad_gi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">provides_eval_hess_L_prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">provides_eval_hess_ψ_prod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../python-api.html#alpaqa._alpaqa.float64.CasADiProblem" title="alpaqa._alpaqa.float64.CasADiProblem"><span class="pre">alpaqa._alpaqa.float64.CasADiProblem</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../cpp-api.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">C++ API Reference</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="problem.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Problem formulation</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021, Pieter Pas
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"Reals": "{\\mathrm{I\\!R}}", "Nats": "{\\mathrm{I\\!N}}", "Cplx": "{\\mathbb{C}}", "R": "{\\Reals}", "N": "{\\Nats}", "C": "{\\Cplx}", "Rn": "{\\Reals^n}", "Rm": "{\\Reals^m}", "gph": "{\\operatorname{\\mathbf{gph}}}", "zer": "{\\operatorname{\\mathbf{zer}}}", "fix": "{\\operatorname{\\mathbf{fix}}}", "minimize": "{\\operatorname*{\\mathbf{minimize}}}", "st": "{\\operatorname*{\\mathbf{s.\\!t.}}}", "argmin": "{\\operatorname*{\\mathbf{arg\\,min}}}", "argmax": "{\\operatorname*{\\mathbf{arg\\,max}}}", "subjto": "{\\operatorname*{\\mathbf{subject\\;to}}}", "prox": "{\\operatorname{\\mathbf{prox}}}", "Hilb": "{\\mathcal{H}}", "proj": ["{\\operatorname{\\mathbf{\\Pi}_\\mathnormal{#1}}}", 1], "dist": "{\\operatorname{\\mathbf{dist}}}", "Id": "{\\mathrm{Id}}", "I": "{\\mathrm{I}}", "one": "{\\mathbf{1}}", "defeq": "{\\triangleq}", "inprod": ["{\\left\\langle {#1} \\,\\middle|\\, {#2} \\right\\rangle}", 2], "norm": ["{\\left\\| {#1} \\vphantom{X} \\right\\|}", 1], "normsq": ["{\\norm{#1}^2}", 1], "defset": ["{\\left\\{ {#1} \\;\\middle|\\; {#2} \\right\\}}", 2], "tp": ["{#1^\\top}", 1], "ttp": ["{#1^{\\!\\top\\!}}", 1], "herm": ["{#1^\\mathrm{H}}", 1], "invherm": ["{#1^{-\\mathrm{H}}}", 1], "inv": ["{#1^{-1}}", 1], "pinv": ["{#1^\\dagger}", 1], "lconj": "{\\overline}", "sconj": ["{#1^*}", 1], "iddots": "{\\mathinner{\\kern1mu\\raise1pt{.}\\kern2mu\\raise4pt{.}\\kern2mu\\raise7pt{\\Rule{0pt}{7pt}{0pt}.}\\kern1mu}}", "imagfun": ["{\\left(#1\\right)\\left(#2\\right)}", 2], "Lagr": "{\\mathcal{L}}", "jac": "{\\mathrm{J}}", "dft": "{\\operatorname{\\mathbf{dft}}}", "cbrt": ["{\\sqrt[3]{#1}}", 1], "sgn": "{\\operatorname{\\mathbf{sgn}}}", "setmap": "{\\rightrightarrows}", "lammin": "{\\lambda_\\text{min}}", "lammax": "{\\lambda_\\text{max}}", "Sc": "{\\mathcal{S}}", "Scstar": "{\\mathcal{S}^*}", "diag": "{\\operatorname{\\mathbf{diag}}}", "blkdiag": "{\\operatorname{\\mathbf{blkdiag}}}", "posdef": "{\\succ}", "possdef": "{\\succeq}", "half": "{\\tfrac{1}{2}}", "hhbar": "{\\hbar}", "barxuk": "{\\bar x^k\\!, \\bar u^k}"}, "packages": ["base", "configmacros", "newcommand", "ams"], "tags": "ams"}, "loader": {"load": ["[tex]/newcommand"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

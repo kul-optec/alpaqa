@@ -1,0 +1,19 @@
+<map id="StructuredLBFGSDirection&lt; Conf &gt;" name="StructuredLBFGSDirection&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="225,2885,431,3360"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="19,1271,216,2823"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,2757,233,2822,245,2869,240,2870,228,2823,213,2758"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="5,213,211,1208"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,1222,115,1270,109,1270,109,1222"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="49,5,167,151"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,151,111,197,105,197,105,151"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html" title=" " alt="" coords="243,1704,413,2389"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="331,2389,331,2869,325,2869,325,2389"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1LBFGSStorage.html" title=" " alt="" coords="235,578,421,843"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="331,843,331,1688,325,1688,325,843"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="446,638,631,783"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="525,784,478,1001,428,1271,397,1481,370,1688,365,1687,391,1480,423,1270,473,1000,520,783"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1CBFGSParams.html" title=" " alt="" coords="445,35,632,121"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="541,121,541,621,536,621,536,121"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1StructuredLBFGSDirectionParams.html" title=" " alt="" coords="437,1969,625,2124"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="528,2124,515,2257,495,2432,466,2627,428,2823,416,2870,411,2869,423,2822,461,2626,490,2431,510,2256,522,2124"/>
+</map>

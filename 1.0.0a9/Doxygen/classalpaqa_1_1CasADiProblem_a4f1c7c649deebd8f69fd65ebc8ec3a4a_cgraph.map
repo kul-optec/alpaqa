@@ -1,0 +1,4 @@
+<map id="load_numerical_data" name="load_numerical_data">
+<area shape="rect" id="node1" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="5,5,164,31"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1csv.html#ae73821e0bcb4fd2933b343533eadc16d" title=" " alt="" coords="212,5,375,31"/>
+</map>

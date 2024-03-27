@@ -1,0 +1,21 @@
+<map id="src/alpaqa/include/alpaqa/inner/directions/panoc/structured&#45;lbfgs.hpp" name="src/alpaqa/include/alpaqa/inner/directions/panoc/structured&#45;lbfgs.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="423,5,623,60"/>
+<area shape="rect" id="Node000002" href="$structured-lbfgs_8tpp.html" title=" " alt="" coords="225,108,403,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="461,69,381,110,378,105,459,64"/>
+<area shape="rect" id="Node000006" href="$structured-panoc-alm_8hpp.html" title=" " alt="" coords="11,115,195,170"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="411,62,213,111,187,118,186,113,212,105,409,57"/>
+<area shape="rect" id="Node000007" href="$structured-zerofpr-alm_8hpp.html" title=" " alt="" coords="428,115,619,170"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="526,74,526,115,521,115,521,74"/>
+<area shape="rect" id="Node000008" href="$panoc-driver_8cpp.html" title=" " alt="" coords="643,123,798,163"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="585,64,687,120,685,125,582,69"/>
+<area shape="rect" id="Node000009" href="$params_8cpp.html" title=" " alt="" coords="822,123,987,163"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="637,58,811,105,855,120,853,125,809,111,636,63"/>
+<area shape="rect" id="Node000003" href="$structured-lbfgs_8cpp.html" title=" " alt="" coords="213,225,415,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,191,317,225,311,225,311,191"/>
+<area shape="rect" id="Node000004" href="$structured-panoc-alm_8cpp.html" title=" " alt="" coords="5,233,188,273"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="235,186,136,235,134,230,233,181"/>
+<area shape="rect" id="Node000005" href="$structured-zerofpr-alm_8cpp.html" title=" " alt="" coords="440,233,623,273"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="395,181,494,230,492,235,393,186"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="103,184,101,232,95,232,98,184"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="529,184,533,232,527,232,524,185"/>
+</map>

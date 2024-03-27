@@ -1,0 +1,9 @@
+<map id="IpoptAdapter" name="IpoptAdapter">
+<area shape="rect" id="node1" title="Based on https://coin&#45;or.github.io/Ipopt/INTERFACES.html." alt="" coords="239,2172,435,2484"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,1453,60,1530"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="85,888,303,2095"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="89,204,299,839"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="131,5,257,141"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1IpoptAdapter.html#structalpaqa_1_1IpoptAdapter_1_1Results" title=" " alt="" coords="327,1387,447,1596"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1IpoptAdapter.html#structalpaqa_1_1IpoptAdapter_1_1Sparsity" title=" " alt="" coords="472,1438,569,1545"/>
+</map>

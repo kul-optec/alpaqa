@@ -1,0 +1,43 @@
+<map id="make_fista_driver_impl" name="make_fista_driver_impl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,145,180,170"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#aab07e5e969c7c3cb284b49f5b7931bf3" title="Attach SIGINT and SIGTERM handlers to stop the given solver." alt="" coords="228,45,429,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,142,162,111,227,79,249,71,250,76,229,84,165,115,114,147"/>
+<area shape="rect" id="Node000003" href="$alm-driver_8hpp.html#ae4ef291d9ec9d55ee804b5723ea2e641" title=" " alt="" coords="260,94,397,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,142,255,120,256,125,153,147"/>
+<area shape="rect" id="Node000004" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="529,145,628,170"/>
+<area shape="poly" id="edge22_Node000001_Node000004" title=" " alt="" coords="180,155,516,155,516,160,180,160"/>
+<area shape="rect" id="Node000016" href="$namespaceanonymous__namespace_02fista-driver_8cpp_03.html#a6f96d677b5961c6a4fcaa773f37ca65b" title=" " alt="" coords="239,195,419,221"/>
+<area shape="poly" id="edge17_Node000001_Node000016" title=" " alt="" coords="153,168,256,190,255,195,152,173"/>
+<area shape="rect" id="Node000017" href="$alm-driver_8hpp.html#aa7ce176e5df1fd415e66c420646cf10d" title=" " alt="" coords="267,245,390,270"/>
+<area shape="poly" id="edge19_Node000001_Node000017" title=" " alt="" coords="114,168,165,199,229,231,255,240,253,245,227,236,162,204,111,172"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="393,117,516,142,515,147,392,122"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1util.html#a381655901120dbb2a07cec1df230595e" title="Join the list of strings into a single string, using the separator given by opt." alt="" coords="740,5,867,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="595,142,652,101,727,55,739,49,741,54,729,60,655,106,598,147"/>
+<area shape="rect" id="Node000006" href="$classOptions.html#a32a1a00438ef83609a2ecf66d9e77056" title=" " alt="" coords="731,70,876,95"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="616,142,727,104,749,97,750,102,729,109,618,147"/>
+<area shape="rect" id="Node000007" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="739,119,867,145"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="628,149,725,138,726,143,628,154"/>
+<area shape="rect" id="Node000008" href="$namespacealpaqa_1_1params.html#af3ba03bed80f69ff9920df80e5223601" title="Update/overwrite the first argument based on the JSON object j." alt="" coords="946,163,1097,203"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="628,157,932,175,932,180,628,163"/>
+<area shape="rect" id="Node000013" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="728,220,879,260"/>
+<area shape="poly" id="edge13_Node000004_Node000013" title=" " alt="" coords="615,168,736,213,734,218,613,173"/>
+<area shape="rect" id="Node000015" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="748,285,859,310"/>
+<area shape="poly" id="edge16_Node000004_Node000015" title=" " alt="" coords="615,168,649,184,682,206,697,223,706,239,714,255,730,270,741,277,738,281,726,274,710,258,701,242,693,226,678,210,646,188,613,172"/>
+<area shape="rect" id="Node000009" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="1164,113,1332,138"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1097,161,1183,139,1185,144,1098,166"/>
+<area shape="rect" id="Node000010" href="$namespacealpaqa_1_1params_1_1detail.html#a6aa41a8827ffd36b3e2a8e7346a44f19" title=" " alt="" coords="1164,163,1332,203"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="1097,180,1150,180,1150,185,1097,185"/>
+<area shape="rect" id="Node000012" href="$namespacealpaqa_1_1util.html#ab38ac790b4155e7631dfb11d7dfff1c3" title="Sort the given range of strings in&#45;place in a case&#45;insensitive manner." alt="" coords="1380,220,1517,260"/>
+<area shape="poly" id="edge12_Node000008_Node000012" title=" " alt="" coords="1097,199,1164,212,1269,225,1366,233,1366,238,1269,230,1164,217,1096,204"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1util.html#aa93b2039064bcb3304233064c0485c9b" title="Join the list of strings into a single string, using the separator given by opt." alt="" coords="1385,170,1512,195"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="1332,180,1372,180,1372,185,1332,185"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="1319,200,1367,214,1366,219,1318,205"/>
+<area shape="poly" id="edge14_Node000013_Node000008" title=" " alt="" coords="878,218,932,203,934,208,879,223"/>
+<area shape="rect" id="Node000014" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="927,227,1116,253"/>
+<area shape="poly" id="edge15_Node000013_Node000014" title=" " alt="" coords="879,237,913,237,913,243,879,243"/>
+<area shape="poly" id="edge18_Node000016_Node000004" title=" " alt="" coords="392,193,515,167,516,173,393,198"/>
+<area shape="rect" id="Node000018" href="$ipopt-enums_8hpp.html#a78dc4442f5ab598a9c86a57e0c067f98" title=" " alt="" coords="527,219,630,245"/>
+<area shape="poly" id="edge20_Node000017_Node000018" title=" " alt="" coords="390,248,513,236,514,241,391,254"/>
+<area shape="rect" id="Node000019" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="477,269,680,309"/>
+<area shape="poly" id="edge21_Node000017_Node000019" title=" " alt="" coords="391,263,464,272,463,277,390,268"/>
+</map>

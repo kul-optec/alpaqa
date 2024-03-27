@@ -1,0 +1,23 @@
+<map id="iter_set_intersection" name="iter_set_intersection">
+<area shape="rect" id="Node000001" title=" " alt="" coords="779,83,933,109"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util_1_1detail.html#a363a373e4888017ca42c9d0f4650b770" title="Returns a range over the row indices in the given column of sp_mat that are also in mask." alt="" coords="563,33,715,73"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="777,83,714,71,715,66,778,78"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="547,108,731,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="766,112,731,117,730,112,765,107"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#ab1fe477130dff69a401ed5ae0078a5f2" title="out += S(mask,:)ᵀ * v(mask);" alt="" coords="276,9,499,49"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="549,47,499,43,499,37,549,42"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CasADiControlProblem.html#a4e8680cb8ad01d9bb6eb4a2d493ff25c" title=" " alt="" coords="5,5,228,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="262,30,228,30,228,24,263,25"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="310,81,465,106"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="533,116,465,107,465,101,534,111"/>
+<area shape="rect" id="Node000008" href="$namespacealpaqa_1_1util.html#a8f8729f20b9e0c58b08803046e2e5e54" title="S += S_full(mask,:)" alt="" coords="291,137,483,162"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="533,140,484,144,483,139,533,134"/>
+<area shape="rect" id="Node000010" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="282,189,493,229"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="566,155,499,177,454,192,452,187,498,172,565,150"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1CasADiControlProblem.html#a55e2e9425cc496e3340e59b099dda766" title=" " alt="" coords="5,69,228,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="297,95,228,94,228,88,297,89"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1CasADiControlProblem.html#aad269794afe7753e16a2cf238b9f42ad" title=" " alt="" coords="5,133,228,173"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="278,154,228,154,228,149,278,148"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1CasADiControlProblem.html#a20f8fadf0aeb2daf8695db68f3d50865" title=" " alt="" coords="5,197,228,237"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="268,216,228,217,228,211,268,210"/>
+</map>

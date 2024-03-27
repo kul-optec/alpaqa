@@ -1,0 +1,5 @@
+<map id="calc_ψ_ŷ" name="calc_ψ_ŷ">
+<area shape="rect" id="node1" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="5,13,84,39"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="132,5,271,47"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="319,13,437,39"/>
+</map>

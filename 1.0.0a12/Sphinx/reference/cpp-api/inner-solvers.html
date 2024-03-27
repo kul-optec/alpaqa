@@ -1,0 +1,901 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Direction providers" href="direction-providers.html" /><link rel="prev" title="Functions and operators" href="functions.html" />
+
+    <link rel="shortcut icon" href="../../_static/alpaqa_favicon.png"/><!-- Generated with Sphinx 7.3.0 and Furo 2023.08.19 -->
+        <title>Inner solvers - alpaqa documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=a9f360ad" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">alpaqa  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/alpaqa_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">alpaqa  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/getting-started.html">Getting started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso.html">Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso-jax.html">Lasso JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/nonlinear-regression.html">Nonlinear regression</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/mpc/index.html">Model predictive control</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Model predictive control</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/hanging-chain.html">Hanging Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/inverted-pendulum.html">Inverted Pendulum</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python-api.html">Python API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Python API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/pyapi.html">High-level problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/panoc.html">Inner PANOC and ZeroFPR Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/pantr.html">Inner PANTR Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/alm.html">Outer ALM Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/problem.html">Problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/functions.html">Functions and operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/casadi.html">CasADi Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../cpp-api.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of C++ API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="accelerators.html">Accelerators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alm-solver.html">Augmented Lagrangian solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Functions and operators</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Inner solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direction-providers.html">Direction providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.html">Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribution/index.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="inner-solvers">
+<h1>Inner solvers<a class="headerlink" href="#inner-solvers" title="Link to this heading">#</a></h1>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__grp__InnerSolvers"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">grp_InnerSolvers</span></span></dt>
+<dd><p>Solvers for the inner problem, such as PANOC. </p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa11PANOCSolverE">
+<span id="_CPPv3I0EN6alpaqa11PANOCSolverE"></span><span id="_CPPv2I0EN6alpaqa11PANOCSolverE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DirectionT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1PANOCSolver"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANOCSolver</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/inner/panoc.hpp&gt;</em></div>
+<p>PANOC solver for ALM. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver7ProblemE">
+<span id="_CPPv3N6alpaqa11PANOCSolver7ProblemE"></span><span id="_CPPv2N6alpaqa11PANOCSolver7ProblemE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1af15850165744bac319c6e838122b76d6"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Problem</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa17TypeErasedProblemE" title="alpaqa::TypeErasedProblem"><span class="n"><span class="pre">TypeErasedProblem</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver6ParamsE">
+<span id="_CPPv3N6alpaqa11PANOCSolver6ParamsE"></span><span id="_CPPv2N6alpaqa11PANOCSolver6ParamsE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1aec036189dd0b7f5304ca24f543db54f5"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa11PANOCParamsE" title="alpaqa::PANOCParams"><span class="n"><span class="pre">PANOCParams</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver9DirectionE">
+<span id="_CPPv3N6alpaqa11PANOCSolver9DirectionE"></span><span id="_CPPv2N6alpaqa11PANOCSolver9DirectionE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a819e2dd1d9a37e4fbfbdc82a3df49ee1"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Direction</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANOCSolverE" title="alpaqa::PANOCSolver::DirectionT"><span class="n"><span class="pre">DirectionT</span></span></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver5StatsE">
+<span id="_CPPv3N6alpaqa11PANOCSolver5StatsE"></span><span id="_CPPv2N6alpaqa11PANOCSolver5StatsE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a26991498acd68000761a85e927e89de2"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Stats</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa10PANOCStatsE" title="alpaqa::PANOCStats"><span class="n"><span class="pre">PANOCStats</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver12ProgressInfoE">
+<span id="_CPPv3N6alpaqa11PANOCSolver12ProgressInfoE"></span><span id="_CPPv2N6alpaqa11PANOCSolver12ProgressInfoE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1accb7175795459906b08d6527cbaa6b7f"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ProgressInfo</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17PANOCProgressInfoE" title="alpaqa::PANOCProgressInfo"><span class="n"><span class="pre">PANOCProgressInfo</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver12SolveOptionsE">
+<span id="_CPPv3N6alpaqa11PANOCSolver12SolveOptionsE"></span><span id="_CPPv2N6alpaqa11PANOCSolver12SolveOptionsE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a541f0f6341f931ff86c223cef890d7a3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SolveOptions</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17InnerSolveOptionsE" title="alpaqa::InnerSolveOptions"><span class="n"><span class="pre">InnerSolveOptions</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver11PANOCSolverERK6Params">
+<span id="_CPPv3N6alpaqa11PANOCSolver11PANOCSolverERK6Params"></span><span id="_CPPv2N6alpaqa11PANOCSolver11PANOCSolverERK6Params"></span><span id="alpaqa::PANOCSolver::PANOCSolver__ParamsCR"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a1b31fc0fb787e13892d7e030250a84f5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANOCSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver6ParamsE" title="alpaqa::PANOCSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRR9Direction">
+<span id="_CPPv3N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRR9Direction"></span><span id="_CPPv2N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRR9Direction"></span><span id="alpaqa::PANOCSolver::PANOCSolver__ParamsCR.DirectionRR"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a15a9b4f4c3c3faa541a840e25b69b59b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANOCSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver6ParamsE" title="alpaqa::PANOCSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver9DirectionE" title="alpaqa::PANOCSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">direction</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRK9Direction">
+<span id="_CPPv3N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRK9Direction"></span><span id="_CPPv2N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRK9Direction"></span><span id="alpaqa::PANOCSolver::PANOCSolver__ParamsCR.DirectionCR"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a5581db83b3a94814e61a6e9ce8564101"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANOCSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver6ParamsE" title="alpaqa::PANOCSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver9DirectionE" title="alpaqa::PANOCSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">direction</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3N6alpaqa11PANOCSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2N6alpaqa11PANOCSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="alpaqa::PANOCSolver::call-operator__ProblemCR.SolveOptionsCR.rvec.rvec.crvec.rvec"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a9124d12ccccf708286ecc8192d1f041b"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver5StatsE" title="alpaqa::PANOCSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver7ProblemE" title="alpaqa::PANOCSolver::Problem"><span class="n"><span class="pre">Problem</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver12SolveOptionsE" title="alpaqa::PANOCSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">err_z</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa11PANOCSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3I0EN6alpaqa11PANOCSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2I0EN6alpaqa11PANOCSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1PANOCSolver_1a2538f4422745a93e1ed73cf706ab41f0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver5StatsE" title="alpaqa::PANOCSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANOCSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec" title="alpaqa::PANOCSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver12SolveOptionsE" title="alpaqa::PANOCSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa11PANOCSolverclE5StatsRK1PRK12SolveOptions4rvec">
+<span id="_CPPv3I0EN6alpaqa11PANOCSolverclERK1PRK12SolveOptions4rvec"></span><span id="_CPPv2I0EN6alpaqa11PANOCSolverclERK1PRK12SolveOptions4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1PANOCSolver_1adad7d5957ac872548d1206dc38a5e43a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver5StatsE" title="alpaqa::PANOCSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANOCSolverclE5StatsRK1PRK12SolveOptions4rvec" title="alpaqa::PANOCSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver12SolveOptionsE" title="alpaqa::PANOCSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">
+<span id="_CPPv3N6alpaqa11PANOCSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"></span><span id="_CPPv2N6alpaqa11PANOCSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a41bbb7cbb8c64ec952a2476a4f896251"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANOCSolverE" title="alpaqa::PANOCSolver"><span class="n"><span class="pre">PANOCSolver</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_progress_callback</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">void</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver12ProgressInfoE" title="alpaqa::PANOCSolver::ProgressInfo"><span class="n"><span class="pre">ProgressInfo</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">cb</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Specify a callable that is invoked with some intermediate results on each iteration of the algorithm. </p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#classalpaqa_1_1PANOCSolver_1accb7175795459906b08d6527cbaa6b7f"><span class="std std-ref">ProgressInfo</span></a></p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa11PANOCSolver8get_nameEv">
+<span id="_CPPv3NK6alpaqa11PANOCSolver8get_nameEv"></span><span id="_CPPv2NK6alpaqa11PANOCSolver8get_nameEv"></span><span id="alpaqa::PANOCSolver::get_nameC"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver4stopEv">
+<span id="_CPPv3N6alpaqa11PANOCSolver4stopEv"></span><span id="_CPPv2N6alpaqa11PANOCSolver4stopEv"></span><span id="alpaqa::PANOCSolver::stop"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a8c528baf37154d347366083f0f816846"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa11PANOCSolver10get_paramsEv">
+<span id="_CPPv3NK6alpaqa11PANOCSolver10get_paramsEv"></span><span id="_CPPv2NK6alpaqa11PANOCSolver10get_paramsEv"></span><span id="alpaqa::PANOCSolver::get_paramsC"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver6ParamsE" title="alpaqa::PANOCSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver9directionE">
+<span id="_CPPv3N6alpaqa11PANOCSolver9directionE"></span><span id="_CPPv2N6alpaqa11PANOCSolver9directionE"></span><span id="alpaqa::PANOCSolver::direction__Direction"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1a53421c695d00016ab925777d423b4eb6"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANOCSolver9DirectionE" title="alpaqa::PANOCSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">direction</span></span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANOCSolver2osE">
+<span id="_CPPv3N6alpaqa11PANOCSolver2osE"></span><span id="_CPPv2N6alpaqa11PANOCSolver2osE"></span><span id="alpaqa::PANOCSolver::os__osP"></span><span class="target" id="classalpaqa_1_1PANOCSolver_1af583aab7469ad85646c68473fa671258"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">os</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">&amp;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">cout</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa11PANTRSolverE">
+<span id="_CPPv3I0EN6alpaqa11PANTRSolverE"></span><span id="_CPPv2I0EN6alpaqa11PANTRSolverE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DirectionT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1PANTRSolver"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANTRSolver</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/inner/pantr.hpp&gt;</em></div>
+<p>PANTR solver for ALM. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver7ProblemE">
+<span id="_CPPv3N6alpaqa11PANTRSolver7ProblemE"></span><span id="_CPPv2N6alpaqa11PANTRSolver7ProblemE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1af15850165744bac319c6e838122b76d6"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Problem</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa17TypeErasedProblemE" title="alpaqa::TypeErasedProblem"><span class="n"><span class="pre">TypeErasedProblem</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver6ParamsE">
+<span id="_CPPv3N6alpaqa11PANTRSolver6ParamsE"></span><span id="_CPPv2N6alpaqa11PANTRSolver6ParamsE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a4e353860e675d7e7cc4fc9d2dcbbf13f"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa11PANTRParamsE" title="alpaqa::PANTRParams"><span class="n"><span class="pre">PANTRParams</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver9DirectionE">
+<span id="_CPPv3N6alpaqa11PANTRSolver9DirectionE"></span><span id="_CPPv2N6alpaqa11PANTRSolver9DirectionE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a819e2dd1d9a37e4fbfbdc82a3df49ee1"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Direction</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANTRSolverE" title="alpaqa::PANTRSolver::DirectionT"><span class="n"><span class="pre">DirectionT</span></span></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver5StatsE">
+<span id="_CPPv3N6alpaqa11PANTRSolver5StatsE"></span><span id="_CPPv2N6alpaqa11PANTRSolver5StatsE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1aa7af6aef5d13138c39b2a8c77212bab3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Stats</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa10PANTRStatsE" title="alpaqa::PANTRStats"><span class="n"><span class="pre">PANTRStats</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver12ProgressInfoE">
+<span id="_CPPv3N6alpaqa11PANTRSolver12ProgressInfoE"></span><span id="_CPPv2N6alpaqa11PANTRSolver12ProgressInfoE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a5e2d6b722ef484700c50f71f9e12ec3e"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ProgressInfo</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17PANTRProgressInfoE" title="alpaqa::PANTRProgressInfo"><span class="n"><span class="pre">PANTRProgressInfo</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver12SolveOptionsE">
+<span id="_CPPv3N6alpaqa11PANTRSolver12SolveOptionsE"></span><span id="_CPPv2N6alpaqa11PANTRSolver12SolveOptionsE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a541f0f6341f931ff86c223cef890d7a3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SolveOptions</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17InnerSolveOptionsE" title="alpaqa::InnerSolveOptions"><span class="n"><span class="pre">InnerSolveOptions</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver11PANTRSolverERK6Params">
+<span id="_CPPv3N6alpaqa11PANTRSolver11PANTRSolverERK6Params"></span><span id="_CPPv2N6alpaqa11PANTRSolver11PANTRSolverERK6Params"></span><span id="alpaqa::PANTRSolver::PANTRSolver__ParamsCR"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1ac039395eabc79dc058232c39cae00bad"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANTRSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver6ParamsE" title="alpaqa::PANTRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRR9Direction">
+<span id="_CPPv3N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRR9Direction"></span><span id="_CPPv2N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRR9Direction"></span><span id="alpaqa::PANTRSolver::PANTRSolver__ParamsCR.DirectionRR"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a4c75abb3233f3a98cb329fa7ac884f23"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANTRSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver6ParamsE" title="alpaqa::PANTRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver9DirectionE" title="alpaqa::PANTRSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">direction</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRK9Direction">
+<span id="_CPPv3N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRK9Direction"></span><span id="_CPPv2N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRK9Direction"></span><span id="alpaqa::PANTRSolver::PANTRSolver__ParamsCR.DirectionCR"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a619d5ef0de52b5089a118143ae7136e6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PANTRSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver6ParamsE" title="alpaqa::PANTRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver9DirectionE" title="alpaqa::PANTRSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">direction</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3N6alpaqa11PANTRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2N6alpaqa11PANTRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="alpaqa::PANTRSolver::call-operator__ProblemCR.SolveOptionsCR.rvec.rvec.crvec.rvec"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a9124d12ccccf708286ecc8192d1f041b"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver5StatsE" title="alpaqa::PANTRSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver7ProblemE" title="alpaqa::PANTRSolver::Problem"><span class="n"><span class="pre">Problem</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver12SolveOptionsE" title="alpaqa::PANTRSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">err_z</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa11PANTRSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3I0EN6alpaqa11PANTRSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2I0EN6alpaqa11PANTRSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1PANTRSolver_1a2538f4422745a93e1ed73cf706ab41f0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver5StatsE" title="alpaqa::PANTRSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANTRSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec" title="alpaqa::PANTRSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver12SolveOptionsE" title="alpaqa::PANTRSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa11PANTRSolverclE5StatsRK1PRK12SolveOptions4rvec">
+<span id="_CPPv3I0EN6alpaqa11PANTRSolverclERK1PRK12SolveOptions4rvec"></span><span id="_CPPv2I0EN6alpaqa11PANTRSolverclERK1PRK12SolveOptions4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1PANTRSolver_1adad7d5957ac872548d1206dc38a5e43a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver5StatsE" title="alpaqa::PANTRSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANTRSolverclE5StatsRK1PRK12SolveOptions4rvec" title="alpaqa::PANTRSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver12SolveOptionsE" title="alpaqa::PANTRSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">
+<span id="_CPPv3N6alpaqa11PANTRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"></span><span id="_CPPv2N6alpaqa11PANTRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a672b497270cf84ce5b64b44e28ecf618"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa11PANTRSolverE" title="alpaqa::PANTRSolver"><span class="n"><span class="pre">PANTRSolver</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_progress_callback</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">void</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver12ProgressInfoE" title="alpaqa::PANTRSolver::ProgressInfo"><span class="n"><span class="pre">ProgressInfo</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">cb</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Specify a callable that is invoked with some intermediate results on each iteration of the algorithm. </p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#classalpaqa_1_1PANTRSolver_1a5e2d6b722ef484700c50f71f9e12ec3e"><span class="std std-ref">ProgressInfo</span></a></p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa11PANTRSolver8get_nameEv">
+<span id="_CPPv3NK6alpaqa11PANTRSolver8get_nameEv"></span><span id="_CPPv2NK6alpaqa11PANTRSolver8get_nameEv"></span><span id="alpaqa::PANTRSolver::get_nameC"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver4stopEv">
+<span id="_CPPv3N6alpaqa11PANTRSolver4stopEv"></span><span id="_CPPv2N6alpaqa11PANTRSolver4stopEv"></span><span id="alpaqa::PANTRSolver::stop"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a8c528baf37154d347366083f0f816846"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa11PANTRSolver10get_paramsEv">
+<span id="_CPPv3NK6alpaqa11PANTRSolver10get_paramsEv"></span><span id="_CPPv2NK6alpaqa11PANTRSolver10get_paramsEv"></span><span id="alpaqa::PANTRSolver::get_paramsC"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver6ParamsE" title="alpaqa::PANTRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver9directionE">
+<span id="_CPPv3N6alpaqa11PANTRSolver9directionE"></span><span id="_CPPv2N6alpaqa11PANTRSolver9directionE"></span><span id="alpaqa::PANTRSolver::direction__Direction"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1a53421c695d00016ab925777d423b4eb6"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa11PANTRSolver9DirectionE" title="alpaqa::PANTRSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">direction</span></span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa11PANTRSolver2osE">
+<span id="_CPPv3N6alpaqa11PANTRSolver2osE"></span><span id="_CPPv2N6alpaqa11PANTRSolver2osE"></span><span id="alpaqa::PANTRSolver::os__osP"></span><span class="target" id="classalpaqa_1_1PANTRSolver_1af583aab7469ad85646c68473fa671258"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">os</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">&amp;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">cout</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa13ZeroFPRSolverE">
+<span id="_CPPv3I0EN6alpaqa13ZeroFPRSolverE"></span><span id="_CPPv2I0EN6alpaqa13ZeroFPRSolverE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DirectionT</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1ZeroFPRSolver"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ZeroFPRSolver</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/inner/zerofpr.hpp&gt;</em></div>
+<p>ZeroFPR solver for ALM. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver7ProblemE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver7ProblemE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver7ProblemE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1af15850165744bac319c6e838122b76d6"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Problem</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa17TypeErasedProblemE" title="alpaqa::TypeErasedProblem"><span class="n"><span class="pre">TypeErasedProblem</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver6ParamsE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver6ParamsE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver6ParamsE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a45236504a69460bfb932f783f4600cc6"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa13ZeroFPRParamsE" title="alpaqa::ZeroFPRParams"><span class="n"><span class="pre">ZeroFPRParams</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver9DirectionE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver9DirectionE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver9DirectionE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a819e2dd1d9a37e4fbfbdc82a3df49ee1"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Direction</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa13ZeroFPRSolverE" title="alpaqa::ZeroFPRSolver::DirectionT"><span class="n"><span class="pre">DirectionT</span></span></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver5StatsE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver5StatsE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver5StatsE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a72571e7d159640b6d4ab45d50110d4ab"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Stats</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa12ZeroFPRStatsE" title="alpaqa::ZeroFPRStats"><span class="n"><span class="pre">ZeroFPRStats</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver12ProgressInfoE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver12ProgressInfoE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver12ProgressInfoE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a0ae6d32e48085bc9a76d7795025f9e2e"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ProgressInfo</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa19ZeroFPRProgressInfoE" title="alpaqa::ZeroFPRProgressInfo"><span class="n"><span class="pre">ZeroFPRProgressInfo</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver12SolveOptionsE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver12SolveOptionsE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver12SolveOptionsE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a541f0f6341f931ff86c223cef890d7a3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SolveOptions</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17InnerSolveOptionsE" title="alpaqa::InnerSolveOptions"><span class="n"><span class="pre">InnerSolveOptions</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6Params">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6Params"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6Params"></span><span id="alpaqa::ZeroFPRSolver::ZeroFPRSolver__ParamsCR"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a1f86acf9d51ac2862dd744722aa70a5d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ZeroFPRSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver6ParamsE" title="alpaqa::ZeroFPRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRR9Direction">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRR9Direction"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRR9Direction"></span><span id="alpaqa::ZeroFPRSolver::ZeroFPRSolver__ParamsCR.DirectionRR"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1ad9967eb3d6c7370725749f21c30e04ad"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ZeroFPRSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver6ParamsE" title="alpaqa::ZeroFPRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver9DirectionE" title="alpaqa::ZeroFPRSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">direction</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRK9Direction">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRK9Direction"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRK9Direction"></span><span id="alpaqa::ZeroFPRSolver::ZeroFPRSolver__ParamsCR.DirectionCR"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a1c927deef3007283427b4286ce003e7f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ZeroFPRSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver6ParamsE" title="alpaqa::ZeroFPRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver9DirectionE" title="alpaqa::ZeroFPRSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">direction</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="alpaqa::ZeroFPRSolver::call-operator__ProblemCR.SolveOptionsCR.rvec.rvec.crvec.rvec"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a9124d12ccccf708286ecc8192d1f041b"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver5StatsE" title="alpaqa::ZeroFPRSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver7ProblemE" title="alpaqa::ZeroFPRSolver::Problem"><span class="n"><span class="pre">Problem</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver12SolveOptionsE" title="alpaqa::ZeroFPRSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">err_z</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa13ZeroFPRSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3I0EN6alpaqa13ZeroFPRSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2I0EN6alpaqa13ZeroFPRSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a2538f4422745a93e1ed73cf706ab41f0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver5StatsE" title="alpaqa::ZeroFPRSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa13ZeroFPRSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec" title="alpaqa::ZeroFPRSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver12SolveOptionsE" title="alpaqa::ZeroFPRSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa13ZeroFPRSolverclE5StatsRK1PRK12SolveOptions4rvec">
+<span id="_CPPv3I0EN6alpaqa13ZeroFPRSolverclERK1PRK12SolveOptions4rvec"></span><span id="_CPPv2I0EN6alpaqa13ZeroFPRSolverclERK1PRK12SolveOptions4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1adad7d5957ac872548d1206dc38a5e43a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver5StatsE" title="alpaqa::ZeroFPRSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa13ZeroFPRSolverclE5StatsRK1PRK12SolveOptions4rvec" title="alpaqa::ZeroFPRSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver12SolveOptionsE" title="alpaqa::ZeroFPRSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a2fc5053a636e64f7df3db2dc1419fbbe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa13ZeroFPRSolverE" title="alpaqa::ZeroFPRSolver"><span class="n"><span class="pre">ZeroFPRSolver</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">set_progress_callback</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">void</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver12ProgressInfoE" title="alpaqa::ZeroFPRSolver::ProgressInfo"><span class="n"><span class="pre">ProgressInfo</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">cb</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Specify a callable that is invoked with some intermediate results on each iteration of the algorithm. </p>
+<p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#classalpaqa_1_1ZeroFPRSolver_1a0ae6d32e48085bc9a76d7795025f9e2e"><span class="std std-ref">ProgressInfo</span></a></p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13ZeroFPRSolver8get_nameEv">
+<span id="_CPPv3NK6alpaqa13ZeroFPRSolver8get_nameEv"></span><span id="_CPPv2NK6alpaqa13ZeroFPRSolver8get_nameEv"></span><span id="alpaqa::ZeroFPRSolver::get_nameC"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver4stopEv">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver4stopEv"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver4stopEv"></span><span id="alpaqa::ZeroFPRSolver::stop"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a8c528baf37154d347366083f0f816846"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13ZeroFPRSolver10get_paramsEv">
+<span id="_CPPv3NK6alpaqa13ZeroFPRSolver10get_paramsEv"></span><span id="_CPPv2NK6alpaqa13ZeroFPRSolver10get_paramsEv"></span><span id="alpaqa::ZeroFPRSolver::get_paramsC"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver6ParamsE" title="alpaqa::ZeroFPRSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver9directionE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver9directionE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver9directionE"></span><span id="alpaqa::ZeroFPRSolver::direction__Direction"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1a53421c695d00016ab925777d423b4eb6"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13ZeroFPRSolver9DirectionE" title="alpaqa::ZeroFPRSolver::Direction"><span class="n"><span class="pre">Direction</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">direction</span></span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13ZeroFPRSolver2osE">
+<span id="_CPPv3N6alpaqa13ZeroFPRSolver2osE"></span><span id="_CPPv2N6alpaqa13ZeroFPRSolver2osE"></span><span id="alpaqa::ZeroFPRSolver::os__osP"></span><span class="target" id="classalpaqa_1_1ZeroFPRSolver_1af583aab7469ad85646c68473fa671258"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">os</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">&amp;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">cout</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolverE">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolverE"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolverE"></span><span id="alpaqa::lbfgsb::LBFGSBSolver"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGSBSolver</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/lbfgsb/lbfgsb-adapter.hpp&gt;</em></div>
+<p>L-BFGS-B solver for ALM. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver7ProblemE">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver7ProblemE"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver7ProblemE"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1af15850165744bac319c6e838122b76d6"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Problem</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa17TypeErasedProblemE" title="alpaqa::TypeErasedProblem"><span class="n"><span class="pre">TypeErasedProblem</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver6ParamsE">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver6ParamsE"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver6ParamsE"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1adbd9c328cf020f43982151d63cfd86ea"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBParamsE" title="alpaqa::lbfgsb::LBFGSBParams"><span class="n"><span class="pre">LBFGSBParams</span></span></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver5StatsE">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver5StatsE"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver5StatsE"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1aaa5780bbb06d8c28a662246273658d24"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Stats</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb11LBFGSBStatsE" title="alpaqa::lbfgsb::LBFGSBStats"><span class="n"><span class="pre">LBFGSBStats</span></span></a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver12SolveOptionsE">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver12SolveOptionsE"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver12SolveOptionsE"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a541f0f6341f931ff86c223cef890d7a3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SolveOptions</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17InnerSolveOptionsE" title="alpaqa::InnerSolveOptions"><span class="n"><span class="pre">InnerSolveOptions</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver12LBFGSBSolverERK6Params">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver12LBFGSBSolverERK6Params"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver12LBFGSBSolverERK6Params"></span><span id="alpaqa::lbfgsb::LBFGSBSolver::LBFGSBSolver__ParamsCR"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a5f309bf56ba77a222568a02ddcd2cc1b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGSBSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver6ParamsE" title="alpaqa::lbfgsb::LBFGSBSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="alpaqa::lbfgsb::LBFGSBSolver::call-operator__ProblemCR.SolveOptionsCR.rvec.rvec.crvec.rvec"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a3e8ce8c8bfa2c124a129b750ea60ad64"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver5StatsE" title="alpaqa::lbfgsb::LBFGSBSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver7ProblemE" title="alpaqa::lbfgsb::LBFGSBSolver::Problem"><span class="n"><span class="pre">Problem</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver12SolveOptionsE" title="alpaqa::lbfgsb::LBFGSBSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">err_z</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>problem</strong> – [in] Problem description </p></li>
+<li><p><strong>opts</strong> – [in] Solve options </p></li>
+<li><p><strong>x</strong> – [inout] Decision variable <span class="math notranslate nohighlight">\( x \)</span></p></li>
+<li><p><strong>y</strong> – [inout] Lagrange multipliers <span class="math notranslate nohighlight">\( y \)</span></p></li>
+<li><p><strong>Σ</strong> – [in] Constraint weights <span class="math notranslate nohighlight">\( \Sigma \)</span></p></li>
+<li><p><strong>err_z</strong> – [out] Slack variable error <span class="math notranslate nohighlight">\( g(x) - \Pi_D(g(x) + \Sigma^{-1} y) \)</span></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa6lbfgsb12LBFGSBSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3I0EN6alpaqa6lbfgsb12LBFGSBSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2I0EN6alpaqa6lbfgsb12LBFGSBSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a175a45a40f45303803a8fd82c49f02f0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver5StatsE" title="alpaqa::lbfgsb::LBFGSBSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa6lbfgsb12LBFGSBSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec" title="alpaqa::lbfgsb::LBFGSBSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver12SolveOptionsE" title="alpaqa::lbfgsb::LBFGSBSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">u</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa6lbfgsb12LBFGSBSolver8get_nameEv">
+<span id="_CPPv3NK6alpaqa6lbfgsb12LBFGSBSolver8get_nameEv"></span><span id="_CPPv2NK6alpaqa6lbfgsb12LBFGSBSolver8get_nameEv"></span><span id="alpaqa::lbfgsb::LBFGSBSolver::get_nameC"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver4stopEv">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver4stopEv"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver4stopEv"></span><span id="alpaqa::lbfgsb::LBFGSBSolver::stop"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a8c528baf37154d347366083f0f816846"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa6lbfgsb12LBFGSBSolver10get_paramsEv">
+<span id="_CPPv3NK6alpaqa6lbfgsb12LBFGSBSolver10get_paramsEv"></span><span id="_CPPv2NK6alpaqa6lbfgsb12LBFGSBSolver10get_paramsEv"></span><span id="alpaqa::lbfgsb::LBFGSBSolver::get_paramsC"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver6ParamsE" title="alpaqa::lbfgsb::LBFGSBSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver2osE">
+<span id="_CPPv3N6alpaqa6lbfgsb12LBFGSBSolver2osE"></span><span id="_CPPv2N6alpaqa6lbfgsb12LBFGSBSolver2osE"></span><span id="alpaqa::lbfgsb::LBFGSBSolver::os__osP"></span><span class="target" id="classalpaqa_1_1lbfgsb_1_1LBFGSBSolver_1af583aab7469ad85646c68473fa671258"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">os</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">&amp;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">cout</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I_6ConfigEN6alpaqa7lbfgspp12LBFGSBSolverE">
+<span id="_CPPv3I_6ConfigEN6alpaqa7lbfgspp12LBFGSBSolverE"></span><span id="_CPPv2I_6ConfigEN6alpaqa7lbfgspp12LBFGSBSolverE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Config</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Conf</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGSBSolver</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/lbfgsb-adapter.hpp&gt;</em></div>
+<p>L-BFGS-B solver for ALM. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver7ProblemE">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver7ProblemE"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver7ProblemE"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1af15850165744bac319c6e838122b76d6"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Problem</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa17TypeErasedProblemE" title="alpaqa::TypeErasedProblem"><span class="n"><span class="pre">TypeErasedProblem</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver6ParamsE">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver6ParamsE"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver6ParamsE"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a4f3077426f46342dcb9100422837c8f3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">LBFGSpp</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">LBFGSBParam</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver5StatsE">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver5StatsE"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver5StatsE"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a543697aa1c38e23ab82a412967c1cf56"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Stats</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7lbfgspp11LBFGSBStatsE" title="alpaqa::lbfgspp::LBFGSBStats"><span class="n"><span class="pre">LBFGSBStats</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver12SolveOptionsE">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver12SolveOptionsE"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver12SolveOptionsE"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a541f0f6341f931ff86c223cef890d7a3"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SolveOptions</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa17InnerSolveOptionsE" title="alpaqa::InnerSolveOptions"><span class="n"><span class="pre">InnerSolveOptions</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver12LBFGSBSolverERK6Params">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver12LBFGSBSolverERK6Params"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver12LBFGSBSolverERK6Params"></span><span id="alpaqa::lbfgspp::LBFGSBSolver::LBFGSBSolver__ParamsCR"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a5f309bf56ba77a222568a02ddcd2cc1b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGSBSolver</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver6ParamsE" title="alpaqa::lbfgspp::LBFGSBSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="alpaqa::lbfgspp::LBFGSBSolver::call-operator__ProblemCR.SolveOptionsCR.rvec.rvec.crvec.rvec"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a9124d12ccccf708286ecc8192d1f041b"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver5StatsE" title="alpaqa::lbfgspp::LBFGSBSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver7ProblemE" title="alpaqa::lbfgspp::LBFGSBSolver::Problem"><span class="n"><span class="pre">Problem</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver12SolveOptionsE" title="alpaqa::lbfgspp::LBFGSBSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">err_z</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0EN6alpaqa7lbfgspp12LBFGSBSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec">
+<span id="_CPPv3I0EN6alpaqa7lbfgspp12LBFGSBSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span id="_CPPv2I0EN6alpaqa7lbfgspp12LBFGSBSolverclERK1PRK12SolveOptions4rvec4rvec5crvec4rvec"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">P</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a175a45a40f45303803a8fd82c49f02f0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver5StatsE" title="alpaqa::lbfgspp::LBFGSBSolver::Stats"><span class="n"><span class="pre">Stats</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">()</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0EN6alpaqa7lbfgspp12LBFGSBSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec" title="alpaqa::lbfgspp::LBFGSBSolver::operator()::P"><span class="n"><span class="pre">P</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">problem</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver12SolveOptionsE" title="alpaqa::lbfgspp::LBFGSBSolver::SolveOptions"><span class="n"><span class="pre">SolveOptions</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">opts</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">u</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Σ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">e</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa7lbfgspp12LBFGSBSolver8get_nameEv">
+<span id="_CPPv3NK6alpaqa7lbfgspp12LBFGSBSolver8get_nameEv"></span><span id="_CPPv2NK6alpaqa7lbfgspp12LBFGSBSolver8get_nameEv"></span><span id="alpaqa::lbfgspp::LBFGSBSolver::get_nameC"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver4stopEv">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver4stopEv"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver4stopEv"></span><span id="alpaqa::lbfgspp::LBFGSBSolver::stop"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a8c528baf37154d347366083f0f816846"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">stop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa7lbfgspp12LBFGSBSolver10get_paramsEv">
+<span id="_CPPv3NK6alpaqa7lbfgspp12LBFGSBSolver10get_paramsEv"></span><span id="_CPPv2NK6alpaqa7lbfgspp12LBFGSBSolver10get_paramsEv"></span><span id="alpaqa::lbfgspp::LBFGSBSolver::get_paramsC"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver6ParamsE" title="alpaqa::lbfgspp::LBFGSBSolver::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver2osE">
+<span id="_CPPv3N6alpaqa7lbfgspp12LBFGSBSolver2osE"></span><span id="_CPPv2N6alpaqa7lbfgspp12LBFGSBSolver2osE"></span><span id="alpaqa::lbfgspp::LBFGSBSolver::os__osP"></span><span class="target" id="classalpaqa_1_1lbfgspp_1_1LBFGSBSolver_1af583aab7469ad85646c68473fa671258"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ostream</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">os</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">&amp;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">cout</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="direction-providers.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Direction providers</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="functions.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Functions and operators</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021, Pieter Pas
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Inner solvers</a><ul>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa11PANOCSolverE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver7ProblemE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::Problem</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver6ParamsE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver9DirectionE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::Direction</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver5StatsE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::Stats</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver12ProgressInfoE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::ProgressInfo</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver12SolveOptionsE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::SolveOptions</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver11PANOCSolverERK6Params"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::PANOCSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRR9Direction"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::PANOCSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver11PANOCSolverERK6ParamsRK9Direction"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::PANOCSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa11PANOCSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa11PANOCSolverclE5StatsRK1PRK12SolveOptions4rvec"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::set_progress_callback()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa11PANOCSolver8get_nameEv"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver4stopEv"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::stop()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa11PANOCSolver10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver9directionE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::direction</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANOCSolver2osE"><code class="docutils literal notranslate"><span class="pre">PANOCSolver::os</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa11PANTRSolverE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver7ProblemE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::Problem</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver6ParamsE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver9DirectionE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::Direction</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver5StatsE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::Stats</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver12ProgressInfoE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::ProgressInfo</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver12SolveOptionsE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::SolveOptions</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver11PANTRSolverERK6Params"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::PANTRSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRR9Direction"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::PANTRSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver11PANTRSolverERK6ParamsRK9Direction"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::PANTRSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa11PANTRSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa11PANTRSolverclE5StatsRK1PRK12SolveOptions4rvec"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::set_progress_callback()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa11PANTRSolver8get_nameEv"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver4stopEv"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::stop()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa11PANTRSolver10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver9directionE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::direction</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa11PANTRSolver2osE"><code class="docutils literal notranslate"><span class="pre">PANTRSolver::os</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa13ZeroFPRSolverE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver7ProblemE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::Problem</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver6ParamsE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver9DirectionE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::Direction</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver5StatsE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::Stats</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver12ProgressInfoE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::ProgressInfo</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver12SolveOptionsE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::SolveOptions</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6Params"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::ZeroFPRSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRR9Direction"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::ZeroFPRSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver13ZeroFPRSolverERK6ParamsRK9Direction"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::ZeroFPRSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa13ZeroFPRSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa13ZeroFPRSolverclE5StatsRK1PRK12SolveOptions4rvec"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver21set_progress_callbackENSt8functionIFvRK12ProgressInfoEEE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::set_progress_callback()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13ZeroFPRSolver8get_nameEv"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver4stopEv"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::stop()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13ZeroFPRSolver10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver9directionE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::direction</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13ZeroFPRSolver2osE"><code class="docutils literal notranslate"><span class="pre">ZeroFPRSolver::os</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolverE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver7ProblemE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::Problem</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver6ParamsE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver5StatsE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::Stats</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver12SolveOptionsE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::SolveOptions</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver12LBFGSBSolverERK6Params"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::LBFGSBSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa6lbfgsb12LBFGSBSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa6lbfgsb12LBFGSBSolver8get_nameEv"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver4stopEv"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::stop()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa6lbfgsb12LBFGSBSolver10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa6lbfgsb12LBFGSBSolver2osE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::os</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4I_6ConfigEN6alpaqa7lbfgspp12LBFGSBSolverE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver7ProblemE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::Problem</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver6ParamsE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver5StatsE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::Stats</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver12SolveOptionsE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::SolveOptions</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver12LBFGSBSolverERK6Params"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::LBFGSBSolver()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolverclERK7ProblemRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0EN6alpaqa7lbfgspp12LBFGSBSolverclE5StatsRK1PRK12SolveOptions4rvec4rvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::operator()()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa7lbfgspp12LBFGSBSolver8get_nameEv"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver4stopEv"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::stop()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa7lbfgspp12LBFGSBSolver10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa7lbfgspp12LBFGSBSolver2osE"><code class="docutils literal notranslate"><span class="pre">LBFGSBSolver::os</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script>window.MathJax = {"tex": {"macros": {"Reals": "{\\mathrm{I\\!R}}", "Nats": "{\\mathrm{I\\!N}}", "Cplx": "{\\mathbb{C}}", "R": "{\\Reals}", "N": "{\\Nats}", "C": "{\\Cplx}", "Rn": "{\\Reals^n}", "Rm": "{\\Reals^m}", "gph": "{\\operatorname{\\mathbf{gph}}}", "zer": "{\\operatorname{\\mathbf{zer}}}", "fix": "{\\operatorname{\\mathbf{fix}}}", "minimize": "{\\operatorname*{\\mathbf{minimize}}}", "st": "{\\operatorname*{\\mathbf{s.\\!t.}}}", "argmin": "{\\operatorname*{\\mathbf{arg\\,min}}}", "argmax": "{\\operatorname*{\\mathbf{arg\\,max}}}", "subjto": "{\\operatorname*{\\mathbf{subject\\;to}}}", "prox": "{\\operatorname{\\mathbf{prox}}}", "Hilb": "{\\mathcal{H}}", "proj": ["{\\operatorname{\\mathbf{\\Pi}_\\mathnormal{#1}}}", 1], "dist": "{\\operatorname{\\mathbf{dist}}}", "Id": "{\\mathrm{Id}}", "I": "{\\mathrm{I}}", "one": "{\\mathbf{1}}", "defeq": "{\\triangleq}", "inprod": ["{\\left\\langle {#1} \\,\\middle|\\, {#2} \\right\\rangle}", 2], "norm": ["{\\left\\| {#1} \\vphantom{X} \\right\\|}", 1], "normsq": ["{\\norm{#1}^2}", 1], "defset": ["{\\left\\{ {#1} \\;\\middle|\\; {#2} \\right\\}}", 2], "tp": ["{#1^\\top}", 1], "ttp": ["{#1^{\\!\\top\\!}}", 1], "herm": ["{#1^\\mathrm{H}}", 1], "invherm": ["{#1^{-\\mathrm{H}}}", 1], "inv": ["{#1^{-1}}", 1], "pinv": ["{#1^\\dagger}", 1], "lconj": "{\\overline}", "sconj": ["{#1^*}", 1], "iddots": "{\\mathinner{\\kern1mu\\raise1pt{.}\\kern2mu\\raise4pt{.}\\kern2mu\\raise7pt{\\Rule{0pt}{7pt}{0pt}.}\\kern1mu}}", "imagfun": ["{\\left(#1\\right)\\left(#2\\right)}", 2], "Lagr": "{\\mathcal{L}}", "jac": "{\\mathrm{J}}", "dft": "{\\operatorname{\\mathbf{dft}}}", "cbrt": ["{\\sqrt[3]{#1}}", 1], "sgn": "{\\operatorname{\\mathbf{sgn}}}", "setmap": "{\\rightrightarrows}", "lammin": "{\\lambda_\\text{min}}", "lammax": "{\\lambda_\\text{max}}", "Sc": "{\\mathcal{S}}", "Scstar": "{\\mathcal{S}^*}", "diag": "{\\operatorname{\\mathbf{diag}}}", "blkdiag": "{\\operatorname{\\mathbf{blkdiag}}}", "posdef": "{\\succ}", "possdef": "{\\succeq}", "half": "{\\tfrac{1}{2}}", "hhbar": "{\\hbar}", "barxuk": "{\\bar x^k\\!, \\bar u^k}"}, "packages": ["base", "configmacros", "newcommand", "ams"], "tags": "ams"}, "loader": {"load": ["[tex]/newcommand"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

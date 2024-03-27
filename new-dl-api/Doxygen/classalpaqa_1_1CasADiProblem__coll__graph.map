@@ -1,0 +1,9 @@
+<map id="CasADiProblem&lt; Conf &gt;" name="CasADiProblem&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title="Problem definition for a CasADi problem, loaded from a DLL." alt="" coords="125,984,323,1839"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html" title="Implements common problem functions for minimization problems with box constraints." alt="" coords="5,248,200,921"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,935,164,983,159,984,151,936"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1sets_1_1Box.html" title=" " alt="" coords="24,5,181,171"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,171,105,232,100,232,100,171"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1copyable__unique__ptr.html" title=" " alt="" coords="225,351,469,818"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="315,819,292,968,287,967,309,818"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="update_valid" name="update_valid">
+<area shape="rect" id="node1" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="5,5,112,32"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a7866204934238efa4a186fc9d48a8a2e" title=" " alt="" coords="160,5,199,32"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="247,5,285,32"/>
+</map>

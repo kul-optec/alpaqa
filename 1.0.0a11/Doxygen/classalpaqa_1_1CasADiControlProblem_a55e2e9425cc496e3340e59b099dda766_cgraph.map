@@ -1,0 +1,7 @@
+<map id="eval_add_R_masked" name="eval_add_R_masked">
+<area shape="rect" id="node1" title=" " alt="" coords="5,35,160,60"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="208,27,355,67"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util.html#aa341d471c192fc72207643cd7057e260" title=" " alt="" coords="635,5,809,31"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="403,55,587,95"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1util.html#afddf99e09d9dad4ee17b5f41705c583a" title=" " alt="" coords="655,55,789,95"/>
+</map>

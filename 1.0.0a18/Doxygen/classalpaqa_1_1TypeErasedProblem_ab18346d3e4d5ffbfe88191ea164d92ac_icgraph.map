@@ -1,0 +1,11 @@
+<map id="provides_eval_f_grad_f" name="provides_eval_f_grad_f">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides a specialized implementation of eval_f_grad_f,..." alt="" coords="564,31,737,56"/>
+<area shape="rect" id="Node000002" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="348,23,516,63"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="551,46,516,46,516,41,551,41"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="177,5,231,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="334,35,231,24,232,18,334,30"/>
+<area shape="rect" id="Node000004" href="$alpaqa-driver_8cpp.html#a97d8bbd07c6daf32220df9e0b4fe2cc0" title=" " alt="" coords="108,55,300,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="334,56,300,60,300,55,334,51"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,55,60,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="95,70,60,70,60,65,95,65"/>
+</map>

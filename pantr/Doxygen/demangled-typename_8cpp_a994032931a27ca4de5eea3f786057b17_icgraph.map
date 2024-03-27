@@ -1,0 +1,11 @@
+<map id="demangled_typename" name="demangled_typename">
+<area shape="rect" id="node1" title="Get the pretty name of the given type as a string." alt="" coords="787,141,955,166"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1params.html#a852289f9dfc45e0c4193de2da3432067" title="Throw a meaningful error when s.key is not empty, to indicate that the given type T is not of struct ..." alt="" coords="529,5,700,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1dl_1_1DLLoader.html#a273e485fe28cedadf95bd27909a7448e" title=" " alt="" coords="537,69,692,109"/>
+<area shape="rect" id="node7" href="$namespacealpaqa_1_1params.html#a6085a1535aaa464dae1b548875f87c6f" title="Use s to index into the struct type T and overwrite the attribute given by s.key." alt="" coords="539,133,690,173"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1params.html#a665142b3480d021942f322e2fe154f22" title="Throw a meaningful error to indicate that parameters of type T are not supported or implemented." alt="" coords="491,198,739,223"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1util_1_1bad__type__erased__type.html#abf843cbb29dec939d0731e491bab6f70" title=" " alt="" coords="533,248,696,288"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1dl_1_1DLLoader.html#a21b1342c38b8fd3409ad0a80a134b34d" title=" " alt="" coords="265,69,443,109"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1dl_1_1DLProblem.html#accae698118d338bfb57705e6a27d9561" title=" " alt="" coords="29,37,194,77"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1dl_1_1DLControlProblem.html#accae698118d338bfb57705e6a27d9561" title=" " alt="" coords="5,101,217,141"/>
+</map>

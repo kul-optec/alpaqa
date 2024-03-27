@@ -1,0 +1,10 @@
+<map id="provides_eval_jac_g" name="provides_eval_jac_g">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of eval_jac_g." alt="" coords="324,69,479,94"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1IpoptAdapter.html#aa33a228364694e6a36d5fbbd4e1e32be" title=" " alt="" coords="113,29,271,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="310,70,271,64,272,59,311,65"/>
+<area shape="rect" id="Node000003" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="108,93,276,133"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="310,98,277,103,276,98,310,93"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="218,17,209,11,192,8,177,10,169,14,165,21,167,28,162,29,160,20,165,11,176,5,192,3,211,6,221,13"/>
+<area shape="rect" id="Node000004" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,101,60,126"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="94,116,60,116,60,111,94,111"/>
+</map>

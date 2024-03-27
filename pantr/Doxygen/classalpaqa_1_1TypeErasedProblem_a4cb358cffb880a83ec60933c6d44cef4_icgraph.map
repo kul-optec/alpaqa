@@ -1,0 +1,10 @@
+<map id="get_m" name="get_m">
+<area shape="rect" id="node1" title="[Required] Number of constraints." alt="" coords="399,173,461,198"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#abbe7a9499d34168ba294d9737ab1516d" title="Calculate the error between ẑ and g(x)." alt="" coords="122,5,337,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1IpoptAdapter.html#a9eaf7ceaf6c5549371845b11c0ed305b" title=" " alt="" coords="150,69,309,109"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1StructuredLBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="108,133,351,173"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1NewtonTRDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="129,197,329,237"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1detail_1_1ALMHelpers.html#aa91b6b1a0715e1efaf34b25131d0e8f1" title=" " alt="" coords="131,261,328,301"/>
+<area shape="rect" id="node7" href="$results_8hpp.html#ac44ace62be5699e983e8e4596ea74cf1" title=" " alt="" coords="178,326,281,351"/>
+<area shape="rect" id="node8" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,326,60,351"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="~Deallocator" name="~Deallocator">
+<area shape="rect" id="node1" title=" " alt="" coords="5,13,113,38"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1util_1_1TypeErased.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Deallocate the memory without invoking the destructor." alt="" coords="161,5,339,45"/>
+</map>

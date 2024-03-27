@@ -1,0 +1,17 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,205,84,230"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="136,5,339,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="47,204,56,173,73,133,97,92,130,55,137,50,140,55,134,59,102,95,78,136,61,175,52,205"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="136,69,339,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="52,202,83,162,105,139,131,119,142,113,144,117,133,124,109,143,87,165,56,206"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#ab6c62b31d326c310c39212fa6331fe6d" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="136,133,339,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="78,202,131,183,155,175,157,180,133,188,80,207"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#a1fbd424119305ac21128594a2f27086d" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="132,197,343,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="84,215,119,215,119,220,84,220"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedProblem.html#a9328096779a46c83fb264bfd3009568f" title="Returns true if the problem provides an implementation of eval_hess_L_prod." alt="" coords="133,261,341,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="80,228,133,247,157,255,155,260,131,252,78,233"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1TypeErasedProblem.html#a53b4d08432e97770dcae02dba82378fa" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="136,326,339,381"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="57,229,88,269,109,291,134,311,143,317,140,322,130,315,106,295,84,272,52,232"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="136,405,339,445"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="51,230,60,262,76,305,100,351,134,390,142,396,139,400,130,394,96,354,71,308,55,264,46,231"/>
+</map>

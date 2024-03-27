@@ -1,0 +1,11 @@
+<map id="remove_column" name="remove_column">
+<area shape="rect" id="Node000001" title="Remove the leftmost column." alt="" coords="701,45,828,70"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="467,37,653,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="688,60,653,60,653,55,688,55"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,5,419,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="453,45,419,40,419,35,453,40"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1AndersonAccel.html#af02aae3147e83aeb9f83c4f0a17f537f" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,69,419,109"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="453,75,419,80,419,75,453,70"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1AndersonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,5,200,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="234,28,200,28,200,23,234,23"/>
+</map>

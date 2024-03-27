@@ -1,0 +1,5 @@
+<map id="Inner solvers" name="Inner solvers">
+<area shape="rect" id="node1" href="$group__grp__ALMSolver.html" title="Augmented Lagrangian Method solver (ALM)." alt="" coords="5,5,179,45"/>
+<area shape="rect" id="node2" title="Solvers for the inner problem, such as PANOC." alt="" coords="227,13,333,38"/>
+<area shape="rect" id="node3" href="$group__grp__PANOCDirectionProviders.html" title="Algorithms that provide quasi&#45;Newton steps for the PANOC solver, such as L&#45;BFGS." alt="" coords="381,13,575,38"/>
+</map>

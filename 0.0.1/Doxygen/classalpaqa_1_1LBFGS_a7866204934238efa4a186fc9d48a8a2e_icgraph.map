@@ -1,0 +1,11 @@
+<map id="α" name="α">
+<area shape="rect" id="node1" title=" " alt="" coords="943,45,981,72"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="812,5,871,32"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LBFGS.html#aaf9c6519c7a7d7ab977113f33c88e2e3" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="788,71,895,97"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="232,17,501,58"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1SpecializedLBFGS.html#a0b030867dbee1f90710a9b23360807a3" title="L&#45;BFGS update when changing the step size γ, recomputing everything." alt="" coords="549,93,740,134"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1SpecializedLBFGS.html#a5a4a6bc855faa7998e2308d5e6d10224" title="Standard L&#45;BFGS update without changing the step size γ." alt="" coords="549,158,740,199"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LBFGS.html#a4db75f8c280c32a05a44bb83769befb1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="611,41,678,68"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1SpecializedLBFGS.html#a747b26091f869cb17a768e38f17fbc8d" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="271,111,462,153"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a39a241c049e8d029cc86a30a89ef92cf" title=" " alt="" coords="5,104,184,160"/>
+</map>

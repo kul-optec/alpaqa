@@ -1,0 +1,7 @@
+<map id="add_bound_constr_to_constr_matrix" name="add_bound_constr_to_constr_matrix">
+<area shape="rect" id="Node000001" title="Update the constraint matrix A, such that for each constraint C(i) with finite bounds,..." alt="" coords="5,29,165,69"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="54,30,52,20,57,11,68,5,85,3,105,6,116,13,113,17,103,11,85,8,70,10,61,15,57,21,59,28"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1anonymous__namespace_02qpalm-adapter_8cpp_03.html#adee889546f9a143bf2668e139bb0f52e" title=" " alt="" coords="213,37,293,62"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="165,47,200,47,200,52,165,52"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="226,38,220,28,223,19,234,12,253,10,276,13,286,22,282,26,274,18,253,15,236,17,227,22,225,28,230,35"/>
+</map>

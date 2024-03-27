@@ -1,0 +1,34 @@
+<map id="load_problem" name="load_problem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,293,116,318"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#ae1c2ae0af996a5319970525430250542" title=" " alt="" coords="164,162,344,217"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,290,195,221,198,226,85,295"/>
+<area shape="rect" id="Node000010" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="902,265,1030,290"/>
+<area shape="poly" id="edge17_Node000001_Node000010" title=" " alt="" coords="116,301,888,277,889,282,116,306"/>
+<area shape="rect" id="Node000014" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="911,314,1021,339"/>
+<area shape="poly" id="edge18_Node000001_Node000014" title=" " alt="" coords="117,314,164,321,373,334,580,337,762,333,897,328,897,333,762,339,580,342,373,339,164,327,116,320"/>
+<area shape="poly" id="edge6_Node000002_Node000002" title=" " alt="" coords="216,162,216,152,223,143,236,137,254,135,276,138,288,146,286,151,274,143,254,141,237,143,226,147,221,154,221,162"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#aa90e763da394543aae1dfe5953688555" title="Convert the type&#45;erased object to the given type." alt="" coords="392,13,592,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="273,160,322,102,354,72,391,47,404,41,406,45,393,52,358,76,326,106,277,163"/>
+<area shape="rect" id="Node000005" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#aa3e6b9b05c276ab46ba86debee10f87e" title=" " alt="" coords="402,86,582,141"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="339,159,392,142,393,148,341,164"/>
+<area shape="rect" id="Node000006" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#ab42fb3dc0421d6c6c1f45d753a95a2c4" title=" " alt="" coords="402,189,582,243"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="345,197,389,202,388,207,344,202"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html#af8c918a4d2bc243a10f9ab866c318fed" title="Query the contained type." alt="" coords="653,5,830,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="592,23,639,23,639,28,592,28"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="446,86,446,76,454,67,470,61,492,59,519,62,534,70,532,75,517,68,492,65,471,67,457,71,451,78,451,86"/>
+<area shape="poly" id="edge10_Node000006_Node000006" title=" " alt="" coords="446,189,446,178,454,170,470,164,492,162,519,165,534,173,532,178,517,170,492,167,471,169,457,174,451,180,451,189"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="640,228,843,268"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="582,225,627,231,626,236,582,230"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="640,113,843,153"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="571,186,639,163,662,155,664,160,641,168,572,191"/>
+<area shape="rect" id="Node000009" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="692,178,791,203"/>
+<area shape="poly" id="edge11_Node000006_Node000009" title=" " alt="" coords="582,204,678,194,679,200,582,210"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="792,198,844,213,891,234,932,256,930,260,888,239,842,219,790,203"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="891,171,1041,211"/>
+<area shape="poly" id="edge13_Node000009_Node000011" title=" " alt="" coords="791,188,877,188,877,193,791,193"/>
+<area shape="poly" id="edge16_Node000009_Node000014" title=" " alt="" coords="792,192,819,200,844,214,862,235,870,257,876,279,893,299,901,305,898,310,889,303,872,281,865,259,858,238,841,218,817,205,790,197"/>
+<area shape="rect" id="Node000012" href="$namespacealpaqa_1_1params.html#a0de0baee3dda47aba5143ba83bd11712" title=" " alt="" coords="1109,143,1259,183"/>
+<area shape="poly" id="edge14_Node000011_Node000012" title=" " alt="" coords="1041,178,1095,171,1095,177,1042,184"/>
+<area shape="rect" id="Node000013" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="1089,207,1279,233"/>
+<area shape="poly" id="edge15_Node000011_Node000013" title=" " alt="" coords="1042,198,1077,203,1076,208,1041,203"/>
+</map>

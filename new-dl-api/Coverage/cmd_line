@@ -1,0 +1,1 @@
+genhtml --prefix /__w/alpaqa/alpaqa /__w/alpaqa/alpaqa/tmp/build/coverage/coverage_total.info --output-directory=/__w/alpaqa/alpaqa/docs/Coverage --legend --title 514e30f9b854f14fbc74474dc3ca9fe2d653dd9b --rc branch_coverage=0 -s --demangle-cpp /opt/x86_64-centos7-linux-gnu/x-tools/x86_64-centos7-linux-gnu/bin/x86_64-centos7-linux-gnu-c++filt --no-function-coverage

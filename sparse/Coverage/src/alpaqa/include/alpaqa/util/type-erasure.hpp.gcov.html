@@ -1,0 +1,648 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 8cf5a6bd047e5cca89327280758518386907f19e - src/alpaqa/include/alpaqa/util/type-erasure.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">src/alpaqa/include/alpaqa/util</a> - type-erasure.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">8cf5a6bd047e5cca89327280758518386907f19e</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">91.2&nbsp;%</td>
+            <td class="headerCovTableEntry">171</td>
+            <td class="headerCovTableEntry">156</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2023-09-27 08:25:09</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;alpaqa/export.hpp&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &lt;alpaqa/util/demangled-typename.hpp&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &lt;alpaqa/util/noop-delete.hpp&gt;</span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &lt;alpaqa/util/type-traits.hpp&gt;</span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              : #include &lt;algorithm&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : #include &lt;cassert&gt;</span>
+<span id="L10"><span class="lineNum">      10</span>              : #include &lt;cstddef&gt;</span>
+<span id="L11"><span class="lineNum">      11</span>              : #include &lt;functional&gt;</span>
+<span id="L12"><span class="lineNum">      12</span>              : #include &lt;memory&gt;</span>
+<span id="L13"><span class="lineNum">      13</span>              : #include &lt;new&gt;</span>
+<span id="L14"><span class="lineNum">      14</span>              : #include &lt;stdexcept&gt;</span>
+<span id="L15"><span class="lineNum">      15</span>              : #include &lt;type_traits&gt;</span>
+<span id="L16"><span class="lineNum">      16</span>              : #include &lt;typeinfo&gt;</span>
+<span id="L17"><span class="lineNum">      17</span>              : #include &lt;utility&gt;</span>
+<span id="L18"><span class="lineNum">      18</span>              : </span>
+<span id="L19"><span class="lineNum">      19</span>              : namespace alpaqa::util {</span>
+<span id="L20"><span class="lineNum">      20</span>              : </span>
+<span id="L21"><span class="lineNum">      21</span>              : class ALPAQA_EXPORT bad_type_erased_type : public std::logic_error {</span>
+<span id="L22"><span class="lineNum">      22</span>              :   public:</span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaUNC tlaBgUNC">           0 :     bad_type_erased_type(const std::type_info &amp;actual_type,</span></span>
+<span id="L24"><span class="lineNum">      24</span>              :                          const std::type_info &amp;requested_type,</span>
+<span id="L25"><span class="lineNum">      25</span>              :                          const std::string &amp;message = &quot;&quot;)</span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaUNC">           0 :         : std::logic_error{message}, actual_type{actual_type},</span></span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaUNC">           0 :           requested_type{requested_type} {}</span></span>
+<span id="L28"><span class="lineNum">      28</span>              : </span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaUNC">           0 :     [[nodiscard]] const char *what() const noexcept override {</span></span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaUNC">           0 :         message = &quot;&quot;;</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaUNC">           0 :         if (const char *w = std::logic_error::what(); w &amp;&amp; *w) {</span></span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaUNC">           0 :             message += w;</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaUNC">           0 :             message += &quot;: &quot;;</span></span>
+<span id="L34"><span class="lineNum">      34</span>              :         }</span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaUNC">           0 :         message = &quot;Type requested: &quot; + demangled_typename(requested_type) +</span></span>
+<span id="L36"><span class="lineNum">      36</span> <span class="tlaUNC">           0 :                   &quot;, type contained: &quot; + demangled_typename(actual_type);</span></span>
+<span id="L37"><span class="lineNum">      37</span> <span class="tlaUNC">           0 :         return message.c_str();</span></span>
+<span id="L38"><span class="lineNum">      38</span>              :     }</span>
+<span id="L39"><span class="lineNum">      39</span>              : </span>
+<span id="L40"><span class="lineNum">      40</span>              :   private:</span>
+<span id="L41"><span class="lineNum">      41</span>              :     const std::type_info &amp;actual_type;</span>
+<span id="L42"><span class="lineNum">      42</span>              :     const std::type_info &amp;requested_type;</span>
+<span id="L43"><span class="lineNum">      43</span>              :     mutable std::string message;</span>
+<span id="L44"><span class="lineNum">      44</span>              : };</span>
+<span id="L45"><span class="lineNum">      45</span>              : </span>
+<span id="L46"><span class="lineNum">      46</span>              : /// Struct that stores the size of a polymorphic object, as well as pointers to</span>
+<span id="L47"><span class="lineNum">      47</span>              : /// functions to copy, move or destroy the object.</span>
+<span id="L48"><span class="lineNum">      48</span>              : /// Inherit from this struct to add useful functions.</span>
+<span id="L49"><span class="lineNum">      49</span>              : struct BasicVTable {</span>
+<span id="L50"><span class="lineNum">      50</span>              : </span>
+<span id="L51"><span class="lineNum">      51</span>              :     template &lt;class&gt;</span>
+<span id="L52"><span class="lineNum">      52</span>              :     struct required_function; // undefined</span>
+<span id="L53"><span class="lineNum">      53</span>              :     template &lt;class R, class... Args&gt;</span>
+<span id="L54"><span class="lineNum">      54</span>              :     struct required_function&lt;R(Args...)&gt; {</span>
+<span id="L55"><span class="lineNum">      55</span>              :         using type = R (*)(void *self, Args...);</span>
+<span id="L56"><span class="lineNum">      56</span>              :     };</span>
+<span id="L57"><span class="lineNum">      57</span>              :     template &lt;class&gt;</span>
+<span id="L58"><span class="lineNum">      58</span>              :     struct required_const_function; // undefined</span>
+<span id="L59"><span class="lineNum">      59</span>              :     template &lt;class R, class... Args&gt;</span>
+<span id="L60"><span class="lineNum">      60</span>              :     struct required_const_function&lt;R(Args...)&gt; {</span>
+<span id="L61"><span class="lineNum">      61</span>              :         using type = R (*)(const void *self, Args...);</span>
+<span id="L62"><span class="lineNum">      62</span>              :     };</span>
+<span id="L63"><span class="lineNum">      63</span>              :     template &lt;class, class VTable = BasicVTable&gt;</span>
+<span id="L64"><span class="lineNum">      64</span>              :     struct optional_function; // undefined</span>
+<span id="L65"><span class="lineNum">      65</span>              :     template &lt;class R, class... Args, class VTable&gt;</span>
+<span id="L66"><span class="lineNum">      66</span>              :     struct optional_function&lt;R(Args...), VTable&gt; {</span>
+<span id="L67"><span class="lineNum">      67</span>              :         using type = R (*)(void *self, Args..., const VTable &amp;);</span>
+<span id="L68"><span class="lineNum">      68</span>              :     };</span>
+<span id="L69"><span class="lineNum">      69</span>              :     template &lt;class, class VTable = BasicVTable&gt;</span>
+<span id="L70"><span class="lineNum">      70</span>              :     struct optional_const_function; // undefined</span>
+<span id="L71"><span class="lineNum">      71</span>              :     template &lt;class R, class... Args, class VTable&gt;</span>
+<span id="L72"><span class="lineNum">      72</span>              :     struct optional_const_function&lt;R(Args...), VTable&gt; {</span>
+<span id="L73"><span class="lineNum">      73</span>              :         using type = R (*)(const void *self, Args..., const VTable &amp;);</span>
+<span id="L74"><span class="lineNum">      74</span>              :     };</span>
+<span id="L75"><span class="lineNum">      75</span>              :     /// A required function includes a void pointer to self, in addition to the</span>
+<span id="L76"><span class="lineNum">      76</span>              :     /// arguments of @p F.</span>
+<span id="L77"><span class="lineNum">      77</span>              :     template &lt;class F&gt;</span>
+<span id="L78"><span class="lineNum">      78</span>              :     using required_function_t = typename required_function&lt;F&gt;::type;</span>
+<span id="L79"><span class="lineNum">      79</span>              :     /// @copydoc required_function_t</span>
+<span id="L80"><span class="lineNum">      80</span>              :     /// For const-qualified member functions.</span>
+<span id="L81"><span class="lineNum">      81</span>              :     template &lt;class F&gt;</span>
+<span id="L82"><span class="lineNum">      82</span>              :     using required_const_function_t = typename required_const_function&lt;F&gt;::type;</span>
+<span id="L83"><span class="lineNum">      83</span>              :     /// An optional function includes a void pointer to self, the arguments of</span>
+<span id="L84"><span class="lineNum">      84</span>              :     /// @p F, and an additional reference to the VTable, so that it can be</span>
+<span id="L85"><span class="lineNum">      85</span>              :     /// implemented in terms of other functions.</span>
+<span id="L86"><span class="lineNum">      86</span>              :     template &lt;class F, class VTable = BasicVTable&gt;</span>
+<span id="L87"><span class="lineNum">      87</span>              :     using optional_function_t = typename optional_function&lt;F, VTable&gt;::type;</span>
+<span id="L88"><span class="lineNum">      88</span>              :     /// @copydoc optional_function_t</span>
+<span id="L89"><span class="lineNum">      89</span>              :     /// For const-qualified member functions.</span>
+<span id="L90"><span class="lineNum">      90</span>              :     template &lt;class F, class VTable = BasicVTable&gt;</span>
+<span id="L91"><span class="lineNum">      91</span>              :     using optional_const_function_t =</span>
+<span id="L92"><span class="lineNum">      92</span>              :         typename optional_const_function&lt;F, VTable&gt;::type;</span>
+<span id="L93"><span class="lineNum">      93</span>              : </span>
+<span id="L94"><span class="lineNum">      94</span>              :     /// Copy-construct a new instance into storage.</span>
+<span id="L95"><span class="lineNum">      95</span>              :     required_const_function_t&lt;void(void *storage)&gt; copy = nullptr;</span>
+<span id="L96"><span class="lineNum">      96</span>              :     /// Move-construct a new instance into storage.</span>
+<span id="L97"><span class="lineNum">      97</span>              :     required_function_t&lt;void(void *storage)&gt; move = nullptr;</span>
+<span id="L98"><span class="lineNum">      98</span>              :     /// Destruct the given instance.</span>
+<span id="L99"><span class="lineNum">      99</span>              :     required_function_t&lt;void()&gt; destroy = nullptr;</span>
+<span id="L100"><span class="lineNum">     100</span>              :     /// The original type of the stored object.</span>
+<span id="L101"><span class="lineNum">     101</span>              :     const std::type_info *type = &amp;typeid(void);</span>
+<span id="L102"><span class="lineNum">     102</span>              : </span>
+<span id="L103"><span class="lineNum">     103</span> <span class="tlaGNC tlaBgGNC">         118 :     BasicVTable() = default;</span></span>
+<span id="L104"><span class="lineNum">     104</span>              : </span>
+<span id="L105"><span class="lineNum">     105</span>              :     template &lt;class T&gt;</span>
+<span id="L106"><span class="lineNum">     106</span> <span class="tlaGNC">          58 :     BasicVTable(std::in_place_t, T &amp;) noexcept {</span></span>
+<span id="L107"><span class="lineNum">     107</span> <span class="tlaGNC">          86 :         copy = [](const void *self, void *storage) {</span></span>
+<span id="L108"><span class="lineNum">     108</span> <span class="tlaGNC">          18 :             new (storage) T(*std::launder(reinterpret_cast&lt;const T *&gt;(self)));</span></span>
+<span id="L109"><span class="lineNum">     109</span>              :         };</span>
+<span id="L110"><span class="lineNum">     110</span>              :         // TODO: require that move constructor is noexcept?</span>
+<span id="L111"><span class="lineNum">     111</span> <span class="tlaGNC">          70 :         move = [](void *self, void *storage) noexcept {</span></span>
+<span id="L112"><span class="lineNum">     112</span> <span class="tlaGNC">          12 :             new (storage)</span></span>
+<span id="L113"><span class="lineNum">     113</span> <span class="tlaGNC">           6 :                 T(std::move(*std::launder(reinterpret_cast&lt;T *&gt;(self))));</span></span>
+<span id="L114"><span class="lineNum">     114</span>              :         };</span>
+<span id="L115"><span class="lineNum">     115</span> <span class="tlaGNC">         190 :         destroy = [](void *self) {</span></span>
+<span id="L116"><span class="lineNum">     116</span> <span class="tlaGNC">          78 :             std::launder(reinterpret_cast&lt;T *&gt;(self))-&gt;~T();</span></span>
+<span id="L117"><span class="lineNum">     117</span>              :         };</span>
+<span id="L118"><span class="lineNum">     118</span> <span class="tlaGNC">          58 :         type = &amp;typeid(T);</span></span>
+<span id="L119"><span class="lineNum">     119</span> <span class="tlaGNC">          58 :     }</span></span>
+<span id="L120"><span class="lineNum">     120</span>              : };</span>
+<span id="L121"><span class="lineNum">     121</span>              : </span>
+<span id="L122"><span class="lineNum">     122</span>              : namespace detail {</span>
+<span id="L123"><span class="lineNum">     123</span>              : template &lt;class Class, class... ExtraArgs&gt;</span>
+<span id="L124"><span class="lineNum">     124</span>              : struct Launderer {</span>
+<span id="L125"><span class="lineNum">     125</span>              :   private:</span>
+<span id="L126"><span class="lineNum">     126</span>              :     template &lt;auto M, class V, class C, class R, class... Args&gt;</span>
+<span id="L127"><span class="lineNum">     127</span>              :     [[gnu::always_inline]] static constexpr auto</span>
+<span id="L128"><span class="lineNum">     128</span> <span class="tlaGNC">       11907 :     do_invoke(V *self, Args... args, ExtraArgs...) -&gt; R {</span></span>
+<span id="L129"><span class="lineNum">     129</span> <span class="tlaGNC">       11907 :         return std::invoke(M, *std::launder(reinterpret_cast&lt;C *&gt;(self)),</span></span>
+<span id="L130"><span class="lineNum">     130</span> <span class="tlaGNC">       15104 :                            std::forward&lt;Args&gt;(args)...);</span></span>
+<span id="L131"><span class="lineNum">     131</span>              :     }</span>
+<span id="L132"><span class="lineNum">     132</span>              :     template &lt;auto M, class T, class R, class... Args&gt;</span>
+<span id="L133"><span class="lineNum">     133</span>              :         requires std::is_base_of_v&lt;T, Class&gt;</span>
+<span id="L134"><span class="lineNum">     134</span>              :     [[gnu::always_inline]] static constexpr auto invoker_ovl(R (T::*)(Args...)</span>
+<span id="L135"><span class="lineNum">     135</span>              :                                                                  const) {</span>
+<span id="L136"><span class="lineNum">     136</span> <span class="tlaGNC">         240 :         return do_invoke&lt;M, const void, const Class, R, Args...&gt;;</span></span>
+<span id="L137"><span class="lineNum">     137</span>              :     }</span>
+<span id="L138"><span class="lineNum">     138</span>              :     template &lt;auto M, class T, class R, class... Args&gt;</span>
+<span id="L139"><span class="lineNum">     139</span>              :         requires std::is_base_of_v&lt;T, Class&gt;</span>
+<span id="L140"><span class="lineNum">     140</span>              :     [[gnu::always_inline]] static constexpr auto</span>
+<span id="L141"><span class="lineNum">     141</span>              :     invoker_ovl(R (T::*)(Args...)) {</span>
+<span id="L142"><span class="lineNum">     142</span>              :         return do_invoke&lt;M, void, Class, R, Args...&gt;;</span>
+<span id="L143"><span class="lineNum">     143</span>              :     }</span>
+<span id="L144"><span class="lineNum">     144</span>              : </span>
+<span id="L145"><span class="lineNum">     145</span>              :   public:</span>
+<span id="L146"><span class="lineNum">     146</span>              :     /// Returns a function that accepts a void pointer, casts it to the class</span>
+<span id="L147"><span class="lineNum">     147</span>              :     /// type of the member function @p Method, launders it, and then invokes</span>
+<span id="L148"><span class="lineNum">     148</span>              :     /// @p Method with it, passing on the arguments to @p Method. The function</span>
+<span id="L149"><span class="lineNum">     149</span>              :     /// can also accept additional arguments at the end, of type @p ExtraArgs.</span>
+<span id="L150"><span class="lineNum">     150</span>              :     template &lt;auto Method&gt;</span>
+<span id="L151"><span class="lineNum">     151</span>              :     [[gnu::always_inline]] static constexpr auto invoker() {</span>
+<span id="L152"><span class="lineNum">     152</span> <span class="tlaGNC">         480 :         return invoker_ovl&lt;Method&gt;(Method);</span></span>
+<span id="L153"><span class="lineNum">     153</span>              :     }</span>
+<span id="L154"><span class="lineNum">     154</span>              : };</span>
+<span id="L155"><span class="lineNum">     155</span>              : } // namespace detail</span>
+<span id="L156"><span class="lineNum">     156</span>              : </span>
+<span id="L157"><span class="lineNum">     157</span>              : /// @copydoc detail::Launderer::invoker</span>
+<span id="L158"><span class="lineNum">     158</span>              : template &lt;class Class, auto Method, class... ExtraArgs&gt;</span>
+<span id="L159"><span class="lineNum">     159</span>              : [[gnu::always_inline]] constexpr auto type_erased_wrapped() {</span>
+<span id="L160"><span class="lineNum">     160</span> <span class="tlaGNC">         240 :     return detail::Launderer&lt;Class, ExtraArgs...&gt;::template invoker&lt;Method&gt;();</span></span>
+<span id="L161"><span class="lineNum">     161</span>              : }</span>
+<span id="L162"><span class="lineNum">     162</span>              : </span>
+<span id="L163"><span class="lineNum">     163</span>              : template &lt;class VTable, class Allocator&gt;</span>
+<span id="L164"><span class="lineNum">     164</span>              : inline constexpr size_t default_te_buffer_size() {</span>
+<span id="L165"><span class="lineNum">     165</span>              :     struct S {</span>
+<span id="L166"><span class="lineNum">     166</span>              :         [[no_unique_address]] Allocator allocator;</span>
+<span id="L167"><span class="lineNum">     167</span>              :         void *self = nullptr;</span>
+<span id="L168"><span class="lineNum">     168</span>              :         VTable vtable;</span>
+<span id="L169"><span class="lineNum">     169</span>              :     };</span>
+<span id="L170"><span class="lineNum">     170</span>              :     const size_t max_size = 128;</span>
+<span id="L171"><span class="lineNum">     171</span>              :     return max_size - std::min(max_size, sizeof(S));</span>
+<span id="L172"><span class="lineNum">     172</span>              : }</span>
+<span id="L173"><span class="lineNum">     173</span>              : </span>
+<span id="L174"><span class="lineNum">     174</span>              : template &lt;class... Types&gt;</span>
+<span id="L175"><span class="lineNum">     175</span>              : inline constexpr size_t required_te_buffer_size_for() {</span>
+<span id="L176"><span class="lineNum">     176</span>              :     constexpr size_t sizes[] = {sizeof(Types)...};</span>
+<span id="L177"><span class="lineNum">     177</span>              :     return *std::max_element(std::begin(sizes), std::end(sizes));</span>
+<span id="L178"><span class="lineNum">     178</span>              : }</span>
+<span id="L179"><span class="lineNum">     179</span>              : </span>
+<span id="L180"><span class="lineNum">     180</span>              : /// Similar to `std::in_place_t`.</span>
+<span id="L181"><span class="lineNum">     181</span>              : template &lt;class T&gt;</span>
+<span id="L182"><span class="lineNum">     182</span>              : struct te_in_place_t {};</span>
+<span id="L183"><span class="lineNum">     183</span>              : /// Convenience instance of @ref te_in_place_t.</span>
+<span id="L184"><span class="lineNum">     184</span>              : template &lt;class T&gt;</span>
+<span id="L185"><span class="lineNum">     185</span>              : inline constexpr te_in_place_t&lt;T&gt; te_in_place;</span>
+<span id="L186"><span class="lineNum">     186</span>              : </span>
+<span id="L187"><span class="lineNum">     187</span>              : /// Class for polymorphism through type erasure. Saves the entire vtable, and</span>
+<span id="L188"><span class="lineNum">     188</span>              : /// uses small buffer optimization.</span>
+<span id="L189"><span class="lineNum">     189</span>              : ///</span>
+<span id="L190"><span class="lineNum">     190</span>              : /// @todo   Decouple allocation/small buffer optimization.</span>
+<span id="L191"><span class="lineNum">     191</span>              : template &lt;class VTable           = BasicVTable,</span>
+<span id="L192"><span class="lineNum">     192</span>              :           class Allocator        = std::allocator&lt;std::byte&gt;,</span>
+<span id="L193"><span class="lineNum">     193</span>              :           size_t SmallBufferSize = default_te_buffer_size&lt;VTable, Allocator&gt;()&gt;</span>
+<span id="L194"><span class="lineNum">     194</span>              : class TypeErased {</span>
+<span id="L195"><span class="lineNum">     195</span>              :   public:</span>
+<span id="L196"><span class="lineNum">     196</span>              :     static constexpr size_t small_buffer_size = SmallBufferSize;</span>
+<span id="L197"><span class="lineNum">     197</span>              :     using allocator_type                      = Allocator;</span>
+<span id="L198"><span class="lineNum">     198</span>              : </span>
+<span id="L199"><span class="lineNum">     199</span>              :   private:</span>
+<span id="L200"><span class="lineNum">     200</span>              :     using allocator_traits = std::allocator_traits&lt;allocator_type&gt;;</span>
+<span id="L201"><span class="lineNum">     201</span>              :     using buffer_type      = std::array&lt;std::byte, small_buffer_size&gt;;</span>
+<span id="L202"><span class="lineNum">     202</span>              :     [[no_unique_address]] alignas(std::max_align_t) buffer_type small_buffer;</span>
+<span id="L203"><span class="lineNum">     203</span>              :     [[no_unique_address]] allocator_type allocator;</span>
+<span id="L204"><span class="lineNum">     204</span>              : </span>
+<span id="L205"><span class="lineNum">     205</span>              :   private:</span>
+<span id="L206"><span class="lineNum">     206</span>              :     /// True if @p T is not a child class of @ref TypeErased.</span>
+<span id="L207"><span class="lineNum">     207</span>              :     template &lt;class T&gt;</span>
+<span id="L208"><span class="lineNum">     208</span>              :     static constexpr auto no_child_of_ours =</span>
+<span id="L209"><span class="lineNum">     209</span>              :         !std::is_base_of_v&lt;TypeErased, std::remove_cvref_t&lt;T&gt;&gt;;</span>
+<span id="L210"><span class="lineNum">     210</span>              : </span>
+<span id="L211"><span class="lineNum">     211</span>              :   protected:</span>
+<span id="L212"><span class="lineNum">     212</span>              :     static constexpr size_t invalid_size =</span>
+<span id="L213"><span class="lineNum">     213</span>              :         static_cast&lt;size_t&gt;(0xDEADBEEFDEADBEEF);</span>
+<span id="L214"><span class="lineNum">     214</span>              :     /// Pointer to the stored object.</span>
+<span id="L215"><span class="lineNum">     215</span>              :     void *self = nullptr;</span>
+<span id="L216"><span class="lineNum">     216</span>              :     /// Size required to store the object.</span>
+<span id="L217"><span class="lineNum">     217</span>              :     size_t size = invalid_size;</span>
+<span id="L218"><span class="lineNum">     218</span>              :     VTable vtable;</span>
+<span id="L219"><span class="lineNum">     219</span>              : </span>
+<span id="L220"><span class="lineNum">     220</span>              :   public:</span>
+<span id="L221"><span class="lineNum">     221</span>              :     /// Default constructor.</span>
+<span id="L222"><span class="lineNum">     222</span> <span class="tlaGNC">          56 :     TypeErased() noexcept(noexcept(allocator_type())) = default;</span></span>
+<span id="L223"><span class="lineNum">     223</span>              :     /// Default constructor (allocator aware).</span>
+<span id="L224"><span class="lineNum">     224</span>              :     template &lt;class Alloc&gt;</span>
+<span id="L225"><span class="lineNum">     225</span> <span class="tlaGNC">          98 :     TypeErased(std::allocator_arg_t, const Alloc &amp;alloc) : allocator{alloc} {}</span></span>
+<span id="L226"><span class="lineNum">     226</span>              :     /// Copy constructor.</span>
+<span id="L227"><span class="lineNum">     227</span> <span class="tlaGNC">          11 :     TypeErased(const TypeErased &amp;other)</span></span>
+<span id="L228"><span class="lineNum">     228</span> <span class="tlaGNC">          19 :         : allocator{allocator_traits::select_on_container_copy_construction(</span></span>
+<span id="L229"><span class="lineNum">     229</span> <span class="tlaGNC">          19 :               other.allocator)} {</span></span>
+<span id="L230"><span class="lineNum">     230</span> <span class="tlaGNC">          11 :         do_copy_assign&lt;false&gt;(other);</span></span>
+<span id="L231"><span class="lineNum">     231</span> <span class="tlaGNC">          11 :     }</span></span>
+<span id="L232"><span class="lineNum">     232</span>              :     /// Copy constructor (allocator aware).</span>
+<span id="L233"><span class="lineNum">     233</span> <span class="tlaGNC">           4 :     TypeErased(const TypeErased &amp;other, allocator_type alloc)</span></span>
+<span id="L234"><span class="lineNum">     234</span> <span class="tlaGNC">           8 :         : allocator{std::move(alloc)} {</span></span>
+<span id="L235"><span class="lineNum">     235</span> <span class="tlaGNC">           4 :         do_copy_assign&lt;false&gt;(other);</span></span>
+<span id="L236"><span class="lineNum">     236</span> <span class="tlaGNC">           4 :     }</span></span>
+<span id="L237"><span class="lineNum">     237</span>              :     /// Copy assignment.</span>
+<span id="L238"><span class="lineNum">     238</span> <span class="tlaGNC">          15 :     TypeErased &amp;operator=(const TypeErased &amp;other) {</span></span>
+<span id="L239"><span class="lineNum">     239</span>              :         // Check for self-assignment</span>
+<span id="L240"><span class="lineNum">     240</span> <span class="tlaGNC">          15 :         if (&amp;other == this)</span></span>
+<span id="L241"><span class="lineNum">     241</span> <span class="tlaGNC">           4 :             return *this;</span></span>
+<span id="L242"><span class="lineNum">     242</span>              :         // Delete our own storage before assigning a new value</span>
+<span id="L243"><span class="lineNum">     243</span> <span class="tlaGNC">          11 :         cleanup();</span></span>
+<span id="L244"><span class="lineNum">     244</span> <span class="tlaGNC">          11 :         do_copy_assign&lt;true&gt;(other);</span></span>
+<span id="L245"><span class="lineNum">     245</span> <span class="tlaGNC">           9 :         return *this;</span></span>
+<span id="L246"><span class="lineNum">     246</span>              :     }</span>
+<span id="L247"><span class="lineNum">     247</span>              : </span>
+<span id="L248"><span class="lineNum">     248</span>              :     /// Move constructor.</span>
+<span id="L249"><span class="lineNum">     249</span> <span class="tlaGNC">           5 :     TypeErased(TypeErased &amp;&amp;other) noexcept</span></span>
+<span id="L250"><span class="lineNum">     250</span> <span class="tlaGNC">           9 :         : allocator{std::move(other.allocator)} {</span></span>
+<span id="L251"><span class="lineNum">     251</span> <span class="tlaGNC">           5 :         size   = other.size;</span></span>
+<span id="L252"><span class="lineNum">     252</span> <span class="tlaGNC">           5 :         vtable = std::move(other.vtable);</span></span>
+<span id="L253"><span class="lineNum">     253</span>              :         // If dynamically allocated, simply steal storage</span>
+<span id="L254"><span class="lineNum">     254</span> <span class="tlaGNC">           5 :         if (size &gt; small_buffer_size) {</span></span>
+<span id="L255"><span class="lineNum">     255</span>              :             // We stole the allocator, so we can steal the storage as well</span>
+<span id="L256"><span class="lineNum">     256</span> <span class="tlaGNC">           4 :             self = std::exchange(other.self, nullptr);</span></span>
+<span id="L257"><span class="lineNum">     257</span>              :         }</span>
+<span id="L258"><span class="lineNum">     258</span>              :         // Otherwise, use the small buffer and do an explicit move</span>
+<span id="L259"><span class="lineNum">     259</span> <span class="tlaGNC">           1 :         else if (other.self) {</span></span>
+<span id="L260"><span class="lineNum">     260</span> <span class="tlaGNC">           1 :             self = small_buffer.data();</span></span>
+<span id="L261"><span class="lineNum">     261</span> <span class="tlaGNC">           1 :             vtable.move(other.self, self);</span></span>
+<span id="L262"><span class="lineNum">     262</span> <span class="tlaGNC">           1 :             vtable.destroy(other.self); // nothing to deallocate</span></span>
+<span id="L263"><span class="lineNum">     263</span> <span class="tlaGNC">           1 :             other.self = nullptr;</span></span>
+<span id="L264"><span class="lineNum">     264</span>              :         }</span>
+<span id="L265"><span class="lineNum">     265</span> <span class="tlaGNC">           5 :     }</span></span>
+<span id="L266"><span class="lineNum">     266</span>              :     /// Move constructor (allocator aware).</span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaGNC">           7 :     TypeErased(TypeErased &amp;&amp;other, const allocator_type &amp;alloc) noexcept</span></span>
+<span id="L268"><span class="lineNum">     268</span> <span class="tlaGNC">          11 :         : allocator{alloc} {</span></span>
+<span id="L269"><span class="lineNum">     269</span>              :         // Only continue if other actually contains a value</span>
+<span id="L270"><span class="lineNum">     270</span> <span class="tlaGNC">           7 :         if (other.self == nullptr)</span></span>
+<span id="L271"><span class="lineNum">     271</span> <span class="tlaGNC">           3 :             return;</span></span>
+<span id="L272"><span class="lineNum">     272</span> <span class="tlaGNC">           4 :         size   = other.size;</span></span>
+<span id="L273"><span class="lineNum">     273</span> <span class="tlaGNC">           4 :         vtable = std::move(other.vtable);</span></span>
+<span id="L274"><span class="lineNum">     274</span>              :         // If dynamically allocated, simply steal other's storage</span>
+<span id="L275"><span class="lineNum">     275</span> <span class="tlaGNC">           4 :         if (size &gt; small_buffer_size) {</span></span>
+<span id="L276"><span class="lineNum">     276</span>              :             // Can we steal the storage because of equal allocators?</span>
+<span id="L277"><span class="lineNum">     277</span> <span class="tlaGNC">           4 :             if (allocator == other.allocator) {</span></span>
+<span id="L278"><span class="lineNum">     278</span> <span class="tlaGNC">           2 :                 self = std::exchange(other.self, nullptr);</span></span>
+<span id="L279"><span class="lineNum">     279</span>              :             }</span>
+<span id="L280"><span class="lineNum">     280</span>              :             // If the allocators are not the same, we cannot steal the</span>
+<span id="L281"><span class="lineNum">     281</span>              :             // storage, so do an explicit move</span>
+<span id="L282"><span class="lineNum">     282</span>              :             else {</span>
+<span id="L283"><span class="lineNum">     283</span> <span class="tlaGNC">           1 :                 self = allocator.allocate(size);</span></span>
+<span id="L284"><span class="lineNum">     284</span> <span class="tlaGNC">           1 :                 vtable.move(other.self, self);</span></span>
+<span id="L285"><span class="lineNum">     285</span>              :                 // Cannot call other.cleanup() here because we stole the vtable</span>
+<span id="L286"><span class="lineNum">     286</span> <span class="tlaGNC">           1 :                 vtable.destroy(other.self);</span></span>
+<span id="L287"><span class="lineNum">     287</span> <span class="tlaGNC">           1 :                 other.deallocate();</span></span>
+<span id="L288"><span class="lineNum">     288</span>              :             }</span>
+<span id="L289"><span class="lineNum">     289</span>              :         }</span>
+<span id="L290"><span class="lineNum">     290</span>              :         // Otherwise, use the small buffer and do an explicit move</span>
+<span id="L291"><span class="lineNum">     291</span> <span class="tlaGNC">           1 :         else if (other.self) {</span></span>
+<span id="L292"><span class="lineNum">     292</span> <span class="tlaGNC">           1 :             self = small_buffer.data();</span></span>
+<span id="L293"><span class="lineNum">     293</span> <span class="tlaGNC">           1 :             vtable.move(other.self, self);</span></span>
+<span id="L294"><span class="lineNum">     294</span>              :             // Cannot call other.cleanup() here because we stole the vtable</span>
+<span id="L295"><span class="lineNum">     295</span> <span class="tlaGNC">           1 :             vtable.destroy(other.self); // nothing to deallocate</span></span>
+<span id="L296"><span class="lineNum">     296</span> <span class="tlaGNC">           1 :             other.self = nullptr;</span></span>
+<span id="L297"><span class="lineNum">     297</span>              :         }</span>
+<span id="L298"><span class="lineNum">     298</span>              :     }</span>
+<span id="L299"><span class="lineNum">     299</span>              :     /// Move assignment.</span>
+<span id="L300"><span class="lineNum">     300</span> <span class="tlaGNC">          11 :     TypeErased &amp;operator=(TypeErased &amp;&amp;other) noexcept {</span></span>
+<span id="L301"><span class="lineNum">     301</span>              :         // Check for self-assignment</span>
+<span id="L302"><span class="lineNum">     302</span> <span class="tlaGNC">          11 :         if (&amp;other == this)</span></span>
+<span id="L303"><span class="lineNum">     303</span> <span class="tlaGNC">           2 :             return *this;</span></span>
+<span id="L304"><span class="lineNum">     304</span>              :         // Delete our own storage before assigning a new value</span>
+<span id="L305"><span class="lineNum">     305</span> <span class="tlaGNC">           9 :         cleanup();</span></span>
+<span id="L306"><span class="lineNum">     306</span>              :         // Check if we are allowed to steal the allocator</span>
+<span id="L307"><span class="lineNum">     307</span>              :         static constexpr bool prop_alloc =</span>
+<span id="L308"><span class="lineNum">     308</span>              :             allocator_traits::propagate_on_container_move_assignment::value;</span>
+<span id="L309"><span class="lineNum">     309</span>              :         if constexpr (prop_alloc)</span>
+<span id="L310"><span class="lineNum">     310</span> <span class="tlaGNC">           8 :             allocator = std::move(other.allocator);</span></span>
+<span id="L311"><span class="lineNum">     311</span>              :         // Only assign if other contains a value</span>
+<span id="L312"><span class="lineNum">     312</span> <span class="tlaGNC">           9 :         if (other.self == nullptr)</span></span>
+<span id="L313"><span class="lineNum">     313</span> <span class="tlaGNC">           4 :             return *this;</span></span>
+<span id="L314"><span class="lineNum">     314</span>              : </span>
+<span id="L315"><span class="lineNum">     315</span> <span class="tlaGNC">           5 :         size   = other.size;</span></span>
+<span id="L316"><span class="lineNum">     316</span> <span class="tlaGNC">           5 :         vtable = std::move(other.vtable);</span></span>
+<span id="L317"><span class="lineNum">     317</span>              :         // If dynamically allocated, simply steal other's storage</span>
+<span id="L318"><span class="lineNum">     318</span> <span class="tlaGNC">           5 :         if (size &gt; small_buffer_size) {</span></span>
+<span id="L319"><span class="lineNum">     319</span>              :             // Can we steal the storage because of equal allocators?</span>
+<span id="L320"><span class="lineNum">     320</span> <span class="tlaGNC">           1 :             if (prop_alloc || allocator == other.allocator) {</span></span>
+<span id="L321"><span class="lineNum">     321</span> <span class="tlaGNC">           2 :                 self = std::exchange(other.self, nullptr);</span></span>
+<span id="L322"><span class="lineNum">     322</span>              :             }</span>
+<span id="L323"><span class="lineNum">     323</span>              :             // If the allocators are not the same, we cannot steal the</span>
+<span id="L324"><span class="lineNum">     324</span>              :             // storage, so do an explicit move</span>
+<span id="L325"><span class="lineNum">     325</span>              :             else {</span>
+<span id="L326"><span class="lineNum">     326</span> <span class="tlaGNC">           1 :                 self = allocator.allocate(size);</span></span>
+<span id="L327"><span class="lineNum">     327</span> <span class="tlaGNC">           1 :                 vtable.move(other.self, self);</span></span>
+<span id="L328"><span class="lineNum">     328</span> <span class="tlaGNC">           1 :                 vtable.destroy(other.self);</span></span>
+<span id="L329"><span class="lineNum">     329</span>              :                 // Careful, we might have moved other.allocator!</span>
+<span id="L330"><span class="lineNum">     330</span> <span class="tlaGNC">           1 :                 auto &amp;deallocator    = prop_alloc ? allocator : other.allocator;</span></span>
+<span id="L331"><span class="lineNum">     331</span>              :                 using pointer_t      = typename allocator_traits::pointer;</span>
+<span id="L332"><span class="lineNum">     332</span> <span class="tlaGNC">           1 :                 auto &amp;&amp;other_pointer = static_cast&lt;pointer_t&gt;(other.self);</span></span>
+<span id="L333"><span class="lineNum">     333</span> <span class="tlaGNC">           1 :                 deallocator.deallocate(other_pointer, size);</span></span>
+<span id="L334"><span class="lineNum">     334</span> <span class="tlaGNC">           1 :                 other.self = nullptr;</span></span>
+<span id="L335"><span class="lineNum">     335</span>              :             }</span>
+<span id="L336"><span class="lineNum">     336</span>              :         }</span>
+<span id="L337"><span class="lineNum">     337</span>              :         // Otherwise, use the small buffer and do an explicit move</span>
+<span id="L338"><span class="lineNum">     338</span> <span class="tlaGNC">           2 :         else if (other.self) {</span></span>
+<span id="L339"><span class="lineNum">     339</span> <span class="tlaGNC">           2 :             self = small_buffer.data();</span></span>
+<span id="L340"><span class="lineNum">     340</span> <span class="tlaGNC">           2 :             vtable.move(other.self, self);</span></span>
+<span id="L341"><span class="lineNum">     341</span> <span class="tlaGNC">           2 :             vtable.destroy(other.self); // nothing to deallocate</span></span>
+<span id="L342"><span class="lineNum">     342</span> <span class="tlaGNC">           2 :             other.self = nullptr;</span></span>
+<span id="L343"><span class="lineNum">     343</span>              :         }</span>
+<span id="L344"><span class="lineNum">     344</span> <span class="tlaGNC">           5 :         return *this;</span></span>
+<span id="L345"><span class="lineNum">     345</span>              :     }</span>
+<span id="L346"><span class="lineNum">     346</span>              : </span>
+<span id="L347"><span class="lineNum">     347</span>              :     /// Destructor.</span>
+<span id="L348"><span class="lineNum">     348</span> <span class="tlaGNC">         116 :     ~TypeErased() { cleanup(); }</span></span>
+<span id="L349"><span class="lineNum">     349</span>              : </span>
+<span id="L350"><span class="lineNum">     350</span>              :     /// Main constructor that type-erases the given argument.</span>
+<span id="L351"><span class="lineNum">     351</span>              :     template &lt;class T, class Alloc&gt;</span>
+<span id="L352"><span class="lineNum">     352</span> <span class="tlaGNC">          10 :     explicit TypeErased(std::allocator_arg_t, const Alloc &amp;alloc, T &amp;&amp;d)</span></span>
+<span id="L353"><span class="lineNum">     353</span> <span class="tlaGNC">          10 :         : allocator{alloc} {</span></span>
+<span id="L354"><span class="lineNum">     354</span> <span class="tlaGNC">          10 :         construct_inplace&lt;std::remove_cvref_t&lt;T&gt;&gt;(std::forward&lt;T&gt;(d));</span></span>
+<span id="L355"><span class="lineNum">     355</span> <span class="tlaGNC">          10 :     }</span></span>
+<span id="L356"><span class="lineNum">     356</span>              :     /// Main constructor that type-erases the object constructed from the given</span>
+<span id="L357"><span class="lineNum">     357</span>              :     /// argument.</span>
+<span id="L358"><span class="lineNum">     358</span>              :     template &lt;class T, class Alloc, class... Args&gt;</span>
+<span id="L359"><span class="lineNum">     359</span>              :     explicit TypeErased(std::allocator_arg_t, const Alloc &amp;alloc,</span>
+<span id="L360"><span class="lineNum">     360</span>              :                         te_in_place_t&lt;T&gt;, Args &amp;&amp;...args)</span>
+<span id="L361"><span class="lineNum">     361</span>              :         : allocator{alloc} {</span>
+<span id="L362"><span class="lineNum">     362</span>              :         construct_inplace&lt;std::remove_cvref_t&lt;T&gt;&gt;(std::forward&lt;Args&gt;(args)...);</span>
+<span id="L363"><span class="lineNum">     363</span>              :     }</span>
+<span id="L364"><span class="lineNum">     364</span>              :     /// @copydoc TypeErased(std::allocator_arg_t, const Alloc &amp;, T &amp;&amp;)</span>
+<span id="L365"><span class="lineNum">     365</span>              :     /// Requirement prevents this constructor from taking precedence over the</span>
+<span id="L366"><span class="lineNum">     366</span>              :     /// copy and move constructors.</span>
+<span id="L367"><span class="lineNum">     367</span>              :     template &lt;class T&gt;</span>
+<span id="L368"><span class="lineNum">     368</span>              :         requires no_child_of_ours&lt;T&gt;</span>
+<span id="L369"><span class="lineNum">     369</span> <span class="tlaGNC">           4 :     explicit TypeErased(T &amp;&amp;d) {</span></span>
+<span id="L370"><span class="lineNum">     370</span> <span class="tlaGNC">           2 :         construct_inplace&lt;std::remove_cvref_t&lt;T&gt;&gt;(std::forward&lt;T&gt;(d));</span></span>
+<span id="L371"><span class="lineNum">     371</span> <span class="tlaGNC">           2 :     }</span></span>
+<span id="L372"><span class="lineNum">     372</span>              :     /// Main constructor that type-erases the object constructed from the given</span>
+<span id="L373"><span class="lineNum">     373</span>              :     /// argument.</span>
+<span id="L374"><span class="lineNum">     374</span>              :     template &lt;class T, class... Args&gt;</span>
+<span id="L375"><span class="lineNum">     375</span>              :     explicit TypeErased(te_in_place_t&lt;T&gt;, Args &amp;&amp;...args) {</span>
+<span id="L376"><span class="lineNum">     376</span>              :         construct_inplace&lt;std::remove_cvref_t&lt;T&gt;&gt;(std::forward&lt;Args&gt;(args)...);</span>
+<span id="L377"><span class="lineNum">     377</span>              :     }</span>
+<span id="L378"><span class="lineNum">     378</span>              : </span>
+<span id="L379"><span class="lineNum">     379</span>              :     /// Construct a type-erased wrapper of type Ret for an object of type T,</span>
+<span id="L380"><span class="lineNum">     380</span>              :     /// initialized in-place with the given arguments.</span>
+<span id="L381"><span class="lineNum">     381</span>              :     template &lt;class Ret, class T, class Alloc, class... Args&gt;</span>
+<span id="L382"><span class="lineNum">     382</span>              :         requires std::is_base_of_v&lt;TypeErased, Ret&gt;</span>
+<span id="L383"><span class="lineNum">     383</span> <span class="tlaGNC">          48 :     static Ret make(std::allocator_arg_t tag, const Alloc &amp;alloc,</span></span>
+<span id="L384"><span class="lineNum">     384</span>              :                     Args &amp;&amp;...args) {</span>
+<span id="L385"><span class="lineNum">     385</span> <span class="tlaGNC">          48 :         Ret r{tag, alloc};</span></span>
+<span id="L386"><span class="lineNum">     386</span> <span class="tlaGNC">          48 :         r.template construct_inplace&lt;T&gt;(std::forward&lt;Args&gt;(args)...);</span></span>
+<span id="L387"><span class="lineNum">     387</span> <span class="tlaGNC">          46 :         return r;</span></span>
+<span id="L388"><span class="lineNum">     388</span> <span class="tlaGNC">           2 :     }</span></span>
+<span id="L389"><span class="lineNum">     389</span>              :     /// Construct a type-erased wrapper of type Ret for an object of type T,</span>
+<span id="L390"><span class="lineNum">     390</span>              :     /// initialized in-place with the given arguments.</span>
+<span id="L391"><span class="lineNum">     391</span>              :     template &lt;class Ret, class T, class... Args&gt;</span>
+<span id="L392"><span class="lineNum">     392</span>              :         requires no_leading_allocator&lt;Args...&gt;</span>
+<span id="L393"><span class="lineNum">     393</span> <span class="tlaGNC">          47 :     static Ret make(Args &amp;&amp;...args) {</span></span>
+<span id="L394"><span class="lineNum">     394</span> <span class="tlaGNC">          45 :         return make&lt;Ret, T&gt;(std::allocator_arg, allocator_type{},</span></span>
+<span id="L395"><span class="lineNum">     395</span> <span class="tlaGNC">         125 :                             std::forward&lt;Args&gt;(args)...);</span></span>
+<span id="L396"><span class="lineNum">     396</span>              :     }</span>
+<span id="L397"><span class="lineNum">     397</span>              : </span>
+<span id="L398"><span class="lineNum">     398</span>              :     /// Check if this wrapper wraps an object. False for default-constructed</span>
+<span id="L399"><span class="lineNum">     399</span>              :     /// objects.</span>
+<span id="L400"><span class="lineNum">     400</span> <span class="tlaGNC">         149 :     explicit operator bool() const noexcept { return self != nullptr; }</span></span>
+<span id="L401"><span class="lineNum">     401</span>              : </span>
+<span id="L402"><span class="lineNum">     402</span>              :     /// Get a copy of the allocator.</span>
+<span id="L403"><span class="lineNum">     403</span> <span class="tlaGNC">          11 :     allocator_type get_allocator() const noexcept { return allocator; }</span></span>
+<span id="L404"><span class="lineNum">     404</span>              : </span>
+<span id="L405"><span class="lineNum">     405</span>              :     /// Query the contained type.</span>
+<span id="L406"><span class="lineNum">     406</span> <span class="tlaGNC">          85 :     [[nodiscard]] const std::type_info &amp;type() const noexcept {</span></span>
+<span id="L407"><span class="lineNum">     407</span> <span class="tlaGNC">          85 :         return *vtable.type;</span></span>
+<span id="L408"><span class="lineNum">     408</span>              :     }</span>
+<span id="L409"><span class="lineNum">     409</span>              : </span>
+<span id="L410"><span class="lineNum">     410</span>              :     /// Convert the type-erased object to the given type. The type is checked</span>
+<span id="L411"><span class="lineNum">     411</span>              :     /// in debug builds only, use with caution.</span>
+<span id="L412"><span class="lineNum">     412</span>              :     template &lt;class T&gt;</span>
+<span id="L413"><span class="lineNum">     413</span> <span class="tlaGNC">          85 :     T &amp;as() &amp; {</span></span>
+<span id="L414"><span class="lineNum">     414</span> <span class="tlaGNC">          85 :         if (typeid(T) != type())</span></span>
+<span id="L415"><span class="lineNum">     415</span> <span class="tlaUNC tlaBgUNC">           0 :             throw bad_type_erased_type(type(), typeid(T));</span></span>
+<span id="L416"><span class="lineNum">     416</span> <span class="tlaGNC tlaBgGNC">          85 :         return *reinterpret_cast&lt;T *&gt;(self);</span></span>
+<span id="L417"><span class="lineNum">     417</span>              :     }</span>
+<span id="L418"><span class="lineNum">     418</span>              :     /// @copydoc as()</span>
+<span id="L419"><span class="lineNum">     419</span>              :     template &lt;class T&gt;</span>
+<span id="L420"><span class="lineNum">     420</span>              :     const T &amp;as() const &amp; {</span>
+<span id="L421"><span class="lineNum">     421</span>              :         if (typeid(T) != type())</span>
+<span id="L422"><span class="lineNum">     422</span>              :             throw bad_type_erased_type(type(), typeid(T));</span>
+<span id="L423"><span class="lineNum">     423</span>              :         return *reinterpret_cast&lt;const T *&gt;(self);</span>
+<span id="L424"><span class="lineNum">     424</span>              :     }</span>
+<span id="L425"><span class="lineNum">     425</span>              :     /// @copydoc as()</span>
+<span id="L426"><span class="lineNum">     426</span>              :     template &lt;class T&gt;</span>
+<span id="L427"><span class="lineNum">     427</span>              :     const T &amp;&amp;as() &amp;&amp; {</span>
+<span id="L428"><span class="lineNum">     428</span>              :         if (typeid(T) != type())</span>
+<span id="L429"><span class="lineNum">     429</span>              :             throw bad_type_erased_type(type(), typeid(T));</span>
+<span id="L430"><span class="lineNum">     430</span>              :         return std::move(*reinterpret_cast&lt;T *&gt;(self));</span>
+<span id="L431"><span class="lineNum">     431</span>              :     }</span>
+<span id="L432"><span class="lineNum">     432</span>              : </span>
+<span id="L433"><span class="lineNum">     433</span>              :   private:</span>
+<span id="L434"><span class="lineNum">     434</span>              :     /// Deallocates the storage when destroyed.</span>
+<span id="L435"><span class="lineNum">     435</span>              :     struct Deallocator {</span>
+<span id="L436"><span class="lineNum">     436</span>              :         TypeErased *instance;</span>
+<span id="L437"><span class="lineNum">     437</span> <span class="tlaGNC">          78 :         Deallocator(TypeErased *instance) noexcept : instance{instance} {}</span></span>
+<span id="L438"><span class="lineNum">     438</span>              :         Deallocator(const Deallocator &amp;)            = delete;</span>
+<span id="L439"><span class="lineNum">     439</span>              :         Deallocator &amp;operator=(const Deallocator &amp;) = delete;</span>
+<span id="L440"><span class="lineNum">     440</span>              :         Deallocator(Deallocator &amp;&amp;o) noexcept</span>
+<span id="L441"><span class="lineNum">     441</span>              :             : instance{std::exchange(o.instance, nullptr)} {}</span>
+<span id="L442"><span class="lineNum">     442</span>              :         Deallocator &amp;operator=(Deallocator &amp;&amp;) noexcept = delete;</span>
+<span id="L443"><span class="lineNum">     443</span> <span class="tlaGNC">          72 :         void release() noexcept { instance = nullptr; }</span></span>
+<span id="L444"><span class="lineNum">     444</span> <span class="tlaGNC">          78 :         ~Deallocator() { instance ? instance-&gt;deallocate() : void(); }</span></span>
+<span id="L445"><span class="lineNum">     445</span>              :     };</span>
+<span id="L446"><span class="lineNum">     446</span>              : </span>
+<span id="L447"><span class="lineNum">     447</span>              :     /// Ensure that storage is available, either by using the small buffer if</span>
+<span id="L448"><span class="lineNum">     448</span>              :     /// it is large enough, or by calling the allocator.</span>
+<span id="L449"><span class="lineNum">     449</span>              :     /// Returns a RAII wrapper that deallocates the storage unless released.</span>
+<span id="L450"><span class="lineNum">     450</span> <span class="tlaGNC">          78 :     Deallocator allocate(size_t size) {</span></span>
+<span id="L451"><span class="lineNum">     451</span> <span class="tlaGNC">          78 :         assert(!self);</span></span>
+<span id="L452"><span class="lineNum">     452</span> <span class="tlaGNC">          78 :         assert(size != invalid_size);</span></span>
+<span id="L453"><span class="lineNum">     453</span> <span class="tlaGNC">         100 :         self       = size &lt;= small_buffer_size ? small_buffer.data()</span></span>
+<span id="L454"><span class="lineNum">     454</span> <span class="tlaGNC">          97 :                                                : allocator.allocate(size);</span></span>
+<span id="L455"><span class="lineNum">     455</span> <span class="tlaGNC">          78 :         this-&gt;size = size;</span></span>
+<span id="L456"><span class="lineNum">     456</span> <span class="tlaGNC">          78 :         return {this};</span></span>
+<span id="L457"><span class="lineNum">     457</span>              :     }</span>
+<span id="L458"><span class="lineNum">     458</span>              : </span>
+<span id="L459"><span class="lineNum">     459</span>              :     /// Deallocate the memory without invoking the destructor.</span>
+<span id="L460"><span class="lineNum">     460</span> <span class="tlaGNC">          79 :     void deallocate() {</span></span>
+<span id="L461"><span class="lineNum">     461</span> <span class="tlaGNC">          79 :         assert(size != invalid_size);</span></span>
+<span id="L462"><span class="lineNum">     462</span>              :         using pointer_t = typename allocator_traits::pointer;</span>
+<span id="L463"><span class="lineNum">     463</span> <span class="tlaGNC">          79 :         if (size &gt; small_buffer_size)</span></span>
+<span id="L464"><span class="lineNum">     464</span> <span class="tlaGNC">          57 :             allocator.deallocate(reinterpret_cast&lt;pointer_t&gt;(self), size);</span></span>
+<span id="L465"><span class="lineNum">     465</span> <span class="tlaGNC">          79 :         self = nullptr;</span></span>
+<span id="L466"><span class="lineNum">     466</span> <span class="tlaGNC">          79 :     }</span></span>
+<span id="L467"><span class="lineNum">     467</span>              : </span>
+<span id="L468"><span class="lineNum">     468</span>              :     /// Destroy the type-erased object (if not empty), and deallocate the memory</span>
+<span id="L469"><span class="lineNum">     469</span>              :     /// if necessary.</span>
+<span id="L470"><span class="lineNum">     470</span> <span class="tlaGNC">         136 :     void cleanup() {</span></span>
+<span id="L471"><span class="lineNum">     471</span> <span class="tlaGNC">         136 :         if (self) {</span></span>
+<span id="L472"><span class="lineNum">     472</span> <span class="tlaGNC">          72 :             vtable.destroy(self);</span></span>
+<span id="L473"><span class="lineNum">     473</span> <span class="tlaGNC">          72 :             deallocate();</span></span>
+<span id="L474"><span class="lineNum">     474</span>              :         }</span>
+<span id="L475"><span class="lineNum">     475</span> <span class="tlaGNC">         136 :     }</span></span>
+<span id="L476"><span class="lineNum">     476</span>              : </span>
+<span id="L477"><span class="lineNum">     477</span>              :     template &lt;bool CopyAllocator&gt;</span>
+<span id="L478"><span class="lineNum">     478</span> <span class="tlaGNC">          26 :     void do_copy_assign(const TypeErased &amp;other) {</span></span>
+<span id="L479"><span class="lineNum">     479</span> <span class="tlaGNC">          26 :         constexpr bool prop_alloc =</span></span>
+<span id="L480"><span class="lineNum">     480</span>              :             allocator_traits::propagate_on_container_copy_assignment::value;</span>
+<span id="L481"><span class="lineNum">     481</span>              :         if constexpr (CopyAllocator &amp;&amp; prop_alloc)</span>
+<span id="L482"><span class="lineNum">     482</span>              :             allocator = other.allocator;</span>
+<span id="L483"><span class="lineNum">     483</span> <span class="tlaGNC">          26 :         if (!other)</span></span>
+<span id="L484"><span class="lineNum">     484</span> <span class="tlaGNC">           8 :             return;</span></span>
+<span id="L485"><span class="lineNum">     485</span> <span class="tlaGNC">          18 :         vtable             = other.vtable;</span></span>
+<span id="L486"><span class="lineNum">     486</span> <span class="tlaGNC">          18 :         auto storage_guard = allocate(other.size);</span></span>
+<span id="L487"><span class="lineNum">     487</span>              :         // If copy constructor throws, storage should be deallocated and self</span>
+<span id="L488"><span class="lineNum">     488</span>              :         // set to null, otherwise the TypeErased destructor will attempt to call</span>
+<span id="L489"><span class="lineNum">     489</span>              :         // the contained object's destructor, which is undefined behavior if</span>
+<span id="L490"><span class="lineNum">     490</span>              :         // construction failed.</span>
+<span id="L491"><span class="lineNum">     491</span> <span class="tlaGNC">          18 :         vtable.copy(other.self, self);</span></span>
+<span id="L492"><span class="lineNum">     492</span> <span class="tlaGNC">          14 :         storage_guard.release();</span></span>
+<span id="L493"><span class="lineNum">     493</span> <span class="tlaGNC">          18 :     }</span></span>
+<span id="L494"><span class="lineNum">     494</span>              : </span>
+<span id="L495"><span class="lineNum">     495</span>              :   protected:</span>
+<span id="L496"><span class="lineNum">     496</span>              :     /// Ensure storage and construct the type-erased object of type T in-place.</span>
+<span id="L497"><span class="lineNum">     497</span>              :     template &lt;class T, class... Args&gt;</span>
+<span id="L498"><span class="lineNum">     498</span> <span class="tlaGNC">          60 :     void construct_inplace(Args &amp;&amp;...args) {</span></span>
+<span id="L499"><span class="lineNum">     499</span>              :         static_assert(std::is_same_v&lt;T, std::remove_cvref_t&lt;T&gt;&gt;);</span>
+<span id="L500"><span class="lineNum">     500</span>              :         // Allocate memory</span>
+<span id="L501"><span class="lineNum">     501</span> <span class="tlaGNC">          60 :         auto storage_guard = allocate(sizeof(T));</span></span>
+<span id="L502"><span class="lineNum">     502</span>              :         // Construct the stored object</span>
+<span id="L503"><span class="lineNum">     503</span>              :         using destroyer = std::unique_ptr&lt;T, noop_delete&lt;T&gt;&gt;;</span>
+<span id="L504"><span class="lineNum">     504</span> <span class="tlaGNC">          60 :         destroyer object_guard{new (self) T{std::forward&lt;Args&gt;(args)...}};</span></span>
+<span id="L505"><span class="lineNum">     505</span> <span class="tlaGNC">          58 :         vtable = VTable{std::in_place, static_cast&lt;T &amp;&gt;(*object_guard.get())};</span></span>
+<span id="L506"><span class="lineNum">     506</span> <span class="tlaGNC">          58 :         object_guard.release();</span></span>
+<span id="L507"><span class="lineNum">     507</span> <span class="tlaGNC">          58 :         storage_guard.release();</span></span>
+<span id="L508"><span class="lineNum">     508</span> <span class="tlaGNC">          60 :     }</span></span>
+<span id="L509"><span class="lineNum">     509</span>              : </span>
+<span id="L510"><span class="lineNum">     510</span>              :     /// Call the vtable function @p f with the given arguments @p args,</span>
+<span id="L511"><span class="lineNum">     511</span>              :     /// implicitly passing the @ref self pointer and @ref vtable reference if</span>
+<span id="L512"><span class="lineNum">     512</span>              :     /// necessary.</span>
+<span id="L513"><span class="lineNum">     513</span>              :     template &lt;class Ret, class... FArgs, class... Args&gt;</span>
+<span id="L514"><span class="lineNum">     514</span>              :     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(const void *, FArgs...),</span>
+<span id="L515"><span class="lineNum">     515</span>              :                                                Args &amp;&amp;...args) const {</span>
+<span id="L516"><span class="lineNum">     516</span> <span class="tlaGNC">        4801 :         assert(f);</span></span>
+<span id="L517"><span class="lineNum">     517</span> <span class="tlaGNC">        4801 :         assert(self);</span></span>
+<span id="L518"><span class="lineNum">     518</span>              :         using LastArg = util::last_type_t&lt;FArgs...&gt;;</span>
+<span id="L519"><span class="lineNum">     519</span>              :         if constexpr (std::is_same_v&lt;LastArg, const VTable &amp;&gt;)</span>
+<span id="L520"><span class="lineNum">     520</span> <span class="tlaGNC">        3633 :             return f(self, std::forward&lt;Args&gt;(args)..., vtable);</span></span>
+<span id="L521"><span class="lineNum">     521</span>              :         else</span>
+<span id="L522"><span class="lineNum">     522</span> <span class="tlaGNC">        1173 :             return f(self, std::forward&lt;Args&gt;(args)...);</span></span>
+<span id="L523"><span class="lineNum">     523</span>              :     }</span>
+<span id="L524"><span class="lineNum">     524</span>              :     /// @copydoc call</span>
+<span id="L525"><span class="lineNum">     525</span>              :     template &lt;class Ret, class... FArgs, class... Args&gt;</span>
+<span id="L526"><span class="lineNum">     526</span>              :     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(void *, FArgs...),</span>
+<span id="L527"><span class="lineNum">     527</span>              :                                                Args &amp;&amp;...args) {</span>
+<span id="L528"><span class="lineNum">     528</span>              :         assert(f);</span>
+<span id="L529"><span class="lineNum">     529</span>              :         assert(self);</span>
+<span id="L530"><span class="lineNum">     530</span>              :         using LastArg = util::last_type_t&lt;FArgs...&gt;;</span>
+<span id="L531"><span class="lineNum">     531</span>              :         if constexpr (std::is_same_v&lt;LastArg, const VTable &amp;&gt;)</span>
+<span id="L532"><span class="lineNum">     532</span>              :             return f(self, std::forward&lt;Args&gt;(args)..., vtable);</span>
+<span id="L533"><span class="lineNum">     533</span>              :         else</span>
+<span id="L534"><span class="lineNum">     534</span>              :             return f(self, std::forward&lt;Args&gt;(args)...);</span>
+<span id="L535"><span class="lineNum">     535</span>              :     }</span>
+<span id="L536"><span class="lineNum">     536</span>              :     /// @copydoc call</span>
+<span id="L537"><span class="lineNum">     537</span>              :     template &lt;class Ret&gt;</span>
+<span id="L538"><span class="lineNum">     538</span>              :     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(const void *)) const {</span>
+<span id="L539"><span class="lineNum">     539</span> <span class="tlaUNC tlaBgUNC">           0 :         assert(f);</span></span>
+<span id="L540"><span class="lineNum">     540</span> <span class="tlaUNC">           0 :         assert(self);</span></span>
+<span id="L541"><span class="lineNum">     541</span> <span class="tlaUNC">           0 :         return f(self);</span></span>
+<span id="L542"><span class="lineNum">     542</span>              :     }</span>
+<span id="L543"><span class="lineNum">     543</span>              :     /// @copydoc call</span>
+<span id="L544"><span class="lineNum">     544</span>              :     template &lt;class Ret&gt;</span>
+<span id="L545"><span class="lineNum">     545</span>              :     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(void *)) {</span>
+<span id="L546"><span class="lineNum">     546</span>              :         assert(f);</span>
+<span id="L547"><span class="lineNum">     547</span>              :         assert(self);</span>
+<span id="L548"><span class="lineNum">     548</span>              :         return f(self);</span>
+<span id="L549"><span class="lineNum">     549</span>              :     }</span>
+<span id="L550"><span class="lineNum">     550</span>              :     /// @copydoc call</span>
+<span id="L551"><span class="lineNum">     551</span>              :     template &lt;class Ret&gt;</span>
+<span id="L552"><span class="lineNum">     552</span>              :     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(const void *,</span>
+<span id="L553"><span class="lineNum">     553</span>              :                                                         const VTable &amp;)) const {</span>
+<span id="L554"><span class="lineNum">     554</span> <span class="tlaGNC tlaBgGNC">           8 :         assert(f);</span></span>
+<span id="L555"><span class="lineNum">     555</span> <span class="tlaGNC">           8 :         assert(self);</span></span>
+<span id="L556"><span class="lineNum">     556</span> <span class="tlaGNC">           8 :         return f(self, vtable);</span></span>
+<span id="L557"><span class="lineNum">     557</span>              :     }</span>
+<span id="L558"><span class="lineNum">     558</span>              :     /// @copydoc call</span>
+<span id="L559"><span class="lineNum">     559</span>              :     template &lt;class Ret&gt;</span>
+<span id="L560"><span class="lineNum">     560</span>              :     [[gnu::always_inline]] decltype(auto) call(Ret (*f)(void *,</span>
+<span id="L561"><span class="lineNum">     561</span>              :                                                         const VTable &amp;)) {</span>
+<span id="L562"><span class="lineNum">     562</span>              :         assert(f);</span>
+<span id="L563"><span class="lineNum">     563</span>              :         assert(self);</span>
+<span id="L564"><span class="lineNum">     564</span>              :         return f(self, vtable);</span>
+<span id="L565"><span class="lineNum">     565</span>              :     }</span>
+<span id="L566"><span class="lineNum">     566</span>              : };</span>
+<span id="L567"><span class="lineNum">     567</span>              : </span>
+<span id="L568"><span class="lineNum">     568</span>              : } // namespace alpaqa::util</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<map id="src/alpaqa/include/alpaqa/accelerators/steihaugcg.hpp" name="src/alpaqa/include/alpaqa/accelerators/steihaugcg.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="538,5,693,60"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="419,108,599,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="584,62,536,101,532,97,581,58"/>
+<area shape="rect" id="Node000009" href="$alloc-check_8hpp.html" title=" " alt="" coords="625,108,822,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="650,58,699,97,696,101,647,62"/>
+<area shape="rect" id="Node000003" href="$quadmath-print_8hpp.html" title=" " alt="" coords="5,181,167,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,136,181,184,180,178,442,131"/>
+<area shape="rect" id="Node000004" href="$quadmath_8hpp.html" title=" " alt="" coords="191,181,352,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="475,136,342,179,341,174,473,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="376,189,455,214"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="497,136,441,182,438,178,493,131"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="479,189,538,214"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="511,134,511,175,506,175,506,134"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="563,189,655,214"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="525,131,585,178,581,182,522,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="679,189,771,214"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="541,131,681,182,680,187,539,136"/>
+<area shape="poly" id="edge9_Node000009_Node000008" title=" " alt="" coords="726,133,727,175,722,175,721,134"/>
+</map>

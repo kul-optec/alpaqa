@@ -1,0 +1,11 @@
+<map id="BenchmarkResults" name="BenchmarkResults">
+<area shape="rect" id="node1" title=" " alt="" coords="262,2531,415,2667"/>
+<area shape="rect" id="node2" href="$problem_8hpp.html#structLoadedProblem" title=" " alt="" coords="90,2244,227,2395"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="5,901,224,2108"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="9,204,220,839"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="52,5,177,141"/>
+<area shape="rect" id="node6" href="$structSolverResults.html" title=" " alt="" coords="258,2171,419,2468"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1EvalCounter.html" title=" " alt="" coords="249,1319,445,1690"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1EvalCounter.html#structalpaqa_1_1EvalCounter_1_1EvalTimer" title=" " alt="" coords="249,336,445,707"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1KKTError.html" title=" " alt="" coords="443,2259,602,2380"/>
+</map>

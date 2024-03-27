@@ -1,0 +1,5 @@
+<map id="eval_hess_L" name="eval_hess_L">
+<area shape="rect" id="node1" title="[Optional] Function that evaluates the Hessian of the Lagrangian as a sparse matrix," alt="" coords="212,45,313,70"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1IpoptAdapter.html#a060dd4fd8af8008a4a6cc2ec807d35f5" title=" " alt="" coords="5,5,164,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1IpoptAdapter.html#a4061f7ec3e2272961f562e449bc32621" title=" " alt="" coords="5,69,164,109"/>
+</map>

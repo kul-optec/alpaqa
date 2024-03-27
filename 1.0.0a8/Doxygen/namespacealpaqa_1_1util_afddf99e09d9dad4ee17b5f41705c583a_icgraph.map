@@ -1,0 +1,13 @@
+<map id="iter_set_intersection" name="iter_set_intersection">
+<area shape="rect" id="node1" title=" " alt="" coords="779,83,933,109"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util_1_1detail.html#a363a373e4888017ca42c9d0f4650b770" title="Returns a range over the row indices in the given column of sp_mat that are also in mask." alt="" coords="563,33,715,73"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="547,108,731,148"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util.html#ab1fe477130dff69a401ed5ae0078a5f2" title="out += S(mask,:)ᵀ * v(mask);" alt="" coords="276,9,499,49"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1CasADiControlProblem.html#a4e8680cb8ad01d9bb6eb4a2d493ff25c" title=" " alt="" coords="5,5,228,45"/>
+<area shape="rect" id="node6" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="310,81,465,106"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1util.html#a8f8729f20b9e0c58b08803046e2e5e54" title="S += S_full(mask,:)" alt="" coords="291,137,483,162"/>
+<area shape="rect" id="node10" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="282,189,493,229"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1CasADiControlProblem.html#a55e2e9425cc496e3340e59b099dda766" title=" " alt="" coords="5,69,228,109"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1CasADiControlProblem.html#aad269794afe7753e16a2cf238b9f42ad" title=" " alt="" coords="5,133,228,173"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1CasADiControlProblem.html#a20f8fadf0aeb2daf8695db68f3d50865" title=" " alt="" coords="5,197,228,237"/>
+</map>

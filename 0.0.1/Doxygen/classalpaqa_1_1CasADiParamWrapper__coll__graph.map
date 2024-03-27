@@ -1,0 +1,9 @@
+<map id="CasADiParamWrapper" name="CasADiParamWrapper">
+<area shape="rect" id="node1" title=" " alt="" coords="205,373,389,495"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1ParamWrapper.html" title=" " alt="" coords="5,189,160,311"/>
+<area shape="rect" id="node3" title=" " alt="" coords="184,204,411,296"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1CasADiParamWrapper.html#structalpaqa_1_1CasADiParamWrapper_1_1Functions" title=" " alt="" coords="435,204,552,296"/>
+<area shape="rect" id="node5" href="$classCasADiFun__2Vi1So.html" title="Wrapper for CasADiFunctionEvaluator with 2 vector inputs, scalar output." alt="" coords="215,13,385,105"/>
+<area shape="rect" id="node6" href="$classCasADiFun__2Vi1Vo.html" title="Wrapper for CasADiFunctionEvaluator with 2 vector inputs, 1 vector output." alt="" coords="409,5,578,112"/>
+<area shape="rect" id="node7" href="$classCasADiFun__3Vi1Vo.html" title="Wrapper for CasADiFunctionEvaluator with 3 vector inputs, 1 vector output." alt="" coords="602,13,771,105"/>
+</map>

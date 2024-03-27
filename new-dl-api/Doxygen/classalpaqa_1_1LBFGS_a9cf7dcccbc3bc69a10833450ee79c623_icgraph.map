@@ -1,0 +1,13 @@
+<map id="history" name="history">
+<area shape="rect" id="Node000001" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="173,104,240,129"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a3c6a2dbecc0d6f8cd90bef088c46b072" title="Get the number of previous s and y vectors currently stored in the buffer." alt="" coords="5,5,125,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="183,95,156,69,124,44,102,33,105,28,127,40,159,65,187,91"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#aa871b5290773b86e2e4919bbac258a04" title="Iterate over the indices in the history buffer, oldest first." alt="" coords="15,55,116,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,103,102,83,103,78,161,98"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#a0804b751cf2035a35f24762474f62cbf" title="Iterate over the indices in the history buffer, newest first." alt="" coords="16,104,115,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="159,119,115,119,115,114,159,114"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#a71f7f5e949a948d578ae6f145e4c4914" title="Get the previous index in the circular buffer of s and y vectors." alt="" coords="40,153,91,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="161,135,92,160,90,155,159,130"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LBFGS.html#a70926baed7362e4fcce66523bb8e2842" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="40,203,91,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="186,141,159,167,127,192,92,209,90,205,124,188,156,163,183,138"/>
+</map>

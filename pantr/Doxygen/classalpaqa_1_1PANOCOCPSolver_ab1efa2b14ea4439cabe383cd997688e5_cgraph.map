@@ -1,0 +1,13 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node1" title=" " alt="" coords="5,271,92,297"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a6bd1a4a692a847afed18dfdac982b2bf" title=" " alt="" coords="155,29,316,69"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1detail.html#af491b0de3cd827129678e22afdbd882f" title=" " alt="" coords="155,117,316,157"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1OCPVariables.html#a276799effc79e618746bf6a7e44c84af" title=" " alt="" coords="155,181,316,221"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="149,246,322,271"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1Box.html#a85dea72f7f5cdd115734c476729d49da" title=" " alt="" coords="168,295,303,321"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="140,345,331,370"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1OCPVariables.html#a50482e485b208e4ced084891de1b7f49" title=" " alt="" coords="143,394,328,419"/>
+<area shape="rect" id="node10" href="$namespacealpaqa.html#a0aa3a21307a2b125ccd70ac4265c4446" title="Get the difference between the given vector and its projection." alt="" coords="166,444,305,484"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="379,239,525,279"/>
+<area shape="rect" id="node11" href="$namespacealpaqa.html#ace167fc364a50a555a05a8bc695ff189" title="Project a vector onto a box." alt="" coords="393,451,511,477"/>
+</map>

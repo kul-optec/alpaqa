@@ -1,0 +1,21 @@
+<map id="update" name="update">
+<area shape="rect" id="node1" title=" " alt="" coords="5,357,72,383"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1SpecializedLBFGS.html#a747b26091f869cb17a768e38f17fbc8d" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="120,349,311,391"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SpecializedLBFGS.html#a0b030867dbee1f90710a9b23360807a3" title="L&#45;BFGS update when changing the step size γ, recomputing everything." alt="" coords="359,307,549,348"/>
+<area shape="rect" id="node19" href="$classalpaqa_1_1SpecializedLBFGS.html#a5a4a6bc855faa7998e2308d5e6d10224" title="Standard L&#45;BFGS update without changing the step size γ." alt="" coords="359,381,549,423"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1SpecializedLBFGS.html#a7e9b3fd96d52976693a1fb57fb32ba3c" title=" " alt="" coords="599,355,805,382"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1SpecializedLBFGS.html#a9cb23d843dff87dd08bd5a916d9eed95" title=" " alt="" coords="599,254,805,281"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1SpecializedLBFGS.html#a366794fa1c1947b58c0e7cfd78529215" title="Get the previous index in the circular buffer of previous s, y, x and g vectors." alt="" coords="607,5,797,47"/>
+<area shape="rect" id="node9" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="612,71,792,112"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1SpecializedLBFGS.html#a644d66009a70ccc909120ba9afa45ea5" title=" " alt="" coords="599,406,805,433"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1SpecializedLBFGS.html#a0df701f7bb07249c37bcbf20d9c980fe" title="Get the next index in the circular buffer of previous s, y, x and g vectors." alt="" coords="607,188,797,229"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1LBFGS.html#aaf9c6519c7a7d7ab977113f33c88e2e3" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="617,559,787,600"/>
+<area shape="rect" id="node15" href="$classalpaqa_1_1SpecializedLBFGS.html#a45235c456e26733897f13bbf1057323e" title=" " alt="" coords="597,137,807,163"/>
+<area shape="rect" id="node16" href="$classalpaqa_1_1SpecializedLBFGS.html#ac8fb9b5f7c53b1285867cf99b0f79d17" title=" " alt="" coords="599,305,805,331"/>
+<area shape="rect" id="node17" href="$classalpaqa_1_1SpecializedLBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="599,457,805,483"/>
+<area shape="rect" id="node18" href="$classalpaqa_1_1SpecializedLBFGS.html#aebf0127f7a3e56b2c46e5f189d517f14" title=" " alt="" coords="599,507,805,534"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1SpecializedLBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s, y, x and g stored in the buffer." alt="" coords="863,217,1053,259"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1SpecializedLBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s, y, x and g vectors in the buffer." alt="" coords="855,355,1061,382"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1LBFGS.html#a7866204934238efa4a186fc9d48a8a2e" title=" " alt="" coords="891,566,1025,593"/>
+<area shape="rect" id="node14" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="1109,566,1241,593"/>
+</map>

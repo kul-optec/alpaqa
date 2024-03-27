@@ -1,0 +1,4 @@
+<map id="provides_eval_f_grad_f" name="provides_eval_f_grad_f">
+<area shape="rect" id="node1" title="Returns true if the problem provides a specialized implementation of eval_f_grad_f,..." alt="" coords="5,13,179,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#ad9bf84763f45ee8e06b5ee1a41aab64a" title=" " alt="" coords="227,5,397,45"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="n" name="n">
+<area shape="rect" id="node1" title=" " alt="" coords="333,31,372,57"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#a32367fb2ecbdf71d6071bddc4dc3ce5d" title="Get the matrix Q such that Q times R is the original matrix." alt="" coords="225,5,285,32"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#a94d70718a4b923a645b928bc68524916" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="224,56,285,83"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#a94d70718a4b923a645b928bc68524916" title=" " alt="" coords="5,49,176,90"/>
+</map>

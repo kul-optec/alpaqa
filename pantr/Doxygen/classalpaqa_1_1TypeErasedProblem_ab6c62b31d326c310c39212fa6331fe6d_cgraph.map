@@ -1,0 +1,4 @@
+<map id="provides_eval_grad_gi" name="provides_eval_grad_gi">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="5,13,173,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#a57d1d17bd1789f429d0971df8fb05253" title=" " alt="" coords="221,5,392,45"/>
+</map>

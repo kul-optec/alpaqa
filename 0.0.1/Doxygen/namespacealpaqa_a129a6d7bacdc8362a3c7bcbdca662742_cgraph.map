@@ -1,0 +1,12 @@
+<map id="minimize_update_anderson" name="minimize_update_anderson">
+<area shape="rect" id="node1" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="5,212,208,238"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3077223e98c1e4e286e01503f220d5" title="Add the given column to the right." alt="" coords="256,74,452,115"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#af83f6287b8ea07acdcfa4670af30cbbf" title=" " alt="" coords="988,106,1205,133"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#a98e2d9685769a3ebb2c0c9600a4c77b2" title="Get the number of columns that are currently stored." alt="" coords="256,139,452,180"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#a436c4dbbf0476354ca67a104bc005e55" title="Remove the leftmost column." alt="" coords="256,204,452,246"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#ae82972feb159f229f6914c036291c0d4" title="Get iterators in the circular buffer." alt="" coords="744,290,940,331"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LimitedMemoryQR.html#a25b6259a3ee886a9a54f3a66ab019084" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="256,322,452,363"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LimitedMemoryQR.html#a7a60dfe0a5f68bc1efec69e406a2b619" title="Solve the least squares problem Ax = b." alt="" coords="256,387,452,428"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#abb2e912e6196e7c6996d3f43fea78237" title="Get the next index in the circular storage for R." alt="" coords="500,132,696,174"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1LimitedMemoryQR.html#aa422d549bc3e631fa73047a8bfe4a5e5" title="Get reverse iterators in the circular buffer." alt="" coords="500,383,696,424"/>
+</map>

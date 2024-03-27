@@ -1,0 +1,7 @@
+<map id="DLProblem" name="DLProblem">
+<area shape="rect" id="node1" title="Class that loads a problem using dlopen." alt="" coords="217,799,439,1639"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1dl_1_1DLLoader.html" title=" " alt="" coords="5,380,200,589"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1BoxConstrProblem.html" title=" " alt="" coords="225,233,431,736"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1Box.html" title=" " alt="" coords="245,5,411,156"/>
+<area shape="rect" id="node5" href="$structalpaqa__problem__functions__t.html" title=" " alt="" coords="456,255,669,714"/>
+</map>

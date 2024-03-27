@@ -1,0 +1,22 @@
+<map id="src/alpaqa/include/alpaqa/functions/prox.hpp" name="src/alpaqa/include/alpaqa/functions/prox.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="519,5,714,45"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="419,93,599,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="592,48,538,87,535,83,589,43"/>
+<area shape="rect" id="Node000009" href="$tag-invoke_8hpp.html" title=" " alt="" coords="629,93,821,119"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="644,43,699,83,696,87,641,48"/>
+<area shape="rect" id="Node000003" href="$quadmath-print_8hpp.html" title=" " alt="" coords="5,167,167,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,121,181,169,180,164,442,116"/>
+<area shape="rect" id="Node000004" href="$quadmath_8hpp.html" title=" " alt="" coords="191,167,352,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="475,121,342,165,341,160,473,116"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="376,174,455,199"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="497,121,441,167,438,163,493,117"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="479,174,538,199"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="511,119,511,160,506,160,506,119"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="679,174,771,199"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="541,116,681,167,680,172,539,121"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="563,174,655,199"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="525,117,585,163,581,167,522,121"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="727,119,727,160,722,160,722,119"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="795,174,855,199"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="741,117,801,163,797,167,738,121"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classalpaqa_1_1BoxConstrProblem.html" title=" " alt="" coords="5,5,212,45"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1dl_1_1DLProblem.html" title="Class that loads a problem using dlopen." alt="" coords="283,17,377,42"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1dl_1_1DLLoader.html" title=" " alt="" coords="67,70,150,95"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1dl_1_1DLControlProblem.html" title="Class that loads an optimal control problem using dlopen." alt="" coords="260,70,400,95"/>
+</map>

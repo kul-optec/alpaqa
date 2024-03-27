@@ -1,0 +1,4 @@
+<map id="LBFGS" name="LBFGS">
+<area shape="rect" id="node1" title="Limited memory Broyden–Fletcher–Goldfarb–Shanno (L&#45;BFGS) algorithm." alt="" coords="41,175,172,589"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#structalpaqa_1_1LBFGSParams" title="Parameters for the LBFGS and SpecializedLBFGS classes." alt="" coords="5,5,208,112"/>
+</map>

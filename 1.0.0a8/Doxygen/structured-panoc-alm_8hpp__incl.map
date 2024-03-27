@@ -1,0 +1,52 @@
+<map id="structured&#45;panoc&#45;alm.hpp" name="structured&#45;panoc&#45;alm.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="1734,5,1924,31"/>
+<area shape="rect" id="node2" href="$structured-lbfgs_8hpp.html" title=" " alt="" coords="677,79,877,119"/>
+<area shape="rect" id="node40" href="$panoc_8hpp.html" title=" " alt="" coords="1742,86,1916,111"/>
+<area shape="rect" id="node49" href="$alm_8hpp.html" title=" " alt="" coords="2027,174,2188,199"/>
+<area shape="rect" id="node3" href="$accelerators_2lbfgs_8hpp.html" title=" " alt="" coords="306,343,456,383"/>
+<area shape="rect" id="node4" href="$config_8hpp.html" title=" " alt="" coords="522,431,702,456"/>
+<area shape="rect" id="node15" href="$panoc-direction-update_8hpp.html" title=" " alt="" coords="814,167,1020,207"/>
+<area shape="rect" id="node16" href="$type-erased-problem_8hpp.html" title=" " alt="" coords="1364,255,1523,295"/>
+<area shape="rect" id="node23" title=" " alt="" coords="2222,431,2297,456"/>
+<area shape="rect" id="node39" href="$panoc-helpers_8hpp.html" title=" " alt="" coords="582,167,740,207"/>
+<area shape="rect" id="node6" title=" " alt="" coords="110,511,169,537"/>
+<area shape="rect" id="node9" href="$export_8hpp.html" title=" " alt="" coords="2495,592,2635,617"/>
+<area shape="rect" id="node11" title=" " alt="" coords="360,511,423,537"/>
+<area shape="rect" id="node12" title=" " alt="" coords="2345,592,2404,617"/>
+<area shape="rect" id="node13" title=" " alt="" coords="26,511,86,537"/>
+<area shape="rect" id="node14" title=" " alt="" coords="230,431,292,456"/>
+<area shape="rect" id="node5" href="$quadmath_8hpp.html" title=" " alt="" coords="447,504,608,544"/>
+<area shape="rect" id="node7" title=" " alt="" coords="714,592,806,617"/>
+<area shape="rect" id="node8" title=" " alt="" coords="244,511,336,537"/>
+<area shape="rect" id="node10" title=" " alt="" coords="2503,665,2627,691"/>
+<area shape="rect" id="node17" href="$box_8hpp.html" title=" " alt="" coords="1018,350,1198,375"/>
+<area shape="rect" id="node21" href="$alloc-check_8hpp.html" title=" " alt="" coords="726,431,924,456"/>
+<area shape="rect" id="node22" href="$check-dim_8hpp.html" title=" " alt="" coords="1650,350,1840,375"/>
+<area shape="rect" id="node24" title=" " alt="" coords="2412,511,2499,537"/>
+<area shape="rect" id="node25" href="$not-implemented_8hpp.html" title=" " alt="" coords="1862,431,2098,456"/>
+<area shape="rect" id="node26" href="$required-method_8hpp.html" title=" " alt="" coords="1425,343,1574,383"/>
+<area shape="rect" id="node27" href="$type-erasure_8hpp.html" title=" " alt="" coords="1375,431,1582,456"/>
+<area shape="rect" id="node38" title=" " alt="" coords="2180,350,2246,375"/>
+<area shape="rect" id="node18" href="$float_8hpp.html" title=" " alt="" coords="948,431,1100,456"/>
+<area shape="rect" id="node19" title=" " alt="" coords="684,511,763,537"/>
+<area shape="rect" id="node20" title=" " alt="" coords="852,592,932,617"/>
+<area shape="rect" id="node36" title=" " alt="" coords="2148,511,2235,537"/>
+<area shape="rect" id="node28" href="$demangled-typename_8hpp.html" title=" " alt="" coords="1702,504,1870,544"/>
+<area shape="rect" id="node29" title=" " alt="" coords="1516,592,1592,617"/>
+<area shape="rect" id="node30" href="$noop-delete_8hpp.html" title=" " alt="" coords="1476,511,1678,537"/>
+<area shape="rect" id="node31" href="$type-traits_8hpp.html" title=" " alt="" coords="940,511,1131,537"/>
+<area shape="rect" id="node32" title=" " alt="" coords="1089,592,1166,617"/>
+<area shape="rect" id="node33" title=" " alt="" coords="1894,511,1980,537"/>
+<area shape="rect" id="node34" title=" " alt="" coords="2004,511,2073,537"/>
+<area shape="rect" id="node35" title=" " alt="" coords="1308,511,1379,537"/>
+<area shape="rect" id="node37" title=" " alt="" coords="1403,511,1452,537"/>
+<area shape="rect" id="node41" href="$inner-solve-options_8hpp.html" title=" " alt="" coords="1758,255,1900,295"/>
+<area shape="rect" id="node42" href="$lipschitz_8hpp.html" title=" " alt="" coords="1044,167,1201,207"/>
+<area shape="rect" id="node43" href="$panoc-stop-crit_8hpp.html" title=" " alt="" coords="2380,255,2537,295"/>
+<area shape="rect" id="node45" href="$solverstatus_8hpp.html" title=" " alt="" coords="2612,255,2769,295"/>
+<area shape="rect" id="node46" href="$atomic-stop-signal_8hpp.html" title=" " alt="" coords="1438,167,1578,207"/>
+<area shape="rect" id="node48" title=" " alt="" coords="1982,262,2062,287"/>
+<area shape="rect" id="node44" title=" " alt="" coords="2473,350,2537,375"/>
+<area shape="rect" id="node47" title=" " alt="" coords="865,262,932,287"/>
+<area shape="rect" id="node50" href="$alm-helpers_8hpp.html" title=" " alt="" coords="956,255,1115,295"/>
+</map>

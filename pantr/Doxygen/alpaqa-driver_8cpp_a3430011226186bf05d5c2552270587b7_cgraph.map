@@ -1,0 +1,18 @@
+<map id="get_solver_builder" name="get_solver_builder">
+<area shape="rect" id="node1" title=" " alt="" coords="5,183,148,208"/>
+<area shape="rect" id="node2" href="$util_8hpp.html#af497b5fe6ea036f154766b39508b338b" title=" " alt="" coords="205,5,343,31"/>
+<area shape="rect" id="node3" href="$ipopt-driver_8cpp.html#ac4ea8f713cf4da6e58caa134ca40b938" title=" " alt="" coords="400,107,543,132"/>
+<area shape="rect" id="node4" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="593,164,691,189"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="940,81,1129,107"/>
+<area shape="rect" id="node10" href="$lbfgsb-driver_8cpp.html#a2123fa3dc6760812199393dc3dfbfa59" title=" " alt="" coords="199,208,349,233"/>
+<area shape="rect" id="node14" href="$panoc-driver_8cpp.html#a0593042a6a3699d7abd50c243a933ca3" title=" " alt="" coords="199,257,349,283"/>
+<area shape="rect" id="node15" href="$pantr-driver_8cpp.html#aa5f9a7c6be5cc33cd70b93162df5cfeb" title=" " alt="" coords="202,307,346,332"/>
+<area shape="rect" id="node16" href="$panoc-driver_8cpp.html#ad9754f90396b070f450b0cded6692db6" title=" " alt="" coords="196,356,352,381"/>
+<area shape="rect" id="node5" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="753,107,881,132"/>
+<area shape="rect" id="node6" href="$namespacealpaqa_1_1params.html#a1ceaf6d5b9906d0d8242d3b3c7bc6dd6" title="Overwrites t based on the options that start with prefix." alt="" coords="741,157,892,197"/>
+<area shape="rect" id="node9" href="$classOptions.html#a55c9d81e0f4bc6698d19b72423b7e90f" title=" " alt="" coords="761,221,872,247"/>
+<area shape="rect" id="node7" href="$namespacealpaqa_1_1params.html#a0de0baee3dda47aba5143ba83bd11712" title=" " alt="" coords="959,157,1110,197"/>
+<area shape="rect" id="node11" href="$alm-driver_8hpp.html#ae4ef291d9ec9d55ee804b5723ea2e641" title=" " alt="" coords="403,259,540,284"/>
+<area shape="rect" id="node12" href="$alm-driver_8hpp.html#aa7ce176e5df1fd415e66c420646cf10d" title=" " alt="" coords="410,308,533,333"/>
+<area shape="rect" id="node13" href="$ipopt-enums_8hpp.html#a78dc4442f5ab598a9c86a57e0c067f98" title=" " alt="" coords="591,308,693,333"/>
+</map>

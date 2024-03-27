@@ -1,0 +1,21 @@
+<map id="history" name="history">
+<area shape="rect" id="node1" title="Get the number of previous vectors s, y, x and g stored in the buffer." alt="" coords="860,208,927,235"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1SpecializedLBFGS.html#a3633932c88d15ff3118f72a11f4c58e4" title=" " alt="" coords="511,27,650,53"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SpecializedLBFGS.html#a37dd0ce624f9914a61118d8f02fa1c7f" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="752,107,811,133"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1SpecializedLBFGS.html#a7e9b3fd96d52976693a1fb57fb32ba3c" title=" " alt="" coords="762,411,801,437"/>
+<area shape="rect" id="node14" href="$classalpaqa_1_1SpecializedLBFGS.html#a9cb23d843dff87dd08bd5a916d9eed95" title=" " alt="" coords="762,157,801,184"/>
+<area shape="rect" id="node15" href="$classalpaqa_1_1SpecializedLBFGS.html#a366794fa1c1947b58c0e7cfd78529215" title="Get the previous index in the circular buffer of previous s, y, x and g vectors." alt="" coords="756,208,807,235"/>
+<area shape="rect" id="node16" href="$classalpaqa_1_1SpecializedLBFGS.html#ab94b4f1bcda8e0f0bace15126f54b6d3" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="751,5,812,32"/>
+<area shape="rect" id="node17" href="$classalpaqa_1_1SpecializedLBFGS.html#a0df701f7bb07249c37bcbf20d9c980fe" title="Get the next index in the circular buffer of previous s, y, x and g vectors." alt="" coords="756,309,807,336"/>
+<area shape="rect" id="node18" href="$classalpaqa_1_1SpecializedLBFGS.html#a45235c456e26733897f13bbf1057323e" title=" " alt="" coords="762,259,801,285"/>
+<area shape="rect" id="node19" href="$classalpaqa_1_1SpecializedLBFGS.html#ac8fb9b5f7c53b1285867cf99b0f79d17" title=" " alt="" coords="762,360,801,387"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a896d954d179723ad79cb7925541c96c8" title=" " alt="" coords="475,99,687,141"/>
+<area shape="rect" id="node6" href="$classhanging__chain__dynamics_1_1HangingChain.html#a2e4d9874164cfa87334b099f3ce1f288" title=" " alt="" coords="459,486,703,527"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1SpecializedLBFGS.html#a0b030867dbee1f90710a9b23360807a3" title="L&#45;BFGS update when changing the step size γ, recomputing everything." alt="" coords="533,259,628,285"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1SpecializedLBFGS.html#a3606f78438b923b36f682fb1f91764d7" title="Initialize with the starting point x₀ and the gradient in that point." alt="" coords="541,411,620,437"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1SpecializedLBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="553,360,608,387"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1SpecializedLBFGS.html#a5a4a6bc855faa7998e2308d5e6d10224" title="Standard L&#45;BFGS update without changing the step size γ." alt="" coords="515,309,646,336"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1SpecializedLBFGS.html#a747b26091f869cb17a768e38f17fbc8d" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="288,284,355,311"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a39a241c049e8d029cc86a30a89ef92cf" title=" " alt="" coords="5,269,184,325"/>
+<area shape="rect" id="node11" href="$structalpaqa_1_1PANOCDirection_3_01SpecializedLBFGS_01_4.html#a47b667371126ccfdb51898d979f2c786" title=" " alt="" coords="232,396,411,452"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="solve" name="solve">
+<area shape="rect" id="node1" title="Solve the least squares problem AX = B." alt="" coords="5,17,63,44"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#af83f6287b8ea07acdcfa4670af30cbbf" title=" " alt="" coords="681,17,720,44"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#a9ec3e86c6cbb239ba0642378b564af41" title="Solve the least squares problem AX = B." alt="" coords="111,43,168,69"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#a98e2d9685769a3ebb2c0c9600a4c77b2" title="Get the number of columns that are currently stored." alt="" coords="216,43,329,69"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#a7a60dfe0a5f68bc1efec69e406a2b619" title="Solve the least squares problem Ax = b." alt="" coords="231,93,314,120"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#ae82972feb159f229f6914c036291c0d4" title="Get iterators in the circular buffer." alt="" coords="557,43,633,69"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#aa422d549bc3e631fa73047a8bfe4a5e5" title="Get reverse iterators in the circular buffer." alt="" coords="377,93,509,120"/>
+</map>

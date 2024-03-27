@@ -1,0 +1,7 @@
+<map id="eval_grad_L" name="eval_grad_L">
+<area shape="rect" id="Node000001" title="[Optional] Evaluate the gradient of the Lagrangian" alt="" coords="315,13,415,38"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="108,5,267,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="301,28,267,28,267,23,301,23"/>
+<area shape="rect" id="Node000003" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

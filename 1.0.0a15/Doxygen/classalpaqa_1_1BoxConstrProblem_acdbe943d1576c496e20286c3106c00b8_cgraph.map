@@ -1,0 +1,14 @@
+<map id="eval_prox_grad_step" name="eval_prox_grad_step">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,63,163,88"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html#ae837b185277175a034b6e120c5d84b19" title="Projected gradient step for rectangular box C." alt="" coords="211,5,395,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,60,240,32,241,37,134,65"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1BoxConstrProblem.html#a1675a9050e69af2eed772e663bedc762" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="224,119,381,159"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="129,86,221,113,220,118,128,91"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1BoxConstrProblem.html#ad88ec4d005c833d5c2c889ca4bd530e8" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="224,55,381,95"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="163,73,210,73,210,78,163,78"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1BoxConstrProblem.html#a3171c5c9e3761a3f47aaabc94ff80a73" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="455,59,613,99"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="380,117,442,100,443,105,381,122"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1vec__util.html#ad25a5d07b7f707ab1d1fa7667a13dffa" title="Get the 1&#45;norm of the given vector." alt="" coords="443,127,625,152"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="381,137,429,137,429,142,381,142"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="381,74,442,75,442,80,381,79"/>
+</map>

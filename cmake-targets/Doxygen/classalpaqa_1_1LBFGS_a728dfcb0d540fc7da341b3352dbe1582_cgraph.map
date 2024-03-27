@@ -1,0 +1,9 @@
+<map id="LBFGS" name="LBFGS">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,69,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the size of the s and y vectors in the buffer." alt="" coords="129,5,167,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="69,33,115,23,116,28,71,39"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#abfe51417fbebd259808f86d27f1d7ec5" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="117,55,179,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="70,48,104,55,103,60,69,53"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LBFGSStorage.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the size of the s and y vectors in the buffer." alt="" coords="227,5,409,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="168,15,213,15,213,21,168,21"/>
+</map>

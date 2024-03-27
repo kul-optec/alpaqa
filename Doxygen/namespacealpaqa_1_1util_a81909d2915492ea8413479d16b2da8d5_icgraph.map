@@ -1,0 +1,9 @@
+<map id="check_dim_msg" name="check_dim_msg">
+<area shape="rect" id="Node000001" title=" " alt="" coords="248,70,375,95"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html#a42d586c61708cc2c925e8ae813ef523b" title=" " alt="" coords="5,5,200,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="250,69,175,48,177,43,252,64"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#ad8c231896e7be7cd900ff0b72ca207a9" title=" " alt="" coords="57,70,149,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="234,85,149,85,149,80,234,80"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1util.html#a5c8d4dc69647418a2240d870f0d098a2" title=" " alt="" coords="57,119,149,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="244,101,149,124,148,119,243,96"/>
+</map>

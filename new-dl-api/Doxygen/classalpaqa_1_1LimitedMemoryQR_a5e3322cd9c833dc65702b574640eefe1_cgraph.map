@@ -1,0 +1,10 @@
+<map id="solve_col" name="solve_col">
+<area shape="rect" id="Node000001" title="Solve the least squares problem Ax = b." alt="" coords="5,5,88,31"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#a0bf0ad441ec87440e4525e75de00d053" title="Get iterators in the circular buffer." alt="" coords="316,5,392,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,15,302,15,302,21,88,21"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LimitedMemoryQR.html#ae8160acf26958eb65aa5c0743dd2826d" title="Get reverse iterators in the circular buffer." alt="" coords="136,31,268,56"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="89,22,123,28,122,33,88,27"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="440,5,479,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="392,15,426,15,426,21,392,21"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="268,30,302,24,303,29,269,35"/>
+</map>

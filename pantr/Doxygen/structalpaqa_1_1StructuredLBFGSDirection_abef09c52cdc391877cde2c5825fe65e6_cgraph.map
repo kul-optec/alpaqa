@@ -1,0 +1,15 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,205,84,230"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="136,5,339,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="136,69,339,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#ab6c62b31d326c310c39212fa6331fe6d" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="136,133,339,173"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedProblem.html#a1fbd424119305ac21128594a2f27086d" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="132,197,343,237"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedProblem.html#a9328096779a46c83fb264bfd3009568f" title="Returns true if the problem provides an implementation of eval_hess_L_prod." alt="" coords="133,261,341,301"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1TypeErasedProblem.html#a53b4d08432e97770dcae02dba82378fa" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="136,326,339,381"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="136,405,339,445"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1ProblemVTable.html#a57d1d17bd1789f429d0971df8fb05253" title=" " alt="" coords="405,133,576,173"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1ProblemVTable.html#a34dd726e23daeb68656647a4f8ad6216" title=" " alt="" coords="391,197,591,237"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1ProblemVTable.html#a2f9375367eb5d2cbee5d4589ed9e1c2f" title=" " alt="" coords="391,261,590,301"/>
+<area shape="rect" id="node11" href="$structalpaqa_1_1ProblemVTable.html#ace21a0c334d237f42db309c082439e7f" title=" " alt="" coords="405,326,576,381"/>
+<area shape="rect" id="node13" href="$structalpaqa_1_1ProblemVTable.html#a984c0b730741e239ffa433b88b755304" title=" " alt="" coords="405,405,576,445"/>
+</map>

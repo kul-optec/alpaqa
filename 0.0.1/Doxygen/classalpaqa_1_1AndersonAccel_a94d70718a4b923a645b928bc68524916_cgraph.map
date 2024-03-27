@@ -1,0 +1,7 @@
+<map id="resize" name="resize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,67,83"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#a94d70718a4b923a645b928bc68524916" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="115,49,311,90"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#af83f6287b8ea07acdcfa4670af30cbbf" title=" " alt="" coords="359,5,576,32"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#ac88f0961aa7ed7c7415550ab2cad49c8" title=" " alt="" coords="361,56,573,83"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="369,107,565,149"/>
+</map>

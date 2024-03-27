@@ -1,0 +1,4 @@
+<map id="sparse_matvec_add_transpose_masked_rows" name="sparse_matvec_add_transpose_masked_rows">
+<area shape="rect" id="node1" title="out += S(mask,:)ᵀ * v(mask);" alt="" coords="276,5,499,45"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1CasADiControlProblem.html#a4e8680cb8ad01d9bb6eb4a2d493ff25c" title=" " alt="" coords="5,5,228,45"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="get_R" name="get_R">
+<area shape="rect" id="node1" title="Get the matrix R such that Q times R is the original matrix." alt="" coords="5,5,64,32"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#aea2c2e4a1de857396eee1e4f20231624" title="Get the full storage for the upper triangular matrix R but with the columns in the correct order." alt="" coords="112,5,199,32"/>
+</map>

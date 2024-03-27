@@ -1,0 +1,6 @@
+<map id="eval_proj_diff_g" name="eval_proj_diff_g">
+<area shape="rect" id="node1" title="[Required] Function that evaluates the difference between the given point &#160;and its projection onto th..." alt="" coords="371,45,496,70"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#abbe7a9499d34168ba294d9737ab1516d" title="Calculate the error between ẑ and g(x)." alt="" coords="108,5,323,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a6a80f35cd4c3476fb0450cf885ff8de8" title=" " alt="" coords="136,69,295,109"/>
+<area shape="rect" id="node4" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,77,60,102"/>
+</map>

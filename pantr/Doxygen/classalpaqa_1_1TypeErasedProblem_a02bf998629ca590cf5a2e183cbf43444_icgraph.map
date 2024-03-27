@@ -1,0 +1,7 @@
+<map id="eval_prox_grad_step" name="eval_prox_grad_step">
+<area shape="rect" id="node1" title="[Required] Function that computes a proximal gradient step." alt="" coords="371,77,528,102"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="108,5,323,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a6a80f35cd4c3476fb0450cf885ff8de8" title=" " alt="" coords="136,69,295,109"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a50b246de556eed72631cd6c6c653f67f" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="108,133,323,173"/>
+<area shape="rect" id="node4" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,77,60,102"/>
+</map>

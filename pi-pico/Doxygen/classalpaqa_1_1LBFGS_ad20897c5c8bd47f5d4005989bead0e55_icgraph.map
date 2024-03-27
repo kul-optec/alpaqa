@@ -1,0 +1,9 @@
+<map id="reset" name="reset">
+<area shape="rect" id="Node000001" title="Throw away the approximation and all previous vectors s and y." alt="" coords="296,77,351,102"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LBFGSDirection.html#a0a4209f98cf9b6125e83cc5d3ec47a8b" title=" " alt="" coords="39,5,214,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,74,247,60,209,48,211,43,249,55,284,69"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LBFGSDirection.html#ad20897c5c8bd47f5d4005989bead0e55" title=" " alt="" coords="39,69,214,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="282,92,214,92,214,87,282,87"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1StructuredLBFGSDirection.html#ad20897c5c8bd47f5d4005989bead0e55" title=" " alt="" coords="5,133,248,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="284,110,249,124,211,136,209,131,247,119,282,105"/>
+</map>

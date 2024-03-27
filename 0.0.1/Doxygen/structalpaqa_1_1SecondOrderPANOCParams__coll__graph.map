@@ -1,0 +1,5 @@
+<map id="SecondOrderPANOCParams" name="SecondOrderPANOCParams">
+<area shape="rect" id="node1" title="Tuning parameters for the second order PANOC algorithm." alt="" coords="75,189,295,428"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#structalpaqa_1_1LipschitzEstimateParams" title=" " alt="" coords="5,5,191,127"/>
+<area shape="rect" id="node3" title=" " alt="" coords="215,27,327,105"/>
+</map>

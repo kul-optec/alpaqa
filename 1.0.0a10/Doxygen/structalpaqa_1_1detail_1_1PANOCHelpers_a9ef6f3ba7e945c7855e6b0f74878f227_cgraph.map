@@ -1,0 +1,6 @@
+<map id="calc_error_stop_crit" name="calc_error_stop_crit">
+<area shape="rect" id="node1" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="5,70,155,95"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a02bf998629ca590cf5a2e183cbf43444" title="[Required] Function that computes a proximal gradient step." alt="" coords="203,5,405,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1vec__util.html#ad25a5d07b7f707ab1d1fa7667a13dffa" title="Get the 1&#45;norm of the given vector." alt="" coords="213,70,395,95"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="209,119,399,145"/>
+</map>

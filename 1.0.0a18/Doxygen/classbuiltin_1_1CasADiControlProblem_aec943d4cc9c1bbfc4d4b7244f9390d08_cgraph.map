@@ -1,0 +1,21 @@
+<map id="CasADiControlProblem" name="CasADiControlProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,148,176,173"/>
+<area shape="rect" id="Node000002" href="$structbuiltin_1_1casadi__loader_1_1CasADiControlFunctionsWithParam.html#a315acb62b6609d1fa6bbf298fcc1064b" title=" " alt="" coords="224,101,440,156"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,147,210,142,211,147,176,152"/>
+<area shape="rect" id="Node000008" href="$classbuiltin_1_1CasADiControlProblem.html#a4f1c7c649deebd8f69fd65ebc8ec3a4a" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="253,180,411,205"/>
+<area shape="poly" id="edge11_Node000001_Node000008" title=" " alt="" coords="176,169,239,178,239,183,176,175"/>
+<area shape="rect" id="Node000003" href="$namespacebuiltin.html#a440de48c7f739b4216916e2aba75b266" title=" " alt="" coords="554,29,657,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="395,99,487,65,540,51,541,57,489,70,397,104"/>
+<area shape="rect" id="Node000004" href="$classbuiltin_1_1CasADiFunctionEvaluator.html#ac82a9153f840c8894aee66550ccc72a4" title=" " alt="" coords="488,79,723,119"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="440,114,474,111,475,116,441,120"/>
+<area shape="rect" id="Node000005" href="$namespacebuiltin.html#aff26ceb374addcf6ae66ee1e4658fcff" title=" " alt="" coords="771,181,909,207"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="441,140,757,181,757,186,440,145"/>
+<area shape="rect" id="Node000007" href="$namespacebuiltin.html#a001ff3b26defa1201f68a339a2c5d768" title=" " alt="" coords="524,219,687,244"/>
+<area shape="poly" id="edge8_Node000002_Node000007" title=" " alt="" coords="411,154,441,165,560,211,558,216,439,170,409,159"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="567,31,559,21,563,11,579,5,605,3,638,7,651,16,648,20,636,11,605,8,580,10,567,15,564,20,571,27"/>
+<area shape="poly" id="edge7_Node000005_Node000005" title=" " alt="" coords="807,183,800,173,804,163,817,157,840,155,868,158,879,168,876,172,866,163,840,160,819,162,808,167,805,172,811,180"/>
+<area shape="rect" id="Node000006" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="957,181,1125,207"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="910,191,944,191,944,197,910,197"/>
+<area shape="poly" id="edge9_Node000007_Node000005" title=" " alt="" coords="685,216,757,204,758,210,686,221"/>
+<area shape="poly" id="edge10_Node000007_Node000007" title=" " alt="" coords="567,220,559,210,563,200,579,194,605,192,638,196,651,205,648,210,636,201,605,197,580,199,567,204,564,210,571,217"/>
+</map>

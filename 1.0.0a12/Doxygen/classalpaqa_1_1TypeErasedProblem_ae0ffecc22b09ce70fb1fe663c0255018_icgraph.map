@@ -1,0 +1,13 @@
+<map id="get_box_C" name="get_box_C">
+<area shape="rect" id="Node000001" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="347,109,437,134"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1StructuredNewtonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="108,5,299,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="363,102,332,80,297,60,270,48,272,43,300,55,335,76,366,98"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="126,69,281,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="333,114,280,105,281,100,334,109"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="124,133,283,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="334,134,283,142,283,137,333,129"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1IpoptAdapter.html#a6a12b21a35ced53a439bfa2510029237" title=" " alt="" coords="124,197,283,237"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="366,145,335,167,300,188,272,200,270,195,297,183,332,162,363,140"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,141,60,166"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="110,156,60,156,60,151,110,151"/>
+</map>

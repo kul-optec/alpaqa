@@ -1,0 +1,4 @@
+<map id="provides_eval_hess_ψ_prod" name="provides_eval_hess_ψ_prod">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="5,5,156,45"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#a34dd726e23daeb68656647a4f8ad6216" title=" " alt="" coords="204,5,404,45"/>
+</map>

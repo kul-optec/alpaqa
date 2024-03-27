@@ -1,0 +1,11 @@
+<map id="cleanup" name="cleanup">
+<area shape="rect" id="Node000001" title=" " alt="" coords="323,31,396,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CUTEstLoader.html#a7b716bf57b17924fa32cc16c9451318a" title=" " alt="" coords="172,5,275,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="309,37,274,30,275,25,310,31"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CUTEstLoader.html#a4e850fce7e5dbb17d98967195fc06756" title=" " alt="" coords="178,55,269,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="310,55,269,62,268,57,309,49"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CUTEstLoader.html#a538fb252301d00675ce3a76d1ca33629" title=" " alt="" coords="8,5,121,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="158,21,122,21,122,15,158,15"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CUTEstLoader.html#ad437e05e226ce80bc4091716ea169381" title=" " alt="" coords="5,55,124,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="164,70,124,70,124,65,164,65"/>
+</map>

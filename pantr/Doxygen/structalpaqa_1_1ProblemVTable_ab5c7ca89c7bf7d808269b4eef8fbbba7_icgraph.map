@@ -1,0 +1,6 @@
+<map id="default_eval_f_g" name="default_eval_f_g">
+<area shape="rect" id="node1" title=" " alt="" coords="575,13,705,38"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#ab88b867d624a80e6e69fb59ab9c3378f" title="Returns true if the problem provides a specialized implementation of eval_f_g, false if it uses the d..." alt="" coords="324,5,527,45"/>
+<area shape="rect" id="node3" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="108,5,276,45"/>
+<area shape="rect" id="node4" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,13,60,38"/>
+</map>

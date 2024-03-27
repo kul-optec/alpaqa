@@ -1,0 +1,5 @@
+<map id="initial_lipschitz_estimate" name="initial_lipschitz_estimate">
+<area shape="rect" id="node1" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="5,45,191,70"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a0c394deb85f2860c2ecc65a8a7ae4036" title="[Optional] Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="239,5,441,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="239,69,441,109"/>
+</map>

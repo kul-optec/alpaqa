@@ -1,0 +1,19 @@
+<map id="src/alpaqa/include/alpaqa/inner/directions/panoc/anderson.hpp" name="src/alpaqa/include/alpaqa/inner/directions/panoc/anderson.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="499,5,674,60"/>
+<area shape="rect" id="Node000002" href="$panoc-anderson-alm_8hpp.html" title=" " alt="" coords="5,108,184,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="486,54,198,111,185,114,184,108,197,105,485,49"/>
+<area shape="rect" id="Node000004" href="$zerofpr-anderson-alm_8hpp.html" title=" " alt="" coords="209,108,394,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="501,67,377,110,375,105,499,62"/>
+<area shape="rect" id="Node000006" href="$panoc-driver_8cpp.html" title=" " alt="" coords="419,115,573,155"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="556,72,515,117,511,113,552,69"/>
+<area shape="rect" id="Node000007" href="$param-complete_8cpp.html" title=" " alt="" coords="598,115,759,155"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="622,69,663,113,659,117,618,72"/>
+<area shape="rect" id="Node000008" href="$json_8cpp.html" title=" " alt="" coords="784,115,949,155"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="673,62,815,113,813,118,671,67"/>
+<area shape="rect" id="Node000009" href="$params_8cpp.html" title=" " alt="" coords="973,115,1139,155"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="688,49,819,74,962,105,991,113,989,118,961,111,818,80,687,54"/>
+<area shape="rect" id="Node000003" href="$panoc-anderson-alm_8cpp.html" title=" " alt="" coords="17,211,172,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,176,97,211,92,211,92,176"/>
+<area shape="rect" id="Node000005" href="$zerofpr-anderson-alm_8cpp.html" title=" " alt="" coords="220,211,383,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="304,176,304,211,299,211,299,176"/>
+</map>

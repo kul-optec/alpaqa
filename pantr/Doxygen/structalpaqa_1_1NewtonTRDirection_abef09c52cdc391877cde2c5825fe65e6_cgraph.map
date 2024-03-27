@@ -1,0 +1,10 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,141,84,166"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="136,5,339,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="136,69,339,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#a1fbd424119305ac21128594a2f27086d" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="132,133,343,173"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedProblem.html#a53b4d08432e97770dcae02dba82378fa" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="136,198,339,253"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1SteihaugCG.html#abfe51417fbebd259808f86d27f1d7ec5" title=" " alt="" coords="162,277,313,317"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1ProblemVTable.html#a34dd726e23daeb68656647a4f8ad6216" title=" " alt="" coords="391,133,591,173"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1ProblemVTable.html#ace21a0c334d237f42db309c082439e7f" title=" " alt="" coords="405,198,576,253"/>
+</map>

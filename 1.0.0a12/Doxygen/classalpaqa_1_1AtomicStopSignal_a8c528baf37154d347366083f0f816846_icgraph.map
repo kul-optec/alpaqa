@@ -1,0 +1,13 @@
+<map id="stop" name="stop">
+<area shape="rect" id="Node000001" title=" " alt="" coords="276,141,327,166"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1PANOCOCPSolver.html#a8c528baf37154d347366083f0f816846" title=" " alt="" coords="23,5,210,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="285,129,261,93,226,59,206,48,208,43,230,55,265,89,289,126"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1PANOCSolver.html#a8c528baf37154d347366083f0f816846" title=" " alt="" coords="37,69,197,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="262,138,227,124,192,112,193,107,229,119,264,133"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1PANTRSolver.html#a8c528baf37154d347366083f0f816846" title=" " alt="" coords="37,133,196,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="262,156,196,156,196,151,262,151"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1ZeroFPRSolver.html#a8c528baf37154d347366083f0f816846" title=" " alt="" coords="31,197,202,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="264,173,229,188,193,200,192,195,227,183,262,168"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1lbfgspp_1_1LBFGSBSolver.html#a8c528baf37154d347366083f0f816846" title=" " alt="" coords="5,261,228,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="289,180,265,217,230,251,208,263,206,259,226,247,261,214,285,177"/>
+</map>

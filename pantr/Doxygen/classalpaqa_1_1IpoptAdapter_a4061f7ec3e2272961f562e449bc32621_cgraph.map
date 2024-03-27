@@ -1,0 +1,7 @@
+<map id="eval_h" name="eval_h">
+<area shape="rect" id="node1" title=" " alt="" coords="5,77,71,102"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a8432c33fb118d707216d6098734c4160" title="[Optional] Function that evaluates the Hessian of the Lagrangian as a sparse matrix," alt="" coords="119,5,321,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a01b7cf0fff8f21d29a5faf139a8896e2" title="Returns true if the problem provides an implementation of eval_hess_L." alt="" coords="119,69,321,109"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1IpoptAdapter.html#a101bece37e49c26ed18036e34b2c548f" title=" " alt="" coords="169,134,271,159"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1ProblemVTable.html#a257b2b39ebee44423adb3baad8ca71a7" title=" " alt="" coords="369,69,540,109"/>
+</map>

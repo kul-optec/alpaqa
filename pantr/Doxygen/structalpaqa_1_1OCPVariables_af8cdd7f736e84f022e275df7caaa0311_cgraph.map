@@ -1,0 +1,7 @@
+<map id="OCPVariables" name="OCPVariables">
+<area shape="rect" id="node1" title=" " alt="" coords="5,109,115,134"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedControlProblem.html#a37162636b12bd4140946ddf781ff2b30" title="Number of constraints." alt="" coords="163,5,357,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedControlProblem.html#a8a6d3f45cd65df0397cf2dac36f2d16a" title="Number of outputs." alt="" coords="163,69,357,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedControlProblem.html#a53f793c14b2ed9e9bb9f802f0ff79844" title="Number of inputs." alt="" coords="163,133,357,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedControlProblem.html#aa60e6b79c9e3235d29c9222e96921566" title="Number of states." alt="" coords="163,197,357,237"/>
+</map>

@@ -1,0 +1,878 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - bac0067c312a781c444204d0918339f4cb35ab1c - src/alpaqa/include/alpaqa/implementation/inner/panoc-ocp.tpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../index.html">top level</a> - <a href="index.html">src/alpaqa/include/alpaqa/implementation/inner</a> - panoc-ocp.tpp</td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">bac0067c312a781c444204d0918339f4cb35ab1c</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">441</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-07-27 13:01:23</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &lt;alpaqa/accelerators/lbfgs.hpp&gt;</a>
+<a name="2"><span class="lineNum">       2 </span>            : #include &lt;alpaqa/config/config.hpp&gt;</a>
+<a name="3"><span class="lineNum">       3 </span>            : #include &lt;alpaqa/implementation/util/print.tpp&gt;</a>
+<a name="4"><span class="lineNum">       4 </span>            : #include &lt;alpaqa/inner/directions/panoc-ocp/lqr.hpp&gt;</a>
+<a name="5"><span class="lineNum">       5 </span>            : #include &lt;alpaqa/inner/directions/panoc-ocp/ocp-vars.hpp&gt;</a>
+<a name="6"><span class="lineNum">       6 </span>            : #include &lt;alpaqa/inner/panoc-ocp.hpp&gt;</a>
+<a name="7"><span class="lineNum">       7 </span>            : #include &lt;alpaqa/problem/box.hpp&gt;</a>
+<a name="8"><span class="lineNum">       8 </span>            : #include &lt;alpaqa/problem/ocproblem.hpp&gt;</a>
+<a name="9"><span class="lineNum">       9 </span>            : #include &lt;alpaqa/util/index-set.hpp&gt;</a>
+<a name="10"><span class="lineNum">      10 </span>            : #include &lt;alpaqa/util/timed.hpp&gt;</a>
+<a name="11"><span class="lineNum">      11 </span>            : #include &lt;concepts&gt;</a>
+<a name="12"><span class="lineNum">      12 </span>            : #include &lt;iomanip&gt;</a>
+<a name="13"><span class="lineNum">      13 </span>            : #include &lt;iostream&gt;</a>
+<a name="14"><span class="lineNum">      14 </span>            : #include &lt;numeric&gt;</a>
+<a name="15"><span class="lineNum">      15 </span>            : #include &lt;stdexcept&gt;</a>
+<a name="16"><span class="lineNum">      16 </span>            : #include &lt;type_traits&gt;</a>
+<a name="17"><span class="lineNum">      17 </span>            : </a>
+<a name="18"><span class="lineNum">      18 </span>            : namespace alpaqa {</a>
+<a name="19"><span class="lineNum">      19 </span>            : </a>
+<a name="20"><span class="lineNum">      20 </span>            : template &lt;Config Conf&gt;</a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineNoCov">          0 : auto PANOCOCPProgressInfo&lt;Conf&gt;::u() const -&gt; vec {</span></a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineNoCov">          0 :     return detail::extract_u(*problem, xu);</span></a>
+<a name="23"><span class="lineNum">      23 </span>            : }</a>
+<a name="24"><span class="lineNum">      24 </span>            : </a>
+<a name="25"><span class="lineNum">      25 </span>            : template &lt;Config Conf&gt;</a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineNoCov">          0 : auto PANOCOCPProgressInfo&lt;Conf&gt;::x() const -&gt; vec {</span></a>
+<a name="27"><span class="lineNum">      27 </span><span class="lineNoCov">          0 :     return detail::extract_x(*problem, xu);</span></a>
+<a name="28"><span class="lineNum">      28 </span>            : }</a>
+<a name="29"><span class="lineNum">      29 </span>            : </a>
+<a name="30"><span class="lineNum">      30 </span>            : template &lt;Config Conf&gt;</a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineNoCov">          0 : auto PANOCOCPProgressInfo&lt;Conf&gt;::û() const -&gt; vec {</span></a>
+<a name="32"><span class="lineNum">      32 </span><span class="lineNoCov">          0 :     return detail::extract_u(*problem, x̂u);</span></a>
+<a name="33"><span class="lineNum">      33 </span>            : }</a>
+<a name="34"><span class="lineNum">      34 </span>            : </a>
+<a name="35"><span class="lineNum">      35 </span>            : template &lt;Config Conf&gt;</a>
+<a name="36"><span class="lineNum">      36 </span><span class="lineNoCov">          0 : auto PANOCOCPProgressInfo&lt;Conf&gt;::x̂() const -&gt; vec {</span></a>
+<a name="37"><span class="lineNum">      37 </span><span class="lineNoCov">          0 :     return detail::extract_x(*problem, x̂u);</span></a>
+<a name="38"><span class="lineNum">      38 </span>            : }</a>
+<a name="39"><span class="lineNum">      39 </span>            : </a>
+<a name="40"><span class="lineNum">      40 </span>            : template &lt;Config Conf&gt;</a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineNoCov">          0 : std::string PANOCOCPSolver&lt;Conf&gt;::get_name() const {</span></a>
+<a name="42"><span class="lineNum">      42 </span><span class="lineNoCov">          0 :     return &quot;PANOCOCPSolver&lt;&quot; + std::string(config_t::get_name()) + '&gt;';</span></a>
+<a name="43"><span class="lineNum">      43 </span>            : }</a>
+<a name="44"><span class="lineNum">      44 </span>            : </a>
+<a name="45"><span class="lineNum">      45 </span>            : template &lt;Config Conf&gt;</a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineNoCov">          0 : auto PANOCOCPSolver&lt;Conf&gt;::operator()(</span></a>
+<a name="47"><span class="lineNum">      47 </span>            :     /// [in]    Problem description</a>
+<a name="48"><span class="lineNum">      48 </span>            :     const Problem &amp;problem,</a>
+<a name="49"><span class="lineNum">      49 </span>            :     /// [in]    Solve options</a>
+<a name="50"><span class="lineNum">      50 </span>            :     const SolveOptions &amp;opts,</a>
+<a name="51"><span class="lineNum">      51 </span>            :     /// [inout] Decision variable @f$ u @f$</a>
+<a name="52"><span class="lineNum">      52 </span>            :     rvec u,</a>
+<a name="53"><span class="lineNum">      53 </span>            :     /// [inout] Lagrange multipliers @f$ y @f$</a>
+<a name="54"><span class="lineNum">      54 </span>            :     rvec y,</a>
+<a name="55"><span class="lineNum">      55 </span>            :     /// [in]    Penalty factors @f$ \mu @f$</a>
+<a name="56"><span class="lineNum">      56 </span>            :     crvec μ,</a>
+<a name="57"><span class="lineNum">      57 </span>            :     /// [out]   Slack variable error @f$ c(x) - \Pi_D(c(x) + \mu^{-1} y) @f$</a>
+<a name="58"><span class="lineNum">      58 </span>            :     rvec err_z) -&gt; Stats {</a>
+<a name="59"><span class="lineNum">      59 </span>            : </a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineNoCov">          0 :     if (opts.check)</span></a>
+<a name="61"><span class="lineNum">      61 </span>            :         problem.check();</a>
+<a name="62"><span class="lineNum">      62 </span>            : </a>
+<a name="63"><span class="lineNum">      63 </span>            :     using std::chrono::nanoseconds;</a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineNoCov">          0 :     auto os         = opts.os ? opts.os : this-&gt;os;</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineNoCov">          0 :     auto start_time = std::chrono::steady_clock::now();</span></a>
+<a name="66"><span class="lineNum">      66 </span><span class="lineNoCov">          0 :     Stats s;</span></a>
+<a name="67"><span class="lineNum">      67 </span>            : </a>
+<a name="68"><span class="lineNum">      68 </span><span class="lineNoCov">          0 :     const auto N    = problem.get_N();</span></a>
+<a name="69"><span class="lineNum">      69 </span><span class="lineNoCov">          0 :     const auto nu   = problem.get_nu();</span></a>
+<a name="70"><span class="lineNum">      70 </span><span class="lineNoCov">          0 :     const auto nx   = problem.get_nx();</span></a>
+<a name="71"><span class="lineNum">      71 </span><span class="lineNoCov">          0 :     const auto nc   = problem.get_nc();</span></a>
+<a name="72"><span class="lineNum">      72 </span><span class="lineNoCov">          0 :     const auto nc_N = problem.get_nc_N();</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineNoCov">          0 :     const auto n    = nu * N;</span></a>
+<a name="74"><span class="lineNum">      74 </span>            : </a>
+<a name="75"><span class="lineNum">      75 </span><span class="lineNoCov">          0 :     bool enable_lbfgs = params.gn_interval != 1;</span></a>
+<a name="76"><span class="lineNum">      76 </span>            : </a>
+<a name="77"><span class="lineNum">      77 </span>            :     // Allocate storage --------------------------------------------------------</a>
+<a name="78"><span class="lineNum">      78 </span>            : </a>
+<a name="79"><span class="lineNum">      79 </span>            :     // TODO: the L-BFGS objects and vectors allocate on each iteration of ALM,</a>
+<a name="80"><span class="lineNum">      80 </span>            :     //       and there are more vectors than strictly necessary.</a>
+<a name="81"><span class="lineNum">      81 </span>            : </a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineNoCov">          0 :     OCPEvaluator&lt;config_t&gt; eval{problem};</span></a>
+<a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :     auto &amp;vars = eval.vars;</span></a>
+<a name="84"><span class="lineNum">      84 </span><span class="lineNoCov">          0 :     alpaqa::detail::IndexSet&lt;config_t&gt; J{N, nu};</span></a>
+<a name="85"><span class="lineNum">      85 </span>            :     using LQRFactor = alpaqa::StatefulLQRFactor&lt;config_t&gt;;</a>
+<a name="86"><span class="lineNum">      86 </span><span class="lineNoCov">          0 :     LQRFactor lqr{{.N = N, .nx = nx, .nu = nu}};</span></a>
+<a name="87"><span class="lineNum">      87 </span><span class="lineNoCov">          0 :     LBFGS&lt;config_t&gt; lbfgs{params.lbfgs_params, enable_lbfgs ? n : 0};</span></a>
+<a name="88"><span class="lineNum">      88 </span><span class="lineNoCov">          0 :     mat jacs = vars.create_AB();</span></a>
+<a name="89"><span class="lineNum">      89 </span><span class="lineNoCov">          0 :     vec qr   = vars.create_qr();</span></a>
+<a name="90"><span class="lineNum">      90 </span>            : </a>
+<a name="91"><span class="lineNum">      91 </span><span class="lineNoCov">          0 :     vec q(n); // Newton step, including states</span></a>
+<a name="92"><span class="lineNum">      92 </span><span class="lineNoCov">          0 :     Box&lt;config_t&gt; U   = Box&lt;config_t&gt;::NaN(nu);</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineNoCov">          0 :     Box&lt;config_t&gt; D   = Box&lt;config_t&gt;::NaN(nc);</span></a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineNoCov">          0 :     Box&lt;config_t&gt; D_N = Box&lt;config_t&gt;::NaN(nc_N);</span></a>
+<a name="95"><span class="lineNum">      95 </span>            : </a>
+<a name="96"><span class="lineNum">      96 </span>            :     // Workspace storage</a>
+<a name="97"><span class="lineNum">      97 </span><span class="lineNoCov">          0 :     vec work_2x(nx * 2);</span></a>
+<a name="98"><span class="lineNum">      98 </span>            : </a>
+<a name="99"><span class="lineNum">      99 </span>            :     // ALM</a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineNoCov">          0 :     assert(μ.size() == nc * N + nc_N);</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineNoCov">          0 :     assert(y.size() == nc * N + nc_N);</span></a>
+<a name="102"><span class="lineNum">     102 </span>            : </a>
+<a name="103"><span class="lineNum">     103 </span>            :     // Functions for accessing the LQR matrices and index sets</a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineNoCov">          0 :     auto ABk = [&amp;](index_t i) -&gt; crmat { return vars.ABk(jacs, i); };</span></a>
+<a name="105"><span class="lineNum">     105 </span><span class="lineNoCov">          0 :     auto Qk  = [&amp;](rvec storage) {</span></a>
+<a name="106"><span class="lineNum">     106 </span><span class="lineNoCov">          0 :         return [&amp;, storage](index_t k) {</span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineNoCov">          0 :             return [&amp;, k](rmat out) {</span></a>
+<a name="108"><span class="lineNum">     108 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_hessians};</span></a>
+<a name="109"><span class="lineNum">     109 </span><span class="lineNoCov">          0 :                 return eval.Qk(storage, y, μ, D, D_N, k, out);</span></a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineNoCov">          0 :             };</span></a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineNoCov">          0 :         };</span></a>
+<a name="112"><span class="lineNum">     112 </span>            :     };</a>
+<a name="113"><span class="lineNum">     113 </span><span class="lineNoCov">          0 :     auto Rk = [&amp;](rvec storage) {</span></a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineNoCov">          0 :         return [&amp;, storage](index_t k) {</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineNoCov">          0 :             return [&amp;, k](crindexvec mask, rmat out) {</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_hessians};</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineNoCov">          0 :                 return eval.Rk(storage, k, mask, out);</span></a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineNoCov">          0 :             };</span></a>
+<a name="119"><span class="lineNum">     119 </span><span class="lineNoCov">          0 :         };</span></a>
+<a name="120"><span class="lineNum">     120 </span>            :     };</a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineNoCov">          0 :     auto Sk = [&amp;](rvec storage) {</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineNoCov">          0 :         return [&amp;, storage](index_t k) {</span></a>
+<a name="123"><span class="lineNum">     123 </span><span class="lineNoCov">          0 :             return [&amp;, k](crindexvec mask, rmat out) {</span></a>
+<a name="124"><span class="lineNum">     124 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_hessians};</span></a>
+<a name="125"><span class="lineNum">     125 </span><span class="lineNoCov">          0 :                 return eval.Sk(storage, k, mask, out);</span></a>
+<a name="126"><span class="lineNum">     126 </span><span class="lineNoCov">          0 :             };</span></a>
+<a name="127"><span class="lineNum">     127 </span><span class="lineNoCov">          0 :         };</span></a>
+<a name="128"><span class="lineNum">     128 </span>            :     };</a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineNoCov">          0 :     auto Rk_prod = [&amp;](rvec storage) {</span></a>
+<a name="130"><span class="lineNum">     130 </span><span class="lineNoCov">          0 :         return [&amp;, storage](index_t k) {</span></a>
+<a name="131"><span class="lineNum">     131 </span><span class="lineNoCov">          0 :             return [&amp;, k](crindexvec mask_J, crindexvec mask_K, crvec v,</span></a>
+<a name="132"><span class="lineNum">     132 </span>            :                           rvec out) {</a>
+<a name="133"><span class="lineNum">     133 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_hessians};</span></a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineNoCov">          0 :                 return eval.Rk_prod(storage, k, mask_J, mask_K, v, out);</span></a>
+<a name="135"><span class="lineNum">     135 </span><span class="lineNoCov">          0 :             };</span></a>
+<a name="136"><span class="lineNum">     136 </span><span class="lineNoCov">          0 :         };</span></a>
+<a name="137"><span class="lineNum">     137 </span>            :     };</a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineNoCov">          0 :     auto Sk_prod = [&amp;](rvec storage) {</span></a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineNoCov">          0 :         return [&amp;, storage](index_t k) {</span></a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineNoCov">          0 :             return [&amp;, k](crindexvec mask_K, crvec v, rvec out) {</span></a>
+<a name="141"><span class="lineNum">     141 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_hessians};</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineNoCov">          0 :                 return eval.Sk_prod(storage, k, mask_K, v, out);</span></a>
+<a name="143"><span class="lineNum">     143 </span><span class="lineNoCov">          0 :             };</span></a>
+<a name="144"><span class="lineNum">     144 </span><span class="lineNoCov">          0 :         };</span></a>
+<a name="145"><span class="lineNum">     145 </span>            :     };</a>
+<a name="146"><span class="lineNum">     146 </span><span class="lineNoCov">          0 :     auto mut_qrk = [&amp;](index_t k) -&gt; rvec { return vars.qrk(qr, k); };</span></a>
+<a name="147"><span class="lineNum">     147 </span><span class="lineNoCov">          0 :     auto mut_q_N = [&amp;]() -&gt; rvec { return vars.qk(qr, N); };</span></a>
+<a name="148"><span class="lineNum">     148 </span><span class="lineNoCov">          0 :     auto qk      = [&amp;](index_t k) -&gt; crvec { return vars.qk(qr, k); };</span></a>
+<a name="149"><span class="lineNum">     149 </span><span class="lineNoCov">          0 :     auto rk      = [&amp;](index_t k) -&gt; crvec { return vars.rk(qr, k); };</span></a>
+<a name="150"><span class="lineNum">     150 </span><span class="lineNoCov">          0 :     auto uk_eq   = [&amp;](index_t k) -&gt; crvec { return q.segment(k * nu, nu); };</span></a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineNoCov">          0 :     auto Jk      = [&amp;](index_t k) -&gt; crindexvec { return J.indices(k); };</span></a>
+<a name="152"><span class="lineNum">     152 </span><span class="lineNoCov">          0 :     auto Kk      = [&amp;](index_t k) -&gt; crindexvec { return J.compl_indices(k); };</span></a>
+<a name="153"><span class="lineNum">     153 </span>            : </a>
+<a name="154"><span class="lineNum">     154 </span>            :     // Iterates ----------------------------------------------------------------</a>
+<a name="155"><span class="lineNum">     155 </span>            : </a>
+<a name="156"><span class="lineNum">     156 </span>            :     // Represents an iterate in the algorithm, keeping track of some</a>
+<a name="157"><span class="lineNum">     157 </span>            :     // intermediate values and function evaluations.</a>
+<a name="158"><span class="lineNum">     158 </span>            :     struct Iterate {</a>
+<a name="159"><span class="lineNum">     159 </span>            :         vec xu;     //&lt; Inputs u interleaved with states x</a>
+<a name="160"><span class="lineNum">     160 </span>            :         vec xû;     //&lt; Inputs u interleaved with states x after prox grad</a>
+<a name="161"><span class="lineNum">     161 </span>            :         vec grad_ψ; //&lt; Gradient of cost in u</a>
+<a name="162"><span class="lineNum">     162 </span>            :         vec p;      //&lt; Proximal gradient step in u</a>
+<a name="163"><span class="lineNum">     163 </span>            :         vec u;      //&lt; Inputs u (used for L-BFGS only)</a>
+<a name="164"><span class="lineNum">     164 </span>            :         real_t ψu       = NaN&lt;config_t&gt;; //&lt; Cost in u</a>
+<a name="165"><span class="lineNum">     165 </span>            :         real_t ψû       = NaN&lt;config_t&gt;; //&lt; Cost in û</a>
+<a name="166"><span class="lineNum">     166 </span>            :         real_t γ        = NaN&lt;config_t&gt;; //&lt; Step size γ</a>
+<a name="167"><span class="lineNum">     167 </span>            :         real_t L        = NaN&lt;config_t&gt;; //&lt; Lipschitz estimate L</a>
+<a name="168"><span class="lineNum">     168 </span>            :         real_t pᵀp      = NaN&lt;config_t&gt;; //&lt; Norm squared of p</a>
+<a name="169"><span class="lineNum">     169 </span>            :         real_t grad_ψᵀp = NaN&lt;config_t&gt;; //&lt; Dot product of gradient and p</a>
+<a name="170"><span class="lineNum">     170 </span>            : </a>
+<a name="171"><span class="lineNum">     171 </span>            :         // @pre    @ref ψu, @ref pᵀp, @pre grad_ψᵀp</a>
+<a name="172"><span class="lineNum">     172 </span>            :         // @return φγ</a>
+<a name="173"><span class="lineNum">     173 </span><span class="lineNoCov">          0 :         real_t fbe() const { return ψu + pᵀp / (2 * γ) + grad_ψᵀp; }</span></a>
+<a name="174"><span class="lineNum">     174 </span>            : </a>
+<a name="175"><span class="lineNum">     175 </span><span class="lineNoCov">          0 :         Iterate(const OCPVariables&lt;config_t&gt; &amp;vars, bool enable_lbfgs)</span></a>
+<a name="176"><span class="lineNum">     176 </span><span class="lineNoCov">          0 :             : xu{vars.create()}, xû{vars.create()}, grad_ψ{vars.N * vars.nu()},</span></a>
+<a name="177"><span class="lineNum">     177 </span><span class="lineNoCov">          0 :               p{vars.N * vars.nu()}, u{enable_lbfgs ? vars.N * vars.nu() : 0} {}</span></a>
+<a name="178"><span class="lineNum">     178 </span><span class="lineNoCov">          0 :     } iterates[2]{</span></a>
+<a name="179"><span class="lineNum">     179 </span>            :         {vars, enable_lbfgs},</a>
+<a name="180"><span class="lineNum">     180 </span>            :         {vars, enable_lbfgs},</a>
+<a name="181"><span class="lineNum">     181 </span>            :     };</a>
+<a name="182"><span class="lineNum">     182 </span><span class="lineNoCov">          0 :     Iterate *curr = &amp;iterates[0];</span></a>
+<a name="183"><span class="lineNum">     183 </span><span class="lineNoCov">          0 :     Iterate *next = &amp;iterates[1];</span></a>
+<a name="184"><span class="lineNum">     184 </span>            : </a>
+<a name="185"><span class="lineNum">     185 </span>            :     // Helper functions --------------------------------------------------------</a>
+<a name="186"><span class="lineNum">     186 </span>            : </a>
+<a name="187"><span class="lineNum">     187 </span><span class="lineNoCov">          0 :     auto eval_proj_grad_step_box = [&amp;U](real_t γ, crvec x, crvec grad_ψ, rvec x̂,</span></a>
+<a name="188"><span class="lineNum">     188 </span>            :                                         rvec p) {</a>
+<a name="189"><span class="lineNum">     189 </span>            :         using binary_real_f = real_t (*)(real_t, real_t);</a>
+<a name="190"><span class="lineNum">     190 </span><span class="lineNoCov">          0 :         p                   = (-γ * grad_ψ)</span></a>
+<a name="191"><span class="lineNum">     191 </span><span class="lineNoCov">          0 :                 .binaryExpr(U.lowerbound - x, binary_real_f(std::fmax))</span></a>
+<a name="192"><span class="lineNum">     192 </span><span class="lineNoCov">          0 :                 .binaryExpr(U.upperbound - x, binary_real_f(std::fmin));</span></a>
+<a name="193"><span class="lineNum">     193 </span><span class="lineNoCov">          0 :         x̂ = x + p;</span></a>
+<a name="194"><span class="lineNum">     194 </span>            :     };</a>
+<a name="195"><span class="lineNum">     195 </span>            : </a>
+<a name="196"><span class="lineNum">     196 </span><span class="lineNoCov">          0 :     auto eval_prox_impl = [&amp;](real_t γ, crvec xu, crvec grad_ψ, rvec x̂u,</span></a>
+<a name="197"><span class="lineNum">     197 </span>            :                               rvec p) {</a>
+<a name="198"><span class="lineNum">     198 </span><span class="lineNoCov">          0 :         alpaqa::util::Timed t{s.time_prox};</span></a>
+<a name="199"><span class="lineNum">     199 </span><span class="lineNoCov">          0 :         real_t pᵀp      = 0;</span></a>
+<a name="200"><span class="lineNum">     200 </span><span class="lineNoCov">          0 :         real_t grad_ψᵀp = 0;</span></a>
+<a name="201"><span class="lineNum">     201 </span><span class="lineNoCov">          0 :         for (index_t t = 0; t &lt; N; ++t) {</span></a>
+<a name="202"><span class="lineNum">     202 </span><span class="lineNoCov">          0 :             auto &amp;&amp;grad_ψ_t = grad_ψ.segment(t * nu, nu);</span></a>
+<a name="203"><span class="lineNum">     203 </span><span class="lineNoCov">          0 :             auto &amp;&amp;p_t      = p.segment(t * nu, nu);</span></a>
+<a name="204"><span class="lineNum">     204 </span><span class="lineNoCov">          0 :             eval_proj_grad_step_box(γ, vars.uk(xu, t), grad_ψ_t,</span></a>
+<a name="205"><span class="lineNum">     205 </span>            :                                     /* in ⟹ out */ vars.uk(x̂u, t), p_t);</a>
+<a name="206"><span class="lineNum">     206 </span>            :             // Calculate ∇ψ(x)ᵀp and ‖p‖²</a>
+<a name="207"><span class="lineNum">     207 </span><span class="lineNoCov">          0 :             pᵀp += p_t.squaredNorm();</span></a>
+<a name="208"><span class="lineNum">     208 </span><span class="lineNoCov">          0 :             grad_ψᵀp += grad_ψ_t.dot(p_t);</span></a>
+<a name="209"><span class="lineNum">     209 </span>            :         }</a>
+<a name="210"><span class="lineNum">     210 </span><span class="lineNoCov">          0 :         return std::make_tuple(pᵀp, grad_ψᵀp);</span></a>
+<a name="211"><span class="lineNum">     211 </span><span class="lineNoCov">          0 :     };</span></a>
+<a name="212"><span class="lineNum">     212 </span>            : </a>
+<a name="213"><span class="lineNum">     213 </span><span class="lineNoCov">          0 :     auto calc_error_stop_crit = [this, &amp;eval_prox_impl](</span></a>
+<a name="214"><span class="lineNum">     214 </span>            :                                     real_t γ, crvec xuₖ, crvec grad_ψₖ,</a>
+<a name="215"><span class="lineNum">     215 </span>            :                                     crvec pₖ, real_t pₖᵀpₖ, rvec work_xu,</a>
+<a name="216"><span class="lineNum">     216 </span>            :                                     rvec work_p) {</a>
+<a name="217"><span class="lineNum">     217 </span><span class="lineNoCov">          0 :         switch (params.stop_crit) {</span></a>
+<a name="218"><span class="lineNum">     218 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::ProjGradNorm: {</span></a>
+<a name="219"><span class="lineNum">     219 </span><span class="lineNoCov">          0 :                 return vec_util::norm_inf(pₖ);</span></a>
+<a name="220"><span class="lineNum">     220 </span>            :             }</a>
+<a name="221"><span class="lineNum">     221 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::ProjGradNorm2: {</span></a>
+<a name="222"><span class="lineNum">     222 </span><span class="lineNoCov">          0 :                 return std::sqrt(pₖᵀpₖ);</span></a>
+<a name="223"><span class="lineNum">     223 </span>            :             }</a>
+<a name="224"><span class="lineNum">     224 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::ProjGradUnitNorm: {</span></a>
+<a name="225"><span class="lineNum">     225 </span><span class="lineNoCov">          0 :                 eval_prox_impl(1, xuₖ, grad_ψₖ, work_xu, work_p);</span></a>
+<a name="226"><span class="lineNum">     226 </span><span class="lineNoCov">          0 :                 return vec_util::norm_inf(work_p);</span></a>
+<a name="227"><span class="lineNum">     227 </span>            :             }</a>
+<a name="228"><span class="lineNum">     228 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::ProjGradUnitNorm2: {</span></a>
+<a name="229"><span class="lineNum">     229 </span><span class="lineNoCov">          0 :                 auto [pTp, gTp] =</span></a>
+<a name="230"><span class="lineNum">     230 </span>            :                     eval_prox_impl(1, xuₖ, grad_ψₖ, work_xu, work_p);</a>
+<a name="231"><span class="lineNum">     231 </span><span class="lineNoCov">          0 :                 return std::sqrt(pTp);</span></a>
+<a name="232"><span class="lineNum">     232 </span>            :             }</a>
+<a name="233"><span class="lineNum">     233 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::FPRNorm: {</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineNoCov">          0 :                 return vec_util::norm_inf(pₖ) / γ;</span></a>
+<a name="235"><span class="lineNum">     235 </span>            :             }</a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::FPRNorm2: {</span></a>
+<a name="237"><span class="lineNum">     237 </span><span class="lineNoCov">          0 :                 return std::sqrt(pₖᵀpₖ) / γ;</span></a>
+<a name="238"><span class="lineNum">     238 </span>            :             }</a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineNoCov">          0 :             case PANOCStopCrit::ApproxKKT: [[fallthrough]];</span></a>
+<a name="240"><span class="lineNum">     240 </span>            :             case PANOCStopCrit::ApproxKKT2: [[fallthrough]];</a>
+<a name="241"><span class="lineNum">     241 </span>            :             case PANOCStopCrit::Ipopt: [[fallthrough]];</a>
+<a name="242"><span class="lineNum">     242 </span>            :             case PANOCStopCrit::LBFGSBpp: [[fallthrough]];</a>
+<a name="243"><span class="lineNum">     243 </span>            :             default:</a>
+<a name="244"><span class="lineNum">     244 </span><span class="lineNoCov">          0 :                 throw std::invalid_argument(&quot;Unsupported stopping criterion&quot;);</span></a>
+<a name="245"><span class="lineNum">     245 </span>            :         }</a>
+<a name="246"><span class="lineNum">     246 </span>            :     };</a>
+<a name="247"><span class="lineNum">     247 </span>            : </a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineNoCov">          0 :     auto check_all_stop_conditions =</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineNoCov">          0 :         [this, &amp;opts](</span></a>
+<a name="250"><span class="lineNum">     250 </span>            :             /// [in]    Time elapsed since the start of the algorithm</a>
+<a name="251"><span class="lineNum">     251 </span>            :             auto time_elapsed,</a>
+<a name="252"><span class="lineNum">     252 </span>            :             /// [in]    The current iteration number</a>
+<a name="253"><span class="lineNum">     253 </span>            :             unsigned iteration,</a>
+<a name="254"><span class="lineNum">     254 </span>            :             /// [in]    Tolerance of the current iterate</a>
+<a name="255"><span class="lineNum">     255 </span>            :             real_t εₖ,</a>
+<a name="256"><span class="lineNum">     256 </span>            :             /// [in]    The number of successive iterations no progress was made</a>
+<a name="257"><span class="lineNum">     257 </span>            :             unsigned no_progress) {</a>
+<a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :             auto max_time = params.max_time;</span></a>
+<a name="259"><span class="lineNum">     259 </span><span class="lineNoCov">          0 :             if (opts.max_time)</span></a>
+<a name="260"><span class="lineNum">     260 </span><span class="lineNoCov">          0 :                 max_time = std::min(max_time, *opts.max_time);</span></a>
+<a name="261"><span class="lineNum">     261 </span><span class="lineNoCov">          0 :             auto tolerance = opts.tolerance &gt; 0 ? opts.tolerance : real_t(1e-8);</span></a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineNoCov">          0 :             bool out_of_time     = time_elapsed &gt; max_time;</span></a>
+<a name="263"><span class="lineNum">     263 </span><span class="lineNoCov">          0 :             bool out_of_iter     = iteration == params.max_iter;</span></a>
+<a name="264"><span class="lineNum">     264 </span><span class="lineNoCov">          0 :             bool interrupted     = stop_signal.stop_requested();</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineNoCov">          0 :             bool not_finite      = not std::isfinite(εₖ);</span></a>
+<a name="266"><span class="lineNum">     266 </span><span class="lineNoCov">          0 :             bool conv            = εₖ &lt;= tolerance;</span></a>
+<a name="267"><span class="lineNum">     267 </span><span class="lineNoCov">          0 :             bool max_no_progress = no_progress &gt; params.max_no_progress;</span></a>
+<a name="268"><span class="lineNum">     268 </span><span class="lineNoCov">          0 :             return conv              ? SolverStatus::Converged</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineNoCov">          0 :                    : out_of_time     ? SolverStatus::MaxTime</span></a>
+<a name="270"><span class="lineNum">     270 </span><span class="lineNoCov">          0 :                    : out_of_iter     ? SolverStatus::MaxIter</span></a>
+<a name="271"><span class="lineNum">     271 </span><span class="lineNoCov">          0 :                    : not_finite      ? SolverStatus::NotFinite</span></a>
+<a name="272"><span class="lineNum">     272 </span><span class="lineNoCov">          0 :                    : max_no_progress ? SolverStatus::NoProgress</span></a>
+<a name="273"><span class="lineNum">     273 </span><span class="lineNoCov">          0 :                    : interrupted     ? SolverStatus::Interrupted</span></a>
+<a name="274"><span class="lineNum">     274 </span><span class="lineNoCov">          0 :                                      : SolverStatus::Busy;</span></a>
+<a name="275"><span class="lineNum">     275 </span>            :         };</a>
+<a name="276"><span class="lineNum">     276 </span>            : </a>
+<a name="277"><span class="lineNum">     277 </span><span class="lineNoCov">          0 :     auto assign_interleave_xu = [&amp;vars](crvec u, rvec xu) {</span></a>
+<a name="278"><span class="lineNum">     278 </span><span class="lineNoCov">          0 :         detail::assign_interleave_xu(vars, u, xu);</span></a>
+<a name="279"><span class="lineNum">     279 </span>            :     };</a>
+<a name="280"><span class="lineNum">     280 </span><span class="lineNoCov">          0 :     auto assign_extract_u = [&amp;vars](crvec xu, rvec u) {</span></a>
+<a name="281"><span class="lineNum">     281 </span><span class="lineNoCov">          0 :         detail::assign_extract_u(vars, xu, u);</span></a>
+<a name="282"><span class="lineNum">     282 </span>            :     };</a>
+<a name="283"><span class="lineNum">     283 </span>            : </a>
+<a name="284"><span class="lineNum">     284 </span><span class="lineNoCov">          0 :     auto write_solution = [&amp;](Iterate &amp;it) {</span></a>
+<a name="285"><span class="lineNum">     285 </span>            :         // Update multipliers and constraint error</a>
+<a name="286"><span class="lineNum">     286 </span><span class="lineNoCov">          0 :         if (nc &gt; 0 || nc_N &gt; 0) {</span></a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineNoCov">          0 :             for (index_t t = 0; t &lt; N; ++t) {</span></a>
+<a name="288"><span class="lineNum">     288 </span><span class="lineNoCov">          0 :                 auto ct = vars.ck(it.xû, t);</span></a>
+<a name="289"><span class="lineNum">     289 </span><span class="lineNoCov">          0 :                 auto yt = y.segment(nc * t, nc);</span></a>
+<a name="290"><span class="lineNum">     290 </span><span class="lineNoCov">          0 :                 auto μt = μ.segment(nc * t, nc);</span></a>
+<a name="291"><span class="lineNum">     291 </span><span class="lineNoCov">          0 :                 auto ζ  = ct + μt.asDiagonal().inverse() * yt;</span></a>
+<a name="292"><span class="lineNum">     292 </span><span class="lineNoCov">          0 :                 auto et = err_z.segment(nc * t, nc);</span></a>
+<a name="293"><span class="lineNum">     293 </span><span class="lineNoCov">          0 :                 et      = projecting_difference(ζ, D);</span></a>
+<a name="294"><span class="lineNum">     294 </span><span class="lineNoCov">          0 :                 et -= μt.asDiagonal().inverse() * yt;</span></a>
+<a name="295"><span class="lineNum">     295 </span><span class="lineNoCov">          0 :                 yt += μt.asDiagonal() * et;</span></a>
+<a name="296"><span class="lineNum">     296 </span>            :             }</a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineNoCov">          0 :             auto ct = vars.ck(it.xû, N);</span></a>
+<a name="298"><span class="lineNum">     298 </span><span class="lineNoCov">          0 :             auto yt = y.segment(nc * N, nc_N);</span></a>
+<a name="299"><span class="lineNum">     299 </span><span class="lineNoCov">          0 :             auto μt = μ.segment(nc * N, nc_N);</span></a>
+<a name="300"><span class="lineNum">     300 </span><span class="lineNoCov">          0 :             auto ζ  = ct + μt.asDiagonal().inverse() * yt;</span></a>
+<a name="301"><span class="lineNum">     301 </span><span class="lineNoCov">          0 :             auto et = err_z.segment(nc * N, nc_N);</span></a>
+<a name="302"><span class="lineNum">     302 </span><span class="lineNoCov">          0 :             et      = projecting_difference(ζ, D_N);</span></a>
+<a name="303"><span class="lineNum">     303 </span><span class="lineNoCov">          0 :             et -= μt.asDiagonal().inverse() * yt;</span></a>
+<a name="304"><span class="lineNum">     304 </span><span class="lineNoCov">          0 :             yt += μt.asDiagonal() * et;</span></a>
+<a name="305"><span class="lineNum">     305 </span>            :         }</a>
+<a name="306"><span class="lineNum">     306 </span><span class="lineNoCov">          0 :         assign_extract_u(it.xû, u);</span></a>
+<a name="307"><span class="lineNum">     307 </span>            :     };</a>
+<a name="308"><span class="lineNum">     308 </span>            : </a>
+<a name="309"><span class="lineNum">     309 </span>            :     // @pre    @ref Iterate::γ, @ref Iterate::xu, @ref Iterate::grad_ψ</a>
+<a name="310"><span class="lineNum">     310 </span>            :     // @post   @ref Iterate::xû, @ref Iterate::p, @ref Iterate::pᵀp,</a>
+<a name="311"><span class="lineNum">     311 </span>            :     //         @ref Iterate::grad_ψᵀp</a>
+<a name="312"><span class="lineNum">     312 </span><span class="lineNoCov">          0 :     auto eval_prox = [&amp;](Iterate &amp;i) {</span></a>
+<a name="313"><span class="lineNum">     313 </span><span class="lineNoCov">          0 :         std::tie(i.pᵀp, i.grad_ψᵀp) =</span></a>
+<a name="314"><span class="lineNum">     314 </span><span class="lineNoCov">          0 :             eval_prox_impl(i.γ, i.xu, i.grad_ψ, i.xû, i.p);</span></a>
+<a name="315"><span class="lineNum">     315 </span>            :     };</a>
+<a name="316"><span class="lineNum">     316 </span>            : </a>
+<a name="317"><span class="lineNum">     317 </span>            :     // @pre    @ref Iterate::xu</a>
+<a name="318"><span class="lineNum">     318 </span>            :     // @post   @ref Iterate::ψu</a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineNoCov">          0 :     auto eval_forward = [&amp;](Iterate &amp;i) {</span></a>
+<a name="320"><span class="lineNum">     320 </span><span class="lineNoCov">          0 :         alpaqa::util::Timed t{s.time_forward};</span></a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineNoCov">          0 :         i.ψu = eval.forward(i.xu, D, D_N, μ, y);</span></a>
+<a name="322"><span class="lineNum">     322 </span><span class="lineNoCov">          0 :     };</span></a>
+<a name="323"><span class="lineNum">     323 </span>            :     // @pre    @ref Iterate::xû</a>
+<a name="324"><span class="lineNum">     324 </span>            :     // @post   @ref Iterate::ψû</a>
+<a name="325"><span class="lineNum">     325 </span><span class="lineNoCov">          0 :     auto eval_forward_hat = [&amp;](Iterate &amp;i) {</span></a>
+<a name="326"><span class="lineNum">     326 </span><span class="lineNoCov">          0 :         alpaqa::util::Timed t{s.time_forward};</span></a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineNoCov">          0 :         i.ψû = eval.forward(i.xû, D, D_N, μ, y);</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineNoCov">          0 :     };</span></a>
+<a name="329"><span class="lineNum">     329 </span>            : </a>
+<a name="330"><span class="lineNum">     330 </span>            :     // @pre    @ref Iterate::xu</a>
+<a name="331"><span class="lineNum">     331 </span>            :     // @post   @ref Iterate::grad_ψ, q, q_N</a>
+<a name="332"><span class="lineNum">     332 </span><span class="lineNoCov">          0 :     auto eval_backward = [&amp;](Iterate &amp;i) {</span></a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineNoCov">          0 :         alpaqa::util::Timed t{s.time_backward};</span></a>
+<a name="334"><span class="lineNum">     334 </span><span class="lineNoCov">          0 :         eval.backward(i.xu, i.grad_ψ, mut_qrk, mut_q_N, D, D_N, μ, y);</span></a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineNoCov">          0 :     };</span></a>
+<a name="336"><span class="lineNum">     336 </span>            : </a>
+<a name="337"><span class="lineNum">     337 </span><span class="lineNoCov">          0 :     auto qub_violated = [this](const Iterate &amp;i) {</span></a>
+<a name="338"><span class="lineNum">     338 </span><span class="lineNoCov">          0 :         real_t margin =</span></a>
+<a name="339"><span class="lineNum">     339 </span><span class="lineNoCov">          0 :             (1 + std::abs(i.ψu)) * params.quadratic_upperbound_tolerance_factor;</span></a>
+<a name="340"><span class="lineNum">     340 </span><span class="lineNoCov">          0 :         return i.ψû &gt; i.ψu + i.grad_ψᵀp + real_t(0.5) * i.L * i.pᵀp + margin;</span></a>
+<a name="341"><span class="lineNum">     341 </span>            :     };</a>
+<a name="342"><span class="lineNum">     342 </span>            : </a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineNoCov">          0 :     auto linesearch_violated = [this](const Iterate &amp;curr,</span></a>
+<a name="344"><span class="lineNum">     344 </span>            :                                       const Iterate &amp;next) {</a>
+<a name="345"><span class="lineNum">     345 </span><span class="lineNoCov">          0 :         real_t β  = params.linesearch_strictness_factor;</span></a>
+<a name="346"><span class="lineNum">     346 </span><span class="lineNoCov">          0 :         real_t σ  = β * (1 - curr.γ * curr.L) / (2 * curr.γ);</span></a>
+<a name="347"><span class="lineNum">     347 </span><span class="lineNoCov">          0 :         real_t φγ = curr.fbe();</span></a>
+<a name="348"><span class="lineNum">     348 </span><span class="lineNoCov">          0 :         real_t margin = (1 + std::abs(φγ)) * params.linesearch_tolerance_factor;</span></a>
+<a name="349"><span class="lineNum">     349 </span><span class="lineNoCov">          0 :         return next.fbe() &gt; φγ - σ * curr.pᵀp + margin;</span></a>
+<a name="350"><span class="lineNum">     350 </span>            :     };</a>
+<a name="351"><span class="lineNum">     351 </span>            : </a>
+<a name="352"><span class="lineNum">     352 </span><span class="lineNoCov">          0 :     auto initial_lipschitz_estimate =</span></a>
+<a name="353"><span class="lineNum">     353 </span><span class="lineNoCov">          0 :         [&amp;](</span></a>
+<a name="354"><span class="lineNum">     354 </span>            :             /// Iterate, updates xu, ψ, grad_ψ, have_jacobians, L</a>
+<a name="355"><span class="lineNum">     355 </span>            :             Iterate *it,</a>
+<a name="356"><span class="lineNum">     356 </span>            :             /// [in]    Finite difference step size relative to x</a>
+<a name="357"><span class="lineNum">     357 </span>            :             real_t ε,</a>
+<a name="358"><span class="lineNum">     358 </span>            :             /// [in]    Minimum absolute finite difference step size</a>
+<a name="359"><span class="lineNum">     359 </span>            :             real_t δ,</a>
+<a name="360"><span class="lineNum">     360 </span>            :             /// [in]    Minimum allowed Lipschitz estimate.</a>
+<a name="361"><span class="lineNum">     361 </span>            :             real_t L_min,</a>
+<a name="362"><span class="lineNum">     362 </span>            :             /// [in]    Maximum allowed Lipschitz estimate.</a>
+<a name="363"><span class="lineNum">     363 </span>            :             real_t L_max,</a>
+<a name="364"><span class="lineNum">     364 </span>            :             ///         Workspace with the same dimensions as xu, with x_init</a>
+<a name="365"><span class="lineNum">     365 </span>            :             rvec work_xu,</a>
+<a name="366"><span class="lineNum">     366 </span>            :             ///         Workspace with the same dimensions as grad_ψ</a>
+<a name="367"><span class="lineNum">     367 </span>            :             rvec work_grad_ψ) {</a>
+<a name="368"><span class="lineNum">     368 </span>            :             // Calculate ψ(x₀), ∇ψ(x₀)</a>
+<a name="369"><span class="lineNum">     369 </span><span class="lineNoCov">          0 :             eval_forward(*it);</span></a>
+<a name="370"><span class="lineNum">     370 </span><span class="lineNoCov">          0 :             eval_backward(*it);</span></a>
+<a name="371"><span class="lineNum">     371 </span>            :             // Select a small step h for finite differences</a>
+<a name="372"><span class="lineNum">     372 </span><span class="lineNoCov">          0 :             auto h        = it-&gt;grad_ψ.unaryExpr([&amp;](real_t g) {</span></a>
+<a name="373"><span class="lineNum">     373 </span><span class="lineNoCov">          0 :                 return g &gt; 0 ? std::max(g * ε, δ) : std::min(g * ε, -δ);</span></a>
+<a name="374"><span class="lineNum">     374 </span>            :             });</a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineNoCov">          0 :             real_t norm_h = h.norm();</span></a>
+<a name="376"><span class="lineNum">     376 </span>            :             // work_xu = xu - h</a>
+<a name="377"><span class="lineNum">     377 </span><span class="lineNoCov">          0 :             for (index_t t = 0; t &lt; N; ++t)</span></a>
+<a name="378"><span class="lineNum">     378 </span><span class="lineNoCov">          0 :                 vars.uk(work_xu, t) =</span></a>
+<a name="379"><span class="lineNum">     379 </span><span class="lineNoCov">          0 :                     vars.uk(it-&gt;xu, t) - h.segment(t * nu, nu);</span></a>
+<a name="380"><span class="lineNum">     380 </span>            : </a>
+<a name="381"><span class="lineNum">     381 </span>            :             { // Calculate ψ(x₀ - h)</a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_forward};</span></a>
+<a name="383"><span class="lineNum">     383 </span><span class="lineNoCov">          0 :                 eval.forward_simulate(work_xu); // needed for backwards sweep</span></a>
+<a name="384"><span class="lineNum">     384 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="385"><span class="lineNum">     385 </span>            :             { // Calculate ∇ψ(x₀ + h)</a>
+<a name="386"><span class="lineNum">     386 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_backward};</span></a>
+<a name="387"><span class="lineNum">     387 </span><span class="lineNoCov">          0 :                 eval.backward(work_xu, work_grad_ψ, mut_qrk, mut_q_N, D, D_N, μ,</span></a>
+<a name="388"><span class="lineNum">     388 </span>            :                               y);</a>
+<a name="389"><span class="lineNum">     389 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="390"><span class="lineNum">     390 </span>            :             // Estimate Lipschitz constant using finite differences</a>
+<a name="391"><span class="lineNum">     391 </span><span class="lineNoCov">          0 :             it-&gt;L = (work_grad_ψ - it-&gt;grad_ψ).norm() / norm_h;</span></a>
+<a name="392"><span class="lineNum">     392 </span><span class="lineNoCov">          0 :             it-&gt;L = std::clamp(it-&gt;L, L_min, L_max);</span></a>
+<a name="393"><span class="lineNum">     393 </span>            :         };</a>
+<a name="394"><span class="lineNum">     394 </span>            : </a>
+<a name="395"><span class="lineNum">     395 </span>            :     // Printing ----------------------------------------------------------------</a>
+<a name="396"><span class="lineNum">     396 </span>            : </a>
+<a name="397"><span class="lineNum">     397 </span>            :     std::array&lt;char, 64&gt; print_buf;</a>
+<a name="398"><span class="lineNum">     398 </span><span class="lineNoCov">          0 :     auto print_real = [&amp;](real_t x) {</span></a>
+<a name="399"><span class="lineNum">     399 </span><span class="lineNoCov">          0 :         return float_to_str_vw(print_buf, x, params.print_precision);</span></a>
+<a name="400"><span class="lineNum">     400 </span>            :     };</a>
+<a name="401"><span class="lineNum">     401 </span><span class="lineNoCov">          0 :     auto print_real3 = [&amp;](real_t x) {</span></a>
+<a name="402"><span class="lineNum">     402 </span><span class="lineNoCov">          0 :         return float_to_str_vw(print_buf, x, 3);</span></a>
+<a name="403"><span class="lineNum">     403 </span>            :     };</a>
+<a name="404"><span class="lineNum">     404 </span><span class="lineNoCov">          0 :     auto print_progress_1 = [&amp;](unsigned k, real_t φₖ, real_t ψₖ, crvec grad_ψₖ,</span></a>
+<a name="405"><span class="lineNum">     405 </span>            :                                 real_t pₖᵀpₖ, real_t γₖ, real_t εₖ) {</a>
+<a name="406"><span class="lineNum">     406 </span><span class="lineNoCov">          0 :         if (k == 0)</span></a>
+<a name="407"><span class="lineNum">     407 </span><span class="lineNoCov">          0 :             *os &lt;&lt; &quot;┌─[PANOCOCP]\n&quot;;</span></a>
+<a name="408"><span class="lineNum">     408 </span>            :         else</a>
+<a name="409"><span class="lineNum">     409 </span><span class="lineNoCov">          0 :             *os &lt;&lt; &quot;├─ &quot; &lt;&lt; std::setw(6) &lt;&lt; k &lt;&lt; '\n';</span></a>
+<a name="410"><span class="lineNum">     410 </span>            :         *os &lt;&lt; &quot;│   φγ = &quot; &lt;&lt; print_real(φₖ)               //</a>
+<a name="411"><span class="lineNum">     411 </span>            :             &lt;&lt; &quot;,    ψ = &quot; &lt;&lt; print_real(ψₖ)               //</a>
+<a name="412"><span class="lineNum">     412 </span>            :             &lt;&lt; &quot;, ‖∇ψ‖ = &quot; &lt;&lt; print_real(grad_ψₖ.norm())   //</a>
+<a name="413"><span class="lineNum">     413 </span>            :             &lt;&lt; &quot;,  ‖p‖ = &quot; &lt;&lt; print_real(std::sqrt(pₖᵀpₖ)) //</a>
+<a name="414"><span class="lineNum">     414 </span>            :             &lt;&lt; &quot;,    γ = &quot; &lt;&lt; print_real(γₖ)               //</a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineNoCov">          0 :             &lt;&lt; &quot;,    ε = &quot; &lt;&lt; print_real(εₖ) &lt;&lt; '\n';</span></a>
+<a name="416"><span class="lineNum">     416 </span>            :     };</a>
+<a name="417"><span class="lineNum">     417 </span><span class="lineNoCov">          0 :     auto print_progress_2 = [&amp;](crvec qₖ, real_t τₖ, bool did_gn, length_t nJ,</span></a>
+<a name="418"><span class="lineNum">     418 </span>            :                                 real_t min_rcond, bool reject) {</a>
+<a name="419"><span class="lineNum">     419 </span><span class="lineNoCov">          0 :         const char *color = τₖ == 1  ? &quot;\033[0;32m&quot;</span></a>
+<a name="420"><span class="lineNum">     420 </span>            :                             : τₖ &gt; 0 ? &quot;\033[0;33m&quot;</a>
+<a name="421"><span class="lineNum">     421 </span>            :                                      : &quot;\033[0;35m&quot;;</a>
+<a name="422"><span class="lineNum">     422 </span>            :         *os &lt;&lt; &quot;│  ‖q‖ = &quot; &lt;&lt; print_real(qₖ.norm())                       //</a>
+<a name="423"><span class="lineNum">     423 </span><span class="lineNoCov">          0 :             &lt;&lt; &quot;,   #J = &quot; &lt;&lt; std::setw(7 + params.print_precision) &lt;&lt; nJ //</span></a>
+<a name="424"><span class="lineNum">     424 </span>            :             &lt;&lt; &quot;, cond = &quot; &lt;&lt; print_real3(real_t(1) / min_rcond)          //</a>
+<a name="425"><span class="lineNum">     425 </span>            :             &lt;&lt; &quot;,    τ = &quot; &lt;&lt; color &lt;&lt; print_real3(τₖ) &lt;&lt; &quot;\033[0m&quot;       //</a>
+<a name="426"><span class="lineNum">     426 </span>            :             &lt;&lt; &quot;,    &quot; &lt;&lt; (did_gn ? &quot;GN&quot; : &quot;L-BFGS&quot;)                      //</a>
+<a name="427"><span class="lineNum">     427 </span>            :             &lt;&lt; &quot;,      dir update &quot;</a>
+<a name="428"><span class="lineNum">     428 </span><span class="lineNoCov">          0 :             &lt;&lt; (reject ? &quot;\033[0;31mrejected\033[0m&quot;</span></a>
+<a name="429"><span class="lineNum">     429 </span>            :                        : &quot;\033[0;32maccepted\033[0m&quot;) //</a>
+<a name="430"><span class="lineNum">     430 </span><span class="lineNoCov">          0 :             &lt;&lt; std::endl; // Flush for Python buffering</span></a>
+<a name="431"><span class="lineNum">     431 </span>            :     };</a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineNoCov">          0 :     auto print_progress_n = [&amp;](SolverStatus status) {</span></a>
+<a name="433"><span class="lineNum">     433 </span><span class="lineNoCov">          0 :         *os &lt;&lt; &quot;└─ &quot; &lt;&lt; status &lt;&lt; &quot; ──&quot;</span></a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineNoCov">          0 :             &lt;&lt; std::endl; // Flush for Python buffering</span></a>
+<a name="435"><span class="lineNum">     435 </span>            :     };</a>
+<a name="436"><span class="lineNum">     436 </span>            : </a>
+<a name="437"><span class="lineNum">     437 </span><span class="lineNoCov">          0 :     auto do_progress_cb = [this, &amp;s, &amp;problem, &amp;lqr,</span></a>
+<a name="438"><span class="lineNum">     438 </span>            :                            &amp;opts](unsigned k, Iterate &amp;curr, crvec q, real_t τ,</a>
+<a name="439"><span class="lineNum">     439 </span>            :                                   real_t εₖ, bool did_gn, index_t nJ,</a>
+<a name="440"><span class="lineNum">     440 </span>            :                                   SolverStatus status) {</a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineNoCov">          0 :         if (!progress_cb)</span></a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineNoCov">          0 :             return;</span></a>
+<a name="443"><span class="lineNum">     443 </span>            :         ScopedMallocAllower ma;</a>
+<a name="444"><span class="lineNum">     444 </span><span class="lineNoCov">          0 :         alpaqa::util::Timed t{s.time_progress_callback};</span></a>
+<a name="445"><span class="lineNum">     445 </span><span class="lineNoCov">          0 :         progress_cb({</span></a>
+<a name="446"><span class="lineNum">     446 </span>            :             .k             = k,</a>
+<a name="447"><span class="lineNum">     447 </span>            :             .status        = status,</a>
+<a name="448"><span class="lineNum">     448 </span><span class="lineNoCov">          0 :             .xu            = curr.xu,</span></a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineNoCov">          0 :             .p             = curr.p,</span></a>
+<a name="450"><span class="lineNum">     450 </span><span class="lineNoCov">          0 :             .norm_sq_p     = curr.pᵀp,</span></a>
+<a name="451"><span class="lineNum">     451 </span><span class="lineNoCov">          0 :             .x̂u            = curr.xû,</span></a>
+<a name="452"><span class="lineNum">     452 </span><span class="lineNoCov">          0 :             .φγ            = curr.fbe(),</span></a>
+<a name="453"><span class="lineNum">     453 </span><span class="lineNoCov">          0 :             .ψ             = curr.ψu,</span></a>
+<a name="454"><span class="lineNum">     454 </span><span class="lineNoCov">          0 :             .grad_ψ        = curr.grad_ψ,</span></a>
+<a name="455"><span class="lineNum">     455 </span><span class="lineNoCov">          0 :             .ψ_hat         = curr.ψû,</span></a>
+<a name="456"><span class="lineNum">     456 </span>            :             .q             = q,</a>
+<a name="457"><span class="lineNum">     457 </span>            :             .gn            = did_gn,</a>
+<a name="458"><span class="lineNum">     458 </span>            :             .nJ            = nJ,</a>
+<a name="459"><span class="lineNum">     459 </span><span class="lineNoCov">          0 :             .lqr_min_rcond = lqr.min_rcond,</span></a>
+<a name="460"><span class="lineNum">     460 </span><span class="lineNoCov">          0 :             .L             = curr.L,</span></a>
+<a name="461"><span class="lineNum">     461 </span><span class="lineNoCov">          0 :             .γ             = curr.γ,</span></a>
+<a name="462"><span class="lineNum">     462 </span><span class="lineNoCov">          0 :             .τ             = status == SolverStatus::Busy ? τ : NaN&lt;config_t&gt;,</span></a>
+<a name="463"><span class="lineNum">     463 </span>            :             .ε             = εₖ,</a>
+<a name="464"><span class="lineNum">     464 </span><span class="lineNoCov">          0 :             .outer_iter    = opts.outer_iter,</span></a>
+<a name="465"><span class="lineNum">     465 </span>            :             .problem       = &amp;problem,</a>
+<a name="466"><span class="lineNum">     466 </span><span class="lineNoCov">          0 :             .params        = &amp;params,</span></a>
+<a name="467"><span class="lineNum">     467 </span>            :         });</a>
+<a name="468"><span class="lineNum">     468 </span><span class="lineNoCov">          0 :     };</span></a>
+<a name="469"><span class="lineNum">     469 </span>            : </a>
+<a name="470"><span class="lineNum">     470 </span>            :     // Initialize inputs and initial state (do not simulate states yet) --------</a>
+<a name="471"><span class="lineNum">     471 </span>            : </a>
+<a name="472"><span class="lineNum">     472 </span><span class="lineNoCov">          0 :     assign_interleave_xu(u, curr-&gt;xu);           // initial guess</span></a>
+<a name="473"><span class="lineNum">     473 </span><span class="lineNoCov">          0 :     problem.get_x_init(curr-&gt;xu.topRows(nx));    // initial state</span></a>
+<a name="474"><span class="lineNum">     474 </span><span class="lineNoCov">          0 :     curr-&gt;xû.topRows(nx) = curr-&gt;xu.topRows(nx); // initial state</span></a>
+<a name="475"><span class="lineNum">     475 </span><span class="lineNoCov">          0 :     next-&gt;xu.topRows(nx) = curr-&gt;xu.topRows(nx); // initial state</span></a>
+<a name="476"><span class="lineNum">     476 </span><span class="lineNoCov">          0 :     next-&gt;xû.topRows(nx) = curr-&gt;xu.topRows(nx); // initial state</span></a>
+<a name="477"><span class="lineNum">     477 </span><span class="lineNoCov">          0 :     if (enable_lbfgs)</span></a>
+<a name="478"><span class="lineNum">     478 </span><span class="lineNoCov">          0 :         curr-&gt;u = u;</span></a>
+<a name="479"><span class="lineNum">     479 </span>            : </a>
+<a name="480"><span class="lineNum">     480 </span>            :     problem.get_U(U);     // input box constraints</a>
+<a name="481"><span class="lineNum">     481 </span>            :     problem.get_D(D);     // general constraints</a>
+<a name="482"><span class="lineNum">     482 </span>            :     problem.get_D_N(D_N); // general terminal constraints</a>
+<a name="483"><span class="lineNum">     483 </span>            : </a>
+<a name="484"><span class="lineNum">     484 </span><span class="lineNoCov">          0 :     bool do_gn_step = params.gn_interval &gt; 0 and !params.disable_acceleration;</span></a>
+<a name="485"><span class="lineNum">     485 </span><span class="lineNoCov">          0 :     bool did_gn     = false;</span></a>
+<a name="486"><span class="lineNum">     486 </span>            : </a>
+<a name="487"><span class="lineNum">     487 </span>            :     // Make sure that we don't allocate any memory in the inner loop</a>
+<a name="488"><span class="lineNum">     488 </span>            :     ScopedMallocBlocker mb;</a>
+<a name="489"><span class="lineNum">     489 </span>            : </a>
+<a name="490"><span class="lineNum">     490 </span>            :     // Estimate Lipschitz constant ---------------------------------------------</a>
+<a name="491"><span class="lineNum">     491 </span>            : </a>
+<a name="492"><span class="lineNum">     492 </span>            :     // Finite difference approximation of ∇²ψ in starting point</a>
+<a name="493"><span class="lineNum">     493 </span><span class="lineNoCov">          0 :     if (params.Lipschitz.L_0 &lt;= 0) {</span></a>
+<a name="494"><span class="lineNum">     494 </span><span class="lineNoCov">          0 :         initial_lipschitz_estimate(curr, params.Lipschitz.ε, params.Lipschitz.δ,</span></a>
+<a name="495"><span class="lineNum">     495 </span>            :                                    params.L_min, params.L_max, next-&gt;xu,</a>
+<a name="496"><span class="lineNum">     496 </span>            :                                    next-&gt;grad_ψ);</a>
+<a name="497"><span class="lineNum">     497 </span>            :     }</a>
+<a name="498"><span class="lineNum">     498 </span>            :     // Initial Lipschitz constant provided by the user</a>
+<a name="499"><span class="lineNum">     499 </span>            :     else {</a>
+<a name="500"><span class="lineNum">     500 </span><span class="lineNoCov">          0 :         curr-&gt;L = params.Lipschitz.L_0;</span></a>
+<a name="501"><span class="lineNum">     501 </span>            :         // Calculate ψ(x₀), ∇ψ(x₀)</a>
+<a name="502"><span class="lineNum">     502 </span><span class="lineNoCov">          0 :         eval_forward(*curr);</span></a>
+<a name="503"><span class="lineNum">     503 </span><span class="lineNoCov">          0 :         eval_backward(*curr);</span></a>
+<a name="504"><span class="lineNum">     504 </span>            :     }</a>
+<a name="505"><span class="lineNum">     505 </span><span class="lineNoCov">          0 :     if (not std::isfinite(curr-&gt;L)) {</span></a>
+<a name="506"><span class="lineNum">     506 </span><span class="lineNoCov">          0 :         s.status = SolverStatus::NotFinite;</span></a>
+<a name="507"><span class="lineNum">     507 </span><span class="lineNoCov">          0 :         return s;</span></a>
+<a name="508"><span class="lineNum">     508 </span>            :     }</a>
+<a name="509"><span class="lineNum">     509 </span><span class="lineNoCov">          0 :     curr-&gt;γ = params.Lipschitz.Lγ_factor / curr-&gt;L;</span></a>
+<a name="510"><span class="lineNum">     510 </span><span class="lineNoCov">          0 :     eval_prox(*curr);</span></a>
+<a name="511"><span class="lineNum">     511 </span><span class="lineNoCov">          0 :     eval_forward_hat(*curr);</span></a>
+<a name="512"><span class="lineNum">     512 </span>            : </a>
+<a name="513"><span class="lineNum">     513 </span><span class="lineNoCov">          0 :     unsigned k  = 0;</span></a>
+<a name="514"><span class="lineNum">     514 </span><span class="lineNoCov">          0 :     real_t τ    = NaN&lt;config_t&gt;;</span></a>
+<a name="515"><span class="lineNum">     515 </span><span class="lineNoCov">          0 :     length_t nJ = -1;</span></a>
+<a name="516"><span class="lineNum">     516 </span>            : </a>
+<a name="517"><span class="lineNum">     517 </span>            :     // Keep track of how many successive iterations didn't update the iterate</a>
+<a name="518"><span class="lineNum">     518 </span><span class="lineNoCov">          0 :     unsigned no_progress = 0;</span></a>
+<a name="519"><span class="lineNum">     519 </span>            : </a>
+<a name="520"><span class="lineNum">     520 </span>            :     // Main PANOC loop</a>
+<a name="521"><span class="lineNum">     521 </span>            :     // =========================================================================</a>
+<a name="522"><span class="lineNum">     522 </span><span class="lineNoCov">          0 :     while (true) {</span></a>
+<a name="523"><span class="lineNum">     523 </span>            : </a>
+<a name="524"><span class="lineNum">     524 </span>            :         // Check stop condition ------------------------------------------------</a>
+<a name="525"><span class="lineNum">     525 </span>            : </a>
+<a name="526"><span class="lineNum">     526 </span><span class="lineNoCov">          0 :         real_t εₖ = calc_error_stop_crit(curr-&gt;γ, curr-&gt;xu, curr-&gt;grad_ψ,</span></a>
+<a name="527"><span class="lineNum">     527 </span><span class="lineNoCov">          0 :                                          curr-&gt;p, curr-&gt;pᵀp, next-&gt;xû, next-&gt;p);</span></a>
+<a name="528"><span class="lineNum">     528 </span>            : </a>
+<a name="529"><span class="lineNum">     529 </span>            :         // Print progress ------------------------------------------------------</a>
+<a name="530"><span class="lineNum">     530 </span><span class="lineNoCov">          0 :         bool do_print =</span></a>
+<a name="531"><span class="lineNum">     531 </span><span class="lineNoCov">          0 :             params.print_interval != 0 &amp;&amp; k % params.print_interval == 0;</span></a>
+<a name="532"><span class="lineNum">     532 </span><span class="lineNoCov">          0 :         if (do_print)</span></a>
+<a name="533"><span class="lineNum">     533 </span><span class="lineNoCov">          0 :             print_progress_1(k, curr-&gt;fbe(), curr-&gt;ψu, curr-&gt;grad_ψ, curr-&gt;pᵀp,</span></a>
+<a name="534"><span class="lineNum">     534 </span>            :                              curr-&gt;γ, εₖ);</a>
+<a name="535"><span class="lineNum">     535 </span>            : </a>
+<a name="536"><span class="lineNum">     536 </span>            :         // Return solution -----------------------------------------------------</a>
+<a name="537"><span class="lineNum">     537 </span>            : </a>
+<a name="538"><span class="lineNum">     538 </span><span class="lineNoCov">          0 :         auto time_elapsed = std::chrono::steady_clock::now() - start_time;</span></a>
+<a name="539"><span class="lineNum">     539 </span>            :         auto stop_status =</a>
+<a name="540"><span class="lineNum">     540 </span><span class="lineNoCov">          0 :             check_all_stop_conditions(time_elapsed, k, εₖ, no_progress);</span></a>
+<a name="541"><span class="lineNum">     541 </span><span class="lineNoCov">          0 :         if (stop_status != SolverStatus::Busy) {</span></a>
+<a name="542"><span class="lineNum">     542 </span><span class="lineNoCov">          0 :             do_progress_cb(k, *curr, null_vec&lt;config_t&gt;, -1, εₖ, false, 0,</span></a>
+<a name="543"><span class="lineNum">     543 </span>            :                            stop_status);</a>
+<a name="544"><span class="lineNum">     544 </span><span class="lineNoCov">          0 :             bool do_final_print = params.print_interval != 0;</span></a>
+<a name="545"><span class="lineNum">     545 </span><span class="lineNoCov">          0 :             if (!do_print &amp;&amp; do_final_print)</span></a>
+<a name="546"><span class="lineNum">     546 </span><span class="lineNoCov">          0 :                 print_progress_1(k, curr-&gt;fbe(), curr-&gt;ψu, curr-&gt;grad_ψ,</span></a>
+<a name="547"><span class="lineNum">     547 </span>            :                                  curr-&gt;pᵀp, curr-&gt;γ, εₖ);</a>
+<a name="548"><span class="lineNum">     548 </span><span class="lineNoCov">          0 :             if (do_print || do_final_print)</span></a>
+<a name="549"><span class="lineNum">     549 </span><span class="lineNoCov">          0 :                 print_progress_n(stop_status);</span></a>
+<a name="550"><span class="lineNum">     550 </span><span class="lineNoCov">          0 :             if (stop_status == SolverStatus::Converged ||</span></a>
+<a name="551"><span class="lineNum">     551 </span><span class="lineNoCov">          0 :                 stop_status == SolverStatus::Interrupted ||</span></a>
+<a name="552"><span class="lineNum">     552 </span><span class="lineNoCov">          0 :                 opts.always_overwrite_results) {</span></a>
+<a name="553"><span class="lineNum">     553 </span><span class="lineNoCov">          0 :                 write_solution(*curr);</span></a>
+<a name="554"><span class="lineNum">     554 </span>            :             }</a>
+<a name="555"><span class="lineNum">     555 </span><span class="lineNoCov">          0 :             s.iterations   = k;</span></a>
+<a name="556"><span class="lineNum">     556 </span><span class="lineNoCov">          0 :             s.ε            = εₖ;</span></a>
+<a name="557"><span class="lineNum">     557 </span><span class="lineNoCov">          0 :             s.elapsed_time = duration_cast&lt;nanoseconds&gt;(time_elapsed);</span></a>
+<a name="558"><span class="lineNum">     558 </span><span class="lineNoCov">          0 :             s.time_lqr_factor -= s.time_hessians;</span></a>
+<a name="559"><span class="lineNum">     559 </span><span class="lineNoCov">          0 :             s.status   = stop_status;</span></a>
+<a name="560"><span class="lineNum">     560 </span><span class="lineNoCov">          0 :             s.final_γ  = curr-&gt;γ;</span></a>
+<a name="561"><span class="lineNum">     561 </span><span class="lineNoCov">          0 :             s.final_ψ  = curr-&gt;ψû;</span></a>
+<a name="562"><span class="lineNum">     562 </span><span class="lineNoCov">          0 :             s.final_h  = 0; // only box constraints</span></a>
+<a name="563"><span class="lineNum">     563 </span><span class="lineNoCov">          0 :             s.final_φγ = curr-&gt;fbe();</span></a>
+<a name="564"><span class="lineNum">     564 </span><span class="lineNoCov">          0 :             return s;</span></a>
+<a name="565"><span class="lineNum">     565 </span>            :         }</a>
+<a name="566"><span class="lineNum">     566 </span>            : </a>
+<a name="567"><span class="lineNum">     567 </span>            :         // Calculate Gauss-Newton step -----------------------------------------</a>
+<a name="568"><span class="lineNum">     568 </span>            : </a>
+<a name="569"><span class="lineNum">     569 </span><span class="lineNoCov">          0 :         real_t τ_init = 1;</span></a>
+<a name="570"><span class="lineNum">     570 </span><span class="lineNoCov">          0 :         did_gn        = do_gn_step;</span></a>
+<a name="571"><span class="lineNum">     571 </span><span class="lineNoCov">          0 :         if (params.disable_acceleration) {</span></a>
+<a name="572"><span class="lineNum">     572 </span><span class="lineNoCov">          0 :             τ_init = 0;</span></a>
+<a name="573"><span class="lineNum">     573 </span><span class="lineNoCov">          0 :         } else if (do_gn_step) {</span></a>
+<a name="574"><span class="lineNum">     574 </span><span class="lineNoCov">          0 :             auto is_constr_inactive = [&amp;](index_t t, index_t i) {</span></a>
+<a name="575"><span class="lineNum">     575 </span><span class="lineNoCov">          0 :                 real_t ui = vars.uk(curr-&gt;xu, t)(i);</span></a>
+<a name="576"><span class="lineNum">     576 </span>            :                 // Gradient descent step.</a>
+<a name="577"><span class="lineNum">     577 </span><span class="lineNoCov">          0 :                 real_t gs = ui - curr-&gt;γ * curr-&gt;grad_ψ(t * nu + i);</span></a>
+<a name="578"><span class="lineNum">     578 </span>            :                 // Check whether the box constraints are active for this index.</a>
+<a name="579"><span class="lineNum">     579 </span><span class="lineNoCov">          0 :                 bool active_lb = gs &lt;= U.lowerbound(i);</span></a>
+<a name="580"><span class="lineNum">     580 </span><span class="lineNoCov">          0 :                 bool active_ub = gs &gt;= U.upperbound(i);</span></a>
+<a name="581"><span class="lineNum">     581 </span><span class="lineNoCov">          0 :                 if (active_ub) {</span></a>
+<a name="582"><span class="lineNum">     582 </span><span class="lineNoCov">          0 :                     q(nu * t + i) = U.upperbound(i) - ui;</span></a>
+<a name="583"><span class="lineNum">     583 </span><span class="lineNoCov">          0 :                     return false;</span></a>
+<a name="584"><span class="lineNum">     584 </span><span class="lineNoCov">          0 :                 } else if (active_lb) {</span></a>
+<a name="585"><span class="lineNum">     585 </span><span class="lineNoCov">          0 :                     q(nu * t + i) = U.lowerbound(i) - ui;</span></a>
+<a name="586"><span class="lineNum">     586 </span><span class="lineNoCov">          0 :                     return false;</span></a>
+<a name="587"><span class="lineNum">     587 </span>            :                 } else { // Store inactive indices</a>
+<a name="588"><span class="lineNum">     588 </span><span class="lineNoCov">          0 :                     return true;</span></a>
+<a name="589"><span class="lineNum">     589 </span>            :                 }</a>
+<a name="590"><span class="lineNum">     590 </span>            :             };</a>
+<a name="591"><span class="lineNum">     591 </span>            :             { // Find active indices J</a>
+<a name="592"><span class="lineNum">     592 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_indices};</span></a>
+<a name="593"><span class="lineNum">     593 </span><span class="lineNoCov">          0 :                 J.update(is_constr_inactive);</span></a>
+<a name="594"><span class="lineNum">     594 </span><span class="lineNoCov">          0 :                 nJ = J.sizes().sum();</span></a>
+<a name="595"><span class="lineNum">     595 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="596"><span class="lineNum">     596 </span>            :             { // evaluate the Jacobians</a>
+<a name="597"><span class="lineNum">     597 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_jacobians};</span></a>
+<a name="598"><span class="lineNum">     598 </span><span class="lineNoCov">          0 :                 for (index_t t = 0; t &lt; N; ++t)</span></a>
+<a name="599"><span class="lineNum">     599 </span><span class="lineNoCov">          0 :                     problem.eval_jac_f(t, vars.xk(curr-&gt;xu, t),</span></a>
+<a name="600"><span class="lineNum">     600 </span><span class="lineNoCov">          0 :                                        vars.uk(curr-&gt;xu, t), vars.ABk(jacs, t));</span></a>
+<a name="601"><span class="lineNum">     601 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="602"><span class="lineNum">     602 </span>            :             { // LQR factor</a>
+<a name="603"><span class="lineNum">     603 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_lqr_factor};</span></a>
+<a name="604"><span class="lineNum">     604 </span><span class="lineNoCov">          0 :                 lqr.factor_masked(ABk, Qk(curr-&gt;xu), Rk(curr-&gt;xu), Sk(curr-&gt;xu),</span></a>
+<a name="605"><span class="lineNum">     605 </span>            :                                   Rk_prod(curr-&gt;xu), Sk_prod(curr-&gt;xu), qk, rk,</a>
+<a name="606"><span class="lineNum">     606 </span><span class="lineNoCov">          0 :                                   uk_eq, Jk, Kk, params.lqr_factor_cholesky);</span></a>
+<a name="607"><span class="lineNum">     607 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="608"><span class="lineNum">     608 </span>            :             { // LQR solve</a>
+<a name="609"><span class="lineNum">     609 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_lqr_solve};</span></a>
+<a name="610"><span class="lineNum">     610 </span><span class="lineNoCov">          0 :                 lqr.solve_masked(ABk, Jk, q, work_2x);</span></a>
+<a name="611"><span class="lineNum">     611 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="612"><span class="lineNum">     612 </span>            :         } else {</a>
+<a name="613"><span class="lineNum">     613 </span><span class="lineNoCov">          0 :             if (!enable_lbfgs)</span></a>
+<a name="614"><span class="lineNum">     614 </span><span class="lineNoCov">          0 :                 throw std::logic_error(&quot;enable_lbfgs&quot;);</span></a>
+<a name="615"><span class="lineNum">     615 </span>            : </a>
+<a name="616"><span class="lineNum">     616 </span>            :             // Find inactive indices J</a>
+<a name="617"><span class="lineNum">     617 </span><span class="lineNoCov">          0 :             auto is_constr_inactive = [&amp;](index_t t, index_t i) {</span></a>
+<a name="618"><span class="lineNum">     618 </span><span class="lineNoCov">          0 :                 real_t ui     = vars.uk(curr-&gt;xu, t)(i);</span></a>
+<a name="619"><span class="lineNum">     619 </span><span class="lineNoCov">          0 :                 real_t grad_i = curr-&gt;grad_ψ(t * nu + i);</span></a>
+<a name="620"><span class="lineNum">     620 </span>            :                 // Gradient descent step.</a>
+<a name="621"><span class="lineNum">     621 </span><span class="lineNoCov">          0 :                 real_t gs = ui - curr-&gt;γ * grad_i;</span></a>
+<a name="622"><span class="lineNum">     622 </span>            :                 // Check whether the box constraints are active for this index.</a>
+<a name="623"><span class="lineNum">     623 </span><span class="lineNoCov">          0 :                 bool active_lb = gs &lt;= U.lowerbound(i);</span></a>
+<a name="624"><span class="lineNum">     624 </span><span class="lineNoCov">          0 :                 bool active_ub = gs &gt;= U.upperbound(i);</span></a>
+<a name="625"><span class="lineNum">     625 </span><span class="lineNoCov">          0 :                 if (active_ub || active_lb) {</span></a>
+<a name="626"><span class="lineNum">     626 </span><span class="lineNoCov">          0 :                     q(t * nu + i) = curr-&gt;p(t * nu + i);</span></a>
+<a name="627"><span class="lineNum">     627 </span><span class="lineNoCov">          0 :                     return false;</span></a>
+<a name="628"><span class="lineNum">     628 </span>            :                 } else { // Store inactive indices</a>
+<a name="629"><span class="lineNum">     629 </span><span class="lineNoCov">          0 :                     q(t * nu + i) = -grad_i;</span></a>
+<a name="630"><span class="lineNum">     630 </span><span class="lineNoCov">          0 :                     return true;</span></a>
+<a name="631"><span class="lineNum">     631 </span>            :                 }</a>
+<a name="632"><span class="lineNum">     632 </span>            :             };</a>
+<a name="633"><span class="lineNum">     633 </span>            : </a>
+<a name="634"><span class="lineNum">     634 </span><span class="lineNoCov">          0 :             auto J_idx = J.indices();</span></a>
+<a name="635"><span class="lineNum">     635 </span><span class="lineNoCov">          0 :             nJ         = 0;</span></a>
+<a name="636"><span class="lineNum">     636 </span>            :             {</a>
+<a name="637"><span class="lineNum">     637 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_lbfgs_indices};</span></a>
+<a name="638"><span class="lineNum">     638 </span><span class="lineNoCov">          0 :                 for (index_t t = 0; t &lt; N; ++t)</span></a>
+<a name="639"><span class="lineNum">     639 </span><span class="lineNoCov">          0 :                     for (index_t i = 0; i &lt; nu; ++i)</span></a>
+<a name="640"><span class="lineNum">     640 </span><span class="lineNoCov">          0 :                         if (is_constr_inactive(t, i))</span></a>
+<a name="641"><span class="lineNum">     641 </span><span class="lineNoCov">          0 :                             J_idx(nJ++) = t * nu + i;</span></a>
+<a name="642"><span class="lineNum">     642 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="643"><span class="lineNum">     643 </span><span class="lineNoCov">          0 :             auto J_lbfgs = J_idx.topRows(nJ);</span></a>
+<a name="644"><span class="lineNum">     644 </span>            : </a>
+<a name="645"><span class="lineNum">     645 </span>            :             // If all indices are inactive, we can use standard L-BFGS,</a>
+<a name="646"><span class="lineNum">     646 </span>            :             // if there are active indices, we need the specialized version</a>
+<a name="647"><span class="lineNum">     647 </span>            :             // that only applies L-BFGS to the inactive indices</a>
+<a name="648"><span class="lineNum">     648 </span><span class="lineNoCov">          0 :             bool success = [&amp;] {</span></a>
+<a name="649"><span class="lineNum">     649 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_lbfgs_apply};</span></a>
+<a name="650"><span class="lineNum">     650 </span><span class="lineNoCov">          0 :                 return lbfgs.apply_masked(q, curr-&gt;γ, J_lbfgs);</span></a>
+<a name="651"><span class="lineNum">     651 </span><span class="lineNoCov">          0 :             }();</span></a>
+<a name="652"><span class="lineNum">     652 </span>            :             // If L-BFGS application failed, qₖ(J) still contains</a>
+<a name="653"><span class="lineNum">     653 </span>            :             // -∇ψ(x)(J) - HqK(J) or -∇ψ(x)(J), which is not a valid step.</a>
+<a name="654"><span class="lineNum">     654 </span><span class="lineNoCov">          0 :             if (not success)</span></a>
+<a name="655"><span class="lineNum">     655 </span><span class="lineNoCov">          0 :                 τ_init = 0;</span></a>
+<a name="656"><span class="lineNum">     656 </span>            :         }</a>
+<a name="657"><span class="lineNum">     657 </span>            : </a>
+<a name="658"><span class="lineNum">     658 </span>            :         // Make sure quasi-Newton step is valid</a>
+<a name="659"><span class="lineNum">     659 </span><span class="lineNoCov">          0 :         if (not q.allFinite()) {</span></a>
+<a name="660"><span class="lineNum">     660 </span><span class="lineNoCov">          0 :             τ_init = 0;</span></a>
+<a name="661"><span class="lineNum">     661 </span>            :             // Is there anything we can do?</a>
+<a name="662"><span class="lineNum">     662 </span><span class="lineNoCov">          0 :             if (not did_gn)</span></a>
+<a name="663"><span class="lineNum">     663 </span><span class="lineNoCov">          0 :                 lbfgs.reset();</span></a>
+<a name="664"><span class="lineNum">     664 </span>            :         }</a>
+<a name="665"><span class="lineNum">     665 </span><span class="lineNoCov">          0 :         s.lbfgs_failures += (τ_init == 0 &amp;&amp; k &gt; 0);</span></a>
+<a name="666"><span class="lineNum">     666 </span>            : </a>
+<a name="667"><span class="lineNum">     667 </span><span class="lineNoCov">          0 :         bool do_next_gn = params.gn_interval &gt; 0 &amp;&amp;</span></a>
+<a name="668"><span class="lineNum">     668 </span><span class="lineNoCov">          0 :                           ((k + 1) % params.gn_interval) == 0 &amp;&amp;</span></a>
+<a name="669"><span class="lineNum">     669 </span><span class="lineNoCov">          0 :                           !params.disable_acceleration;</span></a>
+<a name="670"><span class="lineNum">     670 </span><span class="lineNoCov">          0 :         do_gn_step = do_next_gn || (do_gn_step &amp;&amp; params.gn_sticky);</span></a>
+<a name="671"><span class="lineNum">     671 </span>            : </a>
+<a name="672"><span class="lineNum">     672 </span>            :         // Line search ---------------------------------------------------------</a>
+<a name="673"><span class="lineNum">     673 </span>            : </a>
+<a name="674"><span class="lineNum">     674 </span><span class="lineNoCov">          0 :         next-&gt;γ           = curr-&gt;γ;</span></a>
+<a name="675"><span class="lineNum">     675 </span><span class="lineNoCov">          0 :         next-&gt;L           = curr-&gt;L;</span></a>
+<a name="676"><span class="lineNum">     676 </span><span class="lineNoCov">          0 :         τ                 = τ_init;</span></a>
+<a name="677"><span class="lineNum">     677 </span><span class="lineNoCov">          0 :         real_t τ_prev     = -1;</span></a>
+<a name="678"><span class="lineNum">     678 </span><span class="lineNoCov">          0 :         bool dir_rejected = true;</span></a>
+<a name="679"><span class="lineNum">     679 </span>            : </a>
+<a name="680"><span class="lineNum">     680 </span>            :         // xₖ₊₁ = xₖ + pₖ</a>
+<a name="681"><span class="lineNum">     681 </span><span class="lineNoCov">          0 :         auto take_safe_step = [&amp;] {</span></a>
+<a name="682"><span class="lineNum">     682 </span><span class="lineNoCov">          0 :             next-&gt;xu = curr-&gt;xû;</span></a>
+<a name="683"><span class="lineNum">     683 </span><span class="lineNoCov">          0 :             next-&gt;ψu = curr-&gt;ψû;</span></a>
+<a name="684"><span class="lineNum">     684 </span>            :             // Calculate ∇ψ(xₖ₊₁)</a>
+<a name="685"><span class="lineNum">     685 </span><span class="lineNoCov">          0 :             eval_backward(*next);</span></a>
+<a name="686"><span class="lineNum">     686 </span>            :         };</a>
+<a name="687"><span class="lineNum">     687 </span>            : </a>
+<a name="688"><span class="lineNum">     688 </span>            :         // xₖ₊₁ = xₖ + (1-τ) pₖ + τ qₖ</a>
+<a name="689"><span class="lineNum">     689 </span><span class="lineNoCov">          0 :         auto take_accelerated_step = [&amp;](real_t τ) {</span></a>
+<a name="690"><span class="lineNum">     690 </span><span class="lineNoCov">          0 :             if (τ == 1) {</span></a>
+<a name="691"><span class="lineNum">     691 </span><span class="lineNoCov">          0 :                 for (index_t t = 0; t &lt; N; ++t)</span></a>
+<a name="692"><span class="lineNum">     692 </span><span class="lineNoCov">          0 :                     vars.uk(next-&gt;xu, t) =</span></a>
+<a name="693"><span class="lineNum">     693 </span><span class="lineNoCov">          0 :                         vars.uk(curr-&gt;xu, t) + q.segment(t * nu, nu);</span></a>
+<a name="694"><span class="lineNum">     694 </span>            :             } else {</a>
+<a name="695"><span class="lineNum">     695 </span><span class="lineNoCov">          0 :                 do_gn_step = do_next_gn;</span></a>
+<a name="696"><span class="lineNum">     696 </span><span class="lineNoCov">          0 :                 for (index_t t = 0; t &lt; N; ++t)</span></a>
+<a name="697"><span class="lineNum">     697 </span><span class="lineNoCov">          0 :                     vars.uk(next-&gt;xu, t) =</span></a>
+<a name="698"><span class="lineNum">     698 </span><span class="lineNoCov">          0 :                         vars.uk(curr-&gt;xu, t) +</span></a>
+<a name="699"><span class="lineNum">     699 </span><span class="lineNoCov">          0 :                         (1 - τ) * curr-&gt;p.segment(t * nu, nu) +</span></a>
+<a name="700"><span class="lineNum">     700 </span><span class="lineNoCov">          0 :                         τ * q.segment(t * nu, nu);</span></a>
+<a name="701"><span class="lineNum">     701 </span>            :             }</a>
+<a name="702"><span class="lineNum">     702 </span>            :             // Calculate ψ(xₖ₊₁), ∇ψ(xₖ₊₁)</a>
+<a name="703"><span class="lineNum">     703 </span><span class="lineNoCov">          0 :             eval_forward(*next); // Not necessary for DDP</span></a>
+<a name="704"><span class="lineNum">     704 </span><span class="lineNoCov">          0 :             eval_backward(*next);</span></a>
+<a name="705"><span class="lineNum">     705 </span>            :         };</a>
+<a name="706"><span class="lineNum">     706 </span>            : </a>
+<a name="707"><span class="lineNum">     707 </span>            :         // Backtracking line search loop</a>
+<a name="708"><span class="lineNum">     708 </span><span class="lineNoCov">          0 :         while (!stop_signal.stop_requested()) {</span></a>
+<a name="709"><span class="lineNum">     709 </span>            : </a>
+<a name="710"><span class="lineNum">     710 </span>            :             // Recompute step only if τ changed</a>
+<a name="711"><span class="lineNum">     711 </span><span class="lineNoCov">          0 :             if (τ != τ_prev) {</span></a>
+<a name="712"><span class="lineNum">     712 </span><span class="lineNoCov">          0 :                 τ != 0 ? take_accelerated_step(τ) : take_safe_step();</span></a>
+<a name="713"><span class="lineNum">     713 </span><span class="lineNoCov">          0 :                 τ_prev = τ;</span></a>
+<a name="714"><span class="lineNum">     714 </span>            :             }</a>
+<a name="715"><span class="lineNum">     715 </span>            : </a>
+<a name="716"><span class="lineNum">     716 </span>            :             // If the cost is not finite, or if the quadratic upper bound could</a>
+<a name="717"><span class="lineNum">     717 </span>            :             // not be satisfied, abandon the direction entirely, don't even</a>
+<a name="718"><span class="lineNum">     718 </span>            :             // bother backtracking.</a>
+<a name="719"><span class="lineNum">     719 </span><span class="lineNoCov">          0 :             bool fail = next-&gt;L &gt;= params.L_max || !std::isfinite(next-&gt;ψu);</span></a>
+<a name="720"><span class="lineNum">     720 </span><span class="lineNoCov">          0 :             if (τ &gt; 0 &amp;&amp; fail) {</span></a>
+<a name="721"><span class="lineNum">     721 </span>            :                 // Don't allow a bad accelerated step to destroy the FBS step</a>
+<a name="722"><span class="lineNum">     722 </span>            :                 // size</a>
+<a name="723"><span class="lineNum">     723 </span><span class="lineNoCov">          0 :                 next-&gt;L = curr-&gt;L;</span></a>
+<a name="724"><span class="lineNum">     724 </span><span class="lineNoCov">          0 :                 next-&gt;γ = curr-&gt;γ;</span></a>
+<a name="725"><span class="lineNum">     725 </span>            :                 // Line search failed</a>
+<a name="726"><span class="lineNum">     726 </span><span class="lineNoCov">          0 :                 τ = 0;</span></a>
+<a name="727"><span class="lineNum">     727 </span><span class="lineNoCov">          0 :                 if (enable_lbfgs)</span></a>
+<a name="728"><span class="lineNum">     728 </span><span class="lineNoCov">          0 :                     lbfgs.reset();</span></a>
+<a name="729"><span class="lineNum">     729 </span><span class="lineNoCov">          0 :                 continue;</span></a>
+<a name="730"><span class="lineNum">     730 </span>            :             }</a>
+<a name="731"><span class="lineNum">     731 </span>            : </a>
+<a name="732"><span class="lineNum">     732 </span>            :             // Calculate x̂ₖ₊₁, ψ(x̂ₖ₊₁)</a>
+<a name="733"><span class="lineNum">     733 </span><span class="lineNoCov">          0 :             eval_prox(*next);</span></a>
+<a name="734"><span class="lineNum">     734 </span><span class="lineNoCov">          0 :             eval_forward_hat(*next);</span></a>
+<a name="735"><span class="lineNum">     735 </span>            : </a>
+<a name="736"><span class="lineNum">     736 </span>            :             // Quadratic upper bound step size condition</a>
+<a name="737"><span class="lineNum">     737 </span><span class="lineNoCov">          0 :             if (next-&gt;L &lt; params.L_max &amp;&amp; qub_violated(*next)) {</span></a>
+<a name="738"><span class="lineNum">     738 </span><span class="lineNoCov">          0 :                 next-&gt;γ /= 2;</span></a>
+<a name="739"><span class="lineNum">     739 </span><span class="lineNoCov">          0 :                 next-&gt;L *= 2;</span></a>
+<a name="740"><span class="lineNum">     740 </span><span class="lineNoCov">          0 :                 if (τ &gt; 0)</span></a>
+<a name="741"><span class="lineNum">     741 </span><span class="lineNoCov">          0 :                     τ = τ_init;</span></a>
+<a name="742"><span class="lineNum">     742 </span><span class="lineNoCov">          0 :                 ++s.stepsize_backtracks;</span></a>
+<a name="743"><span class="lineNum">     743 </span><span class="lineNoCov">          0 :                 continue;</span></a>
+<a name="744"><span class="lineNum">     744 </span>            :             }</a>
+<a name="745"><span class="lineNum">     745 </span>            : </a>
+<a name="746"><span class="lineNum">     746 </span>            :             // Line search condition</a>
+<a name="747"><span class="lineNum">     747 </span><span class="lineNoCov">          0 :             if (τ &gt; 0 &amp;&amp; linesearch_violated(*curr, *next)) {</span></a>
+<a name="748"><span class="lineNum">     748 </span><span class="lineNoCov">          0 :                 τ /= 2;</span></a>
+<a name="749"><span class="lineNum">     749 </span><span class="lineNoCov">          0 :                 if (τ &lt; params.min_linesearch_coefficient)</span></a>
+<a name="750"><span class="lineNum">     750 </span><span class="lineNoCov">          0 :                     τ = 0;</span></a>
+<a name="751"><span class="lineNum">     751 </span><span class="lineNoCov">          0 :                 ++s.linesearch_backtracks;</span></a>
+<a name="752"><span class="lineNum">     752 </span><span class="lineNoCov">          0 :                 continue;</span></a>
+<a name="753"><span class="lineNum">     753 </span>            :             }</a>
+<a name="754"><span class="lineNum">     754 </span>            : </a>
+<a name="755"><span class="lineNum">     755 </span>            :             // QUB and line search satisfied (or τ is 0 and L &gt; L_max)</a>
+<a name="756"><span class="lineNum">     756 </span><span class="lineNoCov">          0 :             break;</span></a>
+<a name="757"><span class="lineNum">     757 </span>            :         }</a>
+<a name="758"><span class="lineNum">     758 </span>            : </a>
+<a name="759"><span class="lineNum">     759 </span>            :         // If τ &lt; τ_min the line search failed and we accepted the prox step</a>
+<a name="760"><span class="lineNum">     760 </span><span class="lineNoCov">          0 :         s.linesearch_failures += (τ == 0 &amp;&amp; τ_init &gt; 0);</span></a>
+<a name="761"><span class="lineNum">     761 </span><span class="lineNoCov">          0 :         s.τ_1_accepted += τ == 1;</span></a>
+<a name="762"><span class="lineNum">     762 </span><span class="lineNoCov">          0 :         s.count_τ += (τ_init &gt; 0);</span></a>
+<a name="763"><span class="lineNum">     763 </span><span class="lineNoCov">          0 :         s.sum_τ += τ;</span></a>
+<a name="764"><span class="lineNum">     764 </span>            : </a>
+<a name="765"><span class="lineNum">     765 </span>            :         // Check if we made any progress</a>
+<a name="766"><span class="lineNum">     766 </span><span class="lineNoCov">          0 :         if (no_progress &gt; 0 || k % params.max_no_progress == 0)</span></a>
+<a name="767"><span class="lineNum">     767 </span><span class="lineNoCov">          0 :             no_progress = curr-&gt;xu == next-&gt;xu ? no_progress + 1 : 0;</span></a>
+<a name="768"><span class="lineNum">     768 </span>            : </a>
+<a name="769"><span class="lineNum">     769 </span>            :         // Update L-BFGS -------------------------------------------------------</a>
+<a name="770"><span class="lineNum">     770 </span>            : </a>
+<a name="771"><span class="lineNum">     771 </span><span class="lineNoCov">          0 :         if (enable_lbfgs) {</span></a>
+<a name="772"><span class="lineNum">     772 </span><span class="lineNoCov">          0 :             const bool force = true;</span></a>
+<a name="773"><span class="lineNum">     773 </span><span class="lineNoCov">          0 :             assign_extract_u(next-&gt;xu, next-&gt;u);</span></a>
+<a name="774"><span class="lineNum">     774 </span><span class="lineNoCov">          0 :             bool reset_because_gn = did_gn &amp;&amp; params.reset_lbfgs_on_gn_step;</span></a>
+<a name="775"><span class="lineNum">     775 </span><span class="lineNoCov">          0 :             if (reset_because_gn || curr-&gt;γ != next-&gt;γ) {</span></a>
+<a name="776"><span class="lineNum">     776 </span><span class="lineNoCov">          0 :                 lbfgs.reset();</span></a>
+<a name="777"><span class="lineNum">     777 </span>            :             }</a>
+<a name="778"><span class="lineNum">     778 </span><span class="lineNoCov">          0 :             if (!reset_because_gn) { // TODO: this may be too restrictive</span></a>
+<a name="779"><span class="lineNum">     779 </span><span class="lineNoCov">          0 :                 alpaqa::util::Timed t{s.time_lbfgs_update};</span></a>
+<a name="780"><span class="lineNum">     780 </span><span class="lineNoCov">          0 :                 s.lbfgs_rejected += dir_rejected = not lbfgs.update(</span></a>
+<a name="781"><span class="lineNum">     781 </span><span class="lineNoCov">          0 :                     curr-&gt;u, next-&gt;u, curr-&gt;grad_ψ, next-&gt;grad_ψ,</span></a>
+<a name="782"><span class="lineNum">     782 </span>            :                     LBFGS&lt;config_t&gt;::Sign::Positive, force);</a>
+<a name="783"><span class="lineNum">     783 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="784"><span class="lineNum">     784 </span>            :         }</a>
+<a name="785"><span class="lineNum">     785 </span>            : </a>
+<a name="786"><span class="lineNum">     786 </span>            :         // Print ---------------------------------------------------------------</a>
+<a name="787"><span class="lineNum">     787 </span><span class="lineNoCov">          0 :         do_progress_cb(k, *curr, q, τ, εₖ, did_gn, nJ, SolverStatus::Busy);</span></a>
+<a name="788"><span class="lineNum">     788 </span><span class="lineNoCov">          0 :         if (do_print &amp;&amp; (k != 0 || did_gn))</span></a>
+<a name="789"><span class="lineNum">     789 </span><span class="lineNoCov">          0 :             print_progress_2(q, τ, did_gn, nJ, lqr.min_rcond, dir_rejected);</span></a>
+<a name="790"><span class="lineNum">     790 </span>            : </a>
+<a name="791"><span class="lineNum">     791 </span>            :         // Advance step --------------------------------------------------------</a>
+<a name="792"><span class="lineNum">     792 </span><span class="lineNoCov">          0 :         std::swap(curr, next);</span></a>
+<a name="793"><span class="lineNum">     793 </span><span class="lineNoCov">          0 :         ++k;</span></a>
+<a name="794"><span class="lineNum">     794 </span>            :     }</a>
+<a name="795"><span class="lineNum">     795 </span>            :     throw std::logic_error(&quot;[PANOC] loop error&quot;);</a>
+<a name="796"><span class="lineNum">     796 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="797"><span class="lineNum">     797 </span>            : </a>
+<a name="798"><span class="lineNum">     798 </span>            : } // namespace alpaqa</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.15</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

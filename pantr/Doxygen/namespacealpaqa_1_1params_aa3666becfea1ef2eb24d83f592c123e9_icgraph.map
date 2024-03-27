@@ -1,0 +1,15 @@
+<map id="split_key" name="split_key">
+<area shape="rect" id="node1" title="Split the string full on the first occurrence of tok." alt="" coords="984,409,1064,435"/>
+<area shape="rect" id="node2" href="$alpaqa-driver_8cpp.html#a3430011226186bf05d5c2552270587b7" title=" " alt="" coords="108,239,251,264"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1params.html#a6085a1535aaa464dae1b548875f87c6f" title="Use s to index into the struct type T and overwrite the attribute given by s.key." alt="" coords="841,460,932,485"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1params.html#a1ceaf6d5b9906d0d8242d3b3c7bc6dd6" title="Overwrites t based on the options that start with prefix." alt="" coords="837,207,936,232"/>
+<area shape="rect" id="node3" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,176,60,201"/>
+<area shape="rect" id="node6" href="$problem_8cpp.html#ae36fc572e3716fb2dbe8ff77cfe1ee10" title=" " alt="" coords="319,5,429,31"/>
+<area shape="rect" id="node7" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="691,207,789,232"/>
+<area shape="rect" id="node8" href="$alpaqa-driver_8cpp.html#abdc7f0491e5c38d6f9569a0aad3d2925" title=" " alt="" coords="112,113,247,139"/>
+<area shape="rect" id="node9" href="$alpaqa-driver_8cpp.html#a62667720f096806ed08c60e4207f8972" title=" " alt="" coords="301,359,447,384"/>
+<area shape="rect" id="node10" href="$alm-driver_8hpp.html#ae4ef291d9ec9d55ee804b5723ea2e641" title=" " alt="" coords="501,257,639,283"/>
+<area shape="rect" id="node11" href="$lbfgsb-driver_8cpp.html#a2123fa3dc6760812199393dc3dfbfa59" title=" " alt="" coords="299,239,449,264"/>
+<area shape="rect" id="node12" href="$alm-driver_8hpp.html#a51b2a2cde56762bcb43a2f4da0913f98" title=" " alt="" coords="497,156,643,181"/>
+<area shape="rect" id="node13" href="$ipopt-driver_8cpp.html#ac4ea8f713cf4da6e58caa134ca40b938" title=" " alt="" coords="499,107,641,132"/>
+</map>

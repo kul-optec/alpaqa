@@ -1,0 +1,12 @@
+<map id="assign_interleave_xu" name="assign_interleave_xu">
+<area shape="rect" id="Node000001" title=" " alt="" coords="475,35,635,60"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="594,25,583,17,555,13,531,15,518,20,516,26,523,33,519,36,511,26,515,16,530,10,555,8,585,12,598,21"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1detail.html#a40bbfabdc475e269999278b9dcd33765" title=" " alt="" coords="253,5,413,31"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="460,38,413,31,414,26,461,32"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="240,55,427,95"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="461,62,427,66,427,61,460,57"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1PANOCOCPSolver.html#ab2cdbacaa27c59db09315b64cab7edee" title=" " alt="" coords="5,23,192,63"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="226,63,192,59,193,53,227,58"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="5,87,192,127"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="227,93,193,97,192,92,226,87"/>
+</map>

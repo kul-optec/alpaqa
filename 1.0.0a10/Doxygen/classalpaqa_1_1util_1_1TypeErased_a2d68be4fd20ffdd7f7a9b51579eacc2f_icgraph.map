@@ -1,0 +1,7 @@
+<map id="deallocate" name="deallocate">
+<area shape="rect" id="node1" title="Deallocate the memory without invoking the destructor." alt="" coords="407,42,497,67"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1util_1_1TypeErased_1_1Deallocator.html#a13079395e75f61def62b49e4beb4ab06" title=" " alt="" coords="160,5,359,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1util_1_1TypeErased.html#a4b66d5e31b5dc18b314c8a68163263bd" title="Destroy the type&#45;erased object (if not empty), and deallocate the memory if necessary." alt="" coords="223,70,296,95"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1util_1_1TypeErased.html#a5e33ed4b3e1700f789f9866c319c9bce" title="Destructor." alt="" coords="5,45,112,70"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1util_1_1TypeErased.html#a27cb54a718aa5cf82a1dcfb1fe5c6838" title="Copy assignment." alt="" coords="15,94,103,119"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="reinitialize" name="reinitialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,46,96,73"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1AndersonAccel.html#ad20897c5c8bd47f5d4005989bead0e55" title=" " alt="" coords="144,46,199,73"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="247,5,443,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#a25b6259a3ee886a9a54f3a66ab019084" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="247,71,443,112"/>
+</map>

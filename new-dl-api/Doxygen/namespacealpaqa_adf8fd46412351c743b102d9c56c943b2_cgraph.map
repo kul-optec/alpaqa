@@ -1,0 +1,31 @@
+<map id="minimize_update_anderson" name="minimize_update_anderson">
+<area shape="rect" id="Node000001" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="5,231,208,257"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3077223e98c1e4e286e01503f220d5" title="Add the given column to the right." alt="" coords="256,77,452,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,229,176,180,214,152,255,127,269,120,271,125,257,132,217,157,179,185,123,233"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="988,105,1205,130"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="111,230,130,194,160,147,202,100,227,79,255,63,308,41,364,25,420,14,478,7,594,4,708,14,815,31,910,54,1051,97,1049,103,909,59,814,37,707,19,594,9,479,12,421,19,365,30,310,46,257,68,230,83,206,103,165,150,134,197,116,233"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LimitedMemoryQR.html#a24829df3eaf3f15bd3c677781348b14d" title="Get the number of columns that are currently stored." alt="" coords="500,192,696,232"/>
+<area shape="poly" id="edge8_Node000001_Node000004" title=" " alt="" coords="208,235,486,217,486,222,208,240"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LimitedMemoryQR.html#a9def1a850eb12c2e0347b0680866eab1" title="Get the maximum eigenvalue of R." alt="" coords="256,371,452,411"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="123,255,179,303,217,332,257,356,271,363,269,368,255,361,214,336,176,308,119,259"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LimitedMemoryQR.html#a436c4dbbf0476354ca67a104bc005e55" title="Remove the leftmost column." alt="" coords="256,141,452,181"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="145,229,279,183,281,188,147,234"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LimitedMemoryQR.html#a0bf0ad441ec87440e4525e75de00d053" title="Get iterators in the circular buffer." alt="" coords="744,275,940,315"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="209,248,731,284,730,290,208,254"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LimitedMemoryQR.html#a8a153a1f58e5c5879095a4c3799b6f49" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="256,435,452,475"/>
+<area shape="poly" id="edge14_Node000001_Node000009" title=" " alt="" coords="117,256,138,289,169,333,210,380,258,421,267,426,264,431,254,425,206,384,165,336,133,292,113,258"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3322cd9c833dc65702b574640eefe1" title="Solve the least squares problem Ax = b." alt="" coords="256,307,452,347"/>
+<area shape="poly" id="edge15_Node000001_Node000010" title=" " alt="" coords="147,254,281,300,279,305,145,259"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="452,97,974,111,974,117,452,103"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="430,115,453,127,469,140,478,153,487,166,502,178,512,184,510,189,498,182,483,169,474,156,465,144,451,132,428,120"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LimitedMemoryQR.html#a9f68bead8c70041aacb90dd175150dc4" title="Get the next index in the circular storage for R." alt="" coords="500,128,696,168"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="451,115,488,123,487,128,450,120"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="696,139,974,122,974,128,696,145"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="451,179,488,187,487,192,450,184"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="452,153,486,151,487,157,452,159"/>
+<area shape="poly" id="edge13_Node000008_Node000003" title=" " alt="" coords="871,272,1064,136,1067,141,874,277"/>
+<area shape="poly" id="edge16_Node000010_Node000008" title=" " alt="" coords="452,318,730,299,730,305,453,323"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1LimitedMemoryQR.html#ae8160acf26958eb65aa5c0743dd2826d" title="Get reverse iterators in the circular buffer." alt="" coords="500,357,696,397"/>
+<area shape="poly" id="edge17_Node000010_Node000011" title=" " alt="" coords="451,344,488,352,487,357,450,349"/>
+<area shape="poly" id="edge18_Node000011_Node000008" title=" " alt="" coords="657,355,768,317,770,322,659,360"/>
+</map>

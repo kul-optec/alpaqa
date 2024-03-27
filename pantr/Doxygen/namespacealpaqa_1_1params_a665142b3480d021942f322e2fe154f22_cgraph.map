@@ -1,0 +1,4 @@
+<map id="unsupported_type" name="unsupported_type">
+<area shape="rect" id="node1" title="Throw a meaningful error to indicate that parameters of type T are not supported or implemented." alt="" coords="5,5,144,31"/>
+<area shape="rect" id="node2" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="192,5,360,31"/>
+</map>

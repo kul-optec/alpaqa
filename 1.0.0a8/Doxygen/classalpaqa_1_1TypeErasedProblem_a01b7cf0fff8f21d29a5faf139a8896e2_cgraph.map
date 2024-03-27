@@ -1,0 +1,4 @@
+<map id="provides_eval_hess_L" name="provides_eval_hess_L">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of eval_hess_L." alt="" coords="5,13,169,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#a257b2b39ebee44423adb3baad8ca71a7" title=" " alt="" coords="217,5,388,45"/>
+</map>

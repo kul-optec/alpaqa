@@ -1,0 +1,6 @@
+<map id="provides_eval_hess_ψ" name="provides_eval_hess_ψ">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of eval_hess_ψ." alt="" coords="347,45,513,70"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1StructuredNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="108,5,299,45"/>
+<area shape="rect" id="node3" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="119,69,287,109"/>
+<area shape="rect" id="node4" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,77,60,102"/>
+</map>

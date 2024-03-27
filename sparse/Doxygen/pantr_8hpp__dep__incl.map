@@ -1,0 +1,16 @@
+<map id="src/alpaqa/include/alpaqa/inner/pantr.hpp" name="src/alpaqa/include/alpaqa/inner/pantr.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="305,5,477,45"/>
+<area shape="rect" id="Node000002" href="$pantr_8tpp.html" title=" " alt="" coords="5,93,184,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="319,52,179,96,177,91,317,47"/>
+<area shape="rect" id="Node000005" href="$newton-tr-pantr-alm_8hpp.html" title=" " alt="" coords="208,93,384,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="364,57,325,95,321,91,360,53"/>
+<area shape="rect" id="Node000006" href="$pantr-driver_8cpp.html" title=" " alt="" coords="408,101,563,141"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="422,53,468,99,464,103,418,57"/>
+<area shape="rect" id="Node000007" href="$params_8cpp.html" title=" " alt="" coords="587,101,752,141"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="461,47,614,98,612,103,459,52"/>
+<area shape="rect" id="Node000003" href="$pantr_8cpp.html" title=" " alt="" coords="20,196,169,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,162,97,196,92,196,92,162"/>
+<area shape="rect" id="Node000004" href="$newton-tr-pantr-alm_8cpp.html" title=" " alt="" coords="203,196,367,236"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="161,152,248,193,245,198,159,156"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="294,162,290,196,285,196,289,161"/>
+</map>

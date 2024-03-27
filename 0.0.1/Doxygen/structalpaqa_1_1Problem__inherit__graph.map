@@ -1,0 +1,5 @@
+<map id="Problem" name="Problem">
+<area shape="rect" id="node1" title="Problem description for minimization problems." alt="" coords="108,5,225,259"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1ProblemOnlyD.html" title="Moves the state constraints in the set C to the set D, resulting in an unconstraint inner problem." alt="" coords="5,358,147,479"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1ProblemWithParam.html" title=" " alt="" coords="171,307,343,531"/>
+</map>

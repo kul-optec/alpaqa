@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['τ_0',['τ',['../structalpaqa_1_1PANOCOCPProgressInfo.html#ada42cc816258bf0e72f5a3357375291d',1,'alpaqa::PANOCOCPProgressInfo::τ()'],['../namespacealpaqa.html#ada42cc816258bf0e72f5a3357375291d',1,'alpaqa::PANOCProgressInfo::τ()'],['../namespacealpaqa.html#ada42cc816258bf0e72f5a3357375291d',1,'alpaqa::ZeroFPRProgressInfo::τ()']]],
+  ['τ_5f1_5faccepted_1',['τ_1_accepted',['../namespacealpaqa.html#a1850aa183af7372ea950918c6ff72e6f',1,'alpaqa::PANOCOCPStats::τ_1_accepted()'],['../namespacealpaqa.html#a1850aa183af7372ea950918c6ff72e6f',1,'alpaqa::InnerStatsAccumulator&lt; PANOCOCPStats&lt; Conf &gt; &gt;::τ_1_accepted()'],['../namespacealpaqa.html#a1850aa183af7372ea950918c6ff72e6f',1,'alpaqa::PANOCStats::τ_1_accepted()'],['../namespacealpaqa.html#a1850aa183af7372ea950918c6ff72e6f',1,'alpaqa::InnerStatsAccumulator&lt; PANOCStats&lt; Conf &gt; &gt;::τ_1_accepted()'],['../namespacealpaqa.html#a1850aa183af7372ea950918c6ff72e6f',1,'alpaqa::ZeroFPRStats::τ_1_accepted()'],['../namespacealpaqa.html#a1850aa183af7372ea950918c6ff72e6f',1,'alpaqa::InnerStatsAccumulator&lt; ZeroFPRStats&lt; Conf &gt; &gt;::τ_1_accepted()']]]
+];

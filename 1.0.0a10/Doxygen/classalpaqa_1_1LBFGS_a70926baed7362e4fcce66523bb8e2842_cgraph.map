@@ -1,0 +1,5 @@
+<map id="succ" name="succ">
+<area shape="rect" id="node1" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="5,13,56,38"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="104,13,171,38"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1LBFGSStorage.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="219,5,385,45"/>
+</map>

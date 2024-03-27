@@ -1,0 +1,11 @@
+<map id="assign_extract_x" name="assign_extract_x">
+<area shape="rect" id="Node000001" title=" " alt="" coords="387,45,519,70"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="479,34,472,26,453,23,437,25,428,30,426,36,431,43,427,46,421,36,424,27,435,20,453,18,474,21,483,30"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1detail.html#abb226e64f98ef137cad982337b24b8db" title=" " alt="" coords="256,45,339,70"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="373,60,339,60,339,55,373,55"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="324,34,316,26,297,23,281,25,273,30,271,36,276,43,271,46,266,36,269,27,280,20,297,18,319,21,328,30"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1PANOCOCPProgressInfo.html#ad96012d9a56fac4b89e21164d3bfa816" title=" " alt="" coords="5,5,208,45"/>
+<area shape="poly" id="edge4_Node000002_Node000003" title=" " alt="" coords="242,51,208,45,209,40,243,46"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1PANOCOCPProgressInfo.html#a79dcf0096154d396a307c8719e4297b3" title=" " alt="" coords="5,69,208,109"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="243,69,209,75,208,70,242,64"/>
+</map>

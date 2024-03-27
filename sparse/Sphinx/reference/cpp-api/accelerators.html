@@ -1,0 +1,721 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Augmented Lagrangian solver" href="alm-solver.html" /><link rel="prev" title="C++ API Reference" href="../cpp-api.html" />
+
+    <link rel="shortcut icon" href="../../_static/alpaqa_favicon.png"/><!-- Generated with Sphinx 7.3.0 and Furo 2023.08.19 -->
+        <title>Accelerators - alpaqa documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=a9f360ad" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">alpaqa  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/alpaqa_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">alpaqa  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/getting-started.html">Getting started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso.html">Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso-jax.html">Lasso JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/nonlinear-regression.html">Nonlinear regression</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/mpc/index.html">Model predictive control</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Model predictive control</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/hanging-chain.html">Hanging Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/inverted-pendulum.html">Inverted Pendulum</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python-api.html">Python API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Python API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/pyapi.html">High-level problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/panoc.html">Inner PANOC and ZeroFPR Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/pantr.html">Inner PANTR Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/alm.html">Outer ALM Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/problem.html">Problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/functions.html">Functions and operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/casadi.html">CasADi Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../cpp-api.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of C++ API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Accelerators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alm-solver.html">Augmented Lagrangian solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Functions and operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inner-solvers.html">Inner solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direction-providers.html">Direction providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.html">Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribution/index.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="accelerators">
+<h1>Accelerators<a class="headerlink" href="#accelerators" title="Link to this heading">#</a></h1>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__grp__Accelerators"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">grp_Accelerators</span></span></dt>
+<dd><p>Computing accelerated directions, such as L-BFGS. </p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I_6ConfigEN6alpaqa13AndersonAccelE">
+<span id="_CPPv3I_6ConfigEN6alpaqa13AndersonAccelE"></span><span id="_CPPv2I_6ConfigEN6alpaqa13AndersonAccelE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Config</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Conf</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13DefaultConfigE" title="alpaqa::DefaultConfig"><span class="n"><span class="pre">DefaultConfig</span></span></a><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1AndersonAccel"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AndersonAccel</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/accelerators/anderson.hpp&gt;</em></div>
+<p>Anderson Acceleration. </p>
+<p>Algorithm for accelerating fixed-point iterations for finding fixed points of a function <span class="math notranslate nohighlight">\( g \)</span>, i.e. <span class="math notranslate nohighlight">\( g(x^\star) = x^\star \)</span>, or equivalently, roots of the residual <span class="math notranslate nohighlight">\( r(x) \triangleq g(x) - x \)</span>.</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel6ParamsE">
+<span id="_CPPv3N6alpaqa13AndersonAccel6ParamsE"></span><span id="_CPPv2N6alpaqa13AndersonAccel6ParamsE"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1ad34db5d57333e7118f06444578b11dff"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa19AndersonAccelParamsE" title="alpaqa::AndersonAccelParams"><span class="n"><span class="pre">AndersonAccelParams</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel13AndersonAccelEv">
+<span id="_CPPv3N6alpaqa13AndersonAccel13AndersonAccelEv"></span><span id="_CPPv2N6alpaqa13AndersonAccel13AndersonAccelEv"></span><span id="alpaqa::AndersonAccel::AndersonAccel"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1ab4117a566451272116de397b8a0951e0"></span><span class="sig-name descname"><span class="n"><span class="pre">AndersonAccel</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel13AndersonAccelE6Params">
+<span id="_CPPv3N6alpaqa13AndersonAccel13AndersonAccelE6Params"></span><span id="_CPPv2N6alpaqa13AndersonAccel13AndersonAccelE6Params"></span><span id="alpaqa::AndersonAccel::AndersonAccel__Params"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1ab72d2bea1f61ad7c05d58b4cde355b91"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AndersonAccel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13AndersonAccel6ParamsE" title="alpaqa::AndersonAccel::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> – Parameters. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel13AndersonAccelE6Params8length_t">
+<span id="_CPPv3N6alpaqa13AndersonAccel13AndersonAccelE6Params8length_t"></span><span id="_CPPv2N6alpaqa13AndersonAccel13AndersonAccelE6Params8length_t"></span><span id="alpaqa::AndersonAccel::AndersonAccel__Params.length_t"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a1fcb04cfb2b1398b54d8242cc3b0fb34"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AndersonAccel</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13AndersonAccel6ParamsE" title="alpaqa::AndersonAccel::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">params</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> – Parameters. </p></li>
+<li><p><strong>n</strong> – Problem dimension (size of the vectors). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel6resizeE8length_t">
+<span id="_CPPv3N6alpaqa13AndersonAccel6resizeE8length_t"></span><span id="_CPPv2N6alpaqa13AndersonAccel6resizeE8length_t"></span><span id="alpaqa::AndersonAccel::resize__length_t"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1abfe51417fbebd259808f86d27f1d7ec5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resize</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Change the problem dimension. </p>
+<p>Flushes the history. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> – Problem dimension (size of the vectors). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel10initializeE5crvec5crvec">
+<span id="_CPPv3N6alpaqa13AndersonAccel10initializeE5crvec5crvec"></span><span id="_CPPv2N6alpaqa13AndersonAccel10initializeE5crvec5crvec"></span><span id="alpaqa::AndersonAccel::initialize__crvec.crvec"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1ab19f36da69b46652ea4742d2314c45c7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">initialize</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">g_0</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">r_0</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Call this function on the first iteration to initialize the accelerator. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel7computeE5crvec5crvec4rvec">
+<span id="_CPPv3N6alpaqa13AndersonAccel7computeE5crvec5crvec4rvec"></span><span id="_CPPv2N6alpaqa13AndersonAccel7computeE5crvec5crvec4rvec"></span><span id="alpaqa::AndersonAccel::compute__crvec.crvec.rvec"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a7cbecaa52700158ebe36c0d587791ed4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">gₖ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">rₖ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xₖ_aa</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Compute the accelerated iterate <span class="math notranslate nohighlight">\( x^k_\text{AA} \)</span>, given the function value at the current iterate <span class="math notranslate nohighlight">\( g^k = g(x^k) \)</span> and the corresponding residual <span class="math notranslate nohighlight">\( r^k = g^k - x^k \)</span>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel7computeE5crvecRR3vec4rvec">
+<span id="_CPPv3N6alpaqa13AndersonAccel7computeE5crvecRR3vec4rvec"></span><span id="_CPPv2N6alpaqa13AndersonAccel7computeE5crvecRR3vec4rvec"></span><span id="alpaqa::AndersonAccel::compute__crvec.vecRR.rvec"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1af02aae3147e83aeb9f83c4f0a17f537f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compute</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">gₖ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa3vecE" title="alpaqa::vec"><span class="n"><span class="pre">vec</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rₖ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xₖ_aa</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Compute the accelerated iterate <span class="math notranslate nohighlight">\( x^k_\text{AA} \)</span>, given the function value at the current iterate <span class="math notranslate nohighlight">\( g^k = g(x^k) \)</span> and the corresponding residual <span class="math notranslate nohighlight">\( r^k = g^k - x^k \)</span>.   </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel5resetEv">
+<span id="_CPPv3N6alpaqa13AndersonAccel5resetEv"></span><span id="_CPPv2N6alpaqa13AndersonAccel5resetEv"></span><span id="alpaqa::AndersonAccel::reset"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1ad20897c5c8bd47f5d4005989bead0e55"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Reset the accelerator (but keep the last function value and residual, so calling <a class="reference internal" href="#classalpaqa_1_1AndersonAccel_1ab19f36da69b46652ea4742d2314c45c7"><span class="std std-ref">initialize</span></a> is not necessary). </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13AndersonAccel1nEv">
+<span id="_CPPv3NK6alpaqa13AndersonAccel1nEv"></span><span id="_CPPv2NK6alpaqa13AndersonAccel1nEv"></span><span id="alpaqa::AndersonAccel::nC"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a727afc7a58d2e44ae7add57e3fa77bc6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">n</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the problem dimension. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13AndersonAccel7historyEv">
+<span id="_CPPv3NK6alpaqa13AndersonAccel7historyEv"></span><span id="_CPPv2NK6alpaqa13AndersonAccel7historyEv"></span><span id="alpaqa::AndersonAccel::historyC"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a9cf7dcccbc3bc69a10833450ee79c623"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">history</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the maximum number of stored columns. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13AndersonAccel15current_historyEv">
+<span id="_CPPv3NK6alpaqa13AndersonAccel15current_historyEv"></span><span id="_CPPv2NK6alpaqa13AndersonAccel15current_historyEv"></span><span id="alpaqa::AndersonAccel::current_historyC"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a3c6a2dbecc0d6f8cd90bef088c46b072"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">current_history</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the number of columns currently stored in the buffer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13AndersonAccel10get_paramsEv">
+<span id="_CPPv3NK6alpaqa13AndersonAccel10get_paramsEv"></span><span id="_CPPv2NK6alpaqa13AndersonAccel10get_paramsEv"></span><span id="alpaqa::AndersonAccel::get_paramsC"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13AndersonAccel6ParamsE" title="alpaqa::AndersonAccel::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the parameters. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13AndersonAccel8get_nameEv">
+<span id="_CPPv3NK6alpaqa13AndersonAccel8get_nameEv"></span><span id="_CPPv2NK6alpaqa13AndersonAccel8get_nameEv"></span><span id="alpaqa::AndersonAccel::get_nameC"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa13AndersonAccel7scale_RE6real_t">
+<span id="_CPPv3N6alpaqa13AndersonAccel7scale_RE6real_t"></span><span id="_CPPv2N6alpaqa13AndersonAccel7scale_RE6real_t"></span><span id="alpaqa::AndersonAccel::scale_R__real_t"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1adf11f99cb8b119423c86498dbaab9820"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scale_R</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">scal</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Scale the factorization. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa13AndersonAccel6get_QREv">
+<span id="_CPPv3NK6alpaqa13AndersonAccel6get_QREv"></span><span id="_CPPv2NK6alpaqa13AndersonAccel6get_QREv"></span><span id="alpaqa::AndersonAccel::get_QRC"></span><span class="target" id="classalpaqa_1_1AndersonAccel_1af6313e73e95c05f842233db2b4c19742"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa15LimitedMemoryQRE" title="alpaqa::LimitedMemoryQR"><span class="n"><span class="pre">LimitedMemoryQR</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_QR</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>For testing purposes. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I_6ConfigEN6alpaqa5LBFGSE">
+<span id="_CPPv3I_6ConfigEN6alpaqa5LBFGSE"></span><span id="_CPPv2I_6ConfigEN6alpaqa5LBFGSE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Config</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Conf</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa13DefaultConfigE" title="alpaqa::DefaultConfig"><span class="n"><span class="pre">DefaultConfig</span></span></a><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1LBFGS"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGS</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/accelerators/lbfgs.hpp&gt;</em></div>
+<p>Limited memory Broyden–Fletcher–Goldfarb–Shanno (L-BFGS) algorithm. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum-class">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS4SignE">
+<span id="_CPPv3N6alpaqa5LBFGS4SignE"></span><span id="_CPPv2N6alpaqa5LBFGS4SignE"></span><span class="target" id="classalpaqa_1_1LBFGS_1ad870f3a2c3baacb65e34071ae73c66cb"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Sign</span></span></span><br /></dt>
+<dd><p>The sign of the vectors <span class="math notranslate nohighlight">\( p \)</span> passed to the <a class="reference internal" href="#classalpaqa_1_1LBFGS_1ae34a8e5e432c990eb8af2f95bcbc04bd"><span class="std std-ref">update</span></a> method. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS4Sign8PositiveE">
+<span id="_CPPv3N6alpaqa5LBFGS4Sign8PositiveE"></span><span id="_CPPv2N6alpaqa5LBFGS4Sign8PositiveE"></span><span class="target" id="classalpaqa_1_1LBFGS_1ad870f3a2c3baacb65e34071ae73c66cba3289297424e01eda5b788c083bbf3147"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Positive</span></span></span><br /></dt>
+<dd><p><span class="math notranslate nohighlight">\( p \sim \nabla \psi(x) \)</span></p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS4Sign8NegativeE">
+<span id="_CPPv3N6alpaqa5LBFGS4Sign8NegativeE"></span><span id="_CPPv2N6alpaqa5LBFGS4Sign8NegativeE"></span><span class="target" id="classalpaqa_1_1LBFGS_1ad870f3a2c3baacb65e34071ae73c66cbaffb9356ff2b7da85c75c92fa7ea03b8b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Negative</span></span></span><br /></dt>
+<dd><p><span class="math notranslate nohighlight">\( p \sim -\nabla \psi(x) \)</span></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS6ParamsE">
+<span id="_CPPv3N6alpaqa5LBFGS6ParamsE"></span><span id="_CPPv2N6alpaqa5LBFGS6ParamsE"></span><span class="target" id="classalpaqa_1_1LBFGS_1a5aa7c346020a1dc7f5485b068a509beb"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Params</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa11LBFGSParamsE" title="alpaqa::LBFGSParams"><span class="n"><span class="pre">LBFGSParams</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">config_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS5LBFGSEv">
+<span id="_CPPv3N6alpaqa5LBFGS5LBFGSEv"></span><span id="_CPPv2N6alpaqa5LBFGS5LBFGSEv"></span><span id="alpaqa::LBFGS::LBFGS"></span><span class="target" id="classalpaqa_1_1LBFGS_1a4af9dc6bd1ca331c25c095ea26d5623f"></span><span class="sig-name descname"><span class="n"><span class="pre">LBFGS</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS5LBFGSE6Params">
+<span id="_CPPv3N6alpaqa5LBFGS5LBFGSE6Params"></span><span id="_CPPv2N6alpaqa5LBFGS5LBFGSE6Params"></span><span id="alpaqa::LBFGS::LBFGS__Params"></span><span class="target" id="classalpaqa_1_1LBFGS_1a80f5ea282d2bba5259ed668f23d1c0e1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS6ParamsE" title="alpaqa::LBFGS::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">params</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS5LBFGSE6Params8length_t">
+<span id="_CPPv3N6alpaqa5LBFGS5LBFGSE6Params8length_t"></span><span id="_CPPv2N6alpaqa5LBFGS5LBFGSE6Params8length_t"></span><span id="alpaqa::LBFGS::LBFGS__Params.length_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1a728dfcb0d540fc7da341b3352dbe1582"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LBFGS</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS6ParamsE" title="alpaqa::LBFGS::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">params</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS9update_syE5crvec5crvec6real_tb">
+<span id="_CPPv3N6alpaqa5LBFGS9update_syE5crvec5crvec6real_tb"></span><span id="_CPPv2N6alpaqa5LBFGS9update_syE5crvec5crvec6real_tb"></span><span id="alpaqa::LBFGS::update_sy__crvec.crvec.real_t.b"></span><span class="target" id="classalpaqa_1_1LBFGS_1aad441bdca6bcb18c8493253a54b409ef"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">update_sy</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">pₙₑₓₜᵀpₙₑₓₜ</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">forced</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Update the inverse Hessian approximation using the new vectors sₖ = xₙₑₓₜ - xₖ and yₖ = pₙₑₓₜ - pₖ. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS14update_sy_implERKDaRKDa6real_tb">
+<span id="_CPPv3N6alpaqa5LBFGS14update_sy_implERKDaRKDa6real_tb"></span><span id="_CPPv2N6alpaqa5LBFGS14update_sy_implERKDaRKDa6real_tb"></span><span id="alpaqa::LBFGS::update_sy_impl__autoCR.autoCR.real_t.b"></span><span class="target" id="classalpaqa_1_1LBFGS_1ad67ba15f46e10679e631093d7fb2765f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">update_sy_impl</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">pₙₑₓₜᵀpₙₑₓₜ</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">forced</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p><div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#classalpaqa_1_1LBFGS_1aad441bdca6bcb18c8493253a54b409ef"><span class="std std-ref">update_sy</span></a></p>
+</div>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS6updateE5crvec5crvec5crvec5crvec4Signb">
+<span id="_CPPv3N6alpaqa5LBFGS6updateE5crvec5crvec5crvec5crvec4Signb"></span><span id="_CPPv2N6alpaqa5LBFGS6updateE5crvec5crvec5crvec5crvec4Signb"></span><span id="alpaqa::LBFGS::update__crvec.crvec.crvec.crvec.Sign.b"></span><span class="target" id="classalpaqa_1_1LBFGS_1ae34a8e5e432c990eb8af2f95bcbc04bd"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">update</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xₖ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xₙₑₓₜ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">pₖ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crvecE" title="alpaqa::crvec"><span class="n"><span class="pre">crvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">pₙₑₓₜ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS4SignE" title="alpaqa::LBFGS::Sign"><span class="n"><span class="pre">Sign</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sign</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS4SignE" title="alpaqa::LBFGS::Sign"><span class="n"><span class="pre">Sign</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS4Sign8PositiveE" title="alpaqa::LBFGS::Sign::Positive"><span class="n"><span class="pre">Positive</span></span></a>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">forced</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Update the inverse Hessian approximation using the new vectors xₙₑₓₜ and pₙₑₓₜ. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS5applyE4rvec6real_t">
+<span id="_CPPv3NK6alpaqa5LBFGS5applyE4rvec6real_t"></span><span id="_CPPv2NK6alpaqa5LBFGS5applyE4rvec6real_t"></span><span id="alpaqa::LBFGS::apply__rvec.real_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1adac6fec090a2001b2ba47ce6c6daf921"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">apply</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">q</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="o"><span class="pre">-</span></span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Apply the inverse Hessian approximation to the given vector q. </p>
+<p>Initial inverse Hessian approximation is set to <span class="math notranslate nohighlight">\( H_0 = \gamma I \)</span>. If <code class="docutils literal notranslate"><span class="pre">γ</span></code> is negative, <span class="math notranslate nohighlight">\( H_0 = \frac{s^\top y}{y^\top y} I \)</span>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS12apply_maskedE4rvec6real_t10crindexvec">
+<span id="_CPPv3NK6alpaqa5LBFGS12apply_maskedE4rvec6real_t10crindexvec"></span><span id="_CPPv2NK6alpaqa5LBFGS12apply_maskedE4rvec6real_t10crindexvec"></span><span id="alpaqa::LBFGS::apply_masked__rvec.real_t.crindexvecC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a195721eb9ab308e8929aa55089ac847f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">apply_masked</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">q</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa10crindexvecE" title="alpaqa::crindexvec"><span class="n"><span class="pre">crindexvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">J</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of the Hessian in the index set J. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS12apply_maskedE4rvec6real_tRKNSt6vectorI7index_tEE">
+<span id="_CPPv3NK6alpaqa5LBFGS12apply_maskedE4rvec6real_tRKNSt6vectorI7index_tEE"></span><span id="_CPPv2NK6alpaqa5LBFGS12apply_maskedE4rvec6real_tRKNSt6vectorI7index_tEE"></span><span id="alpaqa::LBFGS::apply_masked__rvec.real_t.std::vector:index_t:CRC"></span><span class="target" id="classalpaqa_1_1LBFGS_1addb51ed25716e280ef3146027a019849"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">apply_masked</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">q</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">J</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of the Hessian in the index set J.   </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS17apply_masked_implE4rvec6real_tRKDa">
+<span id="_CPPv3NK6alpaqa5LBFGS17apply_masked_implE4rvec6real_tRKDa"></span><span id="_CPPv2NK6alpaqa5LBFGS17apply_masked_implE4rvec6real_tRKDa"></span><span id="alpaqa::LBFGS::apply_masked_impl__rvec.real_t.autoCRC"></span><span class="target" id="classalpaqa_1_1LBFGS_1abe3b84085aeeb66a23cb64d40a1a072f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">apply_masked_impl</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rvecE" title="alpaqa::rvec"><span class="n"><span class="pre">rvec</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">q</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">J</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of the Hessian in the index set J.   </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS5resetEv">
+<span id="_CPPv3N6alpaqa5LBFGS5resetEv"></span><span id="_CPPv2N6alpaqa5LBFGS5resetEv"></span><span id="alpaqa::LBFGS::reset"></span><span class="target" id="classalpaqa_1_1LBFGS_1ad20897c5c8bd47f5d4005989bead0e55"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Throw away the approximation and all previous vectors s and y. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS6resizeE8length_t">
+<span id="_CPPv3N6alpaqa5LBFGS6resizeE8length_t"></span><span id="_CPPv2N6alpaqa5LBFGS6resizeE8length_t"></span><span id="alpaqa::LBFGS::resize__length_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1abfe51417fbebd259808f86d27f1d7ec5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">resize</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Re-allocate storage for a problem with a different size. </p>
+<p>Causes a <a class="reference internal" href="#classalpaqa_1_1LBFGS_1ad20897c5c8bd47f5d4005989bead0e55"><span class="std std-ref">reset</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS7scale_yE6real_t">
+<span id="_CPPv3N6alpaqa5LBFGS7scale_yE6real_t"></span><span id="_CPPv2N6alpaqa5LBFGS7scale_yE6real_t"></span><span id="alpaqa::LBFGS::scale_y__real_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1adeddc1e1eb8ce1c1bbaf931b6f9a5b9c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scale_y</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">factor</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Scale the stored y vectors by the given factor. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS8get_nameEv">
+<span id="_CPPv3NK6alpaqa5LBFGS8get_nameEv"></span><span id="_CPPv2NK6alpaqa5LBFGS8get_nameEv"></span><span id="alpaqa::LBFGS::get_nameC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a0789ba541bd61b1b394ff4d411a40790"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_name</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get a string identifier for this accelerator. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS10get_paramsEv">
+<span id="_CPPv3NK6alpaqa5LBFGS10get_paramsEv"></span><span id="_CPPv2NK6alpaqa5LBFGS10get_paramsEv"></span><span id="alpaqa::LBFGS::get_paramsC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a933e2462ce1049db54fed366cce62477"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS6ParamsE" title="alpaqa::LBFGS::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">get_params</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the parameters. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS1nEv">
+<span id="_CPPv3NK6alpaqa5LBFGS1nEv"></span><span id="_CPPv2NK6alpaqa5LBFGS1nEv"></span><span id="alpaqa::LBFGS::nC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a727afc7a58d2e44ae7add57e3fa77bc6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">n</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the size of the s and y vectors in the buffer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS7historyEv">
+<span id="_CPPv3NK6alpaqa5LBFGS7historyEv"></span><span id="_CPPv2NK6alpaqa5LBFGS7historyEv"></span><span id="alpaqa::LBFGS::historyC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a9cf7dcccbc3bc69a10833450ee79c623"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">history</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the number of previous vectors s and y stored in the buffer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS4succE7index_t">
+<span id="_CPPv3NK6alpaqa5LBFGS4succE7index_t"></span><span id="_CPPv2NK6alpaqa5LBFGS4succE7index_t"></span><span id="alpaqa::LBFGS::succ__index_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a70926baed7362e4fcce66523bb8e2842"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">succ</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the next index in the circular buffer of previous s and y vectors. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS4predE7index_t">
+<span id="_CPPv3NK6alpaqa5LBFGS4predE7index_t"></span><span id="_CPPv2NK6alpaqa5LBFGS4predE7index_t"></span><span id="alpaqa::LBFGS::pred__index_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a71f7f5e949a948d578ae6f145e4c4914"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">pred</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the previous index in the circular buffer of s and y vectors. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS15current_historyEv">
+<span id="_CPPv3NK6alpaqa5LBFGS15current_historyEv"></span><span id="_CPPv2NK6alpaqa5LBFGS15current_historyEv"></span><span id="alpaqa::LBFGS::current_historyC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a3c6a2dbecc0d6f8cd90bef088c46b072"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">current_history</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Get the number of previous s and y vectors currently stored in the buffer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS1sE7index_t">
+<span id="_CPPv3N6alpaqa5LBFGS1sE7index_t"></span><span id="_CPPv2N6alpaqa5LBFGS1sE7index_t"></span><span id="alpaqa::LBFGS::s__index_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1a15e4a3db39457cabe764a7737d24e73f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">s</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS1sE7index_t">
+<span id="_CPPv3NK6alpaqa5LBFGS1sE7index_t"></span><span id="_CPPv2NK6alpaqa5LBFGS1sE7index_t"></span><span id="alpaqa::LBFGS::s__index_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1a3735458df713d618d1f9798f3c080552"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">s</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS1yE7index_t">
+<span id="_CPPv3N6alpaqa5LBFGS1yE7index_t"></span><span id="_CPPv2N6alpaqa5LBFGS1yE7index_t"></span><span id="alpaqa::LBFGS::y__index_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1aebac2ec4461761a48a7284152a8217f8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">y</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS1yE7index_t">
+<span id="_CPPv3NK6alpaqa5LBFGS1yE7index_t"></span><span id="_CPPv2NK6alpaqa5LBFGS1yE7index_t"></span><span id="alpaqa::LBFGS::y__index_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1ad7609eeaecc7dc893ab24f98b8fbe6c8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">auto</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">y</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS1ρE7index_t">
+<span id="_CPPv3N6alpaqa5LBFGS1ρE7index_t"></span><span id="_CPPv2N6alpaqa5LBFGS1ρE7index_t"></span><span id="alpaqa::LBFGS::ρ__index_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1acade3dc51f7ca788be9b91908b2e73ab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">ρ</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS1ρE7index_t">
+<span id="_CPPv3NK6alpaqa5LBFGS1ρE7index_t"></span><span id="_CPPv2NK6alpaqa5LBFGS1ρE7index_t"></span><span id="alpaqa::LBFGS::ρ__index_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1ab9a060f407604846d6345f6f85fddc77"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">ρ</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS1αE7index_t">
+<span id="_CPPv3N6alpaqa5LBFGS1αE7index_t"></span><span id="_CPPv2N6alpaqa5LBFGS1αE7index_t"></span><span id="alpaqa::LBFGS::α__index_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1ac7c2ee7d2562303f555dd1f4c3fca8cd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">α</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6alpaqa5LBFGS1αE7index_t">
+<span id="_CPPv3NK6alpaqa5LBFGS1αE7index_t"></span><span id="_CPPv2NK6alpaqa5LBFGS1αE7index_t"></span><span id="alpaqa::LBFGS::α__index_tC"></span><span class="target" id="classalpaqa_1_1LBFGS_1aac6f3071a5748c46bca056709b880369"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">α</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa7index_tE" title="alpaqa::index_t"><span class="n"><span class="pre">index_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">i</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK6alpaqa5LBFGS11foreach_fwdEvRK1F">
+<span id="_CPPv3I0ENK6alpaqa5LBFGS11foreach_fwdERK1F"></span><span id="_CPPv2I0ENK6alpaqa5LBFGS11foreach_fwdERK1F"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1LBFGS_1aa871b5290773b86e2e4919bbac258a04"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">foreach_fwd</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0ENK6alpaqa5LBFGS11foreach_fwdEvRK1F" title="alpaqa::LBFGS::foreach_fwd::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fun</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Iterate over the indices in the history buffer, oldest first. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK6alpaqa5LBFGS11foreach_revEvRK1F">
+<span id="_CPPv3I0ENK6alpaqa5LBFGS11foreach_revERK1F"></span><span id="_CPPv2I0ENK6alpaqa5LBFGS11foreach_revERK1F"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">F</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classalpaqa_1_1LBFGS_1a0804b751cf2035a35f24762474f62cbf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">foreach_rev</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I0ENK6alpaqa5LBFGS11foreach_revEvRK1F" title="alpaqa::LBFGS::foreach_rev::F"><span class="n"><span class="pre">F</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fun</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br /></dt>
+<dd><p>Iterate over the indices in the history buffer, newest first. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa5LBFGS12update_validERK6Params6real_t6real_t6real_t">
+<span id="_CPPv3N6alpaqa5LBFGS12update_validERK6Params6real_t6real_t6real_t"></span><span id="_CPPv2N6alpaqa5LBFGS12update_validERK6Params6real_t6real_t6real_t"></span><span id="alpaqa::LBFGS::update_valid__ParamsCR.real_t.real_t.real_t"></span><span class="target" id="classalpaqa_1_1LBFGS_1a9092141260796245caa15bf98cc3fea7"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">update_valid</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa5LBFGS6ParamsE" title="alpaqa::LBFGS::Params"><span class="n"><span class="pre">Params</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">params</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yᵀs</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">sᵀs</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">pᵀp</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definiteness of the Hessian approximation. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="alm-solver.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Augmented Lagrangian solver</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../cpp-api.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">C++ API Reference</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021, Pieter Pas
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Accelerators</a><ul>
+<li><a class="reference internal" href="#_CPPv4I_6ConfigEN6alpaqa13AndersonAccelE"><code class="docutils literal notranslate"><span class="pre">AndersonAccel</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel6ParamsE"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel13AndersonAccelEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::AndersonAccel()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel13AndersonAccelE6Params"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::AndersonAccel()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel13AndersonAccelE6Params8length_t"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::AndersonAccel()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel6resizeE8length_t"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::resize()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel10initializeE5crvec5crvec"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::initialize()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel7computeE5crvec5crvec4rvec"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::compute()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel7computeE5crvecRR3vec4rvec"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::compute()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel5resetEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::reset()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13AndersonAccel1nEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::n()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13AndersonAccel7historyEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::history()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13AndersonAccel15current_historyEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::current_history()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13AndersonAccel10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13AndersonAccel8get_nameEv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa13AndersonAccel7scale_RE6real_t"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::scale_R()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa13AndersonAccel6get_QREv"><code class="docutils literal notranslate"><span class="pre">AndersonAccel::get_QR()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4I_6ConfigEN6alpaqa5LBFGSE"><code class="docutils literal notranslate"><span class="pre">LBFGS</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS4SignE"><code class="docutils literal notranslate"><span class="pre">LBFGS::Sign</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS4Sign8PositiveE"><code class="docutils literal notranslate"><span class="pre">LBFGS::Sign::Positive</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS4Sign8NegativeE"><code class="docutils literal notranslate"><span class="pre">LBFGS::Sign::Negative</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS6ParamsE"><code class="docutils literal notranslate"><span class="pre">LBFGS::Params</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS5LBFGSEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::LBFGS()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS5LBFGSE6Params"><code class="docutils literal notranslate"><span class="pre">LBFGS::LBFGS()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS5LBFGSE6Params8length_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::LBFGS()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS9update_syE5crvec5crvec6real_tb"><code class="docutils literal notranslate"><span class="pre">LBFGS::update_sy()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS14update_sy_implERKDaRKDa6real_tb"><code class="docutils literal notranslate"><span class="pre">LBFGS::update_sy_impl()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS6updateE5crvec5crvec5crvec5crvec4Signb"><code class="docutils literal notranslate"><span class="pre">LBFGS::update()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS5applyE4rvec6real_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::apply()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS12apply_maskedE4rvec6real_t10crindexvec"><code class="docutils literal notranslate"><span class="pre">LBFGS::apply_masked()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS12apply_maskedE4rvec6real_tRKNSt6vectorI7index_tEE"><code class="docutils literal notranslate"><span class="pre">LBFGS::apply_masked()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS17apply_masked_implE4rvec6real_tRKDa"><code class="docutils literal notranslate"><span class="pre">LBFGS::apply_masked_impl()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS5resetEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::reset()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS6resizeE8length_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::resize()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS7scale_yE6real_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::scale_y()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS8get_nameEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::get_name()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS10get_paramsEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::get_params()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS1nEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::n()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS7historyEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::history()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS4succE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::succ()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS4predE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::pred()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS15current_historyEv"><code class="docutils literal notranslate"><span class="pre">LBFGS::current_history()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS1sE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::s()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS1sE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::s()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS1yE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::y()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS1yE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::y()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS1ρE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::ρ()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS1ρE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::ρ()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS1αE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::α()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4NK6alpaqa5LBFGS1αE7index_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::α()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0ENK6alpaqa5LBFGS11foreach_fwdEvRK1F"><code class="docutils literal notranslate"><span class="pre">LBFGS::foreach_fwd()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0ENK6alpaqa5LBFGS11foreach_revEvRK1F"><code class="docutils literal notranslate"><span class="pre">LBFGS::foreach_rev()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa5LBFGS12update_validERK6Params6real_t6real_t6real_t"><code class="docutils literal notranslate"><span class="pre">LBFGS::update_valid()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script>window.MathJax = {"tex": {"macros": {"Reals": "{\\mathrm{I\\!R}}", "Nats": "{\\mathrm{I\\!N}}", "Cplx": "{\\mathbb{C}}", "R": "{\\Reals}", "N": "{\\Nats}", "C": "{\\Cplx}", "Rn": "{\\Reals^n}", "Rm": "{\\Reals^m}", "gph": "{\\operatorname{\\mathbf{gph}}}", "zer": "{\\operatorname{\\mathbf{zer}}}", "fix": "{\\operatorname{\\mathbf{fix}}}", "minimize": "{\\operatorname*{\\mathbf{minimize}}}", "st": "{\\operatorname*{\\mathbf{s.\\!t.}}}", "argmin": "{\\operatorname*{\\mathbf{arg\\,min}}}", "argmax": "{\\operatorname*{\\mathbf{arg\\,max}}}", "subjto": "{\\operatorname*{\\mathbf{subject\\;to}}}", "prox": "{\\operatorname{\\mathbf{prox}}}", "Hilb": "{\\mathcal{H}}", "proj": ["{\\operatorname{\\mathbf{\\Pi}_\\mathnormal{#1}}}", 1], "dist": "{\\operatorname{\\mathbf{dist}}}", "Id": "{\\mathrm{Id}}", "I": "{\\mathrm{I}}", "one": "{\\mathbf{1}}", "defeq": "{\\triangleq}", "inprod": ["{\\left\\langle {#1} \\,\\middle|\\, {#2} \\right\\rangle}", 2], "norm": ["{\\left\\| {#1} \\vphantom{X} \\right\\|}", 1], "normsq": ["{\\norm{#1}^2}", 1], "defset": ["{\\left\\{ {#1} \\;\\middle|\\; {#2} \\right\\}}", 2], "tp": ["{#1^\\top}", 1], "ttp": ["{#1^{\\!\\top\\!}}", 1], "herm": ["{#1^\\mathrm{H}}", 1], "invherm": ["{#1^{-\\mathrm{H}}}", 1], "inv": ["{#1^{-1}}", 1], "pinv": ["{#1^\\dagger}", 1], "lconj": "{\\overline}", "sconj": ["{#1^*}", 1], "iddots": "{\\mathinner{\\kern1mu\\raise1pt{.}\\kern2mu\\raise4pt{.}\\kern2mu\\raise7pt{\\Rule{0pt}{7pt}{0pt}.}\\kern1mu}}", "imagfun": ["{\\left(#1\\right)\\left(#2\\right)}", 2], "Lagr": "{\\mathcal{L}}", "jac": "{\\mathrm{J}}", "dft": "{\\operatorname{\\mathbf{dft}}}", "cbrt": ["{\\sqrt[3]{#1}}", 1], "sgn": "{\\operatorname{\\mathbf{sgn}}}", "setmap": "{\\rightrightarrows}", "lammin": "{\\lambda_\\text{min}}", "lammax": "{\\lambda_\\text{max}}", "Sc": "{\\mathcal{S}}", "Scstar": "{\\mathcal{S}^*}", "diag": "{\\operatorname{\\mathbf{diag}}}", "blkdiag": "{\\operatorname{\\mathbf{blkdiag}}}", "posdef": "{\\succ}", "possdef": "{\\succeq}", "half": "{\\tfrac{1}{2}}", "hhbar": "{\\hbar}", "barxuk": "{\\bar x^k\\!, \\bar u^k}"}, "packages": ["base", "configmacros", "newcommand", "ams"], "tags": "ams"}, "loader": {"load": ["[tex]/newcommand"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

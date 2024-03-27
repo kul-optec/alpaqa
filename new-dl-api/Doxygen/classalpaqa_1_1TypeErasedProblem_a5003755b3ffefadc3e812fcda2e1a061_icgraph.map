@@ -1,0 +1,5 @@
+<map id="eval_ψ" name="eval_ψ">
+<area shape="rect" id="Node000001" title="[Optional] Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="268,13,335,38"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a50b246de556eed72631cd6c6c653f67f" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="5,5,220,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="254,28,220,28,220,23,254,23"/>
+</map>

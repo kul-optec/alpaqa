@@ -1,0 +1,5 @@
+<map id="get_nc" name="get_nc">
+<area shape="rect" id="node1" title="Number of constraints." alt="" coords="215,42,280,67"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1OCPVariables.html#af8cdd7f736e84f022e275df7caaa0311" title=" " alt="" coords="5,5,167,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedControlProblem.html#a65d38ca126e778fd3a7aa8326063766b" title="Total number of constraints." alt="" coords="55,70,117,95"/>
+</map>

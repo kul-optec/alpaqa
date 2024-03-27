@@ -1,0 +1,8 @@
+<map id="compute_kkt_error" name="compute_kkt_error">
+<area shape="rect" id="node1" title=" " alt="" coords="5,141,151,166"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#acdf5c7c7f249c05d53643e1715070f45" title="[Required] Function that evaluates the constraints," alt="" coords="199,5,401,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a5f0f7f91b5bd3732b02700627e9a8558" title="[Optional] Evaluate the gradient of the Lagrangian" alt="" coords="199,69,401,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#ae9f75b521c8932199f92bfdfc8f91879" title="[Required] Function that evaluates the difference between the given point &#160;and its projection onto th..." alt="" coords="199,133,401,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html#a02bf998629ca590cf5a2e183cbf43444" title="[Required] Function that computes a proximal gradient step." alt="" coords="199,197,401,237"/>
+<area shape="rect" id="node6" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="205,262,395,287"/>
+</map>

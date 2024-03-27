@@ -1,0 +1,17 @@
+<map id="solve" name="solve">
+<area shape="rect" id="Node000001" title="Solve the least squares problem AX = B." alt="" coords="5,18,63,43"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="681,18,720,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="62,23,155,10,271,3,445,3,568,10,668,23,667,28,568,15,445,8,271,8,155,15,63,28"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#a33f0a7b277c8d3c311b0b4868c55eda1" title="Solve the least squares problem AX = B." alt="" coords="111,43,168,69"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="63,35,98,43,97,49,62,40"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LimitedMemoryQR.html#a24829df3eaf3f15bd3c677781348b14d" title="Get the number of columns that are currently stored." alt="" coords="216,43,329,69"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="168,53,202,53,202,59,168,59"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3322cd9c833dc65702b574640eefe1" title="Solve the least squares problem Ax = b." alt="" coords="231,93,314,118"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="169,64,226,85,224,90,167,69"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LimitedMemoryQR.html#a0bf0ad441ec87440e4525e75de00d053" title="Get iterators in the circular buffer." alt="" coords="557,43,633,69"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="314,93,377,80,543,58,544,64,378,85,315,98"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LimitedMemoryQR.html#ae8160acf26958eb65aa5c0743dd2826d" title="Get reverse iterators in the circular buffer." alt="" coords="377,94,509,119"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="314,103,364,103,364,109,314,108"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="633,44,667,36,668,41,634,49"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="481,91,543,70,545,75,483,96"/>
+</map>

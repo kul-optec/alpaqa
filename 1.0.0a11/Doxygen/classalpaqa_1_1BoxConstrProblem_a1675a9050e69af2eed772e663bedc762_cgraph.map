@@ -1,0 +1,5 @@
+<map id="eval_prox_grad_step_box_l1" name="eval_prox_grad_step_box_l1">
+<area shape="rect" id="node1" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="5,35,163,75"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1BoxConstrProblem.html#a3171c5c9e3761a3f47aaabc94ff80a73" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="223,5,381,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1vec__util.html#ad25a5d07b7f707ab1d1fa7667a13dffa" title="Get the 1&#45;norm of the given vector." alt="" coords="211,70,393,95"/>
+</map>

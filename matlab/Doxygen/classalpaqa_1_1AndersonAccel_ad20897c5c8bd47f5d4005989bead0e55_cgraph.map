@@ -1,0 +1,7 @@
+<map id="reset" name="reset">
+<area shape="rect" id="Node000001" title="Reset the accelerator (but keep the last function value and residual, so calling initialize is not ne..." alt="" coords="5,45,60,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="108,5,304,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="60,50,94,43,95,49,61,55"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#a8a153a1f58e5c5879095a4c3799b6f49" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="108,69,304,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="61,60,95,66,94,71,60,65"/>
+</map>

@@ -1,0 +1,56 @@
+<map id="solver&#45;driver.hpp" name="solver&#45;driver.hpp">
+<area shape="rect" id="node1" title=" " alt="" coords="1970,5,2102,31"/>
+<area shape="rect" id="node2" href="$options_8hpp.html" title=" " alt="" coords="1987,247,2085,273"/>
+<area shape="rect" id="node18" href="$results_8hpp.html" title=" " alt="" coords="783,79,878,104"/>
+<area shape="rect" id="node39" title=" " alt="" coords="2897,497,2983,522"/>
+<area shape="rect" id="node3" href="$params_8hpp.html" title=" " alt="" coords="1617,335,1817,361"/>
+<area shape="rect" id="node12" title=" " alt="" coords="2208,416,2261,441"/>
+<area shape="rect" id="node14" title=" " alt="" coords="1382,416,1479,441"/>
+<area shape="rect" id="node16" title=" " alt="" coords="2859,577,2936,603"/>
+<area shape="rect" id="node17" title=" " alt="" coords="2309,335,2371,361"/>
+<area shape="rect" id="node4" href="$config_8hpp.html" title=" " alt="" coords="999,416,1179,441"/>
+<area shape="rect" id="node9" href="$export_8hpp.html" title=" " alt="" coords="786,577,926,603"/>
+<area shape="rect" id="node11" title=" " alt="" coords="1555,416,1629,441"/>
+<area shape="rect" id="node13" title=" " alt="" coords="1393,497,1479,522"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1755,416,1810,441"/>
+<area shape="rect" id="node5" href="$quadmath_8hpp.html" title=" " alt="" coords="1039,489,1201,529"/>
+<area shape="rect" id="node6" title=" " alt="" coords="956,497,1015,522"/>
+<area shape="rect" id="node7" title=" " alt="" coords="1522,577,1614,603"/>
+<area shape="rect" id="node8" title=" " alt="" coords="1277,497,1369,522"/>
+<area shape="rect" id="node10" title=" " alt="" coords="130,651,254,676"/>
+<area shape="rect" id="node19" href="$kkt-error_8hpp.html" title=" " alt="" coords="637,152,787,192"/>
+<area shape="rect" id="node42" title=" " alt="" coords="151,335,217,361"/>
+<area shape="rect" id="node43" title=" " alt="" coords="652,247,727,273"/>
+<area shape="rect" id="node44" href="$ocproblem-counters_8hpp.html" title=" " alt="" coords="5,240,203,280"/>
+<area shape="rect" id="node46" href="$problem-counters_8hpp.html" title=" " alt="" coords="278,240,461,280"/>
+<area shape="rect" id="node47" href="$print_8hpp.html" title=" " alt="" coords="343,335,497,361"/>
+<area shape="rect" id="node48" title=" " alt="" coords="811,159,850,185"/>
+<area shape="rect" id="node49" title=" " alt="" coords="874,159,955,185"/>
+<area shape="rect" id="node50" title=" " alt="" coords="980,159,1055,185"/>
+<area shape="rect" id="node51" title=" " alt="" coords="1079,159,1129,185"/>
+<area shape="rect" id="node52" title=" " alt="" coords="1154,159,1222,185"/>
+<area shape="rect" id="node53" href="$problem_8hpp.html" title=" " alt="" coords="1373,159,1477,185"/>
+<area shape="rect" id="node20" href="$type-erased-problem_8hpp.html" title=" " alt="" coords="1346,240,1505,280"/>
+<area shape="rect" id="node21" href="$box_8hpp.html" title=" " alt="" coords="773,335,953,361"/>
+<area shape="rect" id="node26" href="$alloc-check_8hpp.html" title=" " alt="" coords="1295,335,1492,361"/>
+<area shape="rect" id="node27" href="$check-dim_8hpp.html" title=" " alt="" coords="1029,335,1219,361"/>
+<area shape="rect" id="node29" href="$not-implemented_8hpp.html" title=" " alt="" coords="457,416,693,441"/>
+<area shape="rect" id="node30" href="$required-method_8hpp.html" title=" " alt="" coords="2005,328,2155,368"/>
+<area shape="rect" id="node31" href="$type-erasure_8hpp.html" title=" " alt="" coords="1977,416,2183,441"/>
+<area shape="rect" id="node41" title=" " alt="" coords="2813,497,2873,522"/>
+<area shape="rect" id="node22" href="$float_8hpp.html" title=" " alt="" coords="817,416,969,441"/>
+<area shape="rect" id="node23" title=" " alt="" coords="665,497,727,522"/>
+<area shape="rect" id="node24" title=" " alt="" coords="751,497,830,522"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1261,577,1341,603"/>
+<area shape="rect" id="node28" title=" " alt="" coords="547,577,605,603"/>
+<area shape="rect" id="node32" href="$demangled-typename_8hpp.html" title=" " alt="" coords="1605,489,1773,529"/>
+<area shape="rect" id="node33" title=" " alt="" coords="2266,577,2342,603"/>
+<area shape="rect" id="node34" href="$noop-delete_8hpp.html" title=" " alt="" coords="2231,497,2433,522"/>
+<area shape="rect" id="node35" href="$type-traits_8hpp.html" title=" " alt="" coords="2017,497,2207,522"/>
+<area shape="rect" id="node36" title=" " alt="" coords="2508,497,2593,522"/>
+<area shape="rect" id="node37" title=" " alt="" coords="2617,497,2687,522"/>
+<area shape="rect" id="node38" title=" " alt="" coords="1849,497,1919,522"/>
+<area shape="rect" id="node40" title=" " alt="" coords="1943,497,1993,522"/>
+<area shape="rect" id="node45" title=" " alt="" coords="116,416,180,441"/>
+<area shape="rect" id="node54" title=" " alt="" coords="1529,247,1620,273"/>
+</map>

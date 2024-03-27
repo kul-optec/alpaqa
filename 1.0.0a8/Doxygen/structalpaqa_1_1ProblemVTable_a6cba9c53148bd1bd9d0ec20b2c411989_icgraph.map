@@ -1,0 +1,4 @@
+<map id="default_get_jac_g_num_nonzeros" name="default_get_jac_g_num_nonzeros">
+<area shape="rect" id="node1" title=" " alt="" coords="256,13,429,53"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a378d656ec2cb34fd18df3f98c4d12eac" title="Returns true if the problem provides an implementation of get_jac_g_num_nonzeros." alt="" coords="5,5,208,60"/>
+</map>

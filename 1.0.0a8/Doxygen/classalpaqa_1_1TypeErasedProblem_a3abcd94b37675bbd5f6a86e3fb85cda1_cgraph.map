@@ -1,0 +1,4 @@
+<map id="provides_eval_jac_g" name="provides_eval_jac_g">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of eval_jac_g." alt="" coords="5,13,160,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#a3dbdd7aa1979a82386a6048a1ea2d90a" title=" " alt="" coords="208,5,379,45"/>
+</map>

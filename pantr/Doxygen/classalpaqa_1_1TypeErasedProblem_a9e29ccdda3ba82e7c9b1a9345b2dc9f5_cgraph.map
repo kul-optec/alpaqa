@@ -1,0 +1,4 @@
+<map id="provides_get_hess_ψ_num_nonzeros" name="provides_get_hess_ψ_num_nonzeros">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of get_hess_ψ_num_nonzeros." alt="" coords="5,13,164,53"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#ae206465f99a70da05cc567113519fc31" title=" " alt="" coords="212,5,383,60"/>
+</map>

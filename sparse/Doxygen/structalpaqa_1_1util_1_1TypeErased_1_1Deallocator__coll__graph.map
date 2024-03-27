@@ -1,0 +1,7 @@
+<map id="TypeErased&lt; VTable, Allocator, SmallBufferSize &gt;::Deallocator" name="TypeErased&lt; VTable, Allocator, SmallBufferSize &gt;::Deallocator">
+<area shape="rect" id="Node000001" title="Deallocates the storage when destroyed." alt="" coords="13,1096,200,1311"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="5,213,208,1033"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,1033,109,1080,104,1080,104,1033"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="48,5,165,151"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,151,109,197,104,197,104,151"/>
+</map>

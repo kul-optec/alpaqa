@@ -1,0 +1,9 @@
+<map id="ring_reverse_iter" name="ring_reverse_iter">
+<area shape="rect" id="node1" title="Get reverse iterators in the circular buffer." alt="" coords="832,42,964,67"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3322cd9c833dc65702b574640eefe1" title="Solve the least squares problem Ax = b." alt="" coords="701,42,784,67"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="467,5,653,45"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#a33f0a7b277c8d3c311b0b4868c55eda1" title="Solve the least squares problem AX = B." alt="" coords="531,70,589,95"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,5,419,45"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1AndersonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,5,200,45"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#a5f3732971788e558366a2b509a538206" title="Solve the least squares problem AX = B." alt="" coords="305,70,362,95"/>
+</map>

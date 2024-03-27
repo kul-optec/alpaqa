@@ -1,0 +1,8 @@
+<map id="get_jac_g_sparsity" name="get_jac_g_sparsity">
+<area shape="rect" id="Node000001" title="[Optional] Function that returns (a view of) the sparsity pattern of the Jacobian of the constraints." alt="" coords="233,61,376,86"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="18,5,173,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="234,60,172,46,173,40,236,55"/>
+<area shape="rect" id="Node000003" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="5,94,185,149"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,92,186,103,185,98,235,87"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="130,83,117,75,95,73,77,75,65,79,60,86,60,94,54,94,55,84,62,75,76,69,95,67,119,70,132,78"/>
+</map>

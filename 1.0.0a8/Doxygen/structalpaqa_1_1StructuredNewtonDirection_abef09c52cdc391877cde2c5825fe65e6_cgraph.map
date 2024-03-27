@@ -1,0 +1,12 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,173,84,198"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a1c6397671d61e7194556ea6c691764d0" title="[Optional] Function that evaluates the Hessian of the augmented Lagrangian," alt="" coords="134,5,337,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#afdb9f9fd484c7b8d1b88649c2f9fbd72" title="[Optional] Function that gets the number of nonzeros of the Hessian of the augmented Lagrangian." alt="" coords="132,69,339,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="134,133,337,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html#adb1bf2644a0b8e0c7120e3d546e2cbfe" title="Returns true if the problem provides an implementation of eval_hess_ψ." alt="" coords="134,197,337,237"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedProblem.html#a23a7eb67244853ec477fceda3be3cc2a" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="134,261,337,301"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="134,325,337,365"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1ProblemVTable.html#aca67ae9ab2885da9182b4577bc53d5e0" title=" " alt="" coords="387,197,557,237"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1ProblemVTable.html#a8d79bb0d5b30cc78393ad662e40c680c" title=" " alt="" coords="387,261,557,301"/>
+<area shape="rect" id="node10" href="$structalpaqa_1_1ProblemVTable.html#a984c0b730741e239ffa433b88b755304" title=" " alt="" coords="387,325,557,365"/>
+</map>

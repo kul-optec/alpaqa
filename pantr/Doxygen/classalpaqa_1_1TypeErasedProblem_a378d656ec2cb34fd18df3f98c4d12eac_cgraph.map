@@ -1,0 +1,4 @@
+<map id="provides_get_jac_g_num_nonzeros" name="provides_get_jac_g_num_nonzeros">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of get_jac_g_num_nonzeros." alt="" coords="5,13,152,53"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ProblemVTable.html#a6cba9c53148bd1bd9d0ec20b2c411989" title=" " alt="" coords="200,5,381,60"/>
+</map>

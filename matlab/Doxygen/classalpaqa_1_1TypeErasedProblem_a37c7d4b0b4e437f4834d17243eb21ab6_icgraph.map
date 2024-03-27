@@ -1,0 +1,5 @@
+<map id="get_hess_ψ_sparsity" name="get_hess_ψ_sparsity">
+<area shape="rect" id="Node000001" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the augmented Lag..." alt="" coords="244,13,399,38"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1StructuredNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,28,196,28,196,23,230,23"/>
+</map>

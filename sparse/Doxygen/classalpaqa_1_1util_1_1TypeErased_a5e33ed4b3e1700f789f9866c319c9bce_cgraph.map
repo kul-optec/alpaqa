@@ -1,0 +1,7 @@
+<map id="~TypeErased" name="~TypeErased">
+<area shape="rect" id="Node000001" title="Destructor." alt="" coords="5,5,112,31"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a4b66d5e31b5dc18b314c8a68163263bd" title="Destroy the type&#45;erased object (if not empty), and deallocate the memory if necessary." alt="" coords="160,5,233,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,15,146,15,146,21,112,21"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Deallocate the memory without invoking the destructor." alt="" coords="281,5,372,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="233,15,268,15,268,21,233,21"/>
+</map>
