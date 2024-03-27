@@ -64,7 +64,7 @@ problem types:
 methods:
     panoc[.<direction>]:
         PANOC solver with the given direction.
-        Directions include: lbfgs, struclbfgs, anderson.
+        Directions include: lbfgs, struclbfgs, anderson, convex-newton.
     zerofpr[.<direction>]:
         ZeroFPR solver, supports the same directions as PANOC.
     pantr:

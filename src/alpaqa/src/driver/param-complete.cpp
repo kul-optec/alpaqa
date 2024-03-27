@@ -112,7 +112,7 @@ struct Struct {};
 
 struct RootOpts {
     [[no_unique_address]] Value method, out, sol, x0, mul_g0, mul_x0, num_exp;
-    bool extra_stats;
+    bool extra_stats, show_funcs;
     Struct problem;
 };
 
@@ -130,6 +130,7 @@ PARAMS_TABLE(
                   "Initial guess for the bound constraint multipliers"),    //
     PARAMS_MEMBER(num_exp, "Number of times to repeat the experiment"),     //
     PARAMS_MEMBER(extra_stats, "Log more per-iteration solver statistics"), //
+    PARAMS_MEMBER(show_funcs, "Print the provided problem functions"),      //
     PARAMS_MEMBER(problem, "Options to pass to the problem"),               //
 );
 
