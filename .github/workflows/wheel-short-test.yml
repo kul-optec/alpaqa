@@ -66,6 +66,7 @@ jobs:
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.11.1;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           ALPAQA_WITH_CUTEST = "On"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
           EOF
           python${{ env.PYTHON_VERSION }} -m build -w . \
               -C--cross="$PWD/ninja-${{ matrix.config }}.cross.toml" \
@@ -156,6 +157,14 @@ jobs:
           python -m pip install -U pip build cmake ninja
           ./scripts/install-eigen.sh
           ./scripts/install-casadi-static.sh
+      - name: Disable Fortran
+        run: |
+          cat > py-build-cmake.local.toml <<- EOF
+          [cmake.options]
+          CMAKE_Fortran_COMPILER = "NOTFOUND"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
+          EOF
+        shell: bash
       - name: Build
         run: |
           source ./py-venv/bin/activate
@@ -205,6 +214,7 @@ jobs:
           cat > py-build-cmake.local.toml <<- EOF
           [cmake.options]
           CMAKE_Fortran_COMPILER = "NOTFOUND"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
           EOF
         shell: bash
       - name: Build wheels

@@ -46,7 +46,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a12
+        run: python${{ env.PYTHON_VERSION }} -m pip install -U 'pip' 'build' 'pybind11-stubgen~=2.5' 'numpy<2' 'py-build-cmake~=0.2.0a12'
       # Build
       - name: Native build
         run: |
@@ -59,6 +59,7 @@ jobs:
               -D CMAKE_Fortran_COMPILER="$staging/x-tools/$host/bin/$host-gfortran" \
               -D USE_GLOBAL_PYBIND11=On \
               -D ALPAQA_WITH_CUTEST=On \
+              -D ALPAQA_WITH_EXTERNAL_CASADI=On \
               -D CMAKE_FIND_ROOT_PATH="$staging/pybind11;$staging/eigen-master;$staging/casadi"
           $pbc_cli -B native-build build -- -t ${{ env.C_EXTENSIONS }}
           $pbc_cli -B native-build install --component python_stubs -- --prefix "$PWD/staging/python"
@@ -127,7 +128,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ matrix.python-version }} -m pip install -U pip build pybind11-stubgen~=0.16.2 py-build-cmake~=0.2.0a12
+        run: python${{ matrix.python-version }} -m pip install -U 'pip' 'build' 'pybind11-stubgen~=2.5' 'numpy<2' 'py-build-cmake~=0.2.0a12'
       # Download stubs
       - name: Download stubs
         uses: actions/download-artifact@v4
@@ -149,6 +150,7 @@ jobs:
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.11.1;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           ALPAQA_WITH_CUTEST = "On"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
           EOF
           python${{ matrix.python-version }} -m build -w . \
               -C--cross="$PWD/ninja-debug-release.cross.toml" \
@@ -219,6 +221,7 @@ jobs:
           CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.11.1;$staging/eigen-master;$staging/casadi"
           USE_GLOBAL_PYBIND11 = "On"
           ALPAQA_WITH_CUTEST = "On"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
           EOF
           python${{ env.PYTHON_VERSION }} -m build . \
               -C--cross="$PWD/ninja-debug.cross.toml" \
@@ -311,6 +314,7 @@ jobs:
           cat > py-build-cmake.local.toml <<- EOF
           [cmake.options]
           CMAKE_Fortran_COMPILER = "NOTFOUND"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
           EOF
         shell: bash
       - name: Build wheels
@@ -374,6 +378,14 @@ jobs:
           python -m pip install -U pip build cmake ninja
           ./scripts/install-eigen.sh
           ./scripts/install-casadi-static.sh
+      - name: Disable Fortran
+        run: |
+          cat > py-build-cmake.local.toml <<- EOF
+          [cmake.options]
+          CMAKE_Fortran_COMPILER = "NOTFOUND"
+          ALPAQA_WITH_EXTERNAL_CASADI = "On"
+          EOF
+        shell: bash
       - name: Build
         run: |
           source ./py-venv/bin/activate
