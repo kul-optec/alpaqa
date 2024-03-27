@@ -61,7 +61,6 @@ if (ALPAQA_WITH_LBFGSB)
         "src/inner/lbfgsb.py.cpp"
         "src/params/lbfgsb-params.cpp"
     )
-    target_compile_definitions(_alpaqa PRIVATE ALPAQA_WITH_LBFGSB)
     target_link_libraries(_alpaqa PRIVATE alpaqa::lbfgsb-adapter)
 endif()
 target_include_directories(_alpaqa PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
