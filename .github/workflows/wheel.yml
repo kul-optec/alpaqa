@@ -79,25 +79,9 @@ jobs:
       image: ubuntu:jammy
     strategy:
       matrix:
-        pypy: ['', pypy]
+        pypy: ['']
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
         host: [x86_64-centos7-linux-gnu, armv7-neon-linux-gnueabihf, armv6-rpi-linux-gnueabihf, aarch64-rpi3-linux-gnu]
-        include:
-          - python-version: '3.8'
-            pypy-version: '7.3.11'
-          - python-version: '3.9'
-            pypy-version: '7.3.15'
-          - python-version: '3.10'
-            pypy-version: '7.3.15'
-        exclude:
-          - pypy: pypy
-            python-version: '3.11'
-          - pypy: pypy
-            python-version: '3.12'
-          - pypy: pypy
-            host: armv7-neon-linux-gnueabihf
-          - pypy: pypy
-            host: armv6-rpi-linux-gnueabihf
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
@@ -116,7 +100,6 @@ jobs:
           host: ${{ matrix.host }}
           python-version: ${{ matrix.python-version }}
           pypy: ${{ matrix.pypy }}
-          pypy-version: ${{ matrix.pypy-version }}
       # Ccache
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
@@ -266,13 +249,6 @@ jobs:
       matrix:
         arch: ['AMD64', 'ARM64', 'x86']
         python-id: ['cp38-', 'cp39-', 'cp310-', 'cp311-', 'cp312-']
-        include:
-          - arch: 'AMD64'
-            python-id: 'pp38-'
-          - arch: 'AMD64'
-            python-id: 'pp39-'
-          - arch: 'AMD64'
-            python-id: 'pp310-'
         exclude:
           - arch: 'ARM64'
             python-id: 'cp38-'
