@@ -87,6 +87,7 @@ problem = (
     alpaqa.minimize(mpc_cost, cs.vec(mpc_u))  # objective and variables
     .subject_to_box(C)  #                       box constraints on the variables
     .with_param(mpc_param, param_0)  #          parameters to be changed later
+    .with_name(f"inverted_pendulum_{N_horiz}")  # name used in generated files
 ).compile(sym=cs.MX.sym)
 
 from datetime import timedelta

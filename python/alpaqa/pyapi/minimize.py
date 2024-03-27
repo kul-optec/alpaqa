@@ -120,7 +120,9 @@ class MinimizationProblemDescription:
 
     def with_name(self, name: str) -> "MinimizationProblemDescription":
         """
-        Set the name of the problem.
+        Set the name of the problem. Must be a valid file name, and for compiled
+        problems, it should also be a valid C identifier, therefore it is
+        recommended to stick to letters, numbers and underscores.
         """
         ret = copy(self)
         ret.name = name

@@ -97,7 +97,8 @@ problem = (
     .subject_to_box(C)  #           box constraints on variables    x ∊ C
     .subject_to(mpc_constr, D)  #   general constraints             g(x; p) ∊ D
     .with_param(mpc_param)  #       parameter to be changed later   p
-    .with_param_value(param_0)  # initial parameter value
+    .with_param_value(param_0)  #   initial parameter value
+    .with_name(f"hanging_chain_{N_horiz}")  #  name used in generated files
 ).compile(sym=cs.MX.sym)
 
 # %% NLP solver
