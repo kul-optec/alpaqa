@@ -185,14 +185,12 @@ endif()
 # Optimal control problems
 if (ALPAQA_WITH_OCP AND ALPAQA_WITH_CASADI_OCP)
     add_library(casadi-ocp-loader "interop/casadi/src/CasADiControlProblem.cpp")
-    target_include_directories(casadi-ocp-loader PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
-    target_compile_definitions(casadi-ocp-loader PUBLIC ALPAQA_WITH_CASADI_OCP)
+    target_compile_definitions(casadi-loader PUBLIC
+        $<$<BOOL:${ALPAQA_WITH_CASADI_OCP}>:ALPAQA_WITH_CASADI_OCP>)
     set_property(TARGET casadi-ocp-loader
         PROPERTY OUTPUT_NAME alpaqa-casadi-ocp-loader)
     target_link_libraries(casadi-ocp-loader
-        PUBLIC  alpaqa::alpaqa
+        PUBLIC  alpaqa::alpaqa alpaqa::casadi-loader
         PRIVATE alpaqa::warnings)
     if (ALPAQA_WITH_EXTERNAL_CASADI)
         target_link_libraries(casadi-ocp-loader PRIVATE casadi Threads::Threads)
