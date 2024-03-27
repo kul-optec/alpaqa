@@ -23,11 +23,11 @@ The solvers in this library solve minimization problems of the following form:
 Documentation
 -------------
 
-- `Documentation (Sphinx) <https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/index.html>`_
-- `Python examples <https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/examples/index.html>`_
-- `Documentation (Doxygen) <https://kul-optec.github.io/alpaqa/1.0.0a17/Doxygen/index.html>`_
-- `C++ examples <https://kul-optec.github.io/alpaqa/1.0.0a17/Doxygen/examples.html>`_
-- `Matlab documentation <https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/reference/matlab-api.html>`_
+- `Documentation (Sphinx) <https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/index.html>`_
+- `Python examples <https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/examples/index.html>`_
+- `Documentation (Doxygen) <https://kul-optec.github.io/alpaqa/1.0.0a18/Doxygen/index.html>`_
+- `C++ examples <https://kul-optec.github.io/alpaqa/1.0.0a18/Doxygen/examples.html>`_
+- `Matlab documentation <https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/reference/matlab-api.html>`_
 
 Installation
 ------------
@@ -39,7 +39,7 @@ The Python interface can be installed directly from PyPI:
     python3 -m pip install --upgrade --pre alpaqa
 
 For more information, please see the full
-`installation instructions <https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/install/installation.html>`_.
+`installation instructions <https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/install/installation.html>`_.
 
 Publications
 ------------

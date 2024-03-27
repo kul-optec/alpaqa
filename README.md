@@ -1,7 +1,7 @@
 [![CI Tests: C++](https://github.com/kul-optec/alpaqa/actions/workflows/linux.yml/badge.svg)](https://github.com/kul-optec/alpaqa/actions/workflows/linux.yml)
 [![CI Tests: Python](https://github.com/kul-optec/alpaqa/actions/workflows/wheel-short-test.yml/badge.svg)](https://github.com/kul-optec/alpaqa/actions/workflows/wheel-short-test.yml)
 [![CI: Matlab](https://github.com/kul-optec/alpaqa/actions/workflows/matlab.yml/badge.svg)](https://github.com/kul-optec/alpaqa/actions/workflows/matlab.yml)
-[![Docs](https://img.shields.io/badge/Documentation-1.0.0a17-blue?logo=sphinx)](https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/index.html)
+[![Docs](https://img.shields.io/badge/Documentation-1.0.0a18-blue?logo=sphinx)](https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/index.html)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/alpaqa?label=PyPI&logo=python)](https://pypi.org/project/alpaqa)
 [![GitHub all releases](https://img.shields.io/github/downloads/kul-optec/alpaqa/total?label=Downloads&logo=cplusplus)](https://github.com/kul-optec/alpaqa/releases)
 [![GitHub License](https://img.shields.io/github/license/kul-optec/alpaqa?label=License&logo=gnu)](https://github.com/kul-optec/alpaqa/blob/develop/LICENSE)
@@ -32,11 +32,11 @@ $$
 
 ## Documentation
 
-- [**Documentation** (Sphinx)](https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/index.html)
-- [**Python examples**](https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/examples/index.html)
-- [**C++ documentation** (Doxygen)](https://kul-optec.github.io/alpaqa/1.0.0a17/Doxygen/index.html)
-- [**C++ examples**](https://kul-optec.github.io/alpaqa/1.0.0a17/Doxygen/examples.html)
-- [**Matlab documentation**](https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/reference/matlab-api.html)
+- [**Documentation** (Sphinx)](https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/index.html)
+- [**Python examples**](https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/examples/index.html)
+- [**C++ documentation** (Doxygen)](https://kul-optec.github.io/alpaqa/1.0.0a18/Doxygen/index.html)
+- [**C++ examples**](https://kul-optec.github.io/alpaqa/1.0.0a18/Doxygen/examples.html)
+- [**Matlab documentation**](https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/reference/matlab-api.html)
 
 ## Installation
 
@@ -47,7 +47,7 @@ python3 -m pip install --upgrade --pre alpaqa
 ```
 
 For more information, please see the full
-[installation instructions](https://kul-optec.github.io/alpaqa/1.0.0a17/Sphinx/install/installation.html).
+[installation instructions](https://kul-optec.github.io/alpaqa/1.0.0a18/Sphinx/install/installation.html).
 
 ## Publications
 
