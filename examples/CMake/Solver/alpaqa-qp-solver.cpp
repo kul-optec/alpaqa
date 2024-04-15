@@ -62,25 +62,25 @@ int main(int argc, const char *argv[]) try {
     // y and x have been overwritten by the solution
 
     // Print the results
-    std::cout << '\n'
-              << *counted_problem.evaluations << '\n'
-              << "status: " << stats.status << '\n'
-              << "f = " << problem.eval_objective(x) << '\n'
-              << "inner iterations: " << stats.inner.iterations << '\n'
-              << "outer iterations: " << stats.outer_iterations << '\n'
-              << "ε = " << stats.ε << '\n'
-              << "δ = " << stats.δ << '\n'
-              << "elapsed time:     "
-              << std::chrono::duration<double>{stats.elapsed_time}.count()
-              << " s" << '\n'
-              << "x = " << x.transpose() << '\n'
-              << "y = " << y.transpose() << '\n'
-              << "avg τ = " << (stats.inner.sum_τ / stats.inner.count_τ) << '\n'
-              << "L-BFGS rejected = " << stats.inner.lbfgs_rejected << '\n'
-              << "L-BFGS failures = " << stats.inner.lbfgs_failures << '\n'
-              << "Line search failures = " << stats.inner.linesearch_failures
-              << '\n'
-              << std::endl;
+    std::cout //
+        << '\n'
+        << *counted_problem.evaluations << '\n'
+        << "status: " << stats.status << '\n'
+        << "f = " << problem.eval_objective(x) << '\n'
+        << "inner iterations: " << stats.inner.iterations << '\n'
+        << "outer iterations: " << stats.outer_iterations << '\n'
+        << "ε = " << stats.ε << '\n'
+        << "δ = " << stats.δ << '\n'
+        << "elapsed time:     "
+        << std::chrono::duration<double>{stats.elapsed_time}.count() << " s"
+        << '\n'
+        << "x = " << x.transpose() << '\n'
+        << "y = " << y.transpose() << '\n'
+        << "avg τ = " << (stats.inner.sum_τ / stats.inner.count_τ) << '\n'
+        << "L-BFGS rejected = " << stats.inner.direction_update_rejected << '\n'
+        << "L-BFGS failures = " << stats.inner.direction_failures << '\n'
+        << "Line search failures = " << stats.inner.linesearch_failures << '\n'
+        << std::endl;
     return stats.status == alpaqa::SolverStatus::Converged ? 0 : 1;
 } catch (const std::exception &e) {
     std::cerr << demangled_typename(typeid(e)) << ": " << e.what() << '\n';

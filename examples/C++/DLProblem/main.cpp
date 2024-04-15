@@ -75,22 +75,22 @@ int main(int argc, char *argv[]) {
 
     // Print the results
     std::cout << '\n' << *counted_problem.evaluations << '\n';
-    std::cout << "status: " << stats.status << '\n'
-              << "solver: " << solver.get_name() << '\n'
-              << "f = " << problem.eval_objective(x) << '\n'
-              << "inner iterations: " << stats.inner.iterations << '\n'
-              << "outer iterations: " << stats.outer_iterations << '\n'
-              << "ε = " << stats.ε << '\n'
-              << "δ = " << stats.δ << '\n'
-              << "elapsed time:     "
-              << std::chrono::duration<double>{stats.elapsed_time}.count()
-              << " s" << '\n'
-              << "x = " << x.transpose() << '\n'
-              << "y = " << y.transpose() << '\n'
-              << "avg τ = " << (stats.inner.sum_τ / stats.inner.count_τ) << '\n'
-              << "L-BFGS rejected = " << stats.inner.lbfgs_rejected << '\n'
-              << "L-BFGS failures = " << stats.inner.lbfgs_failures << '\n'
-              << "Line search failures = " << stats.inner.linesearch_failures
-              << '\n'
-              << std::endl;
+    std::cout //
+        << "status: " << stats.status << '\n'
+        << "solver: " << solver.get_name() << '\n'
+        << "f = " << problem.eval_objective(x) << '\n'
+        << "inner iterations: " << stats.inner.iterations << '\n'
+        << "outer iterations: " << stats.outer_iterations << '\n'
+        << "ε = " << stats.ε << '\n'
+        << "δ = " << stats.δ << '\n'
+        << "elapsed time:     "
+        << std::chrono::duration<double>{stats.elapsed_time}.count() << " s"
+        << '\n'
+        << "x = " << x.transpose() << '\n'
+        << "y = " << y.transpose() << '\n'
+        << "avg τ = " << (stats.inner.sum_τ / stats.inner.count_τ) << '\n'
+        << "L-BFGS rejected = " << stats.inner.direction_update_rejected << '\n'
+        << "L-BFGS failures = " << stats.inner.direction_failures << '\n'
+        << "Line search failures = " << stats.inner.linesearch_failures << '\n'
+        << std::endl;
 }

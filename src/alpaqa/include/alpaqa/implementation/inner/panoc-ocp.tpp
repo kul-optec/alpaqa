@@ -675,7 +675,7 @@ auto PANOCOCPSolver<Conf>::operator()(
             if (not did_gn)
                 lbfgs.reset();
         }
-        s.lbfgs_failures += (τ_init == 0 && k > 0);
+        s.direction_failures += (τ_init == 0 && k > 0);
 
         bool do_next_gn = params.gn_interval > 0 &&
                           ((k + 1) % params.gn_interval) == 0 &&
@@ -790,7 +790,7 @@ auto PANOCOCPSolver<Conf>::operator()(
             }
             if (!reset_because_gn) { // TODO: this may be too restrictive
                 alpaqa::util::Timed t{s.time_lbfgs_update};
-                s.lbfgs_rejected += dir_rejected = not lbfgs.update(
+                s.direction_update_rejected += dir_rejected = not lbfgs.update(
                     curr->u, next->u, curr->grad_ψ, next->grad_ψ,
                     LBFGS<config_t>::Sign::Positive, force);
             }

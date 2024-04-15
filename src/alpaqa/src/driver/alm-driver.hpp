@@ -109,12 +109,14 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
         extra.emplace_back(
             "stepsize_backtracks",
             static_cast<index_t>(stats.inner.stepsize_backtracks));
-    if constexpr (requires { stats.inner.lbfgs_failures; })
-        extra.emplace_back("lbfgs_failures",
-                           static_cast<index_t>(stats.inner.lbfgs_failures));
-    if constexpr (requires { stats.inner.lbfgs_rejected; })
-        extra.emplace_back("lbfgs_rejected",
-                           static_cast<index_t>(stats.inner.lbfgs_rejected));
+    if constexpr (requires { stats.inner.direction_failures; })
+        extra.emplace_back(
+            "direction_failures",
+            static_cast<index_t>(stats.inner.direction_failures));
+    if constexpr (requires { stats.inner.direction_update_rejected; })
+        extra.emplace_back(
+            "direction_update_rejected",
+            static_cast<index_t>(stats.inner.direction_update_rejected));
     if constexpr (requires { stats.inner.accelerated_step_rejected; })
         extra.emplace_back(
             "accelerated_step_rejected",

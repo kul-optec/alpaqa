@@ -242,10 +242,10 @@ auto LBFGSBSolver::operator()(
     // Progress callback
     do_progress_cb(k, x, ψ, grad_ψ, τ_max, τ_rel, proj_grad_norm, s.status);
 
-    auto time_elapsed = clock::now() - start_time;
-    s.elapsed_time    = duration_cast<nanoseconds>(time_elapsed);
-    s.lbfgs_rejected  = static_cast<unsigned>(lbfgs_skipped);
-    s.iterations      = static_cast<unsigned>(num_iter);
+    auto time_elapsed           = clock::now() - start_time;
+    s.elapsed_time              = duration_cast<nanoseconds>(time_elapsed);
+    s.direction_update_rejected = static_cast<unsigned>(lbfgs_skipped);
+    s.iterations                = static_cast<unsigned>(num_iter);
 
     // Check final error
     s.ε = proj_grad_norm;

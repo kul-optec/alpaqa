@@ -34,9 +34,9 @@ struct LBFGSB_ADAPTER_EXPORT LBFGSBStats {
     real_t ε            = inf<config_t>;
     std::chrono::nanoseconds elapsed_time{};
     std::chrono::nanoseconds time_progress_callback{};
-    unsigned iterations     = 0;
-    real_t final_ψ          = 0;
-    unsigned lbfgs_rejected = 0;
+    unsigned iterations                = 0;
+    real_t final_ψ                     = 0;
+    unsigned direction_update_rejected = 0;
 };
 
 struct LBFGSBProgressInfo {
@@ -129,7 +129,7 @@ struct InnerStatsAccumulator<lbfgsb::LBFGSBStats> {
     real_t final_ψ = 0;
     /// Total number of times that the L-BFGS update was rejected (i.e. it
     /// could have resulted in a non-positive definite Hessian estimate).
-    unsigned lbfgs_rejected = 0;
+    unsigned direction_update_rejected = 0;
 };
 
 inline InnerStatsAccumulator<lbfgsb::LBFGSBStats> &
@@ -139,7 +139,7 @@ operator+=(InnerStatsAccumulator<lbfgsb::LBFGSBStats> &acc,
     acc.elapsed_time += s.elapsed_time;
     acc.time_progress_callback += s.time_progress_callback;
     acc.final_ψ = s.final_ψ;
-    acc.lbfgs_rejected += s.lbfgs_rejected;
+    acc.direction_update_rejected += s.direction_update_rejected;
     return acc;
 }
 

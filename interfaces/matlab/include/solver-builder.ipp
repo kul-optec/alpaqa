@@ -128,10 +128,12 @@ SolverResults run_alm_solver(typename Solver::Problem &problem, crvec x0,
     if constexpr (requires { s.inner.stepsize_backtracks; })
         inner["stepsize_backtracks"] =
             static_cast<index_t>(s.inner.stepsize_backtracks);
-    if constexpr (requires { s.inner.lbfgs_failures; })
-        inner["lbfgs_failures"] = static_cast<index_t>(s.inner.lbfgs_failures);
-    if constexpr (requires { s.inner.lbfgs_rejected; })
-        inner["lbfgs_rejected"] = static_cast<index_t>(s.inner.lbfgs_rejected);
+    if constexpr (requires { s.inner.direction_failures; })
+        inner["direction_failures"] =
+            static_cast<index_t>(s.inner.direction_failures);
+    if constexpr (requires { s.inner.direction_update_rejected; })
+        inner["direction_update_rejected"] =
+            static_cast<index_t>(s.inner.direction_update_rejected);
     if constexpr (requires { s.inner.accelerated_step_rejected; })
         inner["accelerated_step_rejected"] =
             static_cast<index_t>(s.inner.accelerated_step_rejected);

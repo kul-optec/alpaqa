@@ -74,8 +74,8 @@ int main() {
               << " s" << '\n'
               << "x = " << x.transpose() << '\n'
               << "avg τ = " << (stats.sum_τ / stats.count_τ) << '\n'
-              << "L-BFGS rejected = " << stats.lbfgs_rejected << '\n'
-              << "L-BFGS failures = " << stats.lbfgs_failures << '\n'
+              << "L-BFGS rejected = " << stats.direction_update_rejected << '\n'
+              << "L-BFGS failures = " << stats.direction_failures << '\n'
               << "Line search failures = " << stats.linesearch_failures << '\n'
               << std::endl;
 }

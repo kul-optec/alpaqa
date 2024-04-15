@@ -328,7 +328,7 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
             if (τ_init == 1 && not q.allFinite())
                 τ_init = 0;
             if (τ_init != 1) { // If we computed a quasi-Newton step
-                ++s.lbfgs_failures;
+                ++s.direction_failures;
                 direction.reset(); // Is there anything else we can do?
             }
         }
@@ -395,13 +395,15 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
             // Update L-BFGS
             if (update_lbfgs_in_accel && !updated_lbfgs) {
                 if (τ > 0 && params.update_direction_from_prox_step) {
-                    s.lbfgs_rejected += dir_rejected = not direction.update(
-                        curr->γ, next->γ, curr->x̂, next->x, prox->p, next->p,
-                        prox->grad_ψ, next->grad_ψ);
+                    s.direction_update_rejected += dir_rejected =
+                        not direction.update(curr->γ, next->γ, curr->x̂, next->x,
+                                             prox->p, next->p, prox->grad_ψ,
+                                             next->grad_ψ);
                 } else {
-                    s.lbfgs_rejected += dir_rejected = not direction.update(
-                        curr->γ, next->γ, curr->x, next->x, curr->p, next->p,
-                        curr->grad_ψ, next->grad_ψ);
+                    s.direction_update_rejected += dir_rejected =
+                        not direction.update(curr->γ, next->γ, curr->x, next->x,
+                                             curr->p, next->p, curr->grad_ψ,
+                                             next->grad_ψ);
                 }
                 update_lbfgs_in_accel = false;
                 updated_lbfgs         = true;
@@ -423,13 +425,15 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
             // Update L-BFGS
             if (update_lbfgs_in_linesearch && !updated_lbfgs) {
                 if (τ > 0 && params.update_direction_from_prox_step) {
-                    s.lbfgs_rejected += dir_rejected = not direction.update(
-                        curr->γ, next->γ, curr->x̂, next->x, prox->p, next->p,
-                        prox->grad_ψ, next->grad_ψ);
+                    s.direction_update_rejected += dir_rejected =
+                        not direction.update(curr->γ, next->γ, curr->x̂, next->x,
+                                             prox->p, next->p, prox->grad_ψ,
+                                             next->grad_ψ);
                 } else {
-                    s.lbfgs_rejected += dir_rejected = not direction.update(
-                        curr->γ, next->γ, curr->x, next->x, curr->p, next->p,
-                        curr->grad_ψ, next->grad_ψ);
+                    s.direction_update_rejected += dir_rejected =
+                        not direction.update(curr->γ, next->γ, curr->x, next->x,
+                                             curr->p, next->p, curr->grad_ψ,
+                                             next->grad_ψ);
                 }
                 update_lbfgs_in_linesearch = false;
                 updated_lbfgs              = true;
@@ -469,13 +473,15 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
                 }
             }
             if (τ > 0 && params.update_direction_from_prox_step) {
-                s.lbfgs_rejected += dir_rejected = not direction.update(
-                    curr->γ, next->γ, curr->x̂, next->x, prox->p, next->p,
-                    prox->grad_ψ, next->grad_ψ);
+                s.direction_update_rejected += dir_rejected =
+                    not direction.update(curr->γ, next->γ, curr->x̂, next->x,
+                                         prox->p, next->p, prox->grad_ψ,
+                                         next->grad_ψ);
             } else {
-                s.lbfgs_rejected += dir_rejected = not direction.update(
-                    curr->γ, next->γ, curr->x, next->x, curr->p, next->p,
-                    curr->grad_ψ, next->grad_ψ);
+                s.direction_update_rejected += dir_rejected =
+                    not direction.update(curr->γ, next->γ, curr->x, next->x,
+                                         curr->p, next->p, curr->grad_ψ,
+                                         next->grad_ψ);
             }
         }
 

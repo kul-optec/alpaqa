@@ -63,15 +63,15 @@ struct WolfeStats {
     real_t ε            = inf<config_t>;
     std::chrono::nanoseconds elapsed_time{};
     std::chrono::nanoseconds time_progress_callback{};
-    unsigned iterations            = 0;
-    unsigned linesearch_failures   = 0;
-    unsigned linesearch_backtracks = 0;
-    unsigned lbfgs_failures        = 0;
-    unsigned lbfgs_rejected        = 0;
-    unsigned τ_1_accepted          = 0;
-    unsigned count_τ               = 0;
-    real_t sum_τ                   = 0;
-    real_t final_ψ                 = 0;
+    unsigned iterations                = 0;
+    unsigned linesearch_failures       = 0;
+    unsigned linesearch_backtracks     = 0;
+    unsigned direction_failures        = 0;
+    unsigned direction_update_rejected = 0;
+    unsigned τ_1_accepted              = 0;
+    unsigned count_τ                   = 0;
+    real_t sum_τ                       = 0;
+    real_t final_ψ                     = 0;
 };
 
 /// Iterate information for the unconstrained solver with Wolfe line search.
@@ -181,10 +181,10 @@ struct InnerStatsAccumulator<WolfeStats<Conf>> {
     /// Total number of Wolfe line search backtracking steps.
     unsigned linesearch_backtracks = 0;
     /// Total number of times that the L-BFGS direction was not finite.
-    unsigned lbfgs_failures = 0;
+    unsigned direction_failures = 0;
     /// Total number of times that the L-BFGS update was rejected (i.e. it
     /// could have resulted in a non-positive definite Hessian estimate).
-    unsigned lbfgs_rejected = 0;
+    unsigned direction_update_rejected = 0;
     /// Total number of times that a line search parameter of @f$ \tau = 1 @f$
     /// was accepted (i.e. no backtracking necessary).
     unsigned τ_1_accepted = 0;
@@ -207,8 +207,8 @@ operator+=(InnerStatsAccumulator<WolfeStats<Conf>> &acc,
     acc.time_progress_callback += s.time_progress_callback;
     acc.linesearch_failures += s.linesearch_failures;
     acc.linesearch_backtracks += s.linesearch_backtracks;
-    acc.lbfgs_failures += s.lbfgs_failures;
-    acc.lbfgs_rejected += s.lbfgs_rejected;
+    acc.direction_failures += s.direction_failures;
+    acc.direction_update_rejected += s.direction_update_rejected;
     acc.τ_1_accepted += s.τ_1_accepted;
     acc.count_τ += s.count_τ;
     acc.sum_τ += s.sum_τ;
