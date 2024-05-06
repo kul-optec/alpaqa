@@ -188,7 +188,8 @@ struct ProblemVTable : util::BasicVTable {
         // Combined evaluations
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_gradient, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_constraints, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_gradient_and_constraints_gradient_product, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P,
+                                  eval_objective_gradient_and_constraints_gradient_product, p);
         // Lagrangian and augmented lagrangian evaluations
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_gradient, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian, p);

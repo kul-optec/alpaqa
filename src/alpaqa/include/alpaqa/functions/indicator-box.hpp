@@ -49,4 +49,4 @@ alpaqa_tag_invoke(tag_t<alpaqa::prox_step>, Box<Conf> &self,
     return 0;
 }
 
-} // namespace alpaqa
+} // namespace alpaqa::sets

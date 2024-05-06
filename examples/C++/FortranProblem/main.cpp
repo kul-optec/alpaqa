@@ -15,20 +15,27 @@ ptrdiff_t problem_get_num_constr(void);
 double problem_eval_objective(const double *);
 void problem_eval_objective_gradient(const double *, double *);
 void problem_eval_constraints(const double *, double *);
-void problem_eval_constraints_gradient_product(const double *, const double *, double *);
+void problem_eval_constraints_gradient_product(const double *, const double *,
+                                               double *);
 }
 
 // Problem specification by inheriting from alpaqa::Problem
 struct FortranProblem : alpaqa::BoxConstrProblem<config_t> {
     using alpaqa::BoxConstrProblem<config_t>::BoxConstrProblem;
 
-    real_t eval_objective(crvec x) const { return problem_eval_objective(x.data()); }
+    real_t eval_objective(crvec x) const {
+        return problem_eval_objective(x.data());
+    }
     void eval_objective_gradient(crvec x, rvec fx) const {
         problem_eval_objective_gradient(x.data(), fx.data());
     }
-    void eval_constraints(crvec x, rvec gx) const { problem_eval_constraints(x.data(), gx.data()); }
-    void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const {
-        problem_eval_constraints_gradient_product(x.data(), y.data(), grad_gxy.data());
+    void eval_constraints(crvec x, rvec gx) const {
+        problem_eval_constraints(x.data(), gx.data());
+    }
+    void eval_constraints_gradient_product(crvec x, crvec y,
+                                           rvec grad_gxy) const {
+        problem_eval_constraints_gradient_product(x.data(), y.data(),
+                                                  grad_gxy.data());
     }
 };
 

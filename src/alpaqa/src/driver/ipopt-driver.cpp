@@ -23,7 +23,8 @@ SolverResults run_ipopt_solver(auto &problem,
     USING_ALPAQA_CONFIG(Problem::config_t);
 
     // Dimensions
-    length_t n = problem.problem.get_num_variables(), m = problem.problem.get_num_constraints();
+    length_t n = problem.problem.get_num_variables(),
+             m = problem.problem.get_num_constraints();
 
     // Initial guess
     if (auto sz = problem.initial_guess_x.size(); sz != n)

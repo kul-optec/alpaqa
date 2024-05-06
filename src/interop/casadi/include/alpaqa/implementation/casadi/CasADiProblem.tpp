@@ -295,7 +295,8 @@ void CasADiProblem<Conf>::eval_objective_gradient(crvec x, rvec grad_fx) const {
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::eval_objective_and_gradient(crvec x, rvec grad_fx) const -> real_t {
+auto CasADiProblem<Conf>::eval_objective_and_gradient(
+    crvec x, rvec grad_fx) const -> real_t {
     real_t f;
     impl->f_grad_f({x.data(), param.data()}, {&f, grad_fx.data()});
     return f;
@@ -312,7 +313,8 @@ void CasADiProblem<Conf>::eval_constraints(crvec x, rvec g) const {
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_constraints_gradient_product(crvec x, crvec y, rvec gxy) const {
+void CasADiProblem<Conf>::eval_constraints_gradient_product(crvec x, crvec y,
+                                                            rvec gxy) const {
     if (impl->m == 0) {
         gxy.setZero();
         return;
@@ -320,12 +322,13 @@ void CasADiProblem<Conf>::eval_constraints_gradient_product(crvec x, crvec y, rv
     if (impl->grad_g_prod)
         (*impl->grad_g_prod)({x.data(), param.data(), y.data()}, {gxy.data()});
     else
-        throw not_implemented_error("CasADiProblem::eval_constraints_gradient_product"); // TODO
+        throw not_implemented_error(
+            "CasADiProblem::eval_constraints_gradient_product"); // TODO
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ,
-                                      rvec work_n, rvec work_m) const {
+void CasADiProblem<Conf>::eval_augmented_lagrangian_gradient(
+    crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const {
 #if 0
     impl->grad_ψ({x.data(), param.data(), y.data(), Σ.data(),
                   this->D.lowerbound.data(), this->D.upperbound.data()},
@@ -339,10 +342,13 @@ void CasADiProblem<Conf>::eval_augmented_lagrangian_gradient(crvec x, crvec y, c
 
 template <Config Conf>
 typename CasADiProblem<Conf>::real_t
-CasADiProblem<Conf>::eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec,
-                                   rvec) const {
+CasADiProblem<Conf>::eval_augmented_lagrangian_and_gradient(crvec x, crvec y,
+                                                            crvec Σ,
+                                                            rvec grad_ψ, rvec,
+                                                            rvec) const {
     if (!impl->ψ_grad_ψ)
-        throw std::logic_error("CasADiProblem::eval_augmented_lagrangian_and_gradient");
+        throw std::logic_error(
+            "CasADiProblem::eval_augmented_lagrangian_and_gradient");
     real_t ψ;
     (*impl->ψ_grad_ψ)({x.data(), param.data(), y.data(), Σ.data(),
                        this->D.lowerbound.data(), this->D.upperbound.data()},
@@ -351,8 +357,8 @@ CasADiProblem<Conf>::eval_augmented_lagrangian_and_gradient(crvec x, crvec y, cr
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L,
-                                      rvec) const {
+void CasADiProblem<Conf>::eval_lagrangian_gradient(crvec x, crvec y,
+                                                   rvec grad_L, rvec) const {
     if (!impl->grad_L)
         throw std::logic_error("CasADiProblem::eval_lagrangian_gradient");
     (*impl->grad_L)({x.data(), param.data(), y.data()}, {grad_L.data()});
@@ -360,7 +366,8 @@ void CasADiProblem<Conf>::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L
 
 template <Config Conf>
 typename CasADiProblem<Conf>::real_t
-CasADiProblem<Conf>::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const {
+CasADiProblem<Conf>::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ,
+                                               rvec ŷ) const {
     if (!impl->ψ)
         throw std::logic_error("CasADiProblem::eval_augmented_lagrangian");
     real_t ψ;
@@ -391,7 +398,8 @@ Sparsity<Conf> convert_csc(const auto &sp, sparsity::Symmetry symmetry) {
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::get_constraints_jacobian_sparsity() const -> Sparsity {
+auto CasADiProblem<Conf>::get_constraints_jacobian_sparsity() const
+    -> Sparsity {
     sparsity::Dense<config_t> dense{
         .rows     = this->m,
         .cols     = this->n,
@@ -406,15 +414,17 @@ auto CasADiProblem<Conf>::get_constraints_jacobian_sparsity() const -> Sparsity 
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_constraints_jacobian(crvec x, rvec J_values) const {
+void CasADiProblem<Conf>::eval_constraints_jacobian(crvec x,
+                                                    rvec J_values) const {
     if (!impl->jac_g)
         throw std::logic_error("CasADiProblem::eval_constraints_jacobian");
     (*impl->jac_g)({x.data(), param.data()}, {J_values.data()});
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale,
-                                           crvec v, rvec Hv) const {
+void CasADiProblem<Conf>::eval_lagrangian_hessian_product(crvec x, crvec y,
+                                                          real_t scale, crvec v,
+                                                          rvec Hv) const {
     if (!impl->hess_L_prod)
         throw std::logic_error("CasADiProblem::eval_augmented_lagrangian");
     (*impl->hess_L_prod)({x.data(), param.data(), y.data(), &scale, v.data()},
@@ -436,8 +446,9 @@ auto CasADiProblem<Conf>::get_lagrangian_hessian_sparsity() const -> Sparsity {
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_lagrangian_hessian(crvec x, crvec y, real_t scale,
-                                      rvec H_values) const {
+void CasADiProblem<Conf>::eval_lagrangian_hessian(crvec x, crvec y,
+                                                  real_t scale,
+                                                  rvec H_values) const {
     if (!impl->hess_L)
         throw std::logic_error("CasADiProblem::eval_lagrangian_hessian");
     (*impl->hess_L)({x.data(), param.data(), y.data(), &scale},
@@ -445,11 +456,11 @@ void CasADiProblem<Conf>::eval_lagrangian_hessian(crvec x, crvec y, real_t scale
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ,
-                                           real_t scale, crvec v,
-                                           rvec Hv) const {
+void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian_product(
+    crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const {
     if (!impl->hess_ψ_prod)
-        throw std::logic_error("CasADiProblem::eval_augmented_lagrangian_hessian_product");
+        throw std::logic_error(
+            "CasADiProblem::eval_augmented_lagrangian_hessian_product");
     (*impl->hess_ψ_prod)({x.data(), param.data(), y.data(), Σ.data(), &scale,
                           this->D.lowerbound.data(), this->D.upperbound.data(),
                           v.data()},
@@ -457,7 +468,8 @@ void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian_product(crvec x, crv
 }
 
 template <Config Conf>
-auto CasADiProblem<Conf>::get_augmented_lagrangian_hessian_sparsity() const -> Sparsity {
+auto CasADiProblem<Conf>::get_augmented_lagrangian_hessian_sparsity() const
+    -> Sparsity {
     sparsity::Dense<config_t> dense{
         .rows     = this->n,
         .cols     = this->n,
@@ -471,10 +483,11 @@ auto CasADiProblem<Conf>::get_augmented_lagrangian_hessian_sparsity() const -> S
 }
 
 template <Config Conf>
-void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale,
-                                      rvec H_values) const {
+void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian(
+    crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const {
     if (!impl->hess_ψ)
-        throw std::logic_error("CasADiProblem::eval_augmented_lagrangian_hessian");
+        throw std::logic_error(
+            "CasADiProblem::eval_augmented_lagrangian_hessian");
     (*impl->hess_ψ)({x.data(), param.data(), y.data(), Σ.data(), &scale,
                      this->D.lowerbound.data(), this->D.upperbound.data()},
                     {H_values.data()});
@@ -493,7 +506,8 @@ bool CasADiProblem<Conf>::provides_eval_augmented_lagrangian_gradient() const {
     return impl->ψ_grad_ψ.has_value();
 }
 template <Config Conf>
-bool CasADiProblem<Conf>::provides_eval_augmented_lagrangian_and_gradient() const {
+bool CasADiProblem<Conf>::provides_eval_augmented_lagrangian_and_gradient()
+    const {
     return impl->ψ_grad_ψ.has_value();
 }
 template <Config Conf>
@@ -513,7 +527,8 @@ bool CasADiProblem<Conf>::provides_eval_lagrangian_hessian() const {
     return impl->hess_L.has_value();
 }
 template <Config Conf>
-bool CasADiProblem<Conf>::provides_eval_augmented_lagrangian_hessian_product() const {
+bool CasADiProblem<Conf>::provides_eval_augmented_lagrangian_hessian_product()
+    const {
     return impl->hess_ψ_prod.has_value();
 }
 template <Config Conf>

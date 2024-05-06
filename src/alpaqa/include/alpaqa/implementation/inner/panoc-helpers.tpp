@@ -94,13 +94,13 @@ struct PANOCHelpers {
                 return pₖ.norm();
             }
             case PANOCStopCrit::ProjGradUnitNorm: {
-                problem.eval_proximal_gradient_step(real_t(1), xₖ, grad_ψₖ, work_n1,
-                                            work_n2);
+                problem.eval_proximal_gradient_step(real_t(1), xₖ, grad_ψₖ,
+                                                    work_n1, work_n2);
                 return norm_inf(work_n2);
             }
             case PANOCStopCrit::ProjGradUnitNorm2: {
-                problem.eval_proximal_gradient_step(real_t(1), xₖ, grad_ψₖ, work_n1,
-                                            work_n2);
+                problem.eval_proximal_gradient_step(real_t(1), xₖ, grad_ψₖ,
+                                                    work_n1, work_n2);
                 return work_n2.norm();
             }
             case PANOCStopCrit::FPRNorm: {
@@ -111,8 +111,8 @@ struct PANOCHelpers {
             }
             case PANOCStopCrit::Ipopt: {
                 // work_n2 ← x̂ₖ - Π_C(x̂ₖ - ∇ψ(x̂ₖ))
-                problem.eval_proximal_gradient_step(real_t(1), x̂ₖ, grad_̂ψₖ, work_n1,
-                                            work_n2);
+                problem.eval_proximal_gradient_step(real_t(1), x̂ₖ, grad_̂ψₖ,
+                                                    work_n1, work_n2);
                 auto err = norm_inf(work_n2);
                 auto n   = 2 * (ŷₖ.size() + x̂ₖ.size());
                 if (n == 0)
@@ -128,8 +128,8 @@ struct PANOCHelpers {
                 return err / s_d;
             }
             case PANOCStopCrit::LBFGSBpp: {
-                problem.eval_proximal_gradient_step(real_t(1), xₖ, grad_ψₖ, work_n1,
-                                            work_n2);
+                problem.eval_proximal_gradient_step(real_t(1), xₖ, grad_ψₖ,
+                                                    work_n1, work_n2);
                 return norm_inf(work_n2) / std::fmax(real_t(1), xₖ.norm());
             }
             default:;
@@ -199,13 +199,13 @@ struct PANOCHelpers {
             γₖ /= 2;
 
             // Calculate x̂ₖ and pₖ (with new step size)
-            problem.eval_proximal_gradient_step(γₖ, xₖ, grad_ψₖ, /* in ⟹ out */ x̂ₖ, pₖ);
+            problem.eval_proximal_gradient_step(γₖ, xₖ, grad_ψₖ, x̂ₖ, pₖ);
             // Calculate ∇ψ(xₖ)ᵀpₖ and ‖pₖ‖²
             grad_ψₖᵀpₖ = grad_ψₖ.dot(pₖ);
             norm_sq_pₖ = pₖ.squaredNorm();
 
             // Calculate ψ(x̂ₖ) and ŷ(x̂ₖ)
-            ψx̂ₖ = problem.eval_augmented_lagrangian(x̂ₖ, y, Σ, /* in ⟹ out */ ŷx̂ₖ);
+            ψx̂ₖ = problem.eval_augmented_lagrangian(x̂ₖ, y, Σ, ŷx̂ₖ);
         }
         return old_γₖ;
     }
@@ -279,7 +279,8 @@ struct PANOCHelpers {
         real_t h      = cbrt_ε * (1 + xₖ.norm());
         rvec xₖh      = work_n1;
         xₖh           = xₖ + h * v;
-        problem.eval_augmented_lagrangian_gradient(xₖh, y, Σ, Hv, work_n2, work_m);
+        problem.eval_augmented_lagrangian_gradient(xₖh, y, Σ, Hv, work_n2,
+                                                   work_m);
         Hv -= grad_ψ;
         Hv /= h;
     }
@@ -317,8 +318,8 @@ struct PANOCHelpers {
         rvec work_m) {
 
         // Calculate ψ(x₀), ∇ψ(x₀)
-        ψ = problem.eval_augmented_lagrangian_and_gradient(x, y, Σ, /* in ⟹ out */ grad_ψ, work_n,
-                                  work_m);
+        ψ = problem.eval_augmented_lagrangian_and_gradient(
+            x, y, Σ, /* in ⟹ out */ grad_ψ, work_n, work_m);
         // Select a small step h for finite differences
         auto h =
             (grad_ψ.array() > 0)
@@ -326,8 +327,8 @@ struct PANOCHelpers {
         work_x        = x - h;
         real_t norm_h = h.norm();
         // Calculate ∇ψ(x₀ - h)
-        problem.eval_augmented_lagrangian_gradient(work_x, y, Σ, /* in ⟹ out */ work_grad_ψ, work_n,
-                            work_m);
+        problem.eval_augmented_lagrangian_gradient(
+            work_x, y, Σ, /* in ⟹ out */ work_grad_ψ, work_n, work_m);
 
         // Estimate Lipschitz constant using finite differences
         real_t L = (work_grad_ψ - grad_ψ).norm() / norm_h;
@@ -368,10 +369,11 @@ struct PANOCHelpers {
         work_n1       = xₖ + h;
         real_t norm_h = h.norm();
         // Calculate ∇ψ(x_0 + h)
-        problem.eval_augmented_lagrangian_gradient(work_n1, y, Σ, /* in ⟹ out */ work_n2, work_n3,
-                            work_m);
+        problem.eval_augmented_lagrangian_gradient(
+            work_n1, y, Σ, /* in ⟹ out */ work_n2, work_n3, work_m);
         // Calculate ∇ψ(x_0)
-        problem.eval_augmented_lagrangian_gradient(xₖ, y, Σ, /* in ⟹ out */ grad_ψ, work_n1, work_m);
+        problem.eval_augmented_lagrangian_gradient(
+            xₖ, y, Σ, /* in ⟹ out */ grad_ψ, work_n1, work_m);
 
         // Estimate Lipschitz constant using finite differences
         real_t L = (work_n2 - grad_ψ).norm() / norm_h;

@@ -229,8 +229,8 @@ class TypeErased {
 
   public:
     /// Default constructor.
-    TypeErased() noexcept(noexcept(allocator_type()) && noexcept(VTable())) =
-        default;
+    TypeErased() noexcept(noexcept(allocator_type()) &&
+                          noexcept(VTable())) = default;
     /// Default constructor (allocator aware).
     template <class Alloc>
     TypeErased(std::allocator_arg_t, const Alloc &alloc) : allocator{alloc} {}

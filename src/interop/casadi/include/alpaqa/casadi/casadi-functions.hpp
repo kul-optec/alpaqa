@@ -27,8 +27,8 @@ using fname              = ExternalFunction<"", int(const casadi_real **arg, cas
 // clang-format on
 
 template <Name Nm, class Sgn>
-auto ExternalFunction<Nm, Sgn>::load(void *handle, std::string fname)
-    -> signature_t * {
+auto ExternalFunction<Nm, Sgn>::load(void *handle,
+                                     std::string fname) -> signature_t * {
     static_assert(name.value.back() == '\0');
     fname += name.value.data();
     auto func = reinterpret_cast<signature_t *>(util::load_func(handle, fname));

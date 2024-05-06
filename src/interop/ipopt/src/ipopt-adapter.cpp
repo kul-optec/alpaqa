@@ -94,13 +94,17 @@ bool IpoptAdapter::eval_jac_g(Index n, const Number *x,
                               [[maybe_unused]] Index m, Index nele_jac,
                               Index *iRow, Index *jCol, Number *values) {
     if (!problem.provides_eval_constraints_jacobian())
-        throw std::logic_error("Missing required function: eval_constraints_jacobian");
+        throw std::logic_error(
+            "Missing required function: eval_constraints_jacobian");
     if (values == nullptr) { // Initialize sparsity
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        auto eval_constraints_jacobian = [&](rvec v) { problem.eval_constraints_jacobian(cmvec{x, n}, v); };
-        cvt_sparsity_jac_g.convert_values(eval_constraints_jacobian, mvec{values, nele_jac});
+        auto eval_constraints_jacobian = [&](rvec v) {
+            problem.eval_constraints_jacobian(cmvec{x, n}, v);
+        };
+        cvt_sparsity_jac_g.convert_values(eval_constraints_jacobian,
+                                          mvec{values, nele_jac});
     }
     return true;
 }
@@ -110,13 +114,15 @@ bool IpoptAdapter::eval_h(Index n, const Number *x, [[maybe_unused]] bool new_x,
                           [[maybe_unused]] bool new_lambda, Index nele_hess,
                           Index *iRow, Index *jCol, Number *values) {
     if (!problem.provides_eval_lagrangian_hessian())
-        throw std::logic_error("Missing required function: eval_lagrangian_hessian");
+        throw std::logic_error(
+            "Missing required function: eval_lagrangian_hessian");
     if (values == nullptr) { // Initialize sparsity
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
         auto eval_lagrangian_hessian = [&](rvec v) {
-            problem.eval_lagrangian_hessian(cmvec{x, n}, cmvec{lambda, m}, obj_factor, v);
+            problem.eval_lagrangian_hessian(cmvec{x, n}, cmvec{lambda, m},
+                                            obj_factor, v);
         };
         cvt_sparsity_hess_L.convert_values(eval_lagrangian_hessian,
                                            mvec{values, nele_hess});

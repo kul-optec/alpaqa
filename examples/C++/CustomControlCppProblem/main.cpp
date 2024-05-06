@@ -167,13 +167,13 @@ struct Problem {
 
     // Project the Lagrange multipliers for ALM
     void eval_projection_multipliers([[maybe_unused]] rvec y,
-                               [[maybe_unused]] real_t M) const {
+                                     [[maybe_unused]] real_t M) const {
         // Empty for unconstrained problems
     }
 
     // Get the distance to the feasible set
     void eval_projecting_difference_constraints([[maybe_unused]] crvec z,
-                          [[maybe_unused]] rvec e) const {
+                                                [[maybe_unused]] rvec e) const {
         // Empty for unconstrained problems
     }
 

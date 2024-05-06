@@ -303,7 +303,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def(
             "eval_augmented_lagrangian_gradient",
             [](const T &p, crvec x, crvec y, crvec Σ) {
-                vec grad_ψ(p.get_num_variables()), work_n(p.get_num_variables()), work_m(p.get_num_constraints());
+                vec grad_ψ(p.get_num_variables()), work_n(p.get_num_variables()),
+                    work_m(p.get_num_constraints());
                 p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ, work_n, work_m);
                 return grad_ψ;
             },
@@ -312,7 +313,8 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def(
             "eval_augmented_lagrangian_and_gradient",
             [](const T &p, crvec x, crvec y, crvec Σ) {
-                vec grad_ψ(p.get_num_variables()), work_n(p.get_num_variables()), work_m(p.get_num_constraints());
+                vec grad_ψ(p.get_num_variables()), work_n(p.get_num_variables()),
+                    work_m(p.get_num_constraints());
                 auto ψ = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ, work_n, work_m);
                 return std::make_tuple(std::move(ψ), std::move(grad_ψ));
             },
@@ -321,16 +323,18 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def(
             "eval_constraints_jacobian",
             [&](const T &p, crvec x) {
-                return cvt_matrix(p.get_constraints_jacobian_sparsity(),
-                                  [&](rvec values) { return p.eval_constraints_jacobian(x, values); });
+                return cvt_matrix(p.get_constraints_jacobian_sparsity(), [&](rvec values) {
+                    return p.eval_constraints_jacobian(x, values);
+                });
             },
             "x"_a, "Returns the Jacobian of the constraints and its symmetry.");
     if constexpr (requires { &T::eval_lagrangian_hessian; })
         cls.def(
             "eval_lagrangian_hessian",
             [&](const T &p, crvec x, crvec y, real_t scale) {
-                return cvt_matrix(p.get_lagrangian_hessian_sparsity(),
-                                  [&](rvec values) { return p.eval_lagrangian_hessian(x, y, scale, values); });
+                return cvt_matrix(p.get_lagrangian_hessian_sparsity(), [&](rvec values) {
+                    return p.eval_lagrangian_hessian(x, y, scale, values);
+                });
             },
             "x"_a, "y"_a, "scale"_a = 1.,
             "Returns the Hessian of the Lagrangian and its symmetry.");
@@ -417,10 +421,12 @@ void register_problems(py::module_ &m) {
         .def_readwrite("penalty_alm_split", &BoxConstrProblem::penalty_alm_split,
                        py::return_value_policy::reference_internal,
                        "Index between quadratic penalty and augmented Lagrangian constraints")
-        .def("eval_projecting_difference_constraints", &BoxConstrProblem::eval_projecting_difference_constraints, "z"_a, "e"_a)
-        .def("eval_projection_multipliers", &BoxConstrProblem::eval_projection_multipliers, "y"_a, "M"_a)
-        .def("eval_proximal_gradient_step", &BoxConstrProblem::eval_proximal_gradient_step, "γ"_a, "x"_a,
-             "grad_ψ"_a, "x_hat"_a, "p"_a)
+        .def("eval_projecting_difference_constraints",
+             &BoxConstrProblem::eval_projecting_difference_constraints, "z"_a, "e"_a)
+        .def("eval_projection_multipliers", &BoxConstrProblem::eval_projection_multipliers, "y"_a,
+             "M"_a)
+        .def("eval_proximal_gradient_step", &BoxConstrProblem::eval_proximal_gradient_step, "γ"_a,
+             "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &BoxConstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a)
         .def("get_box_variables", &BoxConstrProblem::get_box_variables)
@@ -449,13 +455,17 @@ void register_problems(py::module_ &m) {
                                "Number of general constraints, dimension of :math:`g(x)`")
         .def("resize", &UnconstrProblem::resize, "num_variables"_a)
         .def("eval_constraints", &UnconstrProblem::eval_constraints, "x"_a, "g"_a)
-        .def("eval_constraints_gradient_product", &UnconstrProblem::eval_constraints_gradient_product, "x"_a, "y"_a, "grad_gxy"_a)
-        .def("eval_constraints_jacobian", &UnconstrProblem::eval_constraints_jacobian, "x"_a, "J_values"_a)
+        .def("eval_constraints_gradient_product",
+             &UnconstrProblem::eval_constraints_gradient_product, "x"_a, "y"_a, "grad_gxy"_a)
+        .def("eval_constraints_jacobian", &UnconstrProblem::eval_constraints_jacobian, "x"_a,
+             "J_values"_a)
         .def("eval_grad_gi", &UnconstrProblem::eval_grad_gi, "x"_a, "i"_a, "grad_gi"_a)
-        .def("eval_projecting_difference_constraints", &UnconstrProblem::eval_projecting_difference_constraints, "z"_a, "e"_a)
-        .def("eval_projection_multipliers", &UnconstrProblem::eval_projection_multipliers, "y"_a, "M"_a)
-        .def("eval_proximal_gradient_step", &UnconstrProblem::eval_proximal_gradient_step, "γ"_a, "x"_a, "grad_ψ"_a,
-             "x_hat"_a, "p"_a)
+        .def("eval_projecting_difference_constraints",
+             &UnconstrProblem::eval_projecting_difference_constraints, "z"_a, "e"_a)
+        .def("eval_projection_multipliers", &UnconstrProblem::eval_projection_multipliers, "y"_a,
+             "M"_a)
+        .def("eval_proximal_gradient_step", &UnconstrProblem::eval_proximal_gradient_step, "γ"_a,
+             "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &UnconstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a);
     problem_constr_proj_methods(unconstr_problem);

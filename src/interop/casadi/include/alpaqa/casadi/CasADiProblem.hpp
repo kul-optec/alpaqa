@@ -127,7 +127,8 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
     /// @see @ref TypeErasedProblem::provides_eval_lagrangian_hessian
     [[nodiscard]] bool provides_eval_lagrangian_hessian() const;
     /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_hessian_product
-    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian_product() const;
+    [[nodiscard]] bool
+    provides_eval_augmented_lagrangian_hessian_product() const;
     /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_hessian
     [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian() const;
 

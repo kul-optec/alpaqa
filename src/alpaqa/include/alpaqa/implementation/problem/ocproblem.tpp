@@ -28,13 +28,13 @@ void ControlProblemVTable<Conf>::default_eval_add_S_prod_masked(const void *, in
     throw not_implemented_error("default_eval_add_S_prod_masked");
 }
 template <Config Conf>
-auto ControlProblemVTable<Conf>::default_get_R_work_size(const void *, const ControlProblemVTable &)
-    -> length_t {
+auto ControlProblemVTable<Conf>::default_get_R_work_size(const void *,
+                                                         const ControlProblemVTable &) -> length_t {
     return 0;
 }
 template <Config Conf>
-auto ControlProblemVTable<Conf>::default_get_S_work_size(const void *, const ControlProblemVTable &)
-    -> length_t {
+auto ControlProblemVTable<Conf>::default_get_S_work_size(const void *,
+                                                         const ControlProblemVTable &) -> length_t {
     return 0;
 }
 template <Config Conf>

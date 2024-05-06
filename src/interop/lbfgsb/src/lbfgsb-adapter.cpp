@@ -166,7 +166,8 @@ auto LBFGSBSolver::operator()(
 
         // New evaluation
         if (task_sv.starts_with("FG")) {
-            ψ = problem.eval_augmented_lagrangian_and_gradient(x_solve, y, Σ, grad_ψ, work_n, work_m);
+            ψ = problem.eval_augmented_lagrangian_and_gradient(
+                x_solve, y, Σ, grad_ψ, work_n, work_m);
         }
         // Converged
         else if (task_sv.starts_with(

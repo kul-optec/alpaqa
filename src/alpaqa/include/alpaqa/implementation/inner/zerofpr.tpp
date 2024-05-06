@@ -110,11 +110,13 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
     // Problem functions -------------------------------------------------------
 
     auto eval_ψ_grad_ψ = [&problem, &y, &Σ, &work_n, &work_m](Iterate &i) {
-        i.ψx = problem.eval_augmented_lagrangian_and_gradient(i.x, y, Σ, i.grad_ψ, work_n, work_m);
+        i.ψx = problem.eval_augmented_lagrangian_and_gradient(
+            i.x, y, Σ, i.grad_ψ, work_n, work_m);
     };
     auto eval_prox_grad_step = [&problem](Iterate &i) {
-        i.hx̂  = problem.eval_proximal_gradient_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
-        i.pᵀp = i.p.squaredNorm();
+        i.hx̂ =
+            problem.eval_proximal_gradient_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
+        i.pᵀp      = i.p.squaredNorm();
         i.grad_ψᵀp = i.p.dot(i.grad_ψ);
     };
     auto eval_cost_in_prox = [&problem, &y, &Σ](Iterate &i) {
@@ -124,8 +126,8 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
         problem.eval_lagrangian_gradient(i.x̂, i.ŷx̂, prox->grad_ψ, work_n);
     };
     auto eval_prox_grad_step_in_prox = [&problem, &prox](const Iterate &i) {
-        prox->hx̂ = problem.eval_proximal_gradient_step(i.γ, i.x̂, prox->grad_ψ, prox->x̂,
-                                               prox->p);
+        prox->hx̂ = problem.eval_proximal_gradient_step(i.γ, i.x̂, prox->grad_ψ,
+                                                       prox->x̂, prox->p);
         prox->pᵀp      = prox->p.squaredNorm();
         prox->grad_ψᵀp = prox->p.dot(prox->grad_ψ);
     };

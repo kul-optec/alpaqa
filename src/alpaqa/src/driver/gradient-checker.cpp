@@ -140,7 +140,8 @@ int main(int argc, const char *argv[]) try {
                                 prob_path.filename(), opts);
     os << "Loaded problem " << problem.path.stem().string() << " from "
        << problem.path << "\nnvar: " << problem.problem.get_num_variables()
-       << "\nncon: " << problem.problem.get_num_constraints() << "\nProvided functions:\n";
+       << "\nncon: " << problem.problem.get_num_constraints()
+       << "\nProvided functions:\n";
     alpaqa::print_provided_functions(os, problem.problem);
     os << std::endl;
 
@@ -182,17 +183,19 @@ int main(int argc, const char *argv[]) try {
     return -1;
 }
 
-void default_eval_lagrangian_gradient(const alpaqa::TypeErasedProblem<config_t> problem,
-                         crvec x, crvec y, rvec grad_L, rvec work_n) {
+void default_eval_lagrangian_gradient(
+    const alpaqa::TypeErasedProblem<config_t> problem, crvec x, crvec y,
+    rvec grad_L, rvec work_n) {
     if (y.size() == 0) /* [[unlikely]] */
         return problem.eval_objective_gradient(x, grad_L);
-    problem.eval_objective_gradient_and_constraints_gradient_product(x, y, grad_L, work_n);
+    problem.eval_objective_gradient_and_constraints_gradient_product(
+        x, y, grad_L, work_n);
     grad_L += work_n;
 }
 
-auto default_eval_augmented_lagrangian_and_gradient(const alpaqa::TypeErasedProblem<config_t> &problem,
-                           crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n,
-                           rvec work_m) -> real_t {
+auto default_eval_augmented_lagrangian_and_gradient(
+    const alpaqa::TypeErasedProblem<config_t> &problem, crvec x, crvec y,
+    crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) -> real_t {
     if (y.size() == 0) /* [[unlikely]] */
         return problem.eval_objective_and_gradient(x, grad_ψ);
 
@@ -276,7 +279,8 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     auto x0 = lproblem.initial_guess_x;
     auto y0 = lproblem.initial_guess_y;
     auto sc = opts.scale_perturbations + x0.norm();
-    auto n = te_problem.get_num_variables(), m = te_problem.get_num_constraints();
+    auto n  = te_problem.get_num_variables(),
+         m  = te_problem.get_num_constraints();
 
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
     vec Σ = 1.5 * vec::Random(m).array() + 2;
@@ -339,7 +343,9 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
 
     log << "Gradient verification: ∇ψ(x) (grad_ψ compared to finite "
            "differences of ψ)\n";
-    auto ψ = [&](crvec x) { return te_problem.eval_augmented_lagrangian(x, y, Σ, wm); };
+    auto ψ = [&](crvec x) {
+        return te_problem.eval_augmented_lagrangian(x, y, Σ, wm);
+    };
     auto [ψx, fd_grad_ψ] = finite_diff(ψ, x);
     vec grad_ψ(n);
     te_problem.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ, wn, wm);
@@ -348,8 +354,8 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     log << "Gradient verification: ∇ψ(x) (grad_ψ compared to reference "
            "implementation based on g, ∇f, ∇g)\n";
     vec grad_ψ_default(n);
-    auto ψ_default =
-        default_eval_augmented_lagrangian_and_gradient(te_problem, x, y, Σ, grad_ψ_default, wn, wm);
+    auto ψ_default = default_eval_augmented_lagrangian_and_gradient(
+        te_problem, x, y, Σ, grad_ψ_default, wn, wm);
     print_compare(grad_ψ, grad_ψ_default);
     log << "Function verification: ψ(x) (ψ compared to reference "
            "implementation based on f, g)\n";
@@ -358,7 +364,8 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     if (te_problem.provides_eval_augmented_lagrangian_and_gradient()) {
         log << "Gradient verification: ∇ψ(x) (grad_ψ compared to ψ_grad_ψ)\n";
         vec ψ_grad_ψ(n);
-        real_t ψ2 = te_problem.eval_augmented_lagrangian_and_gradient(x, y, Σ, ψ_grad_ψ, wn, wm);
+        real_t ψ2 = te_problem.eval_augmented_lagrangian_and_gradient(
+            x, y, Σ, ψ_grad_ψ, wn, wm);
         print_compare(grad_ψ, ψ_grad_ψ);
         log << "Function verification: ψ(x) (ψ compared to ψ_grad_ψ)\n";
         print_compare_scal(ψx, ψ2);
@@ -381,10 +388,12 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
                "finite differences of grad_ψ)\n";
         vec grad_ψv(n);
         vec xv = x + v;
-        te_problem.eval_augmented_lagrangian_gradient(xv, y, Σ, grad_ψv, wn, wm);
+        te_problem.eval_augmented_lagrangian_gradient(xv, y, Σ, grad_ψv, wn,
+                                                      wm);
         vec fd_hess_ψv = grad_ψv - grad_ψ;
         vec hess_ψv(n);
-        te_problem.eval_augmented_lagrangian_hessian_product(x, y, Σ, 1, v, hess_ψv);
+        te_problem.eval_augmented_lagrangian_hessian_product(x, y, Σ, 1, v,
+                                                             hess_ψv);
         print_compare(hess_ψv, fd_hess_ψv);
     }
 
@@ -396,14 +405,20 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
             sparsity};
         mat hess_L(n, n);
-        auto eval_h = [&](rvec v) { te_problem.eval_lagrangian_hessian(x, y, 1., v); };
+        auto eval_h = [&](rvec v) {
+            te_problem.eval_lagrangian_hessian(x, y, 1., v);
+        };
         cvt.convert_values(eval_h, hess_L.reshaped());
         mat fd_hess_L = finite_diff_hess(
-            [&](crvec x, rvec g) { te_problem.eval_lagrangian_gradient(x, y, g, wn); }, x);
+            [&](crvec x, rvec g) {
+                te_problem.eval_lagrangian_gradient(x, y, g, wn);
+            },
+            x);
         print_compare(hess_L, fd_hess_L);
     }
 
-    if (opts.hessians && te_problem.provides_eval_augmented_lagrangian_hessian()) {
+    if (opts.hessians &&
+        te_problem.provides_eval_augmented_lagrangian_hessian()) {
         log << "Hessian verification: ∇²ψ(x) (hess_ψ compared to finite "
                "differences of grad_ψ)\\n";
         namespace sp  = alpaqa::sparsity;
@@ -411,11 +426,14 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
             sparsity};
         mat hess_ψ(n, n);
-        auto eval_h = [&](rvec v) { te_problem.eval_augmented_lagrangian_hessian(x, y, Σ, 1., v); };
+        auto eval_h = [&](rvec v) {
+            te_problem.eval_augmented_lagrangian_hessian(x, y, Σ, 1., v);
+        };
         cvt.convert_values(eval_h, hess_ψ.reshaped());
         mat fd_hess_ψ = finite_diff_hess(
             [&](crvec x, rvec g) {
-                te_problem.eval_augmented_lagrangian_gradient(x, y, Σ, g, wn, wm);
+                te_problem.eval_augmented_lagrangian_gradient(x, y, Σ, g, wn,
+                                                              wm);
             },
             x);
         print_compare(hess_ψ, fd_hess_ψ);

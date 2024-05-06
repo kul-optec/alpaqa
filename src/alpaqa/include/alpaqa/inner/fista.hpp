@@ -192,9 +192,9 @@ operator+=(InnerStatsAccumulator<FISTAStats<Conf>> &acc,
     acc.elapsed_time += s.elapsed_time;
     acc.time_progress_callback += s.time_progress_callback;
     acc.stepsize_backtracks += s.stepsize_backtracks;
-    acc.final_γ  = s.final_γ;
-    acc.final_ψ  = s.final_ψ;
-    acc.final_h  = s.final_h;
+    acc.final_γ = s.final_γ;
+    acc.final_ψ = s.final_ψ;
+    acc.final_h = s.final_h;
     return acc;
 }
 

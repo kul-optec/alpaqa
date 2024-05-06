@@ -68,7 +68,8 @@ auto LBFGSBSolver<Conf>::operator()(
             throw BreakException{SolverStatus::MaxTime};
         }
         // Perform the actual evaluation
-        const auto ψx = problem.eval_augmented_lagrangian_and_gradient(xk, y, Σ, grad, work_n, work_m);
+        const auto ψx = problem.eval_augmented_lagrangian_and_gradient(
+            xk, y, Σ, grad, work_n, work_m);
         // Check that the function value is finite
         if (!std::isfinite(ψx)) {
             if (opts.always_overwrite_results)
@@ -81,8 +82,8 @@ auto LBFGSBSolver<Conf>::operator()(
 
     // Solve problem
     try {
-        s.iterations = solver.minimize(eval_objective_and_gradient, x_solve, s.final_ψ,
-                                       C.lowerbound, C.upperbound);
+        s.iterations = solver.minimize(eval_objective_and_gradient, x_solve,
+                                       s.final_ψ, C.lowerbound, C.upperbound);
         s.status     = SolverStatus::Converged;
         if (static_cast<int>(s.iterations) == effective_params.max_iterations)
             s.status = SolverStatus::MaxIter;

@@ -222,8 +222,10 @@ auto get_problem_path(const char *const *argv) {
 void print_problem_description(std::ostream &os, LoadedProblem &problem,
                                bool show_funcs) {
     os << "Loaded problem \"" << problem.name << "\"\n"
-       << "Number of variables:   " << problem.problem.get_num_variables() << "\n"
-       << "Number of constraints: " << problem.problem.get_num_constraints() << "\n";
+       << "Number of variables:   " << problem.problem.get_num_variables()
+       << "\n"
+       << "Number of constraints: " << problem.problem.get_num_constraints()
+       << "\n";
     if (problem.nnz_jac_g)
         os << "Nonzeros in Jg:  " << *problem.nnz_jac_g << "\n";
     if (problem.nnz_hess_L)
@@ -231,14 +233,14 @@ void print_problem_description(std::ostream &os, LoadedProblem &problem,
     if (problem.nnz_hess_ψ)
         os << "Nonzeros in ∇²ψ: " << *problem.nnz_hess_ψ << "\n";
     if (problem.box_constr_count)
-        os << "Box constraints:"
+        os << "Box constraints:" //
            << "\n  Fixed variables:    " << problem.box_constr_count->eq
            << "\n  Bilateral:          " << problem.box_constr_count->lbub
            << "\n  Lower bound only:   " << problem.box_constr_count->lb
            << "\n  Upper bound only:   " << problem.box_constr_count->ub
            << "\n";
     if (problem.general_constr_count)
-        os << "General constraints:"
+        os << "General constraints:" //
            << "\n  Equality:           " << problem.general_constr_count->eq
            << "\n  Bilateral:          " << problem.general_constr_count->lbub
            << "\n  Lower bound only:   " << problem.general_constr_count->lb

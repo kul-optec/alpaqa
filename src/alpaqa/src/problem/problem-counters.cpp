@@ -71,7 +71,7 @@ std::ostream &operator<<(std::ostream &os, const EvalCounter &c) {
     os << "           ψ_grad_ψ:" //
        << CountResult{c.ψ_grad_ψ, c.time.ψ_grad_ψ};
     os << "+ -----------------:\n" //
-       << "              total:" //
+       << "              total:"   //
        << CountResult{
               c.proj_diff_g + c.proj_multipliers + c.prox_grad_step + c.f +
                   c.grad_f + c.f_grad_f + c.f_g + c.grad_f_grad_g_prod + c.g +

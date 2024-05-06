@@ -18,27 +18,31 @@ void StructuredLBFGSDirection<Conf>::initialize(
         !direction_params.full_augmented_hessian &&
         !problem.provides_eval_lagrangian_hessian_product())
         throw std::invalid_argument(
-            "Structured L-BFGS requires eval_lagrangian_hessian_product(). Alternatively, set "
-            "hessian_vec_factor = 0 or hessian_vec_finite_differences = true.");
+            "Structured L-BFGS requires eval_lagrangian_hessian_product(). "
+            "Alternatively, set hessian_vec_factor = 0 or "
+            "hessian_vec_finite_differences = true.");
     if (direction_params.hessian_vec_factor != 0 &&
         !direction_params.hessian_vec_finite_differences &&
         direction_params.full_augmented_hessian &&
         !(problem.provides_eval_lagrangian_hessian_product() ||
           problem.provides_eval_augmented_lagrangian_hessian_product()))
         throw std::invalid_argument(
-            "Structured L-BFGS requires _eval_augmented_lagrangian_hessian_product() or "
+            "Structured L-BFGS requires "
+            "_eval_augmented_lagrangian_hessian_product() or "
             "eval_lagrangian_hessian_product(). Alternatively, set "
             "hessian_vec_factor = 0 or hessian_vec_finite_differences = true.");
     if (direction_params.hessian_vec_factor != 0 &&
         !direction_params.hessian_vec_finite_differences &&
         direction_params.full_augmented_hessian &&
         !problem.provides_eval_augmented_lagrangian_hessian_product() &&
-        !(problem.provides_get_box_general_constraints() && problem.provides_eval_grad_gi()))
+        !(problem.provides_get_box_general_constraints() &&
+          problem.provides_eval_grad_gi()))
         throw std::invalid_argument(
-            "Structured L-BFGS requires either eval_augmented_lagrangian_hessian_product() or "
-            "get_box_general_constraints() and eval_grad_gi(). Alternatively, set "
-            "hessian_vec_factor = 0, hessian_vec_finite_differences = true, or "
-            "full_augmented_hessian = false.");
+            "Structured L-BFGS requires either "
+            "eval_augmented_lagrangian_hessian_product() or "
+            "get_box_general_constraints() and eval_grad_gi(). Alternatively, "
+            "set hessian_vec_factor = 0, hessian_vec_finite_differences = "
+            "true, or full_augmented_hessian = false.");
     // Store references to problem and ALM variables
     this->problem = &problem;
     this->y.emplace(y);
@@ -131,7 +135,8 @@ void StructuredLBFGSDirection<Conf>::approximate_hessian_vec_term(
             if (problem->provides_eval_augmented_lagrangian_hessian_product()) {
                 // Compute the product with the Hessian of the augmented
                 // Lagrangian
-                problem->eval_augmented_lagrangian_hessian_product(xₖ, *y, *Σ, 1, qₖ, HqK);
+                problem->eval_augmented_lagrangian_hessian_product(xₖ, *y, *Σ,
+                                                                   1, qₖ, HqK);
             } else {
                 // Compute the product with the Hessian of the Lagrangian
                 problem->eval_lagrangian_hessian_product(xₖ, *y, 1, qₖ, HqK);

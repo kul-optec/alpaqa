@@ -30,7 +30,8 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 
     // Get the dimensions of the problem matrices
-    const auto n = problem.get_num_variables(), m = problem.get_num_constraints();
+    const auto n = problem.get_num_variables(),
+               m = problem.get_num_constraints();
 
     // Dummy data to evaluate Hessian and Jacobian
     vec x = vec::Zero(n), y = vec::Zero(m), g(m);
@@ -56,7 +57,9 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_Q.get_sparsity().outer_ptr, qp.Q->p);
         // Get actual values
         mvec H_values{qp.Q->x, nnz_Q};
-        auto eval_h = [&](rvec v) { problem.eval_lagrangian_hessian(x, y, 1, v); };
+        auto eval_h = [&](rvec v) {
+            problem.eval_lagrangian_hessian(x, y, 1, v);
+        };
         sp_Q.convert_values(eval_h, H_values);
     }
     { // Evaluate constraints Jacobian
@@ -81,7 +84,8 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
             .outer_ptr = span{qp.A->p, static_cast<size_t>(qp.A->ncol) + 1},
             .values    = span{qp.A->x, static_cast<size_t>(qp.A->nzmax)},
         };
-        ConstrConv::add_box_constr_to_constr_matrix(A, problem.get_box_variables());
+        ConstrConv::add_box_constr_to_constr_matrix(
+            A, problem.get_box_variables());
         qp.A->nrow = A.nrow;
     }
     { // Evaluate constraints
@@ -98,7 +102,8 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         qp.bmin = qp.sto->b.lowerbound.data();
         qp.bmax = qp.sto->b.upperbound.data();
         // Combine bound constraints and linear constraints
-        auto &&C = problem.get_box_variables(), &&D = problem.get_box_general_constraints();
+        auto &&C = problem.get_box_variables(),
+             &&D = problem.get_box_general_constraints();
         ConstrConv::combine_bound_constr(C, D, qp.sto->b, g);
     }
     qp.m = static_cast<size_t>(qp.A->nrow);

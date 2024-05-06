@@ -80,8 +80,8 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
     using SparsityConv =
         sparsity::SparsityConverter<Sparsity,
                                     sparsity::SparseCOO<config_t, Index>>;
-    Sparsity orig_sparsity_jac_g     = problem.get_constraints_jacobian_sparsity(),
-             orig_sparsity_hess_L    = problem.get_lagrangian_hessian_sparsity();
+    Sparsity orig_sparsity_jac_g  = problem.get_constraints_jacobian_sparsity(),
+             orig_sparsity_hess_L = problem.get_lagrangian_hessian_sparsity();
     SparsityConv cvt_sparsity_jac_g  = orig_sparsity_jac_g,
                  cvt_sparsity_hess_L = orig_sparsity_hess_L;
 };

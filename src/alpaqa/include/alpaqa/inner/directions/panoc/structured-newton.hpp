@@ -69,7 +69,8 @@ struct StructuredNewtonDirection {
                     [[maybe_unused]] real_t γ_0, [[maybe_unused]] crvec x_0,
                     [[maybe_unused]] crvec x̂_0, [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
-        if (!(problem.provides_get_box_variables() && problem.provides_get_box_general_constraints()))
+        if (!(problem.provides_get_box_variables() &&
+              problem.provides_get_box_general_constraints()))
             throw std::invalid_argument(
                 "Structured Newton only supports box-constrained problems");
         // TODO: support eval_inactive_indices_res_lna

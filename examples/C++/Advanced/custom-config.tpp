@@ -77,10 +77,10 @@ template <class T, bool ElementWise>
 auto CustomVectorView<T, ElementWise>::operator*=(
     CustomVectorView<const T, ElementWise> o)
     -> CustomVectorView &requires(ElementWise && !std::is_const_v<T>) {
-        assert(o.size() == this->size());
-        std::ranges::transform(*this, o, begin(), std::multiplies{});
-        return *this;
-    }
+    assert(o.size() == this->size());
+    std::ranges::transform(*this, o, begin(), std::multiplies{});
+    return *this;
+}
 
 template <class T, bool ElementWise>
 template <class U>
@@ -104,10 +104,10 @@ template <class T, bool ElementWise>
 auto CustomVectorView<T, ElementWise>::operator/=(
     CustomVectorView<const T, ElementWise> o)
     -> CustomVectorView &requires(ElementWise && !std::is_const_v<T>) {
-        assert(o.size() == this->size());
-        std::ranges::transform(*this, o, begin(), std::divides{});
-        return *this;
-    }
+    assert(o.size() == this->size());
+    std::ranges::transform(*this, o, begin(), std::divides{});
+    return *this;
+}
 
 template <class T, bool ElementWise>
 auto CustomVectorView<T, ElementWise>::operator/(
@@ -322,9 +322,8 @@ auto CustomVectorView<T, ElementWise>::select(CustomVectorView<const U> a,
 }
 template <class T, bool ElementWise>
 template <class U>
-auto CustomVectorView<T, ElementWise>::select(const CustomVector<U> &a,
-                                              CustomVectorView<U> b) const
-    -> CustomVector<U> {
+auto CustomVectorView<T, ElementWise>::select(
+    const CustomVector<U> &a, CustomVectorView<U> b) const -> CustomVector<U> {
     return select(CustomVectorView<const U>{a}, CustomVectorView<const U>{b});
 }
 template <class T, bool ElementWise>
@@ -336,9 +335,8 @@ auto CustomVectorView<T, ElementWise>::select(const CustomVector<U> &a,
 }
 template <class T, bool ElementWise>
 template <class U>
-auto CustomVectorView<T, ElementWise>::select(CustomVectorView<const U> a,
-                                              const U &b) const
-    -> CustomVector<U> {
+auto CustomVectorView<T, ElementWise>::select(
+    CustomVectorView<const U> a, const U &b) const -> CustomVector<U> {
     assert(a.size() == this->size());
     CustomVector<U> v(size());
     for (index_type i = 0; i < size(); ++i)

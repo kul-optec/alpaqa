@@ -53,7 +53,8 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
     qpalm::Solver solver{&qp, settings};
 
     // Dimensions
-    length_t n = problem.problem.get_num_variables(), m = problem.problem.get_num_constraints();
+    length_t n = problem.problem.get_num_variables(),
+             m = problem.problem.get_num_constraints();
     [[maybe_unused]] length_t num_bounds = static_cast<length_t>(qp.m) - m;
 
     // Initial guess

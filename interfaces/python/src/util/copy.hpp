@@ -12,8 +12,7 @@ void default_copy(py::class_<T, Args...> &cls) {
 template <class T, class... Args>
 void default_deepcopy(py::class_<T, Args...> &cls) {
     using namespace py::literals;
-    cls.def(
-        "__deepcopy__", [](const T &self, py::dict) { return T{self}; }, "memo"_a);
+    cls.def("__deepcopy__", [](const T &self, py::dict) { return T{self}; }, "memo"_a);
 }
 
 template <class T, class... Args>

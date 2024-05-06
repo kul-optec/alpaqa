@@ -220,24 +220,29 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
                                       alpaqa_register_arg_strings},
                 dl_flags} {}
 
-auto DLProblem::eval_projecting_difference_constraints(crvec z, rvec e) const -> void {
+auto DLProblem::eval_projecting_difference_constraints(crvec z,
+                                                       rvec e) const -> void {
     if (functions->eval_projecting_difference_constraints)
-        return functions->eval_projecting_difference_constraints(instance.get(), z.data(), e.data());
-    return BoxConstrProblem<config_t>::eval_projecting_difference_constraints(z, e);
+        return functions->eval_projecting_difference_constraints(
+            instance.get(), z.data(), e.data());
+    return BoxConstrProblem<config_t>::eval_projecting_difference_constraints(
+        z, e);
 }
 
 auto DLProblem::eval_projection_multipliers(rvec y, real_t M) const -> void {
     if (functions->eval_projection_multipliers)
-        return functions->eval_projection_multipliers(instance.get(), y.data(), M);
+        return functions->eval_projection_multipliers(instance.get(), y.data(),
+                                                      M);
     return BoxConstrProblem<config_t>::eval_projection_multipliers(y, M);
 }
 
-auto DLProblem::eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
-                                    rvec p) const -> real_t {
+auto DLProblem::eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ,
+                                            rvec x̂, rvec p) const -> real_t {
     if (functions->eval_proximal_gradient_step)
         return functions->eval_proximal_gradient_step(
             instance.get(), γ, x.data(), grad_ψ.data(), x̂.data(), p.data());
-    return BoxConstrProblem<config_t>::eval_proximal_gradient_step(γ, x, grad_ψ, x̂, p);
+    return BoxConstrProblem<config_t>::eval_proximal_gradient_step(γ, x, grad_ψ,
+                                                                   x̂, p);
 }
 
 auto DLProblem::eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,

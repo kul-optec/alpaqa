@@ -147,7 +147,9 @@ class BoxConstrProblem {
     }
 
     /// @see @ref TypeErasedProblem::eval_projecting_difference_constraints
-    void eval_projecting_difference_constraints(crvec z, rvec p) const { p = projecting_difference(z, D); }
+    void eval_projecting_difference_constraints(crvec z, rvec p) const {
+        p = projecting_difference(z, D);
+    }
 
     static void eval_proj_multipliers_box(const Box &D, rvec y, real_t M,
                                           index_t penalty_alm_split) {

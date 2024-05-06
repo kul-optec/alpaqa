@@ -33,21 +33,21 @@ auto ProblemVTable<Conf>::calc_ŷ_dᵀŷ(const void *self, rvec g_ŷ, crvec y, c
 
 template <Config Conf>
 auto ProblemVTable<Conf>::default_eval_inactive_indices_res_lna(const void *, real_t, crvec, crvec,
-                                                                rindexvec, const ProblemVTable &)
-    -> index_t {
+                                                                rindexvec,
+                                                                const ProblemVTable &) -> index_t {
     throw not_implemented_error("eval_inactive_indices_res_lna");
 }
 
 template <Config Conf>
 void ProblemVTable<Conf>::default_eval_constraints_jacobian(const void *, crvec, rvec,
-                                             const ProblemVTable &vtable) {
+                                                            const ProblemVTable &vtable) {
     if (vtable.m != 0)
         throw not_implemented_error("eval_constraints_jacobian");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_constraints_jacobian_sparsity(const void *, const ProblemVTable &vtable)
-    -> Sparsity {
+auto ProblemVTable<Conf>::default_get_constraints_jacobian_sparsity(
+    const void *, const ProblemVTable &vtable) -> Sparsity {
     return sparsity::Dense<config_t>{vtable.m, vtable.n};
 }
 
@@ -58,45 +58,49 @@ void ProblemVTable<Conf>::default_eval_grad_gi(const void *, crvec, index_t, rve
 }
 
 template <Config Conf>
-void ProblemVTable<Conf>::default_eval_lagrangian_hessian_product(const void *, crvec, crvec, real_t, crvec, rvec,
-                                                   const ProblemVTable &) {
+void ProblemVTable<Conf>::default_eval_lagrangian_hessian_product(const void *, crvec, crvec,
+                                                                  real_t, crvec, rvec,
+                                                                  const ProblemVTable &) {
     throw not_implemented_error("eval_lagrangian_hessian_product");
 }
 
 template <Config Conf>
 void ProblemVTable<Conf>::default_eval_lagrangian_hessian(const void *, crvec, crvec, real_t, rvec,
-                                              const ProblemVTable &) {
+                                                          const ProblemVTable &) {
     throw not_implemented_error("eval_lagrangian_hessian");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_lagrangian_hessian_sparsity(const void *, const ProblemVTable &vtable)
-    -> Sparsity {
+auto ProblemVTable<Conf>::default_get_lagrangian_hessian_sparsity(
+    const void *, const ProblemVTable &vtable) -> Sparsity {
     return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
 
 template <Config Conf>
-void ProblemVTable<Conf>::default_eval_augmented_lagrangian_hessian_product(const void *self, crvec x, crvec y, crvec,
-                                                   real_t scale, crvec v, rvec Hv,
-                                                   const ProblemVTable &vtable) {
-    if (vtable.m == 0 && vtable.eval_lagrangian_hessian_product != ProblemVTable<Conf>::default_eval_lagrangian_hessian_product)
+void ProblemVTable<Conf>::default_eval_augmented_lagrangian_hessian_product(
+    const void *self, crvec x, crvec y, crvec, real_t scale, crvec v, rvec Hv,
+    const ProblemVTable &vtable) {
+    if (vtable.m == 0 && vtable.eval_lagrangian_hessian_product !=
+                             ProblemVTable<Conf>::default_eval_lagrangian_hessian_product)
         return vtable.eval_lagrangian_hessian_product(self, x, y, scale, v, Hv, vtable);
     throw not_implemented_error("eval_augmented_lagrangian_hessian_product");
 }
 
 template <Config Conf>
-void ProblemVTable<Conf>::default_eval_augmented_lagrangian_hessian(const void *self, crvec x, crvec y, crvec,
-                                              real_t scale, rvec H_values,
-                                              const ProblemVTable &vtable) {
+void ProblemVTable<Conf>::default_eval_augmented_lagrangian_hessian(const void *self, crvec x,
+                                                                    crvec y, crvec, real_t scale,
+                                                                    rvec H_values,
+                                                                    const ProblemVTable &vtable) {
     if (vtable.m == 0 && vtable.eval_lagrangian_hessian != default_eval_lagrangian_hessian)
         return vtable.eval_lagrangian_hessian(self, x, y, scale, H_values, vtable);
     throw not_implemented_error("eval_augmented_lagrangian_hessian");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_augmented_lagrangian_hessian_sparsity(const void *self, const ProblemVTable &vtable)
-    -> Sparsity {
-    if (vtable.m == 0 && vtable.get_lagrangian_hessian_sparsity != default_get_lagrangian_hessian_sparsity)
+auto ProblemVTable<Conf>::default_get_augmented_lagrangian_hessian_sparsity(
+    const void *self, const ProblemVTable &vtable) -> Sparsity {
+    if (vtable.m == 0 &&
+        vtable.get_lagrangian_hessian_sparsity != default_get_lagrangian_hessian_sparsity)
         return vtable.get_lagrangian_hessian_sparsity(self, vtable);
     return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
@@ -104,8 +108,8 @@ auto ProblemVTable<Conf>::default_get_augmented_lagrangian_hessian_sparsity(cons
 /** @implementation{ProblemVTable<Conf>::default_eval_objective_and_gradient} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_objective_and_gradient] */
-auto ProblemVTable<Conf>::default_eval_objective_and_gradient(const void *self, crvec x, rvec grad_fx,
-                                                const ProblemVTable &vtable) -> real_t {
+auto ProblemVTable<Conf>::default_eval_objective_and_gradient(
+    const void *self, crvec x, rvec grad_fx, const ProblemVTable &vtable) -> real_t {
     vtable.eval_objective_gradient(self, x, grad_fx);
     return vtable.eval_objective(self, x);
 }
@@ -114,8 +118,8 @@ auto ProblemVTable<Conf>::default_eval_objective_and_gradient(const void *self, 
 /** @implementation{ProblemVTable<Conf>::default_eval_objective_and_constraints} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_objective_and_constraints] */
-auto ProblemVTable<Conf>::default_eval_objective_and_constraints(const void *self, crvec x, rvec g,
-                                           const ProblemVTable &vtable) -> real_t {
+auto ProblemVTable<Conf>::default_eval_objective_and_constraints(
+    const void *self, crvec x, rvec g, const ProblemVTable &vtable) -> real_t {
     vtable.eval_constraints(self, x, g);
     return vtable.eval_objective(self, x);
 }
@@ -124,9 +128,8 @@ auto ProblemVTable<Conf>::default_eval_objective_and_constraints(const void *sel
 /** @implementation{ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product] */
-void ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product(const void *self, crvec x, crvec y,
-                                                          rvec grad_f, rvec grad_gxy,
-                                                          const ProblemVTable &vtable) {
+void ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product(
+    const void *self, crvec x, crvec y, rvec grad_f, rvec grad_gxy, const ProblemVTable &vtable) {
     vtable.eval_objective_gradient(self, x, grad_f);
     vtable.eval_constraints_gradient_product(self, x, y, grad_gxy);
 }
@@ -135,11 +138,13 @@ void ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradie
 /** @implementation{ProblemVTable<Conf>::default_eval_lagrangian_gradient} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_lagrangian_gradient] */
-void ProblemVTable<Conf>::default_eval_lagrangian_gradient(const void *self, crvec x, crvec y, rvec grad_L,
-                                              rvec work_n, const ProblemVTable &vtable) {
+void ProblemVTable<Conf>::default_eval_lagrangian_gradient(const void *self, crvec x, crvec y,
+                                                           rvec grad_L, rvec work_n,
+                                                           const ProblemVTable &vtable) {
     if (y.size() == 0) /* [[unlikely]] */
         return vtable.eval_objective_gradient(self, x, grad_L);
-    vtable.eval_objective_gradient_and_constraints_gradient_product(self, x, y, grad_L, work_n, vtable);
+    vtable.eval_objective_gradient_and_constraints_gradient_product(self, x, y, grad_L, work_n,
+                                                                    vtable);
     grad_L += work_n;
 }
 /* [ProblemVTable<Conf>::default_eval_lagrangian_gradient] */
@@ -147,8 +152,9 @@ void ProblemVTable<Conf>::default_eval_lagrangian_gradient(const void *self, crv
 /** @implementation{ProblemVTable<Conf>::default_eval_augmented_lagrangian} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian] */
-auto ProblemVTable<Conf>::default_eval_augmented_lagrangian(const void *self, crvec x, crvec y, crvec Σ, rvec ŷ,
-                                         const ProblemVTable &vtable) -> real_t {
+auto ProblemVTable<Conf>::default_eval_augmented_lagrangian(const void *self, crvec x, crvec y,
+                                                            crvec Σ, rvec ŷ,
+                                                            const ProblemVTable &vtable) -> real_t {
     if (y.size() == 0) /* [[unlikely]] */
         return vtable.eval_objective(self, x);
 
@@ -163,9 +169,10 @@ auto ProblemVTable<Conf>::default_eval_augmented_lagrangian(const void *self, cr
 /** @implementation{ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient] */
-void ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient(const void *self, crvec x, crvec y, crvec Σ,
-                                              rvec grad_ψ, rvec work_n, rvec work_m,
-                                              const ProblemVTable &vtable) {
+void ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient(const void *self, crvec x,
+                                                                     crvec y, crvec Σ, rvec grad_ψ,
+                                                                     rvec work_n, rvec work_m,
+                                                                     const ProblemVTable &vtable) {
     if (y.size() == 0) /* [[unlikely]] */ {
         vtable.eval_objective_gradient(self, x, grad_ψ);
     } else {
@@ -179,9 +186,9 @@ void ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient(const void 
 /** @implementation{ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient} */
 template <Config Conf>
 /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient] */
-auto ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient(const void *self, crvec x, crvec y, crvec Σ,
-                                                rvec grad_ψ, rvec work_n, rvec work_m,
-                                                const ProblemVTable &vtable) -> real_t {
+auto ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient(
+    const void *self, crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m,
+    const ProblemVTable &vtable) -> real_t {
     if (y.size() == 0) /* [[unlikely]] */
         return vtable.eval_objective_and_gradient(self, x, grad_ψ, vtable);
 
@@ -197,12 +204,14 @@ auto ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient(const v
 /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient] */
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_box_variables(const void *, const ProblemVTable &) -> const Box & {
+auto ProblemVTable<Conf>::default_get_box_variables(const void *,
+                                                    const ProblemVTable &) -> const Box & {
     throw not_implemented_error("get_box_variables");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_box_general_constraints(const void *, const ProblemVTable &) -> const Box & {
+auto ProblemVTable<Conf>::default_get_box_general_constraints(const void *, const ProblemVTable &)
+    -> const Box & {
     throw not_implemented_error("get_box_general_constraints");
 }
 

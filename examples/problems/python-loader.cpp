@@ -70,13 +70,15 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
 
             using P = Problem;
             using alpaqa::member_caller;
-            funcs.n                = py::cast<length_t>(o.attr("n"));
-            funcs.m                = py::cast<length_t>(o.attr("m"));
-            funcs.name             = name.c_str();
-            funcs.eval_objective           = member_caller<&P::eval_objective>();
-            funcs.eval_objective_gradient      = member_caller<&P::eval_objective_gradient>();
-            funcs.eval_constraints           = member_caller<&P::eval_constraints>();
-            funcs.eval_constraints_gradient_product = member_caller<&P::eval_constraints_gradient_product>();
+            funcs.n              = py::cast<length_t>(o.attr("n"));
+            funcs.m              = py::cast<length_t>(o.attr("m"));
+            funcs.name           = name.c_str();
+            funcs.eval_objective = member_caller<&P::eval_objective>();
+            funcs.eval_objective_gradient =
+                member_caller<&P::eval_objective_gradient>();
+            funcs.eval_constraints = member_caller<&P::eval_constraints>();
+            funcs.eval_constraints_gradient_product =
+                member_caller<&P::eval_constraints_gradient_product>();
             // clang-format off
             if (py::hasattr(o, "eval_projecting_difference_constraints"))
                 funcs.eval_projecting_difference_constraints = member_caller<&P::eval_projecting_difference_constraints>();
@@ -160,8 +162,10 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     }
     /// Gradient-vector product of the constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_constraints_gradient_product()
-    void eval_constraints_gradient_product(const real_t *x, const real_t *y, real_t *grad_gxy) {
-        call_func("eval_constraints_gradient_product", vecn(x), vecm(y), vecn(grad_gxy));
+    void eval_constraints_gradient_product(const real_t *x, const real_t *y,
+                                           real_t *grad_gxy) {
+        call_func("eval_constraints_gradient_product", vecn(x), vecm(y),
+                  vecn(grad_gxy));
     }
 
     /// Difference between point and its projection onto the general constraint
@@ -179,10 +183,12 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     /// @see @ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step()
     /// If not set, the default implementation from
     /// @ref alpaqa::BoxConstrProblem is used.
-    real_t eval_proximal_gradient_step(real_t γ, const real_t *x, const real_t *grad_ψ,
-                               real_t *x̂, real_t *p) {
-        return py::cast<real_t>(call_func("eval_proximal_gradient_step", γ, vecn(x),
-                                          vecn(grad_ψ), vecn(x̂), vecn(p)));
+    real_t eval_proximal_gradient_step(real_t γ, const real_t *x,
+                                       const real_t *grad_ψ, real_t *x̂,
+                                       real_t *p) {
+        return py::cast<real_t>(call_func("eval_proximal_gradient_step", γ,
+                                          vecn(x), vecn(grad_ψ), vecn(x̂),
+                                          vecn(p)));
     }
     /// Active indices for proximal operator.
     /// @see @ref alpaqa::TypeErasedProblem::eval_inactive_indices_res_lna()
@@ -197,7 +203,8 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     /// Jacobian of the constraints function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_constraints_jacobian()
     void eval_constraints_jacobian(const real_t *x, real_t *J_values) {
-        call_func("eval_constraints_jacobian", vecn(x), mmat{J_values, funcs.m, funcs.n});
+        call_func("eval_constraints_jacobian", vecn(x),
+                  mmat{J_values, funcs.m, funcs.n});
     }
 #if 0
     /// Get the sparsity pattern of the Jacobian of the constraints function.
@@ -213,15 +220,16 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     }
     /// Hessian-vector product of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_lagrangian_hessian_product()
-    void eval_lagrangian_hessian_product(const real_t *x, const real_t *y, real_t scale,
-                          const real_t *v, real_t *Hv) {
-        call_func("eval_lagrangian_hessian_product", vecn(x), vecm(y), scale, vecn(v),
-                  vecn(Hv));
+    void eval_lagrangian_hessian_product(const real_t *x, const real_t *y,
+                                         real_t scale, const real_t *v,
+                                         real_t *Hv) {
+        call_func("eval_lagrangian_hessian_product", vecn(x), vecm(y), scale,
+                  vecn(v), vecn(Hv));
     }
     /// Hessian of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_lagrangian_hessian()
     void eval_lagrangian_hessian(const real_t *x, const real_t *y, real_t scale,
-                     real_t *H_values) {
+                                 real_t *H_values) {
         call_func("eval_lagrangian_hessian", vecn(x), vecm(y), scale,
                   mmat{H_values, funcs.n, funcs.n});
     }
@@ -234,20 +242,22 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
 #endif
     /// Hessian-vector product of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_hessian_product()
-    void eval_augmented_lagrangian_hessian_product(const real_t *x, const real_t *y, const real_t *Σ,
-                          real_t scale, [[maybe_unused]] const real_t *zl,
-                          [[maybe_unused]] const real_t *zu, const real_t *v,
-                          real_t *Hv) {
-        call_func("eval_augmented_lagrangian_hessian_product", vecn(x), vecm(y), vecm(Σ), scale, vecn(v),
-                  vecn(Hv));
+    void eval_augmented_lagrangian_hessian_product(
+        const real_t *x, const real_t *y, const real_t *Σ, real_t scale,
+        [[maybe_unused]] const real_t *zl, [[maybe_unused]] const real_t *zu,
+        const real_t *v, real_t *Hv) {
+        call_func("eval_augmented_lagrangian_hessian_product", vecn(x), vecm(y),
+                  vecm(Σ), scale, vecn(v), vecn(Hv));
     }
     /// Hessian of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_hessian()
-    void eval_augmented_lagrangian_hessian(const real_t *x, const real_t *y, const real_t *Σ,
-                     real_t scale, [[maybe_unused]] const real_t *zl,
-                     [[maybe_unused]] const real_t *zu, real_t *H_values) {
-        call_func("eval_augmented_lagrangian_hessian", vecn(x), vecm(y), vecm(Σ), scale,
-                  mmat{H_values, funcs.n, funcs.n});
+    void eval_augmented_lagrangian_hessian(const real_t *x, const real_t *y,
+                                           const real_t *Σ, real_t scale,
+                                           [[maybe_unused]] const real_t *zl,
+                                           [[maybe_unused]] const real_t *zu,
+                                           real_t *H_values) {
+        call_func("eval_augmented_lagrangian_hessian", vecn(x), vecm(y),
+                  vecm(Σ), scale, mmat{H_values, funcs.n, funcs.n});
     }
 #if 0
     /// Get the sparsity pattern of the Hessian of the augmented Lagrangian.
@@ -266,48 +276,54 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     /// Cost and constraints.
     /// @see @ref alpaqa::TypeErasedProblem::eval_objective_and_constraints()
     real_t eval_objective_and_constraints(const real_t *x, real_t *g) {
-        return py::cast<real_t>(call_func("eval_objective_and_constraints", vecn(x), vecm(g)));
+        return py::cast<real_t>(
+            call_func("eval_objective_and_constraints", vecn(x), vecm(g)));
     }
     /// Gradient of the cost and gradient-vector product of the constraints.
     /// @see @ref alpaqa::TypeErasedProblem::eval_objective_gradient_and_constraints_gradient_product()
-    void eval_objective_gradient_and_constraints_gradient_product(const real_t *x, const real_t *y,
-                                 real_t *grad_f, real_t *grad_gxy) {
-        call_func("eval_objective_gradient_and_constraints_gradient_product", vecn(x), vecm(y), vecn(grad_f),
-                  vecn(grad_gxy));
+    void eval_objective_gradient_and_constraints_gradient_product(
+        const real_t *x, const real_t *y, real_t *grad_f, real_t *grad_gxy) {
+        call_func("eval_objective_gradient_and_constraints_gradient_product",
+                  vecn(x), vecm(y), vecn(grad_f), vecn(grad_gxy));
     }
     /// Gradient of the Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_lagrangian_gradient()
-    void eval_lagrangian_gradient(const real_t *x, const real_t *y, real_t *grad_L,
-                     real_t *work_n) {
-        call_func("eval_lagrangian_gradient", vecn(x), vecm(y), vecn(grad_L), vecn(work_n));
+    void eval_lagrangian_gradient(const real_t *x, const real_t *y,
+                                  real_t *grad_L, real_t *work_n) {
+        call_func("eval_lagrangian_gradient", vecn(x), vecm(y), vecn(grad_L),
+                  vecn(work_n));
     }
 
     /// Augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian()
-    real_t eval_augmented_lagrangian(const real_t *x, const real_t *y, const real_t *Σ,
-                  [[maybe_unused]] const real_t *zl,
-                  [[maybe_unused]] const real_t *zu, real_t *ŷ) {
-        return py::cast<real_t>(
-            call_func("eval_augmented_lagrangian", vecn(x), vecm(y), vecm(Σ), vecm(ŷ)));
+    real_t eval_augmented_lagrangian(const real_t *x, const real_t *y,
+                                     const real_t *Σ,
+                                     [[maybe_unused]] const real_t *zl,
+                                     [[maybe_unused]] const real_t *zu,
+                                     real_t *ŷ) {
+        return py::cast<real_t>(call_func("eval_augmented_lagrangian", vecn(x),
+                                          vecm(y), vecm(Σ), vecm(ŷ)));
     }
     /// Gradient of the augmented Lagrangian.
     /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_gradient()
-    void eval_augmented_lagrangian_gradient(const real_t *x, const real_t *y, const real_t *Σ,
-                     [[maybe_unused]] const real_t *zl,
-                     [[maybe_unused]] const real_t *zu, real_t *grad_ψ,
-                     real_t *work_n, real_t *work_m) {
-        call_func("eval_augmented_lagrangian_gradient", vecn(x), vecm(y), vecm(Σ), vecn(grad_ψ),
-                  vecn(work_n), vecn(work_m));
+    void eval_augmented_lagrangian_gradient(const real_t *x, const real_t *y,
+                                            const real_t *Σ,
+                                            [[maybe_unused]] const real_t *zl,
+                                            [[maybe_unused]] const real_t *zu,
+                                            real_t *grad_ψ, real_t *work_n,
+                                            real_t *work_m) {
+        call_func("eval_augmented_lagrangian_gradient", vecn(x), vecm(y),
+                  vecm(Σ), vecn(grad_ψ), vecn(work_n), vecn(work_m));
     }
     /// Augmented Lagrangian and its gradient.
     /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_and_gradient()
-    real_t eval_augmented_lagrangian_and_gradient(const real_t *x, const real_t *y, const real_t *Σ,
-                         [[maybe_unused]] const real_t *zl,
-                         [[maybe_unused]] const real_t *zu, real_t *grad_ψ,
-                         real_t *work_n, real_t *work_m) {
-        return py::cast<real_t>(call_func("eval_augmented_lagrangian_and_gradient", vecn(x), vecm(y),
-                                          vecm(Σ), vecn(grad_ψ), vecn(work_n),
-                                          vecn(work_m)));
+    real_t eval_augmented_lagrangian_and_gradient(
+        const real_t *x, const real_t *y, const real_t *Σ,
+        [[maybe_unused]] const real_t *zl, [[maybe_unused]] const real_t *zu,
+        real_t *grad_ψ, real_t *work_n, real_t *work_m) {
+        return py::cast<real_t>(call_func(
+            "eval_augmented_lagrangian_and_gradient", vecn(x), vecm(y), vecm(Σ),
+            vecn(grad_ψ), vecn(work_n), vecn(work_m)));
     }
 
     /// Provide the initial values for the bounds of

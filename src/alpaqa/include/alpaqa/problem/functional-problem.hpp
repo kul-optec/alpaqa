@@ -42,7 +42,8 @@ class FunctionalProblem : public BoxConstrProblem<Conf> {
         ScopedMallocAllower ma;
         hess_L(x, y, scale, H_values.reshaped(this->n, this->n));
     }
-    void eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const {
+    void eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale,
+                                           rvec H_values) const {
         ScopedMallocAllower ma;
         hess_ψ(x, y, Σ, scale, H_values.reshaped(this->n, this->n));
     }
@@ -52,11 +53,15 @@ class FunctionalProblem : public BoxConstrProblem<Conf> {
     /// @see @ref TypeErasedProblem::provides_eval_constraints_jacobian
     [[nodiscard]] bool provides_eval_constraints_jacobian() const { return bool{jac_g}; }
     /// @see @ref TypeErasedProblem::provides_eval_lagrangian_hessian_product
-    [[nodiscard]] bool provides_eval_lagrangian_hessian_product() const { return bool{hess_L_prod}; }
+    [[nodiscard]] bool provides_eval_lagrangian_hessian_product() const {
+        return bool{hess_L_prod};
+    }
     /// @see @ref TypeErasedProblem::provides_eval_lagrangian_hessian
     [[nodiscard]] bool provides_eval_lagrangian_hessian() const { return bool{hess_L}; }
     /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_hessian_product
-    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian_product() const { return bool{hess_ψ_prod}; }
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian_product() const {
+        return bool{hess_ψ_prod};
+    }
     /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_hessian
     [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian() const { return bool{hess_ψ}; }
 

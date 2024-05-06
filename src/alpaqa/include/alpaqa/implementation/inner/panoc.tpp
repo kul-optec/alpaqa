@@ -101,16 +101,19 @@ auto PANOCSolver<DirectionProviderT>::operator()(
     // Problem functions -------------------------------------------------------
 
     auto eval_ψ_grad_ψ = [&problem, &y, &Σ, &work_n, &work_m](Iterate &i) {
-        i.ψx = problem.eval_augmented_lagrangian_and_gradient(i.x, y, Σ, i.grad_ψ, work_n, work_m);
+        i.ψx = problem.eval_augmented_lagrangian_and_gradient(
+            i.x, y, Σ, i.grad_ψ, work_n, work_m);
     };
     auto eval_prox_grad_step = [&problem](Iterate &i) {
-        i.hx̂  = problem.eval_proximal_gradient_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
-        i.pᵀp = i.p.squaredNorm();
+        i.hx̂ =
+            problem.eval_proximal_gradient_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
+        i.pᵀp      = i.p.squaredNorm();
         i.grad_ψᵀp = i.p.dot(i.grad_ψ);
     };
     auto eval_ψx̂ = [&problem, &y, &Σ, &work_n, this](Iterate &i) {
         if (params.eager_gradient_eval)
-            i.ψx̂ = problem.eval_augmented_lagrangian_and_gradient(i.x̂, y, Σ, i.grad_ψx̂, work_n, i.ŷx̂);
+            i.ψx̂ = problem.eval_augmented_lagrangian_and_gradient(
+                i.x̂, y, Σ, i.grad_ψx̂, work_n, i.ŷx̂);
         else
             i.ψx̂ = problem.eval_augmented_lagrangian(i.x̂, y, Σ, i.ŷx̂);
         i.have_grad_ψx̂ = params.eager_gradient_eval;
