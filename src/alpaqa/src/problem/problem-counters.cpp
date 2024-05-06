@@ -29,62 +29,69 @@ std::ostream &operator<<(std::ostream &os, const CountResult &t) {
 }
 } // namespace
 
+#define ALPAQA_STRINGIFY(a) ALPAQA_STRINGIFY_IMPL(a)
+#define ALPAQA_STRINGIFY_IMPL(a) #a
+#define ALPAQA_PRINT_EVAL(x)                                                   \
+    do {                                                                       \
+        os << std::setw(53) << ALPAQA_STRINGIFY(x) ":"                         \
+           << CountResult{c.x, c.time.x};                                      \
+    } while (false)
+
 std::ostream &operator<<(std::ostream &os, const EvalCounter &c) {
-    os << "        proj_diff_g:" //
-       << CountResult{c.proj_diff_g, c.time.proj_diff_g};
-    os << "   proj_multipliers:" //
-       << CountResult{c.proj_multipliers, c.time.proj_multipliers};
-    os << "     prox_grad_step:" //
-       << CountResult{c.prox_grad_step, c.time.prox_grad_step};
-    os << "                  f:" //
-       << CountResult{c.f, c.time.f};
-    os << "             grad_f:" //
-       << CountResult{c.grad_f, c.time.grad_f};
-    os << "           f_grad_f:" //
-       << CountResult{c.f_grad_f, c.time.f_grad_f};
-    os << "                f_g:" //
-       << CountResult{c.f_g, c.time.f_g};
-    os << " grad_f_grad_g_prod:" //
-       << CountResult{c.grad_f_grad_g_prod, c.time.grad_f_grad_g_prod};
-    os << "                  g:" //
-       << CountResult{c.g, c.time.g};
-    os << "        grad_g_prod:" //
-       << CountResult{c.grad_g_prod, c.time.grad_g_prod};
-    os << "            grad_gi:" //
-       << CountResult{c.grad_gi, c.time.grad_gi};
-    os << "              jac_g:" //
-       << CountResult{c.jac_g, c.time.jac_g};
-    os << "             grad_L:" //
-       << CountResult{c.grad_L, c.time.grad_L};
-    os << "        hess_L_prod:" //
-       << CountResult{c.hess_L_prod, c.time.hess_L_prod};
-    os << "             hess_L:" //
-       << CountResult{c.hess_L, c.time.hess_L};
-    os << "        hess_ψ_prod:" //
-       << CountResult{c.hess_ψ_prod, c.time.hess_ψ_prod};
-    os << "             hess_ψ:" //
-       << CountResult{c.hess_ψ, c.time.hess_ψ};
-    os << "                  ψ:" //
-       << CountResult{c.ψ, c.time.ψ};
-    os << "             grad_ψ:" //
-       << CountResult{c.grad_ψ, c.time.grad_ψ};
-    os << "           ψ_grad_ψ:" //
-       << CountResult{c.ψ_grad_ψ, c.time.ψ_grad_ψ};
-    os << "+ -----------------:\n" //
-       << "              total:"   //
+    ALPAQA_PRINT_EVAL(projecting_difference_constraints);
+    ALPAQA_PRINT_EVAL(projection_multipliers);
+    ALPAQA_PRINT_EVAL(proximal_gradient_step);
+    ALPAQA_PRINT_EVAL(inactive_indices_res_lna);
+    ALPAQA_PRINT_EVAL(objective);
+    ALPAQA_PRINT_EVAL(objective_gradient);
+    ALPAQA_PRINT_EVAL(objective_and_gradient);
+    ALPAQA_PRINT_EVAL(objective_and_constraints);
+    ALPAQA_PRINT_EVAL(objective_gradient_and_constraints_gradient_product);
+    ALPAQA_PRINT_EVAL(constraints);
+    ALPAQA_PRINT_EVAL(constraints_gradient_product);
+    ALPAQA_PRINT_EVAL(grad_gi);
+    ALPAQA_PRINT_EVAL(constraints_jacobian);
+    ALPAQA_PRINT_EVAL(lagrangian_gradient);
+    ALPAQA_PRINT_EVAL(lagrangian_hessian_product);
+    ALPAQA_PRINT_EVAL(lagrangian_hessian);
+    ALPAQA_PRINT_EVAL(augmented_lagrangian_hessian_product);
+    ALPAQA_PRINT_EVAL(augmented_lagrangian_hessian);
+    ALPAQA_PRINT_EVAL(augmented_lagrangian);
+    ALPAQA_PRINT_EVAL(augmented_lagrangian_gradient);
+    ALPAQA_PRINT_EVAL(augmented_lagrangian_and_gradient);
+    os << "+ --------------------------------------------------:\n" //
+       << std::setw(53) << "total:"                                 //
        << CountResult{
-              c.proj_diff_g + c.proj_multipliers + c.prox_grad_step + c.f +
-                  c.grad_f + c.f_grad_f + c.f_g + c.grad_f_grad_g_prod + c.g +
-                  c.grad_g_prod + c.grad_gi + c.jac_g + c.grad_L +
-                  c.hess_L_prod + c.hess_L + c.hess_ψ_prod + c.hess_ψ + c.ψ +
-                  c.grad_ψ + c.ψ_grad_ψ,
-              c.time.proj_diff_g + c.time.proj_multipliers +
-                  c.time.prox_grad_step + c.time.f + c.time.grad_f +
-                  c.time.f_grad_f + c.time.f_g + c.time.grad_f_grad_g_prod +
-                  c.time.g + c.time.grad_g_prod + c.time.grad_gi +
-                  c.time.jac_g + c.time.grad_L + c.time.hess_L_prod +
-                  c.time.hess_L + c.time.hess_ψ_prod + c.time.hess_ψ +
-                  c.time.ψ + c.time.grad_ψ + c.time.ψ_grad_ψ};
+              c.projecting_difference_constraints + c.projection_multipliers +
+                  c.proximal_gradient_step + c.inactive_indices_res_lna +
+                  c.objective + c.objective_gradient +
+                  c.objective_and_gradient + c.objective_and_constraints +
+                  c.objective_gradient_and_constraints_gradient_product +
+                  c.constraints + c.constraints_gradient_product + c.grad_gi +
+                  c.constraints_jacobian + c.lagrangian_gradient +
+                  c.lagrangian_hessian_product + c.lagrangian_hessian +
+                  c.augmented_lagrangian_hessian_product +
+                  c.augmented_lagrangian_hessian + c.augmented_lagrangian +
+                  c.augmented_lagrangian_gradient +
+                  c.augmented_lagrangian_and_gradient,
+              c.time.projecting_difference_constraints +
+                  c.time.projection_multipliers +
+                  c.time.proximal_gradient_step +
+                  c.time.inactive_indices_res_lna + c.time.objective +
+                  c.time.objective_gradient + c.time.objective_and_gradient +
+                  c.time.objective_and_constraints +
+                  c.time.objective_gradient_and_constraints_gradient_product +
+                  c.time.constraints + c.time.constraints_gradient_product +
+                  c.time.grad_gi + c.time.constraints_jacobian +
+                  c.time.lagrangian_gradient +
+                  c.time.lagrangian_hessian_product +
+                  c.time.lagrangian_hessian +
+                  c.time.augmented_lagrangian_hessian_product +
+                  c.time.augmented_lagrangian_hessian +
+                  c.time.augmented_lagrangian +
+                  c.time.augmented_lagrangian_gradient +
+                  c.time.augmented_lagrangian_and_gradient,
+          };
     return os;
 }
 

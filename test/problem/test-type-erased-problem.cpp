@@ -332,54 +332,54 @@ TEST(TypeErasedProblem, CountedOptionalProblem) {
     vec x(1);
     indexvec i;
 
-    EXPECT_EQ(evals.proj_diff_g, 0);
+    EXPECT_EQ(evals.projecting_difference_constraints, 0);
     ASSERT_NE(te_prob.vtable.eval_projecting_difference_constraints, nullptr);
     EXPECT_CALL(prob, eval_projecting_difference_constraints);
     te_prob.vtable.eval_projecting_difference_constraints(te_prob.self, x, x);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.proj_diff_g, 1);
+    EXPECT_EQ(evals.projecting_difference_constraints, 1);
 
-    EXPECT_EQ(evals.proj_multipliers, 0);
+    EXPECT_EQ(evals.projection_multipliers, 0);
     ASSERT_NE(te_prob.vtable.eval_projection_multipliers, nullptr);
     EXPECT_CALL(prob, eval_projection_multipliers);
     te_prob.vtable.eval_projection_multipliers(te_prob.self, x, 0);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.proj_multipliers, 1);
+    EXPECT_EQ(evals.projection_multipliers, 1);
 
-    EXPECT_EQ(evals.prox_grad_step, 0);
+    EXPECT_EQ(evals.proximal_gradient_step, 0);
     ASSERT_NE(te_prob.vtable.eval_proximal_gradient_step, nullptr);
     EXPECT_CALL(prob, eval_proximal_gradient_step);
     te_prob.vtable.eval_proximal_gradient_step(te_prob.self, 0, x, x, x, x);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.prox_grad_step, 1);
+    EXPECT_EQ(evals.proximal_gradient_step, 1);
 
-    EXPECT_EQ(evals.f, 0);
+    EXPECT_EQ(evals.objective, 0);
     ASSERT_NE(te_prob.vtable.eval_objective, nullptr);
     EXPECT_CALL(prob, eval_objective);
     te_prob.vtable.eval_objective(te_prob.self, x);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.f, 1);
+    EXPECT_EQ(evals.objective, 1);
 
-    EXPECT_EQ(evals.grad_f, 0);
+    EXPECT_EQ(evals.objective_gradient, 0);
     ASSERT_NE(te_prob.vtable.eval_objective_gradient, nullptr);
     EXPECT_CALL(prob, eval_objective_gradient);
     te_prob.vtable.eval_objective_gradient(te_prob.self, x, x);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.grad_f, 1);
+    EXPECT_EQ(evals.objective_gradient, 1);
 
-    EXPECT_EQ(evals.g, 0);
+    EXPECT_EQ(evals.constraints, 0);
     ASSERT_NE(te_prob.vtable.eval_constraints, nullptr);
     EXPECT_CALL(prob, eval_constraints);
     te_prob.vtable.eval_constraints(te_prob.self, x, x);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.g, 1);
+    EXPECT_EQ(evals.constraints, 1);
 
-    EXPECT_EQ(evals.grad_g_prod, 0);
+    EXPECT_EQ(evals.constraints_gradient_product, 0);
     ASSERT_NE(te_prob.vtable.eval_constraints_gradient_product, nullptr);
     EXPECT_CALL(prob, eval_constraints_gradient_product);
     te_prob.vtable.eval_constraints_gradient_product(te_prob.self, x, x, x);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.grad_g_prod, 1);
+    EXPECT_EQ(evals.constraints_gradient_product, 1);
 
     EXPECT_EQ(evals.grad_gi, 0);
     ASSERT_NE(te_prob.vtable.eval_grad_gi, nullptr);
@@ -388,71 +388,71 @@ TEST(TypeErasedProblem, CountedOptionalProblem) {
     testing::Mock::VerifyAndClearExpectations(&prob);
     EXPECT_EQ(evals.grad_gi, 1);
 
-    EXPECT_EQ(evals.hess_L_prod, 0);
+    EXPECT_EQ(evals.lagrangian_hessian_product, 0);
     ASSERT_NE(te_prob.vtable.eval_lagrangian_hessian_product, nullptr);
     EXPECT_CALL(prob, eval_lagrangian_hessian_product);
     te_prob.vtable.eval_lagrangian_hessian_product(te_prob.self, x, x, 1, x, x,
                                     te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.hess_L_prod, 1);
+    EXPECT_EQ(evals.lagrangian_hessian_product, 1);
 
-    EXPECT_EQ(evals.hess_L, 0);
+    EXPECT_EQ(evals.lagrangian_hessian, 0);
     ASSERT_NE(te_prob.vtable.eval_lagrangian_hessian, nullptr);
     EXPECT_CALL(prob, eval_lagrangian_hessian);
     te_prob.vtable.eval_lagrangian_hessian(te_prob.self, x, x, 1, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.hess_L, 1);
+    EXPECT_EQ(evals.lagrangian_hessian, 1);
 
-    EXPECT_EQ(evals.f_grad_f, 0);
+    EXPECT_EQ(evals.objective_and_gradient, 0);
     ASSERT_NE(te_prob.vtable.eval_objective_and_gradient, nullptr);
     EXPECT_CALL(prob, eval_objective_and_gradient);
     te_prob.vtable.eval_objective_and_gradient(te_prob.self, x, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.f_grad_f, 1);
+    EXPECT_EQ(evals.objective_and_gradient, 1);
 
-    EXPECT_EQ(evals.f_g, 0);
+    EXPECT_EQ(evals.objective_and_constraints, 0);
     ASSERT_NE(te_prob.vtable.eval_objective_and_constraints, nullptr);
     EXPECT_CALL(prob, eval_objective_and_constraints);
     te_prob.vtable.eval_objective_and_constraints(te_prob.self, x, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.f_g, 1);
+    EXPECT_EQ(evals.objective_and_constraints, 1);
 
-    EXPECT_EQ(evals.grad_f_grad_g_prod, 0);
+    EXPECT_EQ(evals.objective_gradient_and_constraints_gradient_product, 0);
     ASSERT_NE(te_prob.vtable.eval_objective_gradient_and_constraints_gradient_product, nullptr);
     EXPECT_CALL(prob, eval_objective_gradient_and_constraints_gradient_product);
     te_prob.vtable.eval_objective_gradient_and_constraints_gradient_product(te_prob.self, x, x, x, x,
                                            te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.grad_f_grad_g_prod, 1);
+    EXPECT_EQ(evals.objective_gradient_and_constraints_gradient_product, 1);
 
-    EXPECT_EQ(evals.grad_L, 0);
+    EXPECT_EQ(evals.lagrangian_gradient, 0);
     ASSERT_NE(te_prob.vtable.eval_lagrangian_gradient, nullptr);
     EXPECT_CALL(prob, eval_lagrangian_gradient);
     te_prob.vtable.eval_lagrangian_gradient(te_prob.self, x, x, x, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.grad_L, 1);
+    EXPECT_EQ(evals.lagrangian_gradient, 1);
 
-    EXPECT_EQ(evals.ψ, 0);
+    EXPECT_EQ(evals.augmented_lagrangian, 0);
     ASSERT_NE(te_prob.vtable.eval_augmented_lagrangian, nullptr);
     EXPECT_CALL(prob, eval_augmented_lagrangian);
     te_prob.vtable.eval_augmented_lagrangian(te_prob.self, x, x, x, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.ψ, 1);
+    EXPECT_EQ(evals.augmented_lagrangian, 1);
 
-    EXPECT_EQ(evals.grad_ψ, 0);
+    EXPECT_EQ(evals.augmented_lagrangian_gradient, 0);
     ASSERT_NE(te_prob.vtable.eval_augmented_lagrangian_gradient, nullptr);
     EXPECT_CALL(prob, eval_augmented_lagrangian_gradient);
     te_prob.vtable.eval_augmented_lagrangian_gradient(te_prob.self, x, x, x, x, x, x, te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.grad_ψ, 1);
+    EXPECT_EQ(evals.augmented_lagrangian_gradient, 1);
 
-    EXPECT_EQ(evals.ψ_grad_ψ, 0);
+    EXPECT_EQ(evals.augmented_lagrangian_and_gradient, 0);
     ASSERT_NE(te_prob.vtable.eval_augmented_lagrangian_and_gradient, nullptr);
     EXPECT_CALL(prob, eval_augmented_lagrangian_and_gradient);
     te_prob.vtable.eval_augmented_lagrangian_and_gradient(te_prob.self, x, x, x, x, x, x,
                                  te_prob.vtable);
     testing::Mock::VerifyAndClearExpectations(&prob);
-    EXPECT_EQ(evals.ψ_grad_ψ, 1);
+    EXPECT_EQ(evals.augmented_lagrangian_and_gradient, 1);
 }
 
 struct TestOptProblemNoHess : TestOptProblem {

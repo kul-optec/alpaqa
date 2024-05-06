@@ -18,124 +18,169 @@ void register_counters(py::module_ &m) {
                                                ":cpp:class:`alpaqa::EvalCounter::EvalTimer`\n\n")
         .def(py::pickle(
             [](const alpaqa::EvalCounter::EvalTimer &p) { // __getstate__
-                return py::make_tuple(p.proj_diff_g, p.proj_multipliers, p.prox_grad_step,
-                                      p.inactive_indices_res_lna, p.f, p.grad_f, p.f_grad_f, p.f_g,
-                                      p.grad_f_grad_g_prod, p.g, p.grad_g_prod, p.grad_gi, p.jac_g,
-                                      p.grad_L, p.hess_L_prod, p.hess_L, p.hess_ψ_prod, p.hess_ψ,
-                                      p.ψ, p.grad_ψ, p.ψ_grad_ψ);
+                return py::make_tuple(
+                    // clang-format off
+                    p.projecting_difference_constraints,
+                    p.projection_multipliers,
+                    p.proximal_gradient_step,
+                    p.inactive_indices_res_lna,
+                    p.objective,
+                    p.objective_gradient,
+                    p.objective_and_gradient,
+                    p.objective_and_constraints,
+                    p.objective_gradient_and_constraints_gradient_product,
+                    p.constraints,
+                    p.constraints_gradient_product,
+                    p.grad_gi,
+                    p.constraints_jacobian,
+                    p.lagrangian_gradient,
+                    p.lagrangian_hessian_product,
+                    p.lagrangian_hessian,
+                    p.augmented_lagrangian_hessian_product,
+                    p.augmented_lagrangian_hessian,
+                    p.augmented_lagrangian,
+                    p.augmented_lagrangian_gradient,
+                    p.augmented_lagrangian_and_gradient)
+                    // clang-format on
+                    ;
             },
             [](py::tuple t) { // __setstate__
                 if (t.size() != 21)
                     throw std::runtime_error("Invalid state!");
                 using T = alpaqa::EvalCounter::EvalTimer;
                 return T{
-                    .proj_diff_g      = py::cast<decltype(T::proj_diff_g)>(t[0]),
-                    .proj_multipliers = py::cast<decltype(T::proj_multipliers)>(t[1]),
-                    .prox_grad_step   = py::cast<decltype(T::prox_grad_step)>(t[2]),
-                    .inactive_indices_res_lna =
-                        py::cast<decltype(T::inactive_indices_res_lna)>(t[3]),
-                    .f                  = py::cast<decltype(T::f)>(t[4]),
-                    .grad_f             = py::cast<decltype(T::grad_f)>(t[5]),
-                    .f_grad_f           = py::cast<decltype(T::f_grad_f)>(t[6]),
-                    .f_g                = py::cast<decltype(T::f_g)>(t[7]),
-                    .grad_f_grad_g_prod = py::cast<decltype(T::grad_f_grad_g_prod)>(t[8]),
-                    .g                  = py::cast<decltype(T::g)>(t[9]),
-                    .grad_g_prod        = py::cast<decltype(T::grad_g_prod)>(t[10]),
-                    .grad_gi            = py::cast<decltype(T::grad_gi)>(t[11]),
-                    .jac_g              = py::cast<decltype(T::grad_gi)>(t[12]),
-                    .grad_L             = py::cast<decltype(T::grad_L)>(t[13]),
-                    .hess_L_prod        = py::cast<decltype(T::hess_L_prod)>(t[14]),
-                    .hess_L             = py::cast<decltype(T::hess_L)>(t[15]),
-                    .hess_ψ_prod        = py::cast<decltype(T::hess_ψ_prod)>(t[16]),
-                    .hess_ψ             = py::cast<decltype(T::hess_ψ)>(t[17]),
-                    .ψ                  = py::cast<decltype(T::ψ)>(t[18]),
-                    .grad_ψ             = py::cast<decltype(T::grad_ψ)>(t[19]),
-                    .ψ_grad_ψ           = py::cast<decltype(T::ψ_grad_ψ)>(t[20]),
+                    // clang-format off
+                    .projecting_difference_constraints = py::cast<decltype(T::projecting_difference_constraints)>(t[0]),
+                    .projection_multipliers = py::cast<decltype(T::projection_multipliers)>(t[1]),
+                    .proximal_gradient_step = py::cast<decltype(T::proximal_gradient_step)>(t[2]),
+                    .inactive_indices_res_lna = py::cast<decltype(T::inactive_indices_res_lna)>(t[3]),
+                    .objective = py::cast<decltype(T::objective)>(t[4]),
+                    .objective_gradient = py::cast<decltype(T::objective_gradient)>(t[5]),
+                    .objective_and_gradient = py::cast<decltype(T::objective_and_gradient)>(t[6]),
+                    .objective_and_constraints = py::cast<decltype(T::objective_and_constraints)>(t[7]),
+                    .objective_gradient_and_constraints_gradient_product = py::cast<decltype(T::objective_gradient_and_constraints_gradient_product)>(t[8]),
+                    .constraints = py::cast<decltype(T::constraints)>(t[9]),
+                    .constraints_gradient_product = py::cast<decltype(T::constraints_gradient_product)>(t[10]),
+                    .grad_gi = py::cast<decltype(T::grad_gi)>(t[11]),
+                    .constraints_jacobian = py::cast<decltype(T::constraints_jacobian)>(t[12]),
+                    .lagrangian_gradient = py::cast<decltype(T::lagrangian_gradient)>(t[13]),
+                    .lagrangian_hessian_product = py::cast<decltype(T::lagrangian_hessian_product)>(t[14]),
+                    .lagrangian_hessian = py::cast<decltype(T::lagrangian_hessian)>(t[15]),
+                    .augmented_lagrangian_hessian_product = py::cast<decltype(T::augmented_lagrangian_hessian_product)>(t[16]),
+                    .augmented_lagrangian_hessian = py::cast<decltype(T::augmented_lagrangian_hessian)>(t[17]),
+                    .augmented_lagrangian = py::cast<decltype(T::augmented_lagrangian)>(t[18]),
+                    .augmented_lagrangian_gradient = py::cast<decltype(T::augmented_lagrangian_gradient)>(t[19]),
+                    .augmented_lagrangian_and_gradient = py::cast<decltype(T::augmented_lagrangian_and_gradient)>(t[20]),
+                    // clang-format on
                 };
             }))
-        .def_readwrite("proj_diff_g", &alpaqa::EvalCounter::EvalTimer::proj_diff_g)
-        .def_readwrite("proj_multipliers", &alpaqa::EvalCounter::EvalTimer::proj_multipliers)
-        .def_readwrite("prox_grad_step", &alpaqa::EvalCounter::EvalTimer::prox_grad_step)
-        .def_readwrite("inactive_indices_res_lna",
-                       &alpaqa::EvalCounter::EvalTimer::inactive_indices_res_lna)
-        .def_readwrite("f", &alpaqa::EvalCounter::EvalTimer::f)
-        .def_readwrite("grad_f", &alpaqa::EvalCounter::EvalTimer::grad_f)
-        .def_readwrite("f_grad_f", &alpaqa::EvalCounter::EvalTimer::f_grad_f)
-        .def_readwrite("f_g", &alpaqa::EvalCounter::EvalTimer::f_g)
-        .def_readwrite("grad_f_grad_g_prod", &alpaqa::EvalCounter::EvalTimer::grad_f_grad_g_prod)
-        .def_readwrite("g", &alpaqa::EvalCounter::EvalTimer::g)
-        .def_readwrite("grad_g_prod", &alpaqa::EvalCounter::EvalTimer::grad_g_prod)
+        // clang-format off
+        .def_readwrite("projecting_difference_constraints", &alpaqa::EvalCounter::EvalTimer::projecting_difference_constraints)
+        .def_readwrite("projection_multipliers", &alpaqa::EvalCounter::EvalTimer::projection_multipliers)
+        .def_readwrite("proximal_gradient_step", &alpaqa::EvalCounter::EvalTimer::proximal_gradient_step)
+        .def_readwrite("inactive_indices_res_lna", &alpaqa::EvalCounter::EvalTimer::inactive_indices_res_lna)
+        .def_readwrite("objective", &alpaqa::EvalCounter::EvalTimer::objective)
+        .def_readwrite("objective_gradient", &alpaqa::EvalCounter::EvalTimer::objective_gradient)
+        .def_readwrite("objective_and_gradient", &alpaqa::EvalCounter::EvalTimer::objective_and_gradient)
+        .def_readwrite("objective_and_constraints", &alpaqa::EvalCounter::EvalTimer::objective_and_constraints)
+        .def_readwrite("objective_gradient_and_constraints_gradient_product", &alpaqa::EvalCounter::EvalTimer::objective_gradient_and_constraints_gradient_product)
+        .def_readwrite("constraints", &alpaqa::EvalCounter::EvalTimer::constraints)
+        .def_readwrite("constraints_gradient_product", &alpaqa::EvalCounter::EvalTimer::constraints_gradient_product)
         .def_readwrite("grad_gi", &alpaqa::EvalCounter::EvalTimer::grad_gi)
-        .def_readwrite("jac_g", &alpaqa::EvalCounter::EvalTimer::grad_gi)
-        .def_readwrite("grad_L", &alpaqa::EvalCounter::EvalTimer::grad_L)
-        .def_readwrite("hess_L_prod", &alpaqa::EvalCounter::EvalTimer::hess_L_prod)
-        .def_readwrite("hess_L", &alpaqa::EvalCounter::EvalTimer::hess_L)
-        .def_readwrite("hess_ψ_prod", &alpaqa::EvalCounter::EvalTimer::hess_ψ_prod)
-        .def_readwrite("hess_ψ", &alpaqa::EvalCounter::EvalTimer::hess_ψ)
-        .def_readwrite("ψ", &alpaqa::EvalCounter::EvalTimer::ψ)
-        .def_readwrite("grad_ψ", &alpaqa::EvalCounter::EvalTimer::grad_ψ)
-        .def_readwrite("ψ_grad_ψ", &alpaqa::EvalCounter::EvalTimer::ψ_grad_ψ);
+        .def_readwrite("constraints_jacobian", &alpaqa::EvalCounter::EvalTimer::constraints_jacobian)
+        .def_readwrite("lagrangian_gradient", &alpaqa::EvalCounter::EvalTimer::lagrangian_gradient)
+        .def_readwrite("lagrangian_hessian_product", &alpaqa::EvalCounter::EvalTimer::lagrangian_hessian_product)
+        .def_readwrite("lagrangian_hessian", &alpaqa::EvalCounter::EvalTimer::lagrangian_hessian)
+        .def_readwrite("augmented_lagrangian_hessian_product", &alpaqa::EvalCounter::EvalTimer::augmented_lagrangian_hessian_product)
+        .def_readwrite("augmented_lagrangian_hessian", &alpaqa::EvalCounter::EvalTimer::augmented_lagrangian_hessian)
+        .def_readwrite("augmented_lagrangian", &alpaqa::EvalCounter::EvalTimer::augmented_lagrangian)
+        .def_readwrite("augmented_lagrangian_gradient", &alpaqa::EvalCounter::EvalTimer::augmented_lagrangian_gradient)
+        .def_readwrite("augmented_lagrangian_and_gradient", &alpaqa::EvalCounter::EvalTimer::augmented_lagrangian_and_gradient);
+    // clang-format on
 
     evalcounter
         .def(py::pickle(
             [](const alpaqa::EvalCounter &p) { // __getstate__
-                return py::make_tuple(p.proj_diff_g, p.proj_multipliers, p.prox_grad_step,
-                                      p.inactive_indices_res_lna, p.f, p.grad_f, p.f_grad_f, p.f_g,
-                                      p.grad_f_grad_g_prod, p.g, p.grad_g_prod, p.grad_gi, p.jac_g,
-                                      p.grad_L, p.hess_L_prod, p.hess_L, p.hess_ψ_prod, p.hess_ψ,
-                                      p.ψ, p.grad_ψ, p.ψ_grad_ψ, p.time);
+                return py::make_tuple(
+                    // clang-format off
+                    p.projecting_difference_constraints,
+                    p.projection_multipliers,
+                    p.proximal_gradient_step,
+                    p.inactive_indices_res_lna,
+                    p.objective,
+                    p.objective_gradient,
+                    p.objective_and_gradient,
+                    p.objective_and_constraints,
+                    p.objective_gradient_and_constraints_gradient_product,
+                    p.constraints,
+                    p.constraints_gradient_product,
+                    p.grad_gi,
+                    p.constraints_jacobian,
+                    p.lagrangian_gradient,
+                    p.lagrangian_hessian_product,
+                    p.lagrangian_hessian,
+                    p.augmented_lagrangian_hessian_product,
+                    p.augmented_lagrangian_hessian,
+                    p.augmented_lagrangian,
+                    p.augmented_lagrangian_gradient,
+                    p.augmented_lagrangian_and_gradient,
+                    // clang-format on
+                    p.time);
             },
             [](py::tuple t) { // __setstate__
                 if (t.size() != 22)
                     throw std::runtime_error("Invalid state!");
                 using T = alpaqa::EvalCounter;
                 return T{
-                    .proj_diff_g      = py::cast<decltype(T::proj_diff_g)>(t[0]),
-                    .proj_multipliers = py::cast<decltype(T::proj_multipliers)>(t[1]),
-                    .prox_grad_step   = py::cast<decltype(T::prox_grad_step)>(t[2]),
-                    .inactive_indices_res_lna =
-                        py::cast<decltype(T::inactive_indices_res_lna)>(t[3]),
-                    .f                  = py::cast<decltype(T::f)>(t[4]),
-                    .grad_f             = py::cast<decltype(T::grad_f)>(t[5]),
-                    .f_grad_f           = py::cast<decltype(T::f_grad_f)>(t[6]),
-                    .f_g                = py::cast<decltype(T::f_g)>(t[7]),
-                    .grad_f_grad_g_prod = py::cast<decltype(T::grad_f_grad_g_prod)>(t[8]),
-                    .g                  = py::cast<decltype(T::g)>(t[9]),
-                    .grad_g_prod        = py::cast<decltype(T::grad_g_prod)>(t[10]),
-                    .grad_gi            = py::cast<decltype(T::grad_gi)>(t[11]),
-                    .jac_g              = py::cast<decltype(T::jac_g)>(t[12]),
-                    .grad_L             = py::cast<decltype(T::grad_L)>(t[13]),
-                    .hess_L_prod        = py::cast<decltype(T::hess_L_prod)>(t[14]),
-                    .hess_L             = py::cast<decltype(T::hess_L)>(t[15]),
-                    .hess_ψ_prod        = py::cast<decltype(T::hess_ψ_prod)>(t[16]),
-                    .hess_ψ             = py::cast<decltype(T::hess_ψ)>(t[17]),
-                    .ψ                  = py::cast<decltype(T::ψ)>(t[18]),
-                    .grad_ψ             = py::cast<decltype(T::grad_ψ)>(t[19]),
-                    .ψ_grad_ψ           = py::cast<decltype(T::ψ_grad_ψ)>(t[20]),
-                    .time               = py::cast<decltype(T::time)>(t[21]),
+                    // clang-format off
+                    .projecting_difference_constraints= py::cast<decltype(T::projecting_difference_constraints)>(t[0]),
+                    .projection_multipliers= py::cast<decltype(T::projection_multipliers)>(t[1]),
+                    .proximal_gradient_step= py::cast<decltype(T::proximal_gradient_step)>(t[2]),
+                    .inactive_indices_res_lna= py::cast<decltype(T::inactive_indices_res_lna)>(t[3]),
+                    .objective= py::cast<decltype(T::objective)>(t[4]),
+                    .objective_gradient= py::cast<decltype(T::objective_gradient)>(t[5]),
+                    .objective_and_gradient= py::cast<decltype(T::objective_and_gradient)>(t[6]),
+                    .objective_and_constraints= py::cast<decltype(T::objective_and_constraints)>(t[7]),
+                    .objective_gradient_and_constraints_gradient_product= py::cast<decltype(T::objective_gradient_and_constraints_gradient_product)>(t[8]),
+                    .constraints= py::cast<decltype(T::constraints)>(t[9]),
+                    .constraints_gradient_product= py::cast<decltype(T::constraints_gradient_product)>(t[10]),
+                    .grad_gi= py::cast<decltype(T::grad_gi)>(t[11]),
+                    .constraints_jacobian= py::cast<decltype(T::constraints_jacobian)>(t[12]),
+                    .lagrangian_gradient= py::cast<decltype(T::lagrangian_gradient)>(t[13]),
+                    .lagrangian_hessian_product= py::cast<decltype(T::lagrangian_hessian_product)>(t[14]),
+                    .lagrangian_hessian= py::cast<decltype(T::lagrangian_hessian)>(t[15]),
+                    .augmented_lagrangian_hessian_product= py::cast<decltype(T::augmented_lagrangian_hessian_product)>(t[16]),
+                    .augmented_lagrangian_hessian= py::cast<decltype(T::augmented_lagrangian_hessian)>(t[17]),
+                    .augmented_lagrangian= py::cast<decltype(T::augmented_lagrangian)>(t[18]),
+                    .augmented_lagrangian_gradient= py::cast<decltype(T::augmented_lagrangian_gradient)>(t[19]),
+                    .augmented_lagrangian_and_gradient= py::cast<decltype(T::augmented_lagrangian_and_gradient)>(t[20]),
+                    // clang-format on
+                    .time = py::cast<decltype(T::time)>(t[21]),
                 };
             }))
-        .def_readwrite("proj_diff_g", &alpaqa::EvalCounter::proj_diff_g)
-        .def_readwrite("proj_multipliers", &alpaqa::EvalCounter::proj_multipliers)
-        .def_readwrite("prox_grad_step", &alpaqa::EvalCounter::prox_grad_step)
+        // clang-format off
+        .def_readwrite("projecting_difference_constraints", &alpaqa::EvalCounter::projecting_difference_constraints)
+        .def_readwrite("projection_multipliers", &alpaqa::EvalCounter::projection_multipliers)
+        .def_readwrite("proximal_gradient_step", &alpaqa::EvalCounter::proximal_gradient_step)
         .def_readwrite("inactive_indices_res_lna", &alpaqa::EvalCounter::inactive_indices_res_lna)
-        .def_readwrite("f", &alpaqa::EvalCounter::f)
-        .def_readwrite("grad_f", &alpaqa::EvalCounter::grad_f)
-        .def_readwrite("f_grad_f", &alpaqa::EvalCounter::f_grad_f)
-        .def_readwrite("f_g", &alpaqa::EvalCounter::f_g)
-        .def_readwrite("grad_f_grad_g_prod", &alpaqa::EvalCounter::grad_f_grad_g_prod)
-        .def_readwrite("g", &alpaqa::EvalCounter::g)
-        .def_readwrite("grad_g_prod", &alpaqa::EvalCounter::grad_g_prod)
+        .def_readwrite("objective", &alpaqa::EvalCounter::objective)
+        .def_readwrite("objective_gradient", &alpaqa::EvalCounter::objective_gradient)
+        .def_readwrite("objective_and_gradient", &alpaqa::EvalCounter::objective_and_gradient)
+        .def_readwrite("objective_and_constraints", &alpaqa::EvalCounter::objective_and_constraints)
+        .def_readwrite("objective_gradient_and_constraints_gradient_product", &alpaqa::EvalCounter::objective_gradient_and_constraints_gradient_product)
+        .def_readwrite("constraints", &alpaqa::EvalCounter::constraints)
+        .def_readwrite("constraints_gradient_product", &alpaqa::EvalCounter::constraints_gradient_product)
         .def_readwrite("grad_gi", &alpaqa::EvalCounter::grad_gi)
-        .def_readwrite("jac_g", &alpaqa::EvalCounter::jac_g)
-        .def_readwrite("grad_L", &alpaqa::EvalCounter::grad_L)
-        .def_readwrite("hess_L_prod", &alpaqa::EvalCounter::hess_L_prod)
-        .def_readwrite("hess_L", &alpaqa::EvalCounter::hess_L)
-        .def_readwrite("hess_ψ_prod", &alpaqa::EvalCounter::hess_ψ_prod)
-        .def_readwrite("hess_ψ", &alpaqa::EvalCounter::hess_ψ)
-        .def_readwrite("ψ", &alpaqa::EvalCounter::ψ)
-        .def_readwrite("grad_ψ", &alpaqa::EvalCounter::grad_ψ)
-        .def_readwrite("ψ_grad_ψ", &alpaqa::EvalCounter::ψ_grad_ψ)
+        .def_readwrite("constraints_jacobian", &alpaqa::EvalCounter::constraints_jacobian)
+        .def_readwrite("lagrangian_gradient", &alpaqa::EvalCounter::lagrangian_gradient)
+        .def_readwrite("lagrangian_hessian_product", &alpaqa::EvalCounter::lagrangian_hessian_product)
+        .def_readwrite("lagrangian_hessian", &alpaqa::EvalCounter::lagrangian_hessian)
+        .def_readwrite("augmented_lagrangian_hessian_product", &alpaqa::EvalCounter::augmented_lagrangian_hessian_product)
+        .def_readwrite("augmented_lagrangian_hessian", &alpaqa::EvalCounter::augmented_lagrangian_hessian)
+        .def_readwrite("augmented_lagrangian", &alpaqa::EvalCounter::augmented_lagrangian)
+        .def_readwrite("augmented_lagrangian_gradient", &alpaqa::EvalCounter::augmented_lagrangian_gradient)
+        .def_readwrite("augmented_lagrangian_and_gradient", &alpaqa::EvalCounter::augmented_lagrangian_and_gradient)
+        // clang-format on
         .def_readwrite("time", &alpaqa::EvalCounter::time)
         .def("__str__", [](const alpaqa::EvalCounter &c) {
             std::ostringstream os;

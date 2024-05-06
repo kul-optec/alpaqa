@@ -72,25 +72,27 @@ inline void write_evaluations(std::ostream &os,
         os << name << ": " << value << '\n';
     };
 #define EVAL(name) dict_elem(#name, evals.name)
-    EVAL(proj_diff_g);
-    EVAL(proj_multipliers);
-    EVAL(prox_grad_step);
-    EVAL(f);
-    EVAL(grad_f);
-    EVAL(f_grad_f);
-    EVAL(f_g);
-    EVAL(grad_f_grad_g_prod);
-    EVAL(g);
-    EVAL(grad_g_prod);
+    EVAL(projecting_difference_constraints);
+    EVAL(projection_multipliers);
+    EVAL(proximal_gradient_step);
+    EVAL(inactive_indices_res_lna);
+    EVAL(objective);
+    EVAL(objective_gradient);
+    EVAL(objective_and_gradient);
+    EVAL(objective_and_constraints);
+    EVAL(objective_gradient_and_constraints_gradient_product);
+    EVAL(constraints);
+    EVAL(constraints_gradient_product);
     EVAL(grad_gi);
-    EVAL(grad_L);
-    EVAL(hess_L_prod);
-    EVAL(hess_L);
-    EVAL(hess_ψ_prod);
-    EVAL(hess_ψ);
-    EVAL(ψ);
-    EVAL(grad_ψ);
-    EVAL(ψ_grad_ψ);
+    EVAL(constraints_jacobian);
+    EVAL(lagrangian_gradient);
+    EVAL(lagrangian_hessian_product);
+    EVAL(lagrangian_hessian);
+    EVAL(augmented_lagrangian_hessian_product);
+    EVAL(augmented_lagrangian_hessian);
+    EVAL(augmented_lagrangian);
+    EVAL(augmented_lagrangian_gradient);
+    EVAL(augmented_lagrangian_and_gradient);
 #undef EVAL
 }
 
