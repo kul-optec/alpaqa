@@ -41,15 +41,15 @@ auto LBFGSBSolver::operator()(
         max_time = std::min(max_time, *opts.max_time);
     Stats s;
 
-    if (!problem.provides_get_box_C())
+    if (!problem.provides_get_box_variables())
         throw std::invalid_argument("LBFGSBSolver requires box constraints");
     if (params.stop_crit != PANOCStopCrit::ProjGradUnitNorm)
         throw std::invalid_argument("LBFGSBSolver only supports "
                                     "PANOCStopCrit::ProjGradUnitNorm");
 
-    const auto n        = problem.get_n();
-    const auto m_constr = problem.get_m();
-    const auto &C       = problem.get_box_C();
+    const auto n        = problem.get_num_variables();
+    const auto m_constr = problem.get_num_constraints();
+    const auto &C       = problem.get_box_variables();
     const auto mem      = static_cast<length_t>(params.memory);
 
     auto do_progress_cb = [this, &s, &problem, &Σ, &y,
@@ -166,7 +166,7 @@ auto LBFGSBSolver::operator()(
 
         // New evaluation
         if (task_sv.starts_with("FG")) {
-            ψ = problem.eval_ψ_grad_ψ(x_solve, y, Σ, grad_ψ, work_n, work_m);
+            ψ = problem.eval_augmented_lagrangian_and_gradient(x_solve, y, Σ, grad_ψ, work_n, work_m);
         }
         // Converged
         else if (task_sv.starts_with(
@@ -253,7 +253,7 @@ auto LBFGSBSolver::operator()(
         s.status == SolverStatus::Interrupted ||
         opts.always_overwrite_results) {
         auto &ŷ   = work_m;
-        s.final_ψ = problem.eval_ψ(x_solve, y, Σ, ŷ);
+        s.final_ψ = problem.eval_augmented_lagrangian(x_solve, y, Σ, ŷ);
         if (err_z.size() > 0)
             err_z = (ŷ - y).cwiseQuotient(Σ);
         x = x_solve;

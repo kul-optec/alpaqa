@@ -19,12 +19,12 @@ prob = pa.CUTEstProblem(str(cutest_dir / problem_name), sparse=True)
 # Extract the problem data
 n = prob.n
 m = prob.m
-Q, Q_sym = prob.eval_hess_L(np.zeros(n), np.zeros(m))
-c, q = prob.eval_f_grad_f(np.zeros(n))
+Q, Q_sym = prob.eval_lagrangian_hessian(np.zeros(n), np.zeros(m))
+c, q = prob.eval_objective_and_gradient(np.zeros(n))
 x_lb = prob.C.lowerbound
 x_ub = prob.C.upperbound
-A, A_sym = prob.eval_jac_g(np.zeros(n))
-g = prob.eval_g(np.zeros(n))
+A, A_sym = prob.eval_constraints_jacobian(np.zeros(n))
+g = prob.eval_constraints(np.zeros(n))
 g_lb = prob.D.lowerbound - g
 g_ub = prob.D.upperbound - g
 

@@ -76,11 +76,11 @@ int main(int argc, char *argv[]) {
     // Print the results
     std::cout << '\n' << *counted_problem.evaluations << '\n';
     vec g(problem.m);
-    problem.eval_g(x, g);
+    problem.eval_constraints(x, g);
     std::cout << "status: " << stats.status << '\n'
               << "x = " << x.transpose() << '\n'
               << "y = " << y.transpose() << '\n'
-              << "f = " << problem.eval_f(x) << '\n'
+              << "f = " << problem.eval_objective(x) << '\n'
               << "g = " << g.transpose() << '\n'
               << "ε = " << stats.ε << '\n'
               << "δ = " << stats.δ << '\n'

@@ -73,19 +73,19 @@ void problem_constr_proj_methods(py::class_<T, Args...> &cls) {
     USING_ALPAQA_CONFIG_TEMPLATE(T::config_t);
     cls //
         .def(
-            "eval_proj_diff_g",
+            "eval_projecting_difference_constraints",
             [](const T &prob, crvec z) {
                 vec e(z.size());
-                prob.eval_proj_diff_g(z, e);
+                prob.eval_projecting_difference_constraints(z, e);
                 return e;
             },
             "z"_a)
         .def(
-            "eval_prox_grad_step",
+            "eval_proximal_gradient_step",
             [](const T &prob, real_t γ, crvec x, crvec grad_ψ) {
                 vec x̂(x.size());
                 vec p(x.size());
-                real_t hx̂ = prob.eval_prox_grad_step(γ, x, grad_ψ, x̂, p);
+                real_t hx̂ = prob.eval_proximal_gradient_step(γ, x, grad_ψ, x̂, p);
                 return std::make_tuple(std::move(x̂), std::move(p), hx̂);
             },
             "γ"_a, "x"_a, "grad_ψ"_a)
@@ -151,195 +151,195 @@ auto cvt_matrix(const alpaqa::Sparsity<Conf> &sparsity, const auto &func) {
 template <class T, class... Args>
 void problem_methods(py::class_<T, Args...> &cls) {
     USING_ALPAQA_CONFIG_TEMPLATE(T::config_t);
-    cls.def_property_readonly("n", &T::get_n,
+    cls.def_property_readonly("num_variables", &T::get_num_variables,
                               "Number of decision variables, dimension of :math:`x`");
-    cls.def_property_readonly("m", &T::get_m,
+    cls.def_property_readonly("num_constraints", &T::get_num_constraints,
                               "Number of general constraints, dimension of :math:`g(x)`");
     // clang-format off
     cls.def("__str__", &T::get_name);
-    cls.def("eval_proj_diff_g", &T::eval_proj_diff_g, "z"_a, "e"_a);
-    cls.def("eval_proj_multipliers", &T::eval_proj_multipliers, "y"_a, "M"_a);
-    cls.def("eval_prox_grad_step", &T::eval_prox_grad_step, "γ"_a, "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a);
+    cls.def("eval_projecting_difference_constraints", &T::eval_projecting_difference_constraints, "z"_a, "e"_a);
+    cls.def("eval_projection_multipliers", &T::eval_projection_multipliers, "y"_a, "M"_a);
+    cls.def("eval_proximal_gradient_step", &T::eval_proximal_gradient_step, "γ"_a, "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a);
     cls.def("eval_inactive_indices_res_lna", &T::eval_inactive_indices_res_lna, "γ"_a, "x"_a, "grad_ψ"_a, "J"_a);
-    cls.def("eval_f", &T::eval_f, "x"_a);
-    cls.def("eval_grad_f", &T::eval_grad_f, "x"_a, "grad_fx"_a);
-    cls.def("eval_g", &T::eval_g, "x"_a, "gx"_a);
-    cls.def("eval_grad_g_prod", &T::eval_grad_g_prod, "x"_a, "y"_a, "grad_gxy"_a);
+    cls.def("eval_objective", &T::eval_objective, "x"_a);
+    cls.def("eval_objective_gradient", &T::eval_objective_gradient, "x"_a, "grad_fx"_a);
+    cls.def("eval_constraints", &T::eval_constraints, "x"_a, "gx"_a);
+    cls.def("eval_constraints_gradient_product", &T::eval_constraints_gradient_product, "x"_a, "y"_a, "grad_gxy"_a);
     cls.def("eval_grad_gi", &T::eval_grad_gi, "x"_a, "i"_a, "grad_gi"_a);
-    // cls.def("eval_jac_g", &T::eval_jac_g, "x"_a, "J"_a); // TODO
-    cls.def("eval_hess_L_prod", &T::eval_hess_L_prod, "x"_a, "y"_a, "scale"_a, "v"_a, "Hv"_a);
-    // cls.def("eval_hess_L", &T::eval_hess_L, "x"_a, "y"_a, "H"_a); // TODO
-    cls.def("eval_hess_ψ_prod", &T::eval_hess_ψ_prod, "x"_a, "y"_a, "Σ"_a, "scale"_a, "v"_a, "Hv"_a);
-    // cls.def("eval_hess_ψ", &T::eval_hess_ψ, "x"_a, "y"_a, "Σ"_a, "H"_a); // TODO
-    cls.def("eval_f_grad_f", &T::eval_f_grad_f, "x"_a, "grad_fx"_a);
-    if constexpr (requires { &T::eval_f_g; })
-        cls.def("eval_f_g", &T::eval_f_g, "x"_a, "g"_a);
-    if constexpr (requires { &T::eval_grad_f_grad_g_prod; })
-        cls.def("eval_grad_f_grad_g_prod", &T::eval_grad_f_grad_g_prod, "x"_a, "y"_a, "grad_f"_a, "grad_gxy"_a);
-    if constexpr (requires { &T::eval_grad_L; })
-        cls.def("eval_grad_L", &T::eval_grad_L, "x"_a, "y"_a, "grad_L"_a, "work_n"_a);
-    if constexpr (requires { &T:: eval_ψ; })
-        cls.def("eval_ψ", &T::eval_ψ, "x"_a, "y"_a, "Σ"_a, "ŷ"_a);
-    if constexpr (requires { &T::eval_grad_ψ; })
-        cls.def("eval_grad_ψ", &T::eval_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
-    if constexpr (requires { &T::eval_ψ_grad_ψ; })
-        cls.def("eval_ψ_grad_ψ", &T::eval_ψ_grad_ψ, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
+    // cls.def("eval_constraints_jacobian", &T::eval_constraints_jacobian, "x"_a, "J"_a); // TODO
+    cls.def("eval_lagrangian_hessian_product", &T::eval_lagrangian_hessian_product, "x"_a, "y"_a, "scale"_a, "v"_a, "Hv"_a);
+    // cls.def("eval_lagrangian_hessian", &T::eval_lagrangian_hessian, "x"_a, "y"_a, "H"_a); // TODO
+    cls.def("eval_augmented_lagrangian_hessian_product", &T::eval_augmented_lagrangian_hessian_product, "x"_a, "y"_a, "Σ"_a, "scale"_a, "v"_a, "Hv"_a);
+    // cls.def("eval_augmented_lagrangian_hessian", &T::eval_augmented_lagrangian_hessian, "x"_a, "y"_a, "Σ"_a, "H"_a); // TODO
+    cls.def("eval_objective_and_gradient", &T::eval_objective_and_gradient, "x"_a, "grad_fx"_a);
+    if constexpr (requires { &T::eval_objective_and_constraints; })
+        cls.def("eval_objective_and_constraints", &T::eval_objective_and_constraints, "x"_a, "g"_a);
+    if constexpr (requires { &T::eval_objective_gradient_and_constraints_gradient_product; })
+        cls.def("eval_objective_gradient_and_constraints_gradient_product", &T::eval_objective_gradient_and_constraints_gradient_product, "x"_a, "y"_a, "grad_f"_a, "grad_gxy"_a);
+    if constexpr (requires { &T::eval_lagrangian_gradient; })
+        cls.def("eval_lagrangian_gradient", &T::eval_lagrangian_gradient, "x"_a, "y"_a, "grad_L"_a, "work_n"_a);
+    if constexpr (requires { &T:: eval_augmented_lagrangian; })
+        cls.def("eval_augmented_lagrangian", &T::eval_augmented_lagrangian, "x"_a, "y"_a, "Σ"_a, "ŷ"_a);
+    if constexpr (requires { &T::eval_augmented_lagrangian_gradient; })
+        cls.def("eval_augmented_lagrangian_gradient", &T::eval_augmented_lagrangian_gradient, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
+    if constexpr (requires { &T::eval_augmented_lagrangian_and_gradient; })
+        cls.def("eval_augmented_lagrangian_and_gradient", &T::eval_augmented_lagrangian_and_gradient, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
     if constexpr (requires { &T::check; })
         cls.def("check", &T::check);
-    if constexpr (requires { &T::get_box_C; })
-        cls.def("get_box_C", &T::get_box_C);
-    if constexpr (requires { &T::get_box_D; })
-        cls.def("get_box_D", &T::get_box_D);
+    if constexpr (requires { &T::get_box_variables; })
+        cls.def("get_box_variables", &T::get_box_variables);
+    if constexpr (requires { &T::get_box_general_constraints; })
+        cls.def("get_box_general_constraints", &T::get_box_general_constraints);
 
     if constexpr (requires { &T::provides_eval_inactive_indices_res_lna; })
         cls.def("provides_eval_inactive_indices_res_lna", &T::provides_eval_inactive_indices_res_lna);
-    if constexpr (requires { &T::provides_eval_jac_g; })
-        cls.def("provides_eval_jac_g", &T::provides_eval_jac_g);
-    if constexpr (requires { &T::provides_get_jac_g_sparsity; })
-        cls.def("provides_get_jac_g_sparsity", &T::provides_get_jac_g_sparsity);
+    if constexpr (requires { &T::provides_eval_constraints_jacobian; })
+        cls.def("provides_eval_constraints_jacobian", &T::provides_eval_constraints_jacobian);
+    if constexpr (requires { &T::provides_get_constraints_jacobian_sparsity; })
+        cls.def("provides_get_constraints_jacobian_sparsity", &T::provides_get_constraints_jacobian_sparsity);
     if constexpr (requires { &T::provides_eval_grad_gi; })
         cls.def("provides_eval_grad_gi", &T::provides_eval_grad_gi);
-    if constexpr (requires { &T::provides_eval_hess_L_prod; })
-        cls.def("provides_eval_hess_L_prod", &T::provides_eval_hess_L_prod);
-    if constexpr (requires { &T::provides_eval_hess_L; })
-        cls.def("provides_eval_hess_L", &T::provides_eval_hess_L);
-    if constexpr (requires { &T::provides_get_hess_L_sparsity; })
-        cls.def("provides_get_hess_L_sparsity", &T::provides_get_hess_L_sparsity);
-    if constexpr (requires { &T::provides_eval_hess_ψ_prod; })
-        cls.def("provides_eval_hess_ψ_prod", &T::provides_eval_hess_ψ_prod);
-    if constexpr (requires { &T::provides_eval_hess_ψ; })
-        cls.def("provides_eval_hess_ψ", &T::provides_eval_hess_ψ);
-    if constexpr (requires { &T::provides_get_hess_ψ_sparsity; })
-        cls.def("provides_get_hess_ψ_sparsity", &T::provides_get_hess_ψ_sparsity);
-    if constexpr (requires { &T::provides_eval_f_grad_f; })
-        cls.def("provides_eval_f_grad_f", &T::provides_eval_f_grad_f);
-    if constexpr (requires { &T::provides_eval_f_g; })
-        cls.def("provides_eval_f_g", &T::provides_eval_f_g);
-    if constexpr (requires { &T::provides_eval_grad_f_grad_g_prod; })
-        cls.def("provides_eval_grad_f_grad_g_prod", &T::provides_eval_grad_f_grad_g_prod);
-    if constexpr (requires { &T::provides_eval_grad_L; })
-        cls.def("provides_eval_grad_L", &T::provides_eval_grad_L);
-    if constexpr (requires { &T::provides_eval_ψ; })
-        cls.def("provides_eval_ψ", &T::provides_eval_ψ);
-    if constexpr (requires { &T::provides_eval_grad_ψ; })
-        cls.def("provides_eval_grad_ψ", &T::provides_eval_grad_ψ);
-    if constexpr (requires { &T::provides_eval_ψ_grad_ψ; })
-        cls.def("provides_eval_ψ_grad_ψ", &T::provides_eval_ψ_grad_ψ);
+    if constexpr (requires { &T::provides_eval_lagrangian_hessian_product; })
+        cls.def("provides_eval_lagrangian_hessian_product", &T::provides_eval_lagrangian_hessian_product);
+    if constexpr (requires { &T::provides_eval_lagrangian_hessian; })
+        cls.def("provides_eval_lagrangian_hessian", &T::provides_eval_lagrangian_hessian);
+    if constexpr (requires { &T::provides_get_lagrangian_hessian_sparsity; })
+        cls.def("provides_get_lagrangian_hessian_sparsity", &T::provides_get_lagrangian_hessian_sparsity);
+    if constexpr (requires { &T::provides_eval_augmented_lagrangian_hessian_product; })
+        cls.def("provides_eval_augmented_lagrangian_hessian_product", &T::provides_eval_augmented_lagrangian_hessian_product);
+    if constexpr (requires { &T::provides_eval_augmented_lagrangian_hessian; })
+        cls.def("provides_eval_augmented_lagrangian_hessian", &T::provides_eval_augmented_lagrangian_hessian);
+    if constexpr (requires { &T::provides_get_augmented_lagrangian_hessian_sparsity; })
+        cls.def("provides_get_augmented_lagrangian_hessian_sparsity", &T::provides_get_augmented_lagrangian_hessian_sparsity);
+    if constexpr (requires { &T::provides_eval_objective_and_gradient; })
+        cls.def("provides_eval_objective_and_gradient", &T::provides_eval_objective_and_gradient);
+    if constexpr (requires { &T::provides_eval_objective_and_constraints; })
+        cls.def("provides_eval_objective_and_constraints", &T::provides_eval_objective_and_constraints);
+    if constexpr (requires { &T::provides_eval_objective_gradient_and_constraints_gradient_product; })
+        cls.def("provides_eval_objective_gradient_and_constraints_gradient_product", &T::provides_eval_objective_gradient_and_constraints_gradient_product);
+    if constexpr (requires { &T::provides_eval_lagrangian_gradient; })
+        cls.def("provides_eval_lagrangian_gradient", &T::provides_eval_lagrangian_gradient);
+    if constexpr (requires { &T::provides_eval_augmented_lagrangian; })
+        cls.def("provides_eval_augmented_lagrangian", &T::provides_eval_augmented_lagrangian);
+    if constexpr (requires { &T::provides_eval_augmented_lagrangian_gradient; })
+        cls.def("provides_eval_augmented_lagrangian_gradient", &T::provides_eval_augmented_lagrangian_gradient);
+    if constexpr (requires { &T::provides_eval_augmented_lagrangian_and_gradient; })
+        cls.def("provides_eval_augmented_lagrangian_and_gradient", &T::provides_eval_augmented_lagrangian_and_gradient);
     if constexpr (requires { &T::provides_check; })
         cls.def("provides_check", &T::provides_check);
-    if constexpr (requires { &T::provides_get_box_C; })
-        cls.def("provides_get_box_C", &T::provides_get_box_C);
-    if constexpr (requires { &T::provides_get_box_D; })
-        cls.def("provides_get_box_D", &T::provides_get_box_D);
+    if constexpr (requires { &T::provides_get_box_variables; })
+        cls.def("provides_get_box_variables", &T::provides_get_box_variables);
+    if constexpr (requires { &T::provides_get_box_general_constraints; })
+        cls.def("provides_get_box_general_constraints", &T::provides_get_box_general_constraints);
     // clang-format on
     cls.def(
-           "eval_proj_diff_g",
+           "eval_projecting_difference_constraints",
            [](const T &prob, crvec z) {
-               vec e(prob.get_m());
-               prob.eval_proj_diff_g(z, e);
+               vec e(prob.get_num_constraints());
+               prob.eval_projecting_difference_constraints(z, e);
                return e;
            },
            "z"_a)
         .def(
-            "eval_prox_grad_step",
+            "eval_proximal_gradient_step",
             [](const T &prob, real_t γ, crvec x, crvec grad_ψ) {
-                vec x̂(prob.get_n());
-                vec p(prob.get_n());
-                real_t hx̂ = prob.eval_prox_grad_step(γ, x, grad_ψ, x̂, p);
+                vec x̂(prob.get_num_variables());
+                vec p(prob.get_num_variables());
+                real_t hx̂ = prob.eval_proximal_gradient_step(γ, x, grad_ψ, x̂, p);
                 return std::make_tuple(std::move(x̂), std::move(p), hx̂);
             },
             "γ"_a, "x"_a, "grad_ψ"_a)
         .def(
             "eval_inactive_indices_res_lna",
             [](const T &prob, real_t γ, crvec x, crvec grad_ψ) {
-                indexvec J_sto(prob.get_n());
+                indexvec J_sto(prob.get_num_variables());
                 index_t nJ = prob.eval_inactive_indices_res_lna(γ, x, grad_ψ, J_sto);
                 return indexvec{J_sto.topRows(nJ)};
             },
             "γ"_a, "x"_a, "grad_ψ"_a)
         .def(
-            "eval_grad_f",
+            "eval_objective_gradient",
             [](const T &p, crvec x) {
-                vec g(p.get_n());
-                p.eval_grad_f(x, g);
+                vec g(p.get_num_variables());
+                p.eval_objective_gradient(x, g);
                 return g;
             },
             "x"_a)
         .def(
-            "eval_g",
+            "eval_constraints",
             [](const T &p, crvec x) {
-                vec g(p.get_m());
-                p.eval_g(x, g);
+                vec g(p.get_num_constraints());
+                p.eval_constraints(x, g);
                 return g;
             },
             "x"_a)
         .def(
-            "eval_grad_g_prod",
+            "eval_constraints_gradient_product",
             [](const T &p, crvec x, crvec y) {
-                vec g(p.get_n());
-                p.eval_grad_g_prod(x, y, g);
+                vec g(p.get_num_variables());
+                p.eval_constraints_gradient_product(x, y, g);
                 return g;
             },
             "x"_a, "y"_a);
-    if constexpr (requires { &T::eval_f_grad_f; })
+    if constexpr (requires { &T::eval_objective_and_gradient; })
         cls.def(
-            "eval_f_grad_f",
+            "eval_objective_and_gradient",
             [](const T &p, crvec x) {
-                vec g(p.get_n());
-                real_t f = p.eval_f_grad_f(x, g);
+                vec g(p.get_num_variables());
+                real_t f = p.eval_objective_and_gradient(x, g);
                 return py::make_tuple(f, std::move(g));
             },
             "x"_a);
-    if constexpr (requires { &T::eval_ψ; })
+    if constexpr (requires { &T::eval_augmented_lagrangian; })
         cls.def(
-            "eval_ψ",
+            "eval_augmented_lagrangian",
             [](const T &p, crvec x, crvec y, crvec Σ) {
-                vec ŷ(p.get_m());
-                auto ψ = p.eval_ψ(x, y, Σ, ŷ);
+                vec ŷ(p.get_num_constraints());
+                auto ψ = p.eval_augmented_lagrangian(x, y, Σ, ŷ);
                 return std::make_tuple(std::move(ψ), std::move(ŷ));
             },
             "x"_a, "y"_a, "Σ"_a);
-    if constexpr (requires { &T::eval_grad_ψ; })
+    if constexpr (requires { &T::eval_augmented_lagrangian_gradient; })
         cls.def(
-            "eval_grad_ψ",
+            "eval_augmented_lagrangian_gradient",
             [](const T &p, crvec x, crvec y, crvec Σ) {
-                vec grad_ψ(p.get_n()), work_n(p.get_n()), work_m(p.get_m());
-                p.eval_grad_ψ(x, y, Σ, grad_ψ, work_n, work_m);
+                vec grad_ψ(p.get_num_variables()), work_n(p.get_num_variables()), work_m(p.get_num_constraints());
+                p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ, work_n, work_m);
                 return grad_ψ;
             },
             "x"_a, "y"_a, "Σ"_a);
-    if constexpr (requires { &T::eval_ψ_grad_ψ; })
+    if constexpr (requires { &T::eval_augmented_lagrangian_and_gradient; })
         cls.def(
-            "eval_ψ_grad_ψ",
+            "eval_augmented_lagrangian_and_gradient",
             [](const T &p, crvec x, crvec y, crvec Σ) {
-                vec grad_ψ(p.get_n()), work_n(p.get_n()), work_m(p.get_m());
-                auto ψ = p.eval_ψ_grad_ψ(x, y, Σ, grad_ψ, work_n, work_m);
+                vec grad_ψ(p.get_num_variables()), work_n(p.get_num_variables()), work_m(p.get_num_constraints());
+                auto ψ = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ, work_n, work_m);
                 return std::make_tuple(std::move(ψ), std::move(grad_ψ));
             },
             "x"_a, "y"_a, "Σ"_a);
-    if constexpr (requires { &T::eval_jac_g; })
+    if constexpr (requires { &T::eval_constraints_jacobian; })
         cls.def(
-            "eval_jac_g",
+            "eval_constraints_jacobian",
             [&](const T &p, crvec x) {
-                return cvt_matrix(p.get_jac_g_sparsity(),
-                                  [&](rvec values) { return p.eval_jac_g(x, values); });
+                return cvt_matrix(p.get_constraints_jacobian_sparsity(),
+                                  [&](rvec values) { return p.eval_constraints_jacobian(x, values); });
             },
             "x"_a, "Returns the Jacobian of the constraints and its symmetry.");
-    if constexpr (requires { &T::eval_hess_L; })
+    if constexpr (requires { &T::eval_lagrangian_hessian; })
         cls.def(
-            "eval_hess_L",
+            "eval_lagrangian_hessian",
             [&](const T &p, crvec x, crvec y, real_t scale) {
-                return cvt_matrix(p.get_hess_L_sparsity(),
-                                  [&](rvec values) { return p.eval_hess_L(x, y, scale, values); });
+                return cvt_matrix(p.get_lagrangian_hessian_sparsity(),
+                                  [&](rvec values) { return p.eval_lagrangian_hessian(x, y, scale, values); });
             },
             "x"_a, "y"_a, "scale"_a = 1.,
             "Returns the Hessian of the Lagrangian and its symmetry.");
-    if constexpr (requires { &T::eval_hess_ψ; })
+    if constexpr (requires { &T::eval_augmented_lagrangian_hessian; })
         cls.def(
-            "eval_hess_ψ",
+            "eval_augmented_lagrangian_hessian",
             [&](const T &p, crvec x, crvec y, crvec Σ, real_t scale) {
-                return cvt_matrix(p.get_hess_ψ_sparsity(), [&](rvec values) {
-                    return p.eval_hess_ψ(x, y, Σ, scale, values);
+                return cvt_matrix(p.get_augmented_lagrangian_hessian_sparsity(), [&](rvec values) {
+                    return p.eval_augmented_lagrangian_hessian(x, y, Σ, scale, values);
                 });
             },
             "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.,
@@ -386,7 +386,7 @@ void register_problems(py::module_ &m) {
         m, "BoxConstrProblem", "C++ documentation: :cpp:class:`alpaqa::BoxConstrProblem`");
     default_copy_methods(box_constr_problem);
     box_constr_problem //
-        .def(py::init<length_t, length_t>(), "n"_a, "m"_a,
+        .def(py::init<length_t, length_t>(), "num_variables"_a, "num_constraints"_a,
              ":param n: Number of unknowns\n"
              ":param m: Number of constraints")
         .def(py::pickle(
@@ -404,11 +404,11 @@ void register_problems(py::module_ &m) {
                     py::cast<index_t>(t[3]),
                 };
             }))
-        .def_property_readonly("n", &BoxConstrProblem::get_n,
+        .def_property_readonly("num_variables", &BoxConstrProblem::get_num_variables,
                                "Number of decision variables, dimension of :math:`x`")
-        .def_property_readonly("m", &BoxConstrProblem::get_m,
+        .def_property_readonly("num_constraints", &BoxConstrProblem::get_num_constraints,
                                "Number of general constraints, dimension of :math:`g(x)`")
-        .def("resize", &BoxConstrProblem::resize, "n"_a, "m"_a)
+        .def("resize", &BoxConstrProblem::resize, "num_variables"_a, "num_constraints"_a)
         .def_readwrite("C", &BoxConstrProblem::C, "Box constraints on :math:`x`")
         .def_readwrite("D", &BoxConstrProblem::D, "Box constraints on :math:`g(x)`")
         .def_readwrite("l1_reg", &BoxConstrProblem::l1_reg,
@@ -417,14 +417,14 @@ void register_problems(py::module_ &m) {
         .def_readwrite("penalty_alm_split", &BoxConstrProblem::penalty_alm_split,
                        py::return_value_policy::reference_internal,
                        "Index between quadratic penalty and augmented Lagrangian constraints")
-        .def("eval_proj_diff_g", &BoxConstrProblem::eval_proj_diff_g, "z"_a, "e"_a)
-        .def("eval_proj_multipliers", &BoxConstrProblem::eval_proj_multipliers, "y"_a, "M"_a)
-        .def("eval_prox_grad_step", &BoxConstrProblem::eval_prox_grad_step, "γ"_a, "x"_a,
+        .def("eval_projecting_difference_constraints", &BoxConstrProblem::eval_projecting_difference_constraints, "z"_a, "e"_a)
+        .def("eval_projection_multipliers", &BoxConstrProblem::eval_projection_multipliers, "y"_a, "M"_a)
+        .def("eval_proximal_gradient_step", &BoxConstrProblem::eval_proximal_gradient_step, "γ"_a, "x"_a,
              "grad_ψ"_a, "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &BoxConstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a)
-        .def("get_box_C", &BoxConstrProblem::get_box_C)
-        .def("get_box_D", &BoxConstrProblem::get_box_D);
+        .def("get_box_variables", &BoxConstrProblem::get_box_variables)
+        .def("get_box_general_constraints", &BoxConstrProblem::get_box_general_constraints);
     problem_constr_proj_methods(box_constr_problem);
 
     using UnconstrProblem = alpaqa::UnconstrProblem<config_t>;
@@ -432,7 +432,7 @@ void register_problems(py::module_ &m) {
         m, "UnconstrProblem", "C++ documentation: :cpp:class:`alpaqa::UnconstrProblem`");
     default_copy_methods(unconstr_problem);
     unconstr_problem //
-        .def(py::init<length_t>(), "n"_a,
+        .def(py::init<length_t>(), "num_variables"_a,
              ":param n: Number of unknowns")
         .def(py::pickle(
             [](const UnconstrProblem &self) { // __getstate__
@@ -443,18 +443,18 @@ void register_problems(py::module_ &m) {
                     throw std::runtime_error("Invalid state!");
                 return UnconstrProblem{py::cast<length_t>(t[0])};
             }))
-        .def_property_readonly("n", &UnconstrProblem::get_n,
+        .def_property_readonly("num_variables", &UnconstrProblem::get_num_variables,
                                "Number of decision variables, dimension of :math:`x`")
-        .def_property_readonly("m", &UnconstrProblem::get_m,
+        .def_property_readonly("num_constraints", &UnconstrProblem::get_num_constraints,
                                "Number of general constraints, dimension of :math:`g(x)`")
-        .def("resize", &UnconstrProblem::resize, "n"_a)
-        .def("eval_g", &UnconstrProblem::eval_g, "x"_a, "g"_a)
-        .def("eval_grad_g_prod", &UnconstrProblem::eval_grad_g_prod, "x"_a, "y"_a, "grad_gxy"_a)
-        .def("eval_jac_g", &UnconstrProblem::eval_jac_g, "x"_a, "J_values"_a)
+        .def("resize", &UnconstrProblem::resize, "num_variables"_a)
+        .def("eval_constraints", &UnconstrProblem::eval_constraints, "x"_a, "g"_a)
+        .def("eval_constraints_gradient_product", &UnconstrProblem::eval_constraints_gradient_product, "x"_a, "y"_a, "grad_gxy"_a)
+        .def("eval_constraints_jacobian", &UnconstrProblem::eval_constraints_jacobian, "x"_a, "J_values"_a)
         .def("eval_grad_gi", &UnconstrProblem::eval_grad_gi, "x"_a, "i"_a, "grad_gi"_a)
-        .def("eval_proj_diff_g", &UnconstrProblem::eval_proj_diff_g, "z"_a, "e"_a)
-        .def("eval_proj_multipliers", &UnconstrProblem::eval_proj_multipliers, "y"_a, "M"_a)
-        .def("eval_prox_grad_step", &UnconstrProblem::eval_prox_grad_step, "γ"_a, "x"_a, "grad_ψ"_a,
+        .def("eval_projecting_difference_constraints", &UnconstrProblem::eval_projecting_difference_constraints, "z"_a, "e"_a)
+        .def("eval_projection_multipliers", &UnconstrProblem::eval_projection_multipliers, "y"_a, "M"_a)
+        .def("eval_proximal_gradient_step", &UnconstrProblem::eval_proximal_gradient_step, "γ"_a, "x"_a, "grad_ψ"_a,
              "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &UnconstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a);
@@ -467,50 +467,50 @@ void register_problems(py::module_ &m) {
         PyProblem(py::object o) : o{std::move(o)} {}
 
         // clang-format off
-        void eval_proj_diff_g(crvec z, rvec e) const { py::gil_scoped_acquire gil; o.attr("eval_proj_diff_g")(z, e); }
-        void eval_proj_multipliers(rvec y, real_t M) const { py::gil_scoped_acquire gil; o.attr("eval_proj_multipliers")(y, M); }
-        real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_prox_grad_step")(γ, x, grad_ψ, x̂, p)); }
+        void eval_projecting_difference_constraints(crvec z, rvec e) const { py::gil_scoped_acquire gil; o.attr("eval_projecting_difference_constraints")(z, e); }
+        void eval_projection_multipliers(rvec y, real_t M) const { py::gil_scoped_acquire gil; o.attr("eval_projection_multipliers")(y, M); }
+        real_t eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_proximal_gradient_step")(γ, x, grad_ψ, x̂, p)); }
         index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const { py::gil_scoped_acquire gil; return py::cast<index_t>(o.attr("eval_inactive_indices_res_lna")(γ, x, grad_ψ, J)); }
-        real_t eval_f(crvec x) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_f")(x)); }
-        void eval_grad_f(crvec x, rvec grad_fx) const { py::gil_scoped_acquire gil; o.attr("eval_grad_f")(x, grad_fx); }
-        void eval_g(crvec x, rvec gx) const { py::gil_scoped_acquire gil; o.attr("eval_g")(x, gx); }
-        void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const { py::gil_scoped_acquire gil; o.attr("eval_grad_g_prod")(x, y, grad_gxy); }
+        real_t eval_objective(crvec x) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_objective")(x)); }
+        void eval_objective_gradient(crvec x, rvec grad_fx) const { py::gil_scoped_acquire gil; o.attr("eval_objective_gradient")(x, grad_fx); }
+        void eval_constraints(crvec x, rvec gx) const { py::gil_scoped_acquire gil; o.attr("eval_constraints")(x, gx); }
+        void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const { py::gil_scoped_acquire gil; o.attr("eval_constraints_gradient_product")(x, y, grad_gxy); }
         void eval_grad_gi(crvec x, index_t i, rvec grad_gi) const { py::gil_scoped_acquire gil; o.attr("eval_grad_gi")(x, i, grad_gi); }
-        void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const { py::gil_scoped_acquire gil; o.attr("eval_hess_L_prod")(x, y, scale, v, Hv); }
-        // void eval_hess_L(crvec x, crvec y, rmat H) const { py::gil_scoped_acquire gil; o.attr("eval_hess_L")(x, y, H); } // TODO
-        void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const { py::gil_scoped_acquire gil; o.attr("eval_hess_ψ_prod")(x, y, Σ, scale, v, Hv); }
-        // void eval_hess_ψ(crvec x, crvec y, crvec Σ, rmat H) const { py::gil_scoped_acquire gil; o.attr("eval_hess_ψ")(x, y, Σ, H); } // TODO
-        real_t eval_f_grad_f(crvec x, rvec grad_fx) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_f_grad_f")(x, grad_fx)); }
-        real_t eval_f_g(crvec x, rvec g) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_f_g")(x, g)); }
-        void eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const { py::gil_scoped_acquire gil; o.attr("eval_grad_f_grad_g_prod")(x, y, grad_f, grad_gxy); }
-        void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const { py::gil_scoped_acquire gil; o.attr("eval_grad_L")(x, y, grad_L, work_n); }
-        real_t eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_ψ")(x, y, Σ, ŷ)); }
-        void eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; o.attr("eval_grad_ψ")(x, y, Σ, grad_ψ, work_n, work_m); }
-        real_t eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_ψ_grad_ψ")(x, y, Σ, grad_ψ, work_n, work_m)); }
+        void eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const { py::gil_scoped_acquire gil; o.attr("eval_lagrangian_hessian_product")(x, y, scale, v, Hv); }
+        // void eval_lagrangian_hessian(crvec x, crvec y, rmat H) const { py::gil_scoped_acquire gil; o.attr("eval_lagrangian_hessian")(x, y, H); } // TODO
+        void eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const { py::gil_scoped_acquire gil; o.attr("eval_augmented_lagrangian_hessian_product")(x, y, Σ, scale, v, Hv); }
+        // void eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, rmat H) const { py::gil_scoped_acquire gil; o.attr("eval_augmented_lagrangian_hessian")(x, y, Σ, H); } // TODO
+        real_t eval_objective_and_gradient(crvec x, rvec grad_fx) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_objective_and_gradient")(x, grad_fx)); }
+        real_t eval_objective_and_constraints(crvec x, rvec g) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_objective_and_constraints")(x, g)); }
+        void eval_objective_gradient_and_constraints_gradient_product(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const { py::gil_scoped_acquire gil; o.attr("eval_objective_gradient_and_constraints_gradient_product")(x, y, grad_f, grad_gxy); }
+        void eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L, rvec work_n) const { py::gil_scoped_acquire gil; o.attr("eval_lagrangian_gradient")(x, y, grad_L, work_n); }
+        real_t eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_augmented_lagrangian")(x, y, Σ, ŷ)); }
+        void eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; o.attr("eval_augmented_lagrangian_gradient")(x, y, Σ, grad_ψ, work_n, work_m); }
+        real_t eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_augmented_lagrangian_and_gradient")(x, y, Σ, grad_ψ, work_n, work_m)); }
         void check() const { py::gil_scoped_acquire gil; if (auto ch = py::getattr(o, "check", py::none()); !ch.is_none()) ch(); }
         std::string get_name() const { py::gil_scoped_acquire gil; return py::str(o); }
-        const Box &get_box_C() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; C = py::cast<Box>(o.attr("get_box_C")()); return C; }
-        const Box &get_box_D() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; D = py::cast<Box>(o.attr("get_box_D")()); return D; }
+        const Box &get_box_variables() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; C = py::cast<Box>(o.attr("get_box_variables")()); return C; }
+        const Box &get_box_general_constraints() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; D = py::cast<Box>(o.attr("get_box_general_constraints")()); return D; }
 
         [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_inactive_indices_res_lna") && (!py::hasattr(o, "provides_eval_inactive_indices_res_lna") || py::cast<bool>(o.attr("provides_eval_inactive_indices_res_lna")())); }
         [[nodiscard]] bool provides_eval_grad_gi() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_gi") && (!py::hasattr(o, "provides_eval_grad_gi") || py::cast<bool>(o.attr("provides_eval_grad_gi")())); }
-        [[nodiscard]] bool provides_eval_hess_L_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_L_prod") && (!py::hasattr(o, "provides_eval_hess_L_prod") || py::cast<bool>(o.attr("provides_eval_hess_L_prod")())); }
-        // [[nodiscard]] bool provides_eval_hess_L() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_L") && (!py::hasattr(o, "provides_eval_hess_L") || py::cast<bool>(o.attr("provides_eval_hess_L")())); }
-        [[nodiscard]] bool provides_eval_hess_ψ_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_ψ_prod") && (!py::hasattr(o, "provides_eval_hess_ψ_prod") || py::cast<bool>(o.attr("provides_eval_hess_ψ_prod")())); }
-        // [[nodiscard]] bool provides_eval_hess_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_hess_ψ") && (!py::hasattr(o, "provides_eval_hess_ψ") || py::cast<bool>(o.attr("provides_eval_hess_ψ")())); }
-        [[nodiscard]] bool provides_eval_f_grad_f() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_f_grad_f") && (!py::hasattr(o, "provides_eval_f_grad_f") || py::cast<bool>(o.attr("provides_eval_f_grad_f")())); }
-        [[nodiscard]] bool provides_eval_f_g() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_f_g") && (!py::hasattr(o, "provides_eval_f_g") || py::cast<bool>(o.attr("provides_eval_f_g")())); }
-        [[nodiscard]] bool provides_eval_grad_f_grad_g_prod() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_f_grad_g_prod") && (!py::hasattr(o, "provides_eval_grad_f_grad_g_prod") || py::cast<bool>(o.attr("provides_eval_grad_f_grad_g_prod")())); }
-        [[nodiscard]] bool provides_eval_grad_L() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_L") && (!py::hasattr(o, "provides_eval_grad_L") || py::cast<bool>(o.attr("provides_eval_grad_L")())); }
-        [[nodiscard]] bool provides_eval_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ") && (!py::hasattr(o, "provides_eval_ψ") || py::cast<bool>(o.attr("provides_eval_ψ")())); }
-        [[nodiscard]] bool provides_eval_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_ψ") && (!py::hasattr(o, "provides_eval_grad_ψ") || py::cast<bool>(o.attr("provides_eval_grad_ψ")())); }
-        [[nodiscard]] bool provides_eval_ψ_grad_ψ() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_ψ_grad_ψ") && (!py::hasattr(o, "provides_eval_ψ_grad_ψ") || py::cast<bool>(o.attr("provides_eval_ψ_grad_ψ")())); }
+        [[nodiscard]] bool provides_eval_lagrangian_hessian_product() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_lagrangian_hessian_product") && (!py::hasattr(o, "provides_eval_lagrangian_hessian_product") || py::cast<bool>(o.attr("provides_eval_lagrangian_hessian_product")())); }
+        // [[nodiscard]] bool provides_eval_lagrangian_hessian() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_lagrangian_hessian") && (!py::hasattr(o, "provides_eval_lagrangian_hessian") || py::cast<bool>(o.attr("provides_eval_lagrangian_hessian")())); }
+        [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian_product() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian_hessian_product") && (!py::hasattr(o, "provides_eval_augmented_lagrangian_hessian_product") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian_hessian_product")())); }
+        // [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian_hessian") && (!py::hasattr(o, "provides_eval_augmented_lagrangian_hessian") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian_hessian")())); }
+        [[nodiscard]] bool provides_eval_objective_and_gradient() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_objective_and_gradient") && (!py::hasattr(o, "provides_eval_objective_and_gradient") || py::cast<bool>(o.attr("provides_eval_objective_and_gradient")())); }
+        [[nodiscard]] bool provides_eval_objective_and_constraints() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_objective_and_constraints") && (!py::hasattr(o, "provides_eval_objective_and_constraints") || py::cast<bool>(o.attr("provides_eval_objective_and_constraints")())); }
+        [[nodiscard]] bool provides_eval_objective_gradient_and_constraints_gradient_product() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_objective_gradient_and_constraints_gradient_product") && (!py::hasattr(o, "provides_eval_objective_gradient_and_constraints_gradient_product") || py::cast<bool>(o.attr("provides_eval_objective_gradient_and_constraints_gradient_product")())); }
+        [[nodiscard]] bool provides_eval_lagrangian_gradient() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_lagrangian_gradient") && (!py::hasattr(o, "provides_eval_lagrangian_gradient") || py::cast<bool>(o.attr("provides_eval_lagrangian_gradient")())); }
+        [[nodiscard]] bool provides_eval_augmented_lagrangian() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian") && (!py::hasattr(o, "provides_eval_augmented_lagrangian") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian")())); }
+        [[nodiscard]] bool provides_eval_augmented_lagrangian_gradient() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian_gradient") && (!py::hasattr(o, "provides_eval_augmented_lagrangian_gradient") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian_gradient")())); }
+        [[nodiscard]] bool provides_eval_augmented_lagrangian_and_gradient() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian_and_gradient") && (!py::hasattr(o, "provides_eval_augmented_lagrangian_and_gradient") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian_and_gradient")())); }
         [[nodiscard]] bool provides_check() const { py::gil_scoped_acquire gil; return py::hasattr(o, "check") && (!py::hasattr(o, "provides_check") || py::cast<bool>(o.attr("provides_check")())); }
-        [[nodiscard]] bool provides_get_box_C() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_C") && (!py::hasattr(o, "provides_get_box_C") || py::cast<bool>(o.attr("provides_get_box_C")())); }
-        [[nodiscard]] bool provides_get_box_D() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_D") && (!py::hasattr(o, "provides_get_box_D") || py::cast<bool>(o.attr("provides_get_box_D")())); }
+        [[nodiscard]] bool provides_get_box_variables() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_variables") && (!py::hasattr(o, "provides_get_box_variables") || py::cast<bool>(o.attr("provides_get_box_variables")())); }
+        [[nodiscard]] bool provides_get_box_general_constraints() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_general_constraints") && (!py::hasattr(o, "provides_get_box_general_constraints") || py::cast<bool>(o.attr("provides_get_box_general_constraints")())); }
 
-        length_t get_n() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("n")); }
-        length_t get_m() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("m")); }
+        length_t get_num_variables() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("num_variables")); }
+        length_t get_num_constraints() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("num_constraints")); }
         // clang-format on
 
         // To keep the references to the boxes alive

@@ -45,7 +45,7 @@ sol, stats = solver(cnt.problem, {"tolerance": 1e-10})
 
 # %% Print the results
 
-final_f = problem.eval_f(sol)
+final_f = problem.eval_objective(sol)
 print()
 pprint(stats)
 print()

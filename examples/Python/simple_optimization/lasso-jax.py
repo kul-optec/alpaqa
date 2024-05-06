@@ -47,10 +47,10 @@ class LassoProblem(pa.BoxConstrProblem):
         self.jit_loss = jit(loss)
         self.jit_grad_loss = jit(grad(loss))
 
-    def eval_f(self, x):  # Cost function
+    def eval_objective(self, x):  # Cost function
         return self.jit_loss(x)
 
-    def eval_grad_f(self, x, grad_f):  # Gradient of the cost
+    def eval_objective_gradient(self, x, grad_f):  # Gradient of the cost
         grad_f[:] = self.jit_grad_loss(x)
 
 
@@ -74,7 +74,7 @@ sol, stats = solver(cnt.problem, {"tolerance": 1e-10})
 
 # %% Print the results
 
-final_f = prob.eval_f(sol)
+final_f = prob.eval_objective(sol)
 print()
 pprint(stats)
 print()

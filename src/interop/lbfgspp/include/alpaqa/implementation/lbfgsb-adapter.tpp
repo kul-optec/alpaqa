@@ -34,9 +34,9 @@ auto LBFGSBSolver<Conf>::operator()(
         max_time = std::min(max_time, *opts.max_time);
     Stats s;
 
-    const auto n  = problem.get_n();
-    const auto m  = problem.get_m();
-    const auto &C = problem.get_box_C();
+    const auto n  = problem.get_num_variables();
+    const auto m  = problem.get_num_constraints();
+    const auto &C = problem.get_box_variables();
 
     vec work_n(n), work_m(m);
     vec x_solve = x;
@@ -51,7 +51,7 @@ auto LBFGSBSolver<Conf>::operator()(
     ::LBFGSpp::LBFGSBSolver<real_t> solver{effective_params};
 
     // Evaluate cost and its gradient, checking for termination
-    auto eval_f_grad_f = [&](crvec xk, rvec grad) {
+    auto eval_objective_and_gradient = [&](crvec xk, rvec grad) {
         // Check user interrupt
         if (stop_signal.stop_requested()) {
             x_solve = xk;
@@ -64,11 +64,11 @@ auto LBFGSBSolver<Conf>::operator()(
             if (opts.always_overwrite_results)
                 x_solve = xk;
             else
-                s.final_ψ = problem.eval_ψ(xk, y, Σ, work_m);
+                s.final_ψ = problem.eval_augmented_lagrangian(xk, y, Σ, work_m);
             throw BreakException{SolverStatus::MaxTime};
         }
         // Perform the actual evaluation
-        const auto ψx = problem.eval_ψ_grad_ψ(xk, y, Σ, grad, work_n, work_m);
+        const auto ψx = problem.eval_augmented_lagrangian_and_gradient(xk, y, Σ, grad, work_n, work_m);
         // Check that the function value is finite
         if (!std::isfinite(ψx)) {
             if (opts.always_overwrite_results)
@@ -81,7 +81,7 @@ auto LBFGSBSolver<Conf>::operator()(
 
     // Solve problem
     try {
-        s.iterations = solver.minimize(eval_f_grad_f, x_solve, s.final_ψ,
+        s.iterations = solver.minimize(eval_objective_and_gradient, x_solve, s.final_ψ,
                                        C.lowerbound, C.upperbound);
         s.status     = SolverStatus::Converged;
         if (static_cast<int>(s.iterations) == effective_params.max_iterations)
@@ -102,7 +102,7 @@ auto LBFGSBSolver<Conf>::operator()(
         s.status == SolverStatus::Interrupted ||
         opts.always_overwrite_results) {
         auto &ŷ   = work_m;
-        s.final_ψ = problem.eval_ψ(x_solve, y, Σ, ŷ);
+        s.final_ψ = problem.eval_augmented_lagrangian(x_solve, y, Σ, ŷ);
         if (err_z.size() > 0)
             err_z = (ŷ - y).cwiseQuotient(Σ);
         x = x_solve;

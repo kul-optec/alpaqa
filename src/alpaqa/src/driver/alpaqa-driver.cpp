@@ -222,8 +222,8 @@ auto get_problem_path(const char *const *argv) {
 void print_problem_description(std::ostream &os, LoadedProblem &problem,
                                bool show_funcs) {
     os << "Loaded problem \"" << problem.name << "\"\n"
-       << "Number of variables:   " << problem.problem.get_n() << "\n"
-       << "Number of constraints: " << problem.problem.get_m() << "\n";
+       << "Number of variables:   " << problem.problem.get_num_variables() << "\n"
+       << "Number of constraints: " << problem.problem.get_num_constraints() << "\n";
     if (problem.nnz_jac_g)
         os << "Nonzeros in Jg:  " << *problem.nnz_jac_g << "\n";
     if (problem.nnz_hess_L)
@@ -384,7 +384,7 @@ int main(int argc, const char *argv[]) try {
     auto solver_results = solver->run(problem, os);
 
     // Compute more statistics
-    real_t f     = problem.problem.eval_f(solver_results.solution);
+    real_t f     = problem.problem.eval_objective(solver_results.solution);
     auto kkt_err = alpaqa::compute_kkt_error(
         problem.problem, solver_results.solution, solver_results.multipliers);
     BenchmarkResults results{

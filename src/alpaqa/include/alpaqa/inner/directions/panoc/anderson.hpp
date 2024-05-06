@@ -51,7 +51,7 @@ struct AndersonDirection {
                     [[maybe_unused]] crvec x_0, [[maybe_unused]] crvec x̂_0,
                     [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
-        anderson.resize(problem.get_n());
+        anderson.resize(problem.get_num_variables());
         anderson.initialize(x̂_0, p_0);
     }
 

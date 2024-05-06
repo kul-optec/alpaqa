@@ -29,7 +29,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
     if (params.max_iter == 0)
         return {.status = SolverStatus::MaxIter};
 
-    auto m = p.get_m();
+    auto m = p.get_num_constraints();
     if (m == 0) { // No general constraints, only box constraints
         Stats s;
         vec Σ_curr(0), error(0);
@@ -83,7 +83,7 @@ ALMSolver<InnerSolverT>::operator()(const Problem &p, rvec x, rvec y,
     real_t ε = params.initial_tolerance;
 
     for (unsigned i = 0; i < params.max_iter; ++i) {
-        p.eval_proj_multipliers(y, params.max_multiplier);
+        p.eval_projection_multipliers(y, params.max_multiplier);
         bool out_of_iter = i + 1 == params.max_iter;
 
         auto time_elapsed   = std::chrono::steady_clock::now() - start_time;

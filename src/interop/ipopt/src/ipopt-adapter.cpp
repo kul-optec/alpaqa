@@ -9,8 +9,8 @@ IpoptAdapter::IpoptAdapter(const Problem &problem) : problem(problem) {}
 
 bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
                                 Index &nnz_h_lag, IndexStyleEnum &index_style) {
-    n         = static_cast<Index>(problem.get_n());
-    m         = static_cast<Index>(problem.get_m());
+    n         = static_cast<Index>(problem.get_num_variables());
+    m         = static_cast<Index>(problem.get_num_constraints());
     nnz_jac_g = static_cast<Index>(cvt_sparsity_jac_g.get_sparsity().nnz());
     nnz_h_lag = static_cast<Index>(cvt_sparsity_hess_L.get_sparsity().nnz());
     auto jac_g_index  = cvt_sparsity_jac_g.get_sparsity().first_index;
@@ -31,10 +31,10 @@ bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
 
 bool IpoptAdapter::get_bounds_info(Index n, Number *x_l, Number *x_u, Index m,
                                    Number *g_l, Number *g_u) {
-    const auto &C = problem.get_box_C();
+    const auto &C = problem.get_box_variables();
     mvec{x_l, n}  = C.lowerbound;
     mvec{x_u, n}  = C.upperbound;
-    const auto &D = problem.get_box_D();
+    const auto &D = problem.get_box_general_constraints();
     mvec{g_l, m}  = D.lowerbound;
     mvec{g_u, m}  = D.upperbound;
     return true;
@@ -73,19 +73,19 @@ bool IpoptAdapter::get_starting_point(Index n, bool init_x, Number *x,
 
 bool IpoptAdapter::eval_f(Index n, const Number *x, [[maybe_unused]] bool new_x,
                           Number &obj_value) {
-    obj_value = problem.eval_f(cmvec{x, n});
+    obj_value = problem.eval_objective(cmvec{x, n});
     return true;
 }
 
 bool IpoptAdapter::eval_grad_f(Index n, const Number *x,
                                [[maybe_unused]] bool new_x, Number *grad_f) {
-    problem.eval_grad_f(cmvec{x, n}, mvec{grad_f, n});
+    problem.eval_objective_gradient(cmvec{x, n}, mvec{grad_f, n});
     return true;
 }
 
 bool IpoptAdapter::eval_g(Index n, const Number *x, [[maybe_unused]] bool new_x,
                           Index m, Number *g) {
-    problem.eval_g(cmvec{x, n}, mvec{g, m});
+    problem.eval_constraints(cmvec{x, n}, mvec{g, m});
     return true;
 }
 
@@ -93,14 +93,14 @@ bool IpoptAdapter::eval_jac_g(Index n, const Number *x,
                               [[maybe_unused]] bool new_x,
                               [[maybe_unused]] Index m, Index nele_jac,
                               Index *iRow, Index *jCol, Number *values) {
-    if (!problem.provides_eval_jac_g())
-        throw std::logic_error("Missing required function: eval_jac_g");
+    if (!problem.provides_eval_constraints_jacobian())
+        throw std::logic_error("Missing required function: eval_constraints_jacobian");
     if (values == nullptr) { // Initialize sparsity
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        auto eval_jac_g = [&](rvec v) { problem.eval_jac_g(cmvec{x, n}, v); };
-        cvt_sparsity_jac_g.convert_values(eval_jac_g, mvec{values, nele_jac});
+        auto eval_constraints_jacobian = [&](rvec v) { problem.eval_constraints_jacobian(cmvec{x, n}, v); };
+        cvt_sparsity_jac_g.convert_values(eval_constraints_jacobian, mvec{values, nele_jac});
     }
     return true;
 }
@@ -109,16 +109,16 @@ bool IpoptAdapter::eval_h(Index n, const Number *x, [[maybe_unused]] bool new_x,
                           Number obj_factor, Index m, const Number *lambda,
                           [[maybe_unused]] bool new_lambda, Index nele_hess,
                           Index *iRow, Index *jCol, Number *values) {
-    if (!problem.provides_eval_hess_L())
-        throw std::logic_error("Missing required function: eval_hess_L");
+    if (!problem.provides_eval_lagrangian_hessian())
+        throw std::logic_error("Missing required function: eval_lagrangian_hessian");
     if (values == nullptr) { // Initialize sparsity
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        auto eval_hess_L = [&](rvec v) {
-            problem.eval_hess_L(cmvec{x, n}, cmvec{lambda, m}, obj_factor, v);
+        auto eval_lagrangian_hessian = [&](rvec v) {
+            problem.eval_lagrangian_hessian(cmvec{x, n}, cmvec{lambda, m}, obj_factor, v);
         };
-        cvt_sparsity_hess_L.convert_values(eval_hess_L,
+        cvt_sparsity_hess_L.convert_values(eval_lagrangian_hessian,
                                            mvec{values, nele_hess});
     }
     return true;

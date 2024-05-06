@@ -30,36 +30,36 @@ class UnconstrProblem {
     UnconstrProblem &operator=(UnconstrProblem &&) noexcept = default;
 
     /// Number of decision variables, @ref n
-    length_t get_n() const { return n; }
+    length_t get_num_variables() const { return n; }
     /// Number of constraints (always zero)
-    length_t get_m() const { return 0; }
+    length_t get_num_constraints() const { return 0; }
 
     /// No-op, no constraints.
-    /// @see @ref TypeErasedProblem::eval_g
-    void eval_g(crvec, rvec) const {}
+    /// @see @ref TypeErasedProblem::eval_constraints
+    void eval_constraints(crvec, rvec) const {}
     /// Constraint gradient is always zero.
-    /// @see @ref TypeErasedProblem::eval_grad_g_prod
-    void eval_grad_g_prod(crvec, crvec, rvec grad) const { grad.setZero(); }
+    /// @see @ref TypeErasedProblem::eval_constraints_gradient_product
+    void eval_constraints_gradient_product(crvec, crvec, rvec grad) const { grad.setZero(); }
     /// Constraint Jacobian is always empty.
-    /// @see @ref TypeErasedProblem::eval_jac_g
-    void eval_jac_g(crvec, rvec) const {}
+    /// @see @ref TypeErasedProblem::eval_constraints_jacobian
+    void eval_constraints_jacobian(crvec, rvec) const {}
     /// Constraint gradient is always zero.
     /// @see @ref TypeErasedProblem::eval_grad_gi
     void eval_grad_gi(crvec, index_t, rvec grad_gi) const { grad_gi.setZero(); }
 
     /// No proximal mapping, just a forward (gradient) step.
-    /// @see @ref TypeErasedProblem::eval_prox_grad_step
-    real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
+    /// @see @ref TypeErasedProblem::eval_proximal_gradient_step
+    real_t eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
         p = -γ * grad_ψ;
         x̂ = x + p;
         return 0;
     }
 
-    /// @see @ref TypeErasedProblem::eval_proj_diff_g
-    void eval_proj_diff_g(crvec, rvec) const {}
+    /// @see @ref TypeErasedProblem::eval_projecting_difference_constraints
+    void eval_projecting_difference_constraints(crvec, rvec) const {}
 
-    /// @see @ref TypeErasedProblem::eval_proj_multipliers
-    void eval_proj_multipliers(rvec, real_t) const {}
+    /// @see @ref TypeErasedProblem::eval_projection_multipliers
+    void eval_projection_multipliers(rvec, real_t) const {}
 
     /// @see @ref TypeErasedProblem::eval_inactive_indices_res_lna
     index_t eval_inactive_indices_res_lna(real_t, crvec, crvec, rindexvec J) const {

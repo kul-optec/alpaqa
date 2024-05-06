@@ -166,12 +166,12 @@ struct prox_step_fn {
  *              @f$ h(\hat x) @f$.
  * @ingroup grp_Functions
  *
- * This function can be used to implement the @ref TypeErasedProblem::eval_prox_grad_step function:
+ * This function can be used to implement the @ref TypeErasedProblem::eval_proximal_gradient_step function:
  *
  * ```cpp
  * struct Problem {
  *     alpaqa::functions::NuclearNorm<config_t> h{λ, rows, cols};
- *     real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
+ *     real_t eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
  *         return alpaqa::prox_step(h, x, grad_ψ, x̂, p, γ, -γ);
  *     }
  * };

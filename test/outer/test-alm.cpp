@@ -280,9 +280,9 @@ TYPED_TEST_P(PANOC, multipleshooting8D) {
 
     ALMSolver solver{almparam, PANOCSolver{panocparam, Direction{accelparam}}};
 
-    vec x(op.get_n());
+    vec x(op.get_num_variables());
     x.fill(5);
-    vec y(op.get_m());
+    vec y(op.get_num_constraints());
     y.fill(1);
 
     auto begin = std::chrono::high_resolution_clock::now();
@@ -292,9 +292,9 @@ TYPED_TEST_P(PANOC, multipleshooting8D) {
     std::cout << "u = " << x.topRows(nu).transpose() << std::endl;
     std::cout << "x = " << x.bottomRows(nx).transpose() << std::endl;
     std::cout << "y = " << y.transpose() << std::endl;
-    std::cout << "f(x) = " << op.eval_f(x) << std::endl;
-    auto gx = vec(op.get_m());
-    op.eval_g(x, gx);
+    std::cout << "f(x) = " << op.eval_objective(x) << std::endl;
+    auto gx = vec(op.get_num_constraints());
+    op.eval_constraints(x, gx);
     std::cout << "g(x) = " << gx.transpose() << std::endl;
     std::cout << "Inner: " << stats.inner.iterations
               << ", Outer: " << stats.outer_iterations << std::endl;
@@ -315,7 +315,7 @@ TYPED_TEST_P(PANOC, multipleshooting8D) {
         0.177012, 1.14043;
     EXPECT_THAT(xs, EigenAlmostEqual(xs_ref, ε));
 
-    vec y_ref(op.get_m());
+    vec y_ref(op.get_num_constraints());
     y_ref << 6.2595, -22.9787, -0.6222, 33.8783, -2.2632, 32.0098, 3.54023,
         22.8086;
     EXPECT_THAT(y, EigenAlmostEqual(y_ref, ε));
@@ -365,9 +365,9 @@ TYPED_TEST_P(PANTR, multipleshooting8D) {
 
     ALMSolver solver{almparam, Solver{innerparam, Direction{{}, dirparam}}};
 
-    vec x(op.get_n());
+    vec x(op.get_num_variables());
     x.fill(5);
-    vec y(op.get_m());
+    vec y(op.get_num_constraints());
     y.fill(1);
 
     auto begin = std::chrono::high_resolution_clock::now();
@@ -377,9 +377,9 @@ TYPED_TEST_P(PANTR, multipleshooting8D) {
     std::cout << "u = " << x.topRows(nu).transpose() << std::endl;
     std::cout << "x = " << x.bottomRows(nx).transpose() << std::endl;
     std::cout << "y = " << y.transpose() << std::endl;
-    std::cout << "f(x) = " << op.eval_f(x) << std::endl;
-    auto gx = vec(op.get_m());
-    op.eval_g(x, gx);
+    std::cout << "f(x) = " << op.eval_objective(x) << std::endl;
+    auto gx = vec(op.get_num_constraints());
+    op.eval_constraints(x, gx);
     std::cout << "g(x) = " << gx.transpose() << std::endl;
     std::cout << "Inner: " << stats.inner.iterations
               << ", Outer: " << stats.outer_iterations << std::endl;
@@ -400,7 +400,7 @@ TYPED_TEST_P(PANTR, multipleshooting8D) {
         0.177012, 1.14043;
     EXPECT_THAT(xs, EigenAlmostEqual(xs_ref, ε));
 
-    vec y_ref(op.get_m());
+    vec y_ref(op.get_num_constraints());
     y_ref << 6.2595, -22.9787, -0.6222, 33.8783, -2.2632, 32.0098, 3.54023,
         22.8086;
     EXPECT_THAT(y, EigenAlmostEqual(y_ref, ε));

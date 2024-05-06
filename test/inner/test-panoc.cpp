@@ -61,20 +61,20 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     auto op = build_test_problem();
     auto p  = alpaqa::TypeErasedProblem<config_t>{op};
 
-    auto f = [&p](crvec x) { return p.eval_f(x); };
+    auto f = [&p](crvec x) { return p.eval_objective(x); };
     auto g = [&p](crvec x) {
-        vec g(p.get_m());
-        p.eval_g(x, g);
+        vec g(p.get_num_constraints());
+        p.eval_constraints(x, g);
         return g;
     };
     auto grad_f = [&p](crvec x) {
-        vec grad(p.get_n());
-        p.eval_grad_f(x, grad);
+        vec grad(p.get_num_variables());
+        p.eval_objective_gradient(x, grad);
         return grad;
     };
     auto grad_g_y = [&](crvec x, crvec y) {
-        vec grad(p.get_n());
-        p.eval_grad_g_prod(x, y, grad);
+        vec grad(p.get_num_variables());
+        p.eval_constraints_gradient_product(x, y, grad);
         return grad;
     };
 
@@ -111,27 +111,27 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     EXPECT_THAT(grad_ψ, EigenAlmostEqual(grad_ψ_fd, grad_ψ(0) * 5e-7));
 
     // calc_ψ_grad_ψ
-    real_t ψ_res = p.eval_ψ_grad_ψ(x, y, Σ, grad_ψ_res, work_n, work_m);
+    real_t ψ_res = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
     EXPECT_DOUBLE_EQ(ψ_res, ψ);
     EXPECT_DOUBLE_EQ(ψ_res, ψ2);
 
     // calc_ψ
     work_m.setZero();
-    ψ_res = p.eval_ψ(x, y, Σ, work_m);
+    ψ_res = p.eval_augmented_lagrangian(x, y, Σ, work_m);
     EXPECT_THAT(work_m, EigenAlmostEqual(ŷ, 1e-10));
     EXPECT_DOUBLE_EQ(ψ_res, ψ);
 
     // calc_grad_ψ_from_ŷ
     grad_ψ_res.setZero();
-    p.eval_grad_L(x, work_m, grad_ψ_res, work_n);
+    p.eval_lagrangian_gradient(x, work_m, grad_ψ_res, work_n);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
 
     // calc_grad_ψ
     grad_ψ_res.setZero();
     work_n.setZero();
     work_m.setZero();
-    p.eval_grad_ψ(x, y, Σ, grad_ψ_res, work_n, work_m);
+    p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
 
     // calc_err_z
@@ -213,26 +213,26 @@ TEST(PANOC, hessian) {
     auto op = build_test_problem2();
     auto p  = alpaqa::TypeErasedProblem<config_t>{op};
 
-    auto f = [&p](crvec x) { return p.eval_f(x); };
+    auto f = [&p](crvec x) { return p.eval_objective(x); };
     auto g = [&p](crvec x) {
-        vec g(p.get_m());
-        p.eval_g(x, g);
+        vec g(p.get_num_constraints());
+        p.eval_constraints(x, g);
         return g;
     };
     auto g1     = [&g](crvec x) { return g(x)(0); };
     auto g2     = [&g](crvec x) { return g(x)(1); };
     auto grad_f = [&p](crvec x) {
-        vec grad(p.get_n());
-        p.eval_grad_f(x, grad);
+        vec grad(p.get_num_variables());
+        p.eval_objective_gradient(x, grad);
         return grad;
     };
     auto grad_g_y = [&](crvec x, crvec y) {
-        vec grad(p.get_n());
-        p.eval_grad_g_prod(x, y, grad);
+        vec grad(p.get_num_variables());
+        p.eval_constraints_gradient_product(x, y, grad);
         return grad;
     };
     auto grad_gi = [&p](crvec x, unsigned i) {
-        vec grad(p.get_n());
+        vec grad(p.get_num_variables());
         p.eval_grad_gi(x, i, grad);
         return grad;
     };
@@ -290,27 +290,27 @@ TEST(PANOC, hessian) {
                 EigenAlmostEqual(grad_ψ_fd, std::abs(grad_ψ(0)) * 5e-6));
 
     // calc_ψ_grad_ψ
-    real_t ψ_res = p.eval_ψ_grad_ψ(x, y, Σ, grad_ψ_res, work_n, work_m);
+    real_t ψ_res = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
     EXPECT_DOUBLE_EQ(ψ_res, ψ);
     EXPECT_DOUBLE_EQ(ψ_res, ψ2);
 
     // calc_ψ
     work_m.setZero();
-    ψ_res = p.eval_ψ(x, y, Σ, work_m);
+    ψ_res = p.eval_augmented_lagrangian(x, y, Σ, work_m);
     EXPECT_THAT(work_m, EigenAlmostEqual(ŷ, 1e-10));
     EXPECT_DOUBLE_EQ(ψ_res, ψ);
 
     // calc_grad_ψ_from_ŷ
     grad_ψ_res.setZero();
-    p.eval_grad_L(x, work_m, grad_ψ_res, work_n);
+    p.eval_lagrangian_gradient(x, work_m, grad_ψ_res, work_n);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
 
     // calc_grad_ψ
     grad_ψ_res.setZero();
     work_n.setZero();
     work_m.setZero();
-    p.eval_grad_ψ(x, y, Σ, grad_ψ_res, work_n, work_m);
+    p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
 
     // calc_err_z
@@ -327,7 +327,7 @@ TEST(PANOC, hessian) {
     vec hess_f1_fd = pa_ref::finite_diff(grad_fi(0), x);
     vec hess_f2_fd = pa_ref::finite_diff(grad_fi(1), x);
     mat H_res(2, 2);
-    p.eval_hess_L(x, vec::Zero(2), 1, H_res.reshaped());
+    p.eval_lagrangian_hessian(x, vec::Zero(2), 1, H_res.reshaped());
     EXPECT_THAT(H_res.col(0),
                 EigenAlmostEqual(hess_f1_fd, std::abs(H_res.col(0)(0)) * 5e-6));
     EXPECT_THAT(H_res.col(1),
@@ -340,7 +340,7 @@ TEST(PANOC, hessian) {
             return grad_L_res(i);
         };
     };
-    p.eval_hess_L(x, y, 1, H_res.reshaped());
+    p.eval_lagrangian_hessian(x, y, 1, H_res.reshaped());
     vec hess_L1_fd = pa_ref::finite_diff(grad_Li(0), x);
     vec hess_L2_fd = pa_ref::finite_diff(grad_Li(1), x);
     EXPECT_THAT(H_res.col(0),
@@ -352,7 +352,7 @@ TEST(PANOC, hessian) {
     auto grad_ψi = [&](unsigned i) {
         return [&, i](crvec x) {
             vec grad_ψ_res(2);
-            p.eval_grad_ψ(x, y, Σ, grad_ψ_res, work_n, work_m);
+            p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
             return grad_ψ_res(i);
         };
     };

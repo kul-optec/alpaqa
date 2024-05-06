@@ -258,7 +258,7 @@ specified, the default initial values for :code:`x0` and :code:`y0` are zero.
     print(stats["status"])
     print(f"Solution:      {x_sol}")
     print(f"Multipliers:   {y_sol}")
-    print(f"Cost:          {problem.eval_f(x_sol):.5f}")
+    print(f"Cost:          {problem.eval_objective(x_sol):.5f}")
 
 This will print something similar to:
 

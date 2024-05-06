@@ -33,65 +33,65 @@ struct ProblemVTable : util::BasicVTable {
 
     // Required
     required_function_t<void(crvec z, rvec e) const>
-        eval_proj_diff_g;
+        eval_projecting_difference_constraints;
     required_function_t<void(rvec y, real_t M) const>
-        eval_proj_multipliers;
+        eval_projection_multipliers;
     required_function_t<real_t(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const>
-        eval_prox_grad_step;
+        eval_proximal_gradient_step;
     required_function_t<real_t(crvec x) const>
-        eval_f;
+        eval_objective;
     required_function_t<void(crvec x, rvec grad_fx) const>
-        eval_grad_f;
+        eval_objective_gradient;
     required_function_t<void(crvec x, rvec gx) const>
-        eval_g;
+        eval_constraints;
     required_function_t<void(crvec x, crvec y, rvec grad_gxy) const>
-        eval_grad_g_prod;
+        eval_constraints_gradient_product;
     optional_function_t<index_t(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const>
         eval_inactive_indices_res_lna = default_eval_inactive_indices_res_lna;
 
     // Second order
     optional_function_t<void(crvec x, rvec J_values) const>
-        eval_jac_g = default_eval_jac_g;
+        eval_constraints_jacobian = default_eval_constraints_jacobian;
     optional_function_t<Sparsity() const>
-        get_jac_g_sparsity = default_get_jac_g_sparsity;
+        get_constraints_jacobian_sparsity = default_get_constraints_jacobian_sparsity;
     optional_function_t<void(crvec x, index_t i, rvec grad_gi) const>
-        eval_grad_gi = default_eval_grad_gi;
+        eval_grad_gi = default_eval_grad_gi; // TODO: remove
     optional_function_t<void(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const>
-        eval_hess_L_prod = default_eval_hess_L_prod;
+        eval_lagrangian_hessian_product = default_eval_lagrangian_hessian_product;
     optional_function_t<void(crvec x, crvec y, real_t scale, rvec H_values) const>
-        eval_hess_L = default_eval_hess_L;
+        eval_lagrangian_hessian = default_eval_lagrangian_hessian;
     optional_function_t<Sparsity() const>
-        get_hess_L_sparsity = default_get_hess_L_sparsity;
+        get_lagrangian_hessian_sparsity = default_get_lagrangian_hessian_sparsity;
     optional_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const>
-        eval_hess_ψ_prod = default_eval_hess_ψ_prod;
+        eval_augmented_lagrangian_hessian_product = default_eval_augmented_lagrangian_hessian_product;
     optional_function_t<void(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const>
-        eval_hess_ψ = default_eval_hess_ψ;
+        eval_augmented_lagrangian_hessian = default_eval_augmented_lagrangian_hessian;
     optional_function_t<Sparsity() const>
-        get_hess_ψ_sparsity = default_get_hess_ψ_sparsity;
+        get_augmented_lagrangian_hessian_sparsity = default_get_augmented_lagrangian_hessian_sparsity;
 
     // Combined evaluations
     optional_function_t<real_t(crvec x, rvec grad_fx) const>
-        eval_f_grad_f = default_eval_f_grad_f;
+        eval_objective_and_gradient = default_eval_objective_and_gradient;
     optional_function_t<real_t(crvec x, rvec g) const>
-        eval_f_g = default_eval_f_g;
+        eval_objective_and_constraints = default_eval_objective_and_constraints;
     optional_function_t<void(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const>
-        eval_grad_f_grad_g_prod = default_eval_grad_f_grad_g_prod;
+        eval_objective_gradient_and_constraints_gradient_product = default_eval_objective_gradient_and_constraints_gradient_product;
 
     // Lagrangian and augmented lagrangian evaluations
     optional_function_t<void(crvec x, crvec y, rvec grad_L, rvec work_n) const>
-        eval_grad_L = default_eval_grad_L;
+        eval_lagrangian_gradient = default_eval_lagrangian_gradient;
     optional_function_t<real_t(crvec x, crvec y, crvec Σ, rvec ŷ) const>
-        eval_ψ = default_eval_ψ;
+        eval_augmented_lagrangian = default_eval_augmented_lagrangian;
     optional_function_t<void(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const>
-        eval_grad_ψ = default_eval_grad_ψ;
+        eval_augmented_lagrangian_gradient = default_eval_augmented_lagrangian_gradient;
     optional_function_t<real_t(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const>
-        eval_ψ_grad_ψ = default_eval_ψ_grad_ψ;
+        eval_augmented_lagrangian_and_gradient = default_eval_augmented_lagrangian_and_gradient;
 
     // Constraint sets
     optional_function_t<const Box &() const>
-        get_box_C = default_get_box_C;
+        get_box_variables = default_get_box_variables;
     optional_function_t<const Box &() const>
-        get_box_D = default_get_box_D;
+        get_box_general_constraints = default_get_box_general_constraints;
 
     // Check
     optional_function_t<void() const>
@@ -106,41 +106,55 @@ struct ProblemVTable : util::BasicVTable {
     ALPAQA_EXPORT static index_t default_eval_inactive_indices_res_lna(const void *, real_t, crvec,
                                                                        crvec, rindexvec,
                                                                        const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_jac_g(const void *, crvec, rvec, const ProblemVTable &);
-    ALPAQA_EXPORT static Sparsity default_get_jac_g_sparsity(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT static void default_eval_constraints_jacobian(const void *, crvec, rvec,
+                                                                const ProblemVTable &);
+    ALPAQA_EXPORT static Sparsity default_get_constraints_jacobian_sparsity(const void *,
+                                                                            const ProblemVTable &);
     ALPAQA_EXPORT static void default_eval_grad_gi(const void *, crvec, index_t, rvec,
                                                    const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_hess_L_prod(const void *, crvec, crvec, real_t, crvec,
-                                                       rvec, const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_hess_L(const void *, crvec, crvec, real_t, rvec,
-                                                  const ProblemVTable &);
-    ALPAQA_EXPORT static Sparsity default_get_hess_L_sparsity(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_hess_ψ_prod(const void *self, crvec x, crvec y, crvec,
-                                                       real_t scale, crvec v, rvec Hv,
-                                                       const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void default_eval_hess_ψ(const void *self, crvec x, crvec y, crvec,
-                                                  real_t scale, rvec H_values,
-                                                  const ProblemVTable &vtable);
-    ALPAQA_EXPORT static Sparsity default_get_hess_ψ_sparsity(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static real_t default_eval_f_grad_f(const void *self, crvec x, rvec grad_fx,
+    ALPAQA_EXPORT static void default_eval_lagrangian_hessian_product(const void *, crvec, crvec,
+                                                                      real_t, crvec, rvec,
+                                                                      const ProblemVTable &);
+    ALPAQA_EXPORT static void default_eval_lagrangian_hessian(const void *, crvec, crvec, real_t,
+                                                              rvec, const ProblemVTable &);
+    ALPAQA_EXPORT static Sparsity default_get_lagrangian_hessian_sparsity(const void *,
+                                                                          const ProblemVTable &);
+    ALPAQA_EXPORT static void
+    default_eval_augmented_lagrangian_hessian_product(const void *self, crvec x, crvec y, crvec,
+                                                      real_t scale, crvec v, rvec Hv,
                                                       const ProblemVTable &vtable);
-    ALPAQA_EXPORT static real_t default_eval_f_g(const void *self, crvec x, rvec g,
-                                                 const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void default_eval_grad_f_grad_g_prod(const void *self, crvec x, crvec y,
-                                                              rvec grad_f, rvec grad_gxy,
-                                                              const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void default_eval_grad_L(const void *self, crvec x, crvec y, rvec grad_L,
-                                                  rvec work_n, const ProblemVTable &vtable);
-    ALPAQA_EXPORT static real_t default_eval_ψ(const void *self, crvec x, crvec y, crvec Σ, rvec ŷ,
+    ALPAQA_EXPORT static void
+    default_eval_augmented_lagrangian_hessian(const void *self, crvec x, crvec y, crvec,
+                                              real_t scale, rvec H_values,
+                                              const ProblemVTable &vtable);
+    ALPAQA_EXPORT static Sparsity
+    default_get_augmented_lagrangian_hessian_sparsity(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT static real_t default_eval_objective_and_gradient(const void *self, crvec x,
+                                                                    rvec grad_fx,
+                                                                    const ProblemVTable &vtable);
+    ALPAQA_EXPORT static real_t default_eval_objective_and_constraints(const void *self, crvec x,
+                                                                       rvec g,
+                                                                       const ProblemVTable &vtable);
+    ALPAQA_EXPORT static void default_eval_objective_gradient_and_constraints_gradient_product(
+        const void *self, crvec x, crvec y, rvec grad_f, rvec grad_gxy,
+        const ProblemVTable &vtable);
+    ALPAQA_EXPORT static void default_eval_lagrangian_gradient(const void *self, crvec x, crvec y,
+                                                               rvec grad_L, rvec work_n,
+                                                               const ProblemVTable &vtable);
+    ALPAQA_EXPORT static real_t default_eval_augmented_lagrangian(const void *self, crvec x,
+                                                                  crvec y, crvec Σ, rvec ŷ,
+                                                                  const ProblemVTable &vtable);
+    ALPAQA_EXPORT static void
+    default_eval_augmented_lagrangian_gradient(const void *self, crvec x, crvec y, crvec Σ,
+                                               rvec grad_ψ, rvec work_n, rvec work_m,
                                                const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void default_eval_grad_ψ(const void *self, crvec x, crvec y, crvec Σ,
-                                                  rvec grad_ψ, rvec work_n, rvec work_m,
-                                                  const ProblemVTable &vtable);
-    ALPAQA_EXPORT static real_t default_eval_ψ_grad_ψ(const void *self, crvec x, crvec y, crvec Σ,
-                                                      rvec grad_ψ, rvec work_n, rvec work_m,
-                                                      const ProblemVTable &vtable);
-    ALPAQA_EXPORT static const Box &default_get_box_C(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static const Box &default_get_box_D(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT static real_t
+    default_eval_augmented_lagrangian_and_gradient(const void *self, crvec x, crvec y, crvec Σ,
+                                                   rvec grad_ψ, rvec work_n, rvec work_m,
+                                                   const ProblemVTable &vtable);
+    ALPAQA_EXPORT static const Box &default_get_box_variables(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT static const Box &default_get_box_general_constraints(const void *,
+                                                                        const ProblemVTable &);
     ALPAQA_EXPORT static void default_check(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static std::string default_get_name(const void *, const ProblemVTable &);
 
@@ -153,43 +167,43 @@ struct ProblemVTable : util::BasicVTable {
         // Initialize all methods
 
         // Required
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_proj_diff_g);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_proj_multipliers);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_prox_grad_step);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_f);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_grad_f);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_g);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_grad_g_prod);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_projecting_difference_constraints);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_projection_multipliers);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_proximal_gradient_step);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_objective);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_objective_gradient);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_constraints);
+        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_constraints_gradient_product);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_inactive_indices_res_lna, p);
         // Second order
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_jac_g, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_jac_g_sparsity, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_constraints_jacobian, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_constraints_jacobian_sparsity, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_grad_gi, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_L_prod, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_L, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_hess_L_sparsity, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_ψ_prod, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_hess_ψ, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_hess_ψ_sparsity, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_hessian_product, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_hessian, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_lagrangian_hessian_sparsity, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_hessian_product, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_hessian, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_augmented_lagrangian_hessian_sparsity, p);
         // Combined evaluations
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_f_grad_f, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_f_g, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_grad_f_grad_g_prod, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_gradient, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_constraints, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_gradient_and_constraints_gradient_product, p);
         // Lagrangian and augmented lagrangian evaluations
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_grad_L, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_ψ, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_grad_ψ, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_ψ_grad_ψ, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_gradient, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_gradient, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_and_gradient, p);
         // Constraint set
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_C, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_D, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_variables, p);
+        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_general_constraints, p);
         // Check
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, check, p);
         ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_name, p);
 
         // Dimensions
-        vtable.n = p.get_n();
-        vtable.m = p.get_m();
+        vtable.n = p.get_num_variables();
+        vtable.m = p.get_num_constraints();
     }
     ProblemVTable() = default;
 };
@@ -243,10 +257,10 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
 
     /// **[Required]**
     /// Number of decision variables.
-    [[nodiscard]] length_t get_n() const;
+    [[nodiscard]] length_t get_num_variables() const;
     /// **[Required]**
     /// Number of constraints.
-    [[nodiscard]] length_t get_m() const;
+    [[nodiscard]] length_t get_num_constraints() const;
 
     /// @}
 
@@ -257,21 +271,21 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// Function that evaluates the cost, @f$ f(x) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
-    [[nodiscard]] real_t eval_f(crvec x) const;
+    [[nodiscard]] real_t eval_objective(crvec x) const;
     /// **[Required]**
     /// Function that evaluates the gradient of the cost, @f$ \nabla f(x) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
     /// @param  [out] grad_fx
     ///         Gradient of cost function @f$ \nabla f(x) \in \R^n @f$
-    void eval_grad_f(crvec x, rvec grad_fx) const;
+    void eval_objective_gradient(crvec x, rvec grad_fx) const;
     /// **[Required]**
     /// Function that evaluates the constraints, @f$ g(x) @f$
     /// @param  [in] x
     ///         Decision variable @f$ x \in \R^n @f$
     /// @param  [out] gx
     ///         Value of the constraints @f$ g(x) \in \R^m @f$
-    void eval_g(crvec x, rvec gx) const;
+    void eval_constraints(crvec x, rvec gx) const;
     /// **[Required]**
     /// Function that evaluates the gradient of the constraints times a vector,
     /// @f$ \nabla g(x)\,y = \tp{\jac_g(x)}y @f$
@@ -282,7 +296,7 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// @param  [out] grad_gxy
     ///         Gradient of the constraints
     ///         @f$ \nabla g(x)\,y \in \R^n @f$
-    void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const;
+    void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const;
 
     /// @}
 
@@ -298,7 +312,7 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         The difference relative to its projection,
     ///         @f$ e = z - \Pi_D(z) \in \R^m @f$
     /// @note   @p z and @p e can refer to the same vector.
-    void eval_proj_diff_g(crvec z, rvec e) const;
+    void eval_projecting_difference_constraints(crvec z, rvec e) const;
     /// **[Required]**
     /// Function that projects the Lagrange multipliers for ALM.
     /// @param  [inout] y
@@ -306,7 +320,7 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// @param  [in] M
     ///         The radius/size of the set @f$ Y @f$.
     ///         See @ref ALMParams::max_multiplier.
-    void eval_proj_multipliers(rvec y, real_t M) const;
+    void eval_projection_multipliers(rvec y, real_t M) const;
     /// **[Required]**
     /// Function that computes a proximal gradient step.
     /// @param  [in] γ
@@ -325,7 +339,7 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         @f$ h(\hat x) @f$.
     /// @note   The vector @f$ p @f$ is often used in stopping criteria, so its
     ///         numerical accuracy is more important than that of @f$ \hat x @f$.
-    real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const;
+    real_t eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const;
     /// **[Optional]**
     /// Function that computes the inactive indices @f$ \mathcal J(x) @f$ for
     /// the evaluation of the linear Newton approximation of the residual, as in
@@ -355,11 +369,11 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// **[Optional]**
     /// Get the rectangular constraint set of the decision variables,
     /// @f$ x \in C @f$.
-    [[nodiscard]] const Box &get_box_C() const;
+    [[nodiscard]] const Box &get_box_variables() const;
     /// **[Optional]**
     /// Get the rectangular constraint set of the general constraint function,
     /// @f$ g(x) \in D @f$.
-    [[nodiscard]] const Box &get_box_D() const;
+    [[nodiscard]] const Box &get_box_general_constraints() const;
 
     /// @}
 
@@ -376,13 +390,13 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         @f$ \jac_g(x) \in \R^{m\times n} @f$
     ///
     /// Required for second-order solvers only.
-    void eval_jac_g(crvec x, rvec J_values) const;
+    void eval_constraints_jacobian(crvec x, rvec J_values) const;
     /// **[Optional]**
     /// Function that returns (a view of) the sparsity pattern of the Jacobian
     /// of the constraints.
     ///
     /// Required for second-order solvers only.
-    [[nodiscard]] Sparsity get_jac_g_sparsity() const;
+    [[nodiscard]] Sparsity get_constraints_jacobian_sparsity() const;
     /// **[Optional]**
     /// Function that evaluates the gradient of one specific constraint,
     /// @f$ \nabla g_i(x) @f$
@@ -413,7 +427,7 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         @f$ \nabla_{xx}^2 L(x, y)\,v \in \R^{n} @f$
     ///
     /// Required for second-order solvers only.
-    void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const;
+    void eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const;
     /// **[Optional]**
     /// Function that evaluates the nonzero values of the Hessian of the
     /// Lagrangian, @f$ \nabla_{xx}^2L(x, y) @f$
@@ -428,13 +442,13 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         @f$ \nabla_{xx}^2 L(x, y) \in \R^{n\times n} @f$.
     ///
     /// Required for second-order solvers only.
-    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const;
+    void eval_lagrangian_hessian(crvec x, crvec y, real_t scale, rvec H_values) const;
     /// **[Optional]**
     /// Function that returns (a view of) the sparsity pattern of the Hessian of
     /// the Lagrangian.
     ///
     /// Required for second-order solvers only.
-    [[nodiscard]] Sparsity get_hess_L_sparsity() const;
+    [[nodiscard]] Sparsity get_lagrangian_hessian_sparsity() const;
     /// **[Optional]**
     /// Function that evaluates the Hessian of the augmented Lagrangian
     /// multiplied by a vector,
@@ -454,7 +468,8 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         @f$ \nabla_{xx}^2 L_\Sigma(x, y)\,v \in \R^{n} @f$
     ///
     /// Required for second-order solvers only.
-    void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const;
+    void eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale, crvec v,
+                                                   rvec Hv) const;
     /// **[Optional]**
     /// Function that evaluates the nonzero values of the Hessian of the
     /// augmented Lagrangian, @f$ \nabla_{xx}^2L_\Sigma(x, y) @f$
@@ -471,13 +486,14 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///         @f$ \nabla_{xx}^2 L_\Sigma(x, y) \in \R^{n\times n} @f$
     ///
     /// Required for second-order solvers only.
-    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const;
+    void eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale,
+                                           rvec H_values) const;
     /// **[Optional]**
     /// Function that returns (a view of) the sparsity pattern of the Hessian of
     /// the augmented Lagrangian.
     ///
     /// Required for second-order solvers only.
-    [[nodiscard]] Sparsity get_hess_ψ_sparsity() const;
+    [[nodiscard]] Sparsity get_augmented_lagrangian_hessian_sparsity() const;
 
     /// @}
 
@@ -486,21 +502,22 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
 
     /// **[Optional]**
     /// Evaluate both @f$ f(x) @f$ and its gradient, @f$ \nabla f(x) @f$.
-    /// @default_impl   ProblemVTable::default_eval_f_grad_f
-    real_t eval_f_grad_f(crvec x, rvec grad_fx) const;
+    /// @default_impl   ProblemVTable::default_eval_objective_and_gradient
+    real_t eval_objective_and_gradient(crvec x, rvec grad_fx) const;
     /// **[Optional]**
     /// Evaluate both @f$ f(x) @f$ and @f$ g(x) @f$.
-    /// @default_impl   ProblemVTable::default_eval_f_g
-    real_t eval_f_g(crvec x, rvec g) const;
+    /// @default_impl   ProblemVTable::default_eval_objective_and_constraints
+    real_t eval_objective_and_constraints(crvec x, rvec g) const;
     /// **[Optional]**
     /// Evaluate both @f$ \nabla f(x) @f$ and @f$ \nabla g(x)\,y @f$.
-    /// @default_impl   ProblemVTable::default_eval_grad_f_grad_g_prod
-    void eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const;
+    /// @default_impl   ProblemVTable::default_eval_objective_gradient_and_constraints_gradient_product
+    void eval_objective_gradient_and_constraints_gradient_product(crvec x, crvec y, rvec grad_f,
+                                                                  rvec grad_gxy) const;
     /// **[Optional]**
     /// Evaluate the gradient of the Lagrangian
     /// @f$ \nabla_x L(x, y) = \nabla f(x) + \nabla g(x)\,y @f$
-    /// @default_impl   ProblemVTable::default_eval_grad_L
-    void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const;
+    /// @default_impl   ProblemVTable::default_eval_lagrangian_gradient
+    void eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L, rvec work_n) const;
 
     /// @}
 
@@ -514,35 +531,37 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     ///   \text{dist}_\Sigma^2\left(g(x) + \Sigma^{-1}y,\;D\right) @f]
     /// @f[ \hat y = \Sigma\, \left(g(x) + \Sigma^{-1}y - \Pi_D\left(g(x)
     ///   + \Sigma^{-1}y\right)\right) @f]
-    /// @default_impl   ProblemVTable::default_eval_ψ
-    [[nodiscard]] real_t eval_ψ(crvec x, ///< [in]  Decision variable @f$ x @f$
-                                crvec y, ///< [in]  Lagrange multipliers @f$ y @f$
-                                crvec Σ, ///< [in]  Penalty weights @f$ \Sigma @f$
-                                rvec ŷ   ///< [out] @f$ \hat y @f$
+    /// @default_impl   ProblemVTable::default_eval_augmented_lagrangian
+    [[nodiscard]] real_t
+    eval_augmented_lagrangian(crvec x, ///< [in]  Decision variable @f$ x @f$
+                              crvec y, ///< [in]  Lagrange multipliers @f$ y @f$
+                              crvec Σ, ///< [in]  Penalty weights @f$ \Sigma @f$
+                              rvec ŷ   ///< [out] @f$ \hat y @f$
     ) const;
     /// **[Optional]**
     /// Calculate the gradient ∇ψ(x).
     /// @f[ \nabla \psi(x) = \nabla f(x) + \nabla g(x)\,\hat y(x) @f]
-    /// @default_impl   ProblemVTable::default_eval_grad_ψ
-    void eval_grad_ψ(crvec x,     ///< [in]  Decision variable @f$ x @f$
-                     crvec y,     ///< [in]  Lagrange multipliers @f$ y @f$
-                     crvec Σ,     ///< [in]  Penalty weights @f$ \Sigma @f$
-                     rvec grad_ψ, ///< [out] @f$ \nabla \psi(x) @f$
-                     rvec work_n, ///<       Dimension @f$ n @f$
-                     rvec work_m  ///<       Dimension @f$ m @f$
+    /// @default_impl   ProblemVTable::default_eval_augmented_lagrangian_gradient
+    void eval_augmented_lagrangian_gradient(crvec x,     ///< [in]  Decision variable @f$ x @f$
+                                            crvec y,     ///< [in]  Lagrange multipliers @f$ y @f$
+                                            crvec Σ,     ///< [in]  Penalty weights @f$ \Sigma @f$
+                                            rvec grad_ψ, ///< [out] @f$ \nabla \psi(x) @f$
+                                            rvec work_n, ///<       Dimension @f$ n @f$
+                                            rvec work_m  ///<       Dimension @f$ m @f$
     ) const;
     /// **[Optional]**
     /// Calculate both ψ(x) and its gradient ∇ψ(x).
     /// @f[ \psi(x) = f(x) + \tfrac{1}{2}
     /// \text{dist}_\Sigma^2\left(g(x) + \Sigma^{-1}y,\;D\right) @f]
     /// @f[ \nabla \psi(x) = \nabla f(x) + \nabla g(x)\,\hat y(x) @f]
-    /// @default_impl   ProblemVTable::default_eval_ψ_grad_ψ
-    [[nodiscard]] real_t eval_ψ_grad_ψ(crvec x,     ///< [in]  Decision variable @f$ x @f$
-                                       crvec y,     ///< [in]  Lagrange multipliers @f$ y @f$
-                                       crvec Σ,     ///< [in]  Penalty weights @f$ \Sigma @f$
-                                       rvec grad_ψ, ///< [out] @f$ \nabla \psi(x) @f$
-                                       rvec work_n, ///<       Dimension @f$ n @f$
-                                       rvec work_m  ///<       Dimension @f$ m @f$
+    /// @default_impl   ProblemVTable::default_eval_augmented_lagrangian_and_gradient
+    [[nodiscard]] real_t
+    eval_augmented_lagrangian_and_gradient(crvec x,     ///< [in]  Decision variable @f$ x @f$
+                                           crvec y,     ///< [in]  Lagrange multipliers @f$ y @f$
+                                           crvec Σ,     ///< [in]  Penalty weights @f$ \Sigma @f$
+                                           rvec grad_ψ, ///< [out] @f$ \nabla \psi(x) @f$
+                                           rvec work_n, ///<       Dimension @f$ n @f$
+                                           rvec work_m  ///<       Dimension @f$ m @f$
     ) const;
 
     /// @}
@@ -575,14 +594,15 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
         return vtable.eval_inactive_indices_res_lna != vtable.default_eval_inactive_indices_res_lna;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref eval_jac_g.
-    [[nodiscard]] bool provides_eval_jac_g() const {
-        return vtable.eval_jac_g != vtable.default_eval_jac_g;
+    /// @ref eval_constraints_jacobian.
+    [[nodiscard]] bool provides_eval_constraints_jacobian() const {
+        return vtable.eval_constraints_jacobian != vtable.default_eval_constraints_jacobian;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_jac_g_sparsity.
-    [[nodiscard]] bool provides_get_jac_g_sparsity() const {
-        return vtable.get_jac_g_sparsity != vtable.default_get_jac_g_sparsity;
+    /// @ref get_constraints_jacobian_sparsity.
+    [[nodiscard]] bool provides_get_constraints_jacobian_sparsity() const {
+        return vtable.get_constraints_jacobian_sparsity !=
+               vtable.default_get_constraints_jacobian_sparsity;
     }
     /// Returns true if the problem provides an implementation of
     /// @ref eval_grad_gi.
@@ -590,77 +610,88 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
         return vtable.eval_grad_gi != vtable.default_eval_grad_gi;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref eval_hess_L_prod.
-    [[nodiscard]] bool provides_eval_hess_L_prod() const {
-        return vtable.eval_hess_L_prod != vtable.default_eval_hess_L_prod;
+    /// @ref eval_lagrangian_hessian_product.
+    [[nodiscard]] bool provides_eval_lagrangian_hessian_product() const {
+        return vtable.eval_lagrangian_hessian_product !=
+               vtable.default_eval_lagrangian_hessian_product;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref eval_hess_L.
-    [[nodiscard]] bool provides_eval_hess_L() const {
-        return vtable.eval_hess_L != vtable.default_eval_hess_L;
+    /// @ref eval_lagrangian_hessian.
+    [[nodiscard]] bool provides_eval_lagrangian_hessian() const {
+        return vtable.eval_lagrangian_hessian != vtable.default_eval_lagrangian_hessian;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_hess_L_sparsity.
-    [[nodiscard]] bool provides_get_hess_L_sparsity() const {
-        return vtable.get_hess_L_sparsity != vtable.default_get_hess_L_sparsity;
+    /// @ref get_lagrangian_hessian_sparsity.
+    [[nodiscard]] bool provides_get_lagrangian_hessian_sparsity() const {
+        return vtable.get_lagrangian_hessian_sparsity !=
+               vtable.default_get_lagrangian_hessian_sparsity;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref eval_hess_ψ_prod.
-    [[nodiscard]] bool provides_eval_hess_ψ_prod() const {
-        return vtable.eval_hess_ψ_prod != vtable.default_eval_hess_ψ_prod;
+    /// @ref eval_augmented_lagrangian_hessian_product.
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian_product() const {
+        return vtable.eval_augmented_lagrangian_hessian_product !=
+               vtable.default_eval_augmented_lagrangian_hessian_product;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref eval_hess_ψ.
-    [[nodiscard]] bool provides_eval_hess_ψ() const {
-        return vtable.eval_hess_ψ != vtable.default_eval_hess_ψ;
+    /// @ref eval_augmented_lagrangian_hessian.
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian() const {
+        return vtable.eval_augmented_lagrangian_hessian !=
+               vtable.default_eval_augmented_lagrangian_hessian;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_hess_ψ_sparsity.
-    [[nodiscard]] bool provides_get_hess_ψ_sparsity() const {
-        return vtable.get_hess_ψ_sparsity != vtable.default_get_hess_ψ_sparsity;
+    /// @ref get_augmented_lagrangian_hessian_sparsity.
+    [[nodiscard]] bool provides_get_augmented_lagrangian_hessian_sparsity() const {
+        return vtable.get_augmented_lagrangian_hessian_sparsity !=
+               vtable.default_get_augmented_lagrangian_hessian_sparsity;
     }
     /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_f_grad_f, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_f_grad_f() const {
-        return vtable.eval_f_grad_f != vtable.default_eval_f_grad_f;
+    /// @ref eval_objective_and_gradient, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_objective_and_gradient() const {
+        return vtable.eval_objective_and_gradient != vtable.default_eval_objective_and_gradient;
     }
     /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_f_g, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_f_g() const {
-        return vtable.eval_f_g != vtable.default_eval_f_g;
+    /// @ref eval_objective_and_constraints, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_objective_and_constraints() const {
+        return vtable.eval_objective_and_constraints !=
+               vtable.default_eval_objective_and_constraints;
     }
     /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_grad_f_grad_g_prod, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_grad_f_grad_g_prod() const {
-        return vtable.eval_grad_f_grad_g_prod != vtable.default_eval_grad_f_grad_g_prod;
+    /// @ref eval_objective_gradient_and_constraints_gradient_product, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_objective_gradient_and_constraints_gradient_product() const {
+        return vtable.eval_objective_gradient_and_constraints_gradient_product !=
+               vtable.default_eval_objective_gradient_and_constraints_gradient_product;
     }
     /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_grad_L, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_grad_L() const {
-        return vtable.eval_grad_L != vtable.default_eval_grad_L;
+    /// @ref eval_lagrangian_gradient, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_lagrangian_gradient() const {
+        return vtable.eval_lagrangian_gradient != vtable.default_eval_lagrangian_gradient;
     }
     /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_ψ, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_ψ() const { return vtable.eval_ψ != vtable.default_eval_ψ; }
-    /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_grad_ψ, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_grad_ψ() const {
-        return vtable.eval_grad_ψ != vtable.default_eval_grad_ψ;
+    /// @ref eval_augmented_lagrangian, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_augmented_lagrangian() const {
+        return vtable.eval_augmented_lagrangian != vtable.default_eval_augmented_lagrangian;
     }
     /// Returns true if the problem provides a specialized implementation of
-    /// @ref eval_ψ_grad_ψ, false if it uses the default implementation.
-    [[nodiscard]] bool provides_eval_ψ_grad_ψ() const {
-        return vtable.eval_ψ_grad_ψ != vtable.default_eval_ψ_grad_ψ;
+    /// @ref eval_augmented_lagrangian_gradient, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_gradient() const {
+        return vtable.eval_augmented_lagrangian_gradient !=
+               vtable.default_eval_augmented_lagrangian_gradient;
+    }
+    /// Returns true if the problem provides a specialized implementation of
+    /// @ref eval_augmented_lagrangian_and_gradient, false if it uses the default implementation.
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_and_gradient() const {
+        return vtable.eval_augmented_lagrangian_and_gradient !=
+               vtable.default_eval_augmented_lagrangian_and_gradient;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_box_C.
-    [[nodiscard]] bool provides_get_box_C() const {
-        return vtable.get_box_C != vtable.default_get_box_C;
+    /// @ref get_box_variables.
+    [[nodiscard]] bool provides_get_box_variables() const {
+        return vtable.get_box_variables != vtable.default_get_box_variables;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_box_D.
-    [[nodiscard]] bool provides_get_box_D() const {
-        return vtable.get_box_D != vtable.default_get_box_D;
+    /// @ref get_box_general_constraints.
+    [[nodiscard]] bool provides_get_box_general_constraints() const {
+        return vtable.get_box_general_constraints != vtable.default_get_box_general_constraints;
     }
     /// Returns true if the problem provides an implementation of @ref check.
     [[nodiscard]] bool provides_check() const { return vtable.check != vtable.default_check; }
@@ -674,13 +705,15 @@ class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator
     /// @name Querying available functions
     /// @{
 
-    /// Returns true if @ref eval_hess_ψ_prod can be called.
-    [[nodiscard]] bool supports_eval_hess_ψ_prod() const {
-        return provides_eval_hess_ψ_prod() || (vtable.m == 0 && provides_eval_hess_L_prod());
+    /// Returns true if @ref eval_augmented_lagrangian_hessian_product can be called.
+    [[nodiscard]] bool supports_eval_augmented_lagrangian_hessian_product() const {
+        return provides_eval_augmented_lagrangian_hessian_product() ||
+               (vtable.m == 0 && provides_eval_lagrangian_hessian_product());
     }
-    /// Returns true if @ref eval_hess_ψ can be called.
-    [[nodiscard]] bool supports_eval_hess_ψ() const {
-        return provides_eval_hess_ψ() || (vtable.m == 0 && provides_eval_hess_L());
+    /// Returns true if @ref eval_augmented_lagrangian_hessian can be called.
+    [[nodiscard]] bool supports_eval_augmented_lagrangian_hessian() const {
+        return provides_eval_augmented_lagrangian_hessian() ||
+               (vtable.m == 0 && provides_eval_lagrangian_hessian());
     }
 
     /// @}
@@ -725,133 +758,143 @@ explicit TypeErasedProblem(Tref &&d, Allocator alloc)
 #endif
 
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_n() const -> length_t {
+auto TypeErasedProblem<Conf, Allocator>::get_num_variables() const -> length_t {
     return vtable.n;
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_m() const -> length_t {
+auto TypeErasedProblem<Conf, Allocator>::get_num_constraints() const -> length_t {
     return vtable.m;
 }
 
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_proj_diff_g(crvec z, rvec e) const {
-    return call(vtable.eval_proj_diff_g, z, e);
+void TypeErasedProblem<Conf, Allocator>::eval_projecting_difference_constraints(crvec z,
+                                                                                rvec e) const {
+    return call(vtable.eval_projecting_difference_constraints, z, e);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_proj_multipliers(rvec y, real_t M) const {
-    return call(vtable.eval_proj_multipliers, y, M);
+void TypeErasedProblem<Conf, Allocator>::eval_projection_multipliers(rvec y, real_t M) const {
+    return call(vtable.eval_projection_multipliers, y, M);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ,
-                                                             rvec x̂, rvec p) const -> real_t {
-    return call(vtable.eval_prox_grad_step, γ, x, grad_ψ, x̂, p);
+auto TypeErasedProblem<Conf, Allocator>::eval_proximal_gradient_step(real_t γ, crvec x,
+                                                                     crvec grad_ψ, rvec x̂,
+                                                                     rvec p) const -> real_t {
+    return call(vtable.eval_proximal_gradient_step, γ, x, grad_ψ, x̂, p);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_inactive_indices_res_lna(real_t γ, crvec x,
-                                                                       crvec grad_ψ,
-                                                                       rindexvec J) const
-    -> index_t {
+auto TypeErasedProblem<Conf, Allocator>::eval_inactive_indices_res_lna(
+    real_t γ, crvec x, crvec grad_ψ, rindexvec J) const -> index_t {
     return call(vtable.eval_inactive_indices_res_lna, γ, x, grad_ψ, J);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_f(crvec x) const -> real_t {
-    return call(vtable.eval_f, x);
+auto TypeErasedProblem<Conf, Allocator>::eval_objective(crvec x) const -> real_t {
+    return call(vtable.eval_objective, x);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_grad_f(crvec x, rvec grad_fx) const {
-    return call(vtable.eval_grad_f, x, grad_fx);
+void TypeErasedProblem<Conf, Allocator>::eval_objective_gradient(crvec x, rvec grad_fx) const {
+    return call(vtable.eval_objective_gradient, x, grad_fx);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_g(crvec x, rvec gx) const {
-    return call(vtable.eval_g, x, gx);
+void TypeErasedProblem<Conf, Allocator>::eval_constraints(crvec x, rvec gx) const {
+    return call(vtable.eval_constraints, x, gx);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const {
-    return call(vtable.eval_grad_g_prod, x, y, grad_gxy);
+void TypeErasedProblem<Conf, Allocator>::eval_constraints_gradient_product(crvec x, crvec y,
+                                                                           rvec grad_gxy) const {
+    return call(vtable.eval_constraints_gradient_product, x, y, grad_gxy);
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const {
     return call(vtable.eval_grad_gi, x, i, grad_gi);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_jac_g(crvec x, rvec J_values) const {
-    return call(vtable.eval_jac_g, x, J_values);
+void TypeErasedProblem<Conf, Allocator>::eval_constraints_jacobian(crvec x, rvec J_values) const {
+    return call(vtable.eval_constraints_jacobian, x, J_values);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_jac_g_sparsity() const -> Sparsity {
-    return call(vtable.get_jac_g_sparsity);
+auto TypeErasedProblem<Conf, Allocator>::get_constraints_jacobian_sparsity() const -> Sparsity {
+    return call(vtable.get_constraints_jacobian_sparsity);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
-                                                          rvec Hv) const {
-    return call(vtable.eval_hess_L_prod, x, y, scale, v, Hv);
+void TypeErasedProblem<Conf, Allocator>::eval_lagrangian_hessian_product(crvec x, crvec y,
+                                                                         real_t scale, crvec v,
+                                                                         rvec Hv) const {
+    return call(vtable.eval_lagrangian_hessian_product, x, y, scale, v, Hv);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_hess_L(crvec x, crvec y, real_t scale,
-                                                     rvec H_values) const {
-    return call(vtable.eval_hess_L, x, y, scale, H_values);
+void TypeErasedProblem<Conf, Allocator>::eval_lagrangian_hessian(crvec x, crvec y, real_t scale,
+                                                                 rvec H_values) const {
+    return call(vtable.eval_lagrangian_hessian, x, y, scale, H_values);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_hess_L_sparsity() const -> Sparsity {
-    return call(vtable.get_hess_L_sparsity);
+auto TypeErasedProblem<Conf, Allocator>::get_lagrangian_hessian_sparsity() const -> Sparsity {
+    return call(vtable.get_lagrangian_hessian_sparsity);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
-                                                          crvec v, rvec Hv) const {
-    return call(vtable.eval_hess_ψ_prod, x, y, Σ, scale, v, Hv);
+void TypeErasedProblem<Conf, Allocator>::eval_augmented_lagrangian_hessian_product(
+    crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const {
+    return call(vtable.eval_augmented_lagrangian_hessian_product, x, y, Σ, scale, v, Hv);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale,
-                                                     rvec H_values) const {
-    return call(vtable.eval_hess_ψ, x, y, Σ, scale, H_values);
+void TypeErasedProblem<Conf, Allocator>::eval_augmented_lagrangian_hessian(crvec x, crvec y,
+                                                                           crvec Σ, real_t scale,
+                                                                           rvec H_values) const {
+    return call(vtable.eval_augmented_lagrangian_hessian, x, y, Σ, scale, H_values);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_hess_ψ_sparsity() const -> Sparsity {
-    return call(vtable.get_hess_ψ_sparsity);
+auto TypeErasedProblem<Conf, Allocator>::get_augmented_lagrangian_hessian_sparsity() const
+    -> Sparsity {
+    return call(vtable.get_augmented_lagrangian_hessian_sparsity);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t {
-    return call(vtable.eval_f_grad_f, x, grad_fx);
+auto TypeErasedProblem<Conf, Allocator>::eval_objective_and_gradient(crvec x,
+                                                                     rvec grad_fx) const -> real_t {
+    return call(vtable.eval_objective_and_gradient, x, grad_fx);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_f_g(crvec x, rvec g) const -> real_t {
-    return call(vtable.eval_f_g, x, g);
+auto TypeErasedProblem<Conf, Allocator>::eval_objective_and_constraints(crvec x,
+                                                                        rvec g) const -> real_t {
+    return call(vtable.eval_objective_and_constraints, x, g);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f,
-                                                                 rvec grad_gxy) const {
-    return call(vtable.eval_grad_f_grad_g_prod, x, y, grad_f, grad_gxy);
+void TypeErasedProblem<Conf, Allocator>::eval_objective_gradient_and_constraints_gradient_product(
+    crvec x, crvec y, rvec grad_f, rvec grad_gxy) const {
+    return call(vtable.eval_objective_gradient_and_constraints_gradient_product, x, y, grad_f,
+                grad_gxy);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_grad_L(crvec x, crvec y, rvec grad_L,
-                                                     rvec work_n) const {
-    return call(vtable.eval_grad_L, x, y, grad_L, work_n);
+void TypeErasedProblem<Conf, Allocator>::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L,
+                                                                  rvec work_n) const {
+    return call(vtable.eval_lagrangian_gradient, x, y, grad_L, work_n);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const -> real_t {
-    return call(vtable.eval_ψ, x, y, Σ, ŷ);
+auto TypeErasedProblem<Conf, Allocator>::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ,
+                                                                   rvec ŷ) const -> real_t {
+    return call(vtable.eval_augmented_lagrangian, x, y, Σ, ŷ);
 }
 template <Config Conf, class Allocator>
-void TypeErasedProblem<Conf, Allocator>::eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ,
-                                                     rvec work_n, rvec work_m) const {
-    return call(vtable.eval_grad_ψ, x, y, Σ, grad_ψ, work_n, work_m);
+void TypeErasedProblem<Conf, Allocator>::eval_augmented_lagrangian_gradient(crvec x, crvec y,
+                                                                            crvec Σ, rvec grad_ψ,
+                                                                            rvec work_n,
+                                                                            rvec work_m) const {
+    return call(vtable.eval_augmented_lagrangian_gradient, x, y, Σ, grad_ψ, work_n, work_m);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ,
-                                                       rvec work_n, rvec work_m) const -> real_t {
-    return call(vtable.eval_ψ_grad_ψ, x, y, Σ, grad_ψ, work_n, work_m);
+auto TypeErasedProblem<Conf, Allocator>::eval_augmented_lagrangian_and_gradient(
+    crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> real_t {
+    return call(vtable.eval_augmented_lagrangian_and_gradient, x, y, Σ, grad_ψ, work_n, work_m);
 }
 template <Config Conf, class Allocator>
 auto TypeErasedProblem<Conf, Allocator>::calc_ŷ_dᵀŷ(rvec g_ŷ, crvec y, crvec Σ) const -> real_t {
     return call(vtable.calc_ŷ_dᵀŷ, g_ŷ, y, Σ);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_box_C() const -> const Box & {
-    return call(vtable.get_box_C);
+auto TypeErasedProblem<Conf, Allocator>::get_box_variables() const -> const Box & {
+    return call(vtable.get_box_variables);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_box_D() const -> const Box & {
-    return call(vtable.get_box_D);
+auto TypeErasedProblem<Conf, Allocator>::get_box_general_constraints() const -> const Box & {
+    return call(vtable.get_box_general_constraints);
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::check() const {
@@ -867,24 +910,26 @@ std::string TypeErasedProblem<Conf, Allocator>::get_name() const {
 
 template <Config Conf>
 void print_provided_functions(std::ostream &os, const TypeErasedProblem<Conf> &problem) {
-    os << "inactive_indices_res_lna: " << problem.provides_eval_inactive_indices_res_lna() << '\n'
-       << "                 grad_gi: " << problem.provides_eval_grad_gi() << '\n'
-       << "                   jac_g: " << problem.provides_eval_jac_g() << '\n'
-       << "             hess_L_prod: " << problem.provides_eval_hess_L_prod() << '\n'
-       << "                  hess_L: " << problem.provides_eval_hess_L() << '\n'
-       << "             hess_ψ_prod: " << problem.provides_eval_hess_ψ_prod() << '\n'
-       << "                  hess_ψ: " << problem.provides_eval_hess_ψ() << '\n'
-       << "                f_grad_f: " << problem.provides_eval_f_grad_f() << '\n'
-       << "                     f_g: " << problem.provides_eval_f_g() << '\n'
-       << "      grad_f_grad_g_prod: " << problem.provides_eval_grad_f_grad_g_prod() << '\n'
-       << "                  grad_L: " << problem.provides_eval_grad_L() << '\n'
-       << "                       ψ: " << problem.provides_eval_ψ() << '\n'
-       << "                  grad_ψ: " << problem.provides_eval_grad_ψ() << '\n'
-       << "                ψ_grad_ψ: " << problem.provides_eval_ψ_grad_ψ() << '\n'
-       << "               get_box_C: " << problem.provides_get_box_C() << '\n'
-       << "               get_box_D: " << problem.provides_get_box_D() << '\n'
-       << "                   check: " << problem.provides_check() << '\n'
-       << "                get_name: " << problem.provides_get_name() << '\n';
+    // clang-format off
+    os << "                            eval_inactive_indices_res_lna: " << problem.provides_eval_inactive_indices_res_lna() << '\n'
+       << "                                             eval_grad_gi: " << problem.provides_eval_grad_gi() << '\n'
+       << "                                eval_constraints_jacobian: " << problem.provides_eval_constraints_jacobian() << '\n'
+       << "                          eval_lagrangian_hessian_product: " << problem.provides_eval_lagrangian_hessian_product() << '\n'
+       << "                                  eval_lagrangian_hessian: " << problem.provides_eval_lagrangian_hessian() << '\n'
+       << "                eval_augmented_lagrangian_hessian_product: " << problem.provides_eval_augmented_lagrangian_hessian_product() << '\n'
+       << "                        eval_augmented_lagrangian_hessian: " << problem.provides_eval_augmented_lagrangian_hessian() << '\n'
+       << "                              eval_objective_and_gradient: " << problem.provides_eval_objective_and_gradient() << '\n'
+       << "                           eval_objective_and_constraints: " << problem.provides_eval_objective_and_constraints() << '\n'
+       << " eval_objective_gradient_and_constraints_gradient_product: " << problem.provides_eval_objective_gradient_and_constraints_gradient_product() << '\n'
+       << "                                 eval_lagrangian_gradient: " << problem.provides_eval_lagrangian_gradient() << '\n'
+       << "                                eval_augmented_lagrangian: " << problem.provides_eval_augmented_lagrangian() << '\n'
+       << "                       eval_augmented_lagrangian_gradient: " << problem.provides_eval_augmented_lagrangian_gradient() << '\n'
+       << "                   eval_augmented_lagrangian_and_gradient: " << problem.provides_eval_augmented_lagrangian_and_gradient() << '\n'
+       << "                                        get_box_variables: " << problem.provides_get_box_variables() << '\n'
+       << "                              get_box_general_constraints: " << problem.provides_get_box_general_constraints() << '\n'
+       << "                                                    check: " << problem.provides_check() << '\n'
+       << "                                                 get_name: " << problem.provides_get_name() << '\n';
+    // clang-format on
 }
 
 /// @}

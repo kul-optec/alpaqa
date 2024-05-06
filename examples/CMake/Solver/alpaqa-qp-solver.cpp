@@ -65,7 +65,7 @@ int main(int argc, const char *argv[]) try {
     std::cout << '\n'
               << *counted_problem.evaluations << '\n'
               << "status: " << stats.status << '\n'
-              << "f = " << problem.eval_f(x) << '\n'
+              << "f = " << problem.eval_objective(x) << '\n'
               << "inner iterations: " << stats.inner.iterations << '\n'
               << "outer iterations: " << stats.outer_iterations << '\n'
               << "ε = " << stats.ε << '\n'

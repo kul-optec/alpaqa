@@ -89,11 +89,11 @@ SolverResults run_alm_solver(typename Solver::Problem &problem, crvec x0,
     // Initial guess
     vec x = x0, y = y0;
     if (x.size() == 0)
-        x = vec::Zero(problem.get_n());
+        x = vec::Zero(problem.get_num_variables());
     if (y.size() == 0)
-        y = vec::Zero(problem.get_m());
+        y = vec::Zero(problem.get_num_constraints());
     // Final penalties
-    vec Σ = vec::Constant(problem.get_m(), alpaqa::NaN<config_t>);
+    vec Σ = vec::Constant(problem.get_num_constraints(), alpaqa::NaN<config_t>);
 
     // Solve the problem
     auto s = solver(problem, x, y, Σ);

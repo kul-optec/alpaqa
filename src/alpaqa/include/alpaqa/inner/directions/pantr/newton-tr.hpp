@@ -59,10 +59,10 @@ struct NewtonTRDirection {
                     [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
         if (!direction_params.finite_diff &&
-            !problem.provides_eval_hess_ψ_prod() &&
-            !(problem.provides_eval_hess_L_prod() && problem.get_m() == 0))
+            !problem.provides_eval_augmented_lagrangian_hessian_product() &&
+            !(problem.provides_eval_lagrangian_hessian_product() && problem.get_num_constraints() == 0))
             throw std::invalid_argument("NewtonTR without finite differences "
-                                        "requires Problem::eval_hess_ψ_prod()");
+                                        "requires Problem::eval_augmented_lagrangian_hessian_product()");
         if (!problem.provides_eval_inactive_indices_res_lna())
             throw std::invalid_argument(
                 "NewtonTR requires "
@@ -72,7 +72,7 @@ struct NewtonTRDirection {
         this->y.emplace(y);
         this->Σ.emplace(Σ);
         // Resize workspaces
-        const auto n = problem.get_n(), m = problem.get_m();
+        const auto n = problem.get_num_variables(), m = problem.get_num_constraints();
         JK_sto.resize(n);
         rJ_sto.resize(n);
         qJ_sto.resize(n);
@@ -111,7 +111,7 @@ struct NewtonTRDirection {
         // Newton with exact Hessian
 
         // Find inactive and active constraints
-        const auto n = problem->get_n();
+        const auto n = problem->get_num_variables();
         index_t nJ =
             problem->eval_inactive_indices_res_lna(γₖ, xₖ, grad_ψxₖ, JK_sto);
         crindexvec J = JK_sto.topRows(nJ);
@@ -131,12 +131,12 @@ struct NewtonTRDirection {
                     (1 + xₖ(J).norm()) * direction_params.finite_diff_stepsize;
                 /// TODO: use a better rule to determine the step size
                 work = xₖ + ε * qₖ;
-                problem->eval_grad_ψ(work, *y, *Σ, work_2, work_n_fd,
+                problem->eval_augmented_lagrangian_gradient(work, *y, *Σ, work_2, work_n_fd,
                                      work_m_fd);
                 rJ.noalias() += (work_2 - grad_ψxₖ)(J) *
                                 (direction_params.hessian_vec_factor / ε);
             } else {
-                problem->eval_hess_ψ_prod(xₖ, *y, *Σ, 1, qₖ, work);
+                problem->eval_augmented_lagrangian_hessian_product(xₖ, *y, *Σ, 1, qₖ, work);
                 rJ.noalias() += work(J) * direction_params.hessian_vec_factor;
             }
         }
@@ -149,13 +149,13 @@ struct NewtonTRDirection {
                 /// TODO: use a better rule to determine the step size
                 work = xₖ;
                 work(J) += ε * p;
-                problem->eval_grad_ψ(work, *y, *Σ, work_2, work_n_fd,
+                problem->eval_augmented_lagrangian_gradient(work, *y, *Σ, work_2, work_n_fd,
                                      work_m_fd);
                 Bp.topRows(nJ) = (work_2 - grad_ψxₖ)(J) / ε;
             } else {
                 work.setZero();
                 work(J) = p;
-                problem->eval_hess_ψ_prod(xₖ, *y, *Σ, 1, work, work_2);
+                problem->eval_augmented_lagrangian_hessian_product(xₖ, *y, *Σ, 1, work, work_2);
                 Bp.topRows(nJ) = work_2(J);
             }
         };

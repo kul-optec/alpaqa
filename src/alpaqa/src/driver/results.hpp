@@ -147,8 +147,8 @@ inline void print_results(std::ostream &os, const BenchmarkResults &results) {
        << results.problem.path << ")" << '\n'
        << "status:  " << (solstats.success ? "\033[0;32m" : "\033[0;31m")
        << solstats.status << "\033[0m" << '\n'
-       << "num var: " << results.problem.problem.get_n() << '\n'
-       << "num con: " << results.problem.problem.get_m() << '\n'
+       << "num var: " << results.problem.problem.get_num_variables() << '\n'
+       << "num con: " << results.problem.problem.get_num_constraints() << '\n'
        << "ε = " << float_to_str(solstats.ε) << '\n'
        << "δ = " << float_to_str(solstats.δ) << '\n'
        << "final step size  = " << float_to_str(solstats.γ) << '\n'

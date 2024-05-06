@@ -88,9 +88,9 @@ struct ALMSolverVTable : util::BasicVTable {
                                            std::optional<vec> &y, bool async,
                                            bool suppress_interrupt) {
         using InnerSolver = typename T::InnerSolver;
-        alpaqa::util::check_dim_msg<vec>(x, p->get_n(),
+        alpaqa::util::check_dim_msg<vec>(x, p->get_num_variables(),
                                          "Length of x does not match problem size problem.n");
-        alpaqa::util::check_dim_msg<vec>(y, p->get_m(),
+        alpaqa::util::check_dim_msg<vec>(y, p->get_num_constraints(),
                                          "Length of y does not match problem size problem.m");
         auto invoke_solver = [&] { return self(*p, *x, *y); };
         auto stats         = async_solve(async, suppress_interrupt, self, invoke_solver, *p);

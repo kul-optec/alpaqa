@@ -49,13 +49,13 @@ Problem::Problem(const std::filesystem::path &problem_dir)
     }
 }
 
-auto Problem::eval_f(crvec x) const -> real_t {
+auto Problem::eval_objective(crvec x) const -> real_t {
     Qx.noalias() = Q * x;
     return 0.5 * x.dot(Qx) + c.dot(x);
 }
-void Problem::eval_grad_f(crvec x, rvec gr) const { gr.noalias() = Q * x + c; }
-void Problem::eval_g(crvec x, rvec g) const { g.noalias() = A * x; }
-void Problem::eval_grad_g_prod(crvec x, crvec y, rvec gr) const {
+void Problem::eval_objective_gradient(crvec x, rvec gr) const { gr.noalias() = Q * x + c; }
+void Problem::eval_constraints(crvec x, rvec g) const { g.noalias() = A * x; }
+void Problem::eval_constraints_gradient_product(crvec x, crvec y, rvec gr) const {
     (void)x;
     gr.noalias() = A.transpose() * y;
 }

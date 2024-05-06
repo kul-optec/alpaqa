@@ -172,7 +172,7 @@ class PANOCOCPSolver {
 
     template <class P>
     Stats operator()(const P &problem, const SolveOptions &opts, rvec u) {
-        if (problem.get_m() != 0)
+        if (problem.get_num_constraints() != 0)
             throw std::invalid_argument("Missing arguments y, Σ, e");
         mvec y{nullptr, 0}, Σ{nullptr, 0}, e{nullptr, 0};
         return operator()(problem, opts, u, y, Σ, e);

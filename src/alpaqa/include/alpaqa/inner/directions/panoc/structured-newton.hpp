@@ -69,22 +69,22 @@ struct StructuredNewtonDirection {
                     [[maybe_unused]] real_t γ_0, [[maybe_unused]] crvec x_0,
                     [[maybe_unused]] crvec x̂_0, [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
-        if (!(problem.provides_get_box_C() && problem.provides_get_box_D()))
+        if (!(problem.provides_get_box_variables() && problem.provides_get_box_general_constraints()))
             throw std::invalid_argument(
                 "Structured Newton only supports box-constrained problems");
         // TODO: support eval_inactive_indices_res_lna
-        if (!problem.supports_eval_hess_ψ())
+        if (!problem.supports_eval_augmented_lagrangian_hessian())
             throw std::invalid_argument("Structured Newton requires hess_ψ");
         // Store references to problem and ALM variables
         this->problem = &problem;
         this->y.emplace(y);
         this->Σ.emplace(Σ);
         // Allocate workspaces
-        const auto n = problem.get_n();
+        const auto n = problem.get_num_variables();
         JK.resize(n);
         H.resize(n, n);
         HJ_storage.resize(n * n);
-        if (!is_dense(problem.get_hess_ψ_sparsity()))
+        if (!is_dense(problem.get_augmented_lagrangian_hessian_sparsity()))
             throw std::logic_error("Sparse hessians not yet implemented");
     }
 
@@ -104,8 +104,8 @@ struct StructuredNewtonDirection {
     bool apply(real_t γₖ, crvec xₖ, [[maybe_unused]] crvec x̂ₖ, crvec pₖ,
                crvec grad_ψxₖ, rvec qₖ) const {
 
-        const auto n  = problem->get_n();
-        const auto &C = problem->get_box_C();
+        const auto n  = problem->get_num_variables();
+        const auto &C = problem->get_box_variables();
 
         // Find inactive indices J
         auto nJ = 0;
@@ -128,7 +128,7 @@ struct StructuredNewtonDirection {
         }
 
         // Compute the Hessian
-        problem->eval_hess_ψ(xₖ, *y, *Σ, 1, H.reshaped());
+        problem->eval_augmented_lagrangian_hessian(xₖ, *y, *Σ, 1, H.reshaped());
 
         // There are no active indices K
         if (nJ == n) {

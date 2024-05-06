@@ -15,13 +15,13 @@ struct RosenbrockProblem : alpaqa::UnconstrProblem<alpaqa::DefaultConfig> {
     real_t a = 2, b = 100;
 
     // Cost
-    real_t eval_f(crvec xy) const {
+    real_t eval_objective(crvec xy) const {
         auto x = xy(0), y = xy(1);
         return sq(a - x) + b * sq(y - sq(x));
     }
 
     // Gradient of cost
-    void eval_grad_f(crvec xy, rvec grad) const {
+    void eval_objective_gradient(crvec xy, rvec grad) const {
         auto x = xy(0), y = xy(1);
         grad(0) = (2 * x) - (2 * a) - (4 * b * x * y) + (4 * b * x * sq(x));
         grad(1) = 2 * b * (y - sq(x));
@@ -66,7 +66,7 @@ int main() {
     // Print the results
     std::cout << '\n' << *counted_problem.evaluations << '\n';
     std::cout << "status: " << stats.status << '\n'
-              << "f = " << problem.eval_f(x) << '\n'
+              << "f = " << problem.eval_objective(x) << '\n'
               << "iterations: " << stats.iterations << '\n'
               << "ε = " << stats.ε << '\n'
               << "elapsed time:     "

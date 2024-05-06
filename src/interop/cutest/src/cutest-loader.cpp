@@ -272,44 +272,44 @@ auto CUTEstProblem::get_report() const -> Report {
     };
 }
 
-auto CUTEstProblem::eval_f(crvec x) const -> real_t {
+auto CUTEstProblem::eval_objective(crvec x) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     real_t f;
     cutest::logical grad = cutest::False;
-    checked(impl->funcs.cofg, "eval_f: CUTEST_cofg")(&impl->nvar, x.data(), &f,
+    checked(impl->funcs.cofg, "eval_objective: CUTEST_cofg")(&impl->nvar, x.data(), &f,
                                                      nullptr, &grad);
     return f;
 }
-void CUTEstProblem::eval_grad_f(crvec x, rvec grad_fx) const {
+void CUTEstProblem::eval_objective_gradient(crvec x, rvec grad_fx) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_fx.size() == static_cast<length_t>(impl->nvar));
     real_t f;
     cutest::logical grad = cutest::True;
-    checked(impl->funcs.cofg, "eval_grad_f: CUTEST_cofg")(
+    checked(impl->funcs.cofg, "eval_objective_gradient: CUTEST_cofg")(
         &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
 }
-void CUTEstProblem::eval_g(crvec x, rvec gx) const {
+void CUTEstProblem::eval_constraints(crvec x, rvec gx) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(gx.size() == static_cast<length_t>(impl->ncon));
     cutest::logical jtrans = cutest::True, grad = cutest::False;
     cutest::integer zero = 0;
-    checked(impl->funcs.ccfg, "eval_g: CUTEST_ccfg")(
+    checked(impl->funcs.ccfg, "eval_constraints: CUTEST_ccfg")(
         &impl->nvar, &impl->ncon, x.data(), gx.data(), &jtrans, &zero, &zero,
         nullptr, &grad);
 }
-void CUTEstProblem::eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const {
+void CUTEstProblem::eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
     assert(grad_gxy.size() == static_cast<length_t>(impl->nvar));
     auto lvector         = static_cast<cutest::integer>(y.size()),
          lresult         = static_cast<cutest::integer>(grad_gxy.size());
     cutest::logical gotj = cutest::False, jtrans = cutest::True;
-    checked(impl->funcs.cjprod, "eval_grad_g_prod: CUTEST_cjprod")(
+    checked(impl->funcs.cjprod, "eval_constraints_gradient_product: CUTEST_cjprod")(
         &impl->nvar, &impl->ncon, &gotj, &jtrans, x.data(), y.data(), &lvector,
         grad_gxy.data(), &lresult);
 }
 
-void CUTEstProblem::eval_jac_g(crvec x, rvec J_values) const {
+void CUTEstProblem::eval_constraints_jacobian(crvec x, rvec J_values) const {
     // Compute the nonzero values
     assert(x.size() == static_cast<length_t>(impl->nvar));
     // Sparse Jacobian
@@ -320,7 +320,7 @@ void CUTEstProblem::eval_jac_g(crvec x, rvec J_values) const {
         assert(storage_jac_g.cols.size() == static_cast<length_t>(nnz_J));
         const cutest::integer nnz = nnz_J;
         cutest::logical grad      = cutest::True;
-        checked(impl->funcs.ccfsg, "eval_jac_g: CUTEST_ccfsg")(
+        checked(impl->funcs.ccfsg, "eval_constraints_jacobian: CUTEST_ccfsg")(
             &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &nnz_J, &nnz,
             J_values.data(), storage_jac_g.cols.data(),
             storage_jac_g.rows.data(), &grad);
@@ -330,12 +330,12 @@ void CUTEstProblem::eval_jac_g(crvec x, rvec J_values) const {
         assert(J_values.size() == static_cast<length_t>(impl->nvar) *
                                       static_cast<length_t>(impl->ncon));
         cutest::logical jtrans = cutest::False, grad = cutest::True;
-        checked(impl->funcs.ccfg, "eval_jac_g: CUTEST_ccfg")(
+        checked(impl->funcs.ccfg, "eval_constraints_jacobian: CUTEST_ccfg")(
             &impl->nvar, &impl->ncon, x.data(), impl->work.data(), &jtrans,
             &impl->ncon, &impl->nvar, J_values.data(), &grad);
     }
 }
-auto CUTEstProblem::get_jac_g_sparsity() const -> Sparsity {
+auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
     if (!sparse)
         return sparsity::Dense<config_t>{
             .rows     = m,
@@ -344,13 +344,13 @@ auto CUTEstProblem::get_jac_g_sparsity() const -> Sparsity {
         };
     if (nnz_J < 0) {
         checked(impl->funcs.cdimsj,
-                "get_jac_g_sparsity: CUTEST_cdimsj")(&nnz_J);
+                "get_constraints_jacobian_sparsity: CUTEST_cdimsj")(&nnz_J);
         nnz_J -= impl->nvar;
         assert(nnz_J >= 0);
         storage_jac_g.cols.resize(nnz_J);
         storage_jac_g.rows.resize(nnz_J);
         const cutest::integer nnz = nnz_J;
-        checked(impl->funcs.csjp, "eval_jac_g: CUTEST_csjp")(
+        checked(impl->funcs.csjp, "eval_constraints_jacobian: CUTEST_csjp")(
             &nnz_J, &nnz, storage_jac_g.cols.data(), storage_jac_g.rows.data());
     }
     using SparseCOO = sparsity::SparseCOO<config_t, int>;
@@ -371,7 +371,7 @@ void CUTEstProblem::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const {
     checked(impl->funcs.cigr, "eval_grad_gi: CUTEST_cigr")(
         &impl->nvar, &iprob, x.data(), grad_gi.data());
 }
-void CUTEstProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
+void CUTEstProblem::eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale, crvec v,
                                      rvec Hv) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
@@ -383,13 +383,13 @@ void CUTEstProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v,
         mult       = impl->work.data();
     }
     cutest::logical goth = cutest::False;
-    checked(impl->funcs.chprod, "eval_hess_L_prod: CUTEST_chprod")(
+    checked(impl->funcs.chprod, "eval_lagrangian_hessian_product: CUTEST_chprod")(
         &impl->nvar, &impl->ncon, &goth, x.data(), mult,
         const_cast<real_t *>(v.data()), Hv.data());
     if (scale != 1)
         Hv *= scale;
 }
-void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
+void CUTEstProblem::eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale,
                                      crvec v, rvec Hv) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
@@ -399,14 +399,14 @@ void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
     auto &&ζ = impl->work.topRows(impl->ncon);
     auto &&ŷ = impl->work2.topRows(impl->ncon);
     // ζ = g(x) + Σ⁻¹y
-    eval_g(x, ζ);
+    eval_constraints(x, ζ);
     ζ += y.cwiseQuotient(Σ);
     // d = ζ - Π(ζ, D)
-    this->eval_proj_diff_g(ζ, ŷ);
+    this->eval_projecting_difference_constraints(ζ, ŷ);
     // ŷ = Σ d
     ŷ.array() *= Σ.array();
     // Hv = ∇²ℒ(x, ŷ) v
-    eval_hess_L_prod(x, ŷ, scale, v, Hv);
+    eval_lagrangian_hessian_product(x, ŷ, scale, v, Hv);
     // Find active constraints
     for (index_t i = 0; i < impl->ncon; ++i)
         ζ(i) = (ζ(i) <= D.lowerbound(i)) || (D.upperbound(i) <= ζ(i))
@@ -417,7 +417,7 @@ void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
     auto lvector         = static_cast<cutest::integer>(v.size()),
          lresult         = static_cast<cutest::integer>(Jv.size());
     cutest::logical gotj = cutest::False, jtrans = cutest::False;
-    checked(impl->funcs.cjprod, "eval_hess_ψ_prod: CUTEST_cjprod-1")(
+    checked(impl->funcs.cjprod, "eval_augmented_lagrangian_hessian_product: CUTEST_cjprod-1")(
         &impl->nvar, &impl->ncon, &gotj, &jtrans, x.data(), v.data(), &lvector,
         Jv.data(), &lresult);
     // Σ Jg v
@@ -426,12 +426,12 @@ void CUTEstProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale,
     std::swap(lvector, lresult);
     gotj = jtrans = cutest::True;
     auto &&JΣJv   = impl->work.topRows(impl->nvar);
-    checked(impl->funcs.cjprod, "eval_hess_ψ_prod: CUTEST_cjprod-2")(
+    checked(impl->funcs.cjprod, "eval_augmented_lagrangian_hessian_product: CUTEST_cjprod-2")(
         &impl->nvar, &impl->ncon, &gotj, &jtrans, x.data(), Jv.data(), &lvector,
         JΣJv.data(), &lresult);
     Hv += JΣJv;
 }
-void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
+void CUTEstProblem::eval_lagrangian_hessian(crvec x, crvec y, real_t scale,
                                 rvec H_values) const {
     // Compute the nonzero values
     assert(x.size() == static_cast<length_t>(impl->nvar));
@@ -448,7 +448,7 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
         assert(storage_hess_L.rows.size() == static_cast<length_t>(nnz_H));
         assert(storage_hess_L.cols.size() == static_cast<length_t>(nnz_H));
         const cutest::integer nnz = nnz_H;
-        checked(impl->funcs.csh, "eval_hess_L: CUTEST_csh")(
+        checked(impl->funcs.csh, "eval_lagrangian_hessian: CUTEST_csh")(
             &impl->nvar, &impl->ncon, x.data(), y.data(), &nnz_H, &nnz,
             H_values.data(), storage_hess_L.rows.data(),
             storage_hess_L.cols.data());
@@ -458,13 +458,13 @@ void CUTEstProblem::eval_hess_L(crvec x, crvec y, real_t scale,
         assert(H_values.size() == static_cast<length_t>(impl->nvar) *
                                       static_cast<length_t>(impl->nvar));
         checked(impl->funcs.cdh,
-                "eval_hess_L: CUTEST_cdh")(&impl->nvar, &impl->ncon, x.data(),
+                "eval_lagrangian_hessian: CUTEST_cdh")(&impl->nvar, &impl->ncon, x.data(),
                                            mult, &impl->nvar, H_values.data());
     }
     if (scale != 1)
         H_values *= scale;
 }
-auto CUTEstProblem::get_hess_L_sparsity() const -> Sparsity {
+auto CUTEstProblem::get_lagrangian_hessian_sparsity() const -> Sparsity {
     if (!sparse)
         return sparsity::Dense<config_t>{
             .rows     = n,
@@ -473,12 +473,12 @@ auto CUTEstProblem::get_hess_L_sparsity() const -> Sparsity {
         };
     if (nnz_H < 0) {
         checked(impl->funcs.cdimsh,
-                "get_hess_L_sparsity: CUTEST_cdimsh")(&nnz_H);
+                "get_lagrangian_hessian_sparsity: CUTEST_cdimsh")(&nnz_H);
         assert(nnz_H >= 0);
         storage_hess_L.rows.resize(nnz_H);
         storage_hess_L.cols.resize(nnz_H);
         const cutest::integer nnz = nnz_H;
-        checked(impl->funcs.cshp, "eval_hess_L: CUTEST_cshp")(
+        checked(impl->funcs.cshp, "eval_lagrangian_hessian: CUTEST_cshp")(
             &impl->nvar, &nnz_H, &nnz, storage_hess_L.rows.data(),
             storage_hess_L.cols.data());
     }
@@ -493,30 +493,30 @@ auto CUTEstProblem::get_hess_L_sparsity() const -> Sparsity {
         .first_index = 1, // Fortran-style indices
     };
 }
-auto CUTEstProblem::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t {
+auto CUTEstProblem::eval_objective_and_gradient(crvec x, rvec grad_fx) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_fx.size() == static_cast<length_t>(impl->nvar));
     real_t f;
     cutest::logical grad = cutest::True;
-    checked(impl->funcs.cofg, "eval_f_grad_f: CUTEST_cofg")(
+    checked(impl->funcs.cofg, "eval_objective_and_gradient: CUTEST_cofg")(
         &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
     return f;
 }
-auto CUTEstProblem::eval_f_g(crvec x, rvec g) const -> real_t {
+auto CUTEstProblem::eval_objective_and_constraints(crvec x, rvec g) const -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(g.size() == static_cast<length_t>(impl->ncon));
     real_t f;
-    checked(impl->funcs.cfn, "eval_f_g: CUTEST_cfn")(&impl->nvar, &impl->ncon,
+    checked(impl->funcs.cfn, "eval_objective_and_constraints: CUTEST_cfn")(&impl->nvar, &impl->ncon,
                                                      x.data(), &f, g.data());
     return f;
 }
-void CUTEstProblem::eval_grad_L(crvec x, crvec y, rvec grad_L, rvec) const {
+void CUTEstProblem::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L, rvec) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
     assert(grad_L.size() == static_cast<length_t>(impl->nvar));
     real_t L;
     cutest::logical grad = cutest::True;
-    checked(impl->funcs.clfg, "eval_f_g: CUTEST_clfg")(
+    checked(impl->funcs.clfg, "eval_objective_and_constraints: CUTEST_clfg")(
         &impl->nvar, &impl->ncon, x.data(), y.data(), &L, grad_L.data(), &grad);
 }
 

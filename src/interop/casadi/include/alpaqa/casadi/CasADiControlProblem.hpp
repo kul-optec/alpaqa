@@ -132,16 +132,16 @@ class CasADiControlProblem {
     [[nodiscard]] length_t get_nc() const { return nc; }
     [[nodiscard]] length_t get_nc_N() const { return nc_N; }
 
-    /// @see @ref TypeErasedControlProblem::eval_proj_diff_g
-    void eval_proj_diff_g(crvec z, rvec e) const {
+    /// @see @ref TypeErasedControlProblem::eval_projecting_difference_constraints
+    void eval_projecting_difference_constraints(crvec z, rvec e) const {
         for (index_t t = 0; t < N; ++t)
             e.segment(t * nc, nc) =
                 projecting_difference(z.segment(t * nc, nc), D);
         e.segment(N * nc, nc_N) =
             projecting_difference(z.segment(N * nc, nc_N), D_N);
     }
-    /// @see @ref TypeErasedControlProblem::eval_proj_multipliers
-    void eval_proj_multipliers(rvec y, real_t M) const {
+    /// @see @ref TypeErasedControlProblem::eval_projection_multipliers
+    void eval_projection_multipliers(rvec y, real_t M) const {
         // If there's no lower bound, the multipliers can only be positive
         auto max_lb = [M](real_t y, real_t z_lb) {
             real_t y_lb = z_lb == -alpaqa::inf<config_t> ? 0 : -M;

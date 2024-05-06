@@ -148,16 +148,16 @@ class MyProblem(pa.BoxConstrProblem):
     def __init__(self) -> None:
         super().__init__(self.Q.shape[0], self.A.shape[0])
 
-    def eval_f(self, x: vec) -> float:
+    def eval_objective(self, x: vec) -> float:
         return 0.5 * x.T @ self.Q @ x
 
-    def eval_grad_f(self, x: vec, grad_fx: vec):
+    def eval_objective_gradient(self, x: vec, grad_fx: vec):
         grad_fx[:] = self.Q @ x
 
-    def eval_g(self, x: vec, gx: vec):
+    def eval_constraints(self, x: vec, gx: vec):
         gx[:] = self.A @ x
 
-    def eval_grad_g_prod(self, x: vec, y: vec, g: vec):
+    def eval_constraints_gradient_product(self, x: vec, y: vec, g: vec):
         g[:] = self.A.T @ y
 
 

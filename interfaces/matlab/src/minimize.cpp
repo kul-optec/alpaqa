@@ -19,7 +19,7 @@ auto span2cmvec(std::span<const double> s) {
 
 void init_problem_data(const ProblemDescription &problem,
                        alpaqa::CasADiProblem<config_t> &cs_problem) {
-    auto n = cs_problem.get_n(), m = cs_problem.get_m();
+    auto n = cs_problem.get_num_variables(), m = cs_problem.get_num_constraints();
     if (!problem.C_lb.empty()) {
         util::check_dim("problem.C_lowerbound", problem.C_lb,
                         static_cast<size_t>(n));
@@ -74,9 +74,9 @@ SolverResults minimize(const ProblemDescription &problem,
     init_problem_data(problem, cs_problem);
     // Initial guess
     if (!x0.empty())
-        util::check_dim("x0", x0, static_cast<size_t>(cs_problem.get_n()));
+        util::check_dim("x0", x0, static_cast<size_t>(cs_problem.get_num_variables()));
     if (!y0.empty())
-        util::check_dim("y0", y0, static_cast<size_t>(cs_problem.get_m()));
+        util::check_dim("y0", y0, static_cast<size_t>(cs_problem.get_num_constraints()));
 
     // Redirect output stream
     streambuf buf{std::move(write_utf8)};

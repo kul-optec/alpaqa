@@ -57,9 +57,9 @@ struct ALMHelpers {
     static void initialize_penalty(const TypeErasedProblem<config_t> &p,
                                    const ALMParams<config_t> &params, crvec x0,
                                    rvec Σ) {
-        real_t f0 = p.eval_f(x0);
-        vec g0(p.get_m());
-        p.eval_g(x0, g0);
+        real_t f0 = p.eval_objective(x0);
+        vec g0(p.get_num_constraints());
+        p.eval_constraints(x0, g0);
         // TODO: reuse evaluations of f ang g in PANOC?
         real_t σ = params.initial_penalty_factor *
                    std::max(real_t(1), std::abs(f0)) /

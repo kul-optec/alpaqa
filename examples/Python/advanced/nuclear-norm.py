@@ -35,16 +35,16 @@ class MyProblem(pa.UnconstrProblem):
         self.jit_grad_loss = jit(grad(f))
         self.reg = pa.functions.NuclearNorm(λ, self.rows, self.cols)
 
-    def eval_f(self, x):  # Cost function
+    def eval_objective(self, x):  # Cost function
         # Important: use consistent order when reshaping or raveling!
         X = jnp.reshape(x, (self.rows, self.cols), order="F")
         return self.jit_loss(X)
 
-    def eval_grad_f(self, x, grad_f):  # Gradient of the cost
+    def eval_objective_gradient(self, x, grad_f):  # Gradient of the cost
         X = jnp.reshape(x, (self.rows, self.cols), order="F")
         grad_f[:] = self.jit_grad_loss(X).ravel(order="F")
 
-    def eval_prox_grad_step(self, γ, x, grad, x_hat, p):
+    def eval_proximal_gradient_step(self, γ, x, grad, x_hat, p):
         # use the prox_step helper function to carry out a generalized
         # forward-backward step. This assumes Fortran order (column major),
         # so we have to use order="F" for all reshape/ravel calls
@@ -100,7 +100,7 @@ X_sol = jnp.reshape(sol, (m, n), order="F")
 
 # %% Print the results
 
-final_f = prob.eval_f(sol)
+final_f = prob.eval_objective(sol)
 print()
 pprint(stats)
 print()

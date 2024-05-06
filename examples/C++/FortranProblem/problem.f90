@@ -13,14 +13,14 @@ module problem
 contains
 
    ! Evaluate the cost, f(x)
-   pure real(c_double) function problem_eval_f(x) bind(C)
+   pure real(c_double) function problem_eval_objective(x) bind(C)
       real(c_double), intent(in) :: x(n)
 
-      problem_eval_f = 0.5_c_double * dot_product(x, matmul(Q, x))
+      problem_eval_objective = 0.5_c_double * dot_product(x, matmul(Q, x))
    end function
 
    ! Evaluate the gradient of the cost, ∇f(x)
-   pure subroutine problem_eval_grad_f(x, grad_fx) bind(C)
+   pure subroutine problem_eval_objective_gradient(x, grad_fx) bind(C)
       real(c_double), intent(in) :: x(n)
       real(c_double), intent(out) :: grad_fx(n)
 
@@ -28,7 +28,7 @@ contains
    end subroutine
 
    ! Evaluate the constraints, g(x)
-   pure subroutine problem_eval_g(x, gx) bind(C)
+   pure subroutine problem_eval_constraints(x, gx) bind(C)
       real(c_double), intent(in) :: x(n)
       real(c_double), intent(out) :: gx(m)
 
@@ -37,7 +37,7 @@ contains
 
    ! Evaluate the matrix-vector product of the gradient of the constraints and
    ! the vector y, ∇g(x) y
-   pure subroutine problem_eval_grad_g_prod(x, y, grad_gxy) bind(C)
+   pure subroutine problem_eval_constraints_gradient_product(x, y, grad_gxy) bind(C)
       real(c_double), intent(in) :: x(n)
       real(c_double), intent(in) :: y(m)
       real(c_double), intent(out) :: grad_gxy(n)

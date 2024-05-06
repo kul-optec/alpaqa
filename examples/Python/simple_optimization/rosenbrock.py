@@ -81,7 +81,7 @@ print(solver)
 print(stats["status"])
 print(f"Solution:      {x_sol}")
 print(f"Multipliers:   {y_sol}")
-print(f"Cost:          {problem.eval_f(x_sol)}")
+print(f"Cost:          {problem.eval_objective(x_sol)}")
 from pprint import pprint
 pprint(stats)
 
@@ -90,8 +90,8 @@ pprint(stats)
 import matplotlib.pyplot as plt
 from matplotlib import patheffects
 
-cost_function_v = np.vectorize(problem.eval_f, signature="(n)->()")
-constr_function_v = np.vectorize(problem.eval_g, signature="(n)->(m)")
+cost_function_v = np.vectorize(problem.eval_objective, signature="(n)->()")
+constr_function_v = np.vectorize(problem.eval_constraints, signature="(n)->(m)")
 
 x = np.linspace(-1.5, 1.5, 256)
 y = np.linspace(-0.5, 2.5, 256)

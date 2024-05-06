@@ -88,8 +88,8 @@ auto FISTASolver<Conf>::operator()(
     auto start_time = std::chrono::steady_clock::now();
     Stats s;
 
-    const auto n = problem.get_n();
-    const auto m = problem.get_m();
+    const auto n = problem.get_num_variables();
+    const auto m = problem.get_num_constraints();
 
     // Represents an iterate in the algorithm, keeping track of some
     // intermediate values and function evaluations.
@@ -134,22 +134,22 @@ auto FISTASolver<Conf>::operator()(
     // Problem functions -------------------------------------------------------
 
     auto eval_ψ_grad_ψ = [&problem, &y, &Σ, &work_n1, &work_m](Iterate &i) {
-        i.ψx = problem.eval_ψ_grad_ψ(i.x, y, Σ, i.grad_ψ, work_n1, work_m);
+        i.ψx = problem.eval_augmented_lagrangian_and_gradient(i.x, y, Σ, i.grad_ψ, work_n1, work_m);
     };
-    auto eval_grad_ψ = [&problem, &y, &Σ, &work_n1, &work_m](Iterate &i) {
-        problem.eval_grad_ψ(i.x, y, Σ, i.grad_ψ, work_n1, work_m);
+    auto eval_augmented_lagrangian_gradient = [&problem, &y, &Σ, &work_n1, &work_m](Iterate &i) {
+        problem.eval_augmented_lagrangian_gradient(i.x, y, Σ, i.grad_ψ, work_n1, work_m);
     };
     auto eval_prox_grad_step = [&problem](Iterate &i) {
-        i.hx̂  = problem.eval_prox_grad_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
+        i.hx̂  = problem.eval_proximal_gradient_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
         i.pᵀp = i.p.squaredNorm();
         i.grad_ψᵀp = i.p.dot(i.grad_ψ);
     };
     auto eval_ψx̂ = [&problem, &y, &Σ](Iterate &i) {
-        i.ψx̂ = problem.eval_ψ(i.x̂, y, Σ, i.ŷx̂);
+        i.ψx̂ = problem.eval_augmented_lagrangian(i.x̂, y, Σ, i.ŷx̂);
     };
     auto eval_grad_ψx̂ = [&problem, &work_n1](Iterate &i) {
         // assumes that eval_ψx̂ was called first
-        problem.eval_grad_L(i.x̂, i.ŷx̂, i.grad_ψx̂, work_n1);
+        problem.eval_lagrangian_gradient(i.x̂, i.ŷx̂, i.grad_ψx̂, work_n1);
     };
 
     // Printing ----------------------------------------------------------------
@@ -220,7 +220,7 @@ auto FISTASolver<Conf>::operator()(
     if (fixed_lipschitz) {
         curr->L = params.L_max;
         // Calculate ∇ψ(x₀)
-        eval_grad_ψ(*curr);
+        eval_augmented_lagrangian_gradient(*curr);
     }
     // Finite difference approximation of ∇²ψ in starting point
     else if (params.Lipschitz.L_0 <= 0) {
@@ -344,7 +344,7 @@ auto FISTASolver<Conf>::operator()(
             curr->x = curr->x̂ + ((t_prev - 1) / t) * (curr->x̂ - prev_x̂);
         // Calculate ψ(xₖ), ∇ψ(xₖ)
         if (fixed_lipschitz)
-            eval_grad_ψ(*curr);
+            eval_augmented_lagrangian_gradient(*curr);
         else
             eval_ψ_grad_ψ(*curr);
 

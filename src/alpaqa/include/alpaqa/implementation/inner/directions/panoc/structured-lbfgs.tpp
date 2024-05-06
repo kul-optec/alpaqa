@@ -16,27 +16,27 @@ void StructuredLBFGSDirection<Conf>::initialize(
     if (direction_params.hessian_vec_factor != 0 &&
         !direction_params.hessian_vec_finite_differences &&
         !direction_params.full_augmented_hessian &&
-        !problem.provides_eval_hess_L_prod())
+        !problem.provides_eval_lagrangian_hessian_product())
         throw std::invalid_argument(
-            "Structured L-BFGS requires eval_hess_L_prod(). Alternatively, set "
+            "Structured L-BFGS requires eval_lagrangian_hessian_product(). Alternatively, set "
             "hessian_vec_factor = 0 or hessian_vec_finite_differences = true.");
     if (direction_params.hessian_vec_factor != 0 &&
         !direction_params.hessian_vec_finite_differences &&
         direction_params.full_augmented_hessian &&
-        !(problem.provides_eval_hess_L_prod() ||
-          problem.provides_eval_hess_ψ_prod()))
+        !(problem.provides_eval_lagrangian_hessian_product() ||
+          problem.provides_eval_augmented_lagrangian_hessian_product()))
         throw std::invalid_argument(
-            "Structured L-BFGS requires _eval_hess_ψ_prod() or "
-            "eval_hess_L_prod(). Alternatively, set "
+            "Structured L-BFGS requires _eval_augmented_lagrangian_hessian_product() or "
+            "eval_lagrangian_hessian_product(). Alternatively, set "
             "hessian_vec_factor = 0 or hessian_vec_finite_differences = true.");
     if (direction_params.hessian_vec_factor != 0 &&
         !direction_params.hessian_vec_finite_differences &&
         direction_params.full_augmented_hessian &&
-        !problem.provides_eval_hess_ψ_prod() &&
-        !(problem.provides_get_box_D() && problem.provides_eval_grad_gi()))
+        !problem.provides_eval_augmented_lagrangian_hessian_product() &&
+        !(problem.provides_get_box_general_constraints() && problem.provides_eval_grad_gi()))
         throw std::invalid_argument(
-            "Structured L-BFGS requires either eval_hess_ψ_prod() or "
-            "get_box_D() and eval_grad_gi(). Alternatively, set "
+            "Structured L-BFGS requires either eval_augmented_lagrangian_hessian_product() or "
+            "get_box_general_constraints() and eval_grad_gi(). Alternatively, set "
             "hessian_vec_factor = 0, hessian_vec_finite_differences = true, or "
             "full_augmented_hessian = false.");
     // Store references to problem and ALM variables
@@ -44,8 +44,8 @@ void StructuredLBFGSDirection<Conf>::initialize(
     this->y.emplace(y);
     this->Σ.emplace(Σ);
     // Allocate workspaces
-    const auto n = problem.get_n();
-    const auto m = problem.get_m();
+    const auto n = problem.get_num_variables();
+    const auto m = problem.get_num_constraints();
     lbfgs.resize(n);
     J_sto.resize(n);
     HqK.resize(n);
@@ -63,7 +63,7 @@ template <Config Conf>
 bool StructuredLBFGSDirection<Conf>::apply(real_t γₖ, crvec xₖ,
                                            [[maybe_unused]] crvec x̂ₖ, crvec pₖ,
                                            crvec grad_ψxₖ, rvec qₖ) const {
-    const auto n = problem->get_n();
+    const auto n = problem->get_num_variables();
 
     // Find inactive indices J
     auto nJ = problem->eval_inactive_indices_res_lna(γₖ, xₖ, grad_ψxₖ, J_sto);
@@ -116,7 +116,7 @@ bool StructuredLBFGSDirection<Conf>::apply(real_t γₖ, crvec xₖ,
 template <Config Conf>
 void StructuredLBFGSDirection<Conf>::approximate_hessian_vec_term(
     crvec xₖ, crvec grad_ψxₖ, rvec qₖ, crindexvec J) const {
-    const auto m = problem->get_m();
+    const auto m = problem->get_num_constraints();
     // Either compute the Hessian-vector product using finite differences
     if (direction_params.hessian_vec_finite_differences) {
         Helpers::calc_augmented_lagrangian_hessian_prod_fd(
@@ -126,22 +126,22 @@ void StructuredLBFGSDirection<Conf>::approximate_hessian_vec_term(
     else {
         if (!direction_params.full_augmented_hessian) {
             // Compute the product with the Hessian of the Lagrangian
-            problem->eval_hess_L_prod(xₖ, *y, 1, qₖ, HqK);
+            problem->eval_lagrangian_hessian_product(xₖ, *y, 1, qₖ, HqK);
         } else {
-            if (problem->provides_eval_hess_ψ_prod()) {
+            if (problem->provides_eval_augmented_lagrangian_hessian_product()) {
                 // Compute the product with the Hessian of the augmented
                 // Lagrangian
-                problem->eval_hess_ψ_prod(xₖ, *y, *Σ, 1, qₖ, HqK);
+                problem->eval_augmented_lagrangian_hessian_product(xₖ, *y, *Σ, 1, qₖ, HqK);
             } else {
                 // Compute the product with the Hessian of the Lagrangian
-                problem->eval_hess_L_prod(xₖ, *y, 1, qₖ, HqK);
+                problem->eval_lagrangian_hessian_product(xₖ, *y, 1, qₖ, HqK);
                 // And then add the Hessian of the penalty terms, to get the
                 // Hessian of the full augmented Lagrangian (if required)
                 if (direction_params.full_augmented_hessian) {
                     assert(m == 0 || problem->provides_eval_grad_gi());
-                    const auto &D = problem->get_box_D();
+                    const auto &D = problem->get_box_general_constraints();
                     auto &g       = work_m;
-                    problem->eval_g(xₖ, g);
+                    problem->eval_constraints(xₖ, g);
                     for (index_t i = 0; i < m; ++i) {
                         real_t ζ = g(i) + (*y)(i) / (*Σ)(i);
                         bool inactive =

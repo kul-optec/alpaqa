@@ -61,7 +61,7 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
     // Initial guess
     vec x = problem.initial_guess_x, y = problem.initial_guess_y;
     // Final penalties
-    vec Σ = vec::Constant(problem.problem.get_m(), alpaqa::NaN<config_t>);
+    vec Σ = vec::Constant(problem.problem.get_num_constraints(), alpaqa::NaN<config_t>);
 
     // Solve the problem
     auto stats = solver(problem.problem, x, y, Σ);

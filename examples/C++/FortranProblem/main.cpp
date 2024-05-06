@@ -12,23 +12,23 @@ USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
 extern "C" {
 ptrdiff_t problem_get_num_vars(void);
 ptrdiff_t problem_get_num_constr(void);
-double problem_eval_f(const double *);
-void problem_eval_grad_f(const double *, double *);
-void problem_eval_g(const double *, double *);
-void problem_eval_grad_g_prod(const double *, const double *, double *);
+double problem_eval_objective(const double *);
+void problem_eval_objective_gradient(const double *, double *);
+void problem_eval_constraints(const double *, double *);
+void problem_eval_constraints_gradient_product(const double *, const double *, double *);
 }
 
 // Problem specification by inheriting from alpaqa::Problem
 struct FortranProblem : alpaqa::BoxConstrProblem<config_t> {
     using alpaqa::BoxConstrProblem<config_t>::BoxConstrProblem;
 
-    real_t eval_f(crvec x) const { return problem_eval_f(x.data()); }
-    void eval_grad_f(crvec x, rvec fx) const {
-        problem_eval_grad_f(x.data(), fx.data());
+    real_t eval_objective(crvec x) const { return problem_eval_objective(x.data()); }
+    void eval_objective_gradient(crvec x, rvec fx) const {
+        problem_eval_objective_gradient(x.data(), fx.data());
     }
-    void eval_g(crvec x, rvec gx) const { problem_eval_g(x.data(), gx.data()); }
-    void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const {
-        problem_eval_grad_g_prod(x.data(), y.data(), grad_gxy.data());
+    void eval_constraints(crvec x, rvec gx) const { problem_eval_constraints(x.data(), gx.data()); }
+    void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const {
+        problem_eval_constraints_gradient_product(x.data(), y.data(), grad_gxy.data());
     }
 };
 
@@ -88,7 +88,7 @@ int main() {
     std::cout << '\n' << *counted_problem.evaluations << '\n';
     std::cout << "status: " << stats.status << '\n'
               << "solver: " << solver.get_name() << '\n'
-              << "f = " << problem.eval_f(x) << '\n'
+              << "f = " << problem.eval_objective(x) << '\n'
               << "inner iterations: " << stats.inner.iterations << '\n'
               << "outer iterations: " << stats.outer_iterations << '\n'
               << "ε = " << stats.ε << '\n'

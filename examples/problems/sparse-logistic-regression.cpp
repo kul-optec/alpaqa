@@ -57,14 +57,14 @@ struct Problem {
     }
 
     /// Objective function.
-    real_t eval_f(const real_t *x_) const {
+    real_t eval_objective(const real_t *x_) const {
         cmvec x{x_, n};
         Ax.noalias() = A * x;
         return μ * logistic_loss(Ax);
     }
 
     /// Gradient of objective.
-    void eval_grad_f(const real_t *x_, real_t *g_) const {
+    void eval_objective_gradient(const real_t *x_, real_t *g_) const {
         cmvec x{x_, n};
         mvec g{g_, n};
         Ax.noalias() = A * x;
@@ -95,7 +95,7 @@ struct Problem {
     }
 
     /// Hessian-vector product of Lagrangian.
-    void eval_hess_L_prod(const real_t *x, [[maybe_unused]] const real_t *y,
+    void eval_lagrangian_hessian_product(const real_t *x, [[maybe_unused]] const real_t *y,
                           real_t scale, const real_t *v, real_t *Hv) const {
         eval_hess_f_prod(x, v, Hv);
         if (scale != 1)
@@ -103,16 +103,16 @@ struct Problem {
     }
 
     /// Hessian-vector product of augmented Lagrangian.
-    void eval_hess_ψ_prod(const real_t *x, const real_t *y,
+    void eval_augmented_lagrangian_hessian_product(const real_t *x, const real_t *y,
                           [[maybe_unused]] const real_t *Σ, real_t scale,
                           [[maybe_unused]] const real_t *zl,
                           [[maybe_unused]] const real_t *zu, const real_t *v,
                           real_t *Hv) const {
-        eval_hess_L_prod(x, y, scale, v, Hv);
+        eval_lagrangian_hessian_product(x, y, scale, v, Hv);
     }
 
     /// Hessian of Lagrangian.
-    void eval_hess_L(const real_t *x, [[maybe_unused]] const real_t *y,
+    void eval_lagrangian_hessian(const real_t *x, [[maybe_unused]] const real_t *y,
                      real_t scale, real_t *H) const {
         eval_hess_f(x, H);
         if (scale != 1)
@@ -120,15 +120,15 @@ struct Problem {
     }
 
     /// Hessian of augmented Lagrangian.
-    void eval_hess_ψ(const real_t *x, const real_t *y,
+    void eval_augmented_lagrangian_hessian(const real_t *x, const real_t *y,
                      [[maybe_unused]] const real_t *Σ, real_t scale,
                      [[maybe_unused]] const real_t *zl,
                      [[maybe_unused]] const real_t *zu, real_t *H) const {
-        eval_hess_L(x, y, scale, H);
+        eval_lagrangian_hessian(x, y, scale, H);
     }
 
     /// Both the objective and its gradient.
-    real_t eval_f_grad_f(const real_t *x_, real_t *g_) const {
+    real_t eval_objective_and_gradient(const real_t *x_, real_t *g_) const {
         cmvec x{x_, n};
         mvec g{g_, n};
         Ax.noalias() = A * x;
@@ -140,15 +140,15 @@ struct Problem {
     }
 
     /// Constraints function (unconstrained).
-    void eval_g(const real_t *, real_t *) const {}
+    void eval_constraints(const real_t *, real_t *) const {}
 
     /// Gradient-vector product of constraints.
-    void eval_grad_g_prod(const real_t *, const real_t *, real_t *gr_) const {
+    void eval_constraints_gradient_product(const real_t *, const real_t *, real_t *gr_) const {
         mvec{gr_, n}.setZero();
     }
 
     /// Jacobian of constraints.
-    void eval_jac_g(const real_t *, real_t *) const {}
+    void eval_constraints_jacobian(const real_t *, real_t *) const {}
 
     /// ℓ₁-regularization term.
     void initialize_l1_reg(real_t *lambda, length_t *size) const {
@@ -205,16 +205,16 @@ struct Problem {
         funcs.n                = n;
         funcs.m                = 0;
         funcs.name             = name.c_str();
-        funcs.eval_f           = member_caller<&P::eval_f>();
-        funcs.eval_grad_f      = member_caller<&P::eval_grad_f>();
-        funcs.eval_f_grad_f    = member_caller<&P::eval_f_grad_f>();
-        funcs.eval_g           = member_caller<&P::eval_g>();
-        funcs.eval_grad_g_prod = member_caller<&P::eval_grad_g_prod>();
-        funcs.eval_jac_g       = member_caller<&P::eval_jac_g>();
-        funcs.eval_hess_L_prod = member_caller<&P::eval_hess_L_prod>();
-        funcs.eval_hess_ψ_prod = member_caller<&P::eval_hess_ψ_prod>();
-        funcs.eval_hess_L      = member_caller<&P::eval_hess_L>();
-        funcs.eval_hess_ψ      = member_caller<&P::eval_hess_ψ>();
+        funcs.eval_objective           = member_caller<&P::eval_objective>();
+        funcs.eval_objective_gradient      = member_caller<&P::eval_objective_gradient>();
+        funcs.eval_objective_and_gradient    = member_caller<&P::eval_objective_and_gradient>();
+        funcs.eval_constraints           = member_caller<&P::eval_constraints>();
+        funcs.eval_constraints_gradient_product = member_caller<&P::eval_constraints_gradient_product>();
+        funcs.eval_constraints_jacobian       = member_caller<&P::eval_constraints_jacobian>();
+        funcs.eval_lagrangian_hessian_product = member_caller<&P::eval_lagrangian_hessian_product>();
+        funcs.eval_augmented_lagrangian_hessian_product = member_caller<&P::eval_augmented_lagrangian_hessian_product>();
+        funcs.eval_lagrangian_hessian      = member_caller<&P::eval_lagrangian_hessian>();
+        funcs.eval_augmented_lagrangian_hessian      = member_caller<&P::eval_augmented_lagrangian_hessian>();
         if (λ > 0)
             funcs.initialize_l1_reg = member_caller<&P::initialize_l1_reg>();
     }

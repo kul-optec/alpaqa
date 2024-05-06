@@ -53,7 +53,7 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
     qpalm::Solver solver{&qp, settings};
 
     // Dimensions
-    length_t n = problem.problem.get_n(), m = problem.problem.get_m();
+    length_t n = problem.problem.get_num_variables(), m = problem.problem.get_num_constraints();
     [[maybe_unused]] length_t num_bounds = static_cast<length_t>(qp.m) - m;
 
     // Initial guess
@@ -72,8 +72,8 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
                 "Invalid size for initial_guess_w (expected " +
                 std::to_string(n) + ", but got " + std::to_string(sz) + ")");
         initial_guess_mult.resize(static_cast<length_t>(qp.m));
-        if (problem.problem.provides_get_box_C())
-            compress_multipliers_bounds(problem.problem.get_box_C(),
+        if (problem.problem.provides_get_box_variables())
+            compress_multipliers_bounds(problem.problem.get_box_variables(),
                                         initial_guess_mult,
                                         problem.initial_guess_w);
         else
@@ -131,8 +131,8 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
         .extra              = {{"dua2_res_norm", info.dua2_res_norm}},
     };
     // Expand the multipliers for the bounds constraints again
-    if (problem.problem.provides_get_box_C())
-        expand_multipliers_bounds(problem.problem.get_box_C(), sol_y,
+    if (problem.problem.provides_get_box_variables())
+        expand_multipliers_bounds(problem.problem.get_box_variables(), sol_y,
                                   results.multipliers_bounds);
     return results;
 }

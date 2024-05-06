@@ -44,8 +44,8 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
     auto start_time = std::chrono::steady_clock::now();
     Stats s;
 
-    const auto n = problem.get_n();
-    const auto m = problem.get_m();
+    const auto n = problem.get_num_variables();
+    const auto m = problem.get_num_constraints();
 
     // Represents an intermediate proximal iterate in the algorithm.
     struct ProxIterate {
@@ -110,21 +110,21 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
     // Problem functions -------------------------------------------------------
 
     auto eval_ψ_grad_ψ = [&problem, &y, &Σ, &work_n, &work_m](Iterate &i) {
-        i.ψx = problem.eval_ψ_grad_ψ(i.x, y, Σ, i.grad_ψ, work_n, work_m);
+        i.ψx = problem.eval_augmented_lagrangian_and_gradient(i.x, y, Σ, i.grad_ψ, work_n, work_m);
     };
     auto eval_prox_grad_step = [&problem](Iterate &i) {
-        i.hx̂  = problem.eval_prox_grad_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
+        i.hx̂  = problem.eval_proximal_gradient_step(i.γ, i.x, i.grad_ψ, i.x̂, i.p);
         i.pᵀp = i.p.squaredNorm();
         i.grad_ψᵀp = i.p.dot(i.grad_ψ);
     };
     auto eval_cost_in_prox = [&problem, &y, &Σ](Iterate &i) {
-        i.ψx̂ = problem.eval_ψ(i.x̂, y, Σ, i.ŷx̂);
+        i.ψx̂ = problem.eval_augmented_lagrangian(i.x̂, y, Σ, i.ŷx̂);
     };
     auto eval_grad_in_prox = [&problem, &prox, &work_n](const Iterate &i) {
-        problem.eval_grad_L(i.x̂, i.ŷx̂, prox->grad_ψ, work_n);
+        problem.eval_lagrangian_gradient(i.x̂, i.ŷx̂, prox->grad_ψ, work_n);
     };
     auto eval_prox_grad_step_in_prox = [&problem, &prox](const Iterate &i) {
-        prox->hx̂ = problem.eval_prox_grad_step(i.γ, i.x̂, prox->grad_ψ, prox->x̂,
+        prox->hx̂ = problem.eval_proximal_gradient_step(i.γ, i.x̂, prox->grad_ψ, prox->x̂,
                                                prox->p);
         prox->pᵀp      = prox->p.squaredNorm();
         prox->grad_ψᵀp = prox->p.dot(prox->grad_ψ);

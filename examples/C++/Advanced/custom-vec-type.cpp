@@ -97,22 +97,22 @@ struct Problem : alpaqa::BoxConstrProblem<config_t> {
     }
 
     // Evaluate the cost
-    real_t eval_f(crvec x) const {
+    real_t eval_objective(crvec x) const {
         Qx = Q * alpaqa::cmvec<alpaqa::EigenConfigd>{x.data(), x.size()};
         return 0.5 * x.dot(crvec{Qx.data(), Qx.size()});
     }
     // Evaluat the gradient of the cost
-    void eval_grad_f(crvec x, rvec gr) const {
+    void eval_objective_gradient(crvec x, rvec gr) const {
         Qx = Q * alpaqa::cmvec<alpaqa::EigenConfigd>{x.data(), x.size()};
         gr = crvec{Qx.data(), Qx.size()};
     }
     // Evaluate the constraints
-    void eval_g(crvec x, rvec g) const {
+    void eval_constraints(crvec x, rvec g) const {
         Ax = A * alpaqa::cmvec<alpaqa::EigenConfigd>{x.data(), x.size()};
         g  = crvec{Ax.data(), Ax.size()};
     }
     // Evaluate a matrix-vector product with the gradient of the constraints
-    void eval_grad_g_prod(crvec x, crvec y, rvec gr) const {
+    void eval_constraints_gradient_product(crvec x, crvec y, rvec gr) const {
         (void)x;
         Qx = A.transpose() *
              alpaqa::cmvec<alpaqa::EigenConfigd>{y.data(), y.size()};

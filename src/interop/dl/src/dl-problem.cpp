@@ -220,24 +220,24 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
                                       alpaqa_register_arg_strings},
                 dl_flags} {}
 
-auto DLProblem::eval_proj_diff_g(crvec z, rvec e) const -> void {
-    if (functions->eval_proj_diff_g)
-        return functions->eval_proj_diff_g(instance.get(), z.data(), e.data());
-    return BoxConstrProblem<config_t>::eval_proj_diff_g(z, e);
+auto DLProblem::eval_projecting_difference_constraints(crvec z, rvec e) const -> void {
+    if (functions->eval_projecting_difference_constraints)
+        return functions->eval_projecting_difference_constraints(instance.get(), z.data(), e.data());
+    return BoxConstrProblem<config_t>::eval_projecting_difference_constraints(z, e);
 }
 
-auto DLProblem::eval_proj_multipliers(rvec y, real_t M) const -> void {
-    if (functions->eval_proj_multipliers)
-        return functions->eval_proj_multipliers(instance.get(), y.data(), M);
-    return BoxConstrProblem<config_t>::eval_proj_multipliers(y, M);
+auto DLProblem::eval_projection_multipliers(rvec y, real_t M) const -> void {
+    if (functions->eval_projection_multipliers)
+        return functions->eval_projection_multipliers(instance.get(), y.data(), M);
+    return BoxConstrProblem<config_t>::eval_projection_multipliers(y, M);
 }
 
-auto DLProblem::eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
+auto DLProblem::eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂,
                                     rvec p) const -> real_t {
-    if (functions->eval_prox_grad_step)
-        return functions->eval_prox_grad_step(
+    if (functions->eval_proximal_gradient_step)
+        return functions->eval_proximal_gradient_step(
             instance.get(), γ, x.data(), grad_ψ.data(), x̂.data(), p.data());
-    return BoxConstrProblem<config_t>::eval_prox_grad_step(γ, x, grad_ψ, x̂, p);
+    return BoxConstrProblem<config_t>::eval_proximal_gradient_step(γ, x, grad_ψ, x̂, p);
 }
 
 auto DLProblem::eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,
@@ -256,50 +256,50 @@ auto DLProblem::get_name() const -> std::string {
 }
 
 // clang-format off
-auto DLProblem::eval_f(crvec x) const -> real_t { return functions->eval_f(instance.get(), x.data()); }
-auto DLProblem::eval_grad_f(crvec x, rvec grad_fx) const -> void { return functions->eval_grad_f(instance.get(), x.data(), grad_fx.data()); }
-auto DLProblem::eval_g(crvec x, rvec gx) const -> void { return functions->eval_g(instance.get(), x.data(), gx.data()); }
-auto DLProblem::eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const -> void { return functions->eval_grad_g_prod(instance.get(), x.data(), y.data(), grad_gxy.data()); }
+auto DLProblem::eval_objective(crvec x) const -> real_t { return functions->eval_objective(instance.get(), x.data()); }
+auto DLProblem::eval_objective_gradient(crvec x, rvec grad_fx) const -> void { return functions->eval_objective_gradient(instance.get(), x.data(), grad_fx.data()); }
+auto DLProblem::eval_constraints(crvec x, rvec gx) const -> void { return functions->eval_constraints(instance.get(), x.data(), gx.data()); }
+auto DLProblem::eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const -> void { return functions->eval_constraints_gradient_product(instance.get(), x.data(), y.data(), grad_gxy.data()); }
 auto DLProblem::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const -> void { return functions->eval_grad_gi(instance.get(), x.data(), i, grad_gi.data()); }
-auto DLProblem::eval_jac_g(crvec x, rvec J_values) const -> void { return functions->eval_jac_g(instance.get(), x.data(), J_values.size() == 0 ? nullptr : J_values.data()); }
-auto DLProblem::get_jac_g_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_jac_g_sparsity(instance.get())); }
-auto DLProblem::eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_hess_L_prod(instance.get(), x.data(), y.data(), scale, v.data(), Hv.data()); }
-auto DLProblem::eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const -> void { return functions->eval_hess_L(instance.get(), x.data(), y.data(), scale, H_values.size() == 0 ? nullptr : H_values.data()); }
-auto DLProblem::get_hess_L_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_hess_L_sparsity(instance.get())); }
-auto DLProblem::eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_hess_ψ_prod(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), v.data(), Hv.data()); }
-auto DLProblem::eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const -> void { return functions->eval_hess_ψ(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
-auto DLProblem::get_hess_ψ_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_hess_ψ_sparsity(instance.get())); }
-auto DLProblem::eval_f_grad_f(crvec x, rvec grad_fx) const -> real_t { return functions->eval_f_grad_f(instance.get(), x.data(), grad_fx.data()); }
-auto DLProblem::eval_f_g(crvec x, rvec g) const -> real_t { return functions->eval_f_g(instance.get(), x.data(), g.data()); }
-auto DLProblem::eval_grad_f_grad_g_prod(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const -> void { return functions->eval_grad_f_grad_g_prod(instance.get(), x.data(), y.data(), grad_f.data(), grad_gxy.data()); }
-auto DLProblem::eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const -> void { return functions->eval_grad_L(instance.get(), x.data(), y.data(), grad_L.data(), work_n.data()); }
-auto DLProblem::eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const -> real_t { return functions->eval_ψ(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), ŷ.data()); }
-auto DLProblem::eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> void { return functions->eval_grad_ψ(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
-auto DLProblem::eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> real_t { return functions->eval_ψ_grad_ψ(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
+auto DLProblem::eval_constraints_jacobian(crvec x, rvec J_values) const -> void { return functions->eval_constraints_jacobian(instance.get(), x.data(), J_values.size() == 0 ? nullptr : J_values.data()); }
+auto DLProblem::get_constraints_jacobian_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_constraints_jacobian_sparsity(instance.get())); }
+auto DLProblem::eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_lagrangian_hessian_product(instance.get(), x.data(), y.data(), scale, v.data(), Hv.data()); }
+auto DLProblem::eval_lagrangian_hessian(crvec x, crvec y, real_t scale, rvec H_values) const -> void { return functions->eval_lagrangian_hessian(instance.get(), x.data(), y.data(), scale, H_values.size() == 0 ? nullptr : H_values.data()); }
+auto DLProblem::get_lagrangian_hessian_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_lagrangian_hessian_sparsity(instance.get())); }
+auto DLProblem::eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_augmented_lagrangian_hessian_product(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), v.data(), Hv.data()); }
+auto DLProblem::eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const -> void { return functions->eval_augmented_lagrangian_hessian(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
+auto DLProblem::get_augmented_lagrangian_hessian_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_augmented_lagrangian_hessian_sparsity(instance.get())); }
+auto DLProblem::eval_objective_and_gradient(crvec x, rvec grad_fx) const -> real_t { return functions->eval_objective_and_gradient(instance.get(), x.data(), grad_fx.data()); }
+auto DLProblem::eval_objective_and_constraints(crvec x, rvec g) const -> real_t { return functions->eval_objective_and_constraints(instance.get(), x.data(), g.data()); }
+auto DLProblem::eval_objective_gradient_and_constraints_gradient_product(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const -> void { return functions->eval_objective_gradient_and_constraints_gradient_product(instance.get(), x.data(), y.data(), grad_f.data(), grad_gxy.data()); }
+auto DLProblem::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L, rvec work_n) const -> void { return functions->eval_lagrangian_gradient(instance.get(), x.data(), y.data(), grad_L.data(), work_n.data()); }
+auto DLProblem::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const -> real_t { return functions->eval_augmented_lagrangian(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), ŷ.data()); }
+auto DLProblem::eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> void { return functions->eval_augmented_lagrangian_gradient(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
+auto DLProblem::eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> real_t { return functions->eval_augmented_lagrangian_and_gradient(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
 
-bool DLProblem::provides_eval_f() const { return functions->eval_f != nullptr; }
-bool DLProblem::provides_eval_grad_f() const { return functions->eval_grad_f != nullptr; }
-bool DLProblem::provides_eval_g() const { return functions->eval_g != nullptr; }
-bool DLProblem::provides_eval_grad_g_prod() const { return functions->eval_grad_g_prod != nullptr; }
-bool DLProblem::provides_eval_jac_g() const { return functions->eval_jac_g != nullptr; }
-bool DLProblem::provides_get_jac_g_sparsity() const { return functions->get_jac_g_sparsity != nullptr; }
+bool DLProblem::provides_eval_objective() const { return functions->eval_objective != nullptr; }
+bool DLProblem::provides_eval_objective_gradient() const { return functions->eval_objective_gradient != nullptr; }
+bool DLProblem::provides_eval_constraints() const { return functions->eval_constraints != nullptr; }
+bool DLProblem::provides_eval_constraints_gradient_product() const { return functions->eval_constraints_gradient_product != nullptr; }
+bool DLProblem::provides_eval_constraints_jacobian() const { return functions->eval_constraints_jacobian != nullptr; }
+bool DLProblem::provides_get_constraints_jacobian_sparsity() const { return functions->get_constraints_jacobian_sparsity != nullptr; }
 bool DLProblem::provides_eval_grad_gi() const { return functions->eval_grad_gi != nullptr; }
-bool DLProblem::provides_eval_hess_L_prod() const { return functions->eval_hess_L_prod != nullptr; }
-bool DLProblem::provides_eval_hess_L() const { return functions->eval_hess_L != nullptr; }
-bool DLProblem::provides_get_hess_L_sparsity() const { return functions->get_hess_L_sparsity != nullptr; }
-bool DLProblem::provides_eval_hess_ψ_prod() const { return functions->eval_hess_ψ_prod != nullptr; }
-bool DLProblem::provides_eval_hess_ψ() const { return functions->eval_hess_ψ != nullptr; }
-bool DLProblem::provides_get_hess_ψ_sparsity() const { return functions->get_hess_ψ_sparsity != nullptr; }
-bool DLProblem::provides_eval_f_grad_f() const { return functions->eval_f_grad_f != nullptr; }
-bool DLProblem::provides_eval_f_g() const { return functions->eval_f_g != nullptr; }
-bool DLProblem::provides_eval_grad_f_grad_g_prod() const { return functions->eval_grad_f_grad_g_prod != nullptr; }
-bool DLProblem::provides_eval_grad_L() const { return functions->eval_grad_L != nullptr; }
-bool DLProblem::provides_eval_ψ() const { return functions->eval_ψ != nullptr; }
-bool DLProblem::provides_eval_grad_ψ() const { return functions->eval_grad_ψ != nullptr; }
-bool DLProblem::provides_eval_ψ_grad_ψ() const { return functions->eval_ψ_grad_ψ != nullptr; }
-bool DLProblem::provides_get_box_C() const { return functions->eval_prox_grad_step == nullptr && BoxConstrProblem::provides_get_box_C(); }
-bool DLProblem::provides_get_box_D() const { return functions->eval_proj_diff_g == nullptr; }
-bool DLProblem::provides_eval_inactive_indices_res_lna() const { return functions->eval_prox_grad_step == nullptr || functions->eval_inactive_indices_res_lna != nullptr; }
+bool DLProblem::provides_eval_lagrangian_hessian_product() const { return functions->eval_lagrangian_hessian_product != nullptr; }
+bool DLProblem::provides_eval_lagrangian_hessian() const { return functions->eval_lagrangian_hessian != nullptr; }
+bool DLProblem::provides_get_lagrangian_hessian_sparsity() const { return functions->get_lagrangian_hessian_sparsity != nullptr; }
+bool DLProblem::provides_eval_augmented_lagrangian_hessian_product() const { return functions->eval_augmented_lagrangian_hessian_product != nullptr; }
+bool DLProblem::provides_eval_augmented_lagrangian_hessian() const { return functions->eval_augmented_lagrangian_hessian != nullptr; }
+bool DLProblem::provides_get_augmented_lagrangian_hessian_sparsity() const { return functions->get_augmented_lagrangian_hessian_sparsity != nullptr; }
+bool DLProblem::provides_eval_objective_and_gradient() const { return functions->eval_objective_and_gradient != nullptr; }
+bool DLProblem::provides_eval_objective_and_constraints() const { return functions->eval_objective_and_constraints != nullptr; }
+bool DLProblem::provides_eval_objective_gradient_and_constraints_gradient_product() const { return functions->eval_objective_gradient_and_constraints_gradient_product != nullptr; }
+bool DLProblem::provides_eval_lagrangian_gradient() const { return functions->eval_lagrangian_gradient != nullptr; }
+bool DLProblem::provides_eval_augmented_lagrangian() const { return functions->eval_augmented_lagrangian != nullptr; }
+bool DLProblem::provides_eval_augmented_lagrangian_gradient() const { return functions->eval_augmented_lagrangian_gradient != nullptr; }
+bool DLProblem::provides_eval_augmented_lagrangian_and_gradient() const { return functions->eval_augmented_lagrangian_and_gradient != nullptr; }
+bool DLProblem::provides_get_box_variables() const { return functions->eval_proximal_gradient_step == nullptr && BoxConstrProblem::provides_get_box_variables(); }
+bool DLProblem::provides_get_box_general_constraints() const { return functions->eval_projecting_difference_constraints == nullptr; }
+bool DLProblem::provides_eval_inactive_indices_res_lna() const { return functions->eval_proximal_gradient_step == nullptr || functions->eval_inactive_indices_res_lna != nullptr; }
 // clang-format on
 
 #if ALPAQA_WITH_OCP

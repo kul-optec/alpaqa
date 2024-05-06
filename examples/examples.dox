@@ -23,13 +23,13 @@
  * The problem is specified by creating a class (`Problem`) that inherits from
  * alpaqa's @ref alpaqa::BoxConstrProblem class. It defines the problem-specific
  * functions for the evaluation of the cost function @f$ f(x) = \tfrac12 \tp xQx @f$
- * (@ref alpaqa::TypeErasedProblem::eval_f "eval_f") and its gradient
- * @f$ \nabla f(x) = Qx @f$ (@ref alpaqa::TypeErasedProblem::eval_grad_f "eval_grad_f"),
+ * (@ref alpaqa::TypeErasedProblem::eval_objective "eval_objective") and its gradient
+ * @f$ \nabla f(x) = Qx @f$ (@ref alpaqa::TypeErasedProblem::eval_objective_gradient "eval_objective_gradient"),
  * as well as the constraint function @f$ g(x) = Ax @f$
- * (@ref alpaqa::TypeErasedProblem::eval_g "eval_g") and the function that
+ * (@ref alpaqa::TypeErasedProblem::eval_constraints "eval_constraints") and the function that
  * evaluates the product of the gradient of the constraints and a given vector
  * @f$ y @f$, @f$ \nabla g(x)\,y = \tp A y @f$
- * (@ref alpaqa::TypeErasedProblem::eval_grad_g_prod "eval_grad_g_prod").
+ * (@ref alpaqa::TypeErasedProblem::eval_constraints_gradient_product "eval_constraints_gradient_product").
  *
  * If you have more efficient ways to combine evaluations of these functions and
  * gradients, you can specify them as well, see the
@@ -38,9 +38,9 @@
  *
  * The @ref alpaqa::BoxConstrProblem class exposes the two constraint sets,
  * @f$ x \in C @f$ and @f$ g(x) \in D @f$, and provides the projection functions
- * (@ref alpaqa::TypeErasedProblem::eval_prox_grad_step "eval_prox_grad_step", 
- * @ref alpaqa::TypeErasedProblem::eval_proj_diff_g "eval_proj_diff_g" and
- * @ref alpaqa::TypeErasedProblem::eval_proj_multipliers "eval_proj_multipliers")
+ * (@ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step", 
+ * @ref alpaqa::TypeErasedProblem::eval_projecting_difference_constraints "eval_projecting_difference_constraints" and
+ * @ref alpaqa::TypeErasedProblem::eval_projection_multipliers "eval_projection_multipliers")
  * for you.
  * The @ref alpaqa::BoxConstrProblem constructor accepts the number of variables
  * @f$ n = 2 @f$ and the number of constraints @f$ m = 1 @f$ as arguments.

@@ -90,46 +90,46 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
                              char sep = ',');
 
     // clang-format off
-    [[nodiscard]] real_t eval_f(crvec x) const;
-    void eval_grad_f(crvec x, rvec grad_fx) const;
-    real_t eval_f_grad_f(crvec x, rvec grad_fx) const; // NOLINT(*nodiscard)
-    void eval_g(crvec x, rvec g) const;
-    void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const;
-    void eval_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const;
-    real_t eval_ψ_grad_ψ(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const; // NOLINT(*nodiscard)
-    void eval_grad_L(crvec x, crvec y, rvec grad_L, rvec work_n) const;
-    [[nodiscard]] real_t eval_ψ(crvec x, crvec y, crvec Σ, rvec ŷ) const;
+    [[nodiscard]] real_t eval_objective(crvec x) const;
+    void eval_objective_gradient(crvec x, rvec grad_fx) const;
+    real_t eval_objective_and_gradient(crvec x, rvec grad_fx) const; // NOLINT(*nodiscard)
+    void eval_constraints(crvec x, rvec g) const;
+    void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const;
+    void eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const;
+    real_t eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const; // NOLINT(*nodiscard)
+    void eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L, rvec work_n) const;
+    [[nodiscard]] real_t eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const;
     void eval_grad_gi(crvec x, index_t i, rvec grad_i) const;
-    [[nodiscard]] Sparsity get_jac_g_sparsity() const;
-    void eval_jac_g(crvec x, rvec J_values) const;
-    void eval_hess_L_prod(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const;
-    [[nodiscard]] Sparsity get_hess_L_sparsity() const;
-    void eval_hess_L(crvec x, crvec y, real_t scale, rvec H_values) const;
-    void eval_hess_ψ_prod(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const;
-    [[nodiscard]] Sparsity get_hess_ψ_sparsity() const;
-    void eval_hess_ψ(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const;
+    [[nodiscard]] Sparsity get_constraints_jacobian_sparsity() const;
+    void eval_constraints_jacobian(crvec x, rvec J_values) const;
+    void eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const;
+    [[nodiscard]] Sparsity get_lagrangian_hessian_sparsity() const;
+    void eval_lagrangian_hessian(crvec x, crvec y, real_t scale, rvec H_values) const;
+    void eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const;
+    [[nodiscard]] Sparsity get_augmented_lagrangian_hessian_sparsity() const;
+    void eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const;
     // clang-format on
 
-    /// @see @ref TypeErasedProblem::provides_eval_grad_L
-    [[nodiscard]] bool provides_eval_grad_L() const;
-    /// @see @ref TypeErasedProblem::provides_eval_ψ
-    [[nodiscard]] bool provides_eval_ψ() const;
-    /// @see @ref TypeErasedProblem::provides_eval_grad_ψ
-    [[nodiscard]] bool provides_eval_grad_ψ() const;
-    /// @see @ref TypeErasedProblem::provides_eval_ψ_grad_ψ
-    [[nodiscard]] bool provides_eval_ψ_grad_ψ() const;
+    /// @see @ref TypeErasedProblem::provides_eval_lagrangian_gradient
+    [[nodiscard]] bool provides_eval_lagrangian_gradient() const;
+    /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian
+    [[nodiscard]] bool provides_eval_augmented_lagrangian() const;
+    /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_gradient
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_gradient() const;
+    /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_and_gradient
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_and_gradient() const;
     /// @see @ref TypeErasedProblem::provides_eval_grad_gi
     [[nodiscard]] bool provides_eval_grad_gi() const;
-    /// @see @ref TypeErasedProblem::provides_eval_jac_g
-    [[nodiscard]] bool provides_eval_jac_g() const;
-    /// @see @ref TypeErasedProblem::provides_eval_hess_L_prod
-    [[nodiscard]] bool provides_eval_hess_L_prod() const;
-    /// @see @ref TypeErasedProblem::provides_eval_hess_L
-    [[nodiscard]] bool provides_eval_hess_L() const;
-    /// @see @ref TypeErasedProblem::provides_eval_hess_ψ_prod
-    [[nodiscard]] bool provides_eval_hess_ψ_prod() const;
-    /// @see @ref TypeErasedProblem::provides_eval_hess_ψ
-    [[nodiscard]] bool provides_eval_hess_ψ() const;
+    /// @see @ref TypeErasedProblem::provides_eval_constraints_jacobian
+    [[nodiscard]] bool provides_eval_constraints_jacobian() const;
+    /// @see @ref TypeErasedProblem::provides_eval_lagrangian_hessian_product
+    [[nodiscard]] bool provides_eval_lagrangian_hessian_product() const;
+    /// @see @ref TypeErasedProblem::provides_eval_lagrangian_hessian
+    [[nodiscard]] bool provides_eval_lagrangian_hessian() const;
+    /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_hessian_product
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian_product() const;
+    /// @see @ref TypeErasedProblem::provides_eval_augmented_lagrangian_hessian
+    [[nodiscard]] bool provides_eval_augmented_lagrangian_hessian() const;
 
     /// @see @ref TypeErasedProblem::get_name
     [[nodiscard]] std::string get_name() const;

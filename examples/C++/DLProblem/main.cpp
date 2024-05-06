@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
     auto counted_problem = alpaqa::problem_with_counters_ref(problem);
 
     // Specify the bounds (optional, overrides any bounds set in problem.c)
-    length_t n           = problem.get_n();
-    length_t m           = problem.get_m();
+    length_t n           = problem.get_num_variables();
+    length_t m           = problem.get_num_constraints();
     vec b                = vec::Constant(m, -1);
     problem.C.lowerbound = vec::Constant(n, -alpaqa::inf<config_t>);
     problem.C.upperbound = vec::Constant(n, +alpaqa::inf<config_t>);
@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     std::cout << '\n' << *counted_problem.evaluations << '\n';
     std::cout << "status: " << stats.status << '\n'
               << "solver: " << solver.get_name() << '\n'
-              << "f = " << problem.eval_f(x) << '\n'
+              << "f = " << problem.eval_objective(x) << '\n'
               << "inner iterations: " << stats.inner.iterations << '\n'
               << "outer iterations: " << stats.outer_iterations << '\n'
               << "ε = " << stats.ε << '\n'

@@ -6,8 +6,8 @@ int main() {
 
     struct Problem : alpaqa::UnconstrProblem<config_t> {
         Problem() : UnconstrProblem{1} {}
-        real_t eval_f(crvec) const { return 0; }
-        void eval_grad_f(crvec, rvec gr) const { gr.setZero(); }
+        real_t eval_objective(crvec) const { return 0; }
+        void eval_objective_gradient(crvec, rvec gr) const { gr.setZero(); }
     };
 
     Problem problem;

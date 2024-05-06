@@ -209,10 +209,10 @@ typedef struct {
 /// Used by @ref alpaqa::dl::DLProblem.
 ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
     /// Number of decision variables.
-    /// @see @ref alpaqa::TypeErasedProblem::get_n()
+    /// @see @ref alpaqa::TypeErasedProblem::get_num_variables()
     alpaqa_length_t n ALPAQA_DEFAULT(0);
     /// Number of constraints.
-    /// @see @ref alpaqa::TypeErasedProblem::get_m()
+    /// @see @ref alpaqa::TypeErasedProblem::get_num_constraints()
     alpaqa_length_t m ALPAQA_DEFAULT(0);
     /// Name of the problem.
     /// @see @ref alpaqa::TypeErasedProblem::get_name()
@@ -220,25 +220,25 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
 
     // clang-format off
     /// Cost function.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_f()
-    alpaqa_real_t (*eval_f)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_objective()
+    alpaqa_real_t (*eval_objective)(
         void *instance,
         const alpaqa_real_t *x) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the cost function.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_f()
-    void (*eval_grad_f)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_objective_gradient()
+    void (*eval_objective_gradient)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *grad_fx) ALPAQA_DEFAULT(nullptr);
     /// Constraints function.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_g()
-    void (*eval_g)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_constraints()
+    void (*eval_constraints)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *gx) ALPAQA_DEFAULT(nullptr);
     /// Gradient-vector product of the constraints function.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_g_prod()
-    void (*eval_grad_g_prod)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_constraints_gradient_product()
+    void (*eval_constraints_gradient_product)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -246,21 +246,21 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
 
     /// Difference between point and its projection onto the general constraint
     /// set D.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_proj_diff_g()
-    void (*eval_proj_diff_g)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_projecting_difference_constraints()
+    void (*eval_projecting_difference_constraints)(
         void *instance,
         const alpaqa_real_t *z,
         alpaqa_real_t *e) ALPAQA_DEFAULT(nullptr);
     /// Project the Lagrange multipliers.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_proj_multipliers()
-    void (*eval_proj_multipliers)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_projection_multipliers()
+    void (*eval_projection_multipliers)(
         void *instance,
         alpaqa_real_t *y, alpaqa_real_t M);
     /// Proximal gradient step.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_prox_grad_step()
+    /// @see @ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step()
     /// If not set, the default implementation from
     /// @ref alpaqa::BoxConstrProblem is used.
-    alpaqa_real_t (*eval_prox_grad_step)(
+    alpaqa_real_t (*eval_proximal_gradient_step)(
         void *instance,
         alpaqa_real_t γ,
         const alpaqa_real_t *x,
@@ -279,14 +279,14 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         alpaqa_index_t *J) ALPAQA_DEFAULT(nullptr);
 
     /// Jacobian of the constraints function.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_jac_g()
-    void (*eval_jac_g)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_constraints_jacobian()
+    void (*eval_constraints_jacobian)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *J_values) ALPAQA_DEFAULT(nullptr);
     /// Get the sparsity pattern of the Jacobian of the constraints function.
-    /// @see @ref alpaqa::TypeErasedProblem::get_jac_g_sparsity()
-    alpaqa_sparsity_t (*get_jac_g_sparsity)(
+    /// @see @ref alpaqa::TypeErasedProblem::get_constraints_jacobian_sparsity()
+    alpaqa_sparsity_t (*get_constraints_jacobian_sparsity)(
         void *instance) ALPAQA_DEFAULT(nullptr);
     /// Gradient of specific constraint function.
     /// @see @ref alpaqa::TypeErasedProblem::eval_grad_gi()
@@ -296,8 +296,8 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         alpaqa_index_t i,
         alpaqa_real_t *grad_gi) ALPAQA_DEFAULT(nullptr);
     /// Hessian-vector product of the Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_L_prod()
-    void (*eval_hess_L_prod)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_lagrangian_hessian_product()
+    void (*eval_lagrangian_hessian_product)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -305,20 +305,20 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *v,
         alpaqa_real_t *Hv) ALPAQA_DEFAULT(nullptr);
     /// Hessian of the Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_L()
-    void (*eval_hess_L)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_lagrangian_hessian()
+    void (*eval_lagrangian_hessian)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t scale,
         alpaqa_real_t *H_values) ALPAQA_DEFAULT(nullptr);
     /// Get the sparsity pattern of the Hessian of the Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::get_hess_L_sparsity()
-    alpaqa_sparsity_t (*get_hess_L_sparsity)(
+    /// @see @ref alpaqa::TypeErasedProblem::get_lagrangian_hessian_sparsity()
+    alpaqa_sparsity_t (*get_lagrangian_hessian_sparsity)(
         void *instance) ALPAQA_DEFAULT(nullptr);
     /// Hessian-vector product of the augmented Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_ψ_prod()
-    void (*eval_hess_ψ_prod)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_hessian_product()
+    void (*eval_augmented_lagrangian_hessian_product)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -329,8 +329,8 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *v,
         alpaqa_real_t *Hv) ALPAQA_DEFAULT(nullptr);
     /// Hessian of the augmented Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_hess_ψ()
-    void (*eval_hess_ψ)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_hessian()
+    void (*eval_augmented_lagrangian_hessian)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -340,33 +340,33 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *zu,
         alpaqa_real_t *H_values) ALPAQA_DEFAULT(nullptr);
     /// Get the sparsity pattern of the Hessian of the augmented Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::get_hess_ψ_sparsity()
-    alpaqa_sparsity_t (*get_hess_ψ_sparsity)(
+    /// @see @ref alpaqa::TypeErasedProblem::get_augmented_lagrangian_hessian_sparsity()
+    alpaqa_sparsity_t (*get_augmented_lagrangian_hessian_sparsity)(
         void *instance) ALPAQA_DEFAULT(nullptr);
 
     /// Cost and its gradient.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_f_grad_f()
-    alpaqa_real_t (*eval_f_grad_f)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_objective_and_gradient()
+    alpaqa_real_t (*eval_objective_and_gradient)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *grad_fx) ALPAQA_DEFAULT(nullptr);
     /// Cost and constraints.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_f_g()
-    alpaqa_real_t (*eval_f_g)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_objective_and_constraints()
+    alpaqa_real_t (*eval_objective_and_constraints)(
         void *instance,
         const alpaqa_real_t *x,
         alpaqa_real_t *g) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the cost and gradient-vector product of the constraints.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_f_grad_g_prod()
-    void (*eval_grad_f_grad_g_prod)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_objective_gradient_and_constraints_gradient_product()
+    void (*eval_objective_gradient_and_constraints_gradient_product)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
         alpaqa_real_t *grad_f,
         alpaqa_real_t *grad_gxy) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_L()
-    void (*eval_grad_L)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_lagrangian_gradient()
+    void (*eval_lagrangian_gradient)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -374,8 +374,8 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         alpaqa_real_t *work_n) ALPAQA_DEFAULT(nullptr);
 
     /// Augmented Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_ψ()
-    alpaqa_real_t (*eval_ψ)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian()
+    alpaqa_real_t (*eval_augmented_lagrangian)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -384,8 +384,8 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         const alpaqa_real_t *zu,
         alpaqa_real_t *ŷ) ALPAQA_DEFAULT(nullptr);
     /// Gradient of the augmented Lagrangian.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_grad_ψ()
-    void (*eval_grad_ψ)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_gradient()
+    void (*eval_augmented_lagrangian_gradient)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,
@@ -396,8 +396,8 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         alpaqa_real_t *work_n,
         alpaqa_real_t *work_m) ALPAQA_DEFAULT(nullptr);
     /// Augmented Lagrangian and its gradient.
-    /// @see @ref alpaqa::TypeErasedProblem::eval_ψ_grad_ψ()
-    alpaqa_real_t (*eval_ψ_grad_ψ)(
+    /// @see @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_and_gradient()
+    alpaqa_real_t (*eval_augmented_lagrangian_and_gradient)(
         void *instance,
         const alpaqa_real_t *x,
         const alpaqa_real_t *y,

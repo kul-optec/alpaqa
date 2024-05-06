@@ -50,7 +50,7 @@ struct LBFGSDirection {
                     [[maybe_unused]] crvec x_0, [[maybe_unused]] crvec x̂_0,
                     [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
-        lbfgs.resize(problem.get_n());
+        lbfgs.resize(problem.get_num_variables());
     }
 
     /// @see @ref PANOCDirection::has_initial_direction

@@ -22,18 +22,18 @@ auto checked_inner_solve() {
     return [](Solver &solver, const Problem &problem,
               const alpaqa::InnerSolveOptions<config_t> &opts, std::optional<vec> x,
               std::optional<vec> y, std::optional<vec> Σ, bool async, bool suppress_interrupt) {
-        alpaqa::util::check_dim_msg<vec>(x, problem.get_n(),
+        alpaqa::util::check_dim_msg<vec>(x, problem.get_num_variables(),
                                          "Length of x does not match problem size problem.n");
         bool ret_y = y.has_value();
-        if (!y && problem.get_m() > 0)
+        if (!y && problem.get_num_constraints() > 0)
             throw std::invalid_argument("Missing argument y");
-        alpaqa::util::check_dim_msg<vec>(y, problem.get_m(),
+        alpaqa::util::check_dim_msg<vec>(y, problem.get_num_constraints(),
                                          "Length of y does not match problem size problem.m");
-        if (!Σ && problem.get_m() > 0)
+        if (!Σ && problem.get_num_constraints() > 0)
             throw std::invalid_argument("Missing argument Σ");
-        alpaqa::util::check_dim_msg<vec>(Σ, problem.get_m(),
+        alpaqa::util::check_dim_msg<vec>(Σ, problem.get_num_constraints(),
                                          "Length of Σ does not match problem size problem.m");
-        vec err_z          = vec::Zero(problem.get_m());
+        vec err_z          = vec::Zero(problem.get_num_constraints());
         auto invoke_solver = [&] { return solver(problem, opts, *x, *y, *Σ, err_z); };
         auto &&stats       = async_solve(async, suppress_interrupt, solver, invoke_solver, problem);
         return ret_y ? py::make_tuple(std::move(*x), std::move(*y), std::move(err_z),

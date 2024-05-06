@@ -20,11 +20,11 @@ struct Problem : alpaqa::BoxConstrProblem<alpaqa::DefaultConfig> {
     Problem(const std::filesystem::path &problem_dir);
 
     /// Evaluate the cost
-    real_t eval_f(crvec x) const;
+    real_t eval_objective(crvec x) const;
     /// Evaluate the gradient of the cost
-    void eval_grad_f(crvec x, rvec gr) const;
+    void eval_objective_gradient(crvec x, rvec gr) const;
     /// Evaluate the constraints
-    void eval_g(crvec x, rvec g) const;
+    void eval_constraints(crvec x, rvec g) const;
     /// Evaluate a matrix-vector product with the gradient of the constraints
-    void eval_grad_g_prod(crvec x, crvec y, rvec gr) const;
+    void eval_constraints_gradient_product(crvec x, crvec y, rvec gr) const;
 };

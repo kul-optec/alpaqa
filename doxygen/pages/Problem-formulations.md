@@ -23,10 +23,10 @@ constraints function.
 
 The solver needs to be able to evaluate the following required functions and
 derivatives:
-  - @ref alpaqa::TypeErasedProblem::eval_f "eval_f"                     @f$ : \Rn \to \R : x \mapsto f(x) @f$ (objective function)
-  - @ref alpaqa::TypeErasedProblem::eval_grad_f "eval_grad_f"           @f$ : \Rn \to \Rn : x \mapsto \nabla f(x) @f$ (gradient of the objective)
-  - @ref alpaqa::TypeErasedProblem::eval_g "eval_g"                     @f$ : \Rn \to \Rm : x \mapsto g(x) @f$ (constraint function)
-  - @ref alpaqa::TypeErasedProblem::eval_grad_g_prod "eval_grad_g_prod" @f$ : \Rn \times \Rm \to \Rn : (x, y) \mapsto \nabla g(x)\, y @f$ (gradient-vector product of the constraints)
+  - @ref alpaqa::TypeErasedProblem::eval_objective "eval_objective"                     @f$ : \Rn \to \R : x \mapsto f(x) @f$ (objective function)
+  - @ref alpaqa::TypeErasedProblem::eval_objective_gradient "eval_objective_gradient"           @f$ : \Rn \to \Rn : x \mapsto \nabla f(x) @f$ (gradient of the objective)
+  - @ref alpaqa::TypeErasedProblem::eval_constraints "eval_constraints"                     @f$ : \Rn \to \Rm : x \mapsto g(x) @f$ (constraint function)
+  - @ref alpaqa::TypeErasedProblem::eval_constraints_gradient_product "eval_constraints_gradient_product" @f$ : \Rn \times \Rm \to \Rn : (x, y) \mapsto \nabla g(x)\, y @f$ (gradient-vector product of the constraints)
 
 Usually, [automatic differentiation](https://en.wikipedia.org/wiki/Automatic_differentiation)
 (AD) is used to evaluate the gradients and gradient-vector products. Many AD
@@ -44,9 +44,9 @@ Additionally, the solver needs to be able to project onto the rectangular sets
 
 <!-- Given two boxes @f$ C @f$ and @f$ D @f$, the @ref alpaqa::BoxConstrProblem "BoxConstrProblem"
 class provides default implementations for the necessary projections:
-@ref alpaqa::TypeErasedProblem::eval_proj_diff_g "eval_proj_diff_g",
-@ref alpaqa::TypeErasedProblem::eval_proj_multipliers "eval_proj_multipliers" and
-@ref alpaqa::TypeErasedProblem::eval_prox_grad_step "eval_prox_grad_step". -->
+@ref alpaqa::TypeErasedProblem::eval_projecting_difference_constraints "eval_projecting_difference_constraints",
+@ref alpaqa::TypeErasedProblem::eval_projection_multipliers "eval_projection_multipliers" and
+@ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step". -->
 
 ## Problem API
 
@@ -66,25 +66,25 @@ alpaqa solvers. Detailed descriptions of each function can be found in the
 struct RosenbrockProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     // Problem dimensions
-    length_t get_n() const; // number of unknowns
-    length_t get_m() const; // number of general constraints
+    length_t get_num_variables() const; // number of unknowns
+    length_t get_num_constraints() const; // number of general constraints
 
     // Cost
-    real_t eval_f(crvec x) const;
+    real_t eval_objective(crvec x) const;
     // Gradient of cost
-    void eval_grad_f(crvec x, rvec grad_fx) const;
+    void eval_objective_gradient(crvec x, rvec grad_fx) const;
 
     // Constraints
-    void eval_g(crvec x, rvec gx) const;
+    void eval_constraints(crvec x, rvec gx) const;
     // Gradient-vector product of constraints
-    void eval_grad_g_prod(crvec x, crvec y, rvec grad_gxy) const;
+    void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const;
 
     // Proximal gradient step
-    real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad, rvec x̂, rvec p) const;
+    real_t eval_proximal_gradient_step(real_t γ, crvec x, crvec grad, rvec x̂, rvec p) const;
     // Projecting difference onto constraint set D
-    void eval_proj_diff_g(crvec z, rvec p) const;
+    void eval_projecting_difference_constraints(crvec z, rvec p) const;
     // Projection of Lagrange multipliers
-    void eval_proj_multipliers(rvec y, real_t max_y) const;
+    void eval_projection_multipliers(rvec y, real_t max_y) const;
 };
 ```
 
@@ -93,9 +93,9 @@ struct RosenbrockProblem {
 Convenience classes with default implementations of some of these functions are
 provided for common use cases:
   - @ref alpaqa::BoxConstrProblem "BoxConstrProblem" defines the 
-    @ref alpaqa::TypeErasedProblem::eval_proj_diff_g "eval_proj_diff_g",
-    @ref alpaqa::TypeErasedProblem::eval_proj_multipliers "eval_proj_multipliers" and
-    @ref alpaqa::TypeErasedProblem::eval_prox_grad_step "eval_prox_grad_step" functions
+    @ref alpaqa::TypeErasedProblem::eval_projecting_difference_constraints "eval_projecting_difference_constraints",
+    @ref alpaqa::TypeErasedProblem::eval_projection_multipliers "eval_projection_multipliers" and
+    @ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step" functions
     for the specific case where @f$ C @f$ and @f$ D @f$ are rectangular boxes,
     as in @f$ \eqref{eq:problem_main} @f$.
   - @ref alpaqa::UnconstrProblem "UnconstrProblem" defines those same functions,
@@ -117,15 +117,15 @@ continue with some more specialized use cases.
 Some solvers can exploit information about the Hessian of the (augmented)
 Lagrangian of the problem. To use these solvers, some of the following functions
 are required, they should be added as member functions to your problem struct.
-  - @ref alpaqa::TypeErasedProblem::eval_jac_g "eval_jac_g": Jacobian matrix of the constraints
-  - @ref alpaqa::TypeErasedProblem::get_jac_g_sparsity "get_jac_g_sparsity": sparsity pattern of the Jacobian of the constraints
+  - @ref alpaqa::TypeErasedProblem::eval_constraints_jacobian "eval_constraints_jacobian": Jacobian matrix of the constraints
+  - @ref alpaqa::TypeErasedProblem::get_constraints_jacobian_sparsity "get_constraints_jacobian_sparsity": sparsity pattern of the Jacobian of the constraints
   - @ref alpaqa::TypeErasedProblem::eval_grad_gi "eval_grad_gi": gradient of a specific constraint
-  - @ref alpaqa::TypeErasedProblem::eval_hess_L_prod "eval_hess_L_prod": Hessian-vector product of the Lagrangian
-  - @ref alpaqa::TypeErasedProblem::eval_hess_L "eval_hess_L": Hessian matrix of the Lagrangian
-  - @ref alpaqa::TypeErasedProblem::get_hess_L_sparsity "get_hess_L_sparsity": sparsity pattern of the Hessian of the Lagrangian
-  - @ref alpaqa::TypeErasedProblem::eval_hess_ψ_prod "eval_hess_ψ_prod": Hessian-vector product of the Hessian of the augmented Lagrangian
-  - @ref alpaqa::TypeErasedProblem::eval_hess_ψ "eval_hess_ψ": Hessian matrix of the augmented Lagrangian
-  - @ref alpaqa::TypeErasedProblem::get_hess_ψ_sparsity "get_hess_ψ_sparsity": sparsity pattern of the Hessian of the augmented Lagrangian
+  - @ref alpaqa::TypeErasedProblem::eval_lagrangian_hessian_product "eval_lagrangian_hessian_product": Hessian-vector product of the Lagrangian
+  - @ref alpaqa::TypeErasedProblem::eval_lagrangian_hessian "eval_lagrangian_hessian": Hessian matrix of the Lagrangian
+  - @ref alpaqa::TypeErasedProblem::get_lagrangian_hessian_sparsity "get_lagrangian_hessian_sparsity": sparsity pattern of the Hessian of the Lagrangian
+  - @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_hessian_product "eval_augmented_lagrangian_hessian_product": Hessian-vector product of the Hessian of the augmented Lagrangian
+  - @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_hessian "eval_augmented_lagrangian_hessian": Hessian matrix of the augmented Lagrangian
+  - @ref alpaqa::TypeErasedProblem::get_augmented_lagrangian_hessian_sparsity "get_augmented_lagrangian_hessian_sparsity": sparsity pattern of the Hessian of the augmented Lagrangian
 
 Matrices can be stored in a dense format, in [compressed sparse column storage](https://www.eigen.tuxfamily.org/dox/group__TutorialSparse.html#TutorialSparseIntro)
 (CCS) format, or in sparse coordinate list format (COO). Solvers convert the
@@ -144,9 +144,9 @@ that's not much higher than a gradient evaluation.
 
 The @ref alpaqa::TypeErasedProblem "TypeErasedProblem" class provides functions
 to query which optional problem functions are available. For example,
-@ref alpaqa::TypeErasedProblem::provides_eval_jac_g "provides_eval_jac_g"
+@ref alpaqa::TypeErasedProblem::provides_eval_constraints_jacobian "provides_eval_constraints_jacobian"
 returns true if the problem provides an implementation for
-@ref alpaqa::TypeErasedProblem::eval_jac_g "eval_jac_g". Calling an optional
+@ref alpaqa::TypeErasedProblem::eval_constraints_jacobian "eval_constraints_jacobian". Calling an optional
 function that is not provided results in an @ref alpaqa::not_implemented_error
 exception being thrown.
 
@@ -164,14 +164,14 @@ produces the function value @f$ f(x) @f$ as a byproduct, motivating the
 simultaneous evaluation of these quantities as well.
 
 The full list of these combined evaluations can be found in the @ref alpaqa::TypeErasedProblem "TypeErasedProblem"
-documentation. They can be provided in the same fashion as `eval_f` above.
-  - @ref alpaqa::TypeErasedProblem::eval_f_grad_f "eval_f_grad_f": @f$ f(x) @f$ and @f$ \nabla f(x) @f$
-  - @ref alpaqa::TypeErasedProblem::eval_f_g "eval_f_g": @f$ f(x) @f$ and @f$ g(x) @f$
-  - @ref alpaqa::TypeErasedProblem::eval_grad_f_grad_g_prod "eval_grad_f_grad_g_prod": @f$ \nabla f(x) @f$ and @f$ \nabla g(x)\,y @f$
-  - @ref alpaqa::TypeErasedProblem::eval_grad_L "eval_grad_L": gradient of the Lagrangian: @f$ \nabla_{\!x} L(x, y) = \nabla f(x) + \nabla g(x)\,y @f$
-  - @ref alpaqa::TypeErasedProblem::eval_ψ "eval_ψ": augmented Lagrangian: @f$ \psi(x) @f$
-  - @ref alpaqa::TypeErasedProblem::eval_grad_ψ "eval_grad_ψ": gradient of the augmented Lagrangian: @f$ \nabla \psi(x) @f$
-  - @ref alpaqa::TypeErasedProblem::eval_ψ_grad_ψ "eval_ψ_grad_ψ": augmented Lagrangian and gradient: @f$ \psi(x) @f$ and @f$ \nabla \psi(x) @f$
+documentation. They can be provided in the same fashion as `eval_objective` above.
+  - @ref alpaqa::TypeErasedProblem::eval_objective_and_gradient "eval_objective_and_gradient": @f$ f(x) @f$ and @f$ \nabla f(x) @f$
+  - @ref alpaqa::TypeErasedProblem::eval_objective_and_constraints "eval_objective_and_constraints": @f$ f(x) @f$ and @f$ g(x) @f$
+  - @ref alpaqa::TypeErasedProblem::eval_objective_gradient_and_constraints_gradient_product "eval_objective_gradient_and_constraints_gradient_product": @f$ \nabla f(x) @f$ and @f$ \nabla g(x)\,y @f$
+  - @ref alpaqa::TypeErasedProblem::eval_lagrangian_gradient "eval_lagrangian_gradient": gradient of the Lagrangian: @f$ \nabla_{\!x} L(x, y) = \nabla f(x) + \nabla g(x)\,y @f$
+  - @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian "eval_augmented_lagrangian": augmented Lagrangian: @f$ \psi(x) @f$
+  - @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_gradient "eval_augmented_lagrangian_gradient": gradient of the augmented Lagrangian: @f$ \nabla \psi(x) @f$
+  - @ref alpaqa::TypeErasedProblem::eval_augmented_lagrangian_and_gradient "eval_augmented_lagrangian_and_gradient": augmented Lagrangian and gradient: @f$ \psi(x) @f$ and @f$ \nabla \psi(x) @f$
 
 ### Proximal operators
 
@@ -194,7 +194,7 @@ By selecting
 the standard NLP formulation @f$ \eqref{eq:problem_main} @f$ is recovered.
 
 To add a custom function @f$ h(x) @f$ to the problem formulation, it suffices to
-implement the @ref alpaqa::TypeErasedProblem::eval_prox_grad_step "eval_prox_grad_step"
+implement the @ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step"
 function, which computes a forward-backward step
 @f$ p = \prox_{\gamma h}\big(x - \gamma \nabla \psi(x)\big) - x @f$, where the
 current iterate @f$ x @f$, the gradient @f$ \nabla \psi(x) @f$ and a positive
@@ -210,7 +210,7 @@ in combination with the box constraints, is supported by the
 @ref alpaqa::BoxConstrProblem::l1_reg member.
 
 The @ref alpaqa::prox_step utility function can be used to implement
-@ref alpaqa::TypeErasedProblem::eval_prox_grad_step "eval_prox_grad_step". See
+@ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step". See
 @ref grp_Functions for details.
 
 ## Dynamically loading problems
@@ -239,10 +239,10 @@ using real_t = alpaqa_real_t;
 struct Problem {
     alpaqa_problem_functions_t funcs{};
 
-    real_t eval_f(const real_t *x_) const;
-    void eval_grad_f(const real_t *x_, real_t *gr_) const;
-    void eval_g(const real_t *x_, real_t *g_) const;
-    void eval_grad_g_prod(const real_t *x_, const real_t *y_, real_t *gr_) const;
+    real_t eval_objective(const real_t *x_) const;
+    void eval_objective_gradient(const real_t *x_, real_t *gr_) const;
+    void eval_constraints(const real_t *x_, real_t *g_) const;
+    void eval_constraints_gradient_product(const real_t *x_, const real_t *y_, real_t *gr_) const;
     void initialize_box_C(real_t *lb_, real_t *ub_) const;
     void initialize_box_D(real_t *lb_, real_t *ub_) const;
 
@@ -254,10 +254,10 @@ struct Problem {
         using alpaqa::member_caller;
         funcs.n                = 3; // number of variables
         funcs.m                = 2; // number of constraints
-        funcs.eval_f           = member_caller<&Problem::eval_f>();
-        funcs.eval_grad_f      = member_caller<&Problem::eval_grad_f>();
-        funcs.eval_g           = member_caller<&Problem::eval_g>();
-        funcs.eval_grad_g_prod = member_caller<&Problem::eval_grad_g_prod>();
+        funcs.eval_objective           = member_caller<&Problem::eval_objective>();
+        funcs.eval_objective_gradient      = member_caller<&Problem::eval_objective_gradient>();
+        funcs.eval_constraints           = member_caller<&Problem::eval_constraints>();
+        funcs.eval_constraints_gradient_product = member_caller<&Problem::eval_constraints_gradient_product>();
         funcs.initialize_box_C = member_caller<&Problem::initialize_box_C>();
         funcs.initialize_box_D = member_caller<&Problem::initialize_box_D>();
     }

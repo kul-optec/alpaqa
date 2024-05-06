@@ -78,9 +78,9 @@ class BoxConstrProblem {
     index_t penalty_alm_split = 0;
 
     /// Number of decision variables, @ref n
-    length_t get_n() const { return n; }
+    length_t get_num_variables() const { return n; }
     /// Number of constraints, @ref m
-    length_t get_m() const { return m; }
+    length_t get_num_constraints() const { return m; }
 
     /** Projected gradient step for rectangular box C.
       * @f[ \begin{aligned} \hat x &= \Pi_C(x - \gamma\nabla\psi(x)) \\
@@ -136,8 +136,8 @@ class BoxConstrProblem {
         return λ * norm_1(x̂);
     }
 
-    /// @see @ref TypeErasedProblem::eval_prox_grad_step
-    real_t eval_prox_grad_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
+    /// @see @ref TypeErasedProblem::eval_proximal_gradient_step
+    real_t eval_proximal_gradient_step(real_t γ, crvec x, crvec grad_ψ, rvec x̂, rvec p) const {
         if (l1_reg.size() == 0)
             return eval_proj_grad_step_box(C, γ, x, grad_ψ, x̂, p);
         else if constexpr (requires { l1_reg(0); })
@@ -146,8 +146,8 @@ class BoxConstrProblem {
         return eval_prox_grad_step_box_l1(C, l1_reg, γ, x, grad_ψ, x̂, p);
     }
 
-    /// @see @ref TypeErasedProblem::eval_proj_diff_g
-    void eval_proj_diff_g(crvec z, rvec p) const { p = projecting_difference(z, D); }
+    /// @see @ref TypeErasedProblem::eval_projecting_difference_constraints
+    void eval_projecting_difference_constraints(crvec z, rvec p) const { p = projecting_difference(z, D); }
 
     static void eval_proj_multipliers_box(const Box &D, rvec y, real_t M,
                                           index_t penalty_alm_split) {
@@ -164,19 +164,19 @@ class BoxConstrProblem {
         y_alm         = y_alm.cwiseMax(y_alm_lb).cwiseMin(y_alm_ub);
     }
 
-    /// @see @ref TypeErasedProblem::eval_proj_multipliers
-    void eval_proj_multipliers(rvec y, real_t M) const {
+    /// @see @ref TypeErasedProblem::eval_projection_multipliers
+    void eval_projection_multipliers(rvec y, real_t M) const {
         eval_proj_multipliers_box(D, y, M, penalty_alm_split);
     }
 
-    /// @see @ref TypeErasedProblem::get_box_C
-    const Box &get_box_C() const { return C; }
-    /// @see @ref TypeErasedProblem::get_box_D
-    const Box &get_box_D() const { return D; }
+    /// @see @ref TypeErasedProblem::get_box_variables
+    const Box &get_box_variables() const { return C; }
+    /// @see @ref TypeErasedProblem::get_box_general_constraints
+    const Box &get_box_general_constraints() const { return D; }
 
     /// Only supported if the ℓ₁-regularization term is zero.
-    /// @see @ref TypeErasedProblem::provides_get_box_C
-    [[nodiscard]] bool provides_get_box_C() const {
+    /// @see @ref TypeErasedProblem::provides_get_box_variables
+    [[nodiscard]] bool provides_get_box_variables() const {
         const auto nλ = l1_reg.size();
         if (nλ == 0)
             return true;

@@ -69,26 +69,26 @@ struct ConvexNewtonDirection {
                     [[maybe_unused]] crvec x_0, [[maybe_unused]] crvec x̂_0,
                     [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
-        if (problem.get_m() != 0)
+        if (problem.get_num_constraints() != 0)
             throw std::invalid_argument("Convex Newton direction does not "
                                         "support general constraints");
         if (!problem.provides_eval_inactive_indices_res_lna())
             throw std::invalid_argument("Convex Newton direction requires "
                                         "eval_inactive_indices_res_lna");
-        if (!problem.provides_eval_hess_L())
+        if (!problem.provides_eval_lagrangian_hessian())
             throw std::invalid_argument("Structured Newton requires "
-                                        "eval_hess_L");
+                                        "eval_lagrangian_hessian");
         // Store reference to problem
         this->problem = &problem;
         // Allocate workspaces
-        const auto n = problem.get_n();
+        const auto n = problem.get_num_variables();
         JK.resize(n);
         JK_old.resize(n);
         nJ_old = -1;
         H.resize(n, n);
         HJ_storage.resize(n * n);
         work.resize(n);
-        auto sparsity = problem.get_hess_ψ_sparsity();
+        auto sparsity = problem.get_lagrangian_hessian_sparsity();
         if (!is_dense(sparsity))
             std::cerr << "Sparse hessians not yet implemented, converting to "
                          "dense matrix (may be very slow)\n";
@@ -125,7 +125,9 @@ struct ConvexNewtonDirection {
         // Evaluate the Hessian
         if (!have_hess) {
             const auto &y = null_vec<config_t>;
-            auto eval_h = [&](rvec v) { problem->eval_hess_L(xₖ, y, 1, v); };
+            auto eval_h   = [&](rvec v) {
+                problem->eval_lagrangian_hessian(xₖ, y, 1, v);
+            };
             H_sparsity->convert_values(eval_h, H.reshaped());
             have_hess = direction_params.quadratic;
         }

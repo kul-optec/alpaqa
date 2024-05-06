@@ -48,7 +48,7 @@ alpaqa::DynamicLoadFlags get_dl_flags(Options &opts) {
 }
 
 void load_initial_guess(Options &opts, LoadedProblem &problem) {
-    const auto n = problem.problem.get_n(), m = problem.problem.get_m();
+    const auto n = problem.problem.get_num_variables(), m = problem.problem.get_num_constraints();
     alpaqa::params::vec_from_file<config_t> x0{n}, y0{m}, w0{n};
     set_params(x0, "x0", opts);
     if (x0.value)
@@ -83,16 +83,16 @@ void count_constr(ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
 }
 
 void count_problem(LoadedProblem &p) {
-    if (p.problem.provides_get_box_C())
-        count_constr(p.box_constr_count.emplace(), p.problem.get_box_C());
-    if (p.problem.provides_get_box_D())
-        count_constr(p.general_constr_count.emplace(), p.problem.get_box_D());
-    if (p.problem.provides_get_jac_g_sparsity())
-        p.nnz_jac_g = get_nnz(p.problem.get_jac_g_sparsity());
-    if (p.problem.provides_get_hess_L_sparsity())
-        p.nnz_hess_L = get_nnz(p.problem.get_hess_L_sparsity());
-    if (p.problem.provides_get_hess_ψ_sparsity())
-        p.nnz_hess_ψ = get_nnz(p.problem.get_hess_ψ_sparsity());
+    if (p.problem.provides_get_box_variables())
+        count_constr(p.box_constr_count.emplace(), p.problem.get_box_variables());
+    if (p.problem.provides_get_box_general_constraints())
+        count_constr(p.general_constr_count.emplace(), p.problem.get_box_general_constraints());
+    if (p.problem.provides_get_constraints_jacobian_sparsity())
+        p.nnz_jac_g = get_nnz(p.problem.get_constraints_jacobian_sparsity());
+    if (p.problem.provides_get_lagrangian_hessian_sparsity())
+        p.nnz_hess_L = get_nnz(p.problem.get_lagrangian_hessian_sparsity());
+    if (p.problem.provides_get_augmented_lagrangian_hessian_sparsity())
+        p.nnz_hess_ψ = get_nnz(p.problem.get_augmented_lagrangian_hessian_sparsity());
 }
 
 #if ALPAQA_WITH_DL

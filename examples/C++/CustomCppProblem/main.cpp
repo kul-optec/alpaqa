@@ -32,16 +32,16 @@ int main() {
         }
 
         // Evaluate the cost
-        real_t eval_f(crvec x) const {
+        real_t eval_objective(crvec x) const {
             Qx.noalias() = Q * x;
             return 0.5 * x.dot(Qx);
         }
         // Evaluat the gradient of the cost
-        void eval_grad_f(crvec x, rvec gr) const { gr.noalias() = Q * x; }
+        void eval_objective_gradient(crvec x, rvec gr) const { gr.noalias() = Q * x; }
         // Evaluate the constraints
-        void eval_g(crvec x, rvec g) const { g.noalias() = A * x; }
+        void eval_constraints(crvec x, rvec g) const { g.noalias() = A * x; }
         // Evaluate a matrix-vector product with the gradient of the constraints
-        void eval_grad_g_prod(crvec x, crvec y, rvec gr) const {
+        void eval_constraints_gradient_product(crvec x, crvec y, rvec gr) const {
             (void)x;
             gr.noalias() = A.transpose() * y;
         }
@@ -92,7 +92,7 @@ int main() {
     // Print the results
     std::cout << '\n' << *counted_problem.evaluations << '\n';
     std::cout << "status: " << stats.status << '\n'
-              << "f = " << problem.eval_f(x) << '\n'
+              << "f = " << problem.eval_objective(x) << '\n'
               << "inner iterations: " << stats.inner.iterations << '\n'
               << "outer iterations: " << stats.outer_iterations << '\n'
               << "ε = " << stats.ε << '\n'
