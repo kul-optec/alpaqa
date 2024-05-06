@@ -1,14 +1,14 @@
 # %% alpaqa nuclear norm example
 
 import alpaqa as pa
-from jax.config import config
+import jax
 import jax.numpy as jnp
 import jax.numpy.linalg as jla
 from jax import grad, jit
 from jax import random
 from pprint import pprint
 
-config.update("jax_enable_x64", True)
+jax.config.update("jax_enable_x64", True)
 
 # %% Define the problem functions
 

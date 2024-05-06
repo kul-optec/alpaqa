@@ -1,13 +1,13 @@
 # %% alpaqa lasso example
 
 import alpaqa as pa
-from jax.config import config
+import jax
 import jax.numpy as jnp
 from jax import grad, jit
 from jax import random
 from pprint import pprint
 
-config.update("jax_enable_x64", True)
+jax.config.update("jax_enable_x64", True)
 
 scale = 5000
 n, m = scale, scale * 2
