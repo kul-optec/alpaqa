@@ -60,7 +60,7 @@
             "toolchainFile": "$env{TOOLCHAIN_PREFIX}/$env{CROSS_COMPILE}.toolchain.cmake",
             "cacheVariables": {
                 "CMAKE_PREFIX_PATH": "$env{TOOLCHAIN_PREFIX}/mumps/usr/local;$env{TOOLCHAIN_PREFIX}/ipopt/usr/local",
-                "CMAKE_FIND_ROOT_PATH": "$env{TOOLCHAIN_PREFIX}/eigen-master;$env{TOOLCHAIN_PREFIX}/googletest;$env{TOOLCHAIN_PREFIX}/casadi;$env{TOOLCHAIN_PREFIX}/openblas;$env{TOOLCHAIN_PREFIX}/mumps;$env{TOOLCHAIN_PREFIX}/ipopt;$env{TOOLCHAIN_PREFIX}/qpalm;$env{TOOLCHAIN_PREFIX}/pybind11-2.13.6"
+                "CMAKE_FIND_ROOT_PATH": "$env{TOOLCHAIN_PREFIX}/eigen-master;$env{TOOLCHAIN_PREFIX}/guanaqo;$env{TOOLCHAIN_PREFIX}/googletest;$env{TOOLCHAIN_PREFIX}/casadi;$env{TOOLCHAIN_PREFIX}/openblas;$env{TOOLCHAIN_PREFIX}/mumps;$env{TOOLCHAIN_PREFIX}/ipopt;$env{TOOLCHAIN_PREFIX}/qpalm;$env{TOOLCHAIN_PREFIX}/pybind11-2.13.6"
             }
         },
         {

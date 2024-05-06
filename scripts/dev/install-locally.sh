@@ -24,6 +24,18 @@ if [ ! -d "$pfx/qpalm" ]; then
     mv "$pfx/QPALM-1.2.5-Linux" "$pfx/qpalm"
 fi
 
+# Install guanaqo
+if [ ! -d "$pfx/guanaqo" ]; then
+    mkdir -p "$pfx/download"
+    git clone git@github.com:tttapa/guanaqo.git "$pfx/download/guanaqo"
+    cmake -B "$pfx/download/guanaqo/build" -S "$pfx/download/guanaqo" -G "Ninja Multi-Config" \
+        -D BUILD_TESTING=Off -D CMAKE_STAGING_PREFIX="$pfx/guanaqo/usr/local" \
+        --toolchain "$pfx/$triple.toolchain.cmake"
+    for cfg in Debug RelWithDebInfo; do cmake --build "$pfx/download/guanaqo/build" -j --config $cfg; done
+    for cfg in Debug RelWithDebInfo; do cmake --install "$pfx/download/guanaqo/build" --config $cfg; done
+    for cfg in Debug RelWithDebInfo; do cmake --install "$pfx/download/guanaqo/build" --config $cfg --component debug; done
+fi
+
 # Configure
 cmake --preset dev-linux-cross-native
 # Build
