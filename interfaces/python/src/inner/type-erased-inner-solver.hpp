@@ -12,8 +12,10 @@ using namespace py::literals;
 
 namespace alpaqa {
 
+using guanaqo::required_function_t;
+
 template <Config Conf, class ProblemT>
-struct InnerSolverVTable : util::BasicVTable {
+struct InnerSolverVTable : guanaqo::BasicVTable {
     USING_ALPAQA_CONFIG(Conf);
     using Stats        = TypeErasedInnerSolverStats<Conf>;
     using Problem      = ProblemT;
@@ -31,9 +33,9 @@ struct InnerSolverVTable : util::BasicVTable {
     // clang-format on
 
     template <class T>
-    InnerSolverVTable(std::in_place_t, T &t) : util::BasicVTable{std::in_place, t} {
-        stop       = util::type_erased_wrapped<T, &T::stop>();
-        get_name   = util::type_erased_wrapped<T, &T::get_name>();
+    InnerSolverVTable(std::in_place_t, T &t) : guanaqo::BasicVTable{std::in_place, t} {
+        stop       = guanaqo::type_erased_wrapped<T, &T::stop>();
+        get_name   = guanaqo::type_erased_wrapped<T, &T::get_name>();
         get_params = [](const void *self_) -> py::object {
             auto &self = *std::launder(reinterpret_cast<const T *>(self_));
             return py::cast(self.get_params());
@@ -48,12 +50,12 @@ struct InnerSolverVTable : util::BasicVTable {
 
 template <Config Conf, class ProblemT, class Allocator = std::allocator<std::byte>>
 class TypeErasedInnerSolver
-    : public util::TypeErased<InnerSolverVTable<Conf, ProblemT>, Allocator> {
+    : public guanaqo::TypeErased<InnerSolverVTable<Conf, ProblemT>, Allocator> {
   public:
     USING_ALPAQA_CONFIG(Conf);
     using VTable         = InnerSolverVTable<Conf, ProblemT>;
     using allocator_type = Allocator;
-    using TypeErased     = util::TypeErased<VTable, allocator_type>;
+    using TypeErased     = guanaqo::TypeErased<VTable, allocator_type>;
     using Stats          = typename VTable::Stats;
     using Problem        = typename VTable::Problem;
     using TypeErased::TypeErased;

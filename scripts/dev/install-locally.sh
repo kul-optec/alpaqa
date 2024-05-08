@@ -27,9 +27,10 @@ fi
 # Install guanaqo
 if [ ! -d "$pfx/guanaqo" ]; then
     mkdir -p "$pfx/download"
-    git clone git@github.com:tttapa/guanaqo.git "$pfx/download/guanaqo"
+    git clone https://github.com/tttapa/guanaqo "$pfx/download/guanaqo"
     cmake -B "$pfx/download/guanaqo/build" -S "$pfx/download/guanaqo" -G "Ninja Multi-Config" \
         -D BUILD_TESTING=Off -D CMAKE_STAGING_PREFIX="$pfx/guanaqo/usr/local" \
+        -D CMAKE_POSITION_INDEPENDENT_CODE=On \
         --toolchain "$pfx/$triple.toolchain.cmake"
     for cfg in Debug RelWithDebInfo; do cmake --build "$pfx/download/guanaqo/build" -j --config $cfg; done
     for cfg in Debug RelWithDebInfo; do cmake --install "$pfx/download/guanaqo/build" --config $cfg; done

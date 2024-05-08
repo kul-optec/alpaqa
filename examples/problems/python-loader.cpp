@@ -4,7 +4,7 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/dl/dl-problem.h>
 #include <alpaqa/params/params.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <guanaqo/string-util.hpp>
 
 #include <span>
 #include <stdexcept>
@@ -58,7 +58,7 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
         : ref{ref} {
         py::gil_scoped_acquire gil;
         try {
-            auto [mod_name, attr_name] = alpaqa::util::split(ref, ":");
+            auto [mod_name, attr_name] = guanaqo::split(ref, ":");
             auto mod = py::module_::import(std::string(mod_name).c_str());
             std::string attr_name_str{attr_name};
             auto constructor = mod.attr(attr_name_str.c_str());

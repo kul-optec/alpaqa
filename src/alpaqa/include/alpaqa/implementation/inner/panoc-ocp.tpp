@@ -1,13 +1,13 @@
 #include <alpaqa/accelerators/lbfgs.hpp>
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/inner/directions/panoc-ocp/lqr.hpp>
 #include <alpaqa/inner/directions/panoc-ocp/ocp-vars.hpp>
 #include <alpaqa/inner/panoc-ocp.hpp>
 #include <alpaqa/problem/box.hpp>
 #include <alpaqa/problem/ocproblem.hpp>
 #include <alpaqa/util/index-set.hpp>
-#include <alpaqa/util/timed.hpp>
+#include <alpaqa/util/print.hpp>
+#include <guanaqo/timed.hpp>
 #include <concepts>
 #include <iomanip>
 #include <iostream>
@@ -105,7 +105,7 @@ auto PANOCOCPSolver<Conf>::operator()(
     auto Qk  = [&](rvec storage) {
         return [&, storage](index_t k) {
             return [&, k](rmat out) {
-                alpaqa::util::Timed t{s.time_hessians};
+                guanaqo::Timed t{s.time_hessians};
                 return eval.Qk(storage, y, μ, D, D_N, k, out);
             };
         };
@@ -113,7 +113,7 @@ auto PANOCOCPSolver<Conf>::operator()(
     auto Rk = [&](rvec storage) {
         return [&, storage](index_t k) {
             return [&, k](crindexvec mask, rmat out) {
-                alpaqa::util::Timed t{s.time_hessians};
+                guanaqo::Timed t{s.time_hessians};
                 return eval.Rk(storage, k, mask, out);
             };
         };
@@ -121,7 +121,7 @@ auto PANOCOCPSolver<Conf>::operator()(
     auto Sk = [&](rvec storage) {
         return [&, storage](index_t k) {
             return [&, k](crindexvec mask, rmat out) {
-                alpaqa::util::Timed t{s.time_hessians};
+                guanaqo::Timed t{s.time_hessians};
                 return eval.Sk(storage, k, mask, out);
             };
         };
@@ -130,7 +130,7 @@ auto PANOCOCPSolver<Conf>::operator()(
         return [&, storage](index_t k) {
             return [&, k](crindexvec mask_J, crindexvec mask_K, crvec v,
                           rvec out) {
-                alpaqa::util::Timed t{s.time_hessians};
+                guanaqo::Timed t{s.time_hessians};
                 return eval.Rk_prod(storage, k, mask_J, mask_K, v, out);
             };
         };
@@ -138,7 +138,7 @@ auto PANOCOCPSolver<Conf>::operator()(
     auto Sk_prod = [&](rvec storage) {
         return [&, storage](index_t k) {
             return [&, k](crindexvec mask_K, crvec v, rvec out) {
-                alpaqa::util::Timed t{s.time_hessians};
+                guanaqo::Timed t{s.time_hessians};
                 return eval.Sk_prod(storage, k, mask_K, v, out);
             };
         };
@@ -195,7 +195,7 @@ auto PANOCOCPSolver<Conf>::operator()(
 
     auto eval_prox_impl = [&](real_t γ, crvec xu, crvec grad_ψ, rvec x̂u,
                               rvec p) {
-        alpaqa::util::Timed t{s.time_prox};
+        guanaqo::Timed t{s.time_prox};
         real_t pᵀp      = 0;
         real_t grad_ψᵀp = 0;
         for (index_t t = 0; t < N; ++t) {
@@ -318,20 +318,20 @@ auto PANOCOCPSolver<Conf>::operator()(
     // @pre    @ref Iterate::xu
     // @post   @ref Iterate::ψu
     auto eval_forward = [&](Iterate &i) {
-        alpaqa::util::Timed t{s.time_forward};
+        guanaqo::Timed t{s.time_forward};
         i.ψu = eval.forward(i.xu, D, D_N, μ, y);
     };
     // @pre    @ref Iterate::xû
     // @post   @ref Iterate::ψû
     auto eval_forward_hat = [&](Iterate &i) {
-        alpaqa::util::Timed t{s.time_forward};
+        guanaqo::Timed t{s.time_forward};
         i.ψû = eval.forward(i.xû, D, D_N, μ, y);
     };
 
     // @pre    @ref Iterate::xu
     // @post   @ref Iterate::grad_ψ, q, q_N
     auto eval_backward = [&](Iterate &i) {
-        alpaqa::util::Timed t{s.time_backward};
+        guanaqo::Timed t{s.time_backward};
         eval.backward(i.xu, i.grad_ψ, mut_qrk, mut_q_N, D, D_N, μ, y);
     };
 
@@ -380,11 +380,11 @@ auto PANOCOCPSolver<Conf>::operator()(
                     vars.uk(it->xu, t) - h.segment(t * nu, nu);
 
             { // Calculate ψ(x₀ - h)
-                alpaqa::util::Timed t{s.time_forward};
+                guanaqo::Timed t{s.time_forward};
                 eval.forward_simulate(work_xu); // needed for backwards sweep
             }
             { // Calculate ∇ψ(x₀ + h)
-                alpaqa::util::Timed t{s.time_backward};
+                guanaqo::Timed t{s.time_backward};
                 eval.backward(work_xu, work_grad_ψ, mut_qrk, mut_q_N, D, D_N, μ,
                               y);
             }
@@ -442,7 +442,7 @@ auto PANOCOCPSolver<Conf>::operator()(
         if (!progress_cb)
             return;
         ScopedMallocAllower ma;
-        alpaqa::util::Timed t{s.time_progress_callback};
+        guanaqo::Timed t{s.time_progress_callback};
         progress_cb({
             .k             = k,
             .status        = status,
@@ -602,24 +602,24 @@ auto PANOCOCPSolver<Conf>::operator()(
                 }
             };
             { // Find active indices J
-                alpaqa::util::Timed t{s.time_indices};
+                guanaqo::Timed t{s.time_indices};
                 J.update(is_constr_inactive);
                 nJ = J.sizes().sum();
             }
             { // evaluate the Jacobians
-                alpaqa::util::Timed t{s.time_jacobians};
+                guanaqo::Timed t{s.time_jacobians};
                 for (index_t t = 0; t < N; ++t)
                     problem.eval_jac_f(t, vars.xk(curr->xu, t),
                                        vars.uk(curr->xu, t), vars.ABk(jacs, t));
             }
             { // LQR factor
-                alpaqa::util::Timed t{s.time_lqr_factor};
+                guanaqo::Timed t{s.time_lqr_factor};
                 lqr.factor_masked(ABk, Qk(curr->xu), Rk(curr->xu), Sk(curr->xu),
                                   Rk_prod(curr->xu), Sk_prod(curr->xu), qk, rk,
                                   uk_eq, Jk, Kk, params.lqr_factor_cholesky);
             }
             { // LQR solve
-                alpaqa::util::Timed t{s.time_lqr_solve};
+                guanaqo::Timed t{s.time_lqr_solve};
                 lqr.solve_masked(ABk, Jk, q, work_2x);
             }
         } else {
@@ -647,7 +647,7 @@ auto PANOCOCPSolver<Conf>::operator()(
             auto J_idx = J.indices();
             nJ         = 0;
             {
-                alpaqa::util::Timed t{s.time_lbfgs_indices};
+                guanaqo::Timed t{s.time_lbfgs_indices};
                 for (index_t t = 0; t < N; ++t)
                     for (index_t i = 0; i < nu; ++i)
                         if (is_constr_inactive(t, i))
@@ -659,7 +659,7 @@ auto PANOCOCPSolver<Conf>::operator()(
             // if there are active indices, we need the specialized version
             // that only applies L-BFGS to the inactive indices
             bool success = [&] {
-                alpaqa::util::Timed t{s.time_lbfgs_apply};
+                guanaqo::Timed t{s.time_lbfgs_apply};
                 return lbfgs.apply_masked(q, curr->γ, J_lbfgs);
             }();
             // If L-BFGS application failed, qₖ(J) still contains
@@ -789,7 +789,7 @@ auto PANOCOCPSolver<Conf>::operator()(
                 lbfgs.reset();
             }
             if (!reset_because_gn) { // TODO: this may be too restrictive
-                alpaqa::util::Timed t{s.time_lbfgs_update};
+                guanaqo::Timed t{s.time_lbfgs_update};
                 s.direction_update_rejected += dir_rejected = not lbfgs.update(
                     curr->u, next->u, curr->grad_ψ, next->grad_ψ,
                     LBFGS<config_t>::Sign::Positive, force);

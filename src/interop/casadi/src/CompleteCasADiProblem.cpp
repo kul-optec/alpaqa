@@ -4,6 +4,7 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/casadi/CasADiLoader-util.hpp>
 #include <casadi/casadi.hpp>
+#include <guanaqo/demangled-typename.hpp>
 
 namespace alpaqa {
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
@@ -16,7 +17,7 @@ auto wrap(const char *name, F f) {
     } catch (const invalid_argument_dimensions &e) {
         throw std::invalid_argument(
             "Unable to load function '" + std::string(name) +
-            "': " + demangled_typename(typeid(e)) + ": " + e.what());
+            "': " + guanaqo::demangled_typename(typeid(e)) + ": " + e.what());
     }
 }
 

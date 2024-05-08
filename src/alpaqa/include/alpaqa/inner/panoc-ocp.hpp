@@ -195,7 +195,7 @@ class PANOCOCPSolver {
 
   private:
     Params params;
-    AtomicStopSignal stop_signal;
+    guanaqo::AtomicStopSignal stop_signal;
     std::function<void(const ProgressInfo &)> progress_cb;
     using Helpers = detail::PANOCHelpers<config_t>;
 

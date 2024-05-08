@@ -5,8 +5,9 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
-#include <alpaqa/util/copyable_unique_ptr.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/copyable-unique_ptr.hpp>
+#include <guanaqo/dl-flags.hpp>
+#include <guanaqo/not-implemented.hpp>
 #include <filesystem>
 #include <map>
 #include <string>
@@ -21,6 +22,10 @@ class Function;
 #endif
 
 namespace alpaqa {
+
+using guanaqo::DynamicLoadFlags;
+using guanaqo::not_implemented_error;
+
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
 namespace casadi_loader {
 template <Config>
@@ -42,7 +47,6 @@ template <Config Conf = EigenConfigd>
 class CasADiProblem : public BoxConstrProblem<Conf> {
   public:
     USING_ALPAQA_CONFIG(Conf);
-    using Sparsity = alpaqa::Sparsity<config_t>;
     vec param;
     std::string name = "CasADiProblem";
 
@@ -137,7 +141,7 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
 
   private:
     using Functions = casadi_loader::CasADiFunctionsWithParam<Conf>;
-    util::copyable_unique_ptr<Functions> impl;
+    guanaqo::copyable_unique_ptr<Functions> impl;
 };
 
 CASADI_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiProblem, EigenConfigd);

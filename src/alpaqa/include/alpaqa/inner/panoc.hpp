@@ -8,7 +8,7 @@
 #include <alpaqa/inner/internal/panoc-stop-crit.hpp>
 #include <alpaqa/inner/internal/solverstatus.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
-#include <alpaqa/util/atomic-stop-signal.hpp>
+#include <guanaqo/atomic-stop-signal.hpp>
 
 #include <chrono>
 #include <iostream>
@@ -196,7 +196,7 @@ class PANOCSolver {
 
   private:
     Params params;
-    AtomicStopSignal stop_signal;
+    guanaqo::AtomicStopSignal stop_signal;
     std::function<void(const ProgressInfo &)> progress_cb;
     using Helpers = detail::PANOCHelpers<config_t>;
 

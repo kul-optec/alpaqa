@@ -2,7 +2,8 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/params/params.tpp>
-#include <alpaqa/util/demangled-typename.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/string-util.hpp>
 
 // For parameters
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
@@ -18,7 +19,7 @@
 #include <alpaqa/inner/pantr.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
 #include <alpaqa/outer/alm.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/dl-flags.hpp>
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
@@ -53,7 +54,7 @@ template <class T>
     requires requires { attribute_table<T, MemberGetter>::table; }
 Result get_members(const MemberGetter &s) {
     const auto &m         = attribute_table<T, MemberGetter>::table;
-    auto [key, remainder] = alpaqa::util::split(s.key, ".");
+    auto [key, remainder] = guanaqo::split(s.key, ".");
     auto it               = m.find(key);
     if (it == m.end()) {
         auto pfx = std::string_view{s.full_key.begin(), s.key.begin()};
@@ -115,7 +116,7 @@ struct RootOpts {
     [[no_unique_address]] Value method, out, sol, x0, mul_g0, mul_x0, num_exp;
     bool extra_stats, show_funcs;
     Struct problem;
-    DynamicLoadFlags dl_flags;
+    guanaqo::DynamicLoadFlags dl_flags;
 };
 
 #include <alpaqa/params/structs.ipp>
@@ -154,7 +155,7 @@ void add_root_opts(std::vector<Result::Member> &v) {
 
 template <class S>
 Result get_results_panoc_like(const MemberGetter &s) {
-    auto [key, remainder] = alpaqa::util::split(s.key, ".");
+    auto [key, remainder] = guanaqo::split(s.key, ".");
     auto recurse          = s;
     recurse.key           = remainder;
 
@@ -188,7 +189,7 @@ Result get_results_panoc_like(const MemberGetter &s) {
 
 template <class S>
 Result get_results_fista_like(const MemberGetter &s) {
-    auto [key, remainder] = alpaqa::util::split(s.key, ".");
+    auto [key, remainder] = guanaqo::split(s.key, ".");
     auto recurse          = s;
     recurse.key           = remainder;
 
@@ -269,7 +270,7 @@ Result get_results(std::string_view method, const MemberGetter &s) {
 }
 
 void print_completion(std::string_view method, std::string_view params) {
-    auto [key, value] = alpaqa::util::split(params, "=");
+    auto [key, value] = guanaqo::split(params, "=");
     bool has_value    = key.end() != params.end();
     MemberGetter s{
         .full_key = key,

@@ -41,8 +41,7 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
 
     using std::span;
     using qp_idx_t     = qpalm::sp_index_t;
-    using SparseCSC    = sparsity::SparseCSC<config_t, qp_idx_t>;
-    using Sparsity     = sparsity::Sparsity<config_t>;
+    using SparseCSC    = sparsity::SparseCSC<qp_idx_t, qp_idx_t>;
     using SparsityConv = sparsity::SparsityConverter<Sparsity, SparseCSC>;
     using ConstrConv   = LinConstrConverter<config_t, qp_idx_t, qp_idx_t>;
     { // Evaluate cost Hessian
@@ -57,10 +56,9 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_Q.get_sparsity().outer_ptr, qp.Q->p);
         // Get actual values
         mvec H_values{qp.Q->x, nnz_Q};
-        auto eval_h = [&](rvec v) {
-            problem.eval_lagrangian_hessian(x, y, 1, v);
-        };
-        sp_Q.convert_values(eval_h, H_values);
+        sp_Q.convert_values_into(as_span(H_values), [&](std::span<real_t> v) {
+            problem.eval_lagrangian_hessian(x, y, 1, as_vec(v));
+        });
     }
     { // Evaluate constraints Jacobian
         Sparsity sp_A_orig = problem.get_constraints_jacobian_sparsity();
@@ -74,8 +72,10 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_A.get_sparsity().outer_ptr, qp.A->p);
         // Get actual values
         mvec J_values{qp.A->x, nnz_A};
-        auto eval_j = [&](rvec v) { problem.eval_constraints_jacobian(x, v); };
-        sp_A.convert_values(eval_j, J_values);
+        sp_A.convert_values_into(as_span(J_values), [&](std::span<real_t> v) {
+            problem.eval_constraints_jacobian(x, as_vec(v));
+        });
+
         // Add the bound constraints
         ConstrConv::SparseView A{
             .nrow      = qp.A->nrow,

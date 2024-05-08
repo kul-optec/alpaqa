@@ -1,9 +1,9 @@
 #pragma once
 
 #include <alpaqa/casadi-loader-export.h>
-#include <alpaqa/util/dl-flags.hpp>
 #include "casadi-functions.hpp"
 #include "casadi-namespace.hpp"
+#include <guanaqo/dl-flags.hpp>
 
 #include <cassert>
 #include <memory>
@@ -14,6 +14,9 @@
 #include <vector>
 
 namespace alpaqa {
+
+using guanaqo::DynamicLoadFlags;
+
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
 namespace casadi {
 

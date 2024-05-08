@@ -1,13 +1,14 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/export.hpp>
 #include <alpaqa/problem/box.hpp>
 #include <alpaqa/problem/ocproblem-counters.hpp>
 #include <alpaqa/problem/problem-counters.hpp>
-#include <alpaqa/util/not-implemented.hpp>
-#include <alpaqa/util/required-method.hpp>
-#include <alpaqa/util/timed.hpp>
-#include <alpaqa/util/type-erasure.hpp>
+#include <guanaqo/not-implemented.hpp>
+#include <guanaqo/required-method.hpp>
+#include <guanaqo/timed.hpp>
+#include <guanaqo/type-erasure.hpp>
 #include <array>
 #include <concepts>
 #include <stdexcept>
@@ -23,6 +24,8 @@
 
 namespace alpaqa {
 
+using guanaqo::not_implemented_error;
+
 template <Config Conf>
 struct OCPDim {
     USING_ALPAQA_CONFIG(Conf);
@@ -30,12 +33,14 @@ struct OCPDim {
 };
 
 template <Config Conf>
-struct ControlProblemVTable : util::BasicVTable {
+struct ControlProblemVTable : guanaqo::BasicVTable {
     USING_ALPAQA_CONFIG(Conf);
     using Box = alpaqa::Box<config_t>;
 
     template <class F>
-    using optional_function_t = util::BasicVTable::optional_function_t<F, ControlProblemVTable>;
+    using optional_function_t = guanaqo::optional_function_t<F, ControlProblemVTable>;
+    template <class F>
+    using required_function_t = guanaqo::required_function_t<F>;
 
     // clang-format off
     required_function_t<void(crvec z, rvec e) const>
@@ -103,37 +108,37 @@ struct ControlProblemVTable : util::BasicVTable {
     length_t N, nu, nx, nh, nh_N, nc, nc_N;
 
     template <class P>
-    ControlProblemVTable(std::in_place_t, P &p) : util::BasicVTable{std::in_place, p} {
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_projecting_difference_constraints);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_projection_multipliers);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, get_U);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, get_D, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, get_D_N, p);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, get_x_init);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_f);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_jac_f);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_grad_f_prod);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_h, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_h_N, p);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_l);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_l_N);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_qr);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_q_N);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_add_Q);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_add_Q_N, p);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_add_R_masked);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, eval_add_S_masked);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_add_R_prod_masked, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_add_S_prod_masked, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, get_R_work_size, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, get_S_work_size, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_constr, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_constr_N, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_grad_constr_prod, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_grad_constr_prod_N, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_add_gn_hess_constr, p);
-        ALPAQA_TE_OPTIONAL_METHOD(*this, P, eval_add_gn_hess_constr_N, p);
-        ALPAQA_TE_REQUIRED_METHOD(*this, P, check);
+    ControlProblemVTable(std::in_place_t, P &p) : guanaqo::BasicVTable{std::in_place, p} {
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_projecting_difference_constraints);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_projection_multipliers);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, get_U);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, get_D, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, get_D_N, p);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, get_x_init);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_f);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_jac_f);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_grad_f_prod);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_h, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_h_N, p);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_l);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_l_N);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_qr);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_q_N);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_add_Q);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_add_Q_N, p);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_add_R_masked);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, eval_add_S_masked);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_add_R_prod_masked, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_add_S_prod_masked, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, get_R_work_size, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, get_S_work_size, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_constr, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_constr_N, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_grad_constr_prod, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_grad_constr_prod_N, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_add_gn_hess_constr, p);
+        GUANAQO_TE_OPTIONAL_METHOD(*this, P, eval_add_gn_hess_constr_N, p);
+        GUANAQO_TE_REQUIRED_METHOD(*this, P, check);
         N    = p.get_N();
         nu   = p.get_nu();
         nx   = p.get_nx();
@@ -234,14 +239,14 @@ ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, Eige
  * @ingroup grp_Problems
  */
 template <Config Conf = DefaultConfig, class Allocator = std::allocator<std::byte>>
-class TypeErasedControlProblem : public util::TypeErased<ControlProblemVTable<Conf>, Allocator> {
+class TypeErasedControlProblem : public guanaqo::TypeErased<ControlProblemVTable<Conf>, Allocator> {
   public:
     USING_ALPAQA_CONFIG(Conf);
     using VTable         = ControlProblemVTable<config_t>;
     using allocator_type = Allocator;
     using Box            = typename VTable::Box;
     using Dim            = OCPDim<config_t>;
-    using TypeErased     = util::TypeErased<VTable, allocator_type>;
+    using TypeErased     = guanaqo::TypeErased<VTable, allocator_type>;
     using TypeErased::TypeErased;
 
   protected:
@@ -636,7 +641,7 @@ struct ControlProblemWithCounters {
   private:
     template <class TimeT, class FunT>
     [[gnu::always_inline]] static decltype(auto) timed(TimeT &time, FunT &&f) {
-        alpaqa::util::Timed timed{time};
+        guanaqo::Timed timed{time};
         return std::forward<FunT>(f)();
     }
 };

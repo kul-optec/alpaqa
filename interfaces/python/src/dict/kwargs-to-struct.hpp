@@ -7,9 +7,9 @@
 #pragma once
 
 #include <alpaqa/params/structs.hpp>
-#include <alpaqa/util/any-ptr.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <guanaqo/any-ptr.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/string-util.hpp>
 #include <functional>
 #include <ranges>
 #include <stdexcept>
@@ -58,9 +58,9 @@ template <>
 struct attribute_accessor<PythonParam> {
     template <class T, class T_actual, class A>
     static attribute_accessor make(A T_actual::*attr, const char *descr = "");
-    std::function<void(const any_ptr &, const char *)> def_readwrite;
-    std::function<py::object(const any_ptr &)> to_py;
-    std::function<void(py::handle, const any_ptr &, const PythonParam &)> from_py;
+    std::function<void(const guanaqo::any_ptr &, const char *)> def_readwrite;
+    std::function<py::object(const guanaqo::any_ptr &)> to_py;
+    std::function<void(py::handle, const guanaqo::any_ptr &, const PythonParam &)> from_py;
 };
 
 namespace detail {
@@ -97,7 +97,7 @@ void dict_to_struct_helper(T &t, const py::dict &dict, const PythonParam &s) {
         auto param = detail::find_param_python(members, ks, error_msg);
         if (!param)
             throw std::invalid_argument("Invalid key '" + ks + "' for type '" +
-                                        demangled_typename(typeid(T)) + "' in '" + s.keys +
+                                        guanaqo::demangled_typename(typeid(T)) + "' in '" + s.keys +
                                         "',\n  did you mean: " + error_msg);
         PythonParam s_sub{s.keys.empty() ? ks : s.keys + '.' + ks};
         try {
@@ -113,7 +113,7 @@ template <class T>
     requires(!requires { alpaqa::params::attribute_table<T, PythonParam>::table; })
 void dict_to_struct_helper(T &, const py::dict &, const PythonParam &s) {
     throw std::runtime_error("No known conversion from Python dict to C++ type '" +
-                             demangled_typename(typeid(T)) + "' in '" + s.keys + '\'');
+                             guanaqo::demangled_typename(typeid(T)) + "' in '" + s.keys + '\'');
 }
 
 template <class T>
@@ -174,7 +174,7 @@ T var_kwargs_to_struct(const params_or_dict<T> &p) {
 #include <alpaqa/inner/pantr.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
 #include <alpaqa/outer/alm.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/dl-flags.hpp>
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
@@ -199,7 +199,7 @@ auto alpaqa::params::attribute_accessor<PythonParam>::make(A T_actual::*attr, co
     -> attribute_accessor {
     return {
         .def_readwrite =
-            [attr, descr](const any_ptr &o, const char *name) {
+            [attr, descr](const guanaqo::any_ptr &o, const char *name) {
                 auto *obj = o.cast<py::class_<T>>();
                 using namespace std::string_view_literals;
                 if (name == "global"sv)
@@ -207,12 +207,12 @@ auto alpaqa::params::attribute_accessor<PythonParam>::make(A T_actual::*attr, co
                 return obj->def_readwrite(name, attr, descr);
             },
         .to_py =
-            [attr](const any_ptr &o) {
+            [attr](const guanaqo::any_ptr &o) {
                 auto *obj = o.cast<const T>();
                 return struct_to_dict_helper(obj->*attr);
             },
         .from_py =
-            [attr](py::handle v, const any_ptr &o, const PythonParam &s) {
+            [attr](py::handle v, const guanaqo::any_ptr &o, const PythonParam &s) {
                 auto *obj = o.cast<T>();
                 set_attr(attr, *obj, v, s);
             },

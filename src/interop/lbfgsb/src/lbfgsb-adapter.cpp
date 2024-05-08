@@ -1,6 +1,6 @@
-#include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/lbfgsb/lbfgsb-adapter.hpp>
-#include <alpaqa/util/timed.hpp>
+#include <alpaqa/util/print.hpp>
+#include <guanaqo/timed.hpp>
 
 #include <iomanip>
 #include <stdexcept>
@@ -59,7 +59,7 @@ auto LBFGSBSolver::operator()(
         if (!progress_cb)
             return;
         ScopedMallocAllower ma;
-        alpaqa::util::Timed t{s.time_progress_callback};
+        guanaqo::Timed t{s.time_progress_callback};
         progress_cb(ProgressInfo{
             .k          = k,
             .status     = status,

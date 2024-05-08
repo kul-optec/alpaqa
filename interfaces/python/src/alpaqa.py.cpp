@@ -1,5 +1,5 @@
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/util/not-implemented.hpp>
+#include <guanaqo/not-implemented.hpp>
 #include <alpaqa-version.h>
 
 #include <pybind11/pybind11.h>
@@ -102,7 +102,7 @@ PYBIND11_MODULE(MODULE_NAME, m) {
 #if ALPAQA_WITH_CASADI
     m.attr("with_casadi") = true;
 #else
-    m.attr("with_casadi")          = false;
+    m.attr("with_casadi") = false;
 #endif
 #if ALPAQA_WITH_EXTERNAL_CASADI
     m.attr("with_external_casadi") = true;
@@ -112,11 +112,11 @@ PYBIND11_MODULE(MODULE_NAME, m) {
 #if ALPAQA_WITH_CASADI_OCP
     m.attr("with_casadi_ocp") = true;
 #else
-    m.attr("with_casadi_ocp")      = false;
+    m.attr("with_casadi_ocp") = false;
 #endif
 
-    py::register_exception<alpaqa::not_implemented_error>(m, "not_implemented_error",
-                                                          PyExc_NotImplementedError);
+    py::register_exception<guanaqo::not_implemented_error>(m, "not_implemented_error",
+                                                           PyExc_NotImplementedError);
 
     register_misc(m);
     register_counters(m);

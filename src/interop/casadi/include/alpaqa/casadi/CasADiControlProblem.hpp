@@ -5,11 +5,14 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/box.hpp>
 #include <alpaqa/util/check-dim.hpp>
-#include <alpaqa/util/copyable_unique_ptr.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/copyable-unique_ptr.hpp>
+#include <guanaqo/dl-flags.hpp>
 #include <filesystem>
 
 namespace alpaqa {
+
+using guanaqo::DynamicLoadFlags;
+
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
 
 namespace casadi_loader {
@@ -178,7 +181,7 @@ class CasADiControlProblem {
 
   private:
     using Functions = casadi_loader::CasADiControlFunctionsWithParam<Conf>;
-    util::copyable_unique_ptr<Functions> impl;
+    guanaqo::copyable_unique_ptr<Functions> impl;
 };
 
 CASADI_OCP_LOADER_EXPORT_EXTERN_TEMPLATE(class, CasADiControlProblem,

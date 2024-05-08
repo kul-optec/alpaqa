@@ -1,8 +1,8 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/params/json.hpp>
-#include <alpaqa/util/any-ptr.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <guanaqo/any-ptr.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/string-util.hpp>
 
 #include <nlohmann/json.hpp>
 #include <functional>
@@ -18,8 +18,8 @@ namespace detail {
 std::string join_sorted_keys(const auto &members) {
     auto keys = std::views::keys(members);
     std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
-    util::sort_case_insensitive(sorted_keys);
-    return util::join(sorted_keys, {.sep = ", ", .empty = "∅"});
+    guanaqo::sort_case_insensitive(sorted_keys);
+    return guanaqo::join(sorted_keys, {.sep = ", ", .empty = "∅"});
 }
 
 template <class S>
@@ -67,7 +67,7 @@ find_param_or_throw(const std::string &key, const attribute_table_t<S> &members,
 }
 
 template <class Aliases>
-[[gnu::noinline]] void set_param_json(const any_ptr &t, const json &j,
+[[gnu::noinline]] void set_param_json(const guanaqo::any_ptr &t, const json &j,
                                       const attribute_table_t<json> &members,
                                       const Aliases &aliases,
                                       const std::string &type_name) {
@@ -97,16 +97,16 @@ struct attribute_accessor<json> {
     template <class T, class T_actual, class A>
     static attribute_accessor make(A T_actual::*attr, std::string_view = "") {
         return {
-            .set{[attr](const any_ptr &t, const json &s) {
+            .set{[attr](const guanaqo::any_ptr &t, const json &s) {
                 return set_param(t.template cast<T>()->*attr, s);
             }},
-            .get{[attr](const any_ptr &t, json &s) {
+            .get{[attr](const guanaqo::any_ptr &t, json &s) {
                 return get_param(t.template cast<const T>()->*attr, s);
             }},
         };
     }
-    std::function<void(const any_ptr &, const json &)> set;
-    std::function<void(const any_ptr &, json &)> get;
+    std::function<void(const guanaqo::any_ptr &, const json &)> set;
+    std::function<void(const guanaqo::any_ptr &, json &)> get;
 };
 
 template <class T>
@@ -117,20 +117,20 @@ void set_param_default(T &t, const json &j) {
     if constexpr (requires { attribute_alias_table<T, json>::table; })
         detail::set_param_json(&t, j, members,
                                attribute_alias_table<T, json>::table,
-                               demangled_typename(typeid(T)));
+                               guanaqo::demangled_typename(typeid(T)));
     else
         detail::set_param_json(&t, j, members, std::false_type{},
-                               demangled_typename(typeid(T)));
+                               guanaqo::demangled_typename(typeid(T)));
 }
 
 template <class T>
     requires requires { enum_table<T, json>::table; }
 void set_param_default(T &t, const json &j) {
     if (!j.is_string())
-        throw invalid_json_param("Invalid value " + to_string(j) +
-                                 " for enum '" + demangled_typename(typeid(T)) +
-                                 "' (expected string, but got " +
-                                 j.type_name() + ')');
+        throw invalid_json_param(
+            "Invalid value " + to_string(j) + " for enum '" +
+            guanaqo::demangled_typename(typeid(T)) +
+            "' (expected string, but got " + j.type_name() + ')');
     // Dictionary of members
     const auto &m     = enum_table<T, json>::table;
     std::string value = j;
@@ -138,7 +138,7 @@ void set_param_default(T &t, const json &j) {
     if (it == m.end()) {
         throw invalid_json_param(
             "Invalid value '" + value + "' for enum '" +
-            demangled_typename(typeid(T)) +
+            guanaqo::demangled_typename(typeid(T)) +
             "',\n  possible values are: " + detail::join_sorted_keys(m));
     }
     t = it->second.value;

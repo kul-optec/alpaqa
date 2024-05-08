@@ -3,7 +3,7 @@
 #include "cutest-types.hpp"
 
 #include <alpaqa/cutest/cutest-errors.hpp>
-#include <alpaqa/util/dl.hpp>
+#include <guanaqo/dl.hpp>
 #include <cassert>
 
 /*
@@ -76,7 +76,7 @@ using fortran_close = Function<"fortran_close_", void(const integer *funit, inte
 template <Name Nm, class Sgn>
 auto Function<Nm, Sgn>::load(void *handle) -> signature_t * {
     static_assert(name.value.back() == '\0');
-    auto func = util::load_func(handle, name.value.data());
+    auto func = guanaqo::load_func(handle, name.value.data());
     assert(func);
     return reinterpret_cast<signature_t *>(func);
 }

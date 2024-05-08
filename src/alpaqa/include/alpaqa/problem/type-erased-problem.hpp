@@ -6,28 +6,30 @@
 #include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/util/alloc-check.hpp>
 #include <alpaqa/util/check-dim.hpp>
-#include <alpaqa/util/not-implemented.hpp>
-#include <alpaqa/util/required-method.hpp>
-#include <alpaqa/util/type-erasure.hpp>
-#include <chrono>
-#include <stdexcept>
+#include <guanaqo/not-implemented.hpp>
+#include <guanaqo/required-method.hpp>
+#include <guanaqo/type-erasure.hpp>
 #include <type_traits>
 #include <utility>
 
 namespace alpaqa {
+
+/// Raised when calling problem functions that are not implemented.
+using guanaqo::not_implemented_error;
 
 /// Struct containing function pointers to all problem functions (like the
 /// objective and constraint functions, with their derivatives, and more).
 /// Some default implementations are available.
 /// Internal struct, it is used by @ref TypeErasedProblem.
 template <Config Conf>
-struct ProblemVTable : util::BasicVTable {
+struct ProblemVTable : guanaqo::BasicVTable {
     USING_ALPAQA_CONFIG(Conf);
-    using Sparsity = alpaqa::Sparsity<config_t>;
-    using Box      = alpaqa::Box<config_t>;
+    using Box = alpaqa::Box<config_t>;
 
     template <class F>
-    using optional_function_t = util::BasicVTable::optional_function_t<F, ProblemVTable>;
+    using optional_function_t = guanaqo::optional_function_t<F, ProblemVTable>;
+    template <class F>
+    using required_function_t = guanaqo::required_function_t<F>;
 
     // clang-format off
 
@@ -161,46 +163,46 @@ struct ProblemVTable : util::BasicVTable {
     length_t n, m;
 
     template <class P>
-    ProblemVTable(std::in_place_t, P &p) : util::BasicVTable{std::in_place, p} {
+    ProblemVTable(std::in_place_t, P &p) : guanaqo::BasicVTable{std::in_place, p} {
         auto &vtable = *this;
 
         // Initialize all methods
 
         // Required
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_projecting_difference_constraints);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_projection_multipliers);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_proximal_gradient_step);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_objective);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_objective_gradient);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_constraints);
-        ALPAQA_TE_REQUIRED_METHOD(vtable, P, eval_constraints_gradient_product);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_inactive_indices_res_lna, p);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_projecting_difference_constraints);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_projection_multipliers);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_proximal_gradient_step);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_objective);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_objective_gradient);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_constraints);
+        GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_constraints_gradient_product);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_inactive_indices_res_lna, p);
         // Second order
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_constraints_jacobian, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_constraints_jacobian_sparsity, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_grad_gi, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_hessian_product, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_hessian, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_lagrangian_hessian_sparsity, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_hessian_product, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_hessian, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_augmented_lagrangian_hessian_sparsity, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_constraints_jacobian, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_constraints_jacobian_sparsity, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_grad_gi, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_hessian_product, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_hessian, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_lagrangian_hessian_sparsity, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_hessian_product, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_hessian, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_augmented_lagrangian_hessian_sparsity, p);
         // Combined evaluations
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_gradient, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_constraints, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P,
-                                  eval_objective_gradient_and_constraints_gradient_product, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_gradient, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_objective_and_constraints, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P,
+                                   eval_objective_gradient_and_constraints_gradient_product, p);
         // Lagrangian and augmented lagrangian evaluations
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_gradient, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_gradient, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_and_gradient, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_lagrangian_gradient, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_gradient, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_and_gradient, p);
         // Constraint set
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_variables, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_box_general_constraints, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_box_variables, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_box_general_constraints, p);
         // Check
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, check, p);
-        ALPAQA_TE_OPTIONAL_METHOD(vtable, P, get_name, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, check, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_name, p);
 
         // Dimensions
         vtable.n = p.get_num_variables();
@@ -232,14 +234,13 @@ ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfig
 /// @ref page-problem-formulations for more information, and
 /// @ref C++/CustomCppProblem/main.cpp for an example.
 template <Config Conf = DefaultConfig, class Allocator = std::allocator<std::byte>>
-class TypeErasedProblem : public util::TypeErased<ProblemVTable<Conf>, Allocator> {
+class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Allocator> {
   public:
     USING_ALPAQA_CONFIG(Conf);
-    using Sparsity       = alpaqa::Sparsity<config_t>;
     using Box            = alpaqa::Box<config_t>;
     using VTable         = ProblemVTable<config_t>;
     using allocator_type = Allocator;
-    using TypeErased     = util::TypeErased<VTable, allocator_type>;
+    using TypeErased     = guanaqo::TypeErased<VTable, allocator_type>;
     using TypeErased::TypeErased;
 
   protected:

@@ -2,7 +2,7 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/functions/prox.hpp>
-#include <alpaqa/util/lifetime.hpp>
+#include <guanaqo/lifetime.hpp>
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
@@ -74,8 +74,8 @@ struct L1Norm {
         }
     }
 
-    friend real_t alpaqa_tag_invoke(tag_t<alpaqa::prox>, L1Norm &self, crmat in,
-                                    rmat out, real_t γ) {
+    friend real_t guanaqo_tag_invoke(tag_t<alpaqa::prox>, L1Norm &self,
+                                     crmat in, rmat out, real_t γ) {
         return self.prox(std::move(in), std::move(out), γ);
     }
 };
@@ -156,21 +156,22 @@ struct L1NormComplex {
     real_t prox(crmat in, rmat out, real_t γ = 1) {
         assert(in.rows() % 2 == 0);
         assert(out.rows() % 2 == 0);
+        using guanaqo::start_lifetime_as_array;
         cmcmat cplx_in{
-            util::start_lifetime_as_array<cplx_t>(in.data(), in.size() / 2),
+            start_lifetime_as_array<cplx_t>(in.data(), in.size() / 2),
             in.rows() / 2,
             in.cols(),
         };
         mcmat cplx_out{
-            util::start_lifetime_as_array<cplx_t>(out.data(), out.size() / 2),
+            start_lifetime_as_array<cplx_t>(out.data(), out.size() / 2),
             out.rows() / 2,
             out.cols(),
         };
         return prox(cplx_in, cplx_out, γ);
     }
 
-    friend real_t alpaqa_tag_invoke(tag_t<alpaqa::prox>, L1NormComplex &self,
-                                    crmat in, rmat out, real_t γ) {
+    friend real_t guanaqo_tag_invoke(tag_t<alpaqa::prox>, L1NormComplex &self,
+                                     crmat in, rmat out, real_t γ) {
         return self.prox(std::move(in), std::move(out), γ);
     }
 };

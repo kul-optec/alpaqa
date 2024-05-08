@@ -1,4 +1,4 @@
-#include <alpaqa/util/quadmath/quadmath.hpp>
+#include <guanaqo/quadmath/quadmath.hpp>
 
 #include <pybind11/chrono.h>
 #include <pybind11/eigen.h>

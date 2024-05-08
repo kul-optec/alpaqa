@@ -48,7 +48,7 @@ void ProblemVTable<Conf>::default_eval_constraints_jacobian(const void *, crvec,
 template <Config Conf>
 auto ProblemVTable<Conf>::default_get_constraints_jacobian_sparsity(
     const void *, const ProblemVTable &vtable) -> Sparsity {
-    return sparsity::Dense<config_t>{vtable.m, vtable.n};
+    return sparsity::Dense{vtable.m, vtable.n};
 }
 
 template <Config Conf>
@@ -73,7 +73,7 @@ void ProblemVTable<Conf>::default_eval_lagrangian_hessian(const void *, crvec, c
 template <Config Conf>
 auto ProblemVTable<Conf>::default_get_lagrangian_hessian_sparsity(
     const void *, const ProblemVTable &vtable) -> Sparsity {
-    return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
+    return sparsity::Dense{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
 
 template <Config Conf>
@@ -102,7 +102,7 @@ auto ProblemVTable<Conf>::default_get_augmented_lagrangian_hessian_sparsity(
     if (vtable.m == 0 &&
         vtable.get_lagrangian_hessian_sparsity != default_get_lagrangian_hessian_sparsity)
         return vtable.get_lagrangian_hessian_sparsity(self, vtable);
-    return sparsity::Dense<config_t>{vtable.n, vtable.n, sparsity::Symmetry::Upper};
+    return sparsity::Dense{vtable.n, vtable.n, sparsity::Symmetry::Upper};
 }
 
 /** @implementation{ProblemVTable<Conf>::default_eval_objective_and_gradient} */

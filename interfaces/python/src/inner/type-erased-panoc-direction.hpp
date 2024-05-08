@@ -3,7 +3,7 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/inner/directions/panoc-direction-update.hpp>
 #include <alpaqa/inner/directions/panoc/lbfgs.hpp>
-#include <alpaqa/util/type-erasure.hpp>
+#include <guanaqo/type-erasure.hpp>
 
 #include <dict/dict-tup.hpp>
 #include <dict/kwargs-to-struct.hpp>
@@ -18,8 +18,10 @@ namespace py = pybind11;
 
 namespace alpaqa {
 
+using guanaqo::required_function_t;
+
 template <Config Conf>
-struct PANOCDirectionVTable : util::BasicVTable {
+struct PANOCDirectionVTable : guanaqo::BasicVTable {
     USING_ALPAQA_CONFIG(Conf);
     using Problem = TypeErasedProblem<config_t>;
 
@@ -43,30 +45,30 @@ struct PANOCDirectionVTable : util::BasicVTable {
     // clang-format on
 
     template <class T>
-    PANOCDirectionVTable(std::in_place_t, T &t) : util::BasicVTable{std::in_place, t} {
-        initialize            = util::type_erased_wrapped<T, &T::initialize>();
-        update                = util::type_erased_wrapped<T, &T::update>();
-        has_initial_direction = util::type_erased_wrapped<T, &T::has_initial_direction>();
-        apply                 = util::type_erased_wrapped<T, &T::apply>();
-        changed_γ             = util::type_erased_wrapped<T, &T::changed_γ>();
-        reset                 = util::type_erased_wrapped<T, &T::reset>();
-        get_params            = util::type_erased_wrapped<T, &T::get_params>();
-        get_name              = util::type_erased_wrapped<T, &T::get_name>();
+    PANOCDirectionVTable(std::in_place_t, T &t) : guanaqo::BasicVTable{std::in_place, t} {
+        initialize            = guanaqo::type_erased_wrapped<T, &T::initialize>();
+        update                = guanaqo::type_erased_wrapped<T, &T::update>();
+        has_initial_direction = guanaqo::type_erased_wrapped<T, &T::has_initial_direction>();
+        apply                 = guanaqo::type_erased_wrapped<T, &T::apply>();
+        changed_γ             = guanaqo::type_erased_wrapped<T, &T::changed_γ>();
+        reset                 = guanaqo::type_erased_wrapped<T, &T::reset>();
+        get_params            = guanaqo::type_erased_wrapped<T, &T::get_params>();
+        get_name              = guanaqo::type_erased_wrapped<T, &T::get_name>();
     }
     PANOCDirectionVTable() = default;
 };
 
 template <Config Conf>
-constexpr size_t te_pd_buff_size = util::required_te_buffer_size_for<LBFGSDirection<Conf>>();
+constexpr size_t te_pd_buff_size = guanaqo::required_te_buffer_size_for<LBFGSDirection<Conf>>();
 
 template <Config Conf = DefaultConfig, class Allocator = std::allocator<std::byte>>
 class TypeErasedPANOCDirection
-    : public util::TypeErased<PANOCDirectionVTable<Conf>, Allocator, te_pd_buff_size<Conf>> {
+    : public guanaqo::TypeErased<PANOCDirectionVTable<Conf>, Allocator, te_pd_buff_size<Conf>> {
   public:
     USING_ALPAQA_CONFIG(Conf);
     using VTable         = PANOCDirectionVTable<Conf>;
     using allocator_type = Allocator;
-    using TypeErased     = util::TypeErased<VTable, allocator_type, te_pd_buff_size<Conf>>;
+    using TypeErased     = guanaqo::TypeErased<VTable, allocator_type, te_pd_buff_size<Conf>>;
     using TypeErased::TypeErased;
     using Problem = TypeErasedProblem<config_t>;
 

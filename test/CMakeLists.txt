@@ -14,17 +14,9 @@ add_executable(tests
     "accelerators/test-anderson-acceleration.cpp"
     "accelerators/test-limited-memory-qr.cpp"
     "inner/test-panoc.cpp"
-    "util/test-type-erasure.cpp"
     "util/test-index-set.cpp"
-    "util/test-print.cpp"
-    "util/test-string-util.cpp"
-    "util/test-duration-parse.cpp"
-    "util/test-set-intersection.cpp"
-    "util/test-sparse-ops.cpp"
-    "util/io/test-csv.cpp"
     "outer/test-alm.cpp"
     "problem/test-type-erased-problem.cpp"
-    "problem/test-sparsity.cpp"
     "interop/test-qpalm-conversion.cpp"
 )
 target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

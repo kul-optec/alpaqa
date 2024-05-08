@@ -4,13 +4,15 @@
 #include <alpaqa/cutest-interface-export.h>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
-#include <alpaqa/util/copyable_unique_ptr.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/copyable-unique_ptr.hpp>
+#include <guanaqo/dl-flags.hpp>
 
 #include <iosfwd>
 #include <string>
 
 namespace alpaqa {
+
+using guanaqo::DynamicLoadFlags;
 
 /// Wrapper for CUTEst problems loaded from an external shared library.
 ///
@@ -19,7 +21,6 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     : public BoxConstrProblem<alpaqa::EigenConfigd> {
   public:
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
-    using Sparsity = alpaqa::Sparsity<config_t>;
 
     /// Load a CUTEst problem from the given shared library and OUTSDIF.d file.
     /// If @p so_fname points to a directory, `"PROBLEM.so"` is appended
@@ -81,7 +82,7 @@ class CUTEST_INTERFACE_EXPORT CUTEstProblem
     vec y0;                         ///< Initial value of Lagrange multipliers
 
   private:
-    util::copyable_unique_ptr<class CUTEstLoader> impl;
+    guanaqo::copyable_unique_ptr<class CUTEstLoader> impl;
     bool sparse       = false;
     mutable int nnz_H = -1;
     mutable int nnz_J = -1;

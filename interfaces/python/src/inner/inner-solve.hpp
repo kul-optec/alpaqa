@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpaqa/util/quadmath/quadmath.hpp>
+#include <guanaqo/quadmath/quadmath.hpp>
 
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>

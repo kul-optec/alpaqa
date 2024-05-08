@@ -1,5 +1,5 @@
-#include <alpaqa/util/demangled-typename.hpp>
 #include <MatlabDataArray/ArrayType.hpp>
+#include <guanaqo/demangled-typename.hpp>
 #include <alpaqa-version.h>
 #include <alpaqa-mex-types.hpp>
 
@@ -161,6 +161,7 @@ class MexFunction : public matlab::mex::Function {
         }
     } catch (std::exception &e) {
         using namespace alpaqa::mex;
+        using guanaqo::demangled_typename;
         displayError(utf8to16(demangled_typename(typeid(e)) + ": " + e.what()));
     }
 };

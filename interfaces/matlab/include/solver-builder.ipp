@@ -11,7 +11,7 @@
 #include <alpaqa/outer/alm.hpp>
 #include <alpaqa/params/json.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <guanaqo/string-util.hpp>
 #include <nlohmann/json.hpp>
 
 #include <alpaqa-mex-types.hpp>
@@ -34,11 +34,11 @@ decltype(auto) set_params(T &t, std::string_view prefix, const Options &opts) {
     } catch (alpaqa::params::invalid_json_param &e) {
         throw std::invalid_argument(
             "Error in params at '" + std::string(prefix) +
-            alpaqa::util::join_quote(std::views::reverse(e.backtrace),
-                                     {.sep         = "",
-                                      .empty       = "",
-                                      .quote_left  = ".",
-                                      .quote_right = ""}) +
+            guanaqo::join_quote(std::views::reverse(e.backtrace),
+                                {.sep         = "",
+                                 .empty       = "",
+                                 .quote_left  = ".",
+                                 .quote_right = ""}) +
             "': " + e.what());
     } catch (nlohmann::json::exception &e) {
         throw std::invalid_argument(std::string("Error in params: ") +
@@ -183,10 +183,10 @@ solver_runner_func make_panoc_like_driver(std::string_view direction,
     if (builder_it != builders.end())
         return builder_it->second(direction, opts);
     else
-        throw std::invalid_argument(
-            "Unknown direction '" + std::string(direction) + "'\n" +
-            "  Available directions: " +
-            alpaqa::util::join(std::views::keys(builders)));
+        throw std::invalid_argument("Unknown direction '" +
+                                    std::string(direction) + "'\n" +
+                                    "  Available directions: " +
+                                    guanaqo::join(std::views::keys(builders)));
 }
 
 solver_runner_func make_panoc_driver(std::string_view direction,
@@ -226,10 +226,10 @@ solver_runner_func make_pantr_like_solver(std::string_view direction,
     if (builder_it != builders.end())
         return builder_it->second(direction, opts);
     else
-        throw std::invalid_argument(
-            "Unknown direction '" + std::string(direction) + "'\n" +
-            "  Available directions: " +
-            alpaqa::util::join(std::views::keys(builders)));
+        throw std::invalid_argument("Unknown direction '" +
+                                    std::string(direction) + "'\n" +
+                                    "  Available directions: " +
+                                    guanaqo::join(std::views::keys(builders)));
 }
 
 solver_runner_func make_pantr_driver(std::string_view direction,
@@ -242,7 +242,7 @@ auto get_solver_builder(std::string_view method,
     std::string direction;
     if (method.empty())
         method = "panoc.struclbfgs";
-    std::tie(method, direction) = alpaqa::util::split(method, ".");
+    std::tie(method, direction) = guanaqo::split(method, ".");
     // Dictionary of available solver builders
     std::map<std::string_view, solver_builder_func> solvers{
         {"panoc", make_panoc_driver},
@@ -259,8 +259,7 @@ auto get_solver_builder(std::string_view method,
     if (solver_it == solvers.end())
         throw std::invalid_argument(
             "Unknown solver '" + std::string(method) + "'\n" +
-            "  Available solvers: " +
-            alpaqa::util::join(std::views::keys(solvers)));
+            "  Available solvers: " + guanaqo::join(std::views::keys(solvers)));
     return std::make_tuple(std::move(solver_it->second), direction);
 }
 

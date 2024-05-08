@@ -10,9 +10,9 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/inner/panoc-helpers.tpp>
-#include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/util/alloc-check.hpp>
-#include <alpaqa/util/timed.hpp>
+#include <alpaqa/util/print.hpp>
+#include <guanaqo/timed.hpp>
 
 namespace alpaqa {
 
@@ -169,7 +169,7 @@ auto PANOCSolver<DirectionProviderT>::operator()(
         if (!progress_cb)
             return;
         ScopedMallocAllower ma;
-        alpaqa::util::Timed t{s.time_progress_callback};
+        guanaqo::Timed t{s.time_progress_callback};
         auto &&grad_ψx̂ =
             it.have_grad_ψx̂ ? crvec{it.grad_ψx̂} : crvec{null_vec<config_t>};
         progress_cb(ProgressInfo{

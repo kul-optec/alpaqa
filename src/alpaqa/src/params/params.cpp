@@ -1,14 +1,13 @@
 #include <alpaqa/implementation/params/params.tpp>
 
 #include <alpaqa/params/vec-from-file.hpp>
-#include <alpaqa/util/duration-parse.hpp>
-#include <alpaqa/util/io/csv.hpp>
-#include <alpaqa/util/possible-alias.hpp>
+#include <guanaqo/duration-parse.hpp>
+#include <guanaqo/from_chars-wrapper.hpp>
+#include <guanaqo/io/csv.hpp>
+#include <guanaqo/possible-alias.hpp>
 #include <fstream>
 #include <stdexcept>
 #include <variant>
-
-#include <alpaqa/util/from_chars-wrapper.hpp>
 
 #include <alpaqa/inner/directions/panoc/anderson.hpp>
 #include <alpaqa/inner/directions/panoc/convex-newton.hpp>
@@ -23,7 +22,7 @@
 #include <alpaqa/inner/pantr.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
 #include <alpaqa/outer/alm.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/dl-flags.hpp>
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
@@ -68,16 +67,17 @@ template <class T>
 void set_param_default(T &f, ParamString s) {
     assert_key_empty<T>(s);
     const auto *val_end = s.value.data() + s.value.size();
-    auto res            = util::from_chars(s.value.data(), val_end, f);
+    auto res            = guanaqo::from_chars(s.value.data(), val_end, f);
     if (res.ec != std::errc())
         throw std::invalid_argument(
             "Invalid value '" + std::string(s.value) + "' for type '" +
-            demangled_typename(typeid(T)) + "' in '" + std::string(s.full_key) +
+            guanaqo::demangled_typename(typeid(T)) + "' in '" +
+            std::string(s.full_key) +
             "': " + std::make_error_code(res.ec).message());
     if (res.ptr != val_end)
         throw std::invalid_argument(
             "Invalid suffix '" + std::string(res.ptr, val_end) +
-            "' for type '" + demangled_typename(typeid(T)) + "' in '" +
+            "' for type '" + guanaqo::demangled_typename(typeid(T)) + "' in '" +
             std::string(s.full_key) + "'");
 }
 
@@ -111,7 +111,7 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, ParamString s) {
                                         "' in '" + std::string(s.full_key) +
                                         '\'');
         try {
-            auto r      = alpaqa::csv::read_row_std_vector<real_t<config_t>>(f);
+            auto r = guanaqo::io::csv_read_row_std_vector<real_t<config_t>>(f);
             auto r_size = static_cast<length_t<config_t>>(r.size());
             if (v.expected_size >= 0 && r_size != v.expected_size)
                 throw std::invalid_argument(
@@ -119,7 +119,7 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, ParamString s) {
                     "' (expected " + std::to_string(v.expected_size) +
                     ", but got " + std::to_string(r.size()) + ')');
             v.value.emplace(cmvec<config_t>{r.data(), r_size});
-        } catch (alpaqa::csv::read_error &e) {
+        } catch (guanaqo::io::csv_read_error &e) {
             throw std::invalid_argument(
                 "Unable to read from file '" + fpath + "' in '" +
                 std::string(s.full_key) +
@@ -145,17 +145,17 @@ template <class Duration>
 void set_param_default(Duration &t, ParamString s) {
     assert_key_empty<Duration>(s);
     try {
-        util::parse_duration(t = {}, s.value);
-    } catch (util::invalid_duration_value &e) {
+        guanaqo::parse_duration(t = {}, s.value);
+    } catch (guanaqo::invalid_duration_value &e) {
         throw invalid_param(
             "Invalid value '" + std::string(s.value) + "' for type '" +
-            demangled_typename(typeid(Duration)) + "': error at '" +
+            guanaqo::demangled_typename(typeid(Duration)) + "': error at '" +
             std::string(std::string_view(s.value.data(), e.result.ptr)));
-    } catch (util::invalid_duration_units &e) {
+    } catch (guanaqo::invalid_duration_units &e) {
         throw invalid_param("Invalid units '" + std::string(e.units) +
                             "' for type '" +
-                            demangled_typename(typeid(Duration)) + "' in '" +
-                            std::string(s.value) + "'");
+                            guanaqo::demangled_typename(typeid(Duration)) +
+                            "' in '" + std::string(s.value) + "'");
     }
 }
 
@@ -171,11 +171,11 @@ void set_param(T &t, ParamString s) {
 }
 
 template <class... Ts>
-void set_param(util::detail::dummy<Ts...> &, ParamString) {}
+void set_param(guanaqo::detail::dummy<Ts...> &, ParamString) {}
 
 #define ALPAQA_SET_PARAM_INST(...)                                             \
     template void ALPAQA_EXPORT set_param(                                     \
-        util::possible_alias_t<__VA_ARGS__> &, ParamString)
+        guanaqo::possible_alias_t<__VA_ARGS__> &, ParamString)
 
 ALPAQA_SET_PARAM_INST(float);
 ALPAQA_SET_PARAM_INST(double, float);
@@ -222,7 +222,7 @@ ALPAQA_SET_PARAM_INST(std::chrono::hours);
 
 ALPAQA_SET_PARAM_INST(PANOCStopCrit);
 ALPAQA_SET_PARAM_INST(LBFGSStepSize);
-ALPAQA_SET_PARAM_INST(DynamicLoadFlags);
+ALPAQA_SET_PARAM_INST(guanaqo::DynamicLoadFlags);
 ALPAQA_SET_PARAM_INST(PANOCParams<config_t>);
 ALPAQA_SET_PARAM_INST(FISTAParams<config_t>);
 ALPAQA_SET_PARAM_INST(ZeroFPRParams<config_t>);

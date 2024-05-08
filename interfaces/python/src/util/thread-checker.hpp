@@ -1,7 +1,7 @@
 #pragma once
 
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/type-erasure.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/type-erasure.hpp>
 #include <optional>
 #include <set>
 #include <stdexcept>
@@ -11,7 +11,7 @@ template <class T>
 const T *get_identity(const T &t) {
     return std::addressof(t);
 }
-const void *get_identity(const alpaqa::util::derived_from_TypeErased auto &t) {
+const void *get_identity(const guanaqo::derived_from_TypeErased auto &t) {
     return t.get_const_pointer();
 }
 template <class T>
@@ -29,7 +29,7 @@ class ThreadChecker {
     ThreadChecker(const T &t) {
         auto [iter, inserted] = set.insert(alpaqa::get_identity(t));
         if (!inserted) {
-            std::string name = "instance of type " + demangled_typename(typeid(T));
+            std::string name = "instance of type " + guanaqo::demangled_typename(typeid(T));
             if constexpr (requires { t.get_name(); })
                 name = "instance of " + std::string(t.get_name());
             throw std::runtime_error("Same " + name +

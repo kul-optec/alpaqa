@@ -2,7 +2,7 @@
 
 #include <alpaqa/params/params.hpp>
 #include <alpaqa/params/vec-from-file.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <guanaqo/string-util.hpp>
 
 #include <algorithm>
 #include <ranges>
@@ -47,7 +47,7 @@ class Options {
             throw std::logic_error(
                 "This version of alpaqa was compiled without JSON support: "
                 "cannot parse options " +
-                alpaqa::util::join_quote(json_flags(), {.sep = " "}));
+                guanaqo::join_quote(json_flags(), {.sep = " "}));
 #endif
         // Keep track of which options are used
         used_storage.resize(opts_storage.size() - num_json);
@@ -102,11 +102,11 @@ void Options::set_params(T &t, std::string_view prefix) {
             throw std::invalid_argument(
                 "Error in JSON file '" + fname + "' at '" +
                 std::string(prefix) +
-                alpaqa::util::join_quote(std::views::reverse(e.backtrace),
-                                         {.sep         = "",
-                                          .empty       = "",
-                                          .quote_left  = ".",
-                                          .quote_right = ""}) +
+                guanaqo::join_quote(std::views::reverse(e.backtrace),
+                                    {.sep         = "",
+                                     .empty       = "",
+                                     .quote_left  = ".",
+                                     .quote_right = ""}) +
                 "': " + e.what());
         } catch (nlohmann::json::exception &e) {
             std::string fname{this->json_flags()[i].substr(1)};

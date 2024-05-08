@@ -1,5 +1,6 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/kkt-error.hpp>
+#include <alpaqa/util/span.hpp>
 #include <alpaqa-python/export.h>
 #include <pybind11/eigen.h>
 #include <pybind11/functional.h>
@@ -106,7 +107,7 @@ struct cvt_matrix_visitor_t {
     USING_ALPAQA_CONFIG(Conf);
     using result_t = std::tuple<py::object, sp::Symmetry>;
     F func;
-    auto operator()(const sp::Dense<config_t> &d) const -> result_t {
+    auto operator()(const sp::Dense &d) const -> result_t {
         mat vals(d.rows, d.cols);
         func(vals.reshaped());
         return {
@@ -114,8 +115,8 @@ struct cvt_matrix_visitor_t {
             d.symmetry,
         };
     }
-    template <class I>
-    auto operator()(const sp::SparseCSC<config_t, I> &csc) const -> result_t {
+    template <class I, class J>
+    auto operator()(const sp::SparseCSC<I, J> &csc) const -> result_t {
         vec vals(csc.nnz());
         func(vals);
         auto csc_array = py::module_::import("scipy.sparse").attr("csc_array");
@@ -127,12 +128,14 @@ struct cvt_matrix_visitor_t {
         };
     }
     template <class I>
-    auto operator()(const sp::SparseCOO<config_t, I> &coo) const -> result_t {
+    auto operator()(const sp::SparseCOO<I> &coo) const -> result_t {
         vec vals(coo.nnz());
         func(vals);
         auto coo_array = py::module_::import("scipy.sparse").attr("coo_array");
         auto Δ         = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
-        auto indices   = py::make_tuple(coo.row_indices - Δ, coo.col_indices - Δ);
+        auto row_ind   = alpaqa::as_vec(coo.row_indices);
+        auto col_ind   = alpaqa::as_vec(coo.col_indices);
+        auto indices   = py::make_tuple(row_ind - Δ, col_ind - Δ);
         auto matrix    = py::make_tuple(std::move(vals), std::move(indices));
         auto shape     = ("shape"_a = py::make_tuple(coo.rows, coo.cols));
         return {
@@ -143,7 +146,7 @@ struct cvt_matrix_visitor_t {
 };
 
 template <alpaqa::Config Conf>
-auto cvt_matrix(const alpaqa::Sparsity<Conf> &sparsity, const auto &func) {
+auto cvt_matrix(const alpaqa::Sparsity &sparsity, const auto &func) {
     cvt_matrix_visitor_t<Conf, decltype(func)> visitor{func};
     return std::visit(visitor, sparsity.value);
 }
@@ -323,16 +326,16 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def(
             "eval_constraints_jacobian",
             [&](const T &p, crvec x) {
-                return cvt_matrix(p.get_constraints_jacobian_sparsity(), [&](rvec values) {
-                    return p.eval_constraints_jacobian(x, values);
-                });
+                return cvt_matrix<config_t>(
+                    p.get_constraints_jacobian_sparsity(),
+                    [&](rvec values) { return p.eval_constraints_jacobian(x, values); });
             },
             "x"_a, "Returns the Jacobian of the constraints and its symmetry.");
     if constexpr (requires { &T::eval_lagrangian_hessian; })
         cls.def(
             "eval_lagrangian_hessian",
             [&](const T &p, crvec x, crvec y, real_t scale) {
-                return cvt_matrix(p.get_lagrangian_hessian_sparsity(), [&](rvec values) {
+                return cvt_matrix<config_t>(p.get_lagrangian_hessian_sparsity(), [&](rvec values) {
                     return p.eval_lagrangian_hessian(x, y, scale, values);
                 });
             },
@@ -342,9 +345,10 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def(
             "eval_augmented_lagrangian_hessian",
             [&](const T &p, crvec x, crvec y, crvec Σ, real_t scale) {
-                return cvt_matrix(p.get_augmented_lagrangian_hessian_sparsity(), [&](rvec values) {
-                    return p.eval_augmented_lagrangian_hessian(x, y, Σ, scale, values);
-                });
+                return cvt_matrix<config_t>(
+                    p.get_augmented_lagrangian_hessian_sparsity(), [&](rvec values) {
+                        return p.eval_augmented_lagrangian_hessian(x, y, Σ, scale, values);
+                    });
             },
             "x"_a, "y"_a, "Σ"_a, "scale"_a = 1.,
             "Returns the Hessian of the augmented Lagrangian and its symmetry.");

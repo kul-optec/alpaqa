@@ -1,7 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/util/type-erasure.hpp>
+#include <guanaqo/type-erasure.hpp>
 
 #include <any>
 #include <new>

@@ -4,11 +4,12 @@
 #include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
 #include <alpaqa/casadi/casadi-namespace.hpp>
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/util/dl-flags.hpp>
-#include <alpaqa/util/io/csv.hpp>
-#include <alpaqa/util/not-implemented.hpp>
+#include <alpaqa/util/span.hpp>
 #include <alpaqa/util/sparse-ops.hpp>
 #include "CasADiLoader-util.hpp"
+#include <guanaqo/dl-flags.hpp>
+#include <guanaqo/io/csv.hpp>
+#include <guanaqo/not-implemented.hpp>
 
 #include <Eigen/Sparse>
 
@@ -275,17 +276,18 @@ void CasADiControlProblem<Conf>::load_numerical_data(
     index_t line        = 0;
     auto wrap_data_load = [&](std::string_view name, auto &v,
                               bool fixed_size = true) {
+        using namespace guanaqo::io;
         try {
             ++line;
             if (data_file.peek() == '\n') // Ignore empty lines
                 return static_cast<void>(data_file.get());
             if (fixed_size) {
-                csv::read_row(data_file, v, sep);
+                csv_read_row(data_file, as_span(v), sep);
             } else { // Dynamic size
-                auto s = csv::read_row_std_vector<real_t>(data_file, sep);
-                v      = cmvec{s.data(), static_cast<index_t>(s.size())};
+                auto s = csv_read_row_std_vector<real_t>(data_file, sep);
+                v      = as_vec(std::span{s});
             }
-        } catch (csv::read_error &e) {
+        } catch (csv_read_error &e) {
             // Transform any errors in something more readable
             throw std::runtime_error("Unable to read " + std::string(name) +
                                      " from data file \"" + filepath.string() +

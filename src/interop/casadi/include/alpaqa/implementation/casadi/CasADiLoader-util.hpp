@@ -2,8 +2,8 @@
 
 #include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
 #include <alpaqa/casadi/casadi-namespace.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/dl.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/dl.hpp>
 
 #include <array>
 #include <optional>
@@ -17,6 +17,9 @@
 #endif
 
 namespace alpaqa {
+
+using guanaqo::dynamic_load_error;
+
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
 namespace casadi_loader {
 
@@ -27,7 +30,7 @@ auto wrap_load(Loader &&loader, const char *name, F f) {
     } catch (const invalid_argument_dimensions &e) {
         throw std::invalid_argument(
             "Unable to load function '" + loader.format_name(name) +
-            "': " + demangled_typename(typeid(e)) + ": " + e.what());
+            "': " + guanaqo::demangled_typename(typeid(e)) + ": " + e.what());
     }
 }
 
@@ -47,7 +50,7 @@ std::optional<T> try_load(Loader &&loader, const char *name, Args &&...args) {
     } catch (casadi::CasadiException &) {
         return std::nullopt;
 #else
-    } catch (util::dynamic_load_error &e) {
+    } catch (dynamic_load_error &e) {
         return std::nullopt;
 #endif
     } catch (std::out_of_range &) {

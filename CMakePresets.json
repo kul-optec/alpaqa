@@ -14,6 +14,7 @@
                 "BUILD_SHARED_LIBS": true,
                 "CMAKE_STAGING_PREFIX": "${sourceDir}/staging",
                 "ALPAQA_WITH_DRIVERS": true,
+                "ALPAQA_WITH_GRADIENT_CHECKER": true,
                 "ALPAQA_WITH_EXAMPLES": true,
                 "ALPAQA_WITH_TESTS": true
             }
@@ -30,7 +31,7 @@
             "warnings": {
                 "dev": true,
                 "deprecated": true,
-                "uninitialized": true
+                "uninitialized": false
             },
             "environment": {
                 "CFLAGS": "-fdiagnostics-color",
@@ -60,7 +61,8 @@
             "toolchainFile": "$env{TOOLCHAIN_PREFIX}/$env{CROSS_COMPILE}.toolchain.cmake",
             "cacheVariables": {
                 "CMAKE_PREFIX_PATH": "$env{TOOLCHAIN_PREFIX}/mumps/usr/local;$env{TOOLCHAIN_PREFIX}/ipopt/usr/local",
-                "CMAKE_FIND_ROOT_PATH": "$env{TOOLCHAIN_PREFIX}/eigen-master;$env{TOOLCHAIN_PREFIX}/guanaqo;$env{TOOLCHAIN_PREFIX}/googletest;$env{TOOLCHAIN_PREFIX}/casadi;$env{TOOLCHAIN_PREFIX}/openblas;$env{TOOLCHAIN_PREFIX}/mumps;$env{TOOLCHAIN_PREFIX}/ipopt;$env{TOOLCHAIN_PREFIX}/qpalm;$env{TOOLCHAIN_PREFIX}/pybind11-2.13.6"
+                "CMAKE_FIND_ROOT_PATH": "$env{TOOLCHAIN_PREFIX}/eigen-master;$env{TOOLCHAIN_PREFIX}/guanaqo;$env{TOOLCHAIN_PREFIX}/googletest;$env{TOOLCHAIN_PREFIX}/casadi;$env{TOOLCHAIN_PREFIX}/openblas;$env{TOOLCHAIN_PREFIX}/mumps;$env{TOOLCHAIN_PREFIX}/ipopt;$env{TOOLCHAIN_PREFIX}/qpalm;$env{TOOLCHAIN_PREFIX}/pybind11-2.13.6",
+                "ALPAQA_FORCE_TEST_DISCOVERY": true
             }
         },
         {
@@ -92,7 +94,11 @@
                 "ALPAQA_WITH_LBFGSB": false,
                 "ALPAQA_WITH_EXTERNAL_CASADI": true,
                 "ALPAQA_WITH_OPENMP": true,
-                "ALPAQA_WITH_ACCURATE_BUILD_TIME": false
+                "ALPAQA_WITH_ACCURATE_BUILD_TIME": false,
+                "ALPAQA_WITH_DRIVERS": false,
+                "ALPAQA_WITH_GRADIENT_CHECKER": false,
+                "ALPAQA_WITH_EXAMPLES": false,
+                "ALPAQA_WITH_TESTS": false
             }
         }
     ]

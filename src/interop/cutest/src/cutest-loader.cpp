@@ -2,8 +2,9 @@
 
 #include <alpaqa/cutest/cutest-errors.hpp>
 #include <alpaqa/problem/sparsity.hpp>
-#include <alpaqa/util/dl-flags.hpp>
-#include <alpaqa/util/dl.hpp>
+#include <alpaqa/util/span.hpp>
+#include <guanaqo/dl-flags.hpp>
+#include <guanaqo/dl.hpp>
 
 #include <cassert>
 #include <filesystem>
@@ -103,7 +104,7 @@ class CUTEstLoader {
         if (fs::is_directory(path))
             path /= "PROBLEM.so";
         // Open the shared library
-        so_handle = util::load_lib(path.c_str(), dl_flags);
+        so_handle = guanaqo::load_lib(path.c_str(), dl_flags);
 
         // Open the OUTSDIF.d file
         if (outsdif_fname && *outsdif_fname)
@@ -339,7 +340,7 @@ void CUTEstProblem::eval_constraints_jacobian(crvec x, rvec J_values) const {
 }
 auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
     if (!sparse)
-        return sparsity::Dense<config_t>{
+        return sparsity::Dense{
             .rows     = m,
             .cols     = n,
             .symmetry = sparsity::Symmetry::Unsymmetric,
@@ -355,13 +356,13 @@ auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
         checked(impl->funcs.csjp, "eval_constraints_jacobian: CUTEST_csjp")(
             &nnz_J, &nnz, storage_jac_g.cols.data(), storage_jac_g.rows.data());
     }
-    using SparseCOO = sparsity::SparseCOO<config_t, int>;
+    using SparseCOO = sparsity::SparseCOO<int>;
     return SparseCOO{
         .rows        = m,
         .cols        = n,
         .symmetry    = sparsity::Symmetry::Unsymmetric,
-        .row_indices = storage_jac_g.rows,
-        .col_indices = storage_jac_g.cols,
+        .row_indices = as_span(storage_jac_g.rows),
+        .col_indices = as_span(storage_jac_g.cols),
         .order       = SparseCOO::Unsorted,
         .first_index = 1, // Fortran-style indices
     };
@@ -472,7 +473,7 @@ void CUTEstProblem::eval_lagrangian_hessian(crvec x, crvec y, real_t scale,
 }
 auto CUTEstProblem::get_lagrangian_hessian_sparsity() const -> Sparsity {
     if (!sparse)
-        return sparsity::Dense<config_t>{
+        return sparsity::Dense{
             .rows     = n,
             .cols     = n,
             .symmetry = sparsity::Symmetry::Upper,
@@ -488,13 +489,13 @@ auto CUTEstProblem::get_lagrangian_hessian_sparsity() const -> Sparsity {
             &impl->nvar, &nnz_H, &nnz, storage_hess_L.rows.data(),
             storage_hess_L.cols.data());
     }
-    using SparseCOO = sparsity::SparseCOO<config_t, int>;
+    using SparseCOO = sparsity::SparseCOO<int>;
     return SparseCOO{
         .rows        = n,
         .cols        = n,
         .symmetry    = sparsity::Symmetry::Upper,
-        .row_indices = storage_hess_L.rows,
-        .col_indices = storage_hess_L.cols,
+        .row_indices = as_span(storage_hess_L.rows),
+        .col_indices = as_span(storage_hess_L.cols),
         .order       = SparseCOO::Unsorted,
         .first_index = 1, // Fortran-style indices
     };

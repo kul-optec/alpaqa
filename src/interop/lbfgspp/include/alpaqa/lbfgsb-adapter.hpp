@@ -5,7 +5,7 @@
 #include <alpaqa/inner/internal/solverstatus.hpp>
 #include <alpaqa/lbfgspp-adapter-export.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
-#include <alpaqa/util/atomic-stop-signal.hpp>
+#include <guanaqo/atomic-stop-signal.hpp>
 
 #include <chrono>
 #include <iostream>
@@ -60,7 +60,7 @@ class LBFGSBSolver {
 
   private:
     Params params;
-    AtomicStopSignal stop_signal;
+    guanaqo::AtomicStopSignal stop_signal;
 
   public:
     std::ostream *os = &std::cout;

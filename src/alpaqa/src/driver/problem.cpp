@@ -3,8 +3,7 @@
 #include <alpaqa/params/vec-from-file.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
-#include <alpaqa/util/dl-flags.hpp>
-#include <alpaqa/util/io/csv.hpp>
+#include <guanaqo/dl-flags.hpp>
 #if ALPAQA_WITH_DL
 #include <alpaqa/dl/dl-problem.hpp>
 #endif

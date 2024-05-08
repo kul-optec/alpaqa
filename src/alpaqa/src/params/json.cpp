@@ -1,10 +1,10 @@
 #include <alpaqa/implementation/params/json.tpp>
 
 #include <alpaqa/params/vec-from-file.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/duration-parse.hpp>
-#include <alpaqa/util/io/csv.hpp>
-#include <alpaqa/util/possible-alias.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/duration-parse.hpp>
+#include <guanaqo/io/csv.hpp>
+#include <guanaqo/possible-alias.hpp>
 #include <algorithm>
 #include <cmath>
 #include <concepts>
@@ -25,12 +25,14 @@
 #include <alpaqa/inner/pantr.hpp>
 #include <alpaqa/inner/zerofpr.hpp>
 #include <alpaqa/outer/alm.hpp>
-#include <alpaqa/util/dl-flags.hpp>
+#include <guanaqo/dl-flags.hpp>
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
 
 namespace alpaqa::params {
+
+using guanaqo::demangled_typename;
 
 template <class T>
 inline constexpr bool is_duration = false;
@@ -46,13 +48,13 @@ void set_param_default(Duration &t, const json &j) {
             demangled_typename(typeid(Duration)) + "' (expected a string)");
     std::string value = j; // keep outside of try block
     try {
-        util::parse_duration(t = {}, value);
-    } catch (util::invalid_duration_value &e) {
+        guanaqo::parse_duration(t = {}, value);
+    } catch (guanaqo::invalid_duration_value &e) {
         throw invalid_json_param(
             "Invalid value '" + value + "' for type '" +
             demangled_typename(typeid(Duration)) + "': error at '" +
             std::string(std::string_view(value.data(), e.result.ptr)));
-    } catch (util::invalid_duration_units &e) {
+    } catch (guanaqo::invalid_duration_units &e) {
         throw invalid_json_param(
             "Invalid units '" + std::string(e.units) + "' for type '" +
             demangled_typename(typeid(Duration)) + "' in '" + value + "'");
@@ -118,6 +120,7 @@ void ALPAQA_EXPORT set_param(alpaqa::vec<config_t> &v, const json &j) {
 
 template <>
 void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
+    using namespace guanaqo::io;
     if (j.is_string()) {
         std::string fpath{j};
         std::ifstream f(fpath);
@@ -126,7 +129,7 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
                                      "' for type '" +
                                      demangled_typename(typeid(v)));
         try {
-            auto r      = alpaqa::csv::read_row_std_vector<real_t<config_t>>(f);
+            auto r      = csv_read_row_std_vector<real_t<config_t>>(f);
             auto r_size = static_cast<length_t<config_t>>(r.size());
             if (v.expected_size >= 0 && r_size != v.expected_size)
                 throw invalid_json_param(
@@ -134,7 +137,7 @@ void ALPAQA_EXPORT set_param(vec_from_file<config_t> &v, const json &j) {
                     std::to_string(v.expected_size) + ", but got " +
                     std::to_string(r.size()) + ")");
             v.value.emplace(cmvec<config_t>{r.data(), r_size});
-        } catch (alpaqa::csv::read_error &e) {
+        } catch (csv_read_error &e) {
             throw invalid_json_param("Unable to read from file '" + fpath +
                                      "': alpaqa::csv::read_error: " + e.what());
         }
@@ -255,18 +258,18 @@ void get_param(const T &t, json &j) {
 }
 
 template <class... Ts>
-void set_param(util::detail::dummy<Ts...> &, const json &) {}
+void set_param(guanaqo::detail::dummy<Ts...> &, const json &) {}
 template <class... Ts>
-void get_param(const util::detail::dummy<Ts...> &, json &) {}
+void get_param(const guanaqo::detail::dummy<Ts...> &, json &) {}
 
 #define ALPAQA_GET_PARAM_INST(...)                                             \
     template void ALPAQA_EXPORT get_param(                                     \
-        const util::possible_alias_t<__VA_ARGS__> &, json &)
+        const guanaqo::possible_alias_t<__VA_ARGS__> &, json &)
 #define ALPAQA_GETSET_PARAM_INST(...)                                          \
     template void ALPAQA_EXPORT set_param(                                     \
-        util::possible_alias_t<__VA_ARGS__> &, const json &);                  \
+        guanaqo::possible_alias_t<__VA_ARGS__> &, const json &);               \
     template void ALPAQA_EXPORT get_param(                                     \
-        const util::possible_alias_t<__VA_ARGS__> &, json &)
+        const guanaqo::possible_alias_t<__VA_ARGS__> &, json &)
 
 ALPAQA_GET_PARAM_INST(std::string);
 
@@ -317,7 +320,7 @@ ALPAQA_GETSET_PARAM_INST(std::chrono::hours);
 
 ALPAQA_GETSET_PARAM_INST(PANOCStopCrit);
 ALPAQA_GETSET_PARAM_INST(LBFGSStepSize);
-ALPAQA_GETSET_PARAM_INST(DynamicLoadFlags);
+ALPAQA_GETSET_PARAM_INST(guanaqo::DynamicLoadFlags);
 ALPAQA_GETSET_PARAM_INST(CBFGSParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(LipschitzEstimateParams<config_t>);
 ALPAQA_GETSET_PARAM_INST(PANOCParams<config_t>);

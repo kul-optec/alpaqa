@@ -9,7 +9,6 @@
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <alpaqa/util/alloc-check.hpp>
 #include <alpaqa/util/index-set.hpp>
-#include <alpaqa/util/print.hpp>
 #include <iostream>
 #include <optional>
 #include <stdexcept>
@@ -85,14 +84,13 @@ struct ConvexNewtonDirection {
         JK.resize(n);
         JK_old.resize(n);
         nJ_old = -1;
-        H.resize(n, n);
         HJ_storage.resize(n * n);
         work.resize(n);
         auto sparsity = problem.get_lagrangian_hessian_sparsity();
         if (!is_dense(sparsity))
             std::cerr << "Sparse hessians not yet implemented, converting to "
                          "dense matrix (may be very slow)\n";
-        H_sparsity.emplace(sparsity);
+        H_eval.emplace(sparsity);
         have_hess = false;
     }
 
@@ -124,18 +122,19 @@ struct ConvexNewtonDirection {
         length_t n = xₖ.size();
         // Evaluate the Hessian
         if (!have_hess) {
+            assert(H_eval);
             const auto &y = null_vec<config_t>;
-            auto eval_h   = [&](rvec v) {
+            H.emplace(H_eval->eval([&](rvec v) {
                 problem->eval_lagrangian_hessian(xₖ, y, 1, v);
-            };
-            H_sparsity->convert_values(eval_h, H.reshaped());
+            }));
             have_hess = direction_params.quadratic;
         }
+        assert(H);
         // Find inactive indices J
         auto nJ = problem->eval_inactive_indices_res_lna(γₖ, xₖ, grad_ψxₖ, JK);
         auto J  = JK.topRows(nJ);
         auto HJ = HJ_storage.topRows(nJ * nJ).reshaped(nJ, nJ);
-        HJ      = H(J, J);
+        HJ      = (*H)(J, J);
         // Regularize the Hessian
         real_t res_sq = pₖ.squaredNorm() / (γₖ * γₖ);
         real_t reg    = reg_params.ζ * std::pow(res_sq, reg_params.ν / 2);
@@ -147,12 +146,13 @@ struct ConvexNewtonDirection {
             rindexvec K = JK.bottomRows(n - nJ);
             detail::IndexSet<config_t>::compute_complement(J, K, n);
             w = (real_t(1) / γₖ) * pₖ(J) -
-                direction_params.hessian_vec_factor * (H(J, K) * qₖ(K));
+                direction_params.hessian_vec_factor * ((*H)(J, K) * qₖ(K));
         } else {
             w = (real_t(1) / γₖ) * pₖ(J);
         }
         // Solve the system
-        if (H_sparsity->get_sparsity().symmetry == sparsity::Symmetry::Upper)
+        auto symmetry = H_eval->converter.converter.get_sparsity().symmetry;
+        if (symmetry == sparsity::Symmetry::Upper)
             reg_params.ldlt ? solve<Eigen::LDLT<rmat, Eigen::Upper>>(HJ, w)
                             : solve<Eigen::LLT<rmat, Eigen::Upper>>(HJ, w);
         else
@@ -182,10 +182,8 @@ struct ConvexNewtonDirection {
 
     mutable indexvec JK, JK_old;
     mutable index_t nJ_old = -1;
-    mutable mat H;
-    using sp_conv_t = sparsity::SparsityConverter<Sparsity<config_t>,
-                                                  sparsity::Dense<config_t>>;
-    mutable std::optional<sp_conv_t> H_sparsity;
+    mutable std::optional<rmat> H;
+    mutable std::optional<sparsity::DenseEvaluator<config_t>> H_eval;
     mutable vec HJ_storage, work;
     mutable bool have_hess = false;
 

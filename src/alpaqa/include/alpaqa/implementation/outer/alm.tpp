@@ -9,9 +9,9 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/outer/internal/alm-helpers.tpp>
-#include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/inner/inner-solve-options.hpp>
 #include <alpaqa/inner/internal/solverstatus.hpp>
+#include <alpaqa/util/print.hpp>
 
 namespace alpaqa {
 

@@ -6,8 +6,8 @@
 #include <alpaqa/inner/internal/panoc-stop-crit.hpp>
 #include <alpaqa/inner/internal/solverstatus.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
-#include <alpaqa/util/atomic-stop-signal.hpp>
-#include <alpaqa/util/not-implemented.hpp>
+#include <guanaqo/atomic-stop-signal.hpp>
+#include <guanaqo/not-implemented.hpp>
 
 #include <stdexcept>
 
@@ -224,7 +224,7 @@ struct PANOCHelpers {
         /// [in]    The current iteration number
         unsigned iteration,
         /// [in]    A stop signal for the user to interrupt the algorithm
-        const AtomicStopSignal &stop_signal,
+        const guanaqo::AtomicStopSignal &stop_signal,
         /// [in]    Tolerance of the current iterate
         real_t εₖ,
         /// [in]    The number of successive iterations no progress was made

@@ -1,6 +1,6 @@
 #include <alpaqa/panoc-alm.hpp>
 #include <alpaqa/problem/problem-with-counters.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
+#include <guanaqo/demangled-typename.hpp>
 
 #include <filesystem>
 #include <iostream>
@@ -83,6 +83,7 @@ int main(int argc, const char *argv[]) try {
         << std::endl;
     return stats.status == alpaqa::SolverStatus::Converged ? 0 : 1;
 } catch (const std::exception &e) {
-    std::cerr << demangled_typename(typeid(e)) << ": " << e.what() << '\n';
+    std::cerr << guanaqo::demangled_typename(typeid(e)) << ": " << e.what()
+              << std::endl;
     return 255;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <alpaqa/util/quadmath/quadmath-print.hpp>
-#include <alpaqa/util/quadmath/quadmath.hpp>
+#include <guanaqo/quadmath/quadmath-print.hpp>
+#include <guanaqo/quadmath/quadmath.hpp>
 
 #include <complex>
 #include <limits>

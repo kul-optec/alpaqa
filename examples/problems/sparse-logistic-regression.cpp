@@ -3,7 +3,8 @@
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/dl/dl-problem.h>
 #include <alpaqa/params/params.hpp>
-#include <alpaqa/util/io/csv.hpp>
+#include <alpaqa/util/span.hpp>
+#include <guanaqo/io/csv.hpp>
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
 #include <algorithm>
@@ -187,10 +188,10 @@ struct Problem {
         Aᵀb.resize(n);
         Ax.resize(m);
         // Read the target labels
-        alpaqa::csv::read_row(csv_file, b);
+        guanaqo::io::csv_read_row(csv_file, alpaqa::as_span(b));
         // Read the data
         for (length_t i = 0; i < n; ++i)
-            alpaqa::csv::read_row(csv_file, A.col(i));
+            guanaqo::io::csv_read_row(csv_file, alpaqa::as_span(A.col(i)));
         // Name of the problem
         name = "sparse logistic regression (\"" + data_file.string() + "\")";
     }

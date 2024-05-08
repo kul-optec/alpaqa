@@ -1,9 +1,12 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/util/tag-invoke.hpp>
+#include <guanaqo/tag-invoke.hpp>
 
 namespace alpaqa {
+
+using guanaqo::guanaqo_tag_invoke;
+using guanaqo::tag_t;
 
 /// Proximal mapping customization point.
 /// @see https://wg21.link/P1895R0
@@ -16,25 +19,25 @@ struct prox_fn {
             requires is_config_v<typename T::config_t>;
             // The proximable function type T should opt in to the prox_fn
             // tag to provide a custom implementation for the proximal operator.
-            requires alpaqa::tag_invocable<
+            requires guanaqo::tag_invocable<
                 prox_fn, T &, typename T::config_t::crmat,
                 typename T::config_t::rmat, typename T::config_t::real_t>;
             // The return type of that proximal operator should be real_t.
             requires std::is_same_v<
-                tag_invoke_result_t<prox_fn, T &, typename T::config_t::crmat,
-                                    typename T::config_t::rmat,
-                                    typename T::config_t::real_t>,
+                guanaqo::tag_invoke_result_t<
+                    prox_fn, T &, typename T::config_t::crmat,
+                    typename T::config_t::rmat, typename T::config_t::real_t>,
                 typename T::config_t::real_t>;
         }
     auto operator()(T &func, typename T::config_t::crmat in,
                     typename T::config_t::rmat out,
                     typename T::config_t::real_t γ = 1) const
-        noexcept(alpaqa::is_nothrow_tag_invocable_v<
+        noexcept(guanaqo::is_nothrow_tag_invocable_v<
                  prox_fn, T &, typename T::config_t::crmat,
                  typename T::config_t::rmat, typename T::config_t::real_t>) ->
         typename T::config_t::real_t {
-        return alpaqa::alpaqa_tag_invoke(*this, func, std::move(in),
-                                         std::move(out), γ);
+        return guanaqo::guanaqo_tag_invoke(*this, func, std::move(in),
+                                           std::move(out), γ);
     }
 }
 /**
@@ -71,14 +74,14 @@ struct prox_step_fn {
             requires is_config_v<typename T::config_t>;
             // The proximable function type T should opt in to the prox_step_fn
             // tag to provide a custom implementation for the proximal operator.
-            requires alpaqa::tag_invocable<
+            requires guanaqo::tag_invocable<
                 prox_step_fn, T &, typename T::config_t::crmat,
                 typename T::config_t::crmat, typename T::config_t::rmat,
                 typename T::config_t::rmat, typename T::config_t::real_t,
                 typename T::config_t::real_t>;
             // The return type of that proximal operator should be real_t.
             requires std::is_same_v<
-                tag_invoke_result_t<
+                guanaqo::tag_invoke_result_t<
                     prox_step_fn, T &, typename T::config_t::crmat,
                     typename T::config_t::crmat, typename T::config_t::rmat,
                     typename T::config_t::rmat, typename T::config_t::real_t,
@@ -91,15 +94,15 @@ struct prox_step_fn {
                     typename T::config_t::rmat fb_step,
                     typename T::config_t::real_t γ     = 1,
                     typename T::config_t::real_t γ_fwd = -1) const
-        noexcept(alpaqa::is_nothrow_tag_invocable_v<
+        noexcept(guanaqo::is_nothrow_tag_invocable_v<
                  prox_step_fn, T &, typename T::config_t::crmat,
                  typename T::config_t::crmat, typename T::config_t::rmat,
                  typename T::config_t::rmat, typename T::config_t::real_t,
                  typename T::config_t::real_t>) ->
         typename T::config_t::real_t {
-        return alpaqa::alpaqa_tag_invoke(*this, func, std::move(in),
-                                         std::move(fwd_step), std::move(out),
-                                         std::move(fb_step), γ, γ_fwd);
+        return guanaqo::guanaqo_tag_invoke(*this, func, std::move(in),
+                                           std::move(fwd_step), std::move(out),
+                                           std::move(fb_step), γ, γ_fwd);
     }
 
     /// Default implementation for prox_step if only prox is provided.
@@ -108,7 +111,7 @@ struct prox_step_fn {
             typename T::config_t;
             requires is_config_v<typename T::config_t>;
             // Only enable if no implementation exists,
-            requires !alpaqa::tag_invocable<
+            requires !guanaqo::tag_invocable<
                 prox_step_fn, T &, typename T::config_t::crmat,
                 typename T::config_t::crmat, typename T::config_t::rmat,
                 typename T::config_t::rmat, typename T::config_t::real_t,

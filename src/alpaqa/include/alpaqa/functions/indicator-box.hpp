@@ -9,9 +9,9 @@ namespace alpaqa::sets {
 
 template <Config Conf>
 typename Conf::real_t
-alpaqa_tag_invoke(tag_t<alpaqa::prox>, Box<Conf> &self, typename Conf::crmat in,
-                  typename Conf::rmat out,
-                  [[maybe_unused]] typename Conf::real_t γ) {
+guanaqo_tag_invoke(tag_t<alpaqa::prox>, Box<Conf> &self,
+                   typename Conf::crmat in, typename Conf::rmat out,
+                   [[maybe_unused]] typename Conf::real_t γ) {
     assert(in.rows() == out.rows());
     assert(in.cols() == out.cols());
     assert(in.size() == self.lowerbound.size());
@@ -26,11 +26,11 @@ alpaqa_tag_invoke(tag_t<alpaqa::prox>, Box<Conf> &self, typename Conf::crmat in,
 
 template <Config Conf>
 typename Conf::real_t
-alpaqa_tag_invoke(tag_t<alpaqa::prox_step>, Box<Conf> &self,
-                  typename Conf::crmat in, typename Conf::crmat fwd_step,
-                  typename Conf::rmat out, typename Conf::rmat fb_step,
-                  [[maybe_unused]] typename Conf::real_t γ,
-                  typename Conf::real_t γ_fwd) {
+guanaqo_tag_invoke(tag_t<alpaqa::prox_step>, Box<Conf> &self,
+                   typename Conf::crmat in, typename Conf::crmat fwd_step,
+                   typename Conf::rmat out, typename Conf::rmat fb_step,
+                   [[maybe_unused]] typename Conf::real_t γ,
+                   typename Conf::real_t γ_fwd) {
     assert(in.rows() == fwd_step.rows());
     assert(in.cols() == fwd_step.cols());
     assert(in.rows() == out.rows());

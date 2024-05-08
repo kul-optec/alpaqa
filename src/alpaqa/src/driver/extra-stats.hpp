@@ -1,7 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/implementation/util/print.tpp>
+#include <alpaqa/util/print.hpp>
 #include "solver-driver.hpp"
 
 #include <chrono>

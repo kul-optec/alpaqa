@@ -1,8 +1,11 @@
 #include <alpaqa/casadi/casadi-external-function.hpp>
 #include <alpaqa/casadi/casadi-namespace.hpp>
-#include <alpaqa/util/dl.hpp>
+#include <guanaqo/dl.hpp>
 
 namespace alpaqa {
+
+using guanaqo::DynamicLoadFlags;
+
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
 namespace casadi {
 
@@ -88,7 +91,7 @@ Function::Sparsity Function::sparsity_out(casadi_int n) const {
 
 Function external(const std::string &name, const std::string &bin_name,
                   DynamicLoadFlags flags) {
-    auto lib_handle = util::load_lib(std::filesystem::path{bin_name}, flags);
+    auto lib_handle = guanaqo::load_lib(std::filesystem::path{bin_name}, flags);
     return Function{std::move(lib_handle), name};
 }
 

@@ -3,7 +3,7 @@
 #include <alpaqa/problem/problem-counters.hpp>
 #include <alpaqa/problem/sparsity.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
-#include <alpaqa/util/timed.hpp>
+#include <guanaqo/timed.hpp>
 
 #include <type_traits>
 
@@ -23,8 +23,7 @@ namespace alpaqa {
 template <class Problem>
 struct ProblemWithCounters {
     USING_ALPAQA_CONFIG_TEMPLATE(std::remove_cvref_t<Problem>::config_t);
-    using Box      = typename TypeErasedProblem<config_t>::Box;
-    using Sparsity = sparsity::Sparsity<config_t>;
+    using Box = typename TypeErasedProblem<config_t>::Box;
 
     // clang-format off
     [[gnu::always_inline]] void eval_projecting_difference_constraints(crvec z, rvec e) const { ++evaluations->projecting_difference_constraints; return timed(evaluations->time.projecting_difference_constraints, [&] { return problem.eval_projecting_difference_constraints(z, e); }); }
@@ -109,7 +108,7 @@ struct ProblemWithCounters {
   private:
     template <class TimeT, class FunT>
     [[gnu::always_inline]] static decltype(auto) timed(TimeT &time, FunT &&f) {
-        util::Timed timed{time};
+        guanaqo::Timed timed{time};
         return std::forward<FunT>(f)();
     }
 };

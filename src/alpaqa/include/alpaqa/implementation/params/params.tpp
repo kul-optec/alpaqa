@@ -2,9 +2,9 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/params/structs.hpp>
-#include <alpaqa/util/any-ptr.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <guanaqo/any-ptr.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/string-util.hpp>
 namespace alpaqa::params {
 
 using config_t = DefaultConfig;
@@ -14,7 +14,7 @@ using config_t = DefaultConfig;
 template <class T>
 void assert_key_empty(ParamString s) {
     if (!s.key.empty())
-        throw invalid_param("Type '" + demangled_typename(typeid(T)) +
+        throw invalid_param("Type '" + guanaqo::demangled_typename(typeid(T)) +
                             "' cannot be indexed in '" +
                             std::string(s.full_key) + "'");
 }
@@ -24,7 +24,7 @@ void assert_key_empty(ParamString s) {
 template <class T>
 void unsupported_type(T &, [[maybe_unused]] ParamString s) {
     throw invalid_param("Unknown parameter type '" +
-                        demangled_typename(typeid(T)) + "' in '" +
+                        guanaqo::demangled_typename(typeid(T)) + "' in '" +
                         std::string(s.full_key) + "'");
 }
 
@@ -34,11 +34,11 @@ template <>
 struct attribute_accessor<ParamString> {
     template <class T, class T_actual, class A>
     static attribute_accessor make(A T_actual::*attr, std::string_view = "") {
-        return {{[attr](const any_ptr &t, const ParamString &s) {
+        return {{[attr](const guanaqo::any_ptr &t, const ParamString &s) {
             return set_param(t.template cast<T>()->*attr, s);
         }}};
     }
-    std::function<void(const any_ptr &, const ParamString &)> set;
+    std::function<void(const guanaqo::any_ptr &, const ParamString &)> set;
 };
 
 template <class T>
@@ -56,8 +56,8 @@ auto find_param(const attribute_table_t<S> &m, std::string_view key,
     if (it == m.end()) {
         auto keys = std::views::keys(m);
         std::vector<std::string> sorted_keys{keys.begin(), keys.end()};
-        util::sort_case_insensitive(sorted_keys);
-        error_msg = util::join(sorted_keys, {.sep = ", ", .empty = "∅"});
+        guanaqo::sort_case_insensitive(sorted_keys);
+        error_msg = guanaqo::join(sorted_keys, {.sep = ", ", .empty = "∅"});
         return std::nullopt;
     }
     return std::make_optional(it);
@@ -74,10 +74,10 @@ void set_param_default(T &t, ParamString s) {
     std::string error_msg;
     auto param = detail::find_param(m, key, error_msg);
     if (!param)
-        throw invalid_param("Invalid key '" + std::string(key) +
-                            "' for type '" + demangled_typename(typeid(T)) +
-                            "' in '" + std::string(s.full_key) +
-                            "',\n  possible keys are: " + error_msg);
+        throw invalid_param(
+            "Invalid key '" + std::string(key) + "' for type '" +
+            guanaqo::demangled_typename(typeid(T)) + "' in '" +
+            std::string(s.full_key) + "',\n  possible keys are: " + error_msg);
     s.key = remainder;
     (*param)->second.set(&t, s);
 }
@@ -92,12 +92,12 @@ void set_param_default(T &t, ParamString s) {
     if (it == m.end()) {
         auto vals = std::views::keys(m);
         std::vector<std::string> sorted_vals{vals.begin(), vals.end()};
-        util::sort_case_insensitive(sorted_vals);
+        guanaqo::sort_case_insensitive(sorted_vals);
         throw invalid_param(
             "Invalid value '" + std::string(s.value) + "' for enum '" +
-            demangled_typename(typeid(T)) + "' in '" + std::string(s.full_key) +
-            "',\n  possible value are: " +
-            util::join(sorted_vals, {.sep = ", ", .empty = "∅"}));
+            guanaqo::demangled_typename(typeid(T)) + "' in '" +
+            std::string(s.full_key) + "',\n  possible value are: " +
+            guanaqo::join(sorted_vals, {.sep = ", ", .empty = "∅"}));
     }
     t = it->second.value;
 }

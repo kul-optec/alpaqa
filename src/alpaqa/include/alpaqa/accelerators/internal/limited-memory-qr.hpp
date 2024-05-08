@@ -1,8 +1,8 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/util/ringbuffer.hpp>
 #include <Eigen/Jacobi>
+#include <guanaqo/ringbuffer.hpp>
 #include <type_traits>
 
 namespace alpaqa {
@@ -267,11 +267,11 @@ class LimitedMemoryQR {
     length_t current_history() const { return q_idx; }
 
     /// Get iterators in the circular buffer.
-    CircularRange<index_t> ring_iter() const {
+    guanaqo::CircularRange<index_t> ring_iter() const {
         return {q_idx, r_idx_start, r_idx_end, m()};
     }
     /// Get reverse iterators in the circular buffer.
-    ReverseCircularRange<index_t> ring_reverse_iter() const {
+    guanaqo::ReverseCircularRange<index_t> ring_reverse_iter() const {
         return ring_iter();
     }
 

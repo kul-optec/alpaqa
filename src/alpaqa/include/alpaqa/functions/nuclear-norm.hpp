@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/functions/prox.hpp>
 #include <Eigen/SVD>
 
 namespace alpaqa::functions {
@@ -83,8 +84,8 @@ struct NuclearNorm {
         return value;
     }
 
-    friend real_t alpaqa_tag_invoke(tag_t<alpaqa::prox>, NuclearNorm &self,
-                                    crmat in, rmat out, real_t γ) {
+    friend real_t guanaqo_tag_invoke(tag_t<alpaqa::prox>, NuclearNorm &self,
+                                     crmat in, rmat out, real_t γ) {
         return self.prox(std::move(in), std::move(out), γ);
     }
 };

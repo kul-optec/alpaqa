@@ -1,4 +1,7 @@
+# Eigen library for vectors and matrices
 find_package(Eigen3 REQUIRED)
+# Guanaqo library for all kinds of utilities
+find_package(guanaqo REQUIRED)
 
 function(alpaqa_configure_visibility target)
     set_target_properties(${target} PROPERTIES CXX_VISIBILITY_PRESET "hidden"
@@ -11,12 +14,6 @@ function(alpaqa_configure_visibility target)
 endfunction()
 
 add_library(alpaqa
-    "alpaqa/src/util/type-erasure.cpp"
-    "alpaqa/src/util/demangled-typename.cpp"
-    "alpaqa/src/util/print.cpp"
-    "alpaqa/src/util/io/csv.cpp"
-    "alpaqa/src/util/quadmath/quadmath-print.cpp"
-    "alpaqa/src/util/dl-flags.cpp"
     "alpaqa/src/accelerators/lbfgs.cpp"
     "alpaqa/src/problem/problem-counters.cpp"
     "alpaqa/src/problem/ocproblem-counters.cpp"
@@ -43,11 +40,6 @@ add_library(alpaqa
     "alpaqa/src/inner/internal/panoc-helpers.cpp"
     "alpaqa/src/params/params.cpp"
 )
-if (ALPAQA_WITH_DL OR ALPAQA_WITH_CASADI)
-    target_sources(alpaqa PRIVATE
-        "alpaqa/src/util/dl.cpp")
-    target_link_libraries(alpaqa PRIVATE ${CMAKE_DL_LIBS})
-endif()
 if (ALPAQA_WITH_OCP)
     target_sources(alpaqa PRIVATE
         "alpaqa/src/inner/panoc-ocp.cpp"
@@ -78,7 +70,7 @@ if (ALPAQA_DEBUG_CHECKS_EIGEN)
         $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
         $<$<CONFIG:Debug>:EIGEN_RUNTIME_NO_MALLOC>)
 endif()
-target_link_libraries(alpaqa PUBLIC Eigen3::Eigen)
+target_link_libraries(alpaqa PUBLIC Eigen3::Eigen guanaqo::guanaqo guanaqo::linalg)
 target_link_libraries(alpaqa PRIVATE warnings)
 alpaqa_configure_visibility(alpaqa)
 target_compile_definitions(alpaqa PUBLIC

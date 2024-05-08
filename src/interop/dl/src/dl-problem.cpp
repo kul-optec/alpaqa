@@ -53,77 +53,76 @@ void leak_lib(std::shared_ptr<void> handle) {
 
 // clang-format off
 template <Config Conf>
-Sparsity<Conf> convert_sparsity(alpaqa_sparsity_t sp) {
+Sparsity convert_sparsity(alpaqa_sparsity_t sp) {
     USING_ALPAQA_CONFIG(Conf);
     switch (sp.kind) {
             using sparsity::Symmetry;
         case alpaqa_sparsity_t::alpaqa_sparsity_dense:
-            using Dense      = sparsity::Dense<config_t>;
-            return Dense{
+            return sparsity::Dense{
                 .rows     = sp.dense.rows,
                 .cols     = sp.dense.cols,
                 .symmetry = static_cast<Symmetry>(sp.dense.symmetry),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_csc:
-            using SparseCSC  = sparsity::SparseCSC<config_t, int>;
+            using SparseCSC  = sparsity::SparseCSC<int, int>;
             return SparseCSC{
                 .rows = sp.sparse_csc.rows,
                 .cols = sp.sparse_csc.cols,
                 .symmetry = static_cast<Symmetry>(sp.sparse_csc.symmetry),
-                .inner_idx = typename SparseCSC::index_vector_map_t{sp.sparse_csc.inner_idx, sp.sparse_csc.nnz},
-                .outer_ptr = typename SparseCSC::index_vector_map_t{sp.sparse_csc.outer_ptr, sp.sparse_csc.cols + 1},
+                .inner_idx = std::span{sp.sparse_csc.inner_idx, static_cast<size_t>(sp.sparse_csc.nnz)},
+                .outer_ptr = std::span{sp.sparse_csc.outer_ptr, static_cast<size_t>(sp.sparse_csc.cols + 1)},
                 .order = static_cast<typename SparseCSC::Order>(sp.sparse_csc.order),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_csc_l:
-            using SparseCSCl = sparsity::SparseCSC<config_t, long>;
+            using SparseCSCl = sparsity::SparseCSC<long, long>;
             return SparseCSCl{
                 .rows = sp.sparse_csc_l.rows,
                 .cols = sp.sparse_csc_l.cols,
                 .symmetry = static_cast<Symmetry>(sp.sparse_csc_l.symmetry),
-                .inner_idx = typename SparseCSCl::index_vector_map_t{sp.sparse_csc_l.inner_idx, sp.sparse_csc_l.nnz},
-                .outer_ptr = typename SparseCSCl::index_vector_map_t{sp.sparse_csc_l.outer_ptr, sp.sparse_csc_l.cols + 1},
+                .inner_idx = std::span{sp.sparse_csc_l.inner_idx, static_cast<size_t>(sp.sparse_csc_l.nnz)},
+                .outer_ptr = std::span{sp.sparse_csc_l.outer_ptr, static_cast<size_t>(sp.sparse_csc_l.cols + 1)},
                 .order = static_cast<typename SparseCSCl::Order>(sp.sparse_csc_l.order),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_csc_ll:
-            using SparseCSCll = sparsity::SparseCSC<config_t, long long>;
+            using SparseCSCll = sparsity::SparseCSC<long long, long long>;
             return SparseCSCll{
                 .rows = sp.sparse_csc_ll.rows,
                 .cols = sp.sparse_csc_ll.cols,
                 .symmetry = static_cast<Symmetry>(sp.sparse_csc_ll.symmetry),
-                .inner_idx = typename SparseCSCll::index_vector_map_t{sp.sparse_csc_ll.inner_idx, sp.sparse_csc_ll.nnz},
-                .outer_ptr = typename SparseCSCll::index_vector_map_t{sp.sparse_csc_ll.outer_ptr, sp.sparse_csc_ll.cols + 1},
+                .inner_idx = std::span{sp.sparse_csc_ll.inner_idx, static_cast<size_t>(sp.sparse_csc_ll.nnz)},
+                .outer_ptr = std::span{sp.sparse_csc_ll.outer_ptr, static_cast<size_t>(sp.sparse_csc_ll.cols + 1)},
                 .order = static_cast<typename SparseCSCll::Order>(sp.sparse_csc_ll.order),
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo:
-            using SparseCOO  = sparsity::SparseCOO<config_t, int>;
+            using SparseCOO  = sparsity::SparseCOO<int>;
             return SparseCOO{
                 .rows = sp.sparse_coo.rows,
                 .cols = sp.sparse_coo.cols,
                 .symmetry = static_cast<Symmetry>(sp.sparse_coo.symmetry),
-                .row_indices = typename SparseCOO::index_vector_map_t{sp.sparse_coo.row_indices, sp.sparse_coo.nnz},
-                .col_indices = typename SparseCOO::index_vector_map_t{sp.sparse_coo.col_indices, sp.sparse_coo.nnz},
+                .row_indices = std::span{sp.sparse_coo.row_indices, static_cast<size_t>(sp.sparse_coo.nnz)},
+                .col_indices = std::span{sp.sparse_coo.col_indices, static_cast<size_t>(sp.sparse_coo.nnz)},
                 .order = static_cast<typename SparseCOO::Order>(sp.sparse_coo.order),
                 .first_index = sp.sparse_coo.first_index,
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo_l:
-            using SparseCOOl = sparsity::SparseCOO<config_t, long>;
+            using SparseCOOl = sparsity::SparseCOO<long>;
             return SparseCOOl{
                 .rows = sp.sparse_coo_l.rows,
                 .cols = sp.sparse_coo_l.cols,
                 .symmetry = static_cast<Symmetry>(sp.sparse_coo_l.symmetry),
-                .row_indices = typename SparseCOOl::index_vector_map_t{sp.sparse_coo_l.row_indices, sp.sparse_coo_l.nnz},
-                .col_indices = typename SparseCOOl::index_vector_map_t{sp.sparse_coo_l.col_indices, sp.sparse_coo_l.nnz},
+                .row_indices = std::span{sp.sparse_coo_l.row_indices, static_cast<size_t>(sp.sparse_coo_l.nnz)},
+                .col_indices = std::span{sp.sparse_coo_l.col_indices, static_cast<size_t>(sp.sparse_coo_l.nnz)},
                 .order = static_cast<typename SparseCOOl::Order>(sp.sparse_coo_l.order),
                 .first_index = sp.sparse_coo_l.first_index,
             };
         case alpaqa_sparsity_t::alpaqa_sparsity_sparse_coo_ll:
-            using SparseCOOll = sparsity::SparseCOO<config_t, long long>;
+            using SparseCOOll = sparsity::SparseCOO<long long>;
             return SparseCOOll{
                 .rows = sp.sparse_coo_ll.rows,
                 .cols = sp.sparse_coo_ll.cols,
                 .symmetry = static_cast<Symmetry>(sp.sparse_coo_ll.symmetry),
-                .row_indices = typename SparseCOOll::index_vector_map_t{sp.sparse_coo_ll.row_indices, sp.sparse_coo_ll.nnz},
-                .col_indices = typename SparseCOOll::index_vector_map_t{sp.sparse_coo_ll.col_indices, sp.sparse_coo_ll.nnz},
+                .row_indices = std::span{sp.sparse_coo_ll.row_indices, static_cast<size_t>(sp.sparse_coo_ll.nnz)},
+                .col_indices = std::span{sp.sparse_coo_ll.col_indices, static_cast<size_t>(sp.sparse_coo_ll.nnz)},
                 .order = static_cast<typename SparseCOOll::Order>(sp.sparse_coo_ll.order),
                 .first_index = sp.sparse_coo_ll.first_index,
             };
@@ -141,10 +140,10 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
     : BoxConstrProblem{0, 0}, file{so_filename} {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle = util::load_lib(so_filename, dl_flags);
+    handle = guanaqo::load_lib(so_filename, dl_flags);
     try {
         auto *version_func = reinterpret_cast<alpaqa_dl_abi_version_t (*)()>(
-            util::load_func(handle.get(), function_name + "_version"));
+            guanaqo::load_func(handle.get(), function_name + "_version"));
         check_abi_version(version_func());
     } catch (const dynamic_load_error &) {
         std::cerr << "Warning: problem " << so_filename
@@ -154,7 +153,7 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
     }
     auto *register_func =
         reinterpret_cast<problem_register_t (*)(alpaqa_register_arg_t)>(
-            util::load_func(handle.get(), function_name));
+            guanaqo::load_func(handle.get(), function_name));
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};
@@ -315,10 +314,10 @@ DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
                                    DynamicLoadFlags dl_flags) {
     if (so_filename.empty())
         throw std::invalid_argument("Invalid problem filename");
-    handle = util::load_lib(so_filename, dl_flags);
+    handle = guanaqo::load_lib(so_filename, dl_flags);
     try {
         auto *version_func = reinterpret_cast<alpaqa_dl_abi_version_t (*)()>(
-            util::load_func(handle.get(), function_name + "_version"));
+            guanaqo::load_func(handle.get(), function_name + "_version"));
         check_abi_version(version_func());
     } catch (const dynamic_load_error &) {
         std::cerr << "Warning: problem " << so_filename
@@ -328,7 +327,7 @@ DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
     }
     auto *register_func =
         reinterpret_cast<control_problem_register_t (*)(alpaqa_register_arg_t)>(
-            util::load_func(handle.get(), function_name));
+            guanaqo::load_func(handle.get(), function_name));
     auto r = register_func(user_param);
     // Avoid leaking if we throw (or if std::shared_ptr constructor throws)
     std::unique_ptr<void, void (*)(void *)> unique_inst{r.instance, r.cleanup};

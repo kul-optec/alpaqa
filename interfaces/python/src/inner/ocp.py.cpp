@@ -2,8 +2,8 @@
 #include <alpaqa/inner/directions/panoc-ocp/ocp-vars.hpp>
 #include <alpaqa/problem/ocproblem.hpp>
 #include <alpaqa/util/check-dim.hpp>
-#include <alpaqa/util/copyable_unique_ptr.hpp>
 #include <alpaqa/util/index-set.hpp>
+#include <guanaqo/copyable-unique_ptr.hpp>
 #include <pybind11/eigen.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -17,7 +17,7 @@ void register_ocp(py::module_ &m) {
 
     struct OCPEvaluator {
         using Problem = alpaqa::TypeErasedControlProblem<config_t>;
-        alpaqa::util::copyable_unique_ptr<Problem> problem;
+        guanaqo::copyable_unique_ptr<Problem> problem;
         alpaqa::OCPEvaluator<config_t> eval;
         alpaqa::Box<Conf> U{alpaqa::Box<Conf>::NaN(eval.vars.nu())};
         alpaqa::Box<Conf> D{alpaqa::Box<Conf>::NaN(eval.vars.nc())};

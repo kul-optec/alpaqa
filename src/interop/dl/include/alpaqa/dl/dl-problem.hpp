@@ -5,8 +5,9 @@
 #include <alpaqa/dl/dl-problem.h>
 #include <alpaqa/problem/box-constr-problem.hpp>
 #include <alpaqa/problem/sparsity.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
-#include <alpaqa/util/dl.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/dl-flags.hpp>
+#include <guanaqo/dl.hpp>
 
 #include <filesystem>
 #include <memory>
@@ -18,7 +19,8 @@
 
 namespace alpaqa::dl {
 
-using util::dynamic_load_error;
+using guanaqo::dynamic_load_error;
+using guanaqo::DynamicLoadFlags;
 
 struct DL_LOADER_EXPORT invalid_abi_error : dynamic_load_error {
     using dynamic_load_error::dynamic_load_error;
@@ -51,8 +53,8 @@ class ExtraFuncs {
         } catch (const std::bad_any_cast &) {
             throw std::logic_error(
                 "DLProblem: incorrect type for extra function \"" + name +
-                "\" (stored type: " + demangled_typename(it->second.type()) +
-                ')');
+                "\" (stored type: " +
+                guanaqo::demangled_typename(it->second.type()) + ')');
         }
     }
 
@@ -103,7 +105,6 @@ class ExtraFuncs {
 class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
   public:
     USING_ALPAQA_CONFIG(DefaultConfig);
-    using Sparsity = alpaqa::Sparsity<config_t>;
 
     /// Load a problem from a shared library.
     DLProblem(

@@ -5,8 +5,8 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/sparsity-conversions.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa/util/print.hpp>
+#include <guanaqo/demangled-typename.hpp>
 #include <alpaqa-version.h>
 
 #include "options.hpp"
@@ -178,7 +178,7 @@ int main(int argc, const char *argv[]) try {
     check_gradients(problem, os, cg_opts);
 
 } catch (std::exception &e) {
-    std::cerr << "Error: " << demangled_typename(typeid(e)) << ":\n  "
+    std::cerr << "Error: " << guanaqo::demangled_typename(typeid(e)) << ":\n  "
               << e.what() << std::endl;
     return -1;
 }
@@ -400,15 +400,12 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
     if (opts.hessians && te_problem.provides_eval_lagrangian_hessian()) {
         log << "Hessian verification: ∇²L(x) (hess_L compared to finite "
                "differences of grad_L)\n";
-        namespace sp  = alpaqa::sparsity;
-        auto sparsity = te_problem.get_lagrangian_hessian_sparsity();
-        sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
-            sparsity};
-        mat hess_L(n, n);
+        auto sp = te_problem.get_lagrangian_hessian_sparsity();
+        alpaqa::sparsity::DenseEvaluator<config_t> cvt{sp};
         auto eval_h = [&](rvec v) {
             te_problem.eval_lagrangian_hessian(x, y, 1., v);
         };
-        cvt.convert_values(eval_h, hess_L.reshaped());
+        auto hess_L   = cvt.eval(eval_h);
         mat fd_hess_L = finite_diff_hess(
             [&](crvec x, rvec g) {
                 te_problem.eval_lagrangian_gradient(x, y, g, wn);
@@ -421,15 +418,12 @@ void check_gradients(LoadedProblem &lproblem, std::ostream &log,
         te_problem.provides_eval_augmented_lagrangian_hessian()) {
         log << "Hessian verification: ∇²ψ(x) (hess_ψ compared to finite "
                "differences of grad_ψ)\\n";
-        namespace sp  = alpaqa::sparsity;
-        auto sparsity = te_problem.get_augmented_lagrangian_hessian_sparsity();
-        sp::SparsityConverter<sp::Sparsity<config_t>, sp::Dense<config_t>> cvt{
-            sparsity};
-        mat hess_ψ(n, n);
+        auto sp = te_problem.get_augmented_lagrangian_hessian_sparsity();
+        alpaqa::sparsity::DenseEvaluator<config_t> cvt{sp};
         auto eval_h = [&](rvec v) {
             te_problem.eval_augmented_lagrangian_hessian(x, y, Σ, 1., v);
         };
-        cvt.convert_values(eval_h, hess_ψ.reshaped());
+        auto hess_ψ   = cvt.eval(eval_h);
         mat fd_hess_ψ = finite_diff_hess(
             [&](crvec x, rvec g) {
                 te_problem.eval_augmented_lagrangian_gradient(x, y, Σ, g, wn,

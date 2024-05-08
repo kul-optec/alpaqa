@@ -1,7 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
-#include <alpaqa/util/float.hpp>
+#include <guanaqo/float.hpp>
 
 namespace alpaqa {
 

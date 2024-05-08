@@ -10,9 +10,9 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/implementation/inner/panoc-helpers.tpp>
-#include <alpaqa/implementation/util/print.tpp>
 #include <alpaqa/util/alloc-check.hpp>
-#include <alpaqa/util/timed.hpp>
+#include <alpaqa/util/print.hpp>
+#include <guanaqo/timed.hpp>
 
 namespace alpaqa {
 
@@ -178,7 +178,7 @@ auto ZeroFPRSolver<DirectionProviderT>::operator()(
         if (!progress_cb)
             return;
         ScopedMallocAllower ma;
-        alpaqa::util::Timed t{s.time_progress_callback};
+        guanaqo::Timed t{s.time_progress_callback};
         progress_cb(ProgressInfo{
             .k          = k,
             .status     = status,

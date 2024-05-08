@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/util/span.hpp>
 #include <span>
 
 namespace alpaqa::detail {
@@ -45,8 +46,7 @@ struct IndexSet {
     }
     static void compute_complement(crindexvec in, rindexvec out, length_t n) {
         assert(in.size() + out.size() == n);
-        compute_complement(std::span{in.data(), static_cast<size_t>(in.size())},
-                           out.data(), n);
+        compute_complement(as_span(in), out.data(), n);
     }
 
     template <class F>

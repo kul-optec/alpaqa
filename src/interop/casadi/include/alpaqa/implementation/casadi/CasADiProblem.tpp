@@ -3,9 +3,10 @@
 #include <alpaqa/casadi/CasADiFunctionWrapper.hpp>
 #include <alpaqa/casadi/CasADiProblem.hpp>
 #include <alpaqa/casadi/casadi-namespace.hpp>
-#include <alpaqa/util/io/csv.hpp>
-#include <alpaqa/util/not-implemented.hpp>
+#include <alpaqa/util/span.hpp>
 #include "CasADiLoader-util.hpp"
+#include <guanaqo/io/csv.hpp>
+#include <guanaqo/not-implemented.hpp>
 #include <tuple>
 
 #if ALPAQA_WITH_EXTERNAL_CASADI
@@ -228,17 +229,18 @@ void CasADiProblem<Conf>::load_numerical_data(
     // Helper function for reading single line of (float) data
     index_t line        = 0;
     auto wrap_data_load = [&](std::string_view name, auto &v, bool fixed_size) {
+        using namespace guanaqo::io;
         try {
             ++line;
             if (data_file.peek() == '\n') // Ignore empty lines
                 return static_cast<void>(data_file.get());
             if (fixed_size) {
-                csv::read_row(data_file, v, sep);
+                csv_read_row(data_file, as_span(v), sep);
             } else { // Dynamic size
-                auto s = csv::read_row_std_vector<real_t>(data_file, sep);
-                v      = cmvec{s.data(), static_cast<index_t>(s.size())};
+                auto s = csv_read_row_std_vector<real_t>(data_file, sep);
+                v      = as_vec(std::span{s});
             }
-        } catch (csv::read_error &e) {
+        } catch (csv_read_error &e) {
             // Transform any errors in something more readable
             throw std::runtime_error("Unable to read " + std::string(name) +
                                      " from data file \"" + filepath.string() +
@@ -383,16 +385,16 @@ void CasADiProblem<Conf>::eval_grad_gi(crvec, index_t, rvec) const {
 }
 
 template <Config Conf>
-Sparsity<Conf> convert_csc(const auto &sp, sparsity::Symmetry symmetry) {
+Sparsity convert_csc(const auto &sp, sparsity::Symmetry symmetry) {
     USING_ALPAQA_CONFIG(Conf);
-    using SparseCSC = sparsity::SparseCSC<Conf, casadi_int>;
-    using map_t     = typename SparseCSC::index_vector_map_t;
+    using SparseCSC = sparsity::SparseCSC<casadi_int, casadi_int>;
+    using std::span;
     return SparseCSC{
         .rows      = static_cast<index_t>(sp.size1()),
         .cols      = static_cast<index_t>(sp.size2()),
         .symmetry  = symmetry,
-        .inner_idx = map_t{sp.row(), static_cast<index_t>(sp.nnz())},
-        .outer_ptr = map_t{sp.colind(), static_cast<index_t>(sp.size2()) + 1},
+        .inner_idx = span{sp.row(), static_cast<size_t>(sp.nnz())},
+        .outer_ptr = span{sp.colind(), static_cast<size_t>(sp.size2()) + 1},
         .order     = SparseCSC::SortedRows,
     };
 }
@@ -400,7 +402,7 @@ Sparsity<Conf> convert_csc(const auto &sp, sparsity::Symmetry symmetry) {
 template <Config Conf>
 auto CasADiProblem<Conf>::get_constraints_jacobian_sparsity() const
     -> Sparsity {
-    sparsity::Dense<config_t> dense{
+    sparsity::Dense dense{
         .rows     = this->m,
         .cols     = this->n,
         .symmetry = sparsity::Symmetry::Unsymmetric,
@@ -433,7 +435,7 @@ void CasADiProblem<Conf>::eval_lagrangian_hessian_product(crvec x, crvec y,
 
 template <Config Conf>
 auto CasADiProblem<Conf>::get_lagrangian_hessian_sparsity() const -> Sparsity {
-    sparsity::Dense<config_t> dense{
+    sparsity::Dense dense{
         .rows     = this->n,
         .cols     = this->n,
         .symmetry = sparsity::Symmetry::Upper,
@@ -470,7 +472,7 @@ void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian_product(
 template <Config Conf>
 auto CasADiProblem<Conf>::get_augmented_lagrangian_hessian_sparsity() const
     -> Sparsity {
-    sparsity::Dense<config_t> dense{
+    sparsity::Dense dense{
         .rows     = this->n,
         .cols     = this->n,
         .symmetry = sparsity::Symmetry::Upper,

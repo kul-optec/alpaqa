@@ -5,9 +5,10 @@
 
 #include <alpaqa/config/config.hpp>
 #include <alpaqa/problem/kkt-error.hpp>
-#include <alpaqa/util/demangled-typename.hpp>
 #include <alpaqa/util/print.hpp>
-#include <alpaqa/util/string-util.hpp>
+#include <alpaqa/util/span.hpp>
+#include <guanaqo/demangled-typename.hpp>
+#include <guanaqo/string-util.hpp>
 #include <alpaqa-version.h>
 
 #include "fista-driver.hpp"
@@ -268,8 +269,7 @@ auto get_solver_builder(Options &opts) {
     if (solver_it == solvers.end())
         throw std::invalid_argument(
             "Unknown solver '" + std::string(method) + "'\n" +
-            "  Available solvers: " +
-            alpaqa::util::join(std::views::keys(solvers)));
+            "  Available solvers: " + guanaqo::join(std::views::keys(solvers)));
     ;
     return std::make_tuple(std::move(solver_it->second), direction);
 }
@@ -297,7 +297,7 @@ void store_solution(const fs::path &sol_output_dir, std::ostream &os,
         auto pth = sol_output_dir / (std::string(fname) + suffix + ".csv");
         os << "Writing " << name << " to " << pth << std::endl;
         std::ofstream output_file(pth);
-        alpaqa::print_csv(output_file, *value);
+        guanaqo::print_csv(output_file, alpaqa::as_span(*value));
     }
     {
         auto pth = sol_output_dir / ("cmdline" + suffix + ".txt");
@@ -407,7 +407,7 @@ int main(int argc, const char *argv[]) try {
         store_solution(sol_output_dir, os, results, solver, opts, args);
 
 } catch (std::exception &e) {
-    std::cerr << "Error: " << demangled_typename(typeid(e)) << ":\n  "
+    std::cerr << "Error: " << guanaqo::demangled_typename(typeid(e)) << ":\n  "
               << e.what() << std::endl;
     return -1;
 }

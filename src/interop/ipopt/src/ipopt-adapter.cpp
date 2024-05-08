@@ -1,5 +1,7 @@
 #include <alpaqa/ipopt/ipopt-adapter.hpp>
 
+#include <alpaqa/util/span.hpp>
+
 #include <IpIpoptCalculatedQuantities.hpp>
 #include <stdexcept>
 
@@ -100,11 +102,12 @@ bool IpoptAdapter::eval_jac_g(Index n, const Number *x,
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        auto eval_constraints_jacobian = [&](rvec v) {
-            problem.eval_constraints_jacobian(cmvec{x, n}, v);
-        };
-        cvt_sparsity_jac_g.convert_values(eval_constraints_jacobian,
-                                          mvec{values, nele_jac});
+        cvt_sparsity_jac_g.convert_values_into(
+            std::span{values, static_cast<size_t>(nele_jac)},
+            [&](std::span<real_t> v) {
+                problem.eval_constraints_jacobian(cmvec{x, n}, as_vec(v));
+            });
+        // TODO: reuse workspace
     }
     return true;
 }
@@ -120,12 +123,13 @@ bool IpoptAdapter::eval_h(Index n, const Number *x, [[maybe_unused]] bool new_x,
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().col_indices, jCol);
     } else { // Evaluate values
-        auto eval_lagrangian_hessian = [&](rvec v) {
-            problem.eval_lagrangian_hessian(cmvec{x, n}, cmvec{lambda, m},
-                                            obj_factor, v);
-        };
-        cvt_sparsity_hess_L.convert_values(eval_lagrangian_hessian,
-                                           mvec{values, nele_hess});
+        cvt_sparsity_hess_L.convert_values_into(
+            std::span{values, static_cast<size_t>(nele_hess)},
+            [&](std::span<real_t> v) {
+                problem.eval_lagrangian_hessian(cmvec{x, n}, cmvec{lambda, m},
+                                                obj_factor, as_vec(v));
+            });
+        // TODO: reuse workspace
     }
     return true;
 }

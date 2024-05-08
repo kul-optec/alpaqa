@@ -66,6 +66,7 @@ class AlpaqaRecipe(ConanFile):
 
     def requirements(self):
         self.requires("eigen/3.4.0", transitive_headers=True)
+        self.requires("guanaqo/1.0.0", transitive_headers=True)
         self.test_requires("gtest/1.11.0")
         if self.options.with_external_casadi:
             self.requires("casadi/3.6.5@alpaqa", transitive_headers=True)

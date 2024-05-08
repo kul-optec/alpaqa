@@ -3,7 +3,7 @@
 #include "casadi-namespace.hpp"
 #include "casadi-types.hpp"
 
-#include <alpaqa/util/dl.hpp>
+#include <guanaqo/dl.hpp>
 #include <cassert>
 
 namespace alpaqa {
@@ -31,7 +31,8 @@ auto ExternalFunction<Nm, Sgn>::load(void *handle,
                                      std::string fname) -> signature_t * {
     static_assert(name.value.back() == '\0');
     fname += name.value.data();
-    auto func = reinterpret_cast<signature_t *>(util::load_func(handle, fname));
+    using guanaqo::load_func;
+    auto func = reinterpret_cast<signature_t *>(load_func(handle, fname));
     assert(func);
     return func;
 }
