@@ -17,16 +17,16 @@ gc.collect()
 prob = pa.CUTEstProblem(str(cutest_dir / problem_name), sparse=True)
 
 # Extract the problem data
-n = prob.n
-m = prob.m
+n = prob.num_variables
+m = prob.num_constraints
 Q, Q_sym = prob.eval_lagrangian_hessian(np.zeros(n), np.zeros(m))
 c, q = prob.eval_objective_and_gradient(np.zeros(n))
-x_lb = prob.C.lowerbound
-x_ub = prob.C.upperbound
+x_lb = prob.variable_bounds.lower
+x_ub = prob.variable_bounds.upper
 A, A_sym = prob.eval_constraints_jacobian(np.zeros(n))
 g = prob.eval_constraints(np.zeros(n))
-g_lb = prob.D.lowerbound - g
-g_ub = prob.D.upperbound - g
+g_lb = prob.general_bounds.lower - g
+g_ub = prob.general_bounds.upper - g
 
 # You could now pass these matrices to a QP solver, for example.
 

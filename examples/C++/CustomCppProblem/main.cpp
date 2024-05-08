@@ -13,10 +13,10 @@ int main() {
     // minimize  ½ xᵀQx
     //  s.t.     Ax ≤ b
     struct Problem : alpaqa::BoxConstrProblem<config_t> {
-        mat Q{n, n};
-        mat A{m, n};
-        vec b{m};
-        mutable vec Qx{n};
+        mat Q{num_variables, num_variables};
+        mat A{num_constraints, num_variables};
+        vec b{num_constraints};
+        mutable vec Qx{num_variables};
 
         Problem() : alpaqa::BoxConstrProblem<config_t>{2, 1} {
             // Initialize problem matrices
@@ -25,10 +25,11 @@ int main() {
             b << -1;
 
             // Specify the bounds
-            C.lowerbound = vec::Constant(n, -alpaqa::inf<config_t>);
-            C.upperbound = vec::Constant(n, +alpaqa::inf<config_t>);
-            D.lowerbound = vec::Constant(m, -alpaqa::inf<config_t>);
-            D.upperbound = b;
+            const auto inf        = alpaqa::inf<config_t>;
+            variable_bounds.lower = vec::Constant(num_variables, -inf);
+            variable_bounds.upper = vec::Constant(num_variables, +inf);
+            general_bounds.lower  = vec::Constant(num_constraints, -inf);
+            general_bounds.upper  = b;
         }
 
         // Evaluate the cost

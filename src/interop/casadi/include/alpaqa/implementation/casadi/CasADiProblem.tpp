@@ -157,11 +157,11 @@ CasADiProblem<Conf>::CasADiProblem(const std::string &filename,
     } loader{filename, dl_flags};
     impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
 
-    this->n     = impl->n;
-    this->m     = impl->m;
-    this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
-    this->C     = Box<config_t>{impl->n};
-    this->D     = Box<config_t>{impl->m};
+    this->num_variables   = impl->n;
+    this->num_constraints = impl->m;
+    this->param           = vec::Constant(impl->p, alpaqa::NaN<Conf>);
+    this->variable_bounds = Box<config_t>{impl->n};
+    this->general_bounds  = Box<config_t>{impl->m};
 
     auto data_filepath = fs::path{filename}.replace_extension("csv");
     if (fs::exists(data_filepath))
@@ -183,11 +183,11 @@ CasADiProblem<Conf>::CasADiProblem(const SerializedCasADiFunctions &functions)
     } loader{functions};
     impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
 
-    this->n     = impl->n;
-    this->m     = impl->m;
-    this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
-    this->C     = Box<config_t>{impl->n};
-    this->D     = Box<config_t>{impl->m};
+    this->num_variables   = impl->n;
+    this->num_constraints = impl->m;
+    this->param           = vec::Constant(impl->p, alpaqa::NaN<Conf>);
+    this->variable_bounds = Box<config_t>{impl->n};
+    this->general_bounds  = Box<config_t>{impl->m};
 #else
     std::ignore = functions;
     throw std::runtime_error(
@@ -210,11 +210,11 @@ CasADiProblem<Conf>::CasADiProblem(const CasADiFunctions &functions)
     } loader{functions};
     impl = casadi_loader::CasADiFunctionsWithParam<Conf>::load(loader);
 
-    this->n     = impl->n;
-    this->m     = impl->m;
-    this->param = vec::Constant(impl->p, alpaqa::NaN<Conf>);
-    this->C     = Box<config_t>{impl->n};
-    this->D     = Box<config_t>{impl->m};
+    this->num_variables   = impl->n;
+    this->num_constraints = impl->m;
+    this->param           = vec::Constant(impl->p, alpaqa::NaN<Conf>);
+    this->variable_bounds = Box<config_t>{impl->n};
+    this->general_bounds  = Box<config_t>{impl->m};
 }
 
 template <Config Conf>
@@ -257,10 +257,10 @@ void CasADiProblem<Conf>::load_numerical_data(
                                      ':' + std::to_string(line) + '"');
     };
     // Read the bounds, parameter value, and regularization
-    wrap_data_load("C.lowerbound", this->C.lowerbound, true);
-    wrap_data_load("C.upperbound", this->C.upperbound, true);
-    wrap_data_load("D.lowerbound", this->D.lowerbound, true);
-    wrap_data_load("D.upperbound", this->D.upperbound, true);
+    wrap_data_load("variable_bounds.lower", this->variable_bounds.lower, true);
+    wrap_data_load("variable_bounds.upper", this->variable_bounds.upper, true);
+    wrap_data_load("general_bounds.lower", this->general_bounds.lower, true);
+    wrap_data_load("general_bounds.upper", this->general_bounds.upper, true);
     wrap_data_load("param", this->param, true);
     wrap_data_load("l1_reg", this->l1_reg, false);
     // Penalty/ALM split is a single integer
@@ -333,7 +333,7 @@ void CasADiProblem<Conf>::eval_augmented_lagrangian_gradient(
     crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const {
 #if 0
     impl->grad_ψ({x.data(), param.data(), y.data(), Σ.data(),
-                  this->D.lowerbound.data(), this->D.upperbound.data()},
+                  this->D.lower.data(), this->D.upper.data()},
                  {grad_ψ.data()});
 #else
     // This seems to be faster than having a specialized function. Possibly
@@ -353,7 +353,8 @@ CasADiProblem<Conf>::eval_augmented_lagrangian_and_gradient(crvec x, crvec y,
             "CasADiProblem::eval_augmented_lagrangian_and_gradient");
     real_t ψ;
     (*impl->ψ_grad_ψ)({x.data(), param.data(), y.data(), Σ.data(),
-                       this->D.lowerbound.data(), this->D.upperbound.data()},
+                       this->general_bounds.lower.data(),
+                       this->general_bounds.upper.data()},
                       {&ψ, grad_ψ.data()});
     return ψ;
 }
@@ -374,7 +375,8 @@ CasADiProblem<Conf>::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ,
         throw std::logic_error("CasADiProblem::eval_augmented_lagrangian");
     real_t ψ;
     (*impl->ψ)({x.data(), param.data(), y.data(), Σ.data(),
-                this->D.lowerbound.data(), this->D.upperbound.data()},
+                this->general_bounds.lower.data(),
+                this->general_bounds.upper.data()},
                {&ψ, ŷ.data()});
     return ψ;
 }
@@ -403,8 +405,8 @@ template <Config Conf>
 auto CasADiProblem<Conf>::get_constraints_jacobian_sparsity() const
     -> Sparsity {
     sparsity::Dense dense{
-        .rows     = this->m,
-        .cols     = this->n,
+        .rows     = this->num_constraints,
+        .cols     = this->num_variables,
         .symmetry = sparsity::Symmetry::Unsymmetric,
     };
     if (!impl->jac_g.has_value())
@@ -436,8 +438,8 @@ void CasADiProblem<Conf>::eval_lagrangian_hessian_product(crvec x, crvec y,
 template <Config Conf>
 auto CasADiProblem<Conf>::get_lagrangian_hessian_sparsity() const -> Sparsity {
     sparsity::Dense dense{
-        .rows     = this->n,
-        .cols     = this->n,
+        .rows     = this->num_variables,
+        .cols     = this->num_variables,
         .symmetry = sparsity::Symmetry::Upper,
     };
     if (!impl->hess_L.has_value())
@@ -464,8 +466,8 @@ void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian_product(
         throw std::logic_error(
             "CasADiProblem::eval_augmented_lagrangian_hessian_product");
     (*impl->hess_ψ_prod)({x.data(), param.data(), y.data(), Σ.data(), &scale,
-                          this->D.lowerbound.data(), this->D.upperbound.data(),
-                          v.data()},
+                          this->general_bounds.lower.data(),
+                          this->general_bounds.upper.data(), v.data()},
                          {Hv.data()});
 }
 
@@ -473,8 +475,8 @@ template <Config Conf>
 auto CasADiProblem<Conf>::get_augmented_lagrangian_hessian_sparsity() const
     -> Sparsity {
     sparsity::Dense dense{
-        .rows     = this->n,
-        .cols     = this->n,
+        .rows     = this->num_variables,
+        .cols     = this->num_variables,
         .symmetry = sparsity::Symmetry::Upper,
     };
     if (!impl->hess_ψ.has_value())
@@ -491,7 +493,8 @@ void CasADiProblem<Conf>::eval_augmented_lagrangian_hessian(
         throw std::logic_error(
             "CasADiProblem::eval_augmented_lagrangian_hessian");
     (*impl->hess_ψ)({x.data(), param.data(), y.data(), Σ.data(), &scale,
-                     this->D.lowerbound.data(), this->D.upperbound.data()},
+                     this->general_bounds.lower.data(),
+                     this->general_bounds.upper.data()},
                     {H_values.data()});
 }
 

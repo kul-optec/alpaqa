@@ -208,10 +208,10 @@ struct Problem {
 
         using P = Problem;
         using alpaqa::member_caller;
-        funcs.n              = n;
-        funcs.m              = 0;
-        funcs.name           = name.c_str();
-        funcs.eval_objective = member_caller<&P::eval_objective>();
+        funcs.num_variables   = n;
+        funcs.num_constraints = 0;
+        funcs.name            = name.c_str();
+        funcs.eval_objective  = member_caller<&P::eval_objective>();
         // clang-format off
         funcs.eval_objective_gradient                   = member_caller<&P::eval_objective_gradient>();
         funcs.eval_objective_and_gradient               = member_caller<&P::eval_objective_and_gradient>();

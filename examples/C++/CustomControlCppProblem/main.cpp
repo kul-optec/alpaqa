@@ -43,8 +43,8 @@ struct Problem {
 
     // Bound constraints on the inputs u.
     void get_U(Box &U) const {
-        U.lowerbound.setConstant(-1);
-        U.upperbound.setConstant(+1);
+        U.lower.setConstant(-1);
+        U.upper.setConstant(+1);
     }
     // Bound constraints on function of the states
     void get_D([[maybe_unused]] Box &D) const {}

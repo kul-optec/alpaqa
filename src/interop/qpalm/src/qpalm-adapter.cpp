@@ -85,7 +85,7 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
             .values    = span{qp.A->x, static_cast<size_t>(qp.A->nzmax)},
         };
         ConstrConv::add_box_constr_to_constr_matrix(
-            A, problem.get_box_variables());
+            A, problem.get_variable_bounds());
         qp.A->nrow = A.nrow;
     }
     { // Evaluate constraints
@@ -97,13 +97,13 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         qp.c = problem.eval_objective_and_gradient(x, qp.sto->q);
     }
     { // Combine bound constraints
-        qp.sto->b.lowerbound.resize(qp.A->nrow);
-        qp.sto->b.upperbound.resize(qp.A->nrow);
-        qp.bmin = qp.sto->b.lowerbound.data();
-        qp.bmax = qp.sto->b.upperbound.data();
+        qp.sto->b.lower.resize(qp.A->nrow);
+        qp.sto->b.upper.resize(qp.A->nrow);
+        qp.bmin = qp.sto->b.lower.data();
+        qp.bmax = qp.sto->b.upper.data();
         // Combine bound constraints and linear constraints
-        auto &&C = problem.get_box_variables(),
-             &&D = problem.get_box_general_constraints();
+        auto &&C = problem.get_variable_bounds(),
+             &&D = problem.get_general_bounds();
         ConstrConv::combine_bound_constr(C, D, qp.sto->b, g);
     }
     qp.m = static_cast<size_t>(qp.A->nrow);

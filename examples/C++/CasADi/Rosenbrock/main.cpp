@@ -26,10 +26,11 @@ int main(int argc, char *argv[]) {
     alpaqa::CasADiProblem<config_t> problem{so_name.string()};
 
     // Specify the bounds
-    problem.C.upperbound = vec::Constant(3, alpaqa::inf<config_t>);
-    problem.C.lowerbound = vec::Constant(3, -alpaqa::inf<config_t>);
-    problem.D.upperbound = vec::Constant(1, 0.);
-    problem.D.lowerbound = vec::Constant(1, 0.);
+    const auto inf                = alpaqa::inf<config_t>;
+    problem.variable_bounds.upper = vec::Constant(3, +inf);
+    problem.variable_bounds.lower = vec::Constant(3, -inf);
+    problem.general_bounds.upper  = vec::Constant(1, 0.);
+    problem.general_bounds.lower  = vec::Constant(1, 0.);
 
     // Define the solvers to use
     using Direction   = alpaqa::LBFGSDirection<config_t>;
@@ -75,7 +76,7 @@ int main(int argc, char *argv[]) {
 
     // Print the results
     std::cout << '\n' << *counted_problem.evaluations << '\n';
-    vec g(problem.m);
+    vec g(problem.num_constraints);
     problem.eval_constraints(x, g);
     std::cout << "status: " << stats.status << '\n'
               << "x = " << x.transpose() << '\n'

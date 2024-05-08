@@ -69,8 +69,8 @@ struct StructuredNewtonDirection {
                     [[maybe_unused]] real_t γ_0, [[maybe_unused]] crvec x_0,
                     [[maybe_unused]] crvec x̂_0, [[maybe_unused]] crvec p_0,
                     [[maybe_unused]] crvec grad_ψx_0) {
-        if (!(problem.provides_get_box_variables() &&
-              problem.provides_get_box_general_constraints()))
+        if (!(problem.provides_get_variable_bounds() &&
+              problem.provides_get_general_bounds()))
             throw std::invalid_argument(
                 "Structured Newton only supports box-constrained problems");
         // TODO: support eval_inactive_indices_res_lna
@@ -106,17 +106,17 @@ struct StructuredNewtonDirection {
                crvec grad_ψxₖ, rvec qₖ) const {
 
         const auto n  = problem->get_num_variables();
-        const auto &C = problem->get_box_variables();
+        const auto &C = problem->get_variable_bounds();
 
         // Find inactive indices J
         auto nJ = 0;
         for (index_t i = 0; i < n; ++i) {
             real_t gd = xₖ(i) - γₖ * grad_ψxₖ(i);
-            if (gd <= C.lowerbound(i)) {        // i ∊ J̲ ⊆ K
-                qₖ(i) = pₖ(i);                  //
-            } else if (C.upperbound(i) <= gd) { // i ∊ J̅ ⊆ K
-                qₖ(i) = pₖ(i);                  //
-            } else {                            // i ∊ J
+            if (gd <= C.lower(i)) {        // i ∊ J̲ ⊆ K
+                qₖ(i) = pₖ(i);             //
+            } else if (C.upper(i) <= gd) { // i ∊ J̅ ⊆ K
+                qₖ(i) = pₖ(i);             //
+            } else {                       // i ∊ J
                 JK(nJ++) = i;
                 qₖ(i)    = -grad_ψxₖ(i);
             }

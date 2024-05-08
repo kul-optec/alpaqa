@@ -16,21 +16,21 @@ class UnconstrProblem {
     USING_ALPAQA_CONFIG(Conf);
 
     /// Number of decision variables, dimension of x
-    length_t n;
+    length_t num_variables;
 
-    /// @param n Number of decision variables
-    UnconstrProblem(length_t n) : n{n} {}
+    /// @param num_variables Number of decision variables
+    UnconstrProblem(length_t num_variables) : num_variables{num_variables} {}
 
     /// Change the number of decision variables.
-    void resize(length_t n) { this->n = n; }
+    void resize(length_t num_variables) { this->num_variables = num_variables; }
 
     UnconstrProblem(const UnconstrProblem &)                = default;
     UnconstrProblem &operator=(const UnconstrProblem &)     = default;
     UnconstrProblem(UnconstrProblem &&) noexcept            = default;
     UnconstrProblem &operator=(UnconstrProblem &&) noexcept = default;
 
-    /// Number of decision variables, @ref n
-    length_t get_num_variables() const { return n; }
+    /// Number of decision variables @f$ n @f$, @ref num_variables
+    length_t get_num_variables() const { return num_variables; }
     /// Number of constraints (always zero)
     length_t get_num_constraints() const { return 0; }
 

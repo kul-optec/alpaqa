@@ -42,7 +42,7 @@ def loss(x):
 class LassoProblem(pa.BoxConstrProblem):
     def __init__(self):
         super().__init__(n, 0)
-        self.C.lowerbound[:] = 0  # Positive lasso
+        self.variable_bounds.lower[:] = 0  # Positive lasso
         self.l1_reg = [λ]  # Regularization
         self.jit_loss = jit(loss)
         self.jit_grad_loss = jit(grad(loss))

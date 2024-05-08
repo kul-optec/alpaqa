@@ -50,8 +50,8 @@ struct ProblemWithCounters {
     [[gnu::always_inline]] real_t eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const requires requires { &std::remove_cvref_t<Problem>::eval_augmented_lagrangian; } { ++evaluations->augmented_lagrangian; return timed(evaluations->time.augmented_lagrangian, [&] { return problem.eval_augmented_lagrangian(x, y, Σ, ŷ); }); }
     [[gnu::always_inline]] void eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const requires requires { &std::remove_cvref_t<Problem>::eval_augmented_lagrangian_gradient; } { ++evaluations->augmented_lagrangian_gradient; return timed(evaluations->time.augmented_lagrangian_gradient, [&] { return problem.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ, work_n, work_m); }); }
     [[gnu::always_inline]] real_t eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const requires requires { &std::remove_cvref_t<Problem>::eval_augmented_lagrangian_and_gradient; } { ++evaluations->augmented_lagrangian_and_gradient; return timed(evaluations->time.augmented_lagrangian_and_gradient, [&] { return problem.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ, work_n, work_m); }); }
-    const Box &get_box_variables() const requires requires { &std::remove_cvref_t<Problem>::get_box_variables; } { return problem.get_box_variables(); }
-    const Box &get_box_general_constraints() const requires requires { &std::remove_cvref_t<Problem>::get_box_general_constraints; } { return problem.get_box_general_constraints(); }
+    const Box &get_variable_bounds() const requires requires { &std::remove_cvref_t<Problem>::get_variable_bounds; } { return problem.get_variable_bounds(); }
+    const Box &get_general_bounds() const requires requires { &std::remove_cvref_t<Problem>::get_general_bounds; } { return problem.get_general_bounds(); }
     void check() const requires requires { &std::remove_cvref_t<Problem>::check; } { return problem.check(); }
     [[nodiscard]] std::string get_name() const requires requires { &std::remove_cvref_t<Problem>::get_name; } { return problem.get_name(); }
 
@@ -72,8 +72,8 @@ struct ProblemWithCounters {
     [[nodiscard]] bool provides_eval_augmented_lagrangian() const requires requires (Problem p) { { p.provides_eval_augmented_lagrangian() } -> std::convertible_to<bool>; } { return problem.provides_eval_augmented_lagrangian(); }
     [[nodiscard]] bool provides_eval_augmented_lagrangian_gradient() const requires requires (Problem p) { { p.provides_eval_augmented_lagrangian_gradient() } -> std::convertible_to<bool>; } { return problem.provides_eval_augmented_lagrangian_gradient(); }
     [[nodiscard]] bool provides_eval_augmented_lagrangian_and_gradient() const requires requires (Problem p) { { p.provides_eval_augmented_lagrangian_and_gradient() } -> std::convertible_to<bool>; } { return problem.provides_eval_augmented_lagrangian_and_gradient(); }
-    [[nodiscard]] bool provides_get_box_variables() const requires requires (Problem p) { { p.provides_get_box_variables() } -> std::convertible_to<bool>; } { return problem.provides_get_box_variables(); }
-    [[nodiscard]] bool provides_get_box_general_constraints() const requires requires (Problem p) { { p.provides_get_box_general_constraints() } -> std::convertible_to<bool>; } { return problem.provides_get_box_general_constraints(); }
+    [[nodiscard]] bool provides_get_variable_bounds() const requires requires (Problem p) { { p.provides_get_variable_bounds() } -> std::convertible_to<bool>; } { return problem.provides_get_variable_bounds(); }
+    [[nodiscard]] bool provides_get_general_bounds() const requires requires (Problem p) { { p.provides_get_general_bounds() } -> std::convertible_to<bool>; } { return problem.provides_get_general_bounds(); }
     [[nodiscard]] bool provides_check() const requires requires (Problem p) { { p.provides_check() } -> std::convertible_to<bool>; } { return problem.provides_check(); }
     [[nodiscard]] bool provides_get_name() const requires requires (Problem p) { { p.provides_get_name() } -> std::convertible_to<bool>; } { return problem.provides_get_name(); }
     // clang-format on

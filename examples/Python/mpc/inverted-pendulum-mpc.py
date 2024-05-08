@@ -127,7 +127,7 @@ class MPCController:
         self.tot_time = timedelta()
         self.max_time = timedelta()
         self.failures = 0
-        self.u = np.ones(problem.n)
+        self.u = np.ones(problem.num_variables)
 
     def __call__(self, state_n):
         state_n = np.array(state_n).ravel()

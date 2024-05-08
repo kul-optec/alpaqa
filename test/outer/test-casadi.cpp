@@ -4,7 +4,6 @@
 #include <alpaqa/structured-panoc-alm.hpp>
 
 #include <test-util/eigen-matchers.hpp>
-#include <stdexcept>
 
 TEST(ALM, casadi) {
     USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
@@ -13,10 +12,12 @@ TEST(ALM, casadi) {
     alpaqa::CasADiProblem<config_t> problem{ROSENBROCK_FUNC_DLL};
 
     // Specify the bounds
-    EXPECT_THAT(problem.C.lowerbound, EigenEqual(vec::Constant(2, 0.)));
-    EXPECT_THAT(problem.C.upperbound, EigenEqual(vec::Constant(2, 5.)));
-    EXPECT_THAT(problem.D.upperbound, EigenEqual(vec::Constant(1, 1.)));
-    EXPECT_THAT(problem.D.lowerbound, EigenEqual(vec::Constant(1, 0.)));
+    EXPECT_THAT(problem.variable_bounds.lower,
+                EigenEqual(vec::Constant(2, 0.)));
+    EXPECT_THAT(problem.variable_bounds.upper,
+                EigenEqual(vec::Constant(2, 5.)));
+    EXPECT_THAT(problem.general_bounds.upper, EigenEqual(vec::Constant(1, 1.)));
+    EXPECT_THAT(problem.general_bounds.lower, EigenEqual(vec::Constant(1, 0.)));
 
     // Parameter
     EXPECT_THAT(problem.param, EigenEqual(vec::Constant(1, 2.)));
@@ -62,7 +63,7 @@ TEST(ALM, casadi) {
 
     // Print the results
     std::cout << '\n' << *counted_problem.evaluations << '\n';
-    vec g(problem.m);
+    vec g(problem.num_constraints);
     problem.eval_constraints(x, g);
     std::cout << "status: " << stats.status << '\n'
               << "x = " << x.transpose() << '\n'

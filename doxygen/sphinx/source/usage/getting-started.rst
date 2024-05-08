@@ -139,7 +139,7 @@ specified when generating the problem, or can be modified after loading it:
 
     # You can change the bounds and parameters after loading the problem
     problem.param = [10.0]
-    problem.D.lowerbound[1] = -1e20
+    problem.general_bounds.lower[1] = -1e20
 
 Selecting a solver
 ^^^^^^^^^^^^^^^^^^

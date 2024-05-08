@@ -21,14 +21,14 @@ struct ProblemData {
 static void eval_objective_gradient(void *instance, const real_t *x,
                                     real_t *grad_f) {
     struct ProblemData *problem = instance;
-    length_t n                  = problem->functions.n;
+    length_t n                  = problem->functions.num_variables;
     matmul(n, n, 1, problem->Q, x, grad_f); // grad_f = Q x
 }
 
 static real_t eval_objective_and_gradient(void *instance, const real_t *x,
                                           real_t *grad_f) {
     struct ProblemData *problem = instance;
-    length_t n                  = problem->functions.n;
+    length_t n                  = problem->functions.num_variables;
     real_t result;
     eval_objective_gradient(instance, x, grad_f);
     matmul(1, n, 1, x, grad_f, &result); // result = xᵀ grad_f
@@ -42,8 +42,8 @@ static real_t eval_objective(void *instance, const real_t *x) {
 
 static void eval_constraints(void *instance, const real_t *x, real_t *gx) {
     struct ProblemData *problem = instance;
-    length_t n                  = problem->functions.n;
-    length_t m                  = problem->functions.m;
+    length_t n                  = problem->functions.num_variables;
+    length_t m                  = problem->functions.num_constraints;
     matmul(m, n, 1, problem->A, x, gx); // gx = A x
 }
 
@@ -52,8 +52,8 @@ static void eval_constraints_gradient_product(void *instance, const real_t *x,
                                               real_t *grad_gxy) {
     (void)x;
     struct ProblemData *problem = instance;
-    length_t n                  = problem->functions.n;
-    length_t m                  = problem->functions.m;
+    length_t n                  = problem->functions.num_variables;
+    length_t m                  = problem->functions.num_constraints;
     matvec_transp(m, n, problem->A, y, grad_gxy); // grad_gxy = Aᵀ y
 }
 
@@ -61,12 +61,12 @@ static void eval_constraints_jacobian(void *instance, const real_t *x,
                                       real_t *J_values) {
     (void)x;
     struct ProblemData *problem = instance;
-    size_t n                    = (size_t)problem->functions.n;
-    size_t m                    = (size_t)problem->functions.m;
+    size_t n                    = (size_t)problem->functions.num_variables;
+    size_t m                    = (size_t)problem->functions.num_constraints;
     memcpy(J_values, problem->A, sizeof(real_t) * m * n);
 }
 
-static void initialize_box_D(void *instance, real_t *lb, real_t *ub) {
+static void initialize_general_bounds(void *instance, real_t *lb, real_t *ub) {
     (void)instance;
     (void)lb; // -inf by default
     ub[0] = -1;
@@ -77,8 +77,8 @@ static struct ProblemData *create_problem(alpaqa_register_arg_t user_data) {
     struct ProblemData *problem = malloc(sizeof(*problem));
     size_t n = 2, m = 1;
     problem->functions = (alpaqa_problem_functions_t){
-        .n                                 = (length_t)n,
-        .m                                 = (length_t)m,
+        .num_variables                     = (length_t)n,
+        .num_constraints                   = (length_t)m,
         .name                              = "example problem",
         .eval_objective                    = &eval_objective,
         .eval_objective_gradient           = &eval_objective_gradient,
@@ -86,7 +86,7 @@ static struct ProblemData *create_problem(alpaqa_register_arg_t user_data) {
         .eval_constraints_gradient_product = &eval_constraints_gradient_product,
         .eval_constraints_jacobian         = &eval_constraints_jacobian,
         .eval_objective_and_gradient       = &eval_objective_and_gradient,
-        .initialize_box_D                  = &initialize_box_D,
+        .initialize_general_bounds         = &initialize_general_bounds,
     };
     problem->Q    = malloc(sizeof(real_t) * n * n);
     problem->A    = malloc(sizeof(real_t) * m * n);

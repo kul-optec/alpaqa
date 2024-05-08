@@ -48,11 +48,13 @@ int main() {
     auto counted_problem = alpaqa::problem_with_counters_ref(problem);
 
     // Specify the bounds
-    vec b                = vec::Constant(problem.m, -1);
-    problem.C.lowerbound = vec::Constant(problem.n, -alpaqa::inf<config_t>);
-    problem.C.upperbound = vec::Constant(problem.n, +alpaqa::inf<config_t>);
-    problem.D.lowerbound = vec::Constant(problem.m, -alpaqa::inf<config_t>);
-    problem.D.upperbound = b;
+    const auto inf = alpaqa::inf<config_t>;
+    const auto n = problem.num_variables, m = problem.num_constraints;
+    vec b                         = vec::Constant(m, -1);
+    problem.variable_bounds.lower = vec::Constant(n, -inf);
+    problem.variable_bounds.upper = vec::Constant(n, +inf);
+    problem.general_bounds.lower  = vec::Constant(m, -inf);
+    problem.general_bounds.upper  = b;
 
     // Define the solvers to use
     using Direction   = alpaqa::StructuredLBFGSDirection<config_t>;

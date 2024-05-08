@@ -62,15 +62,15 @@ void load_initial_guess(Options &opts, LoadedProblem &problem) {
 }
 
 void count_constr(ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
-    const auto n = C.lowerbound.size();
+    const auto n = C.lower.size();
     cnt.lb       = 0;
     cnt.ub       = 0;
     cnt.lbub     = 0;
     cnt.eq       = 0;
     for (index_t i = 0; i < n; ++i) {
-        bool lb = C.lowerbound(i) > -alpaqa::inf<config_t>;
-        bool ub = C.upperbound(i) < +alpaqa::inf<config_t>;
-        bool eq = C.lowerbound(i) == C.upperbound(i);
+        bool lb = C.lower(i) > -alpaqa::inf<config_t>;
+        bool ub = C.upper(i) < +alpaqa::inf<config_t>;
+        bool eq = C.lower(i) == C.upper(i);
         if (eq)
             ++cnt.eq;
         else if (lb && ub)
@@ -83,12 +83,12 @@ void count_constr(ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
 }
 
 void count_problem(LoadedProblem &p) {
-    if (p.problem.provides_get_box_variables())
+    if (p.problem.provides_get_variable_bounds())
         count_constr(p.box_constr_count.emplace(),
-                     p.problem.get_box_variables());
-    if (p.problem.provides_get_box_general_constraints())
+                     p.problem.get_variable_bounds());
+    if (p.problem.provides_get_general_bounds())
         count_constr(p.general_constr_count.emplace(),
-                     p.problem.get_box_general_constraints());
+                     p.problem.get_general_bounds());
     if (p.problem.provides_get_constraints_jacobian_sparsity())
         p.nnz_jac_g = get_nnz(p.problem.get_constraints_jacobian_sparsity());
     if (p.problem.provides_get_lagrangian_hessian_sparsity())

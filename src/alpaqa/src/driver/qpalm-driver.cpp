@@ -23,7 +23,7 @@ void compress_multipliers_bounds(const alpaqa::sets::Box<config_t> &C, rvec y,
                                  crvec multipliers_bounds) {
     using Conv    = alpaqa::LinConstrConverter<config_t, index_t, index_t>;
     index_t shift = 0;
-    for (index_t i = 0; i < C.lowerbound.size(); ++i)
+    for (index_t i = 0; i < C.lower.size(); ++i)
         if (Conv::is_bound(C, i))
             y(shift++) = multipliers_bounds(i);
 }
@@ -32,7 +32,7 @@ void expand_multipliers_bounds(const alpaqa::sets::Box<config_t> &C, crvec y,
                                rvec multipliers_bounds) {
     using Conv    = alpaqa::LinConstrConverter<config_t, index_t, index_t>;
     index_t shift = 0;
-    for (index_t i = 0; i < C.lowerbound.size(); ++i)
+    for (index_t i = 0; i < C.lower.size(); ++i)
         if (Conv::is_bound(C, i))
             multipliers_bounds(i) = y(shift++);
 }
@@ -73,8 +73,8 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
                 "Invalid size for initial_guess_w (expected " +
                 std::to_string(n) + ", but got " + std::to_string(sz) + ")");
         initial_guess_mult.resize(static_cast<length_t>(qp.m));
-        if (problem.problem.provides_get_box_variables())
-            compress_multipliers_bounds(problem.problem.get_box_variables(),
+        if (problem.problem.provides_get_variable_bounds())
+            compress_multipliers_bounds(problem.problem.get_variable_bounds(),
                                         initial_guess_mult,
                                         problem.initial_guess_w);
         else
@@ -132,8 +132,8 @@ SolverResults run_qpalm_solver(auto &problem, const qpalm::Settings &settings,
         .extra              = {{"dua2_res_norm", info.dua2_res_norm}},
     };
     // Expand the multipliers for the bounds constraints again
-    if (problem.problem.provides_get_box_variables())
-        expand_multipliers_bounds(problem.problem.get_box_variables(), sol_y,
+    if (problem.problem.provides_get_variable_bounds())
+        expand_multipliers_bounds(problem.problem.get_variable_bounds(), sol_y,
                                   results.multipliers_bounds);
     return results;
 }

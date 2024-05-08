@@ -204,15 +204,15 @@ auto ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient(
 /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient] */
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_box_variables(const void *,
-                                                    const ProblemVTable &) -> const Box & {
-    throw not_implemented_error("get_box_variables");
+auto ProblemVTable<Conf>::default_get_variable_bounds(const void *,
+                                                      const ProblemVTable &) -> const Box & {
+    throw not_implemented_error("get_variable_bounds");
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_get_box_general_constraints(const void *, const ProblemVTable &)
-    -> const Box & {
-    throw not_implemented_error("get_box_general_constraints");
+auto ProblemVTable<Conf>::default_get_general_bounds(const void *,
+                                                     const ProblemVTable &) -> const Box & {
+    throw not_implemented_error("get_general_bounds");
 }
 
 template <Config Conf>

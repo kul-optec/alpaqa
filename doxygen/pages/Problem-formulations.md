@@ -33,11 +33,12 @@ Usually, [automatic differentiation](https://en.wikipedia.org/wiki/Automatic_dif
 software packages are available, see e.g. <https://autodiff.org/> for an overview.
 
 Additionally, the solver needs to be able to project onto the rectangular sets
+defining the constraints:
 @f[
 \begin{equation}
     \begin{aligned}
-        C &\;\defeq\; \defset{x \in \Rn}{\underline{x} \le x \le \overline{x}}, \\
-        D &\;\defeq\; \defset{z \in \Rm}{\underline{z} \le z \le \overline{z}}.
+        &\text{Variable bounds:} && C \;\defeq\; \defset{x \in \Rn}{\underline{x} \le x \le \overline{x}}, \\
+        &\text{General bounds:} && D \;\defeq\; \defset{z \in \Rm}{\underline{z} \le z \le \overline{z}}.
     \end{aligned}
 \end{equation}
 @f]
@@ -66,17 +67,17 @@ alpaqa solvers. Detailed descriptions of each function can be found in the
 struct RosenbrockProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     // Problem dimensions
-    length_t get_num_variables() const; // number of unknowns
-    length_t get_num_constraints() const; // number of general constraints
+    length_t get_num_variables() const; // number of unknowns, n
+    length_t get_num_constraints() const; // number of general constraints, m
 
-    // Cost
+    // Cost, f(x)
     real_t eval_objective(crvec x) const;
-    // Gradient of cost
+    // Gradient of cost, ∇f(x)
     void eval_objective_gradient(crvec x, rvec grad_fx) const;
 
-    // Constraints
+    // Constraints, g(x)
     void eval_constraints(crvec x, rvec gx) const;
-    // Gradient-vector product of constraints
+    // Gradient-vector product of constraints, ∇g(x) y
     void eval_constraints_gradient_product(crvec x, crvec y, rvec grad_gxy) const;
 
     // Proximal gradient step
@@ -243,8 +244,8 @@ struct Problem {
     void eval_objective_gradient(const real_t *x_, real_t *gr_) const;
     void eval_constraints(const real_t *x_, real_t *g_) const;
     void eval_constraints_gradient_product(const real_t *x_, const real_t *y_, real_t *gr_) const;
-    void initialize_box_C(real_t *lb_, real_t *ub_) const;
-    void initialize_box_D(real_t *lb_, real_t *ub_) const;
+    void initialize_variable_bounds(real_t *lb_, real_t *ub_) const;
+    void initialize_general_bounds(real_t *lb_, real_t *ub_) const;
 
     /// Custom function that's also exposed through @ref alpaqa::dl::DLProblem.
     std::string get_extra_info() const { return "..."; }
@@ -252,14 +253,14 @@ struct Problem {
     /// Constructor initializes the problem and exposes the problem functions.
     Problem(/* ... */) {
         using alpaqa::member_caller;
-        funcs.n                = 3; // number of variables
-        funcs.m                = 2; // number of constraints
-        funcs.eval_objective           = member_caller<&Problem::eval_objective>();
-        funcs.eval_objective_gradient      = member_caller<&Problem::eval_objective_gradient>();
-        funcs.eval_constraints           = member_caller<&Problem::eval_constraints>();
+        funcs.num_variables   = 3;
+        funcs.num_constraints = 2;
+        funcs.eval_objective                    = member_caller<&Problem::eval_objective>();
+        funcs.eval_objective_gradient           = member_caller<&Problem::eval_objective_gradient>();
+        funcs.eval_constraints                  = member_caller<&Problem::eval_constraints>();
         funcs.eval_constraints_gradient_product = member_caller<&Problem::eval_constraints_gradient_product>();
-        funcs.initialize_box_C = member_caller<&Problem::initialize_box_C>();
-        funcs.initialize_box_D = member_caller<&Problem::initialize_box_D>();
+        funcs.initialize_variable_bounds        = member_caller<&Problem::initialize_variable_bounds>();
+        funcs.initialize_general_bounds         = member_caller<&Problem::initialize_general_bounds>();
     }
 };
 

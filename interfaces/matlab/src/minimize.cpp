@@ -21,22 +21,22 @@ void init_problem_data(const ProblemDescription &problem,
     if (!problem.C_lb.empty()) {
         util::check_dim("problem.C_lowerbound", problem.C_lb,
                         static_cast<size_t>(n));
-        cs_problem.C.lowerbound = as_vec(std::span{problem.C_lb});
+        cs_problem.variable_bounds.lower = as_vec(std::span{problem.C_lb});
     }
     if (!problem.C_ub.empty()) {
         util::check_dim("problem.C_upperbound", problem.C_ub,
                         static_cast<size_t>(n));
-        cs_problem.C.upperbound = as_vec(std::span{problem.C_ub});
+        cs_problem.variable_bounds.upper = as_vec(std::span{problem.C_ub});
     }
     if (!problem.D_lb.empty()) {
         util::check_dim("problem.D_lowerbound", problem.D_lb,
                         static_cast<size_t>(m));
-        cs_problem.D.lowerbound = as_vec(std::span{problem.D_lb});
+        cs_problem.general_bounds.lower = as_vec(std::span{problem.D_lb});
     }
     if (!problem.D_ub.empty()) {
         util::check_dim("problem.D_upperbound", problem.D_ub,
                         static_cast<size_t>(m));
-        cs_problem.D.upperbound = as_vec(std::span{problem.D_ub});
+        cs_problem.general_bounds.upper = as_vec(std::span{problem.D_ub});
     }
     if (!problem.l1_reg.empty()) {
         if (problem.l1_reg.size() != 1)

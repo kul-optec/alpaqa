@@ -80,10 +80,10 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
 
     /// Load the numerical problem data (bounds and parameters) from a CSV file.
     /// The file should contain 7 rows, with the following contents:
-    ///   1. @ref BoxConstrProblem::C lower bound [n]
-    ///   2. @ref BoxConstrProblem::C upper bound [n]
-    ///   3. @ref BoxConstrProblem::D lower bound [m]
-    ///   4. @ref BoxConstrProblem::D upper bound [m]
+    ///   1. @ref BoxConstrProblem::variable_bounds lower bound [n]
+    ///   2. @ref BoxConstrProblem::variable_bounds upper bound [n]
+    ///   3. @ref BoxConstrProblem::general_bounds lower bound [m]
+    ///   4. @ref BoxConstrProblem::general_bounds upper bound [m]
     ///   5. @ref param [p]
     ///   6. @ref BoxConstrProblem::l1_reg [0, 1 or n]
     ///   7. @ref BoxConstrProblem::penalty_alm_split [1]

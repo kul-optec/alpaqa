@@ -91,9 +91,9 @@ struct ProblemVTable : guanaqo::BasicVTable {
 
     // Constraint sets
     optional_function_t<const Box &() const>
-        get_box_variables = default_get_box_variables;
+        get_variable_bounds = default_get_variable_bounds;
     optional_function_t<const Box &() const>
-        get_box_general_constraints = default_get_box_general_constraints;
+        get_general_bounds = default_get_general_bounds;
 
     // Check
     optional_function_t<void() const>
@@ -154,9 +154,9 @@ struct ProblemVTable : guanaqo::BasicVTable {
     default_eval_augmented_lagrangian_and_gradient(const void *self, crvec x, crvec y, crvec Σ,
                                                    rvec grad_ψ, rvec work_n, rvec work_m,
                                                    const ProblemVTable &vtable);
-    ALPAQA_EXPORT static const Box &default_get_box_variables(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static const Box &default_get_box_general_constraints(const void *,
-                                                                        const ProblemVTable &);
+    ALPAQA_EXPORT static const Box &default_get_variable_bounds(const void *,
+                                                                const ProblemVTable &);
+    ALPAQA_EXPORT static const Box &default_get_general_bounds(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static void default_check(const void *, const ProblemVTable &);
     ALPAQA_EXPORT static std::string default_get_name(const void *, const ProblemVTable &);
 
@@ -198,8 +198,8 @@ struct ProblemVTable : guanaqo::BasicVTable {
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_gradient, p);
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_augmented_lagrangian_and_gradient, p);
         // Constraint set
-        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_box_variables, p);
-        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_box_general_constraints, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_variable_bounds, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_general_bounds, p);
         // Check
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, check, p);
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_name, p);
@@ -371,11 +371,11 @@ class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Alloca
     /// **[Optional]**
     /// Get the rectangular constraint set of the decision variables,
     /// @f$ x \in C @f$.
-    [[nodiscard]] const Box &get_box_variables() const;
+    [[nodiscard]] const Box &get_variable_bounds() const;
     /// **[Optional]**
     /// Get the rectangular constraint set of the general constraint function,
     /// @f$ g(x) \in D @f$.
-    [[nodiscard]] const Box &get_box_general_constraints() const;
+    [[nodiscard]] const Box &get_general_bounds() const;
 
     /// @}
 
@@ -686,14 +686,14 @@ class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Alloca
                vtable.default_eval_augmented_lagrangian_and_gradient;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_box_variables.
-    [[nodiscard]] bool provides_get_box_variables() const {
-        return vtable.get_box_variables != vtable.default_get_box_variables;
+    /// @ref get_variable_bounds.
+    [[nodiscard]] bool provides_get_variable_bounds() const {
+        return vtable.get_variable_bounds != vtable.default_get_variable_bounds;
     }
     /// Returns true if the problem provides an implementation of
-    /// @ref get_box_general_constraints.
-    [[nodiscard]] bool provides_get_box_general_constraints() const {
-        return vtable.get_box_general_constraints != vtable.default_get_box_general_constraints;
+    /// @ref get_general_bounds.
+    [[nodiscard]] bool provides_get_general_bounds() const {
+        return vtable.get_general_bounds != vtable.default_get_general_bounds;
     }
     /// Returns true if the problem provides an implementation of @ref check.
     [[nodiscard]] bool provides_check() const { return vtable.check != vtable.default_check; }
@@ -891,12 +891,12 @@ auto TypeErasedProblem<Conf, Allocator>::calc_ŷ_dᵀŷ(rvec g_ŷ, crvec y, crve
     return call(vtable.calc_ŷ_dᵀŷ, g_ŷ, y, Σ);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_box_variables() const -> const Box & {
-    return call(vtable.get_box_variables);
+auto TypeErasedProblem<Conf, Allocator>::get_variable_bounds() const -> const Box & {
+    return call(vtable.get_variable_bounds);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::get_box_general_constraints() const -> const Box & {
-    return call(vtable.get_box_general_constraints);
+auto TypeErasedProblem<Conf, Allocator>::get_general_bounds() const -> const Box & {
+    return call(vtable.get_general_bounds);
 }
 template <Config Conf, class Allocator>
 void TypeErasedProblem<Conf, Allocator>::check() const {
@@ -927,8 +927,8 @@ void print_provided_functions(std::ostream &os, const TypeErasedProblem<Conf> &p
        << "                                eval_augmented_lagrangian: " << problem.provides_eval_augmented_lagrangian() << '\n'
        << "                       eval_augmented_lagrangian_gradient: " << problem.provides_eval_augmented_lagrangian_gradient() << '\n'
        << "                   eval_augmented_lagrangian_and_gradient: " << problem.provides_eval_augmented_lagrangian_and_gradient() << '\n'
-       << "                                        get_box_variables: " << problem.provides_get_box_variables() << '\n'
-       << "                              get_box_general_constraints: " << problem.provides_get_box_general_constraints() << '\n'
+       << "                                      get_variable_bounds: " << problem.provides_get_variable_bounds() << '\n'
+       << "                                       get_general_bounds: " << problem.provides_get_general_bounds() << '\n'
        << "                                                    check: " << problem.provides_check() << '\n'
        << "                                                 get_name: " << problem.provides_get_name() << '\n';
     // clang-format on

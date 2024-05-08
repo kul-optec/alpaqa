@@ -254,8 +254,9 @@ class MinimizationProblemDescription:
         functions = _prepare_casadi_problem(parts["f"], parts["g"], **kwargs)
         ser_funcs = {k: v.serialize() for k, v in functions.items()}
         problem: CasADiProblem = deserialize_casadi_problem(ser_funcs)
-        problem.C.lowerbound, problem.C.upperbound = parts["C"]
-        problem.D.lowerbound, problem.D.upperbound = parts["D"]
+        C, D = problem.variable_bounds, problem.general_bounds
+        C.lower, C.upper = parts["C"]
+        D.lower, D.upper = parts["D"]
         if parts["param"] is not None:
             problem.param = parts["param"]
         if parts["l1_reg"] is not None:

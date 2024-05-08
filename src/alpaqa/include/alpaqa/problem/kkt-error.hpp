@@ -39,8 +39,8 @@ KKTError<Conf> compute_kkt_error(const TypeErasedProblem<Conf> &problem, crvec<C
         [](real_t acc, real_t ye) { return std::fmax(acc, std::abs(ye)); }, std::multiplies<>{});
     // Bounds violation
     real_t bounds_violation = NaN<config_t>;
-    if (problem.provides_get_box_variables())
-        bounds_violation = norm_inf(project(x, problem.get_box_variables()) - x);
+    if (problem.provides_get_variable_bounds())
+        bounds_violation = norm_inf(project(x, problem.get_variable_bounds()) - x);
     return {.stationarity     = stationarity,
             .constr_violation = constr_violation,
             .complementarity  = complementarity,

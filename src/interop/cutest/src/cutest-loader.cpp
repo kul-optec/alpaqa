@@ -139,11 +139,11 @@ class CUTEstLoader {
 
     void setup_problem(rvec x0, rvec y0, Box &C, Box &D) {
         assert(x0.size() == static_cast<length_t>(nvar));
-        assert(C.lowerbound.size() == static_cast<length_t>(nvar));
-        assert(C.upperbound.size() == static_cast<length_t>(nvar));
+        assert(C.lower.size() == static_cast<length_t>(nvar));
+        assert(C.upper.size() == static_cast<length_t>(nvar));
         assert(y0.size() == static_cast<length_t>(ncon));
-        assert(D.lowerbound.size() == static_cast<length_t>(ncon));
-        assert(D.upperbound.size() == static_cast<length_t>(ncon));
+        assert(D.lower.size() == static_cast<length_t>(ncon));
+        assert(D.upper.size() == static_cast<length_t>(ncon));
 
         // Variables returned and required by csetup
         equatn.resize(static_cast<length_t>(ncon));
@@ -154,11 +154,11 @@ class CUTEstLoader {
         integer status;
 
         // Initialize the problem
-        call<cutest::csetup>(
-            &status, &funit, &iout, &io_buffer, &nvar, &ncon, x0.data(),
-            C.lowerbound.data(), C.upperbound.data(), y0.data(),
-            D.lowerbound.data(), D.upperbound.data(), equatn.data(),
-            linear.data(), &e_order, &l_order, &v_order);
+        call<cutest::csetup>(&status, &funit, &iout, &io_buffer, &nvar, &ncon,
+                             x0.data(), C.lower.data(), C.upper.data(),
+                             y0.data(), D.lower.data(), D.upper.data(),
+                             equatn.data(), linear.data(), &e_order, &l_order,
+                             &v_order);
         throw_if_error("Failed to call cutest_csetup", status);
         cutest_terminate = terminator();
 
@@ -171,10 +171,10 @@ class CUTEstLoader {
         work.resize(std::max(nvar, ncon));
         work2.resize(std::max(nvar, ncon));
         // Convert bounds
-        std::ranges::replace(C.lowerbound, -cutest::inf, -inf<config_t>);
-        std::ranges::replace(C.upperbound, +cutest::inf, +inf<config_t>);
-        std::ranges::replace(D.lowerbound, -cutest::inf, -inf<config_t>);
-        std::ranges::replace(D.upperbound, +cutest::inf, +inf<config_t>);
+        std::ranges::replace(C.lower, -cutest::inf, -inf<config_t>);
+        std::ranges::replace(C.upper, +cutest::inf, +inf<config_t>);
+        std::ranges::replace(D.lower, -cutest::inf, -inf<config_t>);
+        std::ranges::replace(D.upper, +cutest::inf, +inf<config_t>);
         // Load problem functions and gradients
         funcs = {
             .cfn    = load<cutest::cfn>(),
@@ -241,9 +241,9 @@ CUTEstProblem::CUTEstProblem(const char *so_fname, const char *outsdif_fname,
     impl = std::make_unique<CUTEstLoader>(so_fname, outsdif_fname, flags);
     resize(static_cast<length_t>(impl->nvar),
            static_cast<length_t>(impl->ncon));
-    x0.resize(n);
-    y0.resize(m);
-    impl->setup_problem(x0, y0, C, D);
+    x0.resize(num_variables);
+    y0.resize(num_constraints);
+    impl->setup_problem(x0, y0, variable_bounds, general_bounds);
     name = impl->get_name();
 }
 
@@ -341,8 +341,8 @@ void CUTEstProblem::eval_constraints_jacobian(crvec x, rvec J_values) const {
 auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
     if (!sparse)
         return sparsity::Dense{
-            .rows     = m,
-            .cols     = n,
+            .rows     = num_constraints,
+            .cols     = num_variables,
             .symmetry = sparsity::Symmetry::Unsymmetric,
         };
     if (nnz_J < 0) {
@@ -358,8 +358,8 @@ auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
     }
     using SparseCOO = sparsity::SparseCOO<int>;
     return SparseCOO{
-        .rows        = m,
-        .cols        = n,
+        .rows        = num_constraints,
+        .cols        = num_variables,
         .symmetry    = sparsity::Symmetry::Unsymmetric,
         .row_indices = as_span(storage_jac_g.rows),
         .col_indices = as_span(storage_jac_g.cols),
@@ -413,10 +413,9 @@ void CUTEstProblem::eval_augmented_lagrangian_hessian_product(
     // Hv = ∇²ℒ(x, ŷ) v
     eval_lagrangian_hessian_product(x, ŷ, scale, v, Hv);
     // Find active constraints
+    const auto &D = general_bounds;
     for (index_t i = 0; i < impl->ncon; ++i)
-        ζ(i) = (ζ(i) <= D.lowerbound(i)) || (D.upperbound(i) <= ζ(i))
-                   ? Σ(i)
-                   : real_t(0);
+        ζ(i) = (ζ(i) <= D.lower(i)) || (D.upper(i) <= ζ(i)) ? Σ(i) : real_t(0);
     // Jg(x) v
     auto &&Jv            = impl->work2.topRows(impl->ncon);
     auto lvector         = static_cast<cutest::integer>(v.size()),
@@ -474,8 +473,8 @@ void CUTEstProblem::eval_lagrangian_hessian(crvec x, crvec y, real_t scale,
 auto CUTEstProblem::get_lagrangian_hessian_sparsity() const -> Sparsity {
     if (!sparse)
         return sparsity::Dense{
-            .rows     = n,
-            .cols     = n,
+            .rows     = num_variables,
+            .cols     = num_variables,
             .symmetry = sparsity::Symmetry::Upper,
         };
     if (nnz_H < 0) {
@@ -491,8 +490,8 @@ auto CUTEstProblem::get_lagrangian_hessian_sparsity() const -> Sparsity {
     }
     using SparseCOO = sparsity::SparseCOO<int>;
     return SparseCOO{
-        .rows        = n,
-        .cols        = n,
+        .rows        = num_variables,
+        .cols        = num_variables,
         .symmetry    = sparsity::Symmetry::Upper,
         .row_indices = as_span(storage_hess_L.rows),
         .col_indices = as_span(storage_hess_L.cols),
@@ -533,8 +532,8 @@ void CUTEstProblem::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L,
 std::ostream &CUTEstProblem::format_report(std::ostream &os,
                                            const Report &r) const {
     os << "CUTEst problem: " << name << "\r\n\n"
-       << "Number of variables:   " << n << "\r\n"
-       << "Number of constraints: " << m << "\r\n\n"
+       << "Number of variables:   " << num_variables << "\r\n"
+       << "Number of constraints: " << num_constraints << "\r\n\n"
        << "Objective function evaluations:            " //
        << r.calls.objective << "\r\n"
        << "Objective function gradient evaluations:   " //
@@ -543,7 +542,7 @@ std::ostream &CUTEstProblem::format_report(std::ostream &os,
        << r.calls.objective_hess << "\r\n"
        << "Hessian times vector products:             " //
        << r.calls.objective_hess << "\r\n\n";
-    if (m > 0) {
+    if (num_constraints > 0) {
         os << "Constraint function evaluations:           " //
            << r.calls.constraints << "\r\n"
            << "Constraint function gradients evaluations: " //

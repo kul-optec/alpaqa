@@ -105,13 +105,13 @@ void register_ocp(py::module_ &m) {
                 // Gradient descent step.
                 real_t gs = ui - γ * grad_ψ(t * nu + i);
                 // Check whether the box constraints are active for this index.
-                bool active_lb = gs <= U.lowerbound(i);
-                bool active_ub = gs >= U.upperbound(i);
+                bool active_lb = gs <= U.lower(i);
+                bool active_ub = gs >= U.upper(i);
                 if (active_ub) {
-                    q(nu * t + i) = U.upperbound(i) - ui;
+                    q(nu * t + i) = U.upper(i) - ui;
                     return false;
                 } else if (active_lb) {
-                    q(nu * t + i) = U.lowerbound(i) - ui;
+                    q(nu * t + i) = U.lower(i) - ui;
                     return false;
                 } else { // Store inactive indices
                     return true;

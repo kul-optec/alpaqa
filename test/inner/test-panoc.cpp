@@ -33,11 +33,11 @@ vec finite_diff(std::function<real_t(crvec)> f, crvec x) {
 
 auto build_test_problem() {
     alpaqa::FunctionalProblem<config_t> p{2, 2};
-    p.C.upperbound = vec::Constant(2, inf);
-    p.C.lowerbound = vec::Constant(2, -inf);
-    p.D.upperbound = vec::Constant(2, 350);
-    p.D.lowerbound = vec::Constant(2, -1);
-    p.f            = [](crvec x) { // f(x) = 1/6 x₁⁴ + 2x₂ + x₂² + 1
+    p.variable_bounds.upper = vec::Constant(2, inf);
+    p.variable_bounds.lower = vec::Constant(2, -inf);
+    p.general_bounds.upper  = vec::Constant(2, 350);
+    p.general_bounds.lower  = vec::Constant(2, -1);
+    p.f = [](crvec x) { // f(x) = 1/6 x₁⁴ + 2x₂ + x₂² + 1
         return 1. / 6 * std::pow(x(0), 4) + 2 * x(1) + std::pow(x(1), 2) + 1;
     };
     p.grad_f = [](crvec x, rvec grad) {
@@ -90,12 +90,12 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     vec invΣy = y.cwiseQuotient(Σ);
 
     auto ψ_fun = [&op, &f, &g, &Σ, &invΣy](crvec x) -> real_t {
-        return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.D, Σ);
+        return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.general_bounds, Σ);
     };
 
     // Compute ψ and ∇ψ manually
     vec ζ     = g(x) + invΣy;
-    vec ẑ     = project(ζ, op.D);
+    vec ẑ     = project(ζ, op.general_bounds);
     vec d     = ζ - ẑ;
     vec ŷ     = Σ.cwiseProduct(d);
     real_t ψ  = f(x) + 0.5 * d.dot(ŷ);
@@ -111,7 +111,8 @@ TEST(PANOC, calc_ψ_grad_ψ) {
     EXPECT_THAT(grad_ψ, EigenAlmostEqual(grad_ψ_fd, grad_ψ(0) * 5e-7));
 
     // calc_ψ_grad_ψ
-    real_t ψ_res = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
+    real_t ψ_res = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ_res,
+                                                            work_n, work_m);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
     EXPECT_DOUBLE_EQ(ψ_res, ψ);
     EXPECT_DOUBLE_EQ(ψ_res, ψ2);
@@ -144,12 +145,12 @@ TEST(PANOC, calc_ψ_grad_ψ) {
 
 auto build_test_problem2() {
     alpaqa::FunctionalProblem<config_t> p{2, 2};
-    p.C.upperbound = vec::Constant(2, 10);
-    p.C.lowerbound = vec::Constant(2, -10);
-    p.D.upperbound.resize(2);
-    p.D.upperbound << -1, 0;
-    p.D.lowerbound.resize(2);
-    p.D.lowerbound << -inf, -inf;
+    p.variable_bounds.upper = vec::Constant(2, 10);
+    p.variable_bounds.lower = vec::Constant(2, -10);
+    p.general_bounds.upper.resize(2);
+    p.general_bounds.upper << -1, 0;
+    p.general_bounds.lower.resize(2);
+    p.general_bounds.lower << -inf, -inf;
     p.f = [](crvec x) { // f(x) = 1/48 x₁⁴ - 2x₁x₂ + 1/24 x₁²x₂⁴ + 10
         return 1. / 48 * std::pow(x(0), 4) - 2 * x(0) * x(1) +
                1. / 24 * std::pow(x(0), 2) * std::pow(x(1), 4) + 10;
@@ -251,12 +252,12 @@ TEST(PANOC, hessian) {
     vec invΣy = y.cwiseQuotient(Σ);
 
     auto ψ_fun = [&op, &f, &g, &Σ, &invΣy](crvec x) -> real_t {
-        return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.D, Σ);
+        return f(x) + 0.5 * dist_squared(g(x) + invΣy, op.general_bounds, Σ);
     };
 
     // Compute ψ and ∇ψ manually
     vec ζ     = g(x) + invΣy;
-    vec ẑ     = project(ζ, op.D);
+    vec ẑ     = project(ζ, op.general_bounds);
     vec d     = ζ - ẑ;
     vec ŷ     = Σ.cwiseProduct(d);
     real_t ψ  = f(x) + 0.5 * d.dot(ŷ);
@@ -290,7 +291,8 @@ TEST(PANOC, hessian) {
                 EigenAlmostEqual(grad_ψ_fd, std::abs(grad_ψ(0)) * 5e-6));
 
     // calc_ψ_grad_ψ
-    real_t ψ_res = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
+    real_t ψ_res = p.eval_augmented_lagrangian_and_gradient(x, y, Σ, grad_ψ_res,
+                                                            work_n, work_m);
     EXPECT_THAT(grad_ψ_res, EigenAlmostEqual(grad_ψ, 1e-10));
     EXPECT_DOUBLE_EQ(ψ_res, ψ);
     EXPECT_DOUBLE_EQ(ψ_res, ψ2);
@@ -352,7 +354,8 @@ TEST(PANOC, hessian) {
     auto grad_ψi = [&](unsigned i) {
         return [&, i](crvec x) {
             vec grad_ψ_res(2);
-            p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ_res, work_n, work_m);
+            p.eval_augmented_lagrangian_gradient(x, y, Σ, grad_ψ_res, work_n,
+                                                 work_m);
             return grad_ψ_res(i);
         };
     };

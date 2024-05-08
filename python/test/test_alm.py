@@ -35,10 +35,10 @@ def test_alm():
     p = copy(p) # test copying/cloning
     p = deepcopy(p) # test copying/cloning
     print(p)
-    print("C", p.C.lowerbound, p.C.upperbound)
-    print("D", p.D.lowerbound, p.D.upperbound)
-    p.D.lowerbound = [-np.inf, 0.5]
-    p.D.upperbound = [+np.inf, +np.inf]
+    print("C", p.variable_bounds.lower, p.variable_bounds.upper)
+    print("D", p.general_bounds.lower, p.general_bounds.upper)
+    p.general_bounds.lower = [-np.inf, 0.5]
+    p.general_bounds.upper = [+np.inf, +np.inf]
     solver = pa.PANOCSolver(
         pa.PANOCParams(max_iter=200, print_interval=1),
         pa.LBFGSDirection(pa.LBFGS.Params(memory=5)),
@@ -163,8 +163,8 @@ class MyProblem(pa.BoxConstrProblem):
 
 def get_pickled_problem():
     p = MyProblem()
-    p.D.lowerbound = [-np.inf, 0.5]
-    p.D.upperbound = [+np.inf, +np.inf]
+    p.general_bounds.lower = [-np.inf, 0.5]
+    p.general_bounds.upper = [+np.inf, +np.inf]
     return pickle.dumps(p)
 
 

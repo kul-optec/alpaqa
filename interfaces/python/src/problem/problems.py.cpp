@@ -189,10 +189,10 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def("eval_augmented_lagrangian_and_gradient", &T::eval_augmented_lagrangian_and_gradient, "x"_a, "y"_a, "Σ"_a, "grad_ψ"_a, "work_n"_a, "work_m"_a);
     if constexpr (requires { &T::check; })
         cls.def("check", &T::check);
-    if constexpr (requires { &T::get_box_variables; })
-        cls.def("get_box_variables", &T::get_box_variables);
-    if constexpr (requires { &T::get_box_general_constraints; })
-        cls.def("get_box_general_constraints", &T::get_box_general_constraints);
+    if constexpr (requires { &T::get_variable_bounds; })
+        cls.def("get_variable_bounds", &T::get_variable_bounds);
+    if constexpr (requires { &T::get_general_bounds; })
+        cls.def("get_general_bounds", &T::get_general_bounds);
 
     if constexpr (requires { &T::provides_eval_inactive_indices_res_lna; })
         cls.def("provides_eval_inactive_indices_res_lna", &T::provides_eval_inactive_indices_res_lna);
@@ -230,10 +230,10 @@ void problem_methods(py::class_<T, Args...> &cls) {
         cls.def("provides_eval_augmented_lagrangian_and_gradient", &T::provides_eval_augmented_lagrangian_and_gradient);
     if constexpr (requires { &T::provides_check; })
         cls.def("provides_check", &T::provides_check);
-    if constexpr (requires { &T::provides_get_box_variables; })
-        cls.def("provides_get_box_variables", &T::provides_get_box_variables);
-    if constexpr (requires { &T::provides_get_box_general_constraints; })
-        cls.def("provides_get_box_general_constraints", &T::provides_get_box_general_constraints);
+    if constexpr (requires { &T::provides_get_variable_bounds; })
+        cls.def("provides_get_variable_bounds", &T::provides_get_variable_bounds);
+    if constexpr (requires { &T::provides_get_general_bounds; })
+        cls.def("provides_get_general_bounds", &T::provides_get_general_bounds);
     // clang-format on
     cls.def(
            "eval_projecting_difference_constraints",
@@ -367,13 +367,13 @@ void register_problems(py::module_ &m) {
     box //
         .def(py::pickle(
             [](const Box &b) { // __getstate__
-                return py::make_tuple(b.upperbound, b.lowerbound);
+                return py::make_tuple(b.upper, b.lower);
             },
             [](py::tuple t) { // __setstate__
                 if (t.size() != 2)
                     throw std::runtime_error("Invalid state!");
-                return Box::from_lower_upper(py::cast<decltype(Box::lowerbound)>(t[1]),
-                                             py::cast<decltype(Box::upperbound)>(t[0]));
+                return Box::from_lower_upper(py::cast<decltype(Box::lower)>(t[1]),
+                                             py::cast<decltype(Box::upper)>(t[0]));
             }))
         .def(py::init<length_t>(), "n"_a,
              "Create an :math:`n`-dimensional box at with bounds at "
@@ -384,10 +384,8 @@ void register_problems(py::module_ &m) {
                  return Box::from_lower_upper(std::move(lower), std::move(upper));
              }),
              py::kw_only(), "lower"_a, "upper"_a, "Create a box with the given bounds.")
-        .def_property("lowerbound", vector_getter<&Box::lowerbound>(),
-                      vector_setter<&Box::lowerbound>("lowerbound"))
-        .def_property("upperbound", vector_getter<&Box::upperbound>(),
-                      vector_setter<&Box::upperbound>("upperbound"));
+        .def_property("lower", vector_getter<&Box::lower>(), vector_setter<&Box::lower>("lower"))
+        .def_property("upper", vector_getter<&Box::upper>(), vector_setter<&Box::upper>("upper"));
 
     using BoxConstrProblem = alpaqa::BoxConstrProblem<config_t>;
     py::class_<BoxConstrProblem> box_constr_problem(
@@ -395,12 +393,13 @@ void register_problems(py::module_ &m) {
     default_copy_methods(box_constr_problem);
     box_constr_problem //
         .def(py::init<length_t, length_t>(), "num_variables"_a, "num_constraints"_a,
-             ":param n: Number of unknowns\n"
-             ":param m: Number of constraints")
+             ":param num_variables: Number of decision variables\n"
+             ":param num_constraints: Number of constraints")
         .def(py::pickle(
             [](const BoxConstrProblem &self) { // __getstate__
                 self.check();
-                return py::make_tuple(self.C, self.D, self.l1_reg, self.penalty_alm_split);
+                return py::make_tuple(self.variable_bounds, self.general_bounds, self.l1_reg,
+                                      self.penalty_alm_split);
             },
             [](py::tuple t) { // __setstate__
                 if (t.size() != 4)
@@ -413,12 +412,14 @@ void register_problems(py::module_ &m) {
                 };
             }))
         .def_property_readonly("num_variables", &BoxConstrProblem::get_num_variables,
-                               "Number of decision variables, dimension of :math:`x`")
+                               "Number of decision variables :math:`n`, dimension of :math:`x`")
         .def_property_readonly("num_constraints", &BoxConstrProblem::get_num_constraints,
-                               "Number of general constraints, dimension of :math:`g(x)`")
+                               "Number of general constraints :math:`m`, dimension of :math:`g(x)`")
         .def("resize", &BoxConstrProblem::resize, "num_variables"_a, "num_constraints"_a)
-        .def_readwrite("C", &BoxConstrProblem::C, "Box constraints on :math:`x`")
-        .def_readwrite("D", &BoxConstrProblem::D, "Box constraints on :math:`g(x)`")
+        .def_readwrite("variable_bounds", &BoxConstrProblem::variable_bounds,
+                       "Box constraints on the decision variables, :math:`x\\in C`")
+        .def_readwrite("general_bounds", &BoxConstrProblem::general_bounds,
+                       "General constraint bounds, :math:`g(x) \\in D`")
         .def_readwrite("l1_reg", &BoxConstrProblem::l1_reg,
                        py::return_value_policy::reference_internal,
                        ":math:`\\ell_1` regularization on :math:`x`")
@@ -433,8 +434,8 @@ void register_problems(py::module_ &m) {
              "x"_a, "grad_ψ"_a, "x_hat"_a, "p"_a)
         .def("eval_inactive_indices_res_lna", &BoxConstrProblem::eval_inactive_indices_res_lna,
              "γ"_a, "x"_a, "grad_ψ"_a, "J"_a)
-        .def("get_box_variables", &BoxConstrProblem::get_box_variables)
-        .def("get_box_general_constraints", &BoxConstrProblem::get_box_general_constraints);
+        .def("get_variable_bounds", &BoxConstrProblem::get_variable_bounds)
+        .def("get_general_bounds", &BoxConstrProblem::get_general_bounds);
     problem_constr_proj_methods(box_constr_problem);
 
     using UnconstrProblem = alpaqa::UnconstrProblem<config_t>;
@@ -443,10 +444,10 @@ void register_problems(py::module_ &m) {
     default_copy_methods(unconstr_problem);
     unconstr_problem //
         .def(py::init<length_t>(), "num_variables"_a,
-             ":param n: Number of unknowns")
+             ":param num_variables: Number of decision variables")
         .def(py::pickle(
             [](const UnconstrProblem &self) { // __getstate__
-                return py::make_tuple(self.n);
+                return py::make_tuple(self.num_variables);
             },
             [](py::tuple t) { // __setstate__
                 if (t.size() != 1)
@@ -503,8 +504,8 @@ void register_problems(py::module_ &m) {
         real_t eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const { py::gil_scoped_acquire gil; return py::cast<real_t>(o.attr("eval_augmented_lagrangian_and_gradient")(x, y, Σ, grad_ψ, work_n, work_m)); }
         void check() const { py::gil_scoped_acquire gil; if (auto ch = py::getattr(o, "check", py::none()); !ch.is_none()) ch(); }
         std::string get_name() const { py::gil_scoped_acquire gil; return py::str(o); }
-        const Box &get_box_variables() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; C = py::cast<Box>(o.attr("get_box_variables")()); return C; }
-        const Box &get_box_general_constraints() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; D = py::cast<Box>(o.attr("get_box_general_constraints")()); return D; }
+        const Box &get_variable_bounds() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; C = py::cast<Box>(o.attr("get_variable_bounds")()); return C; }
+        const Box &get_general_bounds() const { py::gil_scoped_acquire gil; alpaqa::ScopedMallocAllower ma; D = py::cast<Box>(o.attr("get_general_bounds")()); return D; }
 
         [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_inactive_indices_res_lna") && (!py::hasattr(o, "provides_eval_inactive_indices_res_lna") || py::cast<bool>(o.attr("provides_eval_inactive_indices_res_lna")())); }
         [[nodiscard]] bool provides_eval_grad_gi() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_grad_gi") && (!py::hasattr(o, "provides_eval_grad_gi") || py::cast<bool>(o.attr("provides_eval_grad_gi")())); }
@@ -520,8 +521,8 @@ void register_problems(py::module_ &m) {
         [[nodiscard]] bool provides_eval_augmented_lagrangian_gradient() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian_gradient") && (!py::hasattr(o, "provides_eval_augmented_lagrangian_gradient") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian_gradient")())); }
         [[nodiscard]] bool provides_eval_augmented_lagrangian_and_gradient() const { py::gil_scoped_acquire gil; return py::hasattr(o, "eval_augmented_lagrangian_and_gradient") && (!py::hasattr(o, "provides_eval_augmented_lagrangian_and_gradient") || py::cast<bool>(o.attr("provides_eval_augmented_lagrangian_and_gradient")())); }
         [[nodiscard]] bool provides_check() const { py::gil_scoped_acquire gil; return py::hasattr(o, "check") && (!py::hasattr(o, "provides_check") || py::cast<bool>(o.attr("provides_check")())); }
-        [[nodiscard]] bool provides_get_box_variables() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_variables") && (!py::hasattr(o, "provides_get_box_variables") || py::cast<bool>(o.attr("provides_get_box_variables")())); }
-        [[nodiscard]] bool provides_get_box_general_constraints() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_box_general_constraints") && (!py::hasattr(o, "provides_get_box_general_constraints") || py::cast<bool>(o.attr("provides_get_box_general_constraints")())); }
+        [[nodiscard]] bool provides_get_variable_bounds() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_variable_bounds") && (!py::hasattr(o, "provides_get_variable_bounds") || py::cast<bool>(o.attr("provides_get_variable_bounds")())); }
+        [[nodiscard]] bool provides_get_general_bounds() const { py::gil_scoped_acquire gil; return py::hasattr(o, "get_general_bounds") && (!py::hasattr(o, "provides_get_general_bounds") || py::cast<bool>(o.attr("provides_get_general_bounds")())); }
 
         length_t get_num_variables() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("num_variables")); }
         length_t get_num_constraints() const { py::gil_scoped_acquire gil; return py::cast<length_t>(o.attr("num_constraints")); }

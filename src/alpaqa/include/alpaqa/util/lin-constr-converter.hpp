@@ -26,7 +26,7 @@ struct LinConstrConverter {
     };
 
     /// Check if the variable with the given index has bound constraints, i.e.
-    /// if not lowerbound == -inf and upperbound == +inf.
+    /// if not lower == -inf and upper == +inf.
     static bool is_bound(std::span<const real_t> lbx,
                          std::span<const real_t> ubx, size_t i) {
         using std::isnan; // Assuming no NaN inputs
@@ -34,7 +34,7 @@ struct LinConstrConverter {
     }
     static bool is_bound(const sets::Box<config_t> &C,
                          typename config_t::index_t i) {
-        return is_bound(as_span(C.lowerbound), as_span(C.upperbound),
+        return is_bound(as_span(C.lower), as_span(C.upper),
                         static_cast<size_t>(i));
     }
 
@@ -49,7 +49,7 @@ struct LinConstrConverter {
     }
 
     static index_t count_bounds(const sets::Box<config_t> &C) {
-        return count_bounds(as_span(C.lowerbound), as_span(C.upperbound));
+        return count_bounds(as_span(C.lower), as_span(C.upper));
     }
 
     static void add_box_constr_to_constr_matrix(mat<config_t> &A,
@@ -68,8 +68,8 @@ struct LinConstrConverter {
     }
     static void add_box_constr_to_constr_matrix(mat<config_t> &A,
                                                 const sets::Box<config_t> &C) {
-        return add_box_constr_to_constr_matrix(A, as_span(C.lowerbound),
-                                               as_span(C.upperbound));
+        return add_box_constr_to_constr_matrix(A, as_span(C.lower),
+                                               as_span(C.upper));
     }
 
     static void
@@ -94,7 +94,7 @@ struct LinConstrConverter {
     add_box_constr_to_constr_matrix_inplace(index_t n_row, rmat<config_t> A,
                                             const sets::Box<config_t> &C) {
         return add_box_constr_to_constr_matrix_inplace(
-            n_row, A, as_span(C.lowerbound), as_span(C.upperbound));
+            n_row, A, as_span(C.lower), as_span(C.upper));
     }
 
     static void add_box_constr_to_constr_matrix_inplace_vec(
@@ -123,7 +123,7 @@ struct LinConstrConverter {
                                                 rvec<config_t> A,
                                                 const sets::Box<config_t> &C) {
         return add_box_constr_to_constr_matrix_inplace_vec(
-            n_row, n_col, A, as_span(C.lowerbound), as_span(C.upperbound));
+            n_row, n_col, A, as_span(C.lower), as_span(C.upper));
     }
 
     /// Update the constraint matrix A, such that for each constraint C(i) with
@@ -139,8 +139,8 @@ struct LinConstrConverter {
                                                 std::span<const real_t> ubx);
     static void add_box_constr_to_constr_matrix(SparseView &A,
                                                 const sets::Box<config_t> &C) {
-        return add_box_constr_to_constr_matrix(A, as_span(C.lowerbound),
-                                               as_span(C.upperbound));
+        return add_box_constr_to_constr_matrix(A, as_span(C.lower),
+                                               as_span(C.upper));
     }
 
     /// For each constraint lbx(i)/ubx(i) with finite bounds, insert these
@@ -157,19 +157,19 @@ struct LinConstrConverter {
                                      const sets::Box<config_t> &D,
                                      sets::Box<config_t> &new_D,
                                      typename config_t::crvec g0) {
-        return combine_bound_constr(
-            as_span(C.lowerbound), as_span(C.upperbound), as_span(D.lowerbound),
-            as_span(D.upperbound), as_span(new_D.lowerbound),
-            as_span(new_D.upperbound), as_span(g0));
+        return combine_bound_constr(as_span(C.lower), as_span(C.upper),
+                                    as_span(D.lower), as_span(D.upper),
+                                    as_span(new_D.lower), as_span(new_D.upper),
+                                    as_span(g0));
     }
     static void combine_bound_constr(const sets::Box<config_t> &C,
                                      const sets::Box<config_t> &D,
                                      std::span<real_t> new_lbg,
                                      std::span<real_t> new_ubg,
                                      typename config_t::crvec g0) {
-        return combine_bound_constr(
-            as_span(C.lowerbound), as_span(C.upperbound), as_span(D.lowerbound),
-            as_span(D.upperbound), new_lbg, new_ubg, as_span(g0));
+        return combine_bound_constr(as_span(C.lower), as_span(C.upper),
+                                    as_span(D.lower), as_span(D.upper), new_lbg,
+                                    new_ubg, as_span(g0));
     }
 };
 

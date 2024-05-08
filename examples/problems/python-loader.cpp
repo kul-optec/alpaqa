@@ -70,16 +70,14 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
 
             using P = Problem;
             using alpaqa::member_caller;
-            funcs.n              = py::cast<length_t>(o.attr("n"));
-            funcs.m              = py::cast<length_t>(o.attr("m"));
-            funcs.name           = name.c_str();
-            funcs.eval_objective = member_caller<&P::eval_objective>();
-            funcs.eval_objective_gradient =
-                member_caller<&P::eval_objective_gradient>();
-            funcs.eval_constraints = member_caller<&P::eval_constraints>();
-            funcs.eval_constraints_gradient_product =
-                member_caller<&P::eval_constraints_gradient_product>();
             // clang-format off
+            funcs.num_variables   = py::cast<length_t>(o.attr("num_variables"));
+            funcs.num_constraints = py::cast<length_t>(o.attr("num_constraints"));
+            funcs.name            = name.c_str();
+            funcs.eval_objective                    = member_caller<&P::eval_objective>();
+            funcs.eval_objective_gradient           = member_caller<&P::eval_objective_gradient>();
+            funcs.eval_constraints                  = member_caller<&P::eval_constraints>();
+            funcs.eval_constraints_gradient_product = member_caller<&P::eval_constraints_gradient_product>();
             if (py::hasattr(o, "eval_projecting_difference_constraints"))
                 funcs.eval_projecting_difference_constraints = member_caller<&P::eval_projecting_difference_constraints>();
             if (py::hasattr(o, "eval_projection_multipliers"))
@@ -116,24 +114,26 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
                 funcs.eval_augmented_lagrangian_hessian_product = member_caller<&P::eval_augmented_lagrangian_hessian_product>();
             if (py::hasattr(o, "eval_augmented_lagrangian_hessian"))
                 funcs.eval_augmented_lagrangian_hessian = member_caller<&P::eval_augmented_lagrangian_hessian>();
-            if (py::hasattr(o, "C"))
-                funcs.initialize_box_C = member_caller<&P::initialize_box_C>();
-            if (py::hasattr(o, "D"))
-                funcs.initialize_box_D = member_caller<&P::initialize_box_D>();
+            if (py::hasattr(o, "variable_bounds"))
+                funcs.initialize_variable_bounds = member_caller<&P::initialize_variable_bounds>();
+            if (py::hasattr(o, "general_bounds"))
+                funcs.initialize_general_bounds = member_caller<&P::initialize_general_bounds>();
             if (py::hasattr(o, "l1_reg"))
                 funcs.initialize_l1_reg = member_caller<&P::initialize_l1_reg>();
             // clang-format on
         } catch (py::error_already_set &e) {
-            // Needs to be caught between the interpreter is destroyed
+            // Needs to be caught before the interpreter is destroyed
             throw python_loader_error(e.what());
         }
     }
 
-    cmvec vecn(const real_t *x) const { return cmvec{x, funcs.n}; }
-    mvec vecn(real_t *x) const { return mvec{x, funcs.n}; }
-    mindexvec vecn(index_t *x) const { return mindexvec{x, funcs.n}; }
-    cmvec vecm(const real_t *x) const { return cmvec{x, funcs.m}; }
-    mvec vecm(real_t *x) const { return mvec{x, funcs.m}; }
+    length_t n() const { return funcs.num_variables; }
+    length_t m() const { return funcs.num_constraints; }
+    cmvec vecn(const real_t *x) const { return cmvec{x, n()}; }
+    mvec vecn(real_t *x) const { return mvec{x, n()}; }
+    mindexvec vecn(index_t *x) const { return mindexvec{x, n()}; }
+    cmvec vecm(const real_t *x) const { return cmvec{x, m()}; }
+    mvec vecm(real_t *x) const { return mvec{x, m()}; }
 
     template <class... Args>
     decltype(auto) call_func(const char *name, Args &&...args) {
@@ -204,7 +204,7 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     /// @see @ref alpaqa::TypeErasedProblem::eval_constraints_jacobian()
     void eval_constraints_jacobian(const real_t *x, real_t *J_values) {
         call_func("eval_constraints_jacobian", vecn(x),
-                  mmat{J_values, funcs.m, funcs.n});
+                  mmat{J_values, m(), n()});
     }
 #if 0
     /// Get the sparsity pattern of the Jacobian of the constraints function.
@@ -231,7 +231,7 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     void eval_lagrangian_hessian(const real_t *x, const real_t *y, real_t scale,
                                  real_t *H_values) {
         call_func("eval_lagrangian_hessian", vecn(x), vecm(y), scale,
-                  mmat{H_values, funcs.n, funcs.n});
+                  mmat{H_values, n(), n()});
     }
 #if 0
     /// Get the sparsity pattern of the Hessian of the Lagrangian.
@@ -257,7 +257,7 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
                                            [[maybe_unused]] const real_t *zu,
                                            real_t *H_values) {
         call_func("eval_augmented_lagrangian_hessian", vecn(x), vecm(y),
-                  vecm(Σ), scale, mmat{H_values, funcs.n, funcs.n});
+                  vecm(Σ), scale, mmat{H_values, n(), n()});
     }
 #if 0
     /// Get the sparsity pattern of the Hessian of the augmented Lagrangian.
@@ -329,14 +329,14 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     /// Provide the initial values for the bounds of
     /// @ref alpaqa::BoxConstrProblem::C, i.e. the constraints on the decision
     /// variables.
-    void initialize_box_C(real_t *lb, real_t *ub) {
+    void initialize_variable_bounds(real_t *lb, real_t *ub) {
         py::gil_scoped_acquire gil;
         try {
-            auto C    = py::cast<py::tuple>(o.attr("C"));
+            auto C    = py::cast<py::tuple>(o.attr("variable_bounds"));
             auto C_lb = py::cast<crvec>(C[0]);
             auto C_ub = py::cast<crvec>(C[1]);
-            if (C_lb.size() != funcs.n || C_ub.size() != funcs.n)
-                throw py::value_error("Invalid dimensions box C");
+            if (C_lb.size() != n() || C_ub.size() != n())
+                throw py::value_error("Invalid dimensions variable_bounds");
             vecn(lb) = C_lb;
             vecn(ub) = C_ub;
         } catch (py::error_already_set &e) {
@@ -345,14 +345,14 @@ struct PYTHON_LOADER_NO_EXPORT Problem {
     }
     /// Provide the initial values for the bounds of
     /// @ref alpaqa::BoxConstrProblem::D, i.e. the general constraints.
-    void initialize_box_D(real_t *lb, real_t *ub) {
+    void initialize_general_bounds(real_t *lb, real_t *ub) {
         py::gil_scoped_acquire gil;
         try {
-            auto D    = py::cast<py::tuple>(o.attr("D"));
+            auto D    = py::cast<py::tuple>(o.attr("general_bounds"));
             auto D_lb = py::cast<crvec>(D[0]);
             auto D_ub = py::cast<crvec>(D[1]);
-            if (D_lb.size() != funcs.n || D_ub.size() != funcs.n)
-                throw py::value_error("Invalid dimensions box D");
+            if (D_lb.size() != m() || D_ub.size() != m())
+                throw py::value_error("Invalid dimensions general_bounds");
             vecn(lb) = D_lb;
             vecn(ub) = D_ub;
         } catch (py::error_already_set &e) {

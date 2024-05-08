@@ -36,16 +36,16 @@ class FunctionalProblem : public BoxConstrProblem<Conf> {
     // clang-format on
     void eval_constraints_jacobian(crvec x, rvec J_values) const {
         ScopedMallocAllower ma;
-        jac_g(x, J_values.reshaped(this->m, this->n));
+        jac_g(x, J_values.reshaped(this->num_constraints, this->num_variables));
     }
     void eval_lagrangian_hessian(crvec x, crvec y, real_t scale, rvec H_values) const {
         ScopedMallocAllower ma;
-        hess_L(x, y, scale, H_values.reshaped(this->n, this->n));
+        hess_L(x, y, scale, H_values.reshaped(this->num_variables, this->num_variables));
     }
     void eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale,
                                            rvec H_values) const {
         ScopedMallocAllower ma;
-        hess_ψ(x, y, Σ, scale, H_values.reshaped(this->n, this->n));
+        hess_ψ(x, y, Σ, scale, H_values.reshaped(this->num_variables, this->num_variables));
     }
 
     /// @see @ref TypeErasedProblem::provides_eval_grad_gi

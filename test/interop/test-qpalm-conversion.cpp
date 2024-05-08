@@ -25,7 +25,7 @@ TEST(qpalm, convertConstraints) {
     Box C(n);
     std::vector<index_t> bound_indices{1, 3, 4, 6};
     for (index_t i : bound_indices)
-        C.upperbound(i) = 1;
+        C.upper(i) = 1;
 
     spmat_t A(m, n);
     using triplet_t = Eigen::Triplet<real_t, index_t>;
@@ -39,10 +39,10 @@ TEST(qpalm, convertConstraints) {
     std::cout << A0 << '\n';
 
     // Check if the variable with the given index has bound constraints, i.e.
-    // if not lowerbound == -inf and upperbound == +inf.
+    // if not lower == -inf and upper == +inf.
     auto is_bound = [&C](index_t i) {
         using std::isnan; // Assuming no NaN inputs
-        return isnan(C.lowerbound(i) + C.upperbound(i)) == 0;
+        return isnan(C.lower(i) + C.upper(i)) == 0;
     };
 
     auto old_nnz = A.nonZeros();
@@ -125,7 +125,7 @@ TEST(LinConstrConverter, convertConstraintsSparse) {
     Box C(n);
     std::vector<index_t> bound_indices{1, 3, 4, 6};
     for (index_t i : bound_indices)
-        C.upperbound(i) = 1;
+        C.upper(i) = 1;
 
     spmat_t A(m, n);
     using triplet_t = Eigen::Triplet<real_t, index_t>;
@@ -171,7 +171,7 @@ TEST(LinConstrConverter, convertConstraintsDense) {
     Box C(n);
     std::vector<index_t> bound_indices{1, 3, 4, 6};
     for (index_t i : bound_indices)
-        C.upperbound(i) = 1;
+        C.upper(i) = 1;
 
     mat A = mat::Constant(m, n, -1);
     for (index_t c = 0; c < n; ++c)
@@ -199,7 +199,7 @@ TEST(LinConstrConverter, convertConstraintsDenseInPlace) {
     Box C(n);
     std::vector<index_t> bound_indices{1, 3, 4, 6};
     for (index_t i : bound_indices)
-        C.upperbound(i) = 1;
+        C.upper(i) = 1;
 
     mat A = mat::Constant(m + 4, n, -1);
     for (index_t c = 0; c < n; ++c)
@@ -227,7 +227,7 @@ TEST(LinConstrConverter, convertConstraintsDenseInPlaceVec) {
     Box C(n);
     std::vector<index_t> bound_indices{1, 3, 4, 6};
     for (index_t i : bound_indices)
-        C.upperbound(i) = 1;
+        C.upper(i) = 1;
 
     mat A = mat::Constant(m, n, -1);
     for (index_t c = 0; c < n; ++c)

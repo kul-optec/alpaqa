@@ -2,7 +2,6 @@
 #include <alpaqa/config/config.hpp>
 
 #include <Eigen/LU>
-#include <limits>
 #include <test-util/eigen-matchers.hpp>
 
 TEST(LBFGS, quadratic) {

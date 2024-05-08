@@ -33,12 +33,12 @@ bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
 
 bool IpoptAdapter::get_bounds_info(Index n, Number *x_l, Number *x_u, Index m,
                                    Number *g_l, Number *g_u) {
-    const auto &C = problem.get_box_variables();
-    mvec{x_l, n}  = C.lowerbound;
-    mvec{x_u, n}  = C.upperbound;
-    const auto &D = problem.get_box_general_constraints();
-    mvec{g_l, m}  = D.lowerbound;
-    mvec{g_u, m}  = D.upperbound;
+    const auto &C = problem.get_variable_bounds();
+    mvec{x_l, n}  = C.lower;
+    mvec{x_u, n}  = C.upper;
+    const auto &D = problem.get_general_bounds();
+    mvec{g_l, m}  = D.lower;
+    mvec{g_u, m}  = D.upper;
     return true;
 }
 

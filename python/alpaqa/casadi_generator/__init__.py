@@ -167,10 +167,11 @@ def _prepare_casadi_problem(
         )
     return functions
 
+
 def generate_casadi_problem(
     f: cs.Function,
     g: Optional[cs.Function],
-    second_order: SECOND_ORDER_SPEC = 'no',
+    second_order: SECOND_ORDER_SPEC = "no",
     name: str = "alpaqa_problem",
     sym: Callable = cs.SX.sym,
 ) -> cs.CodeGenerator:
@@ -195,7 +196,10 @@ def generate_casadi_problem(
         cg.add(func)
     return cg
 
-def _add_parameter(f: cs.Function, expected_inputs: int) -> Tuple[cs.Function, cs.SX, str]:
+
+def _add_parameter(
+    f: cs.Function, expected_inputs: int
+) -> Tuple[cs.Function, cs.SX, str]:
     if f.n_in() == expected_inputs + 1:
         # Okay, we already have a parameter argument
         return f, f.sx_in(expected_inputs), f.name_in(expected_inputs)
@@ -203,17 +207,24 @@ def _add_parameter(f: cs.Function, expected_inputs: int) -> Tuple[cs.Function, c
         # We don't have a parameter argument
         param = cs.SX.sym("p", 0)
         fx = f(*(f.sx_in(i) for i in range(expected_inputs)))
-        return cs.Function(
-            f.name(),
-            [f.sx_in(i) for i in range(expected_inputs)] + [param],
-            [fx] if f.n_out() == 1 else fx,
-            [f.name_in(i) for i in range(expected_inputs)] + ["p"],
-            [f.name_out(i) for i in range(f.n_out())],
-        ), param, "p"
+        return (
+            cs.Function(
+                f.name(),
+                [f.sx_in(i) for i in range(expected_inputs)] + [param],
+                [fx] if f.n_out() == 1 else fx,
+                [f.name_in(i) for i in range(expected_inputs)] + ["p"],
+                [f.name_out(i) for i in range(f.n_out())],
+            ),
+            param,
+            "p",
+        )
     else:
-        raise RuntimeError(f"Incorrect number of inputs for {f.name()} "
-                           f"(expected {expected_inputs} inputs with optional "
-                           f"additional parameter)")
+        raise RuntimeError(
+            f"Incorrect number of inputs for {f.name()} "
+            f"(expected {expected_inputs} inputs with optional "
+            f"additional parameter)"
+        )
+
 
 def generate_casadi_control_problem(
     f: cs.Function,
@@ -239,7 +250,7 @@ def generate_casadi_control_problem(
 
     assert f.n_in() in [2, 3]
     assert f.n_out() == 1
-    f, p_var, p_name = _add_parameter(f, 2) # x, u
+    f, p_var, p_name = _add_parameter(f, 2)  # x, u
     assert f.size2_in(0) == 1
     nx = f.size1_in(0)
     assert f.size2_in(1) == 1
@@ -255,34 +266,40 @@ def generate_casadi_control_problem(
     v_var = cs.SX.sym("v", nx)
 
     # dynamics and their derivatives
-    cg.add(cs.Function(
-        "f",
-        [x_var, u_var, p_var],
-        [f(x_var, u_var, p_var)],
-        [f.name_in(i) for i in range(3)],
-        [f.name_out(0)],
-    ))
-    cg.add(cs.Function(
-        "jacobian_f",
-        [x_var, u_var, p_var],
-        [cs.densify(cs.jacobian(f(x_var, u_var, p_var), xu_var))],
-        [f.name_in(i) for i in range(3)],
-        ["jac_" + f.name_out(0)],
-    ))
-    cg.add(cs.Function(
-        "grad_f_prod",
-        [x_var, u_var, p_var, v_var],
-        [cs.jtimes(f(x_var, u_var, p_var), xu_var, v_var, True)],
-        [f.name_in(i) for i in range(3)] + ["v"],
-        ["grad_" + f.name_out(0) + "_prod"],
-    ))
+    cg.add(
+        cs.Function(
+            "f",
+            [x_var, u_var, p_var],
+            [f(x_var, u_var, p_var)],
+            [f.name_in(i) for i in range(3)],
+            [f.name_out(0)],
+        )
+    )
+    cg.add(
+        cs.Function(
+            "jacobian_f",
+            [x_var, u_var, p_var],
+            [cs.densify(cs.jacobian(f(x_var, u_var, p_var), xu_var))],
+            [f.name_in(i) for i in range(3)],
+            ["jac_" + f.name_out(0)],
+        )
+    )
+    cg.add(
+        cs.Function(
+            "grad_f_prod",
+            [x_var, u_var, p_var, v_var],
+            [cs.jtimes(f(x_var, u_var, p_var), xu_var, v_var, True)],
+            [f.name_in(i) for i in range(3)] + ["v"],
+            ["grad_" + f.name_out(0) + "_prod"],
+        )
+    )
 
     # output mapping
     if h is None:
         h = cs.Function("h", [x_var, u_var, p_var], [xu_var])
     else:
         assert h.n_in() in [2, 3]
-        h, _, _ = _add_parameter(h, 2) # x, u
+        h, _, _ = _add_parameter(h, 2)  # x, u
     assert h.size1_in(0) == nx
     assert h.size2_in(0) == 1
     assert h.size1_in(1) == nu
@@ -292,20 +309,22 @@ def generate_casadi_control_problem(
     nh = h.size1_out(0)
     assert h.size2_out(0) == 1
 
-    cg.add(cs.Function(
-        "h",
-        [x_var, u_var, p_var],
-        [h(x_var, u_var, p_var)],
-        [h.name_in(i) for i in range(3)],
-        [h.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "h",
+            [x_var, u_var, p_var],
+            [h(x_var, u_var, p_var)],
+            [h.name_in(i) for i in range(3)],
+            [h.name_out(0)],
+        )
+    )
 
     # terminal output mapping
     if h_N is None:
         h_N = cs.Function("h_N", [x_var, p_var], [x_var])
     else:
         assert h_N.n_in() in [1, 2]
-        h_N, _, _ = _add_parameter(h_N, 1) # x
+        h_N, _, _ = _add_parameter(h_N, 1)  # x
     assert h_N.size1_in(0) == nx
     assert h_N.size2_in(0) == 1
     assert h_N.size1_in(1) == p
@@ -313,16 +332,18 @@ def generate_casadi_control_problem(
     nh_N = h_N.size1_out(0)
     assert h_N.size2_out(0) == 1
 
-    cg.add(cs.Function(
-        "h_N",
-        [x_var, p_var],
-        [h_N(x_var, p_var)],
-        [h_N.name_in(i) for i in range(2)],
-        [h_N.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "h_N",
+            [x_var, p_var],
+            [h_N(x_var, p_var)],
+            [h_N.name_in(i) for i in range(2)],
+            [h_N.name_out(0)],
+        )
+    )
 
     # cost
-    assert l.n_in() in [1, 2] # h
+    assert l.n_in() in [1, 2]  # h
     l, _, _ = _add_parameter(l, 1)
     assert l.size1_in(0) == nh
     assert l.size2_in(0) == 1
@@ -334,21 +355,32 @@ def generate_casadi_control_problem(
 
     h_var = cs.SX.sym("h", *l.sx_in(0).shape)
 
-    cg.add(cs.Function(
-        "l",
-        [h_var, p_var],
-        [l(h_var, p_var)],
-        [l.name_in(i) for i in range(2)],
-        [l.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "l",
+            [h_var, p_var],
+            [l(h_var, p_var)],
+            [l.name_in(i) for i in range(2)],
+            [l.name_out(0)],
+        )
+    )
 
-    cg.add(cs.Function(
-        "qr",
-        [xu_var, h_var, p_var],
-        [cs.jtimes(h(x_var, u_var, p_var), xu_var, cs.gradient(l(h_var, p_var), h_var), True)],
-        ["xu", "h", "p"], # TODO
-        ["qr"], # TODO
-    ))
+    cg.add(
+        cs.Function(
+            "qr",
+            [xu_var, h_var, p_var],
+            [
+                cs.jtimes(
+                    h(x_var, u_var, p_var),
+                    xu_var,
+                    cs.gradient(l(h_var, p_var), h_var),
+                    True,
+                )
+            ],
+            ["xu", "h", "p"],  # TODO
+            ["qr"],  # TODO
+        )
+    )
 
     # (JhᵀΛ)ᵀ = ΛJh
     # JhᵀΛ = cs.jtimes(h(x_var, u_var, p_var), x_var, cs.hessian(l(h_var, p_var), h_var)[0], True)
@@ -356,41 +388,47 @@ def generate_casadi_control_problem(
     Jhx = cs.jacobian(h(x_var, u_var, p_var), x_var)
     Λ = cs.hessian(l(h_var, p_var), h_var)[0]
     Q = Jhx.T @ Λ @ Jhx
-    cg.add(cs.Function(
-        "Q",
-        [xu_var, h_var, p_var],
-        [Q],
-        ["xu", "h", "p"], # TODO
-        ["Q"], # TODO
-    ))
+    cg.add(
+        cs.Function(
+            "Q",
+            [xu_var, h_var, p_var],
+            [Q],
+            ["xu", "h", "p"],  # TODO
+            ["Q"],  # TODO
+        )
+    )
 
     # (JhᵀΛ)ᵀ = ΛJh
     # JhᵀΛ = cs.jtimes(h(x_var, u_var, p_var), u_var, cs.hessian(l(h_var, p_var), h_var)[0], True)
     # JhᵀΛJh = cs.jtimes(h(x_var, u_var, p_var), u_var, cs.transpose(JhTΛ), True)
     Jhu = cs.jacobian(h(x_var, u_var, p_var), u_var)
     R = Jhu.T @ Λ @ Jhu
-    cg.add(cs.Function(
-        "R",
-        [xu_var, h_var, p_var],
-        [R],
-        ["xu", "h", "p"], # TODO
-        ["R"], # TODO
-    ))
+    cg.add(
+        cs.Function(
+            "R",
+            [xu_var, h_var, p_var],
+            [R],
+            ["xu", "h", "p"],  # TODO
+            ["R"],  # TODO
+        )
+    )
 
     # (JhᵀΛ)ᵀ = ΛJh
     # JhᵀΛ = cs.jtimes(h(x_var, u_var, p_var), x_var, cs.hessian(l(h_var, p_var), h_var)[0], True)
     # JhᵀΛJh = cs.jtimes(h(x_var, u_var, p_var), u_var, cs.transpose(JhTΛ), True)
     S = Jhu.T @ Λ @ Jhx
-    cg.add(cs.Function(
-        "S",
-        [xu_var, h_var, p_var],
-        [S],
-        ["xu", "h", "p"], # TODO
-        ["S"], # TODO
-    ))
+    cg.add(
+        cs.Function(
+            "S",
+            [xu_var, h_var, p_var],
+            [S],
+            ["xu", "h", "p"],  # TODO
+            ["S"],  # TODO
+        )
+    )
 
     # terminal cost
-    assert l_N.n_in() in [1, 2] # h
+    assert l_N.n_in() in [1, 2]  # h
     l_N, _, _ = _add_parameter(l_N, 1)
     assert l_N.size1_in(0) == nh_N
     assert l_N.size2_in(0) == 1
@@ -402,21 +440,32 @@ def generate_casadi_control_problem(
 
     hN_var = cs.SX.sym("hN", *l_N.sx_in(0).shape)
 
-    cg.add(cs.Function(
-        "l_N",
-        [hN_var, p_var],
-        [l_N(hN_var, p_var)],
-        [l_N.name_in(i) for i in range(2)],
-        [l_N.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "l_N",
+            [hN_var, p_var],
+            [l_N(hN_var, p_var)],
+            [l_N.name_in(i) for i in range(2)],
+            [l_N.name_out(0)],
+        )
+    )
 
-    cg.add(cs.Function(
-        "q_N",
-        [x_var, hN_var, p_var],
-        [cs.jtimes(h_N(x_var, p_var), x_var, cs.gradient(l_N(hN_var, p_var), hN_var), True)],
-        ["x", "h", "p"], # TODO
-        ["q_N"], # TODO
-    ))
+    cg.add(
+        cs.Function(
+            "q_N",
+            [x_var, hN_var, p_var],
+            [
+                cs.jtimes(
+                    h_N(x_var, p_var),
+                    x_var,
+                    cs.gradient(l_N(hN_var, p_var), hN_var),
+                    True,
+                )
+            ],
+            ["x", "h", "p"],  # TODO
+            ["q_N"],  # TODO
+        )
+    )
 
     # (JhᵀΛ)ᵀ = ΛJh
     # JhᵀΛ = cs.jtimes(h_N(x_var, p_var), x_var, cs.hessian(l_N(hN_var, p_var), hN_var)[0], True)
@@ -424,13 +473,15 @@ def generate_casadi_control_problem(
     JhN = cs.jacobian(h_N(x_var, p_var), x_var)
     ΛN = cs.hessian(l_N(hN_var, p_var), hN_var)[0]
     Q_N = JhN.T @ ΛN @ JhN
-    cg.add(cs.Function(
-        "Q_N",
-        [x_var, hN_var, p_var],
-        [Q_N],
-        ["x", "h", "p"], # TODO
-        ["Q_N"], # TODO
-    ))
+    cg.add(
+        cs.Function(
+            "Q_N",
+            [x_var, hN_var, p_var],
+            [Q_N],
+            ["x", "h", "p"],  # TODO
+            ["Q_N"],  # TODO
+        )
+    )
 
     # constraints
     if c is None:
@@ -448,21 +499,31 @@ def generate_casadi_control_problem(
 
     w_var = cs.SX.sym("w", nc)
 
-    cg.add(cs.Function(
-        "c",
-        [x_var, p_var],
-        [c(x_var, p_var)],
-        [c.name_in(i) for i in range(2)],
-        [c.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "c",
+            [x_var, p_var],
+            [c(x_var, p_var)],
+            [c.name_in(i) for i in range(2)],
+            [c.name_out(0)],
+        )
+    )
 
-    cg.add(cs.Function(
-        "grad_c_prod",
-        [x_var, p_var, w_var],
-        [cs.jtimes(c(x_var, p_var), x_var, w_var, True) if nc > 0 else cs.DM.zeros(nx)],
-        [c.name_in(i) for i in range(2)] + ["w"],
-        ["grad_" + c.name_out(0) + "_prod"],
-    ))
+    cg.add(
+        cs.Function(
+            "grad_c_prod",
+            [x_var, p_var, w_var],
+            [
+                (
+                    cs.jtimes(c(x_var, p_var), x_var, w_var, True)
+                    if nc > 0
+                    else cs.DM.zeros(nx)
+                )
+            ],
+            [c.name_in(i) for i in range(2)] + ["w"],
+            ["grad_" + c.name_out(0) + "_prod"],
+        )
+    )
 
     m_var = cs.SX.sym("m", nc)
     # (JhᵀM)ᵀ = MJh
@@ -470,13 +531,15 @@ def generate_casadi_control_problem(
     # JhᵀMJh = cs.jtimes(c(x_var, p_var), x_var, cs.transpose(JhᵀM), True)
     Jc = cs.jacobian(c(x_var, p_var), x_var)
     JhᵀMJh = Jc.T @ cs.diag(m_var) @ Jc
-    cg.add(cs.Function(
-        "gn_hess_c",
-        [x_var, p_var, m_var],
-        [JhᵀMJh],
-        [c.name_in(i) for i in range(2)] + ["m"],
-        ["gn_hess_" + c.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "gn_hess_c",
+            [x_var, p_var, m_var],
+            [JhᵀMJh],
+            [c.name_in(i) for i in range(2)] + ["m"],
+            ["gn_hess_" + c.name_out(0)],
+        )
+    )
 
     # constraints
     if c_N is None:
@@ -494,34 +557,47 @@ def generate_casadi_control_problem(
 
     wN_var = cs.SX.sym("wN", nc_N)
 
-    cg.add(cs.Function(
-        "c_N",
-        [x_var, p_var],
-        [c_N(x_var, p_var)],
-        [c_N.name_in(i) for i in range(2)],
-        [c_N.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "c_N",
+            [x_var, p_var],
+            [c_N(x_var, p_var)],
+            [c_N.name_in(i) for i in range(2)],
+            [c_N.name_out(0)],
+        )
+    )
 
-    cg.add(cs.Function(
-        "grad_c_prod_N",
-        [x_var, p_var, wN_var],
-        [cs.jtimes(c_N(x_var, p_var), x_var, wN_var, True) if nc_N > 0 else cs.DM.zeros(nx)],
-        [c_N.name_in(i) for i in range(2)] + ["w"],
-        ["grad_" + c_N.name_out(0) + "_prod"],
-    ))
+    cg.add(
+        cs.Function(
+            "grad_c_prod_N",
+            [x_var, p_var, wN_var],
+            [
+                (
+                    cs.jtimes(c_N(x_var, p_var), x_var, wN_var, True)
+                    if nc_N > 0
+                    else cs.DM.zeros(nx)
+                )
+            ],
+            [c_N.name_in(i) for i in range(2)] + ["w"],
+            ["grad_" + c_N.name_out(0) + "_prod"],
+        )
+    )
 
     mN_var = cs.SX.sym("mN", nc_N)
     JcN = cs.jacobian(c_N(x_var, p_var), x_var)
     JhᵀMJhN = JcN.T @ cs.diag(mN_var) @ JcN
-    cg.add(cs.Function(
-        "gn_hess_c_N",
-        [x_var, p_var, mN_var],
-        [JhᵀMJhN],
-        [c_N.name_in(i) for i in range(2)] + ["m"],
-        ["gn_hess_" + c_N.name_out(0)],
-    ))
+    cg.add(
+        cs.Function(
+            "gn_hess_c_N",
+            [x_var, p_var, mN_var],
+            [JhᵀMJhN],
+            [c_N.name_in(i) for i in range(2)] + ["m"],
+            ["gn_hess_" + c_N.name_out(0)],
+        )
+    )
 
     return cg
+
 
 def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split, name):
     """Write the CSV file with constant data for the problem."""
@@ -536,8 +612,8 @@ def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split, na
         opt = dict(delimiter=",", newline="\n")
         ravelrow = lambda x: np.reshape(x, (1, -1), order="A")
         writerow = lambda x: np.savetxt(f, ravelrow(x), **opt)
-        try_lb = lambda x: x.lowerbound if hasattr(x, "lowerbound") else x[0]
-        try_ub = lambda x: x.upperbound if hasattr(x, "upperbound") else x[1]
+        try_lb = lambda x: x.lower if hasattr(x, "lower") else x[0]
+        try_ub = lambda x: x.upper if hasattr(x, "upper") else x[1]
         writerow(try_lb(C))
         writerow(try_ub(C))
         writerow(try_lb(D))
@@ -546,6 +622,7 @@ def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split, na
         writerow(l1_reg)
         f.write(str(penalty_alm_split))
         f.write(name)
+
 
 def write_casadi_control_problem_data(
     sofile, U, D, D_N, x_init, param, penalty_alm_split=0, penalty_alm_split_N=None
@@ -564,8 +641,8 @@ def write_casadi_control_problem_data(
         opt = dict(delimiter=",", newline="\n")
         ravelrow = lambda x: np.reshape(x, (1, -1), order="A")
         writerow = lambda x: np.savetxt(f, ravelrow(x), **opt)
-        try_lb = lambda x: x.lowerbound if hasattr(x, "lowerbound") else x[0]
-        try_ub = lambda x: x.upperbound if hasattr(x, "upperbound") else x[1]
+        try_lb = lambda x: x.lower if hasattr(x, "lower") else x[0]
+        try_ub = lambda x: x.upper if hasattr(x, "upper") else x[1]
         writerow(try_lb(U))
         writerow(try_ub(U))
         writerow(try_lb(D))

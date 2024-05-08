@@ -29,8 +29,8 @@ problem = (
     .with_param(cs.vec(data))
 ).compile(second_order="psi_prod", sym=cs.SX.sym)
 # Optionally, add constraints on the parameters
-problem.C.lowerbound[1] = 3
-problem.C.upperbound[1] = 7
+problem.variable_bounds.lower[1] = 3
+problem.variable_bounds.upper[1] = 7
 
 # %% Generate some data
 

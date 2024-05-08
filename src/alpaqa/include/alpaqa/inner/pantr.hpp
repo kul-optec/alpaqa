@@ -69,7 +69,7 @@ struct PANTRParams {
     /// Minimum trust radius.
     real_t min_radius = 100 * std::numeric_limits<real_t>::epsilon();
 
-    /// Check the quadratic upperbound and update γ before computing the
+    /// Check the quadratic upper bound and update γ before computing the
     /// reduction of the TR step.
     bool compute_ratio_using_new_stepsize = false;
 

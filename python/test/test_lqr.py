@@ -54,10 +54,10 @@ def convert_to_multiple_shooting_alm(ocp: OCProblemData, y, μ, D, D_N):
 
     penalty = 0
     for i in range(N):
-        proj_D = lambda g: cs.fmax(D.lowerbound, cs.fmin(g, D.upperbound))
+        proj_D = lambda g: cs.fmax(D.lower, cs.fmin(g, D.upper))
         ζ = ocp.c(mpc_x[:, i]) + y[i * nx:i * nx + nx] / μ[i]
         penalty += 0.5 * μ[i] * cs.sum1((ζ - proj_D(ζ))**2)
-    proj_D_N = lambda g: cs.fmax(D_N.lowerbound, cs.fmin(g, D_N.upperbound))
+    proj_D_N = lambda g: cs.fmax(D_N.lower, cs.fmin(g, D_N.upper))
     ζ = ocp.c(mpc_x[:, N]) + y[N * nx:N * nx + nx] / μ[N]
     penalty += 0.5 * μ[N] * cs.sum1((ζ - proj_D_N(ζ))**2)
 
@@ -137,18 +137,18 @@ def test_lqr():
     assert la.norm(grad - cs_grad) < tol
 
     # Check cost and gradient with constraints
-    problem.U.lowerbound = rng.uniform(-2.5, 0, nu)
-    problem.U.upperbound = rng.uniform(0, +2.5, nu)
-    problem.D.lowerbound = rng.uniform(-1, -0.5, nx)
-    problem.D.upperbound = rng.uniform(+0.5, +1, nx)
-    problem.D_N.lowerbound = problem.D.lowerbound[::-1]
-    problem.D_N.upperbound = problem.D.upperbound[::-1]
+    problem.U.lower = rng.uniform(-2.5, 0, nu)
+    problem.U.upper = rng.uniform(0, +2.5, nu)
+    problem.D.lower = rng.uniform(-1, -0.5, nx)
+    problem.D.upper = rng.uniform(+0.5, +1, nx)
+    problem.D_N.lower = problem.D.lower[::-1]
+    problem.D_N.upper = problem.D.upper[::-1]
 
     aug_eval = pa.OCPEvaluator(problem)
     aug_V, aug_grad = aug_eval.forward_backward(u, y, μ)
 
-    ss_D_lb = np.concatenate((np.tile(problem.D.lowerbound, N), problem.D_N.lowerbound))
-    ss_D_ub = np.concatenate((np.tile(problem.D.upperbound, N), problem.D_N.upperbound))
+    ss_D_lb = np.concatenate((np.tile(problem.D.lower, N), problem.D_N.lower))
+    ss_D_ub = np.concatenate((np.tile(problem.D.upper, N), problem.D_N.upper))
     ss_μ = μ.copy()
     proj_D = lambda g: cs.fmax(ss_D_lb, cs.fmin(g, ss_D_ub))
     ζ = ss_constr(cs_u, problem.x_init) + y / ss_μ
@@ -203,7 +203,7 @@ def test_lqr():
         Jhx = cs.substitute(cs.jacobian(h(x_sym, ui), x_sym), x_sym, xi)
         Jhu = cs.substitute(cs.jacobian(h(xi, u_sym), u_sym), u_sym, ui)
         Lhh = cs.substitute(cs.hessian(l(hsym), hsym)[0], hsym, h(xi, ui))
-        proj_D = lambda g: cs.fmax(problem.D.lowerbound, cs.fmin(g, problem.D.upperbound))
+        proj_D = lambda g: cs.fmax(problem.D.lower, cs.fmin(g, problem.D.upper))
         c_sym = cs.SX.sym("c", nx)
         ζ = c_sym + y[i * nx:i * nx + nx] / μi
         penalty = 0.5 * cs.sum1(μi * (ζ - proj_D(ζ))**2)
@@ -227,7 +227,7 @@ def test_lqr():
     xN = xu[N * nxu:N * nxu + nx]
     JhN = cs.substitute(cs.jacobian(hN(x_sym), x_sym), x_sym, xN)
     LNhh = cs.substitute(cs.hessian(lN(hNsym), hNsym)[0], hNsym, hN(xN))
-    proj_D_N = lambda g: cs.fmax(problem.D_N.lowerbound, cs.fmin(g, problem.D_N.upperbound))
+    proj_D_N = lambda g: cs.fmax(problem.D_N.lower, cs.fmin(g, problem.D_N.upper))
     c_sym = cs.SX.sym("c", nx) # TODO: terminal constraints
     ζ = c_sym + y[N * nx:N * nx + nx] / μN
     penalty = 0.5 * cs.sum1(μN * (ζ - proj_D_N(ζ))**2)
@@ -287,8 +287,8 @@ def test_lqr():
     for i in range(N):
         for j in range(nu):
             ui = u[i * nu + j]
-            lb_j = problem.U.lowerbound[j]
-            ub_j = problem.U.upperbound[j]
+            lb_j = problem.U.lower[j]
+            ub_j = problem.U.upper[j]
             gs = ui - γ * aug_grad[i * nu + j]
             if gs <= lb_j:
                 triplets += [(N * nx + nx + m, i * nxu + nx + j, 1.)]

@@ -78,10 +78,11 @@ USING_ALPAQA_CONFIG(CustomConfig);
 // minimize  ½ xᵀQx
 //  s.t.     Ax ≤ b
 struct Problem : alpaqa::BoxConstrProblem<config_t> {
-    alpaqa::mat<alpaqa::EigenConfigd> Q{n, n};
-    alpaqa::mat<alpaqa::EigenConfigd> A{m, n};
-    alpaqa::vec<alpaqa::EigenConfigd> b{m};
-    mutable alpaqa::vec<alpaqa::EigenConfigd> Qx{n}, Ax{m};
+    alpaqa::mat<alpaqa::EigenConfigd> Q{num_variables, num_variables};
+    alpaqa::mat<alpaqa::EigenConfigd> A{num_constraints, num_variables};
+    alpaqa::vec<alpaqa::EigenConfigd> b{num_constraints};
+    mutable alpaqa::vec<alpaqa::EigenConfigd> Qx{num_variables};
+    mutable alpaqa::vec<alpaqa::EigenConfigd> Ax{num_constraints};
 
     Problem() : alpaqa::BoxConstrProblem<config_t>{2, 1} {
         // Initialize problem matrices
@@ -90,10 +91,11 @@ struct Problem : alpaqa::BoxConstrProblem<config_t> {
         b << -1;
 
         // Specify the bounds
-        C.lowerbound = vec::Constant(n, -alpaqa::inf<config_t>);
-        C.upperbound = vec::Constant(n, +alpaqa::inf<config_t>);
-        D.lowerbound = vec::Constant(m, -alpaqa::inf<config_t>);
-        D.upperbound = crvec{b.data(), b.size()};
+        const auto inf        = alpaqa::inf<config_t>;
+        variable_bounds.lower = vec::Constant(num_variables, -inf);
+        variable_bounds.upper = vec::Constant(num_variables, +inf);
+        general_bounds.lower  = vec::Constant(num_constraints, -inf);
+        general_bounds.upper  = crvec{b.data(), b.size()};
     }
 
     // Evaluate the cost

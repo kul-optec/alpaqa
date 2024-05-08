@@ -13,8 +13,7 @@ struct Box {
 
     Box() : Box{0} {}
     Box(length_t n)
-        : lowerbound{vec::Constant(n, -inf<config_t>)},
-          upperbound{vec::Constant(n, +inf<config_t>)} {}
+        : lower{vec::Constant(n, -inf<config_t>)}, upper{vec::Constant(n, +inf<config_t>)} {}
 
     static Box NaN(length_t n) {
         return Box{vec::Constant(n, alpaqa::NaN<config_t>),
@@ -24,11 +23,11 @@ struct Box {
         return Box{std::move(lower), std::move(upper)};
     }
 
-    vec lowerbound;
-    vec upperbound;
+    vec lower;
+    vec upper;
 
   private:
-    Box(vec lower, vec upper) : lowerbound{std::move(lower)}, upperbound{std::move(upper)} {}
+    Box(vec lower, vec upper) : lower{std::move(lower)}, upper{std::move(upper)} {}
 };
 
 /// Project a vector onto a box.
@@ -37,7 +36,7 @@ template <Config Conf>
 inline auto project(const auto &v,       ///< [in] The vector to project
                     const Box<Conf> &box ///< [in] The box to project onto
 ) {
-    return v.cwiseMax(box.lowerbound).cwiseMin(box.upperbound);
+    return v.cwiseMax(box.lower).cwiseMin(box.upper);
 }
 
 /// Get the difference between the given vector and its projection.

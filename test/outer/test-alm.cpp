@@ -11,8 +11,8 @@ TEST(ALM, singleshooting1D) {
     using namespace alpaqa;
 
     Box<config_t> C{1};
-    C.lowerbound << -1;
-    C.upperbound << 1;
+    C.lower << -1;
+    C.upper << 1;
     Box<config_t> D{0};
 
     using Diag = Eigen::DiagonalMatrix<real_t, Eigen::Dynamic, Eigen::Dynamic>;
@@ -87,11 +87,11 @@ TEST(ALM, multipleshooting1D) {
     using namespace alpaqa;
 
     Box<config_t> C{2};
-    C.lowerbound << -1, -inf<config_t>;
-    C.upperbound << 1, inf<config_t>;
+    C.lower << -1, -inf<config_t>;
+    C.upper << 1, inf<config_t>;
     Box<config_t> D{1};
-    D.lowerbound << 0;
-    D.upperbound << 0;
+    D.lower << 0;
+    D.upper << 0;
 
     using Diag = Eigen::DiagonalMatrix<real_t, Eigen::Dynamic, Eigen::Dynamic>;
 
@@ -188,13 +188,13 @@ auto build_ms_problem() {
     length_t m = nx;
 
     Box<config_t> C{n};
-    C.lowerbound.topRows(nu).fill(-1);
-    C.lowerbound.bottomRows(nx).fill(-inf<config_t>);
-    C.upperbound.topRows(nu).fill(1);
-    C.upperbound.bottomRows(nx).fill(inf<config_t>);
+    C.lower.topRows(nu).fill(-1);
+    C.lower.bottomRows(nx).fill(-inf<config_t>);
+    C.upper.topRows(nu).fill(1);
+    C.upper.bottomRows(nx).fill(inf<config_t>);
     Box<config_t> D{m};
-    D.lowerbound.fill(0);
-    D.upperbound.fill(0);
+    D.lower.fill(0);
+    D.upper.fill(0);
 
 #include "matrices/test-alm.mat.ipp"
 

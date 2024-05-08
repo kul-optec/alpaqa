@@ -205,8 +205,8 @@ class DL_LOADER_EXPORT DLProblem : public BoxConstrProblem<DefaultConfig> {
     [[nodiscard]] bool provides_eval_augmented_lagrangian() const;
     [[nodiscard]] bool provides_eval_augmented_lagrangian_gradient() const;
     [[nodiscard]] bool provides_eval_augmented_lagrangian_and_gradient() const;
-    [[nodiscard]] bool provides_get_box_variables() const;
-    [[nodiscard]] bool provides_get_box_general_constraints() const;
+    [[nodiscard]] bool provides_get_variable_bounds() const;
+    [[nodiscard]] bool provides_get_general_bounds() const;
     [[nodiscard]] bool provides_eval_inactive_indices_res_lna() const;
     // clang-format on
 

@@ -36,7 +36,7 @@ auto LBFGSBSolver<Conf>::operator()(
 
     const auto n  = problem.get_num_variables();
     const auto m  = problem.get_num_constraints();
-    const auto &C = problem.get_box_variables();
+    const auto &C = problem.get_variable_bounds();
 
     vec work_n(n), work_m(m);
     vec x_solve = x;
@@ -83,7 +83,7 @@ auto LBFGSBSolver<Conf>::operator()(
     // Solve problem
     try {
         s.iterations = solver.minimize(eval_objective_and_gradient, x_solve,
-                                       s.final_ψ, C.lowerbound, C.upperbound);
+                                       s.final_ψ, C.lower, C.upper);
         s.status     = SolverStatus::Converged;
         if (static_cast<int>(s.iterations) == effective_params.max_iterations)
             s.status = SolverStatus::MaxIter;

@@ -303,12 +303,12 @@ void CasADiControlProblem<Conf>::load_numerical_data(
                                      " from data file \"" + filepath.string() +
                                      ':' + std::to_string(line) + '"');
     };
-    wrap_data_load("U.lowerbound", this->U.lowerbound);
-    wrap_data_load("U.upperbound", this->U.upperbound);
-    wrap_data_load("D.lowerbound", this->D.lowerbound);
-    wrap_data_load("D.upperbound", this->D.upperbound);
-    wrap_data_load("D_N.lowerbound", this->D_N.lowerbound);
-    wrap_data_load("D_N.upperbound", this->D_N.upperbound);
+    wrap_data_load("U.lower", this->U.lower);
+    wrap_data_load("U.upper", this->U.upper);
+    wrap_data_load("D.lower", this->D.lower);
+    wrap_data_load("D.upper", this->D.upper);
+    wrap_data_load("D_N.lower", this->D_N.lower);
+    wrap_data_load("D_N.upper", this->D_N.upper);
     wrap_data_load("x_init", this->x_init);
     wrap_data_load("param", this->param);
     // Penalty/ALM split is a single integer

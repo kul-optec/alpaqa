@@ -103,24 +103,24 @@ class CasADiControlProblem {
     void eval_add_gn_hess_constr_N(crvec x, crvec M, rmat out) const;
 
     void check() const {
-        util::check_dim_msg(U.lowerbound, nu,
-                            "Length of problem.U.lowerbound does not "
+        util::check_dim_msg(U.lower, nu,
+                            "Length of problem.U.lower does not "
                             "match problem size problem.nu");
-        util::check_dim_msg(U.upperbound, nu,
-                            "Length of problem.U.upperbound does not "
+        util::check_dim_msg(U.upper, nu,
+                            "Length of problem.U.upper does not "
                             "match problem size problem.nu");
-        util::check_dim_msg(D.lowerbound, nc,
-                            "Length of problem.D.lowerbound does not "
+        util::check_dim_msg(D.lower, nc,
+                            "Length of problem.D.lower does not "
                             "match problem size problem.nc");
-        util::check_dim_msg(D.upperbound, nc,
-                            "Length of problem.D.upperbound does not "
+        util::check_dim_msg(D.upper, nc,
+                            "Length of problem.D.upper does not "
                             "match problem size problem.nc");
-        util::check_dim_msg(D_N.lowerbound, nc_N,
-                            "Length of problem.D_N.lowerbound does "
-                            "not match problem size problem.nc_N");
-        util::check_dim_msg(D_N.upperbound, nc_N,
-                            "Length of problem.D_N.upperbound does "
-                            "not match problem size problem.nc_N");
+        util::check_dim_msg(D_N.lower, nc_N,
+                            "Length of problem.D_N.lower does not "
+                            "match problem size problem.nc_N");
+        util::check_dim_msg(D_N.upper, nc_N,
+                            "Length of problem.D_N.upper does not "
+                            "match problem size problem.nc_N");
         if (penalty_alm_split < 0 || penalty_alm_split > nc)
             throw std::invalid_argument("Invalid penalty_alm_split");
         if (penalty_alm_split_N < 0 || penalty_alm_split > nc_N)
@@ -160,8 +160,8 @@ class CasADiControlProblem {
             auto &&yt       = y.segment(t * nc, nc);
             auto &&y_qpm    = yt.topRows(penalty_alm_split);
             auto &&y_alm    = yt.bottomRows(num_alm);
-            auto &&z_alm_lb = D.lowerbound.bottomRows(num_alm);
-            auto &&z_alm_ub = D.upperbound.bottomRows(num_alm);
+            auto &&z_alm_lb = D.lower.bottomRows(num_alm);
+            auto &&z_alm_ub = D.upper.bottomRows(num_alm);
             y_qpm.setZero();
             y_alm =
                 y_alm.binaryExpr(z_alm_lb, max_lb).binaryExpr(z_alm_ub, min_ub);
@@ -171,8 +171,8 @@ class CasADiControlProblem {
             auto num_alm    = nc_N - penalty_alm_split_N;
             auto &&y_qpm    = yt.topRows(penalty_alm_split_N);
             auto &&y_alm    = yt.bottomRows(num_alm);
-            auto &&z_alm_lb = D.lowerbound.bottomRows(num_alm);
-            auto &&z_alm_ub = D.upperbound.bottomRows(num_alm);
+            auto &&z_alm_lb = D.lower.bottomRows(num_alm);
+            auto &&z_alm_ub = D.upper.bottomRows(num_alm);
             y_qpm.setZero();
             y_alm =
                 y_alm.binaryExpr(z_alm_lb, max_lb).binaryExpr(z_alm_ub, min_ub);

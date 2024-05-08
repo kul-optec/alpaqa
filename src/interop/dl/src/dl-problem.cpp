@@ -181,23 +181,24 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
     functions   = r.functions;
     extra_funcs = std::shared_ptr<function_dict_t>{std::move(unique_extra)};
 
-    this->n = functions->n;
-    this->m = functions->m;
-    this->C = Box{this->n};
-    this->D = Box{this->m};
-    if (functions->initialize_box_C)
-        functions->initialize_box_C(instance.get(), this->C.lowerbound.data(),
-                                    this->C.upperbound.data());
-    if (functions->initialize_box_D)
-        functions->initialize_box_D(instance.get(), this->D.lowerbound.data(),
-                                    this->D.upperbound.data());
+    num_variables   = functions->num_variables;
+    num_constraints = functions->num_constraints;
+    variable_bounds = Box{num_variables};
+    general_bounds  = Box{num_constraints};
+    if (functions->initialize_variable_bounds)
+        functions->initialize_variable_bounds(instance.get(),
+                                              variable_bounds.lower.data(),
+                                              variable_bounds.upper.data());
+    if (functions->initialize_general_bounds)
+        functions->initialize_general_bounds(instance.get(),
+                                             general_bounds.lower.data(),
+                                             general_bounds.upper.data());
     if (functions->initialize_l1_reg) {
         length_t nλ = 0;
         functions->initialize_l1_reg(instance.get(), nullptr, &nλ);
         if (nλ > 0) {
-            this->l1_reg.resize(nλ);
-            functions->initialize_l1_reg(instance.get(), this->l1_reg.data(),
-                                         &nλ);
+            l1_reg.resize(nλ);
+            functions->initialize_l1_reg(instance.get(), l1_reg.data(), &nλ);
         }
     }
 }
@@ -270,16 +271,16 @@ auto DLProblem::get_constraints_jacobian_sparsity() const -> Sparsity { return c
 auto DLProblem::eval_lagrangian_hessian_product(crvec x, crvec y, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_lagrangian_hessian_product(instance.get(), x.data(), y.data(), scale, v.data(), Hv.data()); }
 auto DLProblem::eval_lagrangian_hessian(crvec x, crvec y, real_t scale, rvec H_values) const -> void { return functions->eval_lagrangian_hessian(instance.get(), x.data(), y.data(), scale, H_values.size() == 0 ? nullptr : H_values.data()); }
 auto DLProblem::get_lagrangian_hessian_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_lagrangian_hessian_sparsity(instance.get())); }
-auto DLProblem::eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_augmented_lagrangian_hessian_product(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), v.data(), Hv.data()); }
-auto DLProblem::eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const -> void { return functions->eval_augmented_lagrangian_hessian(instance.get(), x.data(), y.data(), Σ.data(), scale, D.lowerbound.data(), D.upperbound.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
+auto DLProblem::eval_augmented_lagrangian_hessian_product(crvec x, crvec y, crvec Σ, real_t scale, crvec v, rvec Hv) const -> void { return functions->eval_augmented_lagrangian_hessian_product(instance.get(), x.data(), y.data(), Σ.data(), scale, general_bounds.lower.data(), general_bounds.upper.data(), v.data(), Hv.data()); }
+auto DLProblem::eval_augmented_lagrangian_hessian(crvec x, crvec y, crvec Σ, real_t scale, rvec H_values) const -> void { return functions->eval_augmented_lagrangian_hessian(instance.get(), x.data(), y.data(), Σ.data(), scale, general_bounds.lower.data(), general_bounds.upper.data(), H_values.size() == 0 ? nullptr : H_values.data()); }
 auto DLProblem::get_augmented_lagrangian_hessian_sparsity() const -> Sparsity { return convert_sparsity<config_t>(functions->get_augmented_lagrangian_hessian_sparsity(instance.get())); }
 auto DLProblem::eval_objective_and_gradient(crvec x, rvec grad_fx) const -> real_t { return functions->eval_objective_and_gradient(instance.get(), x.data(), grad_fx.data()); }
 auto DLProblem::eval_objective_and_constraints(crvec x, rvec g) const -> real_t { return functions->eval_objective_and_constraints(instance.get(), x.data(), g.data()); }
 auto DLProblem::eval_objective_gradient_and_constraints_gradient_product(crvec x, crvec y, rvec grad_f, rvec grad_gxy) const -> void { return functions->eval_objective_gradient_and_constraints_gradient_product(instance.get(), x.data(), y.data(), grad_f.data(), grad_gxy.data()); }
 auto DLProblem::eval_lagrangian_gradient(crvec x, crvec y, rvec grad_L, rvec work_n) const -> void { return functions->eval_lagrangian_gradient(instance.get(), x.data(), y.data(), grad_L.data(), work_n.data()); }
-auto DLProblem::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const -> real_t { return functions->eval_augmented_lagrangian(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), ŷ.data()); }
-auto DLProblem::eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> void { return functions->eval_augmented_lagrangian_gradient(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
-auto DLProblem::eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> real_t { return functions->eval_augmented_lagrangian_and_gradient(instance.get(), x.data(), y.data(), Σ.data(), D.lowerbound.data(), D.upperbound.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
+auto DLProblem::eval_augmented_lagrangian(crvec x, crvec y, crvec Σ, rvec ŷ) const -> real_t { return functions->eval_augmented_lagrangian(instance.get(), x.data(), y.data(), Σ.data(), general_bounds.lower.data(), general_bounds.upper.data(), ŷ.data()); }
+auto DLProblem::eval_augmented_lagrangian_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> void { return functions->eval_augmented_lagrangian_gradient(instance.get(), x.data(), y.data(), Σ.data(), general_bounds.lower.data(), general_bounds.upper.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
+auto DLProblem::eval_augmented_lagrangian_and_gradient(crvec x, crvec y, crvec Σ, rvec grad_ψ, rvec work_n, rvec work_m) const -> real_t { return functions->eval_augmented_lagrangian_and_gradient(instance.get(), x.data(), y.data(), Σ.data(), general_bounds.lower.data(), general_bounds.upper.data(), grad_ψ.data(), work_n.data(), work_m.data()); }
 
 bool DLProblem::provides_eval_objective() const { return functions->eval_objective != nullptr; }
 bool DLProblem::provides_eval_objective_gradient() const { return functions->eval_objective_gradient != nullptr; }
@@ -301,8 +302,8 @@ bool DLProblem::provides_eval_lagrangian_gradient() const { return functions->ev
 bool DLProblem::provides_eval_augmented_lagrangian() const { return functions->eval_augmented_lagrangian != nullptr; }
 bool DLProblem::provides_eval_augmented_lagrangian_gradient() const { return functions->eval_augmented_lagrangian_gradient != nullptr; }
 bool DLProblem::provides_eval_augmented_lagrangian_and_gradient() const { return functions->eval_augmented_lagrangian_and_gradient != nullptr; }
-bool DLProblem::provides_get_box_variables() const { return functions->eval_proximal_gradient_step == nullptr && BoxConstrProblem::provides_get_box_variables(); }
-bool DLProblem::provides_get_box_general_constraints() const { return functions->eval_projecting_difference_constraints == nullptr; }
+bool DLProblem::provides_get_variable_bounds() const { return functions->eval_proximal_gradient_step == nullptr && BoxConstrProblem::provides_get_variable_bounds(); }
+bool DLProblem::provides_get_general_bounds() const { return functions->eval_projecting_difference_constraints == nullptr; }
 bool DLProblem::provides_eval_inactive_indices_res_lna() const { return functions->eval_proximal_gradient_step == nullptr || functions->eval_inactive_indices_res_lna != nullptr; }
 // clang-format on
 
@@ -357,9 +358,9 @@ DLControlProblem::DLControlProblem(const std::filesystem::path &so_filename,
 }
 
 // clang-format off
-auto DLControlProblem::get_U(Box &U) const -> void { return functions->get_U(instance.get(), U.lowerbound.data(), U.upperbound.data()); }
-auto DLControlProblem::get_D(Box &D) const -> void { return functions->get_D(instance.get(), D.lowerbound.data(), D.upperbound.data()); }
-auto DLControlProblem::get_D_N(Box &D) const -> void { return functions->get_D_N(instance.get(), D.lowerbound.data(), D.upperbound.data()); }
+auto DLControlProblem::get_U(Box &U) const -> void { return functions->get_U(instance.get(), U.lower.data(), U.upper.data()); }
+auto DLControlProblem::get_D(Box &D) const -> void { return functions->get_D(instance.get(), D.lower.data(), D.upper.data()); }
+auto DLControlProblem::get_D_N(Box &D) const -> void { return functions->get_D_N(instance.get(), D.lower.data(), D.upper.data()); }
 auto DLControlProblem::get_x_init(rvec x_init) const -> void { return functions->get_x_init(instance.get(), x_init.data()); }
 auto DLControlProblem::eval_f(index_t timestep, crvec x, crvec u, rvec fxu) const -> void { return functions->eval_f(instance.get(), timestep, x.data(), u.data(), fxu.data()); }
 auto DLControlProblem::eval_jac_f(index_t timestep, crvec x, crvec u, rmat J_fxu) const -> void { return functions->eval_jac_f(instance.get(), timestep, x.data(), u.data(), J_fxu.data()); }

@@ -210,10 +210,10 @@ typedef struct {
 ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
     /// Number of decision variables.
     /// @see @ref alpaqa::TypeErasedProblem::get_num_variables()
-    alpaqa_length_t n ALPAQA_DEFAULT(0);
+    alpaqa_length_t num_variables ALPAQA_DEFAULT(0);
     /// Number of constraints.
     /// @see @ref alpaqa::TypeErasedProblem::get_num_constraints()
-    alpaqa_length_t m ALPAQA_DEFAULT(0);
+    alpaqa_length_t num_constraints ALPAQA_DEFAULT(0);
     /// Name of the problem.
     /// @see @ref alpaqa::TypeErasedProblem::get_name()
     const char *name ALPAQA_DEFAULT(nullptr);
@@ -409,15 +409,16 @@ ALPAQA_BEGIN_STRUCT(alpaqa_problem_functions_t) {
         alpaqa_real_t *work_m) ALPAQA_DEFAULT(nullptr);
 
     /// Provide the initial values for the bounds of
-    /// @ref alpaqa::BoxConstrProblem::C, i.e. the constraints on the decision
-    /// variables.
-    void (*initialize_box_C)(
+    /// @ref alpaqa::BoxConstrProblem::variable_bounds, i.e. the box constraints
+    /// on the decision variables.
+    void (*initialize_variable_bounds)(
         void *instance,
         alpaqa_real_t *lb,
         alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);
     /// Provide the initial values for the bounds of
-    /// @ref alpaqa::BoxConstrProblem::D, i.e. the general constraints.
-    void (*initialize_box_D)(
+    /// @ref alpaqa::BoxConstrProblem::general_bounds, i.e. the general
+    /// constraints.
+    void (*initialize_general_bounds)(
         void *instance,
         alpaqa_real_t *lb,
         alpaqa_real_t *ub) ALPAQA_DEFAULT(nullptr);

@@ -111,7 +111,7 @@ cgc = plt.contour(X, Y, Zgc, [0], **line_opts)
 plt.setp(cgc, path_effects=fx)
 cgl = plt.contour(X, Y, Zgl, [0], **line_opts)
 plt.setp(cgl, path_effects=fx)
-xl = plt.contour(X, Y, -X, [-problem.C.lowerbound[0]], **line_opts)
+xl = plt.contour(X, Y, -X, [-problem.variable_bounds.lower[0]], **line_opts)
 plt.setp(xl, path_effects=fx)
 
 plt.title("PANOC+ALM Rosenbrock example")

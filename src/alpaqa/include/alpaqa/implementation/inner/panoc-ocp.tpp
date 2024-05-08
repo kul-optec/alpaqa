@@ -188,8 +188,8 @@ auto PANOCOCPSolver<Conf>::operator()(
                                         rvec p) {
         using binary_real_f = real_t (*)(real_t, real_t);
         p                   = (-γ * grad_ψ)
-                .binaryExpr(U.lowerbound - x, binary_real_f(std::fmax))
-                .binaryExpr(U.upperbound - x, binary_real_f(std::fmin));
+                .binaryExpr(U.lower - x, binary_real_f(std::fmax))
+                .binaryExpr(U.upper - x, binary_real_f(std::fmin));
         x̂ = x + p;
     };
 
@@ -589,13 +589,13 @@ auto PANOCOCPSolver<Conf>::operator()(
                 // Gradient descent step.
                 real_t gs = ui - curr->γ * curr->grad_ψ(t * nu + i);
                 // Check whether the box constraints are active for this index.
-                bool active_lb = gs <= U.lowerbound(i);
-                bool active_ub = gs >= U.upperbound(i);
+                bool active_lb = gs <= U.lower(i);
+                bool active_ub = gs >= U.upper(i);
                 if (active_ub) {
-                    q(nu * t + i) = U.upperbound(i) - ui;
+                    q(nu * t + i) = U.upper(i) - ui;
                     return false;
                 } else if (active_lb) {
-                    q(nu * t + i) = U.lowerbound(i) - ui;
+                    q(nu * t + i) = U.lower(i) - ui;
                     return false;
                 } else { // Store inactive indices
                     return true;
@@ -633,8 +633,8 @@ auto PANOCOCPSolver<Conf>::operator()(
                 // Gradient descent step.
                 real_t gs = ui - curr->γ * grad_i;
                 // Check whether the box constraints are active for this index.
-                bool active_lb = gs <= U.lowerbound(i);
-                bool active_ub = gs >= U.upperbound(i);
+                bool active_lb = gs <= U.lower(i);
+                bool active_ub = gs >= U.upper(i);
                 if (active_ub || active_lb) {
                     q(t * nu + i) = curr->p(t * nu + i);
                     return false;

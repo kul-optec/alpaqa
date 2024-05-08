@@ -346,13 +346,13 @@ struct OCPEvaluator {
             auto ζ  = ck + μk.asDiagonal().inverse() * yk;
             if (k < N) {
                 for (index_t i = 0; i < nc; ++i)
-                    work_ck(i) = μk(i) * (ζ(i) < D.lowerbound(i) ||
-                                          ζ(i) > D.upperbound(i));
+                    work_ck(i) = μk(i) * (ζ(i) < D.lower(i) || //
+                                          ζ(i) > D.upper(i));
                 problem->eval_add_gn_hess_constr(k, xk, work_ck, out);
             } else {
                 for (index_t i = 0; i < nc_N; ++i)
-                    work_cN(i) = μk(i) * (ζ(i) < D_N.lowerbound(i) ||
-                                          ζ(i) > D_N.upperbound(i));
+                    work_cN(i) = μk(i) * (ζ(i) < D_N.lower(i) || //
+                                          ζ(i) > D_N.upper(i));
                 problem->eval_add_gn_hess_constr_N(xk, work_cN, out);
             }
         }

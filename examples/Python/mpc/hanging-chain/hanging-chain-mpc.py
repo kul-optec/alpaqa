@@ -136,8 +136,8 @@ class MPCController:
         self.tot_time = timedelta()
         self.max_time = timedelta()
         self.failures = 0
-        self.U = np.zeros(problem.n)
-        self.λ = np.zeros(problem.m)
+        self.U = np.zeros(problem.num_variables)
+        self.λ = np.zeros(problem.num_constraints)
 
     def __call__(self, y_n):
         y_n = np.array(y_n).ravel()

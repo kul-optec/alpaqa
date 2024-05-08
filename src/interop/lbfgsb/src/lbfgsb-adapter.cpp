@@ -41,7 +41,7 @@ auto LBFGSBSolver::operator()(
         max_time = std::min(max_time, *opts.max_time);
     Stats s;
 
-    if (!problem.provides_get_box_variables())
+    if (!problem.provides_get_variable_bounds())
         throw std::invalid_argument("LBFGSBSolver requires box constraints");
     if (params.stop_crit != PANOCStopCrit::ProjGradUnitNorm)
         throw std::invalid_argument("LBFGSBSolver only supports "
@@ -49,7 +49,7 @@ auto LBFGSBSolver::operator()(
 
     const auto n        = problem.get_num_variables();
     const auto m_constr = problem.get_num_constraints();
-    const auto &C       = problem.get_box_variables();
+    const auto &C       = problem.get_variable_bounds();
     const auto mem      = static_cast<length_t>(params.memory);
 
     auto do_progress_cb = [this, &s, &problem, &Σ, &y,
@@ -93,8 +93,8 @@ auto LBFGSBSolver::operator()(
     for (index_t i = 0; i < n; ++i) {
         static constexpr int nbd_legend[2][2] /* NOLINT(*c-arrays) */ {{0, 3},
                                                                        {1, 2}};
-        int lowerbounded = C.lowerbound(i) == -inf<config_t> ? 0 : 1;
-        int upperbounded = C.upperbound(i) == +inf<config_t> ? 0 : 1;
+        int lowerbounded = C.lower(i) == -inf<config_t> ? 0 : 1;
+        int upperbounded = C.upper(i) == +inf<config_t> ? 0 : 1;
         nbd(i)           = nbd_legend[lowerbounded][upperbounded];
     }
 
@@ -159,10 +159,10 @@ auto LBFGSBSolver::operator()(
     while (true) {
         // Invoke solver
         alpaqa_setulb_c(static_cast<int>(n), static_cast<int>(mem),
-                        x_solve.data(), C.lowerbound.data(),
-                        C.upperbound.data(), nbd.data(), ψ, grad_ψ.data(),
-                        factr, pgtol, wa.data(), iwa.data(), task.data(), print,
-                        csave.data(), lsave.data(), isave.data(), dsave.data());
+                        x_solve.data(), C.lower.data(), C.upper.data(),
+                        nbd.data(), ψ, grad_ψ.data(), factr, pgtol, wa.data(),
+                        iwa.data(), task.data(), print, csave.data(),
+                        lsave.data(), isave.data(), dsave.data());
 
         // New evaluation
         if (task_sv.starts_with("FG")) {

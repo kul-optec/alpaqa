@@ -14,12 +14,12 @@ guanaqo_tag_invoke(tag_t<alpaqa::prox>, Box<Conf> &self,
                    [[maybe_unused]] typename Conf::real_t γ) {
     assert(in.rows() == out.rows());
     assert(in.cols() == out.cols());
-    assert(in.size() == self.lowerbound.size());
-    assert(in.size() == self.upperbound.size());
-    assert(!(self.lowerbound.array() > self.upperbound.array()).any());
+    assert(in.size() == self.lower.size());
+    assert(in.size() == self.upper.size());
+    assert(!(self.lower.array() > self.upper.array()).any());
     out = in.reshaped()
-              .cwiseMax(self.lowerbound)
-              .cwiseMin(self.upperbound)
+              .cwiseMax(self.lower)
+              .cwiseMin(self.upper)
               .reshaped(in.rows(), in.cols());
     return 0;
 }
@@ -37,13 +37,13 @@ guanaqo_tag_invoke(tag_t<alpaqa::prox_step>, Box<Conf> &self,
     assert(in.cols() == out.cols());
     assert(in.rows() == fb_step.rows());
     assert(in.cols() == fb_step.cols());
-    assert(in.size() == self.lowerbound.size());
-    assert(in.size() == self.upperbound.size());
-    assert(!(self.lowerbound.array() > self.upperbound.array()).any());
+    assert(in.size() == self.lower.size());
+    assert(in.size() == self.upper.size());
+    assert(!(self.lower.array() > self.upper.array()).any());
     fb_step = (γ_fwd * fwd_step)
                   .reshaped()
-                  .cwiseMax(self.lowerbound - in.reshaped())
-                  .cwiseMin(self.upperbound - in.reshaped())
+                  .cwiseMax(self.lower - in.reshaped())
+                  .cwiseMin(self.upper - in.reshaped())
                   .reshaped(in.rows(), in.cols());
     out = in + fb_step;
     return 0;

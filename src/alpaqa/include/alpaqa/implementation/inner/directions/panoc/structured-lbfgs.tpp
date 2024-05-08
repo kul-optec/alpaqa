@@ -35,12 +35,12 @@ void StructuredLBFGSDirection<Conf>::initialize(
         !direction_params.hessian_vec_finite_differences &&
         direction_params.full_augmented_hessian &&
         !problem.provides_eval_augmented_lagrangian_hessian_product() &&
-        !(problem.provides_get_box_general_constraints() &&
+        !(problem.provides_get_general_bounds() &&
           problem.provides_eval_grad_gi()))
         throw std::invalid_argument(
             "Structured L-BFGS requires either "
             "eval_augmented_lagrangian_hessian_product() or "
-            "get_box_general_constraints() and eval_grad_gi(). Alternatively, "
+            "get_general_bounds() and eval_grad_gi(). Alternatively, "
             "set hessian_vec_factor = 0, hessian_vec_finite_differences = "
             "true, or full_augmented_hessian = false.");
     // Store references to problem and ALM variables
@@ -144,13 +144,12 @@ void StructuredLBFGSDirection<Conf>::approximate_hessian_vec_term(
                 // Hessian of the full augmented Lagrangian (if required)
                 if (direction_params.full_augmented_hessian) {
                     assert(m == 0 || problem->provides_eval_grad_gi());
-                    const auto &D = problem->get_box_general_constraints();
+                    const auto &D = problem->get_general_bounds();
                     auto &g       = work_m;
                     problem->eval_constraints(xₖ, g);
                     for (index_t i = 0; i < m; ++i) {
-                        real_t ζ = g(i) + (*y)(i) / (*Σ)(i);
-                        bool inactive =
-                            D.lowerbound(i) < ζ && ζ < D.upperbound(i);
+                        real_t ζ      = g(i) + (*y)(i) / (*Σ)(i);
+                        bool inactive = D.lower(i) < ζ && ζ < D.upper(i);
                         if (not inactive) {
                             problem->eval_grad_gi(xₖ, i, work_n);
                             auto t = (*Σ)(i)*work_n.dot(qₖ);
