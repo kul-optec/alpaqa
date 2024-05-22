@@ -3,42 +3,71 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"/../..
 
 set -ex
 
+# Activate virtual environment
+[ -d ".venv" ] || python3 -m venv .venv
+. ./.venv/bin/activate
+python_version="$(python --version | cut -d ' ' -f 2)"
+python_majmin="${python_version%.*}"
+
 # Select architecture
-triple="x86_64-centos7-linux-gnu"
+triple=x86_64-bionic-linux-gnu
 
 # Download compiler
-download_url="https://github.com/tttapa/cross-python/releases/download/1.0.0"
+gcc_version=14
 tools_dir="$PWD/toolchains"
-pfx="$tools_dir/$triple"
-mkdir -p "$tools_dir"
-if [ ! -d "$pfx" ]; then
-    wget "$download_url/full-$triple.tar.xz" -O- | \
-        tar xJ -C "$tools_dir"
-fi
+pfx="$tools_dir/x-tools/$triple"
+mkdir -p "$tools_dir/x-tools"
+[ -d "$pfx" ] || {
+    chmod u+w "$tools_dir/x-tools"
+    url=https://github.com/tttapa/toolchains/releases/latest/download
+    wget "$url/x-tools-$triple-gcc$gcc_version.tar.xz" -O- | tar xJ -C "$tools_dir"
+    chmod u+w "$pfx"
+    url=https://github.com/tttapa/python-dev/releases/latest/download
+    wget "$url/python-dev-$triple.tar.xz" -O- | tar xJ -C "$tools_dir"
+}
 
-# Install QPALM
-if [ ! -d "$pfx/qpalm" ]; then
-    qpalm_download="https://github.com/kul-optec/QPALM/releases/download/1.2.5"
-    wget "$qpalm_download/QPALM-1.2.5-Linux.tar.gz" -O- | \
-        tar xz -C "$pfx"
-    mv "$pfx/QPALM-1.2.5-Linux" "$pfx/qpalm"
-fi
+# Download dependencies
+pip install -U pip build conan
+# My own custom recipes for Ipopt, CasADi, patched OpenBLAS, patched Eigen
+[ -d "$tools_dir/thirdparty/conan-recipes" ] || {
+    git clone https://github.com/tttapa/conan-recipes "$tools_dir/thirdparty/conan-recipes"
+    conan remote add tttapa-conan-recipes "$tools_dir/thirdparty/conan-recipes" --force
+}
+# QPALM QP solver
+[ -d "$tools_dir/thirdparty/QPALM" ] || {
+    git clone https://github.com/kul-optec/QPALM --branch=1.2.3 "$tools_dir/thirdparty/QPALM"
+    conan export "$tools_dir/thirdparty/QPALM"
+}
 
-# Install guanaqo
-if [ ! -d "$pfx/guanaqo" ]; then
-    mkdir -p "$pfx/download"
-    git clone https://github.com/tttapa/guanaqo "$pfx/download/guanaqo"
-    cmake -B "$pfx/download/guanaqo/build" -S "$pfx/download/guanaqo" -G "Ninja Multi-Config" \
-        -D BUILD_TESTING=Off -D CMAKE_STAGING_PREFIX="$pfx/guanaqo/usr/local" \
-        -D CMAKE_POSITION_INDEPENDENT_CODE=On \
-        --toolchain "$pfx/$triple.toolchain.cmake"
-    for cfg in Debug RelWithDebInfo; do cmake --build "$pfx/download/guanaqo/build" -j --config $cfg; done
-    for cfg in Debug RelWithDebInfo; do cmake --install "$pfx/download/guanaqo/build" --config $cfg; done
-    for cfg in Debug RelWithDebInfo; do cmake --install "$pfx/download/guanaqo/build" --config $cfg --component debug; done
-fi
+# Create Conan profile
+profile="$PWD/profile.local.conan"
+cat <<- EOF > "$profile"
+include($pfx.python.profile.conan)
+[conf]
+tools.build.cross_building:can_run=true
+tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+tools.build:skip_test=true
+[buildenv]
+CFLAGS=-march=native -fdiagnostics-color
+CXXFLAGS=-march=native -fdiagnostics-color
+LDFLAGS+= -static-libgcc -static-libstdc++
+EOF
+
+# Build and install alpaqa dependencies
+export CTEST_OUTPUT_ON_FAILURE=1
+for cfg in Debug RelWithDebInfo; do
+    conan install . --build=missing \
+        -pr:h "$profile" \
+        -o with_ipopt=True -o with_external_casadi=True -o with_qpalm=True \
+        -o with_cutest=True -o "openblas/*:target=HASWELL" \
+        -s build_type=$cfg
+done
 
 # Configure
-cmake --preset dev-linux-cross-native
+cmake --preset conan-default -B build \
+    -D CMAKE_INSTALL_PREFIX="$PWD/staging" \
+    -D CMAKE_C_COMPILER_LAUNCHER="ccache" \
+    -D CMAKE_CXX_COMPILER_LAUNCHER="ccache"
 # Build
 for cfg in Debug RelWithDebInfo; do
     cmake --build build -j --config $cfg
@@ -51,27 +80,38 @@ cpack -G 'TGZ;DEB' -C "RelWithDebInfo;Debug"
 popd
 
 # Build Python package
+for cfg in Debug Release; do
+    conan install . --build=missing \
+        -pr:h "$profile" \
+        -o with_ipopt=True -o with_external_casadi=True -o with_qpalm=True \
+        -o with_cutest=True -o with_python=True -o "openblas/*:target=HASWELL" \
+        -s build_type=$cfg
+done
 config="$triple.py-build-cmake.config.toml"
 cat <<- EOF > "$config"
+toolchain_file = "build/generators/conan_toolchain.cmake"
 [cmake]
 config = ["Debug", "Release"]
 generator = "Ninja Multi-Config"
-preset = "dev-linux-cross-native-python"
+preset = "conan-default"
+[cmake.options]
+USE_GLOBAL_PYBIND11 = "On" # Provided by Conan, not by Pip
+CMAKE_C_COMPILER_LAUNCHER = "ccache"
+CMAKE_CXX_COMPILER_LAUNCHER = "ccache"
 EOF
-. ./.venv/bin/activate
-pip install -U pip build
+cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
 develop=false
 if $develop; then
     pip install -e ".[test]" -v \
-        --config-settings=--cross="$pfx/$triple.py-build-cmake.cross.toml" \
-        --config-settings=--local="$PWD/$config"
+        --config-settings=--cross="$cross_cfg" \
+        --config-settings=--cross="$PWD/$config"
 else
     python -m build -w "." -o staging \
-        -C--cross="$pfx/$triple.py-build-cmake.cross.toml" \
-        -C--local="$PWD/$config"
+        -C--cross="$cross_cfg" \
+        -C--cross="$PWD/$config"
     python -m build -w "python/alpaqa-debug" -o staging \
-        -C--cross="$pfx/$triple.py-build-cmake.cross.toml" \
-        -C--local="$PWD/$config"
+        -C--cross="$cross_cfg" \
+        -C--cross="$PWD/$config"
     pip install -f staging --force-reinstall --no-deps \
         "alpaqa==1.0.0a20" "alpaqa-debug==1.0.0a20"
     pip install -f staging \

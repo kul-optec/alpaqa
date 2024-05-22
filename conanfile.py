@@ -32,6 +32,7 @@ class AlpaqaRecipe(ConanFile):
         "with_qpalm": False,
         "with_json": True,
         "with_lbfgsb": False,
+        "with_ipopt": False,
         "with_ocp": False,
         "with_casadi_ocp": False,
         "with_openmp": False,
@@ -65,19 +66,23 @@ class AlpaqaRecipe(ConanFile):
     )
 
     def requirements(self):
-        self.requires("eigen/3.4.0", transitive_headers=True)
-        self.requires("guanaqo/1.0.0", transitive_headers=True)
+        self.requires("eigen/tttapa.20240516", transitive_headers=True, override=True)
+        self.requires("guanaqo/1.0.0-alpha.1", transitive_headers=True)
         self.test_requires("gtest/1.11.0")
         if self.options.with_external_casadi:
-            self.requires("casadi/3.6.5@alpaqa", transitive_headers=True)
+            self.requires("casadi/3.6.5", transitive_headers=True)
         if self.options.with_json:
             self.requires("nlohmann_json/3.11.2", transitive_headers=True)
+        if self.options.with_ipopt:
+            self.requires("ipopt/3.14.16", transitive_headers=True)
+        if self.options.with_qpalm:
+            self.requires("qpalm/1.2.3", transitive_headers=True)
         if self.options.with_python:
             self.requires("pybind11/2.13.6")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.4")
         if self.options.with_blas:
-            self.requires("openblas/0.3.24")
+            self.requires("openblas/0.3.27")
 
     def config_options(self):
         if self.settings.get_safe("os") == "Windows":
@@ -88,7 +93,9 @@ class AlpaqaRecipe(ConanFile):
             msg = "MATLAB MEX interface requires JSON. Set 'with_json=True'."
             raise ConanInvalidConfiguration(msg)
         if self.options.with_matlab and not self.options.with_external_casadi:
-            msg = "MATLAB MEX interface requires CasADi. Set 'with_external_casadi=True'."
+            msg = (
+                "MATLAB MEX interface requires CasADi. Set 'with_external_casadi=True'."
+            )
             raise ConanInvalidConfiguration(msg)
 
     def layout(self):
@@ -123,3 +130,4 @@ class AlpaqaRecipe(ConanFile):
     def package_info(self):
         self.cpp_info.set_property("cmake_find_mode", "none")
         self.cpp_info.builddirs.append(os.path.join("lib", "cmake", "alpaqa"))
+        self.runenv_info.prepend_path("PATH", os.path.join(self.package_folder, "bin"))

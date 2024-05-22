@@ -42,64 +42,6 @@
                 "CMAKE_C_COMPILER_LAUNCHER": "ccache",
                 "CMAKE_CXX_COMPILER_LAUNCHER": "ccache"
             }
-        },
-        {
-            "name": ".dev-linux-cross-native",
-            "description": "Configuration for cross-compiling using local x86_64-centos7-linux-gnu toolchain (with -march=native)",
-            "hidden": true,
-            "inherits": [
-                ".dev-linux"
-            ],
-            "environment": {
-                "CFLAGS": "-march=native -fdiagnostics-color",
-                "CXXFLAGS": "-march=native -fdiagnostics-color",
-                "FCFLAGS": "-march=native -fdiagnostics-color",
-                "LDFLAGS": "-static-libstdc++",
-                "CROSS_COMPILE": "x86_64-centos7-linux-gnu",
-                "TOOLCHAIN_PREFIX": "${sourceDir}/toolchains/$env{CROSS_COMPILE}"
-            },
-            "toolchainFile": "$env{TOOLCHAIN_PREFIX}/$env{CROSS_COMPILE}.toolchain.cmake",
-            "cacheVariables": {
-                "CMAKE_PREFIX_PATH": "$env{TOOLCHAIN_PREFIX}/mumps/usr/local;$env{TOOLCHAIN_PREFIX}/ipopt/usr/local",
-                "CMAKE_FIND_ROOT_PATH": "$env{TOOLCHAIN_PREFIX}/eigen-master;$env{TOOLCHAIN_PREFIX}/guanaqo;$env{TOOLCHAIN_PREFIX}/googletest;$env{TOOLCHAIN_PREFIX}/casadi;$env{TOOLCHAIN_PREFIX}/openblas;$env{TOOLCHAIN_PREFIX}/mumps;$env{TOOLCHAIN_PREFIX}/ipopt;$env{TOOLCHAIN_PREFIX}/qpalm;$env{TOOLCHAIN_PREFIX}/pybind11-2.13.6",
-                "ALPAQA_FORCE_TEST_DISCOVERY": true
-            }
-        },
-        {
-            "name": "dev-linux-cross-native",
-            "description": "Configuration for cross-compiling using local x86_64-centos7-linux-gnu toolchain (with -march=native)",
-            "inherits": [
-                ".dev-linux-cross-native"
-            ],
-            "cacheVariables": {
-                "ALPAQA_WITH_CUTEST": true,
-                "ALPAQA_WITH_QPALM": true,
-                "ALPAQA_WITH_IPOPT": true,
-                "ALPAQA_WITH_PYTHON": false
-            }
-        },
-        {
-            "name": "dev-linux-cross-native-python",
-            "description": "Configuration for cross-compiling Python bindings using local x86_64-centos7-linux-gnu toolchain (with -march=native)",
-            "inherits": [
-                ".dev-linux-cross-native"
-            ],
-            "binaryDir": "${sourceDir}/build/python",
-            "cacheVariables": {
-                "BUILD_SHARED_LIBS": false,
-                "ALPAQA_PYTHON_DEBUG_CONFIG": "Debug",
-                "USE_GLOBAL_PYBIND11": true,
-                "ALPAQA_WITH_PY_STUBS": true,
-                "ALPAQA_WITH_CUTEST": true,
-                "ALPAQA_WITH_LBFGSB": false,
-                "ALPAQA_WITH_EXTERNAL_CASADI": true,
-                "ALPAQA_WITH_OPENMP": true,
-                "ALPAQA_WITH_ACCURATE_BUILD_TIME": false,
-                "ALPAQA_WITH_DRIVERS": false,
-                "ALPAQA_WITH_GRADIENT_CHECKER": false,
-                "ALPAQA_WITH_EXAMPLES": false,
-                "ALPAQA_WITH_TESTS": false
-            }
         }
     ]
 }
