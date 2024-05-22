@@ -12,7 +12,7 @@ Imported Targets
 
 This module provides the following imported targets, if found:
 
-``COIN::Ipopt``
+``Ipopt::Ipopt``
   The COIN-OR Ipopt library
 
 Result Variables
@@ -83,18 +83,18 @@ if(Ipopt_FOUND)
     set(Ipopt_DEFINITIONS ${PC_Ipopt_CFLAGS_OTHER})
 endif()
 
-if(Ipopt_FOUND AND NOT TARGET COIN::Ipopt)
-    add_library(COIN::Ipopt UNKNOWN IMPORTED)
-    set_target_properties(COIN::Ipopt PROPERTIES
+if(Ipopt_FOUND AND NOT TARGET Ipopt::Ipopt)
+    add_library(Ipopt::Ipopt UNKNOWN IMPORTED)
+    set_target_properties(Ipopt::Ipopt PROPERTIES
         IMPORTED_LOCATION "${Ipopt_LIBRARY}"
         INTERFACE_INCLUDE_DIRECTORIES "${Ipopt_INCLUDE_DIR}"
     )
-    # target_link_options(COIN::Ipopt INTERFACE ${PC_Ipopt_LDFLAGS})
-    target_link_directories(COIN::Ipopt INTERFACE ${PC_Ipopt_LIBRARY_DIRS})
-    target_link_libraries(COIN::Ipopt INTERFACE ${PC_Ipopt_LIBRARIES})
+    # target_link_options(Ipopt::Ipopt INTERFACE ${PC_Ipopt_LDFLAGS})
+    target_link_directories(Ipopt::Ipopt INTERFACE ${PC_Ipopt_LIBRARY_DIRS})
+    target_link_libraries(Ipopt::Ipopt INTERFACE ${PC_Ipopt_LIBRARIES})
     find_package(Threads)
     if (TARGET Threads::Threads)
-        target_link_libraries(COIN::Ipopt INTERFACE Threads::Threads)
+        target_link_libraries(Ipopt::Ipopt INTERFACE Threads::Threads)
     endif()
 endif()
 

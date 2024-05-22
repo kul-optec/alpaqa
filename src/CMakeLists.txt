@@ -268,7 +268,7 @@ if (ALPAQA_WITH_IPOPT)
             "interop/ipopt/src/ipopt-json.cpp")
     endif()
     target_link_libraries(ipopt-adapter
-        PUBLIC COIN::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
+        PUBLIC Ipopt::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(ipopt-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/ipopt/include>
         $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
