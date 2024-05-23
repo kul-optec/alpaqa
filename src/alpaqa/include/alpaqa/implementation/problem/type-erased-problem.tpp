@@ -39,6 +39,11 @@ auto ProblemVTable<Conf>::default_eval_inactive_indices_res_lna(const void *, re
 }
 
 template <Config Conf>
+auto ProblemVTable<Conf>::default_eval_nonsmooth_objective(const void *, crvec, const ProblemVTable &) -> real_t {
+    throw not_implemented_error("eval_nonsmooth_objective");
+}
+
+template <Config Conf>
 void ProblemVTable<Conf>::default_eval_constraints_jacobian(const void *, crvec, rvec,
                                                             const ProblemVTable &vtable) {
     if (vtable.m != 0)

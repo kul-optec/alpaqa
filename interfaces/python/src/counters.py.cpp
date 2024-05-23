@@ -24,6 +24,7 @@ void register_counters(py::module_ &m) {
                     p.projection_multipliers,
                     p.proximal_gradient_step,
                     p.inactive_indices_res_lna,
+                    p.nonsmooth_objective,
                     p.objective,
                     p.objective_gradient,
                     p.objective_and_gradient,
@@ -45,7 +46,7 @@ void register_counters(py::module_ &m) {
                     ;
             },
             [](py::tuple t) { // __setstate__
-                if (t.size() != 21)
+                if (t.size() != 22)
                     throw std::runtime_error("Invalid state!");
                 using T = alpaqa::EvalCounter::EvalTimer;
                 return T{
@@ -54,23 +55,24 @@ void register_counters(py::module_ &m) {
                     .projection_multipliers = py::cast<decltype(T::projection_multipliers)>(t[1]),
                     .proximal_gradient_step = py::cast<decltype(T::proximal_gradient_step)>(t[2]),
                     .inactive_indices_res_lna = py::cast<decltype(T::inactive_indices_res_lna)>(t[3]),
-                    .objective = py::cast<decltype(T::objective)>(t[4]),
-                    .objective_gradient = py::cast<decltype(T::objective_gradient)>(t[5]),
-                    .objective_and_gradient = py::cast<decltype(T::objective_and_gradient)>(t[6]),
-                    .objective_and_constraints = py::cast<decltype(T::objective_and_constraints)>(t[7]),
-                    .objective_gradient_and_constraints_gradient_product = py::cast<decltype(T::objective_gradient_and_constraints_gradient_product)>(t[8]),
-                    .constraints = py::cast<decltype(T::constraints)>(t[9]),
-                    .constraints_gradient_product = py::cast<decltype(T::constraints_gradient_product)>(t[10]),
-                    .grad_gi = py::cast<decltype(T::grad_gi)>(t[11]),
-                    .constraints_jacobian = py::cast<decltype(T::constraints_jacobian)>(t[12]),
-                    .lagrangian_gradient = py::cast<decltype(T::lagrangian_gradient)>(t[13]),
-                    .lagrangian_hessian_product = py::cast<decltype(T::lagrangian_hessian_product)>(t[14]),
-                    .lagrangian_hessian = py::cast<decltype(T::lagrangian_hessian)>(t[15]),
-                    .augmented_lagrangian_hessian_product = py::cast<decltype(T::augmented_lagrangian_hessian_product)>(t[16]),
-                    .augmented_lagrangian_hessian = py::cast<decltype(T::augmented_lagrangian_hessian)>(t[17]),
-                    .augmented_lagrangian = py::cast<decltype(T::augmented_lagrangian)>(t[18]),
-                    .augmented_lagrangian_gradient = py::cast<decltype(T::augmented_lagrangian_gradient)>(t[19]),
-                    .augmented_lagrangian_and_gradient = py::cast<decltype(T::augmented_lagrangian_and_gradient)>(t[20]),
+                    .nonsmooth_objective = py::cast<decltype(T::nonsmooth_objective)>(t[4]),
+                    .objective = py::cast<decltype(T::objective)>(t[5]),
+                    .objective_gradient = py::cast<decltype(T::objective_gradient)>(t[6]),
+                    .objective_and_gradient = py::cast<decltype(T::objective_and_gradient)>(t[7]),
+                    .objective_and_constraints = py::cast<decltype(T::objective_and_constraints)>(t[8]),
+                    .objective_gradient_and_constraints_gradient_product = py::cast<decltype(T::objective_gradient_and_constraints_gradient_product)>(t[9]),
+                    .constraints = py::cast<decltype(T::constraints)>(t[10]),
+                    .constraints_gradient_product = py::cast<decltype(T::constraints_gradient_product)>(t[11]),
+                    .grad_gi = py::cast<decltype(T::grad_gi)>(t[12]),
+                    .constraints_jacobian = py::cast<decltype(T::constraints_jacobian)>(t[13]),
+                    .lagrangian_gradient = py::cast<decltype(T::lagrangian_gradient)>(t[14]),
+                    .lagrangian_hessian_product = py::cast<decltype(T::lagrangian_hessian_product)>(t[15]),
+                    .lagrangian_hessian = py::cast<decltype(T::lagrangian_hessian)>(t[16]),
+                    .augmented_lagrangian_hessian_product = py::cast<decltype(T::augmented_lagrangian_hessian_product)>(t[17]),
+                    .augmented_lagrangian_hessian = py::cast<decltype(T::augmented_lagrangian_hessian)>(t[18]),
+                    .augmented_lagrangian = py::cast<decltype(T::augmented_lagrangian)>(t[19]),
+                    .augmented_lagrangian_gradient = py::cast<decltype(T::augmented_lagrangian_gradient)>(t[20]),
+                    .augmented_lagrangian_and_gradient = py::cast<decltype(T::augmented_lagrangian_and_gradient)>(t[21]),
                     // clang-format on
                 };
             }))
@@ -108,6 +110,7 @@ void register_counters(py::module_ &m) {
                     p.proximal_gradient_step,
                     p.inactive_indices_res_lna,
                     p.objective,
+                    p.nonsmooth_objective,
                     p.objective_gradient,
                     p.objective_and_gradient,
                     p.objective_and_constraints,
@@ -128,7 +131,7 @@ void register_counters(py::module_ &m) {
                     p.time);
             },
             [](py::tuple t) { // __setstate__
-                if (t.size() != 22)
+                if (t.size() != 23)
                     throw std::runtime_error("Invalid state!");
                 using T = alpaqa::EvalCounter;
                 return T{
@@ -137,25 +140,26 @@ void register_counters(py::module_ &m) {
                     .projection_multipliers= py::cast<decltype(T::projection_multipliers)>(t[1]),
                     .proximal_gradient_step= py::cast<decltype(T::proximal_gradient_step)>(t[2]),
                     .inactive_indices_res_lna= py::cast<decltype(T::inactive_indices_res_lna)>(t[3]),
-                    .objective= py::cast<decltype(T::objective)>(t[4]),
-                    .objective_gradient= py::cast<decltype(T::objective_gradient)>(t[5]),
-                    .objective_and_gradient= py::cast<decltype(T::objective_and_gradient)>(t[6]),
-                    .objective_and_constraints= py::cast<decltype(T::objective_and_constraints)>(t[7]),
-                    .objective_gradient_and_constraints_gradient_product= py::cast<decltype(T::objective_gradient_and_constraints_gradient_product)>(t[8]),
-                    .constraints= py::cast<decltype(T::constraints)>(t[9]),
-                    .constraints_gradient_product= py::cast<decltype(T::constraints_gradient_product)>(t[10]),
-                    .grad_gi= py::cast<decltype(T::grad_gi)>(t[11]),
-                    .constraints_jacobian= py::cast<decltype(T::constraints_jacobian)>(t[12]),
-                    .lagrangian_gradient= py::cast<decltype(T::lagrangian_gradient)>(t[13]),
-                    .lagrangian_hessian_product= py::cast<decltype(T::lagrangian_hessian_product)>(t[14]),
-                    .lagrangian_hessian= py::cast<decltype(T::lagrangian_hessian)>(t[15]),
-                    .augmented_lagrangian_hessian_product= py::cast<decltype(T::augmented_lagrangian_hessian_product)>(t[16]),
-                    .augmented_lagrangian_hessian= py::cast<decltype(T::augmented_lagrangian_hessian)>(t[17]),
-                    .augmented_lagrangian= py::cast<decltype(T::augmented_lagrangian)>(t[18]),
-                    .augmented_lagrangian_gradient= py::cast<decltype(T::augmented_lagrangian_gradient)>(t[19]),
-                    .augmented_lagrangian_and_gradient= py::cast<decltype(T::augmented_lagrangian_and_gradient)>(t[20]),
+                    .nonsmooth_objective= py::cast<decltype(T::nonsmooth_objective)>(t[4]),
+                    .objective= py::cast<decltype(T::objective)>(t[5]),
+                    .objective_gradient= py::cast<decltype(T::objective_gradient)>(t[6]),
+                    .objective_and_gradient= py::cast<decltype(T::objective_and_gradient)>(t[7]),
+                    .objective_and_constraints= py::cast<decltype(T::objective_and_constraints)>(t[8]),
+                    .objective_gradient_and_constraints_gradient_product= py::cast<decltype(T::objective_gradient_and_constraints_gradient_product)>(t[9]),
+                    .constraints= py::cast<decltype(T::constraints)>(t[10]),
+                    .constraints_gradient_product= py::cast<decltype(T::constraints_gradient_product)>(t[11]),
+                    .grad_gi= py::cast<decltype(T::grad_gi)>(t[12]),
+                    .constraints_jacobian= py::cast<decltype(T::constraints_jacobian)>(t[13]),
+                    .lagrangian_gradient= py::cast<decltype(T::lagrangian_gradient)>(t[14]),
+                    .lagrangian_hessian_product= py::cast<decltype(T::lagrangian_hessian_product)>(t[15]),
+                    .lagrangian_hessian= py::cast<decltype(T::lagrangian_hessian)>(t[16]),
+                    .augmented_lagrangian_hessian_product= py::cast<decltype(T::augmented_lagrangian_hessian_product)>(t[17]),
+                    .augmented_lagrangian_hessian= py::cast<decltype(T::augmented_lagrangian_hessian)>(t[18]),
+                    .augmented_lagrangian= py::cast<decltype(T::augmented_lagrangian)>(t[19]),
+                    .augmented_lagrangian_gradient= py::cast<decltype(T::augmented_lagrangian_gradient)>(t[20]),
+                    .augmented_lagrangian_and_gradient= py::cast<decltype(T::augmented_lagrangian_and_gradient)>(t[21]),
                     // clang-format on
-                    .time = py::cast<decltype(T::time)>(t[21]),
+                    .time = py::cast<decltype(T::time)>(t[22]),
                 };
             }))
         // clang-format off
@@ -163,6 +167,7 @@ void register_counters(py::module_ &m) {
         .def_readwrite("projection_multipliers", &alpaqa::EvalCounter::projection_multipliers)
         .def_readwrite("proximal_gradient_step", &alpaqa::EvalCounter::proximal_gradient_step)
         .def_readwrite("inactive_indices_res_lna", &alpaqa::EvalCounter::inactive_indices_res_lna)
+        .def_readwrite("nonsmooth_objective", &alpaqa::EvalCounter::nonsmooth_objective)
         .def_readwrite("objective", &alpaqa::EvalCounter::objective)
         .def_readwrite("objective_gradient", &alpaqa::EvalCounter::objective_gradient)
         .def_readwrite("objective_and_gradient", &alpaqa::EvalCounter::objective_and_gradient)

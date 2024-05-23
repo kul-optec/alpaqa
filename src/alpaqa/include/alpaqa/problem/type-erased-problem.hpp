@@ -50,6 +50,8 @@ struct ProblemVTable : guanaqo::BasicVTable {
         eval_constraints_gradient_product;
     optional_function_t<index_t(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const>
         eval_inactive_indices_res_lna = default_eval_inactive_indices_res_lna;
+    optional_function_t<real_t(crvec x) const>
+        eval_nonsmooth_objective = default_eval_nonsmooth_objective;
 
     // Second order
     optional_function_t<void(crvec x, rvec J_values) const>
@@ -105,6 +107,8 @@ struct ProblemVTable : guanaqo::BasicVTable {
 
     ALPAQA_EXPORT_STATIC static real_t calc_ŷ_dᵀŷ(const void *self, rvec g_ŷ, crvec y, crvec Σ,
                                                   const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static real_t default_eval_nonsmooth_objective(const void *, crvec,
+                                                                        const ProblemVTable &);
     ALPAQA_EXPORT_STATIC static index_t
     default_eval_inactive_indices_res_lna(const void *, real_t, crvec, crvec, rindexvec,
                                           const ProblemVTable &);
@@ -183,6 +187,7 @@ struct ProblemVTable : guanaqo::BasicVTable {
         GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_constraints);
         GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_constraints_gradient_product);
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_inactive_indices_res_lna, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_nonsmooth_objective, p);
         // Second order
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_constraints_jacobian, p);
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, get_constraints_jacobian_sparsity, p);
@@ -368,6 +373,12 @@ class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Alloca
     /// \lt x_i - \gamma\nabla_{\!x_i}\psi(x) \lt \overline x_i}. @f]
     [[nodiscard]] index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,
                                                         rindexvec J) const;
+    /// **[Optional]**
+    /// Function that evaluates the non-smooth term of the cost @f$ h(x) @f$.
+    /// @param  [in] x
+    ///         Decision variable @f$ x \in \R^n @f$
+    /// @return @f$ h(x) @f$
+    [[nodiscard]] real_t eval_nonsmooth_objective(crvec x) const;
 
     /// @}
 
@@ -602,6 +613,11 @@ class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Alloca
         return vtable.eval_inactive_indices_res_lna != vtable.default_eval_inactive_indices_res_lna;
     }
     /// Returns true if the problem provides an implementation of
+    /// @ref eval_nonsmooth_objective.
+    [[nodiscard]] bool provides_eval_nonsmooth_objective() const {
+        return vtable.eval_nonsmooth_objective != vtable.default_eval_nonsmooth_objective;
+    }
+    /// Returns true if the problem provides an implementation of
     /// @ref eval_constraints_jacobian.
     [[nodiscard]] bool provides_eval_constraints_jacobian() const {
         return vtable.eval_constraints_jacobian != vtable.default_eval_constraints_jacobian;
@@ -797,6 +813,10 @@ auto TypeErasedProblem<Conf, Allocator>::eval_inactive_indices_res_lna(real_t γ
     return call(vtable.eval_inactive_indices_res_lna, γ, x, grad_ψ, J);
 }
 template <Config Conf, class Allocator>
+auto TypeErasedProblem<Conf, Allocator>::eval_nonsmooth_objective(crvec x) const -> real_t {
+    return call(vtable.eval_nonsmooth_objective, x);
+}
+template <Config Conf, class Allocator>
 auto TypeErasedProblem<Conf, Allocator>::eval_objective(crvec x) const -> real_t {
     return call(vtable.eval_objective, x);
 }
@@ -921,7 +941,8 @@ std::string TypeErasedProblem<Conf, Allocator>::get_name() const {
 template <Config Conf>
 void print_provided_functions(std::ostream &os, const TypeErasedProblem<Conf> &problem) {
     // clang-format off
-    os << "                            eval_inactive_indices_res_lna: " << problem.provides_eval_inactive_indices_res_lna() << '\n'
+    os << "                                 eval_nonsmooth_objective: " << problem.provides_eval_nonsmooth_objective() << '\n'
+       << "                            eval_inactive_indices_res_lna: " << problem.provides_eval_inactive_indices_res_lna() << '\n'
        << "                                             eval_grad_gi: " << problem.provides_eval_grad_gi() << '\n'
        << "                                eval_constraints_jacobian: " << problem.provides_eval_constraints_jacobian() << '\n'
        << "                          eval_lagrangian_hessian_product: " << problem.provides_eval_lagrangian_hessian_product() << '\n'

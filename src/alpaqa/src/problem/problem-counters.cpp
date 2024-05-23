@@ -33,11 +33,14 @@ std::ostream &operator<<(std::ostream &os, const CountResult &t) {
 #define ALPAQA_STRINGIFY_IMPL(a) #a
 #define ALPAQA_PRINT_EVAL(x)                                                   \
     do {                                                                       \
+        total.count += c.x;                                                    \
+        total.time += c.time.x;                                                \
         os << std::setw(53) << ALPAQA_STRINGIFY(x) ":"                         \
            << CountResult{c.x, c.time.x};                                      \
     } while (false)
 
 std::ostream &operator<<(std::ostream &os, const EvalCounter &c) {
+    CountResult total{{}, {}};
     ALPAQA_PRINT_EVAL(projecting_difference_constraints);
     ALPAQA_PRINT_EVAL(projection_multipliers);
     ALPAQA_PRINT_EVAL(proximal_gradient_step);
@@ -59,39 +62,8 @@ std::ostream &operator<<(std::ostream &os, const EvalCounter &c) {
     ALPAQA_PRINT_EVAL(augmented_lagrangian);
     ALPAQA_PRINT_EVAL(augmented_lagrangian_gradient);
     ALPAQA_PRINT_EVAL(augmented_lagrangian_and_gradient);
-    os << "+ --------------------------------------------------:\n" //
-       << std::setw(53) << "total:"                                 //
-       << CountResult{
-              c.projecting_difference_constraints + c.projection_multipliers +
-                  c.proximal_gradient_step + c.inactive_indices_res_lna +
-                  c.objective + c.objective_gradient +
-                  c.objective_and_gradient + c.objective_and_constraints +
-                  c.objective_gradient_and_constraints_gradient_product +
-                  c.constraints + c.constraints_gradient_product + c.grad_gi +
-                  c.constraints_jacobian + c.lagrangian_gradient +
-                  c.lagrangian_hessian_product + c.lagrangian_hessian +
-                  c.augmented_lagrangian_hessian_product +
-                  c.augmented_lagrangian_hessian + c.augmented_lagrangian +
-                  c.augmented_lagrangian_gradient +
-                  c.augmented_lagrangian_and_gradient,
-              c.time.projecting_difference_constraints +
-                  c.time.projection_multipliers +
-                  c.time.proximal_gradient_step +
-                  c.time.inactive_indices_res_lna + c.time.objective +
-                  c.time.objective_gradient + c.time.objective_and_gradient +
-                  c.time.objective_and_constraints +
-                  c.time.objective_gradient_and_constraints_gradient_product +
-                  c.time.constraints + c.time.constraints_gradient_product +
-                  c.time.grad_gi + c.time.constraints_jacobian +
-                  c.time.lagrangian_gradient +
-                  c.time.lagrangian_hessian_product +
-                  c.time.lagrangian_hessian +
-                  c.time.augmented_lagrangian_hessian_product +
-                  c.time.augmented_lagrangian_hessian +
-                  c.time.augmented_lagrangian +
-                  c.time.augmented_lagrangian_gradient +
-                  c.time.augmented_lagrangian_and_gradient,
-          };
+    os << "+ --------------------------------------------------:\n"
+       << std::setw(53) << "total:" << total;
     return os;
 }
 

@@ -12,6 +12,7 @@ struct EvalCounter {
     unsigned projection_multipliers{};
     unsigned proximal_gradient_step{};
     unsigned inactive_indices_res_lna{};
+    unsigned nonsmooth_objective{};
     unsigned objective{};
     unsigned objective_gradient{};
     unsigned objective_and_gradient{};
@@ -35,6 +36,7 @@ struct EvalCounter {
         std::chrono::nanoseconds projection_multipliers{};
         std::chrono::nanoseconds proximal_gradient_step{};
         std::chrono::nanoseconds inactive_indices_res_lna{};
+        std::chrono::nanoseconds nonsmooth_objective{};
         std::chrono::nanoseconds objective{};
         std::chrono::nanoseconds objective_gradient{};
         std::chrono::nanoseconds objective_and_gradient{};
@@ -65,6 +67,7 @@ inline EvalCounter::EvalTimer &operator+=(EvalCounter::EvalTimer &a,
     a.projection_multipliers += b.projection_multipliers;
     a.proximal_gradient_step += b.proximal_gradient_step;
     a.inactive_indices_res_lna += b.inactive_indices_res_lna;
+    a.nonsmooth_objective += b.nonsmooth_objective;
     a.objective += b.objective;
     a.objective_gradient += b.objective_gradient;
     a.objective_and_gradient += b.objective_and_gradient;
@@ -91,6 +94,7 @@ inline EvalCounter &operator+=(EvalCounter &a, const EvalCounter &b) {
     a.projection_multipliers += b.projection_multipliers;
     a.proximal_gradient_step += b.proximal_gradient_step;
     a.inactive_indices_res_lna += b.inactive_indices_res_lna;
+    a.nonsmooth_objective += b.nonsmooth_objective;
     a.objective += b.objective;
     a.objective_gradient += b.objective_gradient;
     a.objective_and_gradient += b.objective_and_gradient;

@@ -229,6 +229,17 @@ class BoxConstrProblem {
         return nJ;
     }
 
+    /// @see @ref TypeErasedProblem::eval_nonsmooth_objective
+    real_t eval_nonsmooth_objective(crvec x) const {
+        using vec_util::norm_1;
+        if (l1_reg.size() == 0)
+            return 0;
+        else if constexpr (requires { l1_reg(0); })
+            if (l1_reg.size() == 1)
+                return l1_reg(0) == 0 ? 0 : l1_reg(0) * norm_1(x);
+        return norm_1(x.cwiseProduct(l1_reg));
+    }
+
     /// @see @ref TypeErasedProblem::check
     void check() const {
         util::check_dim_msg(variable_bounds.lower, num_variables,
