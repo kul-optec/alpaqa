@@ -11,10 +11,10 @@
 struct Problem : alpaqa::BoxConstrProblem<alpaqa::DefaultConfig> {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 
-    mat Q{n, n};       ///< Hessian matrix
-    vec c{n};          ///< Gradient vextor
-    mat A{m, n};       ///< Constraint matrix
-    mutable vec Qx{n}; ///< Temporary work vector
+    mat Q{num_variables, num_variables};   ///< Hessian matrix
+    vec c{num_variables};                  ///< Gradient vextor
+    mat A{num_constraints, num_variables}; ///< Constraint matrix
+    mutable vec Qx{num_variables};         ///< Temporary work vector
 
     /// Constructor loads problem data from the given directory
     Problem(const std::filesystem::path &problem_dir);
