@@ -27,6 +27,19 @@ auto as_span(Eigen::DenseBase<Derived> &v) {
 /// Convert an Eigen vector view to a `std::span`.
 template <class Derived>
     requires(Derived::ColsAtCompileTime == 1)
+auto as_span(Eigen::DenseBase<Derived> &&v) {
+    using PlainObjectBase = Eigen::PlainObjectBase<std::decay_t<Derived>>;
+    static_assert(!std::is_base_of_v<PlainObjectBase, std::decay_t<Derived>>,
+                  "Refusing to return a span to a temporary Eigen vector with "
+                  "its own storage");
+    constexpr auto E = detail::to_std_extent<Derived::RowsAtCompileTime>;
+    using T          = std::remove_pointer_t<decltype(v.derived().data())>;
+    return std::span<T, E>{v.derived().data(), static_cast<size_t>(v.size())};
+}
+
+/// Convert an Eigen vector view to a `std::span`.
+template <class Derived>
+    requires(Derived::ColsAtCompileTime == 1)
 auto as_span(const Eigen::DenseBase<Derived> &v) {
     constexpr auto E = detail::to_std_extent<Derived::RowsAtCompileTime>;
     using T          = std::remove_pointer_t<decltype(v.derived().data())>;
