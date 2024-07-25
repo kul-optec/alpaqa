@@ -24,7 +24,26 @@ namespace casadi {
 /// Designed to match (part of) the `casadi::Function` API.
 class CASADI_LOADER_EXPORT Function {
   public:
+    struct Functions {
+        fname_incref::signature_t *incref             = nullptr;
+        fname_decref::signature_t *decref             = nullptr;
+        fname_n_in::signature_t *n_in                 = nullptr;
+        fname_n_out::signature_t *n_out               = nullptr;
+        fname_name_in::signature_t *name_in           = nullptr;
+        fname_name_out::signature_t *name_out         = nullptr;
+        fname_sparsity_in::signature_t *sparsity_in   = nullptr;
+        fname_sparsity_out::signature_t *sparsity_out = nullptr;
+        fname_alloc_mem::signature_t *alloc_mem       = nullptr;
+        fname_init_mem::signature_t *init_mem         = nullptr;
+        fname_free_mem::signature_t *free_mem         = nullptr;
+        fname_work::signature_t *work                 = nullptr;
+        fname::signature_t *call                      = nullptr;
+    };
+
+  public:
+    Function();
     Function(std::shared_ptr<void> so_handle, const std::string &func_name);
+    Function(const Functions &functions);
     Function(const Function &);
     Function(Function &&) noexcept;
     ~Function();
@@ -80,21 +99,7 @@ class CASADI_LOADER_EXPORT Function {
 
   private:
     std::shared_ptr<void> so_handle;
-    struct Functions {
-        fname_incref::signature_t *incref             = nullptr;
-        fname_decref::signature_t *decref             = nullptr;
-        fname_n_in::signature_t *n_in                 = nullptr;
-        fname_n_out::signature_t *n_out               = nullptr;
-        fname_name_in::signature_t *name_in           = nullptr;
-        fname_name_out::signature_t *name_out         = nullptr;
-        fname_sparsity_in::signature_t *sparsity_in   = nullptr;
-        fname_sparsity_out::signature_t *sparsity_out = nullptr;
-        fname_alloc_mem::signature_t *alloc_mem       = nullptr;
-        fname_init_mem::signature_t *init_mem         = nullptr;
-        fname_free_mem::signature_t *free_mem         = nullptr;
-        fname_work::signature_t *work                 = nullptr;
-        fname::signature_t *call                      = nullptr;
-    } functions;
+    Functions functions;
     struct Work {
         std::vector<const casadi_real *> arg;
         std::vector<casadi_real *> res;
@@ -102,7 +107,7 @@ class CASADI_LOADER_EXPORT Function {
         std::vector<casadi_real> w;
     };
     std::optional<Work> work;
-    void *mem = nullptr;
+    int mem = 0;
 };
 
 inline std::pair<casadi_int, casadi_int> Function::Sparsity::size() const {

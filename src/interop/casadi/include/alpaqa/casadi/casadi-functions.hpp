@@ -19,11 +19,11 @@ using fname_name_in      = ExternalFunction<"_name_in", const char *(casadi_int 
 using fname_name_out     = ExternalFunction<"_name_out", const char *(casadi_int ind)>;
 using fname_sparsity_in  = ExternalFunction<"_sparsity_in", const casadi_int *(casadi_int ind)>;
 using fname_sparsity_out = ExternalFunction<"_sparsity_out", const casadi_int *(casadi_int ind)>;
-using fname_alloc_mem    = ExternalFunction<"_alloc_mem", void *(void)>;
-using fname_init_mem     = ExternalFunction<"_init_mem", int(void *mem)>;
-using fname_free_mem     = ExternalFunction<"_free_mem", int(void *mem)>;
+using fname_alloc_mem    = ExternalFunction<"_alloc_mem", int(void)>;
+using fname_init_mem     = ExternalFunction<"_init_mem", int(int mem)>;
+using fname_free_mem     = ExternalFunction<"_free_mem", void(int mem)>;
 using fname_work         = ExternalFunction<"_work", int(casadi_int *sz_arg, casadi_int *sz_res, casadi_int *sz_iw, casadi_int *sz_w)>;
-using fname              = ExternalFunction<"", int(const casadi_real **arg, casadi_real **res, casadi_int *iw, casadi_real *w, void *mem)>;
+using fname              = ExternalFunction<"", int(const casadi_real **arg, casadi_real **res, casadi_int *iw, casadi_real *w, int mem)>;
 // clang-format on
 
 template <Name Nm, class Sgn>

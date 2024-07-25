@@ -42,10 +42,16 @@ void Function::init_work() {
     w.w.resize(static_cast<size_t>(sz_w));
 }
 
+Function::Function() = default;
 Function::Function(std::shared_ptr<void> so_handle,
                    const std::string &func_name)
     : so_handle{std::move(so_handle)} {
     load(this->so_handle.get(), func_name);
+}
+static char no_handle;
+Function::Function(const Functions &functions)
+    : so_handle{&no_handle, [](void *) {}}, functions{functions} {
+    functions.incref();
 }
 Function::Function(const Function &o)
     : so_handle{o.so_handle}, functions{o.functions} {
@@ -53,10 +59,10 @@ Function::Function(const Function &o)
 }
 Function::Function(Function &&o) noexcept
     : so_handle{std::move(o.so_handle)}, functions{o.functions},
-      work{std::move(o.work)}, mem{std::exchange(o.mem, nullptr)} {}
+      work{std::move(o.work)}, mem{std::exchange(o.mem, 0)} {}
 Function::~Function() {
     if (so_handle) {
-        if (mem)
+        if (work)
             functions.free_mem(mem);
         functions.decref();
     }
