@@ -50,7 +50,7 @@ std::optional<T> try_load(Loader &&loader, const char *name, Args &&...args) {
     } catch (casadi::CasadiException &) {
         return std::nullopt;
 #else
-    } catch (dynamic_load_error &e) {
+    } catch (dynamic_load_error &) {
         return std::nullopt;
 #endif
     } catch (std::out_of_range &) {
