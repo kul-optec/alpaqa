@@ -101,6 +101,7 @@ void register_classes_for(py::module_ &m) {
     register_ocp<Conf>(m);
     register_alm<Conf>(m);
     register_prox<Conf>(m);
+    register_python_inner_solver<Conf>(m);
 }
 
 PYBIND11_MODULE(MODULE_NAME, m) {

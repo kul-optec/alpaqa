@@ -30,6 +30,7 @@ pybind11_add_module(_alpaqa MODULE
     "src/inner/pantr-directions.py.cpp"
     "src/inner/panoc-directions.py.cpp"
     "src/inner/inner-solver.py.cpp"
+    "src/inner/python-inner-solver.py.cpp"
     "src/problem/problems.py.cpp"
     "src/proximal/prox.py.cpp"
     # NO_EXTRAS # Prevent pybind11 from stripping the binary

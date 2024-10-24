@@ -3,6 +3,7 @@
 #include <alpaqa/inner/inner-solve-options.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 #include <optional>
+#include <type_traits>
 
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
@@ -37,8 +38,12 @@ struct InnerSolverVTable : guanaqo::BasicVTable {
         stop       = guanaqo::type_erased_wrapped<T, &T::stop>();
         get_name   = guanaqo::type_erased_wrapped<T, &T::get_name>();
         get_params = [](const void *self_) -> py::object {
-            auto &self = *std::launder(reinterpret_cast<const T *>(self_));
-            return py::cast(self.get_params());
+            auto &self    = *std::launder(reinterpret_cast<const T *>(self_));
+            auto &&params = self.get_params();
+            if constexpr (std::is_convertible_v<decltype(params), py::object>)
+                return std::move(params);
+            else
+                return py::cast(std::move(params));
         };
         call = []<class... Args>(void *self_, const Problem &p, Args... args) {
             auto &self = *std::launder(reinterpret_cast<T *>(self_));
