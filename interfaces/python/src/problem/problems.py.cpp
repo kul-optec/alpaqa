@@ -120,8 +120,10 @@ struct cvt_matrix_visitor_t {
         vec vals(csc.nnz());
         func(vals);
         auto csc_array = py::module_::import("scipy.sparse").attr("csc_array");
-        auto matrix    = py::make_tuple(std::move(vals), csc.inner_idx, csc.outer_ptr);
-        auto shape     = ("shape"_a = py::make_tuple(csc.rows, csc.cols));
+        auto matrix    = py::make_tuple(
+            std::move(vals), py::cast(alpaqa::as_vec(csc.inner_idx), py::return_value_policy::copy),
+            py::cast(alpaqa::as_vec(csc.outer_ptr), py::return_value_policy::copy));
+        auto shape = ("shape"_a = py::make_tuple(csc.rows, csc.cols));
         return {
             csc_array(std::move(matrix), std::move(shape)),
             csc.symmetry,
@@ -131,13 +133,14 @@ struct cvt_matrix_visitor_t {
     auto operator()(const sp::SparseCOO<I> &coo) const -> result_t {
         vec vals(coo.nnz());
         func(vals);
-        auto coo_array = py::module_::import("scipy.sparse").attr("coo_array");
-        auto Δ         = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
-        auto row_ind   = alpaqa::as_vec(coo.row_indices);
-        auto col_ind   = alpaqa::as_vec(coo.col_indices);
-        auto indices   = py::make_tuple(row_ind - Δ, col_ind - Δ);
-        auto matrix    = py::make_tuple(std::move(vals), std::move(indices));
-        auto shape     = ("shape"_a = py::make_tuple(coo.rows, coo.cols));
+        auto coo_array   = py::module_::import("scipy.sparse").attr("coo_array");
+        auto Δ           = Eigen::VectorX<I>::Constant(coo.nnz(), coo.first_index);
+        auto row_indices = alpaqa::as_vec(coo.row_indices) - Δ;
+        auto col_indices = alpaqa::as_vec(coo.col_indices) - Δ;
+        auto indices     = py::make_tuple(py::cast(row_indices, py::return_value_policy::copy),
+                                          py::cast(col_indices, py::return_value_policy::copy));
+        auto matrix      = py::make_tuple(std::move(vals), std::move(indices));
+        auto shape       = ("shape"_a = py::make_tuple(coo.rows, coo.cols));
         return {
             coo_array(std::move(matrix), std::move(shape)),
             coo.symmetry,
@@ -302,6 +305,15 @@ void problem_methods(py::class_<T, Args...> &cls) {
                 return std::make_tuple(std::move(ψ), std::move(ŷ));
             },
             "x"_a, "y"_a, "Σ"_a);
+    if constexpr (requires { &T::eval_lagrangian_gradient; })
+        cls.def(
+            "eval_lagrangian_gradient",
+            [](const T &p, crvec x, crvec y) {
+                vec grad_L(p.get_num_variables()), work_n(p.get_num_variables());
+                p.eval_lagrangian_gradient(x, y, grad_L, work_n);
+                return grad_L;
+            },
+            "x"_a, "y"_a);
     if constexpr (requires { &T::eval_augmented_lagrangian_gradient; })
         cls.def(
             "eval_augmented_lagrangian_gradient",
