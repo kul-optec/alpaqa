@@ -42,7 +42,7 @@ docs = [
 ]
 test = [
     "pytest>=7.2.0,<9",
-    "qpalm~=1.2.1",
+    "qpalm~=1.2.3",
     "scipy>=1.9.3,<2",
     "casadi~=3.7.1",
     "cmake>=3.28,<5",
@@ -144,7 +144,7 @@ archs = ["wasm32"]
 # ---------------------------------------------------------------------------- #
 
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "7.0"
 testpaths = ["python/test"]
 
 [tool.mypy]
