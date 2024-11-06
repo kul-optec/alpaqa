@@ -4,29 +4,16 @@ mark_as_advanced(USE_GLOBAL_PYBIND11)
 # First tries to find Python 3, then tries to import the pybind11 module to
 # query the CMake config location, and finally imports pybind11 using
 # find_package(pybind11 ${ARGN} REQUIRED CONFIG CMAKE_FIND_ROOT_PATH_BOTH),
-# where ${ARGN} are the arguments passed to this function.
-function(find_pybind11_python_first)
+# where ${ARGN} are the arguments passed to this macro.
+macro(find_pybind11_python_first)
+
+    set(PYBIND11_USE_CROSSCOMPILING On)
 
     # Find Python
     if (CMAKE_CROSSCOMPILING AND NOT (APPLE AND "$ENV{CIBUILDWHEEL}" STREQUAL "1"))
         find_package(Python3 REQUIRED COMPONENTS Development.Module)
     else()
         find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
-    endif()
-
-    # Tweak extension suffix and debug ABI when cross-compiling
-    if (CMAKE_CROSSCOMPILING AND NOT (DEFINED PYTHON_MODULE_DEBUG_POSTFIX
-                                      AND DEFINED PYTHON_MODULE_EXTENSION
-                                      AND DEFINED PYTHON_IS_DEBUG))
-        include(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/pybind11GuessPythonExtSuffix.cmake)
-        pybind11_guess_python_module_extension(Python3)
-        if (DEFINED PYTHON_MODULE_DEBUG_POSTFIX
-          AND DEFINED PYTHON_MODULE_EXTENSION
-          AND DEFINED PYTHON_IS_DEBUG)
-            set(PYTHON_MODULE_DEBUG_POSTFIX "${PYTHON_MODULE_DEBUG_POSTFIX}" PARENT_SCOPE)
-            set(PYTHON_MODULE_EXTENSION "${PYTHON_MODULE_EXTENSION}" PARENT_SCOPE)
-            set(PYTHON_IS_DEBUG "${PYTHON_IS_DEBUG}" PARENT_SCOPE)
-        endif()
     endif()
 
     # Query Python to see if it knows where the pybind11 root is
@@ -52,4 +39,4 @@ function(find_pybind11_python_first)
     # pybind11 is header-only, so finding a native version is fine
     find_package(pybind11 ${ARGN} REQUIRED CONFIG CMAKE_FIND_ROOT_PATH_BOTH)
 
-endfunction()
+endmacro()
