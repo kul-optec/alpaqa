@@ -14,7 +14,6 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
   public:
     USING_ALPAQA_CONFIG(EigenConfigd);
     using Problem = TypeErasedProblem<config_t>;
-    const Problem &problem;
     vec initial_guess;
     vec initial_guess_bounds_multipliers;
     vec initial_guess_multipliers;
@@ -76,6 +75,8 @@ class IPOPT_ADAPTER_EXPORT IpoptAdapter : public Ipopt::TNLP {
     /// @}
 
   private:
+    const Problem &problem;
+
     using SparsityConv =
         sparsity::SparsityConverter<Sparsity, sparsity::SparseCOO<Index>>;
     Sparsity orig_sparsity_jac_g  = problem.get_constraints_jacobian_sparsity(),

@@ -75,6 +75,15 @@ void register_lbfgsb(py::module_ &) {}
 #endif
 
 template <alpaqa::Config Conf>
+void register_python_inner_solver(py::module_ &m);
+
+#if ALPAQA_WITH_IPOPT
+void register_ipopt(py::module_ &m);
+#else
+void register_ipopt(py::module_ &) {}
+#endif
+
+template <alpaqa::Config Conf>
 void register_classes_for(py::module_ &m) {
     register_problems<Conf>(m);
     register_control_problems<Conf>(m);
@@ -114,6 +123,11 @@ PYBIND11_MODULE(MODULE_NAME, m) {
 #else
     m.attr("with_casadi_ocp") = false;
 #endif
+#if ALPAQA_WITH_IPOPT
+    m.attr("with_ipopt") = true;
+#else
+    m.attr("with_ipopt") = false;
+#endif
 
     py::register_exception<guanaqo::not_implemented_error>(m, "not_implemented_error",
                                                            PyExc_NotImplementedError);
@@ -131,4 +145,6 @@ PYBIND11_MODULE(MODULE_NAME, m) {
     // Note: this is usually disabled because NumPy doesn't support it.
     ALPAQA_IF_QUADF(auto m_quad = m.def_submodule("float128", "Quadruple precision");
                     register_classes_for<alpaqa::EigenConfigq>(m_quad);)
+
+    register_ipopt(m_double);
 }
