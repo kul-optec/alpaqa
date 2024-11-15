@@ -161,7 +161,7 @@ class MinimizationProblemDescription:
             D_alm = (-np.inf * np.ones(m_alm), +np.inf * np.zeros(m_alm))
         num_param = self.parameter_value
         if num_param is None:
-            num_param = np.NaN * np.ones(p)
+            num_param = np.nan * np.ones(p)
         λ = self.regularizer
         return dict(
             f=cs.Function("f", args, f),
