@@ -58,13 +58,17 @@ export CTEST_OUTPUT_ON_FAILURE=1
 for cfg in Debug RelWithDebInfo; do
     conan install . --build=missing \
         -pr:h "$profile" \
-        -o with_ipopt=True -o with_external_casadi=True -o with_qpalm=True \
-        -o with_cutest=True -o "openblas/*:target=HASWELL" \
+        -o \&:shared=True \
+        -o \&:with_ipopt=True -o \&:with_external_casadi=True \
+        -o \&:with_qpalm=True -o \&:with_cutest=True \
+        -o "openblas/*:target=HASWELL" \
+        -s "casadi/*:build_type=Release" \
         -s build_type=$cfg
 done
 
 # Configure
 cmake --preset conan-default -B build \
+    -D CMAKE_EXPORT_COMPILE_COMMANDS=On \
     -D CMAKE_INSTALL_PREFIX="$PWD/staging" \
     -D CMAKE_C_COMPILER_LAUNCHER="ccache" \
     -D CMAKE_CXX_COMPILER_LAUNCHER="ccache"
