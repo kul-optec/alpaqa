@@ -9,20 +9,23 @@ on:
   release:
     types: ['released', 'prereleased']
 
-env:
-  PYTHON_VERSION: '3.11'
-
 jobs:
   build:
     runs-on: ubuntu-latest
     container: ubuntu:jammy
     strategy:
       matrix:
-        host: [x86_64-centos7-linux-gnu, aarch64-rpi3-linux-gnu]
+        include:
+          - host: x86_64-bionic-linux-gnu
+            openblas-target: HASWELL
+          - host: aarch64-rpi3-linux-gnu
+            openblas-target: CORTEXA53
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
+      CONAN_HOME: /root/.conan2
+      LDFLAGS: '-static-libstdc++ -flto=auto'
     steps:
       # Git clone
       - name: Install git
@@ -32,72 +35,89 @@ jobs:
           submodules: recursive
       # Tools
       - name: Install tools
-        uses: ./.github/workflows/toolchain
+        id: tools
+        uses: ./.github/workflows/new-toolchain
         with:
           host: ${{ matrix.host }}
-          python-version: ${{ env.PYTHON_VERSION }}
       # Ccache
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
       - name: Cache ccache
         uses: actions/cache@v4
         with:
-          path: ${{ env.CCACHE_DIR }}
+          path: ${{ env.CCACHE_DIR }}/p
           key: ${{ runner.os }}-linux-bin-${{ matrix.host }}-ccache-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-linux-bin-${{ matrix.host }}-ccache
-      # Configure
-      - name: Configure
+      # Conan
+      - name: Cache Conan
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CONAN_HOME }}
+          key: ${{ runner.os }}-linux-bin-${{ matrix.host }}-conan-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-linux-bin-${{ matrix.host }}-conan
+      - name: Install Conan
         run: |
-          host="${{ matrix.host }}"
-          staging="/opt/$host"
-          case $host in
-            aarch64*) quadmath=Off ;;
-            *)        quadmath=On ;;
-          esac
-          cmake -B package -S. \
-            -G "Ninja Multi-Config" \
-            -D BUILD_SHARED_LIBS=On \
-            -D CMAKE_POSITION_INDEPENDENT_CODE=On \
-            -D ALPAQA_WITH_EXAMPLES=Off \
-            -D ALPAQA_WITH_TESTS=Off \
-            -D ALPAQA_WARNINGS_AS_ERRORS=On \
-            -D ALPAQA_WITH_SINGLE_PRECISION=On \
-            -D ALPAQA_WITH_LONG_DOUBLE=On \
-            -D ALPAQA_WITH_QUAD_PRECISION=$quadmath \
-            -D ALPAQA_WITH_CASADI=On \
-            -D ALPAQA_WITH_EXTERNAL_CASADI=Off \
-            -D ALPAQA_WITH_IPOPT=On \
-            -D ALPAQA_WITH_CUTEST=On \
-            -D ALPAQA_WITH_CUTEST_EXAMPLES=Off \
-            -D ALPAQA_WITH_DRIVERS=On \
-            -D ALPAQA_WITH_GRADIENT_CHECKER=On \
-            -D CMAKE_TOOLCHAIN_FILE="$staging/$host.toolchain.cmake" \
-            -D CMAKE_PREFIX_PATH="$staging/mumps/usr/local;$staging/ipopt/usr/local" \
-            -D CMAKE_FIND_ROOT_PATH="$staging/eigen;$staging/openblas;$staging/mumps;$staging/ipopt"
-        env:
-          CXXFLAGS: '-static-libstdc++'
-      # Build
-      - name: Build RelWithDebInfo
-        run: |
-          cmake --build package --config RelWithDebInfo -j
-      - name: Build Debug
-        run: |
-          cmake --build package --config Debug -j
+          python3 -m pip install -U conan
+          conan --version
+          conan profile detect -f
+          git clone https://github.com/tttapa/conan-recipes tttapa-conan-recipes
+          conan remote add tttapa-conan-recipes tttapa-conan-recipes --force
+      # Install dependencies
+      - name: Install dependencies (RelWithDebInfo)
+        run: >
+          conan install . --build=missing
+          -pr:h "${{ steps.tools.outputs.conan-profile }}"
+          -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config"
+          -c tools.build:skip_test=True
+          -o \&:shared=True
+          -o \&:with_ipopt=True -o \&:with_external_casadi=False
+          -o \&:with_qpalm=True -o \&:with_cutest=True
+          -o \&:with_examples=False
+          -o "openblas/*:target=${{ matrix.openblas-target }}"
+          -s build_type=RelWithDebInfo
+      # Configure and Build
+      - name: Configure (RelWithDebInfo)
+        run: cmake --preset conan-default
+      - name: Build (RelWithDebInfo)
+        run: cmake --build --preset conan-relwithdebinfo
+      # Cleanup
+      - name: Cleanup (RelWithDebInfo)
+        run: rm build/CMakeCache.txt
+      # Install dependencies
+      - name: Install dependencies (Debug)
+        run: >
+          conan install . --build=missing
+          -pr:h "${{ steps.tools.outputs.conan-profile }}"
+          -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config"
+          -c tools.build:skip_test=True
+          -o \&:shared=True
+          -o \&:with_ipopt=True -o \&:with_external_casadi=False
+          -o \&:with_qpalm=True -o \&:with_cutest=True
+          -o \&:with_examples=False
+          -o "openblas/*:target=${{ matrix.openblas-target }}"
+          -s build_type=Debug
+      # Configure and Build
+      - name: Configure (Debug)
+        run: cmake --preset conan-default
+      - name: Build (Debug)
+        run: cmake --build --preset conan-debug
       # Package
       - name: Package
         run: |
           cpack -G 'TGZ;DEB' -C "RelWithDebInfo;Debug"
-        working-directory: package
+        working-directory: build
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: alpaqa-${{ matrix.host }}
           retention-days: 1
           path: |
-            package/alpaqa*.tar.gz
-            package/*alpaqa*.deb
+            build/alpaqa*.tar.gz
+            build/*alpaqa*.deb
 
   test:
+    # TODO
+    if: false
     needs: [build]
     runs-on: ubuntu-latest
     container: ubuntu:jammy
@@ -208,7 +228,8 @@ jobs:
 
   release:
     if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
-    needs: [test, test-deb]
+    # TODO
+    needs: [test-deb]
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -1,0 +1,95 @@
+name: Toolchains
+description: Install toolchains
+inputs:
+  host:
+    required: true
+    type: string
+  tools-version:
+    required: false
+    default: '1.0.0'
+    type: string
+  gcc-version:
+    required: false
+    default: '13'
+    type: string
+  tools-url:
+    required: false
+    default: 'https://github.com/tttapa/toolchains/releases/download'
+    type: string
+  cmake-version:
+    required: false
+    default: '3.30.5'
+    type: string
+  sudo:
+    required: false
+    default: ''
+    type: string
+  root-path:
+    required: false
+    default: ''
+    type: string
+outputs:
+  cmake-toolchain:
+    description: "Path to the CMake toolchain"
+    value: ${{ steps.out.outputs.cmake-toolchain }}
+  conan-profile:
+    description: "Path to the Conan profile"
+    value: ${{ steps.out.outputs.conan-profile }}
+  install-dir:
+    description: "Path to the installed tools"
+    value: ${{ steps.out.outputs.install-dir }}
+
+
+runs:
+  using: composite
+  steps:
+    # Apt install tools
+    - name: Install tools
+      shell: bash
+      run: |
+        ${{ inputs.sudo }} apt -y update
+        ${{ inputs.sudo }} apt -y install --no-install-recommends \
+          wget bzip2 xz-utils ccache ninja-build pkg-config \
+          ca-certificates libquadmath0 python3-dev python3-venv python3-pip
+    # Cache
+    - name: Cache tools
+      id: cache-tools
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.root-path }}/opt
+        key: ${{ runner.os }}-${{ inputs.host }}-tools-${{ inputs.tools-version }}-${{ inputs.cmake-version }}
+    # CMake
+    - name: Install CMake
+      if: ${{ steps.cache-tools.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: |
+        version=${{ inputs.cmake-version }}; cd ${{ inputs.root-path }}; mkdir -p ${{ inputs.root-path }}/opt/cmake
+        wget https://github.com/Kitware/CMake/releases/download/v$version/cmake-$version-Linux-x86_64.sh
+        bash cmake-$version-*.sh --skip-license --prefix="${{ inputs.root-path }}/opt/cmake"
+    - name: Add CMake to PATH
+      shell: bash
+      run: echo "${{ inputs.root-path }}/opt/cmake/bin" >> $GITHUB_PATH
+    # Toolchains
+    - name: Download toolchains
+      if: steps.cache-tools.outputs.cache-hit != 'true'
+      shell: bash
+      run: >
+        url="${{ inputs.tools-url }}/${{ inputs.tools-version }}";
+        wget "$url/x-tools-${{ inputs.host }}-gcc${{ inputs.gcc-version }}.tar.xz" -O- |
+        tar xJ -C ${{ inputs.root-path }}/opt
+    # Install runtime libraries
+    - name: Install runtime libraries
+      if: ${{ inputs.host == 'x86_64-bionic-linux-gnu' }}
+      shell: bash
+      run: |
+        ${{ inputs.sudo }} cp ${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libgfortran.so.*.*.* /usr/local/lib
+        ${{ inputs.sudo }} cp ${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libstdc++.so.*.*.* /usr/local/lib
+        ${{ inputs.sudo }} ldconfig
+    # Save output paths
+    - name: Write outputs
+      id: out
+      shell: bash
+      run: |
+        echo "cmake-toolchain=${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}.toolchain.cmake" >> $GITHUB_OUTPUT
+        echo "conan-profile=${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}.profile.conan" >> $GITHUB_OUTPUT
+        echo "install-dir=${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}" >> $GITHUB_OUTPUT
