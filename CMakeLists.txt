@@ -43,6 +43,8 @@ option(ALPAQA_WITH_TESTS
     "Build the tests" ${BUILD_TESTING})
 option(ALPAQA_WITH_EXAMPLES
     "Build the examples" On)
+option(ALPAQA_WITH_PYTHON_PROBLEM_LOADER
+    "Build the dynamic loader for problems defined in Python" Off)
 option(ALPAQA_WITH_DRIVERS
     "Build the solver driver programs" On)
 option(ALPAQA_WITH_GRADIENT_CHECKER

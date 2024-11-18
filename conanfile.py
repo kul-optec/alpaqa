@@ -26,6 +26,7 @@ class AlpaqaRecipe(ConanFile):
         "with_matlab": False,
         "with_drivers": True,
         "with_examples": False,
+        "with_python_problem_loader": False,
         "with_gradient_checker": False,
         "with_casadi": True,
         "with_external_casadi": False,
@@ -59,6 +60,7 @@ class AlpaqaRecipe(ConanFile):
         "CMakeLists.txt",
         "src/*",
         "cmake/*",
+        "examples/*",
         "interfaces/*",
         "python/*",
         "test/*",
@@ -68,7 +70,7 @@ class AlpaqaRecipe(ConanFile):
 
     def requirements(self):
         self.requires("eigen/tttapa.20240516", transitive_headers=True, override=True)
-        self.requires("guanaqo/1.0.0-alpha.1", transitive_headers=True)
+        self.requires("guanaqo/1.0.0-alpha.2", transitive_headers=True)
         self.test_requires("gtest/1.11.0")
         if self.options.with_external_casadi:
             self.requires("casadi/3.6.7", transitive_headers=True)
@@ -78,7 +80,7 @@ class AlpaqaRecipe(ConanFile):
             self.requires("ipopt/3.14.16", transitive_headers=True)
         if self.options.with_qpalm:
             self.requires("qpalm/1.2.4", transitive_headers=True)
-        if self.options.with_python:
+        if self.options.with_python or self.options.with_python_problem_loader:
             self.requires("pybind11/2.13.6")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.4")
