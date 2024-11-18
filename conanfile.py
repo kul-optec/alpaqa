@@ -25,6 +25,7 @@ class AlpaqaRecipe(ConanFile):
         "with_python": False,
         "with_matlab": False,
         "with_drivers": True,
+        "with_examples": False,
         "with_gradient_checker": False,
         "with_casadi": True,
         "with_external_casadi": False,
@@ -70,7 +71,7 @@ class AlpaqaRecipe(ConanFile):
         self.requires("guanaqo/1.0.0-alpha.1", transitive_headers=True)
         self.test_requires("gtest/1.11.0")
         if self.options.with_external_casadi:
-            self.requires("casadi/3.6.5", transitive_headers=True)
+            self.requires("casadi/3.6.7", transitive_headers=True)
         if self.options.with_json:
             self.requires("nlohmann_json/3.11.2", transitive_headers=True)
         if self.options.with_ipopt:
@@ -106,7 +107,7 @@ class AlpaqaRecipe(ConanFile):
         deps.set_property("utfcpp", "cmake_target_name", "utf8cpp::utf8cpp")
         deps.generate()
         tc = CMakeToolchain(self)
-        tc.variables["ALPAQA_WITH_EXAMPLES"] = False
+        tc.user_presets_path = "ConanPresets.json"
         for k in self.bool_alpaqa_options:
             value = getattr(self.options, k, None)
             if value is not None and value.value is not None:

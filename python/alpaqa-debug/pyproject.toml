@@ -17,14 +17,15 @@ description = "Debug symbols for the alpaqa package."
 
 [build-system]
 requires = [
-    "py-build-cmake~=0.2.0a14",
+    "py-build-cmake~=0.2.0a15.dev0",
     "pybind11==2.13.6",
     "pybind11-stubgen~=2.5",
     "numpy<3",
 ]
 build-backend = "py_build_cmake.build_component"
 
-[tool.py-build-cmake.component]
+[tool.py-build-cmake]
 main_project = "../.."
+[tool.py-build-cmake.component.10]
 install_components = ["python_modules_debug"]
 install_only = true

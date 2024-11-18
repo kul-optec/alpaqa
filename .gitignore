@@ -1,6 +1,8 @@
 # Local files
 CMakeUserPresets.json
+ConanPresets.json
 py-build-cmake.local.toml
+profile*.local.conan
 
 # Temporary build and cache folders
 build
@@ -17,6 +19,7 @@ dist-debug
 wheelhouse
 python-cross-staging
 *.py-build-cmake.config.toml
+*.py-build-cmake.config.pbc
 python/alpaqa/_alpaqa*
 /install
 /staging
@@ -31,6 +34,7 @@ python/alpaqa/_alpaqa*
 *.so
 a.out
 dynamics.c
+/*.csv
 
 # Profiling
 perf.data*

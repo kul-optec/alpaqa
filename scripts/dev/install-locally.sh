@@ -42,6 +42,17 @@ pip install -U pip build conan
 # Create Conan profile
 profile="$PWD/profile.local.conan"
 cat <<- EOF > "$profile"
+include($pfx.profile.conan)
+[conf]
+tools.build.cross_building:can_run=true
+tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+[buildenv]
+CFLAGS=-march=native -fdiagnostics-color
+CXXFLAGS=-march=native -fdiagnostics-color
+LDFLAGS=-static-libstdc++ -flto=auto
+EOF
+python_profile="$PWD/profile-python.local.conan"
+cat <<- EOF > "$python_profile"
 include($pfx.python.profile.conan)
 [conf]
 tools.build.cross_building:can_run=true
@@ -50,7 +61,7 @@ tools.build:skip_test=true
 [buildenv]
 CFLAGS=-march=native -fdiagnostics-color
 CXXFLAGS=-march=native -fdiagnostics-color
-LDFLAGS+= -static-libgcc -static-libstdc++
+LDFLAGS=-static-libgcc -static-libstdc++ -flto=auto
 EOF
 
 # Build and install alpaqa dependencies
@@ -61,6 +72,7 @@ for cfg in Debug RelWithDebInfo; do
         -o \&:shared=True \
         -o \&:with_ipopt=True -o \&:with_external_casadi=True \
         -o \&:with_qpalm=True -o \&:with_cutest=True \
+        -o \&:with_examples=True \
         -o "openblas/*:target=HASWELL" \
         -s "casadi/*:build_type=Release" \
         -s build_type=$cfg
@@ -86,22 +98,32 @@ popd
 # Build Python package
 for cfg in Debug Release; do
     conan install . --build=missing \
-        -pr:h "$profile" \
-        -o with_ipopt=True -o with_external_casadi=True -o with_qpalm=True \
-        -o with_cutest=True -o with_python=True -o "openblas/*:target=HASWELL" \
+        -pr:h "$python_profile" \
+        -c tools.cmake.cmake_layout:build_folder_vars="['settings.build_type', 'const.python']" \
+        -o \&:with_ipopt=True -o \&:with_external_casadi=True \
+        -o \&:with_qpalm=True -o \&:with_cutest=True \
+        -o \&:with_python=True \
+        -o "openblas/*:target=HASWELL" \
+        -s "casadi/*:build_type=Release" \
         -s build_type=$cfg
 done
-config="$triple.py-build-cmake.config.toml"
+config="$triple.py-build-cmake.config.pbc"
 cat <<- EOF > "$config"
-toolchain_file = "build/generators/conan_toolchain.cmake"
-[cmake]
-config = ["Debug", "Release"]
-generator = "Ninja Multi-Config"
-preset = "conan-default"
-[cmake.options]
-USE_GLOBAL_PYBIND11 = "On" # Provided by Conan, not by Pip
-CMAKE_C_COMPILER_LAUNCHER = "ccache"
-CMAKE_CXX_COMPILER_LAUNCHER = "ccache"
+os=linux
+toolchain_file=!  # Set by the Conan preset
+cmake.options+={
+    USE_GLOBAL_PYBIND11=true,  # Package provided by Conan, not by Pip
+    CMAKE_C_COMPILER_LAUNCHER="ccache",
+    CMAKE_CXX_COMPILER_LAUNCHER="ccache",
+    ALPAQA_WITH_PY_STUBS=true
+}
+cmake.10.preset="conan-debug-python"
+cmake.10.build_presets=["conan-debug-python"]
+cmake.10.build_path="build/debug-python"
+cmake.10.env.ALPAQA_PYTHON_DEBUG="1"
+cmake.20.preset="conan-release-python"
+cmake.20.build_presets=["conan-release-python"]
+cmake.20.build_path="build/release-python"
 EOF
 cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
 develop=false

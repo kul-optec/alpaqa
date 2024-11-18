@@ -125,6 +125,7 @@ option(ALPAQA_WITH_PY_STUBS
     ${ALPAQA_WITH_PY_STUBS_DEFAULT})
 if (ALPAQA_WITH_PY_STUBS)
     include(cmake/Pybind11Stubgen.cmake)
-    pybind11_stubgen(_alpaqa)
-    pybind11_stubgen_install(_alpaqa ${PY_BUILD_CMAKE_MODULE_NAME})
+    pybind11_stubgen(_alpaqa
+        PACKAGE ${PY_BUILD_CMAKE_MODULE_NAME}
+        COMPONENT python_stubs)
 endif()

@@ -23,13 +23,13 @@ classifiers = [
     "Operating System :: MacOS",
     "Typing :: Typed",
 ]
-dependencies = ["numpy<3", "casadi~=3.6.0", "cmake~=3.31.2", "ninja~=1.11.1"]
+dependencies = ["numpy<3", "casadi~=3.6.7", "cmake>=3.28,<4", "ninja~=1.11.1"]
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
 docs = ["breathe~=4.35.0", "sphinx>=7.2.2,<8", "sphinx-tabs~=3.4.4", "sphinxcontrib-matlabdomain~=0.20.2", "sphinxcontrib-moderncmakedomain~=3.27.0", "furo==2023.08.19", "matplotlib"]
-debug = ["alpaqa-debug==1.0.0a20"]
-test = ["pytest>=7.2.0,<7.5", "qpalm~=1.2.1", "scipy>=1.9.3,<1.12"]
+debug = ["alpaqa-debug==1.0.0a20.dev0"]
+test = ["pytest>=7.2.0,<7.5", "qpalm~=1.2.1", "scipy>=1.9.3,<2"]
 
 [project.urls]
 "Documentation" = "https://kul-optec.github.io/alpaqa"
@@ -41,7 +41,7 @@ alpaqa = "alpaqa.__main__:main"
 
 [build-system]
 requires = [
-    "py-build-cmake~=0.2.0a14",
+    "py-build-cmake~=0.2.0a15.dev0",
     "pybind11==2.13.6",
     "pybind11-stubgen~=2.5",
     "numpy<3",
@@ -67,9 +67,7 @@ exclude = []
 [tool.py-build-cmake.cmake]
 minimum_version = "3.24"
 source_path = "."
-config = []
 args = ["-Wdev"]
-build_args = ["-j"]
 install_components = ["python_modules", "python_stubs"]
 [tool.py-build-cmake.cmake.options]
 "ALPAQA_WITH_PYTHON:BOOL" = "On"
@@ -86,18 +84,40 @@ install_components = ["python_modules", "python_stubs"]
 "ALPAQA_DEBUG_CHECKS_EIGEN:BOOL" = "On"
 "CMAKE_BUILD_TYPE" = "Debug"  # Forces pybind11 to keep debug symbols (https://github.com/pybind/pybind11/issues/4454)
 
+# Build Linux
 [tool.py-build-cmake.linux.cmake]
-config = ["Debug", "Release"]
 generator = "Ninja Multi-Config"
+preset = "conan-default"
+[tool.py-build-cmake.linux.cmake.10]
+config = "Debug"
+build_presets = "conan-debug"
+[tool.py-build-cmake.linux.cmake.20]
+config = "Release"
+build_presets = "conan-release"
+
+# Build macOS
 [tool.py-build-cmake.mac.cmake]
-config = ["Debug", "Release"]
 generator = "Ninja Multi-Config"
+[tool.py-build-cmake.mac.cmake.10]
+config = "Debug"
+build_presets = "conan-debug"
+[tool.py-build-cmake.mac.cmake.20]
+config = "Release"
+build_presets = "conan-release"
+
+# Build Windows
 [tool.py-build-cmake.windows.cmake]
-config = ["RelWithDebInfo", "Release"]
+preset = "conan-default"
 [tool.py-build-cmake.windows.cmake.options]
 CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Zi /Ob0 /Od /RTC1"
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF"
 ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
+[tool.py-build-cmake.windows.cmake.10]
+config = "RelWithDebInfo"
+build_presets = "conan-relwithdebinfo"
+[tool.py-build-cmake.windows.cmake.20]
+config = "Release"
+build_presets = "conan-release"
 
 [tool.py-build-cmake.stubgen]
 args = ["-v"]
