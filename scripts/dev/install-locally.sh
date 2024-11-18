@@ -28,15 +28,10 @@ mkdir -p "$tools_dir/x-tools"
 
 # Download dependencies
 pip install -U pip build conan
-# My own custom recipes for Ipopt, CasADi, patched OpenBLAS, patched Eigen
+# My own custom recipes for Ipopt, CasADi, QPALM, patched Eigen
 [ -d "$tools_dir/thirdparty/conan-recipes" ] || {
     git clone https://github.com/tttapa/conan-recipes "$tools_dir/thirdparty/conan-recipes"
     conan remote add tttapa-conan-recipes "$tools_dir/thirdparty/conan-recipes" --force
-}
-# QPALM QP solver
-[ -d "$tools_dir/thirdparty/QPALM" ] || {
-    git clone https://github.com/kul-optec/QPALM --branch=1.2.3 "$tools_dir/thirdparty/QPALM"
-    conan export "$tools_dir/thirdparty/QPALM"
 }
 
 # Create Conan profile
