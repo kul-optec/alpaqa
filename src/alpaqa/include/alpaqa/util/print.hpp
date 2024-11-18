@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Eigen/Core>
+#include <guanaqo/eigen/view.hpp>
 #include <guanaqo/print.hpp>
 
 namespace alpaqa {
@@ -12,13 +13,7 @@ template <class Derived>
 std::ostream &print_python(std::ostream &os,
                            const Eigen::DenseBase<Derived> &M) {
     if constexpr (requires { M.derived().data(); })
-        return guanaqo::detail::print_python_impl(
-            os, guanaqo::MatrixView<const typename Derived::Scalar>{{
-                    .data         = M.derived().data(),
-                    .rows         = M.rows(),
-                    .cols         = M.cols(),
-                    .outer_stride = M.outerStride(),
-                }});
+        return guanaqo::print_python(os, guanaqo::as_view(M));
     else
         return print_python(os, M.eval());
 }
