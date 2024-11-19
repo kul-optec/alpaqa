@@ -25,7 +25,7 @@ jobs:
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
       CONAN_HOME: /root/.conan2
-      LDFLAGS: '-static-libstdc++ -flto=auto'
+      LDFLAGS: '-static-libstdc++ -static-libgcc -flto=auto'
     steps:
       # Git clone
       - name: Install git
@@ -228,7 +228,7 @@ jobs:
 
   release:
     if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
-    # TODO
+    # TODO: test
     needs: [test-deb]
     runs-on: ubuntu-latest
     strategy:
