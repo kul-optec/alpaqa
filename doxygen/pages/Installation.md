@@ -22,6 +22,7 @@ sudo apt install g++ gcc git python3-venv python3-dev
 The alpaqa package requires a relatively recent compiler
 (tested using GCC 10-13, Clang (libc++) 16-17, or Clang (libstdc++) 17).
 
+<!--
 To install GCC 11 on older versions of Ubuntu, you can use
 ```sh
 sudo apt update
@@ -33,6 +34,7 @@ To install the latest version of Clang, you can use the instructions from <https
 ```sh
 bash -c "$(wget -O- https://apt.llvm.org/llvm.sh)"
 ```
+-->
 
 ### Clone the repository
 
@@ -42,35 +44,44 @@ git clone https://github.com/kul-optec/alpaqa --branch=develop --single-branch
 
 ### Create a virtual environment
 
-For convenience, we'll install everything into a Python virtual environment
-(including the C++ libraries and dependencies). This allows you to easily
-experiment in a sandbox, without requiring root permissions, and without the
-risk of messing with system packages.
+For convenience, we'll install everything into a Python virtual environment.
+This allows you to easily experiment in a sandbox, without requiring root
+permissions, and without the risk of messing with system packages.
 
 ```sh
 cd alpaqa
 python3 -m venv .venv
 . ./.venv/bin/activate
-pip install cmake ninja casadi numpy
+pip install conan cmake ninja
+```
+
+If you haven't used Conan before, run the following command to configure a
+default Conan profile for your system:
+```sh
+conan profile detect
 ```
 
 ### Install dependencies
 
-The `scripts` folder contains some Bash scripts to install the necessary
-dependencies. Feel free to inspect and modify the installation scripts.
-If you already have the dependencies installed globally you can skip these
-steps.
+The Conan package manager is used for installing the dependencies. Since not all
+packages are in the main Conan Center repository, we add a secondary repository:
 
 ```sh
-bash ./scripts/install-casadi-static.sh "$VIRTUAL_ENV" Release
-bash ./scripts/install-gtest.sh "$VIRTUAL_ENV" Release
-bash ./scripts/install-eigen.sh "$VIRTUAL_ENV" Release
+git clone https://github.com/tttapa/conan-recipes
+conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
 ```
 
-CasADi is built as a static library because it is later statically linked into
-the final alpaqa libraries for better portability, this is especially useful
-when creating the Python package. If you need to link against CasADi
-dynamically, you can use the `install-casadi.sh` script instead.
+We'll now install the dependencies of alpaqa. See `conanfile.py` for a list of
+the available options. For the sake of simplicity, we'll simply install the
+dependencies for the default, minimal configuration of alpaqa:
+
+```sh
+conan install . --build=missing -s build_type=Release \
+    -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config"
+```
+
+To speed up the compilation, you can disable the tests:
+`-c tools.build:skip_test=True`.
 
 ### Build and install
 
@@ -81,19 +92,10 @@ for a system-wide install (requires `sudo`), or `--prefix $HOME/.local` to
 install it for the current user.
 
 ```sh
-cmake -S. -Bbuild -G "Ninja Multi-Config"
-
-cmake --build build --config Release -j       # Build in release mode
-cmake --build build -t test                   # Run the tests
-cmake --install build --prefix "$VIRTUAL_ENV" # Install the release version
-
-cmake --build build --config Debug -j         # Build in debug mode
-cmake --build build -t test                   # Run the tests with extra checks
-cmake --install build --prefix "$VIRTUAL_ENV" # Install the debug version
+cmake --preset conan-default
+cmake --build --preset conan-release
+cmake --install build --prefix "$VIRTUAL_ENV" --config Release  # optional
 ```
-Installing both the release and debug versions can be very useful for checking
-matrix dimension errors and out of bounds accesses during development, and 
-switching to an optimized version later.
 
 > **Note**  
 > If you changed the installation prefix, and
@@ -108,13 +110,21 @@ switching to an optimized version later.
 
 ## Windows
 
-The instructions for Windows are quite similar to the ones for Linux. To install
-the dependencies, you can use the Powershell scripts instead of the Bash scripts:
-
-```ps
-./scripts/install-casadi-static.ps1
-./scripts/install-gtest.ps1
-./scripts/install-eigen.ps1
+The instructions for Windows are quite similar to the ones for Linux, but you'll
+usually want to use the default generator rather than Ninja when doing
+`conan install`:
+```sh
+cd alpaqa
+py -m venv .venv
+&./.venv/Scripts/Activate.ps1
+pip install conan cmake ninja
+conan profile detect
+git clone https://github.com/tttapa/conan-recipes
+conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan install . --build=missing -s build_type=Release
+cmake --preset conan-default
+cmake --build --preset conan-release
+cmake --install build --prefix "$VIRTUAL_ENV" --config Release  # optional
 ```
 
 ## macOS
@@ -123,16 +133,8 @@ The instructions for macOS are the same as the ones for Linux, with the caveat
 that the default AppleClang compiler might not yet support the necessary C++20
 features used by alpaqa. If this is the case, you can use a mainline Clang
 compiler (version 16 or higher), that you install using Homebrew or another
-package manager.  
-You can select the compiler to use by setting the `CC` and `CXX` environment
-variables and reconfiguring the project, for example:
-```sh
-export CC=clang-16
-export CXX=clang++-16
-rm build/CMakeCache.txt  # Remove cache to trigger a fresh CMake configuration
-```
-
-Xcode 15 or later include Clang 16 and are known to work.
+package manager. Xcode 15 or later include Clang 16 and are known to work.
+Make sure you use a Conan profile that selects the appropriate version of Clang.
 
 ***
 
@@ -140,7 +142,8 @@ Xcode 15 or later include Clang 16 and are known to work.
 
 Once the library is installed, you can use it in your own projects.
 
-For example:
+It is highly recommended to have a look at the `examples/CMake/Solver` example
+project, but in short:
 
 **main.cpp**
 ```cpp
@@ -164,8 +167,8 @@ add_executable(main main.cpp)
 target_link_libraries(main PRIVATE alpaqa::alpaqa)
 ```
 
-Different targets are available. Depending on your needs, you might want to
-link to:
+Different components and targets are available. Depending on your needs, you
+might want to link to:
 
  - `alpaqa::alpaqa`: the core alpaqa library and solvers
  - `alpaqa::casadi-loader`: provides the `CasADiProblem` class that allows
@@ -184,54 +187,89 @@ link to:
  - `alpaqa::qpalm-adapter`: allows passing any alpaqa problem to the QPALM
     solver
 
+See the [CMake API documentation](../Sphinx/reference/cmake-api.html) for more
+details.
+
 # Python
 
-After creating the virtual environment and installing the dependencies, you can
-install the Python module using:
+Similarly to the instructions above, create a virtual environment and install
+the dependencies using Conan. You want to add the `with_python` option.
+
 ```sh
-pip install .
+cd alpaqa
+python3 -m venv .venv
+. ./.venv/bin/activate
+pip install conan cmake ninja
+conan profile detect
+git clone https://github.com/tttapa/conan-recipes
+conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan install . --build=missing -s build_type=Release -o \&:with_python=True \
+    -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config"
+```
+
+After creating the virtual environment and installing the dependencies, you can
+install the Python module using Pip (this may take a while):
+```sh
+pip install -v .
 ```
 To build the Python package without installing, you can use:
 ```sh
 pip install build
-python3 -m build .
+python -m build -w .
+```
+Finally, test the package:
+```sh
+pip install pytest
+pytest
+```
+
+To build a debug version of alpaqa, you can use the following:
+```sh
+rm -rf build/python  # Remove the old binaries
+conan install . --build=missing -s build_type=Debug -o \&:with_python=True \
+    -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config"
+pip install -v . \
+    -C override=cmake.config=Debug \
+    -C override=cmake.build_presets=conan-python-debug
+ALPAQA_PYTHON_DEBUG=1 pytest
 ```
 
 # Matlab
 
-The previous steps are not required to install the MATLAB/MEX interface. We'll
-use [Conan](https://conan.io/) to manage and build the necessary dependencies.
-
 ## Linux and macOS
 
 ```sh
-python3 -m pip install -U conan cmake ninja
-conan profile detect --force
-conan export scripts/recipes/casadi
-conan install . \
-    --build=missing \
+cd alpaqa
+python3 -m venv .venv
+. ./.venv/bin/activate
+python -m pip install -U conan cmake ninja
+conan profile detect
+git clone https://github.com/tttapa/conan-recipes
+conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan install . --build=missing \
     -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config" \
-    -of build-matlab \
     -o with_matlab=True -o with_external_casadi=True
-cmake --preset conan-default
-cmake --build --preset conan-release -j -t alpaqa_mex
-cmake --install build-matlab/build \
+cmake --preset conan-matlab
+cmake --build --preset conan-matlab-release -t alpaqa_mex
+cmake --install build/matlab \
     --prefix ~/Documents/MATLAB --component mex_interface
 ```
 
 ## Windows
 
 ```sh
-python -m pip install -U conan cmake ninja
-conan profile detect --force
-conan export scripts/recipes/casadi
-conan install . \
-    --build=missing \
-    -of build-matlab \
+cd alpaqa
+py -m venv .venv
+&./.venv/Scripts/Activate.ps1
+pip install conan cmake ninja
+conan profile detect
+git clone https://github.com/tttapa/conan-recipes
+conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan install . --build=missing \
     -o with_matlab=True -o with_external_casadi=True
-cmake --preset conan-default
-cmake --build --preset conan-release -j -t alpaqa_mex
-cmake --install build-matlab/build \
+cmake --preset conan-matlab
+cmake --build --preset conan-matlab-release -j -t alpaqa_mex
+cmake --install build/matlab \
     --prefix "$env:USERPROFILE\Documents\MATLAB" --component mex_interface
 ```
 
@@ -240,6 +278,6 @@ cmake --install build-matlab/build \
 To uninstall the alpaqa MATLAB/MEX interface, simply remove the `+alpaqa`
 directory, e.g. by running the following command in the MATLAB command window:
 
-```
+```matlab
 rmdir(fullfile(userpath, '+alpaqa'), 's')
 ```
