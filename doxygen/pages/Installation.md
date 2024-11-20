@@ -195,6 +195,7 @@ details.
 Similarly to the instructions above, create a virtual environment and install
 the dependencies using Conan. You want to add the `with_python` option.
 
+## Linux and macOS
 ```sh
 cd alpaqa
 python3 -m venv .venv
@@ -207,10 +208,22 @@ conan install . --build=missing -s build_type=Release -o \&:with_python=True \
     -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config"
 ```
 
+## Windows
+```ps1
+cd alpaqa
+py -m venv .venv
+&./.venv/Scripts/Activate.ps1
+pip install conan cmake ninja
+conan profile detect
+git clone https://github.com/tttapa/conan-recipes
+conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan install . --build=missing -s build_type=Release -o "&:with_python=True"
+```
+
 After creating the virtual environment and installing the dependencies, you can
 install the Python module using Pip (this may take a while):
 ```sh
-pip install -v .
+pip install -v ".[test]"
 ```
 To build the Python package without installing, you can use:
 ```sh
