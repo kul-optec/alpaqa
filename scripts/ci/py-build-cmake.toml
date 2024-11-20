@@ -1,0 +1,23 @@
+[cmake.options]
+"CMAKE_BUILD_TYPE" = "Debug"  # Forces pybind11 to keep debug symbols (https://github.com/pybind/pybind11/issues/4454)
+
+# We install two configurations by default: Debug and Release
+[cmake.10]
+config = "Debug"
+build_presets = "conan-python-debug"
+[cmake.20]
+config = "Release"
+build_presets = "conan-python-release"
+
+# Build Windows:
+#   The "Debug" CMake configuration selects the debug ABI of CPython. Here we
+#   only want to build alpaqa itself in debug mode, without affecting the
+#   Python ABI, so we use the "RelWithDebInfo" config, but disable optimizations
+#   to mimic what we would get with the real "Debug" config.
+[windows.cmake.options]
+CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Zi /Ob0 /Od /RTC1"
+CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF"
+ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
+[windows.cmake.10]
+config = "RelWithDebInfo"
+build_presets = "conan-python-relwithdebinfo"

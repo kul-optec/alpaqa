@@ -107,7 +107,6 @@ cat <<- EOF > "$config"
 os=linux
 toolchain_file=!  # Set by the Conan preset
 cmake.options+={
-    USE_GLOBAL_PYBIND11=true,  # Package provided by Conan, not by Pip
     CMAKE_C_COMPILER_LAUNCHER="ccache",
     CMAKE_CXX_COMPILER_LAUNCHER="ccache",
     ALPAQA_WITH_PY_STUBS=true
@@ -124,13 +123,17 @@ cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
 develop=false
 if $develop; then
     pip install -e ".[test]" -v \
+        --config-settings=--local="$PWD/scripts/ci/py-build-cmake.toml" \
         --config-settings=--cross="$cross_cfg" \
         --config-settings=--cross="$PWD/$config"
 else
     python -m build -w "." -o staging \
+        -C--local="$PWD/scripts/ci/py-build-cmake.toml" \
         -C--cross="$cross_cfg" \
         -C--cross="$PWD/$config"
     python -m build -w "python/alpaqa-debug" -o staging \
+        -C--local="$PWD/scripts/ci/py-build-cmake.toml" \
+        -C--component="$PWD/scripts/ci/py-build-cmake.component.toml" \
         -C--cross="$cross_cfg" \
         -C--cross="$PWD/$config"
     pip install -f staging --force-reinstall --no-deps \

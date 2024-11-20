@@ -27,7 +27,15 @@ dependencies = ["numpy<3", "casadi~=3.6.7", "cmake>=3.28,<4", "ninja~=1.11.1"]
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
-docs = ["breathe~=4.35.0", "sphinx>=7.2.2,<8", "sphinx-tabs~=3.4.4", "sphinxcontrib-matlabdomain~=0.20.2", "sphinxcontrib-moderncmakedomain~=3.27.0", "furo==2023.08.19", "matplotlib"]
+docs = [
+    "breathe~=4.35.0",
+    "sphinx>=7.2.2,<8",
+    "sphinx-tabs~=3.4.4",
+    "sphinxcontrib-matlabdomain~=0.20.2",
+    "sphinxcontrib-moderncmakedomain~=3.27.0",
+    "furo==2023.08.19",
+    "matplotlib",
+]
 debug = ["alpaqa-debug==1.0.0a20.dev0"]
 test = ["pytest>=7.2.0,<7.5", "qpalm~=1.2.1", "scipy>=1.9.3,<2"]
 
@@ -68,56 +76,29 @@ exclude = []
 minimum_version = "3.24"
 source_path = "."
 args = ["-Wdev"]
+preset = "conan-python"
+build_presets = "conan-python-release"
+config = "Release"
+build_path = "build/python"
 install_components = ["python_modules", "python_stubs"]
 [tool.py-build-cmake.cmake.options]
-"ALPAQA_WITH_PYTHON:BOOL" = "On"
-"ALPAQA_WITH_TESTS:BOOL" = "Off"
-"ALPAQA_WITH_EXAMPLES:BOOL" = "Off"
-"ALPAQA_WITH_DRIVERS:BOOL" = "Off"
-"ALPAQA_WITH_GRADIENT_CHECKER:BOOL" = "Off"
-"ALPAQA_WITH_LBFGSB:BOOL" = "Off"
-"ALPAQA_WITH_SINGLE_PRECISION:BOOL" = "Off"
-"ALPAQA_WITH_LONG_DOUBLE:BOOL" = "On"
-"ALPAQA_WITH_QUAD_PRECISION:BOOL" = "Off"
-"ALPAQA_WITH_UBSAN_DEBUG:BOOL" = "Off"
-"ALPAQA_WITH_ASAN_DEBUG:BOOL" = "Off"
-"ALPAQA_DEBUG_CHECKS_EIGEN:BOOL" = "On"
-"CMAKE_BUILD_TYPE" = "Debug"  # Forces pybind11 to keep debug symbols (https://github.com/pybind/pybind11/issues/4454)
-
-# Build Linux
+ALPAQA_WITH_PYTHON = true
+ALPAQA_WITH_TESTS = false
+ALPAQA_WITH_EXAMPLES = false
+ALPAQA_WITH_DRIVERS = false
+ALPAQA_WITH_GRADIENT_CHECKER = false
+ALPAQA_WITH_LBFGSB = false
+ALPAQA_WITH_SINGLE_PRECISION = false
+ALPAQA_WITH_LONG_DOUBLE = true
+ALPAQA_WITH_QUAD_PRECISION = false
+ALPAQA_WITH_UBSAN_DEBUG = false
+ALPAQA_WITH_ASAN_DEBUG = false
+ALPAQA_DEBUG_CHECKS_EIGEN = true
+USE_GLOBAL_PYBIND11 = true           # Use the package provided by Conan, not by Pip
 [tool.py-build-cmake.linux.cmake]
 generator = "Ninja Multi-Config"
-preset = "conan-default"
-[tool.py-build-cmake.linux.cmake.10]
-config = "Debug"
-build_presets = "conan-debug"
-[tool.py-build-cmake.linux.cmake.20]
-config = "Release"
-build_presets = "conan-release"
-
-# Build macOS
 [tool.py-build-cmake.mac.cmake]
 generator = "Ninja Multi-Config"
-[tool.py-build-cmake.mac.cmake.10]
-config = "Debug"
-build_presets = "conan-debug"
-[tool.py-build-cmake.mac.cmake.20]
-config = "Release"
-build_presets = "conan-release"
-
-# Build Windows
-[tool.py-build-cmake.windows.cmake]
-preset = "conan-default"
-[tool.py-build-cmake.windows.cmake.options]
-CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Zi /Ob0 /Od /RTC1"
-CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF"
-ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
-[tool.py-build-cmake.windows.cmake.10]
-config = "RelWithDebInfo"
-build_presets = "conan-relwithdebinfo"
-[tool.py-build-cmake.windows.cmake.20]
-config = "Release"
-build_presets = "conan-release"
 
 [tool.py-build-cmake.stubgen]
 args = ["-v"]
@@ -127,7 +108,7 @@ mode = "symlink"
 
 [tool.cibuildwheel]
 build-verbosity = 1
-environment = { PY_BUILD_CMAKE_VERBOSE="1" }
+environment = { PY_BUILD_CMAKE_VERBOSE = "1" }
 test-command = "pytest {package}/python/test"
 test-extras = ["test"]
 

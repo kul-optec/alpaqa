@@ -70,7 +70,7 @@ class AlpaqaRecipe(ConanFile):
 
     def requirements(self):
         self.requires("eigen/tttapa.20240516", transitive_headers=True, override=True)
-        self.requires("guanaqo/1.0.0-alpha.2", transitive_headers=True)
+        self.requires("guanaqo/1.0.0-alpha.3", transitive_headers=True)
         self.test_requires("gtest/1.15.0")
         if self.options.with_external_casadi:
             self.requires("casadi/3.6.7", transitive_headers=True)
@@ -102,6 +102,11 @@ class AlpaqaRecipe(ConanFile):
             raise ConanInvalidConfiguration(msg)
 
     def layout(self):
+        if self.folders.build_folder_vars is None:
+            if self.options.with_python:
+                self.folders.build_folder_vars = ['const.python']
+            if self.options.with_matlab:
+                self.folders.build_folder_vars = ['const.matlab']
         cmake_layout(self)
 
     def generate(self):

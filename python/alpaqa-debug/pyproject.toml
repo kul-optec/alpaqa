@@ -26,6 +26,6 @@ build-backend = "py_build_cmake.build_component"
 
 [tool.py-build-cmake]
 main_project = "../.."
-[tool.py-build-cmake.component.10]
+[tool.py-build-cmake.component]
 install_components = ["python_modules_debug"]
 install_only = true
