@@ -113,7 +113,7 @@ cmake --install build --prefix "$VIRTUAL_ENV" --config Release  # optional
 The instructions for Windows are quite similar to the ones for Linux, but you'll
 usually want to use the default generator rather than Ninja when doing
 `conan install`:
-```sh
+```ps1
 cd alpaqa
 py -m venv .venv
 &./.venv/Scripts/Activate.ps1
@@ -124,7 +124,7 @@ conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
 conan install . --build=missing -s build_type=Release
 cmake --preset conan-default
 cmake --build --preset conan-release
-cmake --install build --prefix "$VIRTUAL_ENV" --config Release  # optional
+cmake --install build --prefix "$env:VIRTUAL_ENV" --config Release  # optional
 ```
 
 ## macOS
