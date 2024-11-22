@@ -108,11 +108,9 @@ config="$triple.py-build-cmake.config.pbc"
 cat <<- EOF > "$config"
 os=linux
 toolchain_file=!  # Set by the Conan preset
-cmake.options+={
-    CMAKE_C_COMPILER_LAUNCHER="ccache",
-    CMAKE_CXX_COMPILER_LAUNCHER="ccache",
-    ALPAQA_WITH_PY_STUBS=true
-}
+cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
+cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
+cmake.options.ALPAQA_WITH_PY_STUBS=true
 EOF
 cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
 develop=false

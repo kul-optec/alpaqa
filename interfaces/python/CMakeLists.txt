@@ -103,6 +103,7 @@ if (ALPAQA_ENABLE_PCH)
         <pybind11/iostream.h>
         <pybind11/stl.h>)
 endif()
+add_custom_target(python_modules DEPENDS _alpaqa)
 
 # Install the Python module (py-build-cmake)
 install(TARGETS _alpaqa

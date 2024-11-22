@@ -102,6 +102,8 @@ set(ALPAQA_INSTALL_ZSHCOMPLETEDIR "${ALPAQA_INSTALL_DATADIR}/zsh/site-functions"
     CACHE PATH "Installation directory for Zsh completion scripts")
 set(ALPAQA_INSTALL_BASHCOMPLETEDIR "${ALPAQA_INSTALL_DATADIR}/bash-completion/completions"
     CACHE PATH "Installation directory for Bash completion scripts")
+set(ALPAQA_INSTALL_PYSTUBSDIR ""
+    CACHE PATH "Installation directory for Python stubs (relative to Python package)")
 option(ALPAQA_STANDALONE
     "Install with relative RPATH to locate its own shared libraries" On)
 

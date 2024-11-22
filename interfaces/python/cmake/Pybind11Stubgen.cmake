@@ -8,7 +8,7 @@ function(pybind11_stubgen target)
     endif()
 
     set(STUBGEN_MODULE $<TARGET_FILE_BASE_NAME:${target}>)
-    set(STUBGEN_CMD "\"${Python3_EXECUTABLE}\" -m pybind11_stubgen -o . 
+    set(STUBGEN_CMD "\"${Python3_EXECUTABLE}\" -m pybind11_stubgen -o \"${ALPAQA_INSTALL_PYSTUBSDIR}\" 
         --exit-code --numpy-array-use-type-var --enum-class-locations Sign:LBFGS
         \"${STUBGEN_MODULE}\"")
     install(CODE "
