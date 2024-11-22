@@ -70,7 +70,7 @@ class AlpaqaRecipe(ConanFile):
 
     def requirements(self):
         self.requires("eigen/tttapa.20240516", transitive_headers=True, force=True)
-        self.requires("guanaqo/1.0.0-alpha.3", transitive_headers=True)
+        self.requires("guanaqo/1.0.0-alpha.4", transitive_headers=True)
         self.test_requires("gtest/1.15.0")
         if self.options.with_external_casadi:
             self.requires("casadi/3.6.7", transitive_headers=True)
@@ -79,7 +79,7 @@ class AlpaqaRecipe(ConanFile):
         if self.options.with_ipopt:
             self.requires("ipopt/3.14.16", transitive_headers=True)
         if self.options.with_qpalm:
-            self.requires("qpalm/1.2.4", transitive_headers=True)
+            self.requires("qpalm/1.2.5", transitive_headers=True)
         if self.options.with_python or self.options.with_python_problem_loader:
             self.requires("pybind11/2.13.6")
         if self.options.with_matlab:

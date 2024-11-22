@@ -350,7 +350,7 @@ endif()
 
 if (ALPAQA_WITH_QPALM)
     message(STATUS "Compiling QPALM solver adapter")
-    find_package(QPALM_cxx REQUIRED)
+    find_package(QPALM REQUIRED COMPONENTS cxx)
     add_library(qpalm-adapter "interop/qpalm/src/qpalm-adapter.cpp")
     if (ALPAQA_WITH_DRIVERS)
         target_sources(qpalm-adapter PRIVATE
