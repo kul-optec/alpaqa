@@ -134,8 +134,8 @@ jobs:
       image: ubuntu:jammy
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
-        host: [x86_64-bionic-linux-gnu, armv7-neon-linux-gnueabihf, armv6-rpi-linux-gnueabihf, aarch64-rpi3-linux-gnu]
+        python-version: ['3.13']
+        host: [x86_64-bionic-linux-gnu]
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
@@ -205,8 +205,8 @@ jobs:
           for cfg in Debug Release; do
               conan install . --build=missing \
                   -pr:h python.profile \
-                  -o \&:with_ipopt=True -o \&:with_external_casadi=True \
-                  -o \&:with_qpalm=True -o \&:with_cutest=True \
+                  -o \&:with_ipopt=False -o \&:with_external_casadi=False \
+                  -o \&:with_qpalm=False -o \&:with_cutest=False \
                   -o \&:with_python=True \
                   -o "openblas/*:target=$openblas_tgt" \
                   -s "casadi/*:build_type=Release" \
