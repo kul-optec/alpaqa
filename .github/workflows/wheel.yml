@@ -69,7 +69,6 @@ jobs:
           tools.build:skip_test=true
           tools.build.cross_building:can_run=true
           tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-          tools.build:skip_test=true
           tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
           [buildenv]
           CFLAGS+= -fdiagnostics-color
@@ -100,7 +99,8 @@ jobs:
             --local scripts/ci/py-build-cmake.toml \
             --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
             --cross cross.pbc \
-            configure --index 20 -- -D ALPAQA_INSTALL_PYSTUBSDIR="$PWD/stubs"
+            configure --index 20 \
+            -- -D ALPAQA_INSTALL_PYSTUBSDIR="$PWD/stubs/python/alpaqa"
           py-build-cmake \
             --local scripts/ci/py-build-cmake.toml \
             --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
@@ -118,7 +118,7 @@ jobs:
             --cross cross.pbc \
             install --index 20 --component python_stubs \
             -- --prefix /tmp/_alpaqa
-          tar cf stubs.tar stubs
+          tar cf stubs.tar -C stubs python
       # Upload
       - name: Upload stubs
         uses: actions/upload-artifact@v4
@@ -128,23 +128,19 @@ jobs:
           path: stubs.tar
 
   build-linux:
-    if: false
     needs: [generate-stubs]
     runs-on: ubuntu-latest
     container: 
       image: ubuntu:jammy
     strategy:
       matrix:
-        pypy: ['']
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
-        host: [x86_64-centos7-linux-gnu, armv7-neon-linux-gnueabihf, armv6-rpi-linux-gnueabihf, aarch64-rpi3-linux-gnu]
-        exclude:
-          - python-version: '3.13'
-            host: armv6-rpi-linux-gnueabihf
+        host: [x86_64-bionic-linux-gnu, armv7-neon-linux-gnueabihf, armv6-rpi-linux-gnueabihf, aarch64-rpi3-linux-gnu]
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
+      CONAN_HOME: /root/.conan2
     steps:
       # Git clone
       - name: Install git
@@ -154,11 +150,11 @@ jobs:
           submodules: recursive
       # Tools
       - name: Install tools
-        uses: ./.github/workflows/toolchain
+        id: tools
+        uses: ./.github/workflows/new-toolchain
         with:
           host: ${{ matrix.host }}
-          python-version: ${{ matrix.python-version }}
-          pypy: ${{ matrix.pypy }}
+          with-python: true
       # Ccache
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
@@ -166,11 +162,56 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}-ccache
+          key: python-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.host }}-ccache-${{ github.run_id }}
+          restore-keys: python-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.host }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ matrix.python-version }} -m pip install -U 'pip' 'build' 'pybind11-stubgen~=2.5' 'numpy<2' 'py-build-cmake~=0.3.0a2'
+        run: python${{ matrix.python-version }} -m pip install -U 'pip' 'build' 'conan'
+      # Conan
+      - name: Cache Conan
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CONAN_HOME }}/p
+          key: stubs-${{ runner.os }}-${{ matrix.host }}-conan-${{ github.run_id }}
+          restore-keys: stubs-${{ runner.os }}-${{ matrix.host }}-conan
+      - name: Install Conan
+        run: |
+          conan --version
+          conan profile detect -f
+          git clone https://github.com/tttapa/conan-recipes tttapa-conan-recipes
+          conan remote add tttapa-conan-recipes tttapa-conan-recipes --force
+      # Conan install dependencies
+      - name: Install Conan dependencies
+        run: |
+          pfx="${{ steps.tools.outputs.install-dir }}"
+          cat <<- EOF > python.profile
+          include($pfx.python.profile.conan)
+          [conf]
+          tools.build:skip_test=true
+          tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+          tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
+          [buildenv]
+          CFLAGS+= -fdiagnostics-color
+          CXXFLAGS+= -fdiagnostics-color
+          LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
+          EOF
+          case ${{ matrix.host }} in
+              x86_64-bionic*) openblas_tgt="HASWELL" ;;
+              aarch64-rpi3*) openblas_tgt="CORTEXA53" ;;
+              armv8-rpi3*) openblas_tgt="CORTEXA15" ;;
+              armv7-neon*) openblas_tgt="CORTEXA9" ;;
+              armv6-rpi*) openblas_tgt="ARMV6" ;;
+          esac
+          for cfg in Debug Release; do
+              conan install . --build=missing \
+                  -pr:h python.profile \
+                  -o \&:with_ipopt=True -o \&:with_external_casadi=True \
+                  -o \&:with_qpalm=True -o \&:with_cutest=True \
+                  -o \&:with_python=True \
+                  -o "openblas/*:target=$openblas_tgt" \
+                  -s "casadi/*:build_type=Release" \
+                  -s build_type=$cfg
+          done
       # Download stubs
       - name: Download stubs
         uses: actions/download-artifact@v4
@@ -181,47 +222,41 @@ jobs:
       # Build
       - name: Build wheels
         run: |
-          host="${{ matrix.host }}"
-          staging="/opt/$host"
-          cat > ninja-debug-release.cross.toml <<- EOF
-          [cmake]
-          build_args = ["1"]
-          config = ["Debug", "Release"]
-          generator = "Ninja Multi-Config"
-          [cmake.options]
-          CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.13.6;$staging/eigen-master;$staging/casadi"
-          USE_GLOBAL_PYBIND11 = "On"
-          ALPAQA_WITH_CUTEST = "On"
-          ALPAQA_WITH_EXTERNAL_CASADI = "On"
+          pfx="${{ steps.tools.outputs.install-dir }}"
+          py_majmin=${{ matrix.python-version }}
+          cat <<- EOF > cross.pbc
+          os=linux
+          toolchain_file=!  # Set by the Conan preset
+          cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
+          cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
+          cmake.options.ALPAQA_WITH_PY_STUBS=false
           EOF
-          python${{ matrix.python-version }} -m build -w . \
-              -C--cross="$PWD/ninja-debug-release.cross.toml" \
-              -C--cross="$staging/$host.py-build-cmake.cross.toml"
-        env:
-          CXXFLAGS: '-static-libstdc++'
+          python3 -m build -w \
+            -C local=scripts/ci/py-build-cmake.toml \
+            -C cross=$pfx.python$py_majmin.py-build-cmake.cross.toml \
+            -C cross=cross.pbc
       - name: Build debug wheels
-        if: ${{ matrix.host == 'x86_64-centos7-linux-gnu' }}
+        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
         run: |
-          host="${{ matrix.host }}"
-          staging="/opt/$host"
-          python${{ matrix.python-version }} -m build -w python/alpaqa-debug \
-              -C--cross="$PWD/ninja-debug-release.cross.toml" \
-              -C--cross="$staging/$host.py-build-cmake.cross.toml" \
-              -o dist-debug
-        env:
-          CXXFLAGS: '-static-libstdc++'
+          pfx="${{ steps.tools.outputs.install-dir }}"
+          py_majmin=${{ matrix.python-version }}
+          python3 -m build -w python/alpaqa-debug -o dist-debug \
+            -C local=scripts/ci/py-build-cmake.toml \
+            -C component=scripts/ci/py-build-cmake.component.toml \
+            -C cross=$pfx.python$py_majmin.py-build-cmake.cross.toml \
+            -C cross=cross.pbc
       # Upload
       - name: Upload Wheels
         uses: actions/upload-artifact@v4
         with:
-          name: whl-linux-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}
+          name: whl-linux-${{ matrix.python-version }}-${{ matrix.host }}
           retention-days: 1
           path: dist/*.whl
       - name: Upload debug Wheels
-        if: ${{ matrix.host == 'x86_64-centos7-linux-gnu' }}
+        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
         uses: actions/upload-artifact@v4
         with:
-          name: whl-debug-linux-${{ matrix.pypy }}${{ matrix.python-version }}-${{ matrix.host }}
+          name: whl-debug-linux-${{ matrix.python-version }}-${{ matrix.host }}
           retention-days: 1
           path: dist-debug/*.whl
 
@@ -231,7 +266,7 @@ jobs:
     container:
       image: ubuntu:jammy
     env:
-      HOST: 'x86_64-centos7-linux-gnu'
+      HOST: 'x86_64-bionic-linux-gnu'
       PYTHON_VERSION: '3.11'
     steps:
       # Git clone
