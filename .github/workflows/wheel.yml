@@ -166,7 +166,7 @@ jobs:
           restore-keys: python-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.host }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ matrix.python-version }} -m pip install -U 'pip' 'build' 'conan'
+        run: python3 -m pip install -U 'pip' 'build' 'conan'
       # Conan
       - name: Cache Conan
         uses: actions/cache@v4
@@ -221,6 +221,7 @@ jobs:
         run: tar xf stubs.tar
       # Build
       - name: Build wheels
+        if: false
         run: |
           pfx="${{ steps.tools.outputs.install-dir }}"
           py_majmin=${{ matrix.python-version }}
@@ -236,7 +237,7 @@ jobs:
             -C cross=$pfx.python$py_majmin.py-build-cmake.cross.toml \
             -C cross=cross.pbc
       - name: Build debug wheels
-        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
+        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' && false }}
         run: |
           pfx="${{ steps.tools.outputs.install-dir }}"
           py_majmin=${{ matrix.python-version }}
@@ -247,13 +248,14 @@ jobs:
             -C cross=cross.pbc
       # Upload
       - name: Upload Wheels
+        if: false
         uses: actions/upload-artifact@v4
         with:
           name: whl-linux-${{ matrix.python-version }}-${{ matrix.host }}
           retention-days: 1
           path: dist/*.whl
       - name: Upload debug Wheels
-        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
+        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' && false }}
         uses: actions/upload-artifact@v4
         with:
           name: whl-debug-linux-${{ matrix.python-version }}-${{ matrix.host }}
