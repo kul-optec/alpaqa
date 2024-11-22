@@ -85,7 +85,6 @@ jobs:
             -s build_type=Release
       # Build
       - name: Native build
-        if: false
         run: |
           pfx="${{ steps.tools.outputs.install-dir }}"
           py_majmin=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
@@ -120,7 +119,6 @@ jobs:
           tar cf stubs.tar stubs
       # Upload
       - name: Upload stubs
-        if: false
         uses: actions/upload-artifact@v4
         with:
           name: stubs
