@@ -39,6 +39,7 @@ profile="$PWD/profile.local.conan"
 cat <<- EOF > "$profile"
 include($pfx.profile.conan)
 [conf]
+tools.build:skip_test=true
 tools.build.cross_building:can_run=true
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 [buildenv]
@@ -50,9 +51,11 @@ python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
 include($pfx.python.profile.conan)
 [conf]
+tools.build:skip_test=true
 tools.build.cross_building:can_run=true
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 tools.build:skip_test=true
+tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
 [buildenv]
 CFLAGS=-march=native -fdiagnostics-color
 CXXFLAGS=-march=native -fdiagnostics-color
@@ -94,7 +97,6 @@ popd
 for cfg in Debug Release; do
     conan install . --build=missing \
         -pr:h "$python_profile" \
-        -c tools.cmake.cmake_layout:build_folder_vars="['settings.build_type', 'const.python']" \
         -o \&:with_ipopt=True -o \&:with_external_casadi=True \
         -o \&:with_qpalm=True -o \&:with_cutest=True \
         -o \&:with_python=True \
@@ -111,31 +113,27 @@ cmake.options+={
     CMAKE_CXX_COMPILER_LAUNCHER="ccache",
     ALPAQA_WITH_PY_STUBS=true
 }
-cmake.10.preset="conan-debug-python"
-cmake.10.build_presets=["conan-debug-python"]
-cmake.10.build_path="build/debug-python"
-cmake.10.env.ALPAQA_PYTHON_DEBUG="1"
-cmake.20.preset="conan-release-python"
-cmake.20.build_presets=["conan-release-python"]
-cmake.20.build_path="build/release-python"
 EOF
 cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
 develop=false
 if $develop; then
     pip install -e ".[test]" -v \
-        --config-settings=--local="$PWD/scripts/ci/py-build-cmake.toml" \
-        --config-settings=--cross="$cross_cfg" \
-        --config-settings=--cross="$PWD/$config"
+        -C local="$PWD/scripts/ci/py-build-cmake.toml" \
+        -C cross="$cross_cfg" \
+        -C cross="$PWD/$config"
 else
+    tag=\"$(date -u +"%Y_%m_%dT%H.%M.%SZ")\"
     python -m build -w "." -o staging \
-        -C--local="$PWD/scripts/ci/py-build-cmake.toml" \
-        -C--cross="$cross_cfg" \
-        -C--cross="$PWD/$config"
+        -C local="$PWD/scripts/ci/py-build-cmake.toml" \
+        -C cross="$cross_cfg" \
+        -C cross="$PWD/$config" \
+        -C override=wheel.build_tag="$tag"
     python -m build -w "python/alpaqa-debug" -o staging \
-        -C--local="$PWD/scripts/ci/py-build-cmake.toml" \
-        -C--component="$PWD/scripts/ci/py-build-cmake.component.toml" \
-        -C--cross="$cross_cfg" \
-        -C--cross="$PWD/$config"
+        -C local="$PWD/scripts/ci/py-build-cmake.toml" \
+        -C component="$PWD/scripts/ci/py-build-cmake.component.toml" \
+        -C cross="$cross_cfg" \
+        -C cross="$PWD/$config" \
+        -C override=wheel.build_tag="$tag"
     pip install -f staging --force-reinstall --no-deps \
         "alpaqa==1.0.0a20" "alpaqa-debug==1.0.0a20"
     pip install -f staging \
