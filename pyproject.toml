@@ -64,6 +64,8 @@ directory = "python"
 include = [
     "README.md",
     "CMakeLists.txt",
+    "CMakePresets.json",
+    "conanfile.py",
     "src",
     "cmake",
     "interfaces",
