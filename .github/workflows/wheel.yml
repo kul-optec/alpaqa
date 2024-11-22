@@ -232,7 +232,7 @@ jobs:
             -C cross=$pfx.python$py_majmin.py-build-cmake.cross.toml \
             -C cross=cross.pbc
       - name: Build debug wheels
-        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' && false }}
+        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
         run: |
           pfx="${{ steps.tools.outputs.install-dir }}"
           py_majmin=${{ matrix.python-version }}
@@ -249,7 +249,7 @@ jobs:
           retention-days: 1
           path: dist/*.whl
       - name: Upload debug Wheels
-        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' && false }}
+        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
         uses: actions/upload-artifact@v4
         with:
           name: whl-debug-linux-${{ matrix.python-version }}-${{ matrix.host }}
