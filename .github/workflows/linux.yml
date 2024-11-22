@@ -45,14 +45,14 @@ jobs:
       - name: Cache ccache
         uses: actions/cache@v4
         with:
-          path: ${{ env.CCACHE_DIR }}/p
+          path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.os }}-linux-bin-${{ matrix.host }}-ccache-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-linux-bin-${{ matrix.host }}-ccache
       # Conan
       - name: Cache Conan
         uses: actions/cache@v4
         with:
-          path: ${{ env.CONAN_HOME }}
+          path: ${{ env.CONAN_HOME }}/p
           key: ${{ runner.os }}-linux-bin-${{ matrix.host }}-conan-${{ github.run_id }}
           restore-keys: ${{ runner.os }}-linux-bin-${{ matrix.host }}-conan
       - name: Install Conan
