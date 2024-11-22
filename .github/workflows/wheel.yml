@@ -16,8 +16,6 @@ jobs:
       image: ubuntu:jammy
     env:
       HOST: 'x86_64-bionic-linux-gnu'
-      CMAKE_C_COMPILER_LAUNCHER: ccache
-      CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
       CONAN_HOME: /root/.conan2
     steps:
@@ -137,8 +135,6 @@ jobs:
         python-version: ['3.13']
         host: [x86_64-bionic-linux-gnu]
     env:
-      CMAKE_C_COMPILER_LAUNCHER: ccache
-      CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
       CONAN_HOME: /root/.conan2
     steps:

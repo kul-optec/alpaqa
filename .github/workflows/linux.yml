@@ -21,8 +21,6 @@ jobs:
           - host: aarch64-rpi3-linux-gnu
             openblas-target: CORTEXA53
     env:
-      CMAKE_C_COMPILER_LAUNCHER: ccache
-      CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
       CONAN_HOME: /root/.conan2
       LDFLAGS: '-static-libstdc++ -static-libgcc -flto=auto'
@@ -78,6 +76,9 @@ jobs:
       # Configure and Build
       - name: Configure (RelWithDebInfo)
         run: cmake --preset conan-default
+        env:
+          CMAKE_C_COMPILER_LAUNCHER: ccache
+          CMAKE_CXX_COMPILER_LAUNCHER: ccache
       - name: Build (RelWithDebInfo)
         run: cmake --build --preset conan-relwithdebinfo
       # Cleanup
@@ -99,6 +100,9 @@ jobs:
       # Configure and Build
       - name: Configure (Debug)
         run: cmake --preset conan-default
+        env:
+          CMAKE_C_COMPILER_LAUNCHER: ccache
+          CMAKE_CXX_COMPILER_LAUNCHER: ccache
       - name: Build (Debug)
         run: cmake --build --preset conan-debug
       # Package
