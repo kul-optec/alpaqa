@@ -110,12 +110,14 @@ jobs:
             --local scripts/ci/py-build-cmake.toml \
             --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
             --cross cross.pbc \
-            install --index 20 --component python_modules --prefix /tmp/_alpaqa
+            install --index 20 --component python_modules \
+            -- --prefix /tmp/_alpaqa
           py-build-cmake \
             --local scripts/ci/py-build-cmake.toml \
             --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
             --cross cross.pbc \
-            install --index 20 --component python_stubs --prefix /tmp/_alpaqa
+            install --index 20 --component python_stubs \
+            -- --prefix /tmp/_alpaqa
           tar cf stubs.tar stubs
       # Upload
       - name: Upload stubs
