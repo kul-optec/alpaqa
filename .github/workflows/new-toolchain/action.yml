@@ -12,10 +12,22 @@ inputs:
     required: false
     default: '13'
     type: string
+  python-dev-version:
+    required: false
+    default: '0.0.6'
+    type: string
   tools-url:
     required: false
     default: 'https://github.com/tttapa/toolchains/releases/download'
     type: string
+  python-dev-url:
+    required: false
+    default: 'https://github.com/tttapa/python-dev/releases/download'
+    type: string
+  with-python:
+    required: false
+    default: false
+    type: boolean
   cmake-version:
     required: false
     default: '3.30.5'
@@ -57,7 +69,7 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ inputs.root-path }}/opt
-        key: ${{ runner.os }}-${{ inputs.host }}-tools-${{ inputs.tools-version }}-${{ inputs.cmake-version }}
+        key: ${{ runner.os }}-${{ inputs.host }}-tools-${{ inputs.tools-version }}-${{ inputs.cmake-version }}-${{ inputs.python-dev-version }}-${{ inputs.with-python }}
     # CMake
     - name: Install CMake
       if: ${{ steps.cache-tools.outputs.cache-hit != 'true' }}
@@ -85,6 +97,15 @@ runs:
         ${{ inputs.sudo }} cp ${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libgfortran.so.*.*.* /usr/local/lib
         ${{ inputs.sudo }} cp ${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}/${{ inputs.host }}/lib64/libstdc++.so.*.*.* /usr/local/lib
         ${{ inputs.sudo }} ldconfig
+    # Python libraries
+    - name: Python development
+      if: ${{ steps.cache-tools.outputs.cache-hit != 'true' && inputs.with-python }}
+      shell: bash
+      run: >
+        chmod u+w "${{ inputs.root-path }}/opt/x-tools/${{ inputs.host }}";
+        url="${{ inputs.python-dev-url }}/${{ inputs.python-dev-version }}";
+        wget "$url/python-dev-${{ inputs.host }}.tar.xz" -O- |
+        tar xJ -C ${{ inputs.root-path }}/opt
     # Save output paths
     - name: Write outputs
       id: out

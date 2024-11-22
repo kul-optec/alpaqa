@@ -8,7 +8,6 @@ on:
 env:
   PACKAGE_VERSION: "1.0.0a20"
   PACKAGE_NAME: alpaqa
-  C_EXTENSIONS: _alpaqa
 
 jobs:
   generate-stubs:
@@ -16,11 +15,11 @@ jobs:
     container:
       image: ubuntu:jammy
     env:
-      HOST: 'x86_64-centos7-linux-gnu'
-      PYTHON_VERSION: '3.11'
+      HOST: 'x86_64-bionic-linux-gnu'
       CMAKE_C_COMPILER_LAUNCHER: ccache
       CMAKE_CXX_COMPILER_LAUNCHER: ccache
       CCACHE_DIR: /root/.ccache
+      CONAN_HOME: /root/.conan2
     steps:
       # Git clone
       - name: Install git
@@ -30,11 +29,11 @@ jobs:
           submodules: recursive
       # Tools
       - name: Install tools
-        uses: ./.github/workflows/toolchain
+        id: tools
+        uses: ./.github/workflows/new-toolchain
         with:
           host: ${{ env.HOST }}
-          python-version: ${{ env.PYTHON_VERSION }}
-          pypy: ''
+          with-python: true
       # Ccache
       - name: Prepare ccache directory
         run: mkdir -p "${{ env.CCACHE_DIR }}"
@@ -42,30 +41,86 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-${{ env.PYTHON_VERSION }}-${{ env.HOST }}-ccache
+          key: stubs-${{ runner.os }}-${{ env.HOST }}-ccache-${{ github.run_id }}
+          restore-keys: stubs-${{ runner.os }}-${{ env.HOST }}-ccache
       # Pip install dependencies
       - name: Install Python dependencies
-        run: python${{ env.PYTHON_VERSION }} -m pip install -U 'pip' 'build' 'pybind11-stubgen~=2.5' 'numpy<2' 'py-build-cmake~=0.3.0a2'
+        run: python3 -m pip install -U 'pip' 'build' 'conan' 'pybind11-stubgen~=2.5' 'numpy<3' 'py-build-cmake~=0.3.0a2'
+      # Conan
+      - name: Cache Conan
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CONAN_HOME }}
+          key: stubs-${{ runner.os }}-${{ env.HOST }}-conan-${{ github.run_id }}
+          restore-keys: stubs-${{ runner.os }}-${{ env.HOST }}-conan
+      - name: Install Conan
+        run: |
+          conan --version
+          conan profile detect -f
+          git clone https://github.com/tttapa/conan-recipes tttapa-conan-recipes
+          conan remote add tttapa-conan-recipes tttapa-conan-recipes --force
+      # Conan install dependencies
+      - name: Install Conan dependencies
+        run: |
+          pfx="${{ steps.tools.outputs.install-dir }}"
+          cat <<- EOF > python.profile
+          include($pfx.python.profile.conan)
+          [conf]
+          tools.build:skip_test=true
+          tools.build.cross_building:can_run=true
+          tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+          tools.build:skip_test=true
+          tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
+          [buildenv]
+          CFLAGS+= -fdiagnostics-color
+          CXXFLAGS+= -fdiagnostics-color
+          LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
+          EOF
+          conan install . --build=missing \
+            -pr:h python.profile \
+            -o \&:with_ipopt=True -o \&:with_external_casadi=True \
+            -o \&:with_qpalm=True -o \&:with_cutest=True \
+            -o \&:with_python=True \
+            -o "openblas/*:target=HASWELL" \
+            -s build_type=Release
       # Build
       - name: Native build
+        if: false
         run: |
-          host="${{ env.HOST }}"
-          staging="/opt/$host"
-          pbc_cli="python${{ env.PYTHON_VERSION }} -m py_build_cmake.cli"
-          $pbc_cli -B native-build configure -- \
-              -D CMAKE_C_COMPILER="$staging/x-tools/$host/bin/$host-gcc" \
-              -D CMAKE_CXX_COMPILER="$staging/x-tools/$host/bin/$host-g++" \
-              -D CMAKE_Fortran_COMPILER="$staging/x-tools/$host/bin/$host-gfortran" \
-              -D USE_GLOBAL_PYBIND11=On \
-              -D ALPAQA_WITH_CUTEST=On \
-              -D ALPAQA_WITH_EXTERNAL_CASADI=On \
-              -D CMAKE_FIND_ROOT_PATH="$staging/pybind11-2.13.6;$staging/eigen-master;$staging/casadi"
-          $pbc_cli -B native-build build -- -t ${{ env.C_EXTENSIONS }}
-          $pbc_cli -B native-build install --component python_stubs -- --prefix "$PWD/staging/python"
-          tar cf stubs.tar -C "$PWD/staging" python
+          pfx="${{ steps.tools.outputs.install-dir }}"
+          py_majmin=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+          cat <<- EOF > cross.pbc
+          os=linux
+          toolchain_file=!  # Set by the Conan preset
+          cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
+          cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
+          cmake.options.ALPAQA_WITH_PY_STUBS=true
+          EOF
+          py-build-cmake --version
+          py-build-cmake --verbose \
+            --local scripts/ci/py-build-cmake.toml \
+            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
+            --cross cross.pbc \
+            configure --index 20 -- -D ALPAQA_INSTALL_PYSTUBSDIR="$PWD/stubs"
+          py-build-cmake \
+            --local scripts/ci/py-build-cmake.toml \
+            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
+            --cross cross.pbc \
+            build --index 20 -- -t python_modules
+          py-build-cmake \
+            --local scripts/ci/py-build-cmake.toml \
+            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
+            --cross cross.pbc \
+            install --index 20 --component python_modules --prefix /tmp/_alpaqa
+          py-build-cmake \
+            --local scripts/ci/py-build-cmake.toml \
+            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
+            --cross cross.pbc \
+            install --index 20 --component python_stubs --prefix /tmp/_alpaqa
+          tar cf stubs.tar stubs
       # Upload
       - name: Upload stubs
+        if: false
         uses: actions/upload-artifact@v4
         with:
           name: stubs
@@ -73,6 +128,7 @@ jobs:
           path: stubs.tar
 
   build-linux:
+    if: false
     needs: [generate-stubs]
     runs-on: ubuntu-latest
     container: 
@@ -170,6 +226,7 @@ jobs:
           path: dist-debug/*.whl
 
   build-linux-src:
+    if: false
     runs-on: ubuntu-latest
     container:
       image: ubuntu:jammy
@@ -223,6 +280,7 @@ jobs:
           path: dist/*.tar.gz
 
   test-linux:
+    if: false
     needs: [build-linux]
     runs-on: ubuntu-latest
     container: python:${{ matrix.python-version }}-bullseye
@@ -246,6 +304,7 @@ jobs:
 
 
   build-windows:
+    if: false
     needs: [generate-stubs]
     runs-on: windows-2022
     strategy:
@@ -314,6 +373,7 @@ jobs:
 
 
   build-macos:
+    if: false
     runs-on: macos-13
     strategy:
       matrix:
@@ -380,6 +440,7 @@ jobs:
           path: dist/*.whl
 
   test-macos:
+    if: false
     needs: [build-macos]
     runs-on: macos-13
     strategy:
