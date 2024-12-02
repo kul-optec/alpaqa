@@ -114,6 +114,9 @@ environment = { PY_BUILD_CMAKE_VERBOSE = "1" }
 test-command = "pytest {package}/python/test"
 test-extras = ["test"]
 
+[tool.cibuildwheel.config-settings]
+--local = "scripts/ci/py-build-cmake.toml"
+
 [tool.cibuildwheel.macos]
 archs = ["universal2"]
 before-build = [

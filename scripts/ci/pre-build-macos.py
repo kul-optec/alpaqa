@@ -70,6 +70,9 @@ Path("cibw.profile").write_text(profile)
 print(profile)
 
 opts = dict(shell=True, check=True)
+if not Path("recipes").exists():
+    run(f"git clone https://github.com/tttapa/conan-recipes recipes", **opts)
+    run(f"conan remote add tttapa-conan-recipes recipes --force", **opts)
 for c in ("Debug", "Release"):
     run(
         "conan install . -pr:h ./cibw.profile --build=missing -s build_type=" + c,

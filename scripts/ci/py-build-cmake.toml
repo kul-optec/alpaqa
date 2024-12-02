@@ -28,4 +28,6 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF
 ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
 [windows.cmake.10]
 install_config = "RelWithDebInfo"
+preset = "conan-python-relwithdebinfo"
 build_presets = "conan-python-relwithdebinfo"
+build_path="build/python-relwithdebinfo"
