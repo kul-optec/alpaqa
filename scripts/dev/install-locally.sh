@@ -50,12 +50,12 @@ EOF
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
 include($pfx.python.profile.conan)
+include($PWD/scripts/ci/alpaqa-python.profile)
+include($PWD/scripts/ci/$triple.profile)
 [conf]
-tools.build:skip_test=true
-tools.build.cross_building:can_run=true
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+tools.build.cross_building:can_run=true
 tools.build:skip_test=true
-tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
 [buildenv]
 CFLAGS=-march=native -fdiagnostics-color
 CXXFLAGS=-march=native -fdiagnostics-color
@@ -95,14 +95,7 @@ popd
 
 # Build Python package
 for cfg in Debug Release; do
-    conan install . --build=missing \
-        -pr:h "$python_profile" \
-        -o \&:with_ipopt=True -o \&:with_external_casadi=True \
-        -o \&:with_qpalm=True -o \&:with_cutest=True \
-        -o \&:with_python=True \
-        -o "openblas/*:target=HASWELL" \
-        -s "casadi/*:build_type=Release" \
-        -s build_type=$cfg
+    conan install . --build=missing -pr:h "$python_profile" -s build_type=$cfg
 done
 config="$triple.py-build-cmake.config.pbc"
 cat <<- EOF > "$config"
@@ -111,6 +104,7 @@ toolchain_file=!  # Set by the Conan preset
 cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
 cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
 cmake.options.ALPAQA_WITH_PY_STUBS=true
+cmake.options.USE_GLOBAL_PYBIND11=true
 EOF
 cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
 develop=false

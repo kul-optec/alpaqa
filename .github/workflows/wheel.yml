@@ -1,4 +1,4 @@
-name: 'Python Wheels'
+name: Python Wheels
 
 on:
   workflow_dispatch:
@@ -6,547 +6,283 @@ on:
     types: ['released', 'prereleased']
 
 env:
-  PACKAGE_VERSION: "1.0.0a20"
+  PACKAGE_VERSION: '1.0.0a20.dev0'
   PACKAGE_NAME: alpaqa
 
 jobs:
-  generate-stubs:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:jammy
-    env:
-      HOST: 'x86_64-bionic-linux-gnu'
-      CCACHE_DIR: /root/.ccache
-      CONAN_HOME: /root/.conan2
-    steps:
-      # Git clone
-      - name: Install git
-        run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      # Tools
-      - name: Install tools
-        id: tools
-        uses: ./.github/workflows/new-toolchain
-        with:
-          host: ${{ env.HOST }}
-          with-python: true
-      # Ccache
-      - name: Prepare ccache directory
-        run: mkdir -p "${{ env.CCACHE_DIR }}"
-      - name: Cache ccache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CCACHE_DIR }}
-          key: stubs-${{ runner.os }}-${{ env.HOST }}-ccache-${{ github.run_id }}
-          restore-keys: stubs-${{ runner.os }}-${{ env.HOST }}-ccache
-      # Pip install dependencies
-      - name: Install Python dependencies
-        run: python3 -m pip install -U 'pip' 'build' 'conan' 'pybind11-stubgen~=2.5' 'numpy<3' 'py-build-cmake~=0.3.0a2'
-      # Conan
-      - name: Cache Conan
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CONAN_HOME }}
-          key: stubs-${{ runner.os }}-${{ env.HOST }}-conan-${{ github.run_id }}
-          restore-keys: stubs-${{ runner.os }}-${{ env.HOST }}-conan
-      - name: Install Conan
-        run: |
-          conan --version
-          conan profile detect -f
-          git clone https://github.com/tttapa/conan-recipes tttapa-conan-recipes
-          conan remote add tttapa-conan-recipes tttapa-conan-recipes --force
-      # Conan install dependencies
-      - name: Install Conan dependencies
-        run: |
-          pfx="${{ steps.tools.outputs.install-dir }}"
-          cat <<- EOF > python.profile
-          include($pfx.python.profile.conan)
-          [conf]
-          tools.build:skip_test=true
-          tools.build.cross_building:can_run=true
-          tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-          tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
-          [buildenv]
-          CFLAGS+= -fdiagnostics-color
-          CXXFLAGS+= -fdiagnostics-color
-          LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
-          EOF
-          conan install . --build=missing \
-            -pr:h python.profile \
-            -o \&:with_ipopt=True -o \&:with_external_casadi=True \
-            -o \&:with_qpalm=True -o \&:with_cutest=True \
-            -o \&:with_python=True \
-            -o "openblas/*:target=HASWELL" \
-            -s build_type=Release
-      # Build
-      - name: Native build
-        run: |
-          pfx="${{ steps.tools.outputs.install-dir }}"
-          py_majmin=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-          cat <<- EOF > cross.pbc
-          os=linux
-          toolchain_file=!  # Set by the Conan preset
-          cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
-          cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
-          cmake.options.ALPAQA_WITH_PY_STUBS=true
-          EOF
-          py-build-cmake --version
-          py-build-cmake --verbose \
-            --local scripts/ci/py-build-cmake.toml \
-            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
-            --cross cross.pbc \
-            configure --index 20 \
-            -- -D ALPAQA_INSTALL_PYSTUBSDIR="$PWD/stubs/python/alpaqa"
-          py-build-cmake \
-            --local scripts/ci/py-build-cmake.toml \
-            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
-            --cross cross.pbc \
-            build --index 20 -- -t python_modules
-          py-build-cmake \
-            --local scripts/ci/py-build-cmake.toml \
-            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
-            --cross cross.pbc \
-            install --index 20 --component python_modules \
-            -- --prefix /tmp/_alpaqa
-          py-build-cmake \
-            --local scripts/ci/py-build-cmake.toml \
-            --cross $pfx.python$py_majmin.py-build-cmake.cross.toml \
-            --cross cross.pbc \
-            install --index 20 --component python_stubs \
-            -- --prefix /tmp/_alpaqa
-          tar cf stubs.tar -C stubs python
-      # Upload
-      - name: Upload stubs
-        uses: actions/upload-artifact@v4
-        with:
-          name: stubs
-          retention-days: 1
-          path: stubs.tar
-
-  build-linux:
-    needs: [generate-stubs]
-    runs-on: ubuntu-latest
-    container: 
-      image: ubuntu:jammy
+  # First we build the wheels natively (build system == host system).
+  # This allows us to import the compiled modules, and automatically generate
+  # stub files for them. Those stub files are then included in the sdist
+  # (source distribution), to be later included in the cross-compiled packages
+  # as well (because we can't generate stubs while cross-compiling).
+  # By building the native wheels first, we can already start testing while the
+  # cross-compiled versions are being built.
+  build-sdist:
+    name: Build sdist
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         python-version: ['3.13']
-        host: [x86_64-bionic-linux-gnu]
-    env:
-      CCACHE_DIR: /root/.ccache
-      CONAN_HOME: /root/.conan2
     steps:
-      # Git clone
-      - name: Install git
-        run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
         with:
-          submodules: recursive
-      # Tools
-      - name: Install tools
-        id: tools
-        uses: ./.github/workflows/new-toolchain
-        with:
-          host: ${{ matrix.host }}
-          with-python: true
-      # Ccache
-      - name: Prepare ccache directory
-        run: mkdir -p "${{ env.CCACHE_DIR }}"
-      - name: Cache ccache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CCACHE_DIR }}
-          key: python-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.host }}-ccache-${{ github.run_id }}
-          restore-keys: python-${{ runner.os }}-${{ matrix.python-version }}-${{ matrix.host }}-ccache
-      # Pip install dependencies
+          python-version: ${{ matrix.python-version }}
       - name: Install Python dependencies
-        run: python3 -m pip install -U 'pip' 'build' 'conan'
-      # Conan
-      - name: Cache Conan
+        run: >
+          pip install -U
+          pip build conan ninja 'py-build-cmake~=0.3.1' 'pybind11-stubgen~=2.5.1' 'numpy<3'
+
+        # Cache the Conan cache folder to speed up installation of the dependencies.
+      - name: Cache Conan dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ env.CONAN_HOME }}/p
-          key: stubs-${{ runner.os }}-${{ matrix.host }}-conan-${{ github.run_id }}
-          restore-keys: stubs-${{ runner.os }}-${{ matrix.host }}-conan
-      - name: Install Conan
+          path: ~/.conan2/p
+          # Key is unique, to force updating the cache, but we still want the
+          # cache to be restored, so we use restore-keys with a matching prefix.
+          key: ${{ runner.os }}-build-sdist-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-build-sdist-
+      - name: Prepare Conan configuration
         run: |
-          conan --version
           conan profile detect -f
-          git clone https://github.com/tttapa/conan-recipes tttapa-conan-recipes
-          conan remote add tttapa-conan-recipes tttapa-conan-recipes --force
-      # Conan install dependencies
+          cat <<- EOF > conan.profile
+          include(default)
+          include(${{ github.workspace }}/scripts/ci/alpaqa-python.profile)
+          [conf]
+          tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+          tools.build:skip_test=true
+          [buildenv]
+          CFLAGS=-fdiagnostics-color
+          CXXFLAGS=-fdiagnostics-color
+          LDFLAGS=-static-libgcc -static-libstdc++ -flto=auto
+          EOF
+      - name: Install Conan recipes
+        run: |
+          recipes="${{ github.workspace }}/tttapa-conan-recipes"
+          git clone https://github.com/tttapa/conan-recipes "$recipes"
+          conan remote add tttapa-conan-recipes "$recipes" --force
       - name: Install Conan dependencies
         run: |
-          pfx="${{ steps.tools.outputs.install-dir }}"
-          cat <<- EOF > python.profile
-          include($pfx.python.profile.conan)
-          [conf]
-          tools.build:skip_test=true
-          tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-          tools.cmake.cmake_layout:build_folder_vars=['const.python', 'settings.build_type']
-          [buildenv]
-          CFLAGS+= -fdiagnostics-color
-          CXXFLAGS+= -fdiagnostics-color
-          LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
-          EOF
-          case ${{ matrix.host }} in
-              x86_64-bionic*) openblas_tgt="HASWELL" ;;
-              aarch64-rpi3*) openblas_tgt="CORTEXA53" ;;
-              armv8-rpi3*) openblas_tgt="CORTEXA15" ;;
-              armv7-neon*) openblas_tgt="CORTEXA9" ;;
-              armv6-rpi*) openblas_tgt="ARMV6" ;;
-          esac
-          for cfg in Debug Release; do
-              conan install . --build=missing \
-                  -pr:h python.profile \
-                  -o \&:with_ipopt=False -o \&:with_external_casadi=False \
-                  -o \&:with_qpalm=False -o \&:with_cutest=False \
-                  -o \&:with_python=True \
-                  -o "openblas/*:target=$openblas_tgt" \
-                  -s "casadi/*:build_type=Release" \
-                  -s build_type=$cfg
+          for c in Debug Release; do
+            conan install . --build=missing -pr:h conan.profile -s build_type=$c
           done
-      # Download stubs
-      - name: Download stubs
-        uses: actions/download-artifact@v4
-        with:
-          name: stubs
-      - name: Extract stubs
-        run: tar xf stubs.tar
-      # Build
-      - name: Build wheels
-        run: |
-          pfx="${{ steps.tools.outputs.install-dir }}"
-          py_majmin=${{ matrix.python-version }}
-          cat <<- EOF > cross.pbc
-          os=linux
-          toolchain_file=!  # Set by the Conan preset
-          cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
-          cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
-          cmake.options.ALPAQA_WITH_PY_STUBS=false
-          EOF
-          python3 -m build -w \
-            -C local=scripts/ci/py-build-cmake.toml \
-            -C cross=$pfx.python$py_majmin.py-build-cmake.cross.toml \
-            -C cross=cross.pbc
-      - name: Build debug wheels
-        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
-        run: |
-          pfx="${{ steps.tools.outputs.install-dir }}"
-          py_majmin=${{ matrix.python-version }}
-          python3 -m build -w python/alpaqa-debug -o dist-debug \
-            -C local=scripts/ci/py-build-cmake.toml \
-            -C component=scripts/ci/py-build-cmake.component.toml \
-            -C cross=$pfx.python$py_majmin.py-build-cmake.cross.toml \
-            -C cross=cross.pbc
-      # Upload
-      - name: Upload Wheels
+
+      - name: Build Wheel package
+        run: python3 -m build -w -C local="scripts/ci/py-build-cmake.toml"
+      - name: Upload Wheel
         uses: actions/upload-artifact@v4
         with:
-          name: whl-linux-${{ matrix.python-version }}-${{ matrix.host }}
-          retention-days: 1
+          name: native-wheels
           path: dist/*.whl
-      - name: Upload debug Wheels
-        if: ${{ matrix.host == 'x86_64-bionic-linux-gnu' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: whl-debug-linux-${{ matrix.python-version }}-${{ matrix.host }}
           retention-days: 1
-          path: dist-debug/*.whl
-
-  build-linux-src:
-    if: false
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:jammy
-    env:
-      HOST: 'x86_64-bionic-linux-gnu'
-      PYTHON_VERSION: '3.11'
-    steps:
-      # Git clone
-      - name: Install git
-        run: apt -y update && apt -y install --no-install-recommends git ca-certificates
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      # Tools
-      - name: Install tools
-        uses: ./.github/workflows/toolchain
-        with:
-          host: ${{ env.HOST }}
-          python-version: ${{ env.PYTHON_VERSION }}
-          pypy: ''
-      # Pip install dependencies
-      - name: Install Python dependencies
-        run: python${{ env.PYTHON_VERSION }} -m pip install -U pip build
-      # Build
-      - name: Build wheels
+          
+      - name: Install stubs
         run: |
-          host="${{ env.HOST }}"
-          staging="/opt/$host"
-          cat > ninja-debug.cross.toml <<- EOF
-          [cmake]
-          build_args = ["1"]
-          config = ["Debug"]
-          generator = "Ninja Multi-Config"
-          [cmake.options]
-          CMAKE_FIND_ROOT_PATH = "$staging/pybind11-2.13.6;$staging/eigen-master;$staging/casadi"
-          USE_GLOBAL_PYBIND11 = "On"
-          ALPAQA_WITH_CUTEST = "On"
-          ALPAQA_WITH_EXTERNAL_CASADI = "On"
-          EOF
-          python${{ env.PYTHON_VERSION }} -m build . \
-              -C--cross="$PWD/ninja-debug.cross.toml" \
-              -C--cross="$staging/$host.py-build-cmake.cross.toml"
-        env:
-          CXXFLAGS: '-static-libstdc++'
-      # Upload
-      - name: Upload source
+          # We install the Python modules and stubs in the source directory
+          for i in 10 20; do
+            py-build-cmake --local="scripts/ci/py-build-cmake.toml" \
+              configure --index $i
+            py-build-cmake --local="scripts/ci/py-build-cmake.toml" \
+              install --index $i --component python_modules -- --prefix python
+            py-build-cmake --local="scripts/ci/py-build-cmake.toml" \
+              install --index $i --component python_stubs -- --prefix python
+          done
+          # Then we remove the binary Python modules (sdist is source only)
+          while IFS= read -r f || [ -n "$f" ]; do rm -f "$f"
+          done < build/python-debug/install_manifest_python_modules.txt
+          while IFS= read -r f || [ -n "$f" ]; do rm -f "$f"
+          done < build/python-release/install_manifest_python_modules.txt
+      - name: Create sdist
+        run: python3 -m build -s
+
+      - name: Upload sdist
         uses: actions/upload-artifact@v4
         with:
-          name: src-dist
-          retention-days: 1
+          name: sdist
           path: dist/*.tar.gz
+          retention-days: 1
 
+  # Testing is done in the official Python Docker container: https://hub.docker.com/_/python/
+  # This should match more closely to the environment that users might use.
+  # It also ensures that we don't accidentally depend on any libraries specific
+  # to the build container.
   test-linux:
-    needs: [build-linux]
+    name: Run tests
+    needs: [build-sdist]
     runs-on: ubuntu-latest
-    container: python:${{ matrix.python-version }}-bullseye
-    strategy:
-      matrix:
-        python-version: ['3.13']
+    container: python:3.13-bookworm
     steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: whl-linux-*
-          merge-multiple: true
-          path: dist
-      - name: Test
-        run: |
-          python3 -m pip install -U pip cmake ninja
-          python3 -m pip install --find-links=dist "${PACKAGE_NAME}[test]==${PACKAGE_VERSION}"
-          pytest -rP
+      - name: Checkout
+        uses: actions/checkout@v4
 
-
-  build-windows:
-    if: false
-    needs: [generate-stubs]
-    runs-on: windows-2022
-    strategy:
-      matrix:
-        arch: ['AMD64', 'ARM64', 'x86']
-        python-id: ['cp38-', 'cp39-', 'cp310-', 'cp311-', 'cp312-', 'cp313']
-        exclude:
-          - arch: 'ARM64'
-            python-id: 'cp38-'
-    env:
-      CXXFLAGS: "/bigobj"
-      CFLAGS: "/bigobj"
-      PYTHONUTF8: 1
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - name: Cache dependencies
-        id: cache-dep
-        uses: actions/cache@v4
-        with:
-          path: deps
-          key: deps-${{ runner.os }}-${{ matrix.arch }}-${{ hashFiles('scripts/install-eigen.ps1', 'scripts/install-casadi-static.ps1') }}
-      - name: Install Python dependencies
-        if: steps.cache-dep.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          mkdir $env:VIRTUAL_ENV
-          ./scripts/install-eigen.ps1
-          ./scripts/install-casadi-static.ps1
-        env:
-          VIRTUAL_ENV: ${{ github.workspace }}/deps
-          CMAKE_TOOLCHAIN_FILE: ${{ github.workspace }}/scripts/toolchains/Win-${{ matrix.arch }}.cmake
-      # Download stubs
-      - name: Download stubs
-        if: ${{ matrix.arch == 'ARM64' }}
+      - name: Download wheels
         uses: actions/download-artifact@v4
         with:
-          name: stubs
-      - name: Extract stubs
-        if: ${{ matrix.arch == 'ARM64' }}
-        run: tar xf stubs.tar
-      - name: Disable Fortran
-        run: |
-          cat > py-build-cmake.local.toml <<- EOF
-          [cmake.options]
-          CMAKE_Fortran_COMPILER = "NOTFOUND"
-          ALPAQA_WITH_EXTERNAL_CASADI = "On"
-          EOF
+          name: native-wheels
+          path: dist
+
+      - name: Install
+        run: python3 -m pip install --find-links=dist "${PACKAGE_NAME}[test]==${PACKAGE_VERSION}"
+
+      - name: Test
+        run: pytest -rP
+
+  # After the native build, we have the stub files, and we can start cross-
+  # compiling for other architectures.
+  cross-build-linux:
+    name: Cross-build wheels for ${{ matrix.host }} - ${{ matrix.python-version }}
+    needs: [build-sdist]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        host: [x86_64-bionic-linux-gnu, aarch64-rpi3-linux-gnu, armv7-neon-linux-gnueabihf, armv6-rpi-linux-gnueabihf]
+        python-version:
+          - python3.7
+          - python3.8
+          - python3.9
+          - python3.10
+          - python3.11
+          - python3.12
+          - python3.13
+          - pypy3.7-v7.3
+          - pypy3.8-v7.3
+          - pypy3.9-v7.3
+          - pypy3.10-v7.3
+        # PyPy does not provide 32-bit ARM binaries, so we exclude these:
+        exclude:
+          - python-version: pypy3.7-v7.3
+            host: armv7-neon-linux-gnueabihf
+          - python-version: pypy3.8-v7.3
+            host: armv7-neon-linux-gnueabihf
+          - python-version: pypy3.9-v7.3
+            host: armv7-neon-linux-gnueabihf
+          - python-version: pypy3.10-v7.3
+            host: armv7-neon-linux-gnueabihf
+          - python-version: pypy3.7-v7.3
+            host: armv6-rpi-linux-gnueabihf
+          - python-version: pypy3.8-v7.3
+            host: armv6-rpi-linux-gnueabihf
+          - python-version: pypy3.9-v7.3
+            host: armv6-rpi-linux-gnueabihf
+          - python-version: pypy3.10-v7.3
+            host: armv6-rpi-linux-gnueabihf
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download sdist
+        uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist
+      - name: Extract sdist
+        run: mkdir sdist && tar xf dist/*.tar.gz -C sdist --strip-components 1
+
+      - name: Build
+        uses: ./.github/workflows/python-build
+        with:
+          source-dir: sdist
+          host: ${{ matrix.host }}
+          python-version: ${{ matrix.python-version }}
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.host }}-${{ matrix.python-version }}
+          path: ./sdist/dist/*.whl
+
+  # Build for Windows and macOS using cibuildwheel.
+  # Since we're not specifying any cross-compilation settings, py-build-cmake
+  # will use its default cross-compilation settings for Windows on ARM64.
+  # For macOS, we build universal wheels that work on both Intel and ARM macs.
+  build-macos-windows:
+    name: Build wheels for ${{ matrix.os }}
+    needs: [build-sdist]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download sdist
+        uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist
+      - name: Extract sdist
         shell: bash
+        run: |
+          mkdir sdist
+          tar xf dist/*.tar.gz -C sdist --strip-components 1
+          cp -a scripts sdist
+
       - name: Build wheels
         uses: pypa/cibuildwheel@ee63bf16da6cddfb925f542f2c7b59ad50e93969
         with:
+          package-dir: sdist
           output-dir: dist
         env:
-          CIBW_BUILD: "${{ matrix.python-id }}*"
-          CIBW_ARCHS: ${{ matrix.arch }}
-          CIBW_TEST_SKIP: "*-{win32,win_arm64} cp313-* pp*" # no CasADi binaries
-          CMAKE_PREFIX_PATH: ${{ github.workspace }}/deps
-      - name: Upload
+          CIBW_ENABLE: 'pypy'
+
+      - name: Upload package
         uses: actions/upload-artifact@v4
         with:
-          name: whl-windows-${{ matrix.python-id }}-${{ matrix.arch }}
-          retention-days: 1
-          path: dist/*.whl
+          name: wheels-${{ matrix.os }}
+          path: ./dist/*.whl
 
-
-  build-macos:
-    if: false
-    runs-on: macos-13
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
-    env:
-      CMAKE_C_COMPILER_LAUNCHER: ccache
-      CMAKE_CXX_COMPILER_LAUNCHER: ccache
-      CCACHE_DIR: /tmp/.ccache
-      DEVELOPER_DIR: /Applications/Xcode_15.2.app/Contents/Developer
-      MACOSX_DEPLOYMENT_TARGET: '11.0'
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - uses: actions/setup-python@v5
-        id: python
-        name: Install Python
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install ccache
-        run: brew install ccache && ccache --version
-      - name: Prepare ccache directory
-        run: mkdir -p "${{ env.CCACHE_DIR }}"
-      - name: Cache ccache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-${{ matrix.python-version }}-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-${{ matrix.python-version }}-ccache
-      - name: Cache Virtual Environment
-        id: cache-venv
-        uses: actions/cache@v4
-        with:
-          path: py-venv
-          key: ${{ runner.os }}-${{ steps.python.outputs.python-version }}-${{ hashFiles('scripts/install-eigen.sh', 'scripts/install-casadi-static.sh') }}
-      - name: Install Python dependencies 
-        if: steps.cache-venv.outputs.cache-hit != 'true'
-        run: |
-          python -m venv py-venv
-          source ./py-venv/bin/activate
-          python -m pip install -U pip build cmake ninja
-          ./scripts/install-eigen.sh
-          ./scripts/install-casadi-static.sh
-      - name: Disable Fortran
-        run: |
-          cat > py-build-cmake.local.toml <<- EOF
-          [cmake.options]
-          CMAKE_Fortran_COMPILER = "NOTFOUND"
-          ALPAQA_WITH_EXTERNAL_CASADI = "On"
-          EOF
-        shell: bash
-      - name: Build
-        run: |
-          source ./py-venv/bin/activate
-          CMAKE_PREFIX_PATH="$VIRTUAL_ENV:$CMAKE_PREFIX_PATH" \
-          _PYTHON_HOST_PLATFORM='macosx-11.0-universal2' \
-          ARCHFLAGS='-arch arm64 -arch x86_64' \
-              python -m build -w .
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: whl-macos-${{ matrix.python-version }}
-          retention-days: 1
-          path: dist/*.whl
-
-  test-macos:
-    if: false
-    needs: [build-macos]
-    runs-on: macos-13
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      - uses: actions/setup-python@v5
-        name: Install Python
-        with: 
-          python-version: ${{ matrix.python-version }}
-      - uses: actions/download-artifact@v4
-        with:
-          name: whl-macos-${{ matrix.python-version }}
-          path: dist
-      - name: Test
-        run: |
-          python3 -m pip install -U pip cmake ninja
-          python3 -m pip install --find-links=dist "${PACKAGE_NAME}[test]==${PACKAGE_VERSION}"
-          pytest -rP
-
-
+  # This step checks the package version before release (to make sure that the
+  # package version actually matches the version of the GitHub release tag),
+  # and uses Twine to check the metadata of the packages.
   check-release:
     if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
-    needs: [test-linux, build-linux-src, build-windows, test-macos]
+    needs: [build-sdist, test-linux, build-macos-windows]
     runs-on: ubuntu-latest
-    container: python:3.11-bullseye
+    container: python:3.12-bullseye
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
-          pattern: whl-linux-*
-          merge-multiple: true
+          pattern: wheels-*
           path: dist
+          merge-multiple: true
       - name: Install package
         run: python -m pip install --no-deps --no-index --find-links=dist ${PACKAGE_NAME}==${PACKAGE_VERSION}
       - name: Check package version
         run: |
           [ "${{ github.event.release.tag_name }}" == $(python -c 'from importlib.metadata import version as v; print(v("${{ env.PACKAGE_NAME }}"))') ]
         shell: bash
+      - name: Twine check
+        run: |
+          python -m pip install twine
+          twine check dist/*
 
+  # Here we download the sdist and the built Wheel files, and upload them to
+  # TestPyPI. You should follow the trusted publishing instructions in the
+  # https://github.com/pypa/gh-action-pypi-publish README and on
+  # https://docs.pypi.org/trusted-publishers carefully!
   release:
     needs: [check-release]
     if: ${{ github.event.action == 'released' || github.event.action == 'prereleased' }}
     runs-on: ubuntu-latest
     environment:
-      name: release
+      name: testpypi
       url: https://pypi.org/p/alpaqa
     permissions:
       id-token: write  # mandatory for trusted publishing
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: whl-linux-*
-          merge-multiple: true
+          pattern: wheels-*
           path: dist
+          merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
-          pattern: whl-debug-linux-*
-          merge-multiple: true
-          path: dist
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: whl-windows-*
-          merge-multiple: true
-          path: dist
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: whl-macos-*
-          merge-multiple: true
-          path: dist
-      - uses: actions/download-artifact@v4
-        with:
-          name: src-dist
+          name: sdist
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@67339c736fd9354cd4f8cb0b744f2b82a74b5c70
+        uses: pypa/gh-action-pypi-publish@15c56dba361d8335944d31a2ecd17d700fc7bcbc

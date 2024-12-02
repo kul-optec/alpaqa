@@ -116,9 +116,21 @@ test-extras = ["test"]
 
 [tool.cibuildwheel.macos]
 archs = ["universal2"]
+before-build = [
+    "pip install cmake 'conan>=2,<3' ninja",
+    "conan profile detect -f",
+    "rm -rf {package}/build",
+    "python {package}/scripts/ci/pre-build-macos.py",
+]
 
 [tool.cibuildwheel.windows]
-archs = ["AMD64", "x86", "ARM64"]
+archs = ["AMD64"]
+before-build = [
+    "python -m pip install cmake \"conan>=2,<3\" ninja",
+    "conan profile detect -f",
+    "(if exist {package}\\build (rmdir /s /q {package}\\build))",
+    "python {package}\\scripts\\ci\\pre-build-windows.py",
+]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
