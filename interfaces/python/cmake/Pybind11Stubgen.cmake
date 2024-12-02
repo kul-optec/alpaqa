@@ -1,7 +1,7 @@
 function(pybind11_stubgen target)
 
-    cmake_parse_arguments(STUBGEN "" "PACKAGE;DESTINATION;COMPONENT" "" ${ARGN})
     set(STUBGEN_COMPONENT "python_stubs")
+    cmake_parse_arguments(STUBGEN "" "PACKAGE;DESTINATION;COMPONENT" "" ${ARGN})
 
     if (NOT DEFINED Python3_EXECUTABLE)
         find_package(Python3 REQUIRED COMPONENTS Interpreter)
