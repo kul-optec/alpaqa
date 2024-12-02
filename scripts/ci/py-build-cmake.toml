@@ -3,14 +3,16 @@
 
 # We install two configurations by default: Debug and Release
 [cmake.10]
-config = "Debug"
+config = []
+install_config = "Debug"
 preset = "conan-python-debug"
 build_presets = "conan-python-debug"
 build_path="build/python-debug"
 [cmake.10.env]
 ALPAQA_PYTHON_DEBUG = "1"
 [cmake.20]
-config = "Release"
+config = []
+install_config = "Release"
 preset = "conan-python-release"
 build_presets = "conan-python-release"
 build_path="build/python-release"
@@ -25,5 +27,5 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Zi /Ob0 /Od /RTC1"
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF"
 ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
 [windows.cmake.10]
-config = "RelWithDebInfo"
+install_config = "RelWithDebInfo"
 build_presets = "conan-python-relwithdebinfo"
