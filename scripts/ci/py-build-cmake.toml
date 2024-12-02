@@ -17,6 +17,10 @@ preset = "conan-python-release"
 build_presets = "conan-python-release"
 build_path="build/python-release"
 
+[mac.cmake.options]
+CMAKE_C_COMPILER_LAUNCHER = "sccache"
+CMAKE_CXX_COMPILER_LAUNCHER = "sccache"
+
 # Build Windows:
 #   The "Debug" CMake configuration selects the debug ABI of CPython. Here we
 #   only want to build alpaqa itself in debug mode, without affecting the
@@ -26,6 +30,8 @@ build_path="build/python-release"
 CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Zi /Ob0 /Od /RTC1"
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF"
 ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
+CMAKE_C_COMPILER_LAUNCHER = "sccache"
+CMAKE_CXX_COMPILER_LAUNCHER = "sccache"
 [windows.cmake.10]
 install_config = "RelWithDebInfo"
 preset = "conan-python-relwithdebinfo"
