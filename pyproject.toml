@@ -70,8 +70,9 @@ include = [
     "interfaces",
     "applications",
     "test",
+    "python/test",
 ]
-exclude = []
+exclude = ["**/__pycache__"]
 
 [tool.py-build-cmake.cmake]
 minimum_version = "3.24"
