@@ -23,9 +23,24 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.13']
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Ccache
+      - name: Install ccache
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ccache
+          mkdir -p "${{ env.CCACHE_DIR }}"
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ runner.os }}-wheel-native-ccache-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-wheel-native-ccache
 
       - name: Install Python
         uses: actions/setup-python@v5
@@ -72,6 +87,9 @@ jobs:
 
       - name: Build Wheel package
         run: python3 -m build -w -C local="scripts/ci/py-build-cmake.toml"
+        env:
+          CMAKE_C_COMPILER_LAUNCHER: ccache
+          CMAKE_CXX_COMPILER_LAUNCHER: ccache
       - name: Upload Wheel
         uses: actions/upload-artifact@v4
         with:
@@ -95,6 +113,9 @@ jobs:
           done < build/python-debug/install_manifest_python_modules.txt
           while IFS= read -r f || [ -n "$f" ]; do rm -f "$f"
           done < build/python-release/install_manifest_python_modules.txt
+        env:
+          CMAKE_C_COMPILER_LAUNCHER: ccache
+          CMAKE_CXX_COMPILER_LAUNCHER: ccache
       - name: Create sdist
         run: python3 -m build -s
 
@@ -142,9 +163,24 @@ jobs:
         python-version:
           - python3.13
           - pypy3.10-v7.3
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Ccache
+      - name: Install ccache
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ccache
+          mkdir -p "${{ env.CCACHE_DIR }}"
+      - name: Cache ccache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ${{ runner.os }}-wheel-${{ matrix.host }}-${{ matrix.python-version }}-ccache-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-wheel-${{ matrix.host }}-${{ matrix.python-version }}-ccache
 
       - name: Download sdist
         uses: actions/download-artifact@v4
@@ -160,6 +196,7 @@ jobs:
           source-dir: sdist
           host: ${{ matrix.host }}
           python-version: ${{ matrix.python-version }}
+          ccache: ccache
 
       - name: Upload package
         uses: actions/upload-artifact@v4

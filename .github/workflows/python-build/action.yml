@@ -27,6 +27,11 @@ inputs:
     default: 'sudo'
     description: >
       The sudo argument to use. Set to '' if already running as root.
+  ccache:
+    required: false
+    default: ''
+    description: >
+      The ccache program to use during the build.
 
 runs:
   using: composite
@@ -157,3 +162,6 @@ runs:
             -C local="${{ github.workspace }}/scripts/ci/py-build-cmake.toml" \
             -C cross=/opt/x-tools/${{ inputs.host }}.${{ inputs.python-version }}.py-build-cmake.cross.toml \
             -C cross=conan-py-build-cmake.cross.pbc
+      env:
+        CMAKE_C_COMPILER_LAUNCHER: ${{ inputs.ccache }}
+        CMAKE_CXX_COMPILER_LAUNCHER: ${{ inputs.ccache }}
