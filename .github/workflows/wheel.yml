@@ -253,6 +253,7 @@ jobs:
         env:
           CIBW_ENABLE: 'pypy'
           CIBW_TEST_SKIP: 'pp*'
+          CIBW_BUILD: 'cp311-* pp310-*'
 
       - name: Upload package
         uses: actions/upload-artifact@v4
