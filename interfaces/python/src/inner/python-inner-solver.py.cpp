@@ -20,6 +20,8 @@ void register_python_inner_solver(py::module_ &) {
     struct PythonInnerSolver {
         py::object solver;
 
+        PythonInnerSolver(py::object solver) : solver(std::move(solver)) {}
+
         using Problem      = TEProblem;
         using SolveOptions = alpaqa::InnerSolveOptions<config_t>;
         py::object operator()(const Problem &problem, const SolveOptions &opt, rvec x, rvec y,
