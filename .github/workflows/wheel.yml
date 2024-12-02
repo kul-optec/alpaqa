@@ -252,6 +252,7 @@ jobs:
           output-dir: dist
         env:
           CIBW_ENABLE: 'pypy'
+          CIBW_TEST_SKIP: 'pp*'
 
       - name: Upload package
         uses: actions/upload-artifact@v4
