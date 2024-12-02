@@ -119,6 +119,7 @@ test-extras = ["test"]
 
 [tool.cibuildwheel.macos]
 archs = ["universal2"]
+environment = { PY_BUILD_CMAKE_VERBOSE = "1", MACOSX_DEPLOYMENT_TARGET = "10.15" }
 before-build = [
     "pip install cmake 'conan>=2,<3' ninja",
     "conan profile detect -f",
