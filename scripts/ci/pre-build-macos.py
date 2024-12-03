@@ -46,7 +46,7 @@ cmake_opts = f"'CMAKE_OSX_ARCHITECTURES': '{';'.join(archs)}', "
 cmake_opts += f"'CMAKE_Fortran_FLAGS_INIT': '{' '.join(cpu_flags)}'"
 native_profile = f"""\
 include(default)
-include({project_dir.as_posix()}/scripts/ci/alpaqa-python.profile)
+include({project_dir.as_posix()}/scripts/ci/alpaqa-python-macos.profile)
 [settings]
 arch={conan_arch}
 os.version={deployment_target}

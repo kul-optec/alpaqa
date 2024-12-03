@@ -65,7 +65,7 @@ jobs:
           conan profile detect -f
           cat <<- EOF > conan.profile
           include(default)
-          include(${{ github.workspace }}/scripts/ci/alpaqa-python.profile)
+          include(${{ github.workspace }}/scripts/ci/alpaqa-python-linux.profile)
           [conf]
           tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
           tools.build:skip_test=true

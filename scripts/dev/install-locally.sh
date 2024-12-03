@@ -50,7 +50,7 @@ EOF
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
 include($pfx.python.profile.conan)
-include($PWD/scripts/ci/alpaqa-python.profile)
+include($PWD/scripts/ci/alpaqa-python-linux.profile)
 include($PWD/scripts/ci/$triple.profile)
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config

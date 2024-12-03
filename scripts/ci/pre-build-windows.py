@@ -49,7 +49,7 @@ cpu_flags = {
 
 native_profile = f"""\
 include(default)
-include({project_dir.as_posix()}/scripts/ci/alpaqa-python.profile)
+include({project_dir.as_posix()}/scripts/ci/alpaqa-python-windows.profile)
 [settings]
 arch={conan_arch}
 build_type=Release

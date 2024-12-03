@@ -93,7 +93,7 @@ runs:
         pyver="${{ inputs.python-version }}"
         cat <<- EOF > conan.profile
         include(/opt/x-tools/${{ inputs.host }}.${pyver%%[0-9]*}.profile.conan)
-        include(${{ github.workspace }}/scripts/ci/alpaqa-python.profile)
+        include(${{ github.workspace }}/scripts/ci/alpaqa-python-linux.profile)
         include(${{ github.workspace }}/scripts/ci/${{ inputs.host }}.profile)
         [conf]
         tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
