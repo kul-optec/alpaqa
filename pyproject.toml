@@ -75,7 +75,7 @@ include = [
 exclude = ["**/__pycache__"]
 
 [tool.py-build-cmake.cmake]
-minimum_version = "3.24"
+minimum_version = "3.25"
 source_path = "."
 args = ["-Wdev"]
 preset = "conan-python"

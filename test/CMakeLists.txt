@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25)
 project(alpaqa-test C CXX)
 enable_testing()
 include(GoogleTest)

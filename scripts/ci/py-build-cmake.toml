@@ -27,7 +27,9 @@ CMAKE_CXX_COMPILER_LAUNCHER = "sccache"
 #   Python ABI, so we use the "RelWithDebInfo" config, but disable optimizations
 #   to mimic what we would get with the real "Debug" config.
 [windows.cmake.options]
-CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Zi /Ob0 /Od /RTC1"
+CMAKE_CXX_FLAGS_RELWITHDEBINFO = "/Ob0 /Od /RTC1"
+CMAKE_MSVC_DEBUG_INFORMATION_FORMAT = "$<$<CONFIG:Debug,RelWithDebInfo>:Embedded>"
+CMAKE_POLICY_CMP0141 = "NEW"
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF"
 ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
 CMAKE_C_COMPILER_LAUNCHER = "sccache"

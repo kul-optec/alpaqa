@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.25)
 project(alpaqa_test_package CXX)
 
 find_package(alpaqa REQUIRED)
