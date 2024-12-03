@@ -757,9 +757,12 @@ void register_problems(py::module_ &m) {
         .def_readwrite("constr_violation", &KKTError::constr_violation)
         .def_readwrite("complementarity", &KKTError::complementarity)
         .def_readwrite("bounds_violation", &KKTError::bounds_violation);
-    m.def("kkt_error", [](const TEProblem &problem, crvec x, crvec y) {
-        return alpaqa::compute_kkt_error(problem, x, y);
-    });
+    m.def(
+        "kkt_error",
+        [](const TEProblem &problem, crvec x, crvec y) {
+            return alpaqa::compute_kkt_error(problem, x, y);
+        },
+        "problem"_a, "x"_a, "y"_a);
 
     // Must be last
     te_problem.def(py::init([](py::object o) { return TEProblem::template make<PyProblem>(o); }),
