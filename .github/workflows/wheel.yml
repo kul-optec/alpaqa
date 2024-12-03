@@ -145,6 +145,9 @@ jobs:
           name: native-wheels
           path: dist
 
+      - name: Install libgfortran
+        run: apt-get update && apt-get install -y libgfortran5
+
       - name: Install
         run: python3 -m pip install --find-links=dist "${PACKAGE_NAME}[test]==${PACKAGE_VERSION}"
 
