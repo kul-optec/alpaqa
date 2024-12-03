@@ -43,9 +43,9 @@ tools.build:skip_test=true
 tools.build.cross_building:can_run=true
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 [buildenv]
-CFLAGS=-march=native -fdiagnostics-color
-CXXFLAGS=-march=native -fdiagnostics-color
-LDFLAGS=-static-libstdc++ -flto=auto
+CFLAGS+= -march=native -fdiagnostics-color
+CXXFLAGS+= -march=native -fdiagnostics-color
+LDFLAGS+= -static-libstdc++ -flto=auto
 EOF
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
@@ -57,9 +57,9 @@ tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 tools.build.cross_building:can_run=true
 tools.build:skip_test=true
 [buildenv]
-CFLAGS=-march=native -fdiagnostics-color
-CXXFLAGS=-march=native -fdiagnostics-color
-LDFLAGS=-static-libgcc -static-libstdc++ -flto=auto
+CFLAGS+= -march=native -fdiagnostics-color
+CXXFLAGS+= -march=native -fdiagnostics-color
+LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
 EOF
 
 # Build and install alpaqa dependencies

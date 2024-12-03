@@ -70,9 +70,9 @@ jobs:
           tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
           tools.build:skip_test=true
           [buildenv]
-          CFLAGS=-fdiagnostics-color
-          CXXFLAGS=-fdiagnostics-color
-          LDFLAGS=-static-libgcc -static-libstdc++ -flto=auto
+          CFLAGS+= -fdiagnostics-color
+          CXXFLAGS+= -fdiagnostics-color
+          LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
           EOF
       - name: Install Conan recipes
         run: |
