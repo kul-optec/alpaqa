@@ -219,6 +219,7 @@ jobs:
     env:
       CONAN_HOME: ${{ github.workspace }}/.conan2
       SCCACHE_GHA_VERSION: "1"
+      SCCACHE_CACHE_MULTIARCH: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
