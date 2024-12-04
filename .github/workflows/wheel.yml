@@ -257,8 +257,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.CONAN_HOME }}/p
-          key: ${{ runner.os }}-build-wheel-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-build-wheel-
+          key: ${{ runner.os }}-build-wheel-${{ matrix.cibw-arch }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-build-wheel-${{ matrix.cibw-arch }}-
 
       - name: Download sdist
         uses: actions/download-artifact@v4
