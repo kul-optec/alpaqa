@@ -1,10 +1,10 @@
 # %% alpaqa lasso example
 
+import numpy as np
 import alpaqa as pa
 import jax
 import jax.numpy as jnp
 from jax import grad, jit
-from jax import random
 from pprint import pprint
 
 jax.config.update("jax_enable_x64", True)
@@ -12,19 +12,17 @@ jax.config.update("jax_enable_x64", True)
 scale = 5000
 n, m = scale, scale * 2
 sparsity = 0.02
-key = random.PRNGKey(0)
 
 # %% Generate some data
 
-key, *subkeys = random.split(key, 5)
+rng = np.random.default_rng(seed=123)
 # Random data matrix A
-A = random.uniform(subkeys[0], (m, n), minval=-1, maxval=1)
+A = rng.uniform(-1, 1, (m, n))
 # Sparse solution x_exact
-x_exact = random.uniform(subkeys[1], (n,), minval=-0.1, maxval=1)
-x_exact_zeros = random.uniform(subkeys[2], (n,), minval=0, maxval=1) > sparsity
-x_exact = x_exact.at[x_exact_zeros].set(0)
+x_exact = rng.uniform(-0.1, 1, n)
+x_exact[rng.uniform(0, 1, n) > sparsity] = 0
 # Noisy right-hand side b
-b = A @ x_exact + 0.1 * random.normal(subkeys[3], (m,))
+b = A @ x_exact + rng.normal(0, 0.1, m)
 
 # %% Build the problem
 
