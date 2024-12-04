@@ -37,6 +37,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO = "/INCREMENTAL:NO /DEBUG:FULL /OPT:REF
 ALPAQA_PYTHON_DEBUG_CONFIG = "RelWithDebInfo"
 CMAKE_C_COMPILER_LAUNCHER = "sccache"
 CMAKE_CXX_COMPILER_LAUNCHER = "sccache"
+CMAKE_Fortran_COMPILER = ""
 [windows.cmake.10]
 install_config = "RelWithDebInfo"
 preset = "conan-python-relwithdebinfo"
