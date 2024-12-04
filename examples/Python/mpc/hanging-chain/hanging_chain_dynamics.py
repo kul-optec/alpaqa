@@ -9,6 +9,7 @@ class HangingChain:
     def __init__(self, N: int, dim: int, Ts: float = 0.05):
         self.N = N
         self.dim = dim
+        self.nx = 2 * dim * N + dim
 
         self.y1 = cs.SX.sym("y1", dim * N, 1)  # state: balls 1→N positions
         self.y2 = cs.SX.sym("y2", dim * N, 1)  # state: balls 1→N velocities
@@ -84,6 +85,16 @@ class HangingChain:
         else:
             return u.reshape((self.dim, u.shape[0] // self.dim))
 
+    def state_to_matrix(self, y):
+        """
+        Reshape the state sequence from a vector into a n × (N_horiz+1) matrix (note
+        that CasADi matrices are stored column-wise and NumPy arrays row-wise)
+        """
+        if isinstance(y, np.ndarray):
+            return y.reshape((self.nx, y.shape[0] // self.nx), order='F')
+        else:
+            return y.reshape((self.nx, y.shape[0] // self.nx))
+
     def simulate(self, N_sim: int, y_0: np.ndarray,
                  u: Union[np.ndarray, list, cs.SX.sym, cs.MX.sym],
                  p: Union[np.ndarray, list, cs.SX.sym, cs.MX.sym]):
@@ -105,6 +116,8 @@ class HangingChain:
 
         y_null = np.concatenate((y1_0, y2_0, y3_0))
         u_null = np.zeros((d, ))
+
+        assert self.nx == len(y_null)
 
         return y_null, u_null
 
