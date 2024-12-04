@@ -55,7 +55,7 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_Q.get_sparsity().inner_idx, qp.Q->i);
         std::ranges::copy(sp_Q.get_sparsity().outer_ptr, qp.Q->p);
         // Get actual values
-        mvec H_values{qp.Q->x, nnz_Q};
+        mvec H_values{qp.Q->x, static_cast<index_t>(nnz_Q)};
         sp_Q.convert_values_into(as_span(H_values), [&](std::span<real_t> v) {
             problem.eval_lagrangian_hessian(x, y, 1, as_vec(v));
         });
@@ -71,7 +71,7 @@ build_qpalm_problem(const TypeErasedProblem<EigenConfigd> &problem) {
         std::ranges::copy(sp_A.get_sparsity().inner_idx, qp.A->i);
         std::ranges::copy(sp_A.get_sparsity().outer_ptr, qp.A->p);
         // Get actual values
-        mvec J_values{qp.A->x, nnz_A};
+        mvec J_values{qp.A->x, static_cast<index_t>(nnz_A)};
         sp_A.convert_values_into(as_span(J_values), [&](std::span<real_t> v) {
             problem.eval_constraints_jacobian(x, as_vec(v));
         });
