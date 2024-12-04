@@ -1,3 +1,6 @@
+[cmake]
+generator = "Ninja Multi-Config"
+
 [cmake.options]
 "CMAKE_BUILD_TYPE" = "Debug" # Forces pybind11 to keep debug symbols (https://github.com/pybind/pybind11/issues/4454)
 

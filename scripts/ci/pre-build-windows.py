@@ -54,6 +54,7 @@ include({project_dir.as_posix()}/scripts/ci/alpaqa-python-windows.profile)
 arch={conan_arch}
 build_type=Release
 [conf]
+tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 tools.build:skip_test=True
 tools.build:cflags+={cpu_flags}
 tools.build:cxxflags+={cpu_flags}

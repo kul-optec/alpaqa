@@ -217,18 +217,41 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest]
+        include:
+        - os: windows-latest
+          cibw-arch: AMD64
+          arch: amd64
+        - os: windows-latest
+          cibw-arch: x86
+          arch: amd64_x86
+        - os: windows-latest
+          cibw-arch: ARM64
+          arch: amd64_arm64
+        - os: macos-latest
+          cibw-arch: universal2
       fail-fast: false
     env:
       CONAN_HOME: ${{ github.workspace }}/.conan2
       SCCACHE_GHA_VERSION: "1"
       SCCACHE_CACHE_MULTIARCH: "1"
+      CIBW_ARCHS: ${{ matrix.cibw-arch }}
+      CIBW_ENABLE: 'pypy'
+      CIBW_TEST_SKIP: 'pp*'
+      CIBW_BUILD: 'cp311-* pp310-*'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Install sccache
         uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
+
+      - name: Install cibuildwheel
+        run: python -m pip install cibuildwheel~=2.22.0
 
       - name: Cache Conan dependencies
         uses: actions/cache@v4
@@ -250,19 +273,20 @@ jobs:
           cp -a scripts sdist
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@ee63bf16da6cddfb925f542f2c7b59ad50e93969
-        with:
-          package-dir: sdist
-          output-dir: dist
-        env:
-          CIBW_ENABLE: 'pypy'
-          CIBW_TEST_SKIP: 'pp*'
-          CIBW_BUILD: 'cp311-* pp310-*'
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.arch }}
+          cibuildwheel sdist --output-dir dist
+
+      - name: Build wheels
+        if: runner.os != 'Windows'
+        run: cibuildwheel sdist --output-dir dist
 
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.os }}
+          name: wheels-${{ matrix.os }}-${{ matrix.cibw-arch }}
           path: ./dist/*.whl
 
   # This step checks the package version before release (to make sure that the
