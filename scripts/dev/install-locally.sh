@@ -45,7 +45,7 @@ compiler.cppstd=gnu23
 compiler.libcxx=libstdc++11
 compiler.version=14
 [tool_requires]
-tttapa-toolchains/14.2.0
+tttapa-toolchains/1.0.1
 [conf]
 tools.build:skip_test=true
 tools.build:cflags+=["-march=native", "-fdiagnostics-color"]
@@ -60,16 +60,6 @@ tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 tools.build.cross_building:can_run=True
 [options]
 alpaqa/*:with_conan_python=True
-[buildenv]
-CMAKE_C_COMPILER_LAUNCHER=ccache
-CMAKE_CXX_COMPILER_LAUNCHER=ccache
-EOF
-
-build_profile="$PWD/profile-build.local.conan"
-cat <<- EOF > "$build_profile"
-include(default)
-[options]
-tttapa-toolchains/*:target=$triple
 [buildenv]
 CMAKE_C_COMPILER_LAUNCHER=ccache
 CMAKE_CXX_COMPILER_LAUNCHER=ccache
@@ -100,7 +90,8 @@ version="$python_majmin_nodot"
 abi="cp$python_majmin_nodot"
 arch=manylinux_2_27_x86_64
 cmake.options.ALPAQA_WITH_PY_STUBS=true
-# cmake.build_args+=["--verbose"]
+cmake.options.CMAKE_C_COMPILER_LAUNCHER=ccache
+cmake.options.CMAKE_CXX_COMPILER_LAUNCHER=ccache
 EOF
 
 # Build C++ packages
@@ -108,7 +99,6 @@ if [ $build_cpp -eq 1 ]; then
     for cfg in Debug RelWithDebInfo; do
         conan install . --build=missing \
             -pr:h "$cpp_profile" \
-            -pr:b "$build_profile" \
             -s build_type=$cfg
     done
 
@@ -133,7 +123,6 @@ if [ $build_python -eq 1 ]; then
     for cfg in Debug Release; do
         conan install . --build=missing \
             -pr:h "$python_profile" \
-            -pr:b "$build_profile" \
             -s build_type=$cfg
     done
     develop=false

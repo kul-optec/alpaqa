@@ -36,7 +36,7 @@ compiler.cppstd=gnu23
 compiler.libcxx=libstdc++11
 compiler.version=14
 [tool_requires]
-tttapa-toolchains/14.2.0
+tttapa-toolchains/1.0.1
 [conf]
 tools.build:skip_test=true
 tools.build:cflags+=["-fdiagnostics-color"]
@@ -52,13 +52,6 @@ tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELWITHD
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 [options]
 alpaqa/*:with_conan_python=True
-EOF
-
-build_profile="$PWD/profile-build.local.conan"
-cat <<- EOF > "$build_profile"
-include(default)
-[options]
-tttapa-toolchains/*:target=$triple
 EOF
 
 python_profile="$PWD/profile-python.local.conan"
@@ -88,7 +81,6 @@ rm -rf "$pkg_dir"/build/python-{debug,release}/{generators,CMakeCache.txt}
 for cfg in Debug Release; do
     conan install "$pkg_dir" --build=missing \
         -pr:h "$python_profile" \
-        -pr:b "$build_profile" \
         -s build_type=$cfg
 done
 
