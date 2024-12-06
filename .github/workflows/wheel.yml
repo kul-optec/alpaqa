@@ -169,6 +169,7 @@ jobs:
   # will use its default cross-compilation settings for Windows on ARM64.
   # For macOS, we build universal wheels that work on both Intel and ARM macs.
   build-macos-windows:
+    if: false
     name: Build wheels for ${{ matrix.os }} - ${{ matrix.cibw-arch }}
     needs: [build-sdist]
     runs-on: ${{ matrix.os }}
