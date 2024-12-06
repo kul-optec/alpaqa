@@ -17,7 +17,7 @@ case "$triple" in
     aarch64-rpi3-*) plat_tag=manylinux_2_27_aarch64 ;;
     armv8-rpi3-*) plat_tag=manylinux_2_27_armv7l ;;
     armv7-neon-*) plat_tag=manylinux_2_27_armv7l ;;
-    armv6-*) plat_tag=linux_armv6l; extra_lflags="\"-latomic\"" ;;
+    armv6-*) plat_tag=linux_armv6l ;;
     *) echo "Unknown platform ${triple}"; exit 1 ;;
 esac
 
@@ -43,8 +43,6 @@ tools.build:cflags+=["-fdiagnostics-color"]
 tools.build:cxxflags+=["-fdiagnostics-color"]
 tools.build:exelinkflags+=["-flto=auto", "-static-libstdc++"]
 tools.build:sharedlinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.build:exelinkflags+=[$extra_lflags]
-tools.build:sharedlinkflags+=[$extra_lflags]
 tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_INIT}"}
 tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_DEBUG_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_DEBUG_INIT}"}
 tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELEASE_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELEASE_INIT}"}
