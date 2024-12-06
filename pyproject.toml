@@ -71,6 +71,7 @@ include = [
     "applications",
     "test",
     "python/test",
+    "python/alpaqa-debug",
 ]
 exclude = ["**/__pycache__"]
 

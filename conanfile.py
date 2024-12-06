@@ -3,7 +3,7 @@ import os
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMakeDeps, CMakeToolchain, CMake, cmake_layout
-from conan.tools.build import can_run, cross_building
+from conan.tools.build import can_run
 
 
 class AlpaqaRecipe(ConanFile):
@@ -46,14 +46,22 @@ class AlpaqaRecipe(ConanFile):
         "no_dlclose": False,
         "with_blas": False,
     }
-    options = {
-        "shared": [True, False],
-        "fPIC": [True, False],
-    } | {k: [True, False] for k in bool_alpaqa_options}
-    default_options = {
-        "shared": False,
-        "fPIC": True,
-    } | bool_alpaqa_options
+    options = (
+        {
+            "shared": [True, False],
+            "fPIC": [True, False],
+        }
+        | {k: [True, False] for k in bool_alpaqa_options}
+        | {"with_conan_python": [True, False]}
+    )
+    default_options = (
+        {
+            "shared": False,
+            "fPIC": True,
+        }
+        | bool_alpaqa_options
+        | {"with_conan_python": False}
+    )
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = (
@@ -82,7 +90,7 @@ class AlpaqaRecipe(ConanFile):
             self.requires("qpalm/1.2.5", transitive_headers=True)
         if self.options.with_python or self.options.with_python_problem_loader:
             self.requires("pybind11/2.13.6")
-            if cross_building(self) and self.settings.os == "Linux":
+            if self.options.with_conan_python:
                 self.requires("tttapa-python-dev/3.13.1")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.5")
@@ -106,9 +114,9 @@ class AlpaqaRecipe(ConanFile):
     def layout(self):
         if self.folders.build_folder_vars is None:
             if self.options.with_python:
-                self.folders.build_folder_vars = ['const.python']
+                self.folders.build_folder_vars = ["const.python"]
             if self.options.with_matlab:
-                self.folders.build_folder_vars = ['const.matlab']
+                self.folders.build_folder_vars = ["const.matlab"]
         cmake_layout(self)
 
     def generate(self):
