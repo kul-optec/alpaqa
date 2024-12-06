@@ -6,16 +6,14 @@ generator = "Ninja Multi-Config"
 
 # We install two configurations by default: Debug and Release
 [cmake.10]
-config = []
-install_config = "Debug"
+config = "Debug"
 preset = "conan-python-debug"
 build_presets = "conan-python-debug"
 build_path="build/python-debug"
 [cmake.10.env]
 ALPAQA_PYTHON_DEBUG = "1"
 [cmake.20]
-config = []
-install_config = "Release"
+config = "Release"
 preset = "conan-python-release"
 build_presets = "conan-python-release"
 build_path="build/python-release"

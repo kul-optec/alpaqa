@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 cd "$( dirname "${BASH_SOURCE[0]}" )"/../..
+export CTEST_OUTPUT_ON_FAILURE=1
 
 set -ex
 
@@ -18,90 +19,100 @@ esac
 . ./.venv/bin/activate
 python_version="$(python --version | cut -d ' ' -f 2)"
 python_majmin="${python_version%.*}"
+python_majmin_nodot="${python_majmin//./}"
 
 # Select architecture
 triple=x86_64-bionic-linux-gnu
-
-# Download compiler
-gcc_version=14
 tools_dir="$PWD/toolchains"
-pfx="$tools_dir/x-tools/$triple"
-mkdir -p "$tools_dir/x-tools"
-[ -d "$pfx" ] || {
-    chmod u+w "$tools_dir/x-tools"
-    url=https://github.com/tttapa/toolchains/releases/latest/download
-    wget "$url/x-tools-$triple-gcc$gcc_version.tar.xz" -O- | tar xJ -C "$tools_dir"
-    chmod u+w "$pfx"
-    url=https://github.com/tttapa/python-dev/releases/latest/download
-    wget "$url/python-dev-$triple.tar.xz" -O- | tar xJ -C "$tools_dir"
-}
 
 # Download dependencies
 pip install -U pip build conan
 # My own custom recipes for Ipopt, CasADi, QPALM, patched Eigen
 [ -d "$tools_dir/thirdparty/conan-recipes" ] || {
+    mkdir -p "$tools_dir/thirdparty"
     git clone https://github.com/tttapa/conan-recipes "$tools_dir/thirdparty/conan-recipes"
     conan remote add tttapa-conan-recipes "$tools_dir/thirdparty/conan-recipes" --force
 }
 
-# Create Conan profile
-profile="$PWD/profile.local.conan"
-cat <<- EOF > "$profile"
-include($pfx.profile.conan)
+# Create Conan profiles
+host_profile="$PWD/profile-host.local.conan"
+cat <<- EOF > "$host_profile"
+include($PWD/scripts/ci/$triple.profile)
+[settings]
+build_type=Release
+compiler=gcc
+compiler.cppstd=gnu23
+compiler.libcxx=libstdc++11
+compiler.version=14
+[tool_requires]
+tttapa-toolchains/14.2.0
 [conf]
 tools.build:skip_test=true
-tools.build.cross_building:can_run=true
+tools.build:cflags+=["-march=native", "-fdiagnostics-color"]
+tools.build:cxxflags+=["-march=native", "-fdiagnostics-color"]
+tools.build:exelinkflags+=["-flto=auto", "-static-libstdc++"]
+tools.build:sharedlinkflags+=["-flto=auto", "-static-libstdc++"]
+tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_INIT}"}
+tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_DEBUG_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_DEBUG_INIT}"}
+tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELEASE_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELEASE_INIT}"}
+tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO_INIT}"}
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 [buildenv]
-CFLAGS+= -march=native -fdiagnostics-color
-CXXFLAGS+= -march=native -fdiagnostics-color
-LDFLAGS+= -static-libstdc++ -flto=auto
+CMAKE_C_COMPILER_LAUNCHER=ccache
+CMAKE_CXX_COMPILER_LAUNCHER=ccache
 EOF
+
+build_profile="$PWD/profile-build.local.conan"
+cat <<- EOF > "$build_profile"
+include(default)
+[options]
+tttapa-toolchains/*:target=$triple
+[buildenv]
+CMAKE_C_COMPILER_LAUNCHER=ccache
+CMAKE_CXX_COMPILER_LAUNCHER=ccache
+EOF
+
+cpp_profile="$PWD/profile-cpp.local.conan"
+cat <<- EOF > "$cpp_profile"
+include($host_profile)
+include($PWD/scripts/ci/alpaqa-cpp-linux.profile)
+EOF
+
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
-include($pfx.python.profile.conan)
+include($host_profile)
 include($PWD/scripts/ci/alpaqa-python-linux.profile)
-include($PWD/scripts/ci/$triple.profile)
 [conf]
-tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-tools.build.cross_building:can_run=true
-tools.build:skip_test=true
-[buildenv]
-CFLAGS+= -march=native -fdiagnostics-color
-CXXFLAGS+= -march=native -fdiagnostics-color
-LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
+tools.build:exelinkflags+=["-static-libgcc"]
+tools.build:sharedlinkflags+=["-static-libgcc"]
+[replace_requires]
+tttapa-python-dev/*: tttapa-python-dev/[^$python_version]
 EOF
+
 pbc_config="$PWD/$triple.py-build-cmake.config.pbc"
 cat <<- EOF > "$pbc_config"
 os=linux
-toolchain_file=!  # Set by the Conan preset
-cmake.options.CMAKE_C_COMPILER_LAUNCHER="ccache"
-cmake.options.CMAKE_CXX_COMPILER_LAUNCHER="ccache"
+implementation="cp"
+version="$python_majmin_nodot"
+abi="cp$python_majmin_nodot"
+arch=manylinux_2_27_x86_64
 cmake.options.ALPAQA_WITH_PY_STUBS=true
-cmake.options.USE_GLOBAL_PYBIND11=true
+# cmake.build_args+=["--verbose"]
 EOF
 
+# Build C++ packages
 if [ $build_cpp -eq 1 ]; then
-    # Build and install alpaqa dependencies
-    export CTEST_OUTPUT_ON_FAILURE=1
     for cfg in Debug RelWithDebInfo; do
         conan install . --build=missing \
-            -pr:h "$profile" \
-            -o \&:shared=True \
-            -o \&:with_ipopt=True -o \&:with_external_casadi=True \
-            -o \&:with_qpalm=True -o \&:with_cutest=True \
-            -o \&:with_examples=True \
-            -o "openblas/*:target=HASWELL" \
-            -s "casadi/*:build_type=Release" \
+            -pr:h "$cpp_profile" \
+            -pr:b "$build_profile" \
             -s build_type=$cfg
     done
 
     # Configure
     cmake --preset conan-default -B build \
         -D CMAKE_EXPORT_COMPILE_COMMANDS=On \
-        -D CMAKE_INSTALL_PREFIX="$PWD/staging" \
-        -D CMAKE_C_COMPILER_LAUNCHER="ccache" \
-        -D CMAKE_CXX_COMPILER_LAUNCHER="ccache"
+        -D CMAKE_INSTALL_PREFIX="$PWD/staging"
     # Build
     for cfg in Debug RelWithDebInfo; do
         cmake --build build -j --config $cfg
@@ -114,29 +125,28 @@ if [ $build_cpp -eq 1 ]; then
     popd
 fi
 
-# Build Python package
+# Build Python packages
 if [ $build_python -eq 1 ]; then
     for cfg in Debug Release; do
-        conan install . --build=missing -pr:h "$python_profile" -s build_type=$cfg
+        conan install . --build=missing \
+            -pr:h "$python_profile" \
+            -pr:b "$build_profile" \
+            -s build_type=$cfg
     done
-    cross_cfg="$pfx.python$python_majmin.py-build-cmake.cross.toml"
     develop=false
     if $develop; then
         pip install -e ".[test]" -v \
             -C local="$PWD/scripts/ci/py-build-cmake.toml" \
-            -C cross="$cross_cfg" \
             -C cross="$pbc_config"
     else
         tag=\"$(date -u +"%Y_%m_%dT%H.%M.%SZ")\"
         python -m build -w "." -o staging \
             -C local="$PWD/scripts/ci/py-build-cmake.toml" \
-            -C cross="$cross_cfg" \
             -C cross="$pbc_config" \
             -C override=wheel.build_tag="$tag"
         python -m build -w "python/alpaqa-debug" -o staging \
             -C local="$PWD/scripts/ci/py-build-cmake.toml" \
             -C component="$PWD/scripts/ci/py-build-cmake.component.toml" \
-            -C cross="$cross_cfg" \
             -C cross="$pbc_config" \
             -C override=wheel.build_tag="$tag"
         pip install -f staging --force-reinstall --no-deps \

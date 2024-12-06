@@ -3,7 +3,7 @@ import os
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
 from conan.tools.cmake import CMakeDeps, CMakeToolchain, CMake, cmake_layout
-from conan.tools.build import can_run
+from conan.tools.build import can_run, cross_building
 
 
 class AlpaqaRecipe(ConanFile):
@@ -82,6 +82,8 @@ class AlpaqaRecipe(ConanFile):
             self.requires("qpalm/1.2.5", transitive_headers=True)
         if self.options.with_python or self.options.with_python_problem_loader:
             self.requires("pybind11/2.13.6")
+            if cross_building(self) and self.settings.os == "Linux":
+                self.requires("tttapa-python-dev/3.13.1")
         if self.options.with_matlab:
             self.requires("utfcpp/4.0.5")
         if self.options.with_blas:
