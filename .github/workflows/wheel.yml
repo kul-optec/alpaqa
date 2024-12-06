@@ -24,101 +24,49 @@ jobs:
       matrix:
         python-version: ['3.13']
     env:
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CONAN_HOME: ${{ github.workspace }}/.conan2
+      SCCACHE_GHA_VERSION: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      # Ccache
-      - name: Install ccache
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ccache
-          mkdir -p "${{ env.CCACHE_DIR }}"
-      - name: Cache ccache
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-wheel-native-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-wheel-native-ccache
 
       - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Install Python dependencies
         run: >
           pip install -U
           pip build conan ninja 'py-build-cmake~=0.3.2' 'pybind11-stubgen~=2.5.1' 'numpy<3'
-
-        # Cache the Conan cache folder to speed up installation of the dependencies.
+          
+      - name: Install sccache
+        uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
+  
       - name: Cache Conan dependencies
         uses: actions/cache@v4
         with:
-          path: ~/.conan2/p
-          # Key is unique, to force updating the cache, but we still want the
-          # cache to be restored, so we use restore-keys with a matching prefix.
+          path: ${{ env.CONAN_HOME }}/p
           key: ${{ runner.os }}-build-sdist-${{ github.sha }}
           restore-keys: ${{ runner.os }}-build-sdist-
-      - name: Prepare Conan configuration
+      - name: Configure Conan
         run: |
           conan profile detect -f
-          cat <<- EOF > conan.profile
-          include(default)
-          include(${{ github.workspace }}/scripts/ci/alpaqa-python-linux.profile)
-          [conf]
-          tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-          tools.build:skip_test=true
-          [buildenv]
-          CFLAGS+= -fdiagnostics-color
-          CXXFLAGS+= -fdiagnostics-color
-          LDFLAGS+= -static-libgcc -static-libstdc++ -flto=auto
-          EOF
-      - name: Install Conan recipes
-        run: |
           recipes="${{ github.workspace }}/tttapa-conan-recipes"
           git clone https://github.com/tttapa/conan-recipes "$recipes"
           conan remote add tttapa-conan-recipes "$recipes" --force
-      - name: Install Conan dependencies
-        run: |
-          for c in Debug Release; do
-            conan install . --build=missing -pr:h conan.profile -s build_type=$c
-          done
 
-      - name: Build Wheel package
-        run: python3 -m build -w -C local="scripts/ci/py-build-cmake.toml"
-        env:
-          CMAKE_C_COMPILER_LAUNCHER: ccache
-          CMAKE_CXX_COMPILER_LAUNCHER: ccache
+      - name: Build Wheel (and install stubs)
+        run: bash scripts/ci/build-linux-native.sh . dist python
       - name: Upload Wheel
         uses: actions/upload-artifact@v4
         with:
           name: native-wheels
           path: dist/*.whl
           retention-days: 1
-          
-      - name: Install stubs
-        run: |
-          # We install the Python modules and stubs in the source directory
-          for i in 10 20; do
-            py-build-cmake --local="scripts/ci/py-build-cmake.toml" \
-              configure --index $i
-            py-build-cmake --local="scripts/ci/py-build-cmake.toml" \
-              install --index $i --component python_modules -- --prefix python
-            py-build-cmake --local="scripts/ci/py-build-cmake.toml" \
-              install --index $i --component python_stubs -- --prefix python
-          done
-          # Then we remove the binary Python modules (sdist is source only)
-          while IFS= read -r f || [ -n "$f" ]; do rm -f "$f"
-          done < build/python-debug/install_manifest_python_modules.txt
-          while IFS= read -r f || [ -n "$f" ]; do rm -f "$f"
-          done < build/python-release/install_manifest_python_modules.txt
-        env:
-          CMAKE_C_COMPILER_LAUNCHER: ccache
-          CMAKE_CXX_COMPILER_LAUNCHER: ccache
+
       - name: Create sdist
         run: python3 -m build -s
-
       - name: Upload sdist
         uses: actions/upload-artifact@v4
         with:
@@ -163,27 +111,39 @@ jobs:
     strategy:
       matrix:
         host: [x86_64-bionic-linux-gnu, aarch64-rpi3-linux-gnu]
-        python-version:
-          - python3.13
-          - pypy3.10-v7.3
+        python-version: ['3.9', '3.13']
     env:
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CONAN_HOME: ${{ github.workspace }}/.conan2
+      SCCACHE_GHA_VERSION: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Ccache
-      - name: Install ccache
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ccache
-          mkdir -p "${{ env.CCACHE_DIR }}"
-      - name: Cache ccache
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python dependencies
+        run: >
+          pip install -U
+          pip build conan ninja 'py-build-cmake~=0.3.2' 'pybind11-stubgen~=2.5.1' 'numpy<3'
+          
+      - name: Install sccache
+        uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
+  
+      - name: Cache Conan dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ env.CCACHE_DIR }}
-          key: ${{ runner.os }}-wheel-${{ matrix.host }}-${{ matrix.python-version }}-ccache-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-wheel-${{ matrix.host }}-${{ matrix.python-version }}-ccache
+          path: ${{ env.CONAN_HOME }}/p
+          key: ${{ runner.os }}-cross-build-linux-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-cross-build-linux-
+      - name: Configure Conan
+        run: |
+          conan profile detect -f
+          recipes="${{ github.workspace }}/tttapa-conan-recipes"
+          git clone https://github.com/tttapa/conan-recipes "$recipes"
+          conan remote add tttapa-conan-recipes "$recipes" --force
 
       - name: Download sdist
         uses: actions/download-artifact@v4
@@ -194,18 +154,15 @@ jobs:
         run: mkdir sdist && tar xf dist/*.tar.gz -C sdist --strip-components 1
 
       - name: Build
-        uses: ./.github/workflows/python-build
-        with:
-          source-dir: sdist
-          host: ${{ matrix.host }}
-          python-version: ${{ matrix.python-version }}
-          ccache: ccache
+        run: >
+          bash scripts/ci/build-linux.sh
+          ${{ matrix.python-version }} ${{ matrix.host }} sdist dist
 
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.host }}-${{ matrix.python-version }}
-          path: ./sdist/dist/*.whl
+          path: ./dist/*.whl
 
   # Build for Windows and macOS using cibuildwheel.
   # Since we're not specifying any cross-compilation settings, py-build-cmake
