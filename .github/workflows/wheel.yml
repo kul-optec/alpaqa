@@ -15,46 +15,18 @@ jobs:
   # stub files for them. Those stub files are then included in the sdist
   # (source distribution), to be later included in the cross-compiled packages
   # as well (because we can't generate stubs while cross-compiling).
-  # By building the native wheels first, we can already start testing while the
-  # cross-compiled versions are being built.
   build-sdist:
     name: Build sdist
     runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        python-version: ['3.13']
-    env:
-      CONAN_HOME: ${{ github.workspace }}/.conan2
-      SCCACHE_GHA_VERSION: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Setup Conan and sccache
+        uses: ./.github/workflows/setup-conan
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Python dependencies
-        run: >
-          pip install -U
-          pip build conan ninja 'py-build-cmake~=0.3.2' 'pybind11-stubgen~=2.5.1' 'numpy<3'
-          
-      - name: Install sccache
-        uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
-  
-      - name: Cache Conan dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CONAN_HOME }}/p
-          key: ${{ runner.os }}-build-sdist-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-build-sdist-
-      - name: Configure Conan
-        run: |
-          conan profile detect -f
-          recipes="${{ github.workspace }}/tttapa-conan-recipes"
-          git clone https://github.com/tttapa/conan-recipes "$recipes"
-          conan remote add tttapa-conan-recipes "$recipes" --force
+          python-version: '3.12'
+          cache-key: build-sdist
 
       - name: Build Wheel (and install stubs)
         run: bash scripts/ci/build-linux-native.sh . dist python
@@ -82,7 +54,7 @@ jobs:
     name: Run tests
     needs: [build-sdist]
     runs-on: ubuntu-latest
-    container: python:3.13-bookworm
+    container: python:3.12-bookworm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -105,45 +77,21 @@ jobs:
   # After the native build, we have the stub files, and we can start cross-
   # compiling for other architectures.
   cross-build-linux:
-    name: Cross-build wheels for ${{ matrix.host }} - ${{ matrix.python-version }}
+    name: Cross-build wheels ${{ matrix.host }}
     needs: [build-sdist]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         host: [x86_64-bionic-linux-gnu, aarch64-rpi3-linux-gnu]
-        python-version: ['3.9', '3.13']
-    env:
-      CONAN_HOME: ${{ github.workspace }}/.conan2
-      SCCACHE_GHA_VERSION: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Setup Conan and sccache
+        uses: ./.github/workflows/setup-conan
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Install Python dependencies
-        run: >
-          pip install -U
-          pip build conan ninja 'py-build-cmake~=0.3.2' 'pybind11-stubgen~=2.5.1' 'numpy<3'
-          
-      - name: Install sccache
-        uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
-  
-      - name: Cache Conan dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CONAN_HOME }}/p
-          key: ${{ runner.os }}-cross-build-linux-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-cross-build-linux-
-      - name: Configure Conan
-        run: |
-          conan profile detect -f
-          recipes="${{ github.workspace }}/tttapa-conan-recipes"
-          git clone https://github.com/tttapa/conan-recipes "$recipes"
-          conan remote add tttapa-conan-recipes "$recipes" --force
+          python-version: '3.12'
+          cache-key: cross-build-${{ matrix.host }}
 
       - name: Download sdist
         uses: actions/download-artifact@v4
@@ -153,15 +101,16 @@ jobs:
       - name: Extract sdist
         run: mkdir sdist && tar xf dist/*.tar.gz -C sdist --strip-components 1
 
-      - name: Build
-        run: >
-          bash scripts/ci/build-linux.sh
-          ${{ matrix.python-version }} ${{ matrix.host }} sdist dist
+      - name: Build Wheels
+        run: |
+          for v in 3.9 3.13; do
+            bash scripts/ci/build-linux.sh $v ${{ matrix.host }} sdist dist
+          done
 
-      - name: Upload package
+      - name: Upload Wheels
         uses: actions/upload-artifact@v4
         with:
-          name: wheels-${{ matrix.host }}-${{ matrix.python-version }}
+          name: wheels-${{ matrix.host }}
           path: ./dist/*.whl
 
   # Build for Windows and macOS using cibuildwheel.
@@ -200,23 +149,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Python
-        uses: actions/setup-python@v5
+      - name: Setup Conan and sccache
+        uses: ./setup-conan/action.yml
         with:
           python-version: "3.12"
-
-      - name: Install sccache
-        uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
+          cache-key: cibuildwheel-${{ matrix.cibw-arch }}
 
       - name: Install cibuildwheel
         run: python -m pip install cibuildwheel~=2.22.0
-
-      - name: Cache Conan dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.CONAN_HOME }}/p
-          key: ${{ runner.os }}-build-wheel-${{ matrix.cibw-arch }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-build-wheel-${{ matrix.cibw-arch }}-
 
       - name: Download sdist
         uses: actions/download-artifact@v4
@@ -225,10 +165,7 @@ jobs:
           path: dist
       - name: Extract sdist
         shell: bash
-        run: |
-          mkdir sdist
-          tar xf dist/*.tar.gz -C sdist --strip-components 1
-          cp -a scripts sdist
+        run: mkdir sdist && tar xf dist/*.tar.gz -C sdist --strip-components 1 && cp -a scripts sdist
 
       - name: Build wheels
         if: runner.os == 'Windows'

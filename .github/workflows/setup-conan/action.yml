@@ -1,0 +1,54 @@
+name: Python build
+description: Cross-compile the Python package
+inputs:
+  python-version:
+    required: false
+    default: '3.13'
+    description: >
+      The Python version to use for the build, e.g. '3.13'.
+  conan-home:
+    required: false
+    default: ${{ github.workspace }}/.conan2
+  cache-key:
+    required: false
+    default: generic
+
+runs:
+  using: composite
+  steps:
+
+  - name: Install Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: ${{ inputs.python-version }}
+
+  - name: Install Python dependencies
+    shell: bash
+    run: >
+      pip install -U
+      pip build conan cmake ninja
+      'py-build-cmake~=0.3.2' 'pybind11-stubgen~=2.5.1' 'numpy<3'
+
+  - name: Configure sccache version
+    shell: bash
+    run: echo "SCCACHE_GHA_VERSION=${{ inputs.cache-key }}" >> "$GITHUB_ENV"
+
+  - name: Install sccache
+    uses: mozilla-actions/sccache-action@9e326ebed976843c9932b3aa0e021c6f50310eb4
+
+  - name: Cache Conan dependencies
+    uses: actions/cache@v4
+    with:
+      path: ${{ inputs.conan-home }}/p
+      key: conan-${{ runner.os }}-${{ inputs.cache-key }}-${{ github.sha }}
+      restore-keys: conan-${{ runner.os }}-${{ inputs.cache-key }}-
+
+  - name: Configure Conan
+    shell: bash
+    run: |
+      export CONAN_HOME="${{ inputs.conan-home }}"
+      echo "CONAN_HOME=${{ inputs.conan-home }}" >> "$GITHUB_ENV"
+      conan profile detect -f
+      recipes="${{ github.workspace }}/tttapa-conan-recipes"
+      git clone https://github.com/tttapa/conan-recipes "$recipes"
+      conan remote add tttapa-conan-recipes "$recipes" --force
