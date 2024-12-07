@@ -26,39 +26,16 @@ pkg_dir="${3:-.}"
 out_dir="${4:-dist}"
 
 # Create Conan profiles
-host_profile="$PWD/profile-host.local.conan"
-cat <<- EOF > "$host_profile"
-include($PWD/scripts/ci/$triple.profile)
-[settings]
-build_type=Release
-compiler=gcc
-compiler.cppstd=gnu23
-compiler.libcxx=libstdc++11
-compiler.version=14
-[tool_requires]
-tttapa-toolchains/1.0.1
-[conf]
-tools.build:skip_test=true
-tools.build:cflags+=["-fdiagnostics-color"]
-tools.build:cxxflags+=["-fdiagnostics-color"]
-tools.build:exelinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.build:sharedlinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_DEBUG_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_DEBUG_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELEASE_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELEASE_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO_INIT}"}
-tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-[options]
-alpaqa/*:with_conan_python=True
-EOF
-
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
-include($host_profile)
-include($PWD/scripts/ci/alpaqa-python-linux.profile)
+include($PWD/scripts/ci/profiles/cross-linux.profile)
+include($PWD/scripts/ci/profiles/$triple.profile)
+include($PWD/scripts/ci/profiles/alpaqa-python-linux.profile)
 [conf]
 tools.build:exelinkflags+=["-static-libgcc"]
 tools.build:sharedlinkflags+=["-static-libgcc"]
+[options]
+alpaqa/*:with_conan_python=True
 [replace_requires]
 tttapa-python-dev/* : tttapa-python-dev/[~$python_majmin]
 EOF

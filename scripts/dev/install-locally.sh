@@ -11,7 +11,7 @@ case $1 in
     "") ;;
     py*) build_cpp=0 ;;
     cpp*) build_python=0 ;;
-    *) echo "Invalid argument, use python or cpp"; exit 1 ;;
+    *) echo "Invalid argument, use py[-dev] or cpp[-pkg]"; exit 1 ;;
 esac
 
 # Activate virtual environment
@@ -23,11 +23,12 @@ python_majmin_nodot="${python_majmin//./}"
 
 # Select architecture
 triple=x86_64-bionic-linux-gnu
-tools_dir="$PWD/toolchains"
+plat_tag=manylinux_2_27_x86_64
 
 # Download dependencies
 pip install -U pip build conan
 # My own custom recipes for Ipopt, CasADi, QPALM, patched Eigen
+tools_dir="$PWD/toolchains"
 [ -d "$tools_dir/thirdparty/conan-recipes" ] || {
     mkdir -p "$tools_dir/thirdparty"
     git clone https://github.com/tttapa/conan-recipes "$tools_dir/thirdparty/conan-recipes"
@@ -37,47 +38,30 @@ pip install -U pip build conan
 # Create Conan profiles
 host_profile="$PWD/profile-host.local.conan"
 cat <<- EOF > "$host_profile"
-include($PWD/scripts/ci/$triple.profile)
-[settings]
-build_type=Release
-compiler=gcc
-compiler.cppstd=gnu23
-compiler.libcxx=libstdc++11
-compiler.version=14
-[tool_requires]
-tttapa-toolchains/1.0.1
+include($PWD/scripts/ci/profiles/cross-linux.profile)
+include($PWD/scripts/ci/profiles/$triple.profile)
 [conf]
-tools.build:skip_test=true
-tools.build:cflags+=["-march=native", "-fdiagnostics-color"]
-tools.build:cxxflags+=["-march=native", "-fdiagnostics-color"]
-tools.build:exelinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.build:sharedlinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_DEBUG_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_DEBUG_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELEASE_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELEASE_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO_INIT}"}
-tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 tools.build.cross_building:can_run=True
-[options]
-alpaqa/*:with_conan_python=True
 [buildenv]
-CMAKE_C_COMPILER_LAUNCHER=ccache
-CMAKE_CXX_COMPILER_LAUNCHER=ccache
+CMAKE_C_COMPILER_LAUNCHER=sccache
+CMAKE_CXX_COMPILER_LAUNCHER=sccache
 EOF
 
 cpp_profile="$PWD/profile-cpp.local.conan"
 cat <<- EOF > "$cpp_profile"
 include($host_profile)
-include($PWD/scripts/ci/alpaqa-cpp-linux.profile)
+include($PWD/scripts/ci/profiles/alpaqa-cpp-linux.profile)
 EOF
 
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
 include($host_profile)
-include($PWD/scripts/ci/alpaqa-python-linux.profile)
+include($PWD/scripts/ci/profiles/alpaqa-python-linux.profile)
 [conf]
 tools.build:exelinkflags+=["-static-libgcc"]
 tools.build:sharedlinkflags+=["-static-libgcc"]
+[options]
+alpaqa/*:with_conan_python=True
 [replace_requires]
 tttapa-python-dev/*: tttapa-python-dev/[^$python_version]
 EOF
@@ -88,10 +72,10 @@ os=linux
 implementation="cp"
 version="$python_majmin_nodot"
 abi="cp$python_majmin_nodot"
-arch=manylinux_2_27_x86_64
+arch=$plat_tag
+cmake.options.CMAKE_C_COMPILER_LAUNCHER=sccache
+cmake.options.CMAKE_CXX_COMPILER_LAUNCHER=sccache
 cmake.options.ALPAQA_WITH_PY_STUBS=true
-cmake.options.CMAKE_C_COMPILER_LAUNCHER=ccache
-cmake.options.CMAKE_CXX_COMPILER_LAUNCHER=ccache
 EOF
 
 # Build C++ packages
@@ -113,9 +97,11 @@ if [ $build_cpp -eq 1 ]; then
         cmake --install build --config $cfg --component debug
     done
     # Package
-    pushd build
-    cpack -G 'TGZ;DEB' -C "RelWithDebInfo;Debug"
-    popd
+    if [ "${1: -4}" = "-pkg" ]; then
+        pushd build
+        cpack -G 'TGZ;DEB' -C "RelWithDebInfo;Debug"
+        popd
+    fi
 fi
 
 # Build Python packages
@@ -125,13 +111,13 @@ if [ $build_python -eq 1 ]; then
             -pr:h "$python_profile" \
             -s build_type=$cfg
     done
-    develop=false
-    if $develop; then
+    if [ "${1: -4}" = "-dev" ]; then
         pip install -e ".[test]" -v \
             -C local="$PWD/scripts/ci/py-build-cmake.toml" \
-            -C cross="$pbc_config"
+            -C cross="$pbc_config" \
+            -C override=cmake.install_components+='[python_modules_debug]'
     else
-        tag=\"$(date -u +"%Y_%m_%dT%H.%M.%SZ")\"
+        tag=\"$(date -u +"%s")\"
         python -m build -w "." -o staging \
             -C local="$PWD/scripts/ci/py-build-cmake.toml" \
             -C cross="$pbc_config" \

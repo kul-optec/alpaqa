@@ -9,26 +9,11 @@ out_dir="${2:-dist}"
 install_stubs_dir="$3"
 
 # Create Conan profiles
-host_profile="$PWD/profile-host.local.conan"
-cat <<- EOF > "$host_profile"
-include(default)
-[conf]
-tools.build:skip_test=true
-tools.build:cflags+=["-fdiagnostics-color"]
-tools.build:cxxflags+=["-fdiagnostics-color"]
-tools.build:exelinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.build:sharedlinkflags+=["-flto=auto", "-static-libstdc++"]
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_DEBUG_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_DEBUG_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELEASE_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELEASE_INIT}"}
-tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO_INIT": "\${CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO_INIT}"}
-tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
-EOF
-
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
-include($host_profile)
-include($PWD/scripts/ci/alpaqa-python-linux.profile)
+include(default)
+include($PWD/scripts/ci/profiles/linux-conf.profile)
+include($PWD/scripts/ci/profiles/alpaqa-python-linux.profile)
 [conf]
 tools.build:exelinkflags+=["-static-libgcc"]
 tools.build:sharedlinkflags+=["-static-libgcc"]
