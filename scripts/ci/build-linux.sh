@@ -49,6 +49,7 @@ abi="cp$python_majmin_nodot"
 arch=$plat_tag
 cmake.options.CMAKE_C_COMPILER_LAUNCHER=sccache
 cmake.options.CMAKE_CXX_COMPILER_LAUNCHER=sccache
+cmake.build_args+=["--verbose"]
 EOF
 
 # Install dependencies
