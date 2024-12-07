@@ -16,7 +16,7 @@ jobs:
         include:
           - os: ubuntu-22.04
             name: glnxa64
-            matlab-version: 'R2021a'
+            matlab-release: 'R2021a'
             host: x86_64-bionic-linux-gnu
           - os: macos-14
             name: maca64
@@ -26,6 +26,7 @@ jobs:
             name: maci64
             matlab-release: 'R2021a'
             host: macos
+      fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
@@ -42,7 +43,7 @@ jobs:
       uses: matlab-actions/setup-matlab@64144ac4bb7c754f9ef7642f693671c873701c60
       id: matlab
       with:
-        release: ${{ matrix.matlab-version }}
+        release: ${{ matrix.matlab-release }}
 
     - name: Build
       run: >
@@ -64,13 +65,15 @@ jobs:
       with:
         files: alpaqa-matlab-${{ matrix.name }}.zip
 
+    - run: conan cache clean
+
   build-windows:
     strategy:
       matrix:
         include:
           - os: windows-2022
             name: win64
-            matlab-version: 'R2021a'
+            matlab-release: 'R2021a'
             host: amd64
     runs-on: ${{ matrix.os }}
     steps:
@@ -88,12 +91,12 @@ jobs:
       uses: matlab-actions/setup-matlab@64144ac4bb7c754f9ef7642f693671c873701c60
       id: matlab
       with:
-        release: ${{ matrix.matlab-version }}
+        release: ${{ matrix.matlab-release }}
 
     - name: Build
       shell: cmd
       run: >
-        call scripts\ci\build-matlab-windows.bat
+        call .\scripts\ci\build-matlab-windows.bat
         "${{ steps.matlab.outputs.matlabroot }}" "${{ matrix.host }}" "." "staging"
 
     - name: Package

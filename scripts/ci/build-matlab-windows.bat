@@ -18,7 +18,7 @@ set "out_dir=%~4"
 if "%out_dir%"=="" set "out_dir=staging\matlab"
 
 :: Source the Visual Studio environment
-set "vcvarsall_path=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"
+set "vcvarsall_path=C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat"
 call "%vcvarsall_path%" %triple% || exit /b 1
 
 :: Create Conan profiles
