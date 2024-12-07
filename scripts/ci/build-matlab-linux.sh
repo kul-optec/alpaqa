@@ -31,7 +31,9 @@ done
 # Build MATLAB bindings
 pushd "$pkg_dir"
 cmake --preset conan-matlab-release \
-    -D CMAKE_FIND_ROOT_PATH="$matlab_dir"
+    -D CMAKE_FIND_ROOT_PATH="$matlab_dir" \
+    -D CMAKE_C_COMPILER_LAUNCHER=sccache \
+    -D CMAKE_CXX_COMPILER_LAUNCHER=sccache
 cmake --build --preset conan-matlab-release \
     -t alpaqa_mex -v
 cmake --install build/matlab-release \
