@@ -119,6 +119,8 @@ jobs:
             build/alpaqa*.tar.gz
             build/*alpaqa*.deb
 
+      - run: conan cache clean
+
   test:
     # TODO
     if: false

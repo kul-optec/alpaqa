@@ -46,6 +46,8 @@ jobs:
           path: dist/*.tar.gz
           retention-days: 1
 
+      - run: conan cache clean
+
   # Testing is done in the official Python Docker container: https://hub.docker.com/_/python/
   # This should match more closely to the environment that users might use.
   # It also ensures that we don't accidentally depend on any libraries specific
@@ -112,6 +114,8 @@ jobs:
         with:
           name: wheels-${{ matrix.host }}
           path: ./dist/*.whl
+
+      - run: conan cache clean
 
   # Build for Windows and macOS using cibuildwheel.
   # Since we're not specifying any cross-compilation settings, py-build-cmake
@@ -183,6 +187,8 @@ jobs:
         with:
           name: wheels-${{ matrix.os }}-${{ matrix.cibw-arch }}
           path: ./dist/*.whl
+
+      - run: conan cache clean
 
   # This step checks the package version before release (to make sure that the
   # package version actually matches the version of the GitHub release tag),
