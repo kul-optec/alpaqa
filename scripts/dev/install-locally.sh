@@ -38,7 +38,6 @@ tools_dir="$PWD/toolchains"
 # Create Conan profiles
 host_profile="$PWD/profile-host.local.conan"
 cat <<- EOF > "$host_profile"
-include($PWD/scripts/ci/profiles/cross-linux.profile)
 include($PWD/scripts/ci/profiles/$triple.profile)
 [conf]
 tools.build.cross_building:can_run=True

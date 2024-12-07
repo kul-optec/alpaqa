@@ -1,3 +1,5 @@
+include({{ os.path.join(profile_dir, "cross-linux.profile") }})
+
 [settings]
 # armv6hf doesn't exist
 arch=armv6

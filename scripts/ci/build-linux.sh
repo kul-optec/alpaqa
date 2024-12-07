@@ -28,7 +28,6 @@ out_dir="${4:-dist}"
 # Create Conan profiles
 python_profile="$PWD/profile-python.local.conan"
 cat <<- EOF > "$python_profile"
-include($PWD/scripts/ci/profiles/cross-linux.profile)
 include($PWD/scripts/ci/profiles/$triple.profile)
 include($PWD/scripts/ci/profiles/alpaqa-python-linux.profile)
 [conf]

@@ -1,3 +1,5 @@
+include({{ os.path.join(profile_dir, "cross-linux.profile") }})
+
 [settings]
 arch=x86_64
 os=Linux

@@ -16,12 +16,8 @@ out_dir="${4:-staging/matlab}"
 # Create Conan profiles
 matlab_profile="$PWD/profile-matlab.local.conan"
 cat <<- EOF > "$matlab_profile"
-include($PWD/scripts/ci/profiles/cross-linux.profile)
 include($PWD/scripts/ci/profiles/$triple.profile)
-include($PWD/scripts/ci/profiles/alpaqa-matlab-linux.profile)
-[conf]
-tools.build:exelinkflags+=["-static-libgcc"]
-tools.build:sharedlinkflags+=["-static-libgcc"]
+include($PWD/scripts/ci/profiles/alpaqa-matlab.profile)
 EOF
 
 # Install dependencies
@@ -37,7 +33,7 @@ pushd "$pkg_dir"
 cmake --preset conan-matlab-release \
     -D CMAKE_FIND_ROOT_PATH="$matlab_dir"
 cmake --build --preset conan-matlab-release \
-    -t alpaqa_mex
+    -t alpaqa_mex -v
 cmake --install build/matlab-release \
     --component mex_interface --prefix "$out_dir"
 popd
