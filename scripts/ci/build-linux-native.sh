@@ -34,10 +34,10 @@ for cfg in Debug Release; do
 done
 
 # Build Python packages
-python -m build -w "$pkg_dir" -o "$out_dir" \
+python3 -m build -w "$pkg_dir" -o "$out_dir" \
     -C local="$PWD/scripts/ci/py-build-cmake.toml" \
     -C local="$pbc_config"
-python -m build -w "$pkg_dir/python/alpaqa-debug" -o "$out_dir" \
+python3 -m build -w "$pkg_dir/python/alpaqa-debug" -o "$out_dir" \
     -C local="$PWD/scripts/ci/py-build-cmake.toml" \
     -C component="$PWD/scripts/ci/py-build-cmake.component.toml" \
     -C local="$pbc_config"
