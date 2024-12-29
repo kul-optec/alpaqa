@@ -142,8 +142,6 @@ jobs:
           cibw-arch: universal2
       fail-fast: false
     env:
-      CONAN_HOME: ${{ github.workspace }}/.conan2
-      SCCACHE_GHA_VERSION: "1"
       SCCACHE_CACHE_MULTIARCH: "1"
       CIBW_ARCHS: ${{ matrix.cibw-arch }}
       CIBW_ENABLE: 'pypy'
