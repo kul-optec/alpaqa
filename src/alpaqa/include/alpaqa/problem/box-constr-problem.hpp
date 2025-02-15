@@ -231,7 +231,9 @@ class BoxConstrProblem {
 
     /// @see @ref TypeErasedProblem::eval_prox_jacobian_diag
     /// @todo Factor out common logic eval_inactive_indices_res_lna
-    void eval_prox_jacobian_diag(real_t γ, crvec x, rvec J_diag) const {
+    void eval_prox_jacobian_diag(real_t γ, crvec x, rvec J_diag) const
+        requires config_t::supports_indexvec // TODO
+    {
         // Helper that adds i to index set J if x ∊ C
         const auto J_prox_box = [&](real_t x_fw, index_t i) {
             const auto lb = variable_bounds.lower(i), ub = variable_bounds.upper(i);
