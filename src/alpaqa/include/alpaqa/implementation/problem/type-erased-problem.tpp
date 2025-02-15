@@ -39,7 +39,14 @@ auto ProblemVTable<Conf>::default_eval_inactive_indices_res_lna(const void *, re
 }
 
 template <Config Conf>
-auto ProblemVTable<Conf>::default_eval_nonsmooth_objective(const void *, crvec, const ProblemVTable &) -> real_t {
+void ProblemVTable<Conf>::default_eval_prox_jacobian_diag(const void *, real_t, crvec, rvec,
+                                                          const ProblemVTable &) {
+    throw not_implemented_error("eval_prox_jacobian_diag");
+}
+
+template <Config Conf>
+auto ProblemVTable<Conf>::default_eval_nonsmooth_objective(const void *, crvec,
+                                                           const ProblemVTable &) -> real_t {
     throw not_implemented_error("eval_nonsmooth_objective");
 }
 

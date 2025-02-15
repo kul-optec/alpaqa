@@ -45,6 +45,7 @@ std::ostream &operator<<(std::ostream &os, const EvalCounter &c) {
     ALPAQA_PRINT_EVAL(projection_multipliers);
     ALPAQA_PRINT_EVAL(proximal_gradient_step);
     ALPAQA_PRINT_EVAL(inactive_indices_res_lna);
+    ALPAQA_PRINT_EVAL(prox_jacobian_diag);
     ALPAQA_PRINT_EVAL(objective);
     ALPAQA_PRINT_EVAL(objective_gradient);
     ALPAQA_PRINT_EVAL(objective_and_gradient);

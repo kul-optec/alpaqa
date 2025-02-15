@@ -229,6 +229,41 @@ class BoxConstrProblem {
         return nJ;
     }
 
+    /// @see @ref TypeErasedProblem::eval_prox_jacobian_diag
+    /// @todo Factor out common logic eval_inactive_indices_res_lna
+    void eval_prox_jacobian_diag(real_t γ, crvec x, rvec J_diag) const {
+        // Helper that adds i to index set J if x ∊ C
+        const auto J_prox_box = [&](real_t x_fw, index_t i) {
+            const auto lb = variable_bounds.lower(i), ub = variable_bounds.upper(i);
+            return (lb < x_fw && x_fw < ub) ? real_t{1} : real_t{0};
+        };
+        // Update the index set J for the general box + l1 case
+        const auto J_prox_general = [&](real_t λ, real_t x_fw, index_t i) {
+            if (λ == 0) {
+                return J_prox_box(x_fw, i);
+            } else {
+                if (x_fw > γ * λ)
+                    return J_prox_box(x_fw - γ * λ, i);
+                else if (x_fw < -γ * λ)
+                    return J_prox_box(x_fw + γ * λ, i);
+                else
+                    return real_t{0};
+            }
+        };
+        const auto nλ     = l1_reg.size();
+        const bool λ_is_0 = nλ == 0 || (nλ == 1 && l1_reg(0) == 0);
+        // Only box constraints
+        if (λ_is_0)
+            for (index_t i = 0; i < num_variables; ++i)
+                J_diag(i) = J_prox_box(x(i), i);
+        // Box constraints and l1
+        else
+            for (index_t i = 0; i < num_variables; ++i) {
+                real_t λi = nλ == 0 ? 0 : nλ == 1 ? l1_reg(0) : l1_reg(i);
+                J_diag(i) = J_prox_general(λi, x(i), i);
+            }
+    }
+
     /// @see @ref TypeErasedProblem::eval_nonsmooth_objective
     real_t eval_nonsmooth_objective(crvec x) const {
         using vec_util::norm_1;

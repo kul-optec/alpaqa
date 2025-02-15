@@ -50,6 +50,8 @@ struct ProblemVTable : guanaqo::BasicVTable {
         eval_constraints_gradient_product;
     optional_function_t<index_t(real_t γ, crvec x, crvec grad_ψ, rindexvec J) const>
         eval_inactive_indices_res_lna = default_eval_inactive_indices_res_lna;
+    optional_function_t<void(real_t γ, crvec x, rvec J_diag) const>
+        eval_prox_jacobian_diag = default_eval_prox_jacobian_diag;
     optional_function_t<real_t(crvec x) const>
         eval_nonsmooth_objective = default_eval_nonsmooth_objective;
 
@@ -112,6 +114,8 @@ struct ProblemVTable : guanaqo::BasicVTable {
     ALPAQA_EXPORT_STATIC static index_t
     default_eval_inactive_indices_res_lna(const void *, real_t, crvec, crvec, rindexvec,
                                           const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void default_eval_prox_jacobian_diag(const void *, real_t, crvec,
+                                                                     rvec, const ProblemVTable &);
     ALPAQA_EXPORT_STATIC static void default_eval_constraints_jacobian(const void *, crvec, rvec,
                                                                        const ProblemVTable &);
     ALPAQA_EXPORT_STATIC static Sparsity
@@ -187,6 +191,7 @@ struct ProblemVTable : guanaqo::BasicVTable {
         GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_constraints);
         GUANAQO_TE_REQUIRED_METHOD(vtable, P, eval_constraints_gradient_product);
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_inactive_indices_res_lna, p);
+        GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_prox_jacobian_diag, p);
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_nonsmooth_objective, p);
         // Second order
         GUANAQO_TE_OPTIONAL_METHOD(vtable, P, eval_constraints_jacobian, p);
@@ -373,6 +378,17 @@ class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Alloca
     /// \lt x_i - \gamma\nabla_{\!x_i}\psi(x) \lt \overline x_i}. @f]
     [[nodiscard]] index_t eval_inactive_indices_res_lna(real_t γ, crvec x, crvec grad_ψ,
                                                         rindexvec J) const;
+    /// **[Optional]**
+    /// Function that computes the diagonal Jacobian of the proximal mapping of
+    /// @f$ h(x) @f$.
+    /// @param  [in] γ
+    ///         Step size, @f$ \gamma \in \R_{>0} @f$
+    /// @param  [in] x
+    ///         Decision variable @f$ x \in \R^n @f$
+    /// @param  [out] J_diag
+    ///         The diagonal elements of the Jacobian of the prox of the
+    ///         nonsmooth objective @f$ h(x) @f$.
+    void eval_prox_jacobian_diag(real_t γ, crvec x, rvec J_diag) const;
     /// **[Optional]**
     /// Function that evaluates the non-smooth term of the cost @f$ h(x) @f$.
     /// @param  [in] x
@@ -613,6 +629,11 @@ class TypeErasedProblem : public guanaqo::TypeErased<ProblemVTable<Conf>, Alloca
         return vtable.eval_inactive_indices_res_lna != vtable.default_eval_inactive_indices_res_lna;
     }
     /// Returns true if the problem provides an implementation of
+    /// @ref eval_prox_jacobian_diag.
+    [[nodiscard]] bool provides_eval_prox_jacobian_diag() const {
+        return vtable.eval_prox_jacobian_diag != vtable.default_eval_prox_jacobian_diag;
+    }
+    /// Returns true if the problem provides an implementation of
     /// @ref eval_nonsmooth_objective.
     [[nodiscard]] bool provides_eval_nonsmooth_objective() const {
         return vtable.eval_nonsmooth_objective != vtable.default_eval_nonsmooth_objective;
@@ -813,6 +834,11 @@ auto TypeErasedProblem<Conf, Allocator>::eval_inactive_indices_res_lna(real_t γ
     return call(vtable.eval_inactive_indices_res_lna, γ, x, grad_ψ, J);
 }
 template <Config Conf, class Allocator>
+void TypeErasedProblem<Conf, Allocator>::eval_prox_jacobian_diag(real_t γ, crvec x,
+                                                                 rvec J_diag) const {
+    return call(vtable.eval_prox_jacobian_diag, γ, x, J_diag);
+}
+template <Config Conf, class Allocator>
 auto TypeErasedProblem<Conf, Allocator>::eval_nonsmooth_objective(crvec x) const -> real_t {
     return call(vtable.eval_nonsmooth_objective, x);
 }
@@ -943,6 +969,7 @@ void print_provided_functions(std::ostream &os, const TypeErasedProblem<Conf> &p
     // clang-format off
     os << "                                 eval_nonsmooth_objective: " << problem.provides_eval_nonsmooth_objective() << '\n'
        << "                            eval_inactive_indices_res_lna: " << problem.provides_eval_inactive_indices_res_lna() << '\n'
+       << "                                  eval_prox_jacobian_diag: " << problem.provides_eval_prox_jacobian_diag() << '\n'
        << "                                             eval_grad_gi: " << problem.provides_eval_grad_gi() << '\n'
        << "                                eval_constraints_jacobian: " << problem.provides_eval_constraints_jacobian() << '\n'
        << "                          eval_lagrangian_hessian_product: " << problem.provides_eval_lagrangian_hessian_product() << '\n'

@@ -67,6 +67,9 @@ class UnconstrProblem {
         return J.size();
     }
 
+    /// @see @ref TypeErasedProblem::eval_prox_jacobian_diag
+    void eval_proj_jacobian_diag(real_t, crvec, rvec J_diag) const { J_diag.setZero(); }
+
     /// @see @ref TypeErasedProblem::get_name
     [[nodiscard]] std::string get_name() const { return "UnconstrProblem"; }
 };

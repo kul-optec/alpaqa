@@ -76,6 +76,7 @@ inline void write_evaluations(std::ostream &os,
     EVAL(projection_multipliers);
     EVAL(proximal_gradient_step);
     EVAL(inactive_indices_res_lna);
+    EVAL(prox_jacobian_diag);
     EVAL(objective);
     EVAL(objective_gradient);
     EVAL(objective_and_gradient);
