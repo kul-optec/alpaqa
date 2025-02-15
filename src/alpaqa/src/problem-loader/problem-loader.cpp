@@ -22,12 +22,12 @@
 #include <string>
 namespace fs = std::filesystem;
 
-#include "options.hpp"
-#include "problem.hpp"
+#include <alpaqa/problem-loader/problem-loader.hpp>
 
 namespace {
 
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+using alpaqa::LoadedProblem;
 
 std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
     std::string name          = "register_alpaqa_problem";
@@ -40,13 +40,13 @@ std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
     return name;
 }
 
-alpaqa::DynamicLoadFlags get_dl_flags(Options &opts) {
-    alpaqa::DynamicLoadFlags flags;
+guanaqo::DynamicLoadFlags get_dl_flags(alpaqa::Options &opts) {
+    guanaqo::DynamicLoadFlags flags;
     set_params(flags, "dl_flags", opts);
     return flags;
 }
 
-void load_initial_guess(Options &opts, LoadedProblem &problem) {
+void load_initial_guess(alpaqa::Options &opts, LoadedProblem &problem) {
     const auto n = problem.problem.get_num_variables(),
                m = problem.problem.get_num_constraints();
     alpaqa::params::vec_from_file<config_t> x0{n}, y0{m}, w0{n};
@@ -61,7 +61,7 @@ void load_initial_guess(Options &opts, LoadedProblem &problem) {
         problem.initial_guess_w = std::move(*w0.value);
 }
 
-void count_constr(ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
+void count_constr(alpaqa::ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
     const auto n = C.lower.size();
     cnt.lb       = 0;
     cnt.ub       = 0;
@@ -101,7 +101,7 @@ void count_problem(LoadedProblem &p) {
 #if ALPAQA_WITH_DL
 LoadedProblem load_dl_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
-                              Options &opts) {
+                              alpaqa::Options &opts) {
     using TEProblem    = alpaqa::TypeErasedProblem<config_t>;
     using DLProblem    = alpaqa::dl::DLProblem;
     using CntProblem   = alpaqa::ProblemWithCounters<DLProblem>;
@@ -126,7 +126,7 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
 template <bool = true>
 LoadedProblem load_cs_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
-                              Options &opts) {
+                              alpaqa::Options &opts) {
     static std::mutex mtx;
     std::unique_lock lck{mtx};
     using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
@@ -161,7 +161,7 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
 template <bool = true>
 LoadedProblem load_cu_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
-                              Options &opts) {
+                              alpaqa::Options &opts) {
     std::string outsdif_path;
     alpaqa::params::set_params(outsdif_path, "outsdif", prob_opts);
     bool sparse = false;
@@ -194,8 +194,10 @@ LoadedProblem load_cu_problem(const fs::path &full_path,
 
 } // namespace
 
-LoadedProblem load_problem(std::string_view type, const fs::path &dir,
-                           const fs::path &file, Options &opts) {
+namespace alpaqa {
+
+LoadedProblem load_problem(std::string_view type, const fs::path &file,
+                           Options &opts) {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     // Isolate problem-specific options
     std::vector<std::string_view> prob_opts;
@@ -209,10 +211,9 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
         }
     }
     // Load problem
-    auto full_path = dir / file;
     if (type == "dl" || type.empty()) {
 #if ALPAQA_WITH_DL
-        return load_dl_problem(full_path, prob_opts, opts);
+        return load_dl_problem(file, prob_opts, opts);
 #else
         throw std::logic_error("This version of alpaqa was compiled without "
                                "support for dynamic problem loading");
@@ -220,7 +221,7 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
     } else if (type == "cs") {
 #if ALPAQA_WITH_CASADI
         if constexpr (std::is_same_v<config_t, alpaqa::EigenConfigd>)
-            return load_cs_problem(full_path, prob_opts, opts);
+            return load_cs_problem(file, prob_opts, opts);
         else
             throw std::logic_error("CasADi only supports double precision.");
 #else
@@ -230,7 +231,7 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
     } else if (type == "cu") {
 #ifdef ALPAQA_WITH_CUTEST
         if constexpr (std::is_same_v<config_t, alpaqa::EigenConfigd>)
-            return load_cu_problem(full_path, prob_opts, opts);
+            return load_cu_problem(file, prob_opts, opts);
         else
             throw std::logic_error("CUTEst only supports double precision.");
 #else
@@ -241,3 +242,38 @@ LoadedProblem load_problem(std::string_view type, const fs::path &dir,
     throw std::invalid_argument("Unknown problem type '" + std::string(type) +
                                 "'");
 }
+
+void print_problem_description(std::ostream &os, LoadedProblem &problem,
+                               bool show_funcs) {
+    os << "Loaded problem \"" << problem.name << "\"\n"
+       << "Number of variables:   " << problem.problem.get_num_variables()
+       << "\n"
+       << "Number of constraints: " << problem.problem.get_num_constraints()
+       << "\n";
+    if (problem.nnz_jac_g)
+        os << "Nonzeros in Jg:  " << *problem.nnz_jac_g << "\n";
+    if (problem.nnz_hess_L)
+        os << "Nonzeros in ∇²L: " << *problem.nnz_hess_L << "\n";
+    if (problem.nnz_hess_ψ)
+        os << "Nonzeros in ∇²ψ: " << *problem.nnz_hess_ψ << "\n";
+    if (problem.box_constr_count)
+        os << "Box constraints:" //
+           << "\n  Fixed variables:    " << problem.box_constr_count->eq
+           << "\n  Bilateral:          " << problem.box_constr_count->lbub
+           << "\n  Lower bound only:   " << problem.box_constr_count->lb
+           << "\n  Upper bound only:   " << problem.box_constr_count->ub
+           << "\n";
+    if (problem.general_constr_count)
+        os << "General constraints:" //
+           << "\n  Equality:           " << problem.general_constr_count->eq
+           << "\n  Bilateral:          " << problem.general_constr_count->lbub
+           << "\n  Lower bound only:   " << problem.general_constr_count->lb
+           << "\n  Upper bound only:   " << problem.general_constr_count->ub
+           << "\n";
+    if (show_funcs) {
+        os << "Provided functions:\n";
+        alpaqa::print_provided_functions(os, problem.problem);
+    }
+}
+
+} // namespace alpaqa

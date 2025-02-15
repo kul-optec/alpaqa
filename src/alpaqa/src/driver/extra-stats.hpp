@@ -1,11 +1,13 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/driver/solver-driver.hpp>
 #include <alpaqa/util/print.hpp>
-#include "solver-driver.hpp"
 
 #include <chrono>
 #include <memory>
+
+namespace alpaqa::driver {
 
 template <alpaqa::Config Conf>
 struct AlpaqaSolverStatsCollector {
@@ -68,7 +70,7 @@ struct AlpaqaSolverWrapperStats : SolverWrapper {
     [[nodiscard]] bool has_statistics() const override {
         return collector && !collector->stats.empty();
     }
-    void write_statistics_to_stream(std::ostream &os) override {
+    void write_statistics_to_stream(std::ostream &os) const override {
         std::array<char, 64> buf;
         os << "outer_iter,inner_iter,time,gamma,eps,delta,psi,psi_hat,fbe,tau,"
               "radius,rho\n";
@@ -87,3 +89,5 @@ struct AlpaqaSolverWrapperStats : SolverWrapper {
         }
     }
 };
+
+} // namespace alpaqa::driver

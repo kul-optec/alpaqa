@@ -382,9 +382,42 @@ if (ALPAQA_WITH_QPALM)
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
 endif()
 
+# Problem loader
+add_library(problem-loader
+    "alpaqa/src/problem-loader/problem-loader.cpp"
+)
+set_property(TARGET problem-loader
+    PROPERTY OUTPUT_NAME alpaqa-problem-loader)
+target_link_libraries(problem-loader
+    PUBLIC alpaqa::alpaqa
+    PRIVATE alpaqa::warnings)
+alpaqa_configure_visibility(problem-loader)
+set_target_properties(problem-loader PROPERTIES SOVERSION ${PROJECT_VERSION})
+add_library(alpaqa::problem-loader ALIAS problem-loader)
+list(APPEND ALPAQA_INSTALL_TARGETS problem-loader)
+generate_export_header(problem-loader
+    EXPORT_FILE_NAME export/alpaqa/problem-loader-export.h)
+target_include_directories(problem-loader PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+if (TARGET alpaqa::dl-loader)
+    target_link_libraries(problem-loader PUBLIC alpaqa::dl-loader)
+endif()
+if (TARGET alpaqa::casadi-loader)
+    target_link_libraries(problem-loader PUBLIC alpaqa::casadi-loader)
+endif()
+if (ALPAQA_WITH_EXTERNAL_CASADI)
+    target_link_libraries(problem-loader PRIVATE casadi)
+endif()
+if (TARGET alpaqa::cutest-interface)
+    target_link_libraries(problem-loader PUBLIC alpaqa::cutest-interface)
+endif()
+if (TARGET alpaqa::casadi-ocp-loader)
+    target_link_libraries(problem-loader PUBLIC alpaqa::casadi-ocp-loader)
+endif()
+
 # Drivers
 if (ALPAQA_WITH_DRIVERS)
-    add_executable(driver
+    add_library(drivers
         "alpaqa/src/driver/alpaqa-driver.cpp"
         "alpaqa/src/driver/panoc-driver.cpp"
         "alpaqa/src/driver/fista-driver.cpp"
@@ -392,9 +425,38 @@ if (ALPAQA_WITH_DRIVERS)
         "alpaqa/src/driver/ipopt-driver.cpp"
         "alpaqa/src/driver/lbfgsb-driver.cpp"
         "alpaqa/src/driver/qpalm-driver.cpp"
-        "alpaqa/src/driver/problem.cpp"
+    )
+    set_target_properties(drivers PROPERTIES
+        OUTPUT_NAME alpaqa-drivers)
+    target_link_libraries(drivers
+        PUBLIC alpaqa::alpaqa alpaqa::problem-loader PRIVATE alpaqa::warnings)
+    if (TARGET alpaqa::ipopt-adapter)
+        target_link_libraries(drivers PUBLIC alpaqa::ipopt-adapter)
+    endif()
+    if (TARGET alpaqa::lbfgsb-adapter)
+        target_link_libraries(drivers PUBLIC alpaqa::lbfgsb-adapter)
+    endif()
+    if (TARGET alpaqa::qpalm-adapter)
+        target_link_libraries(drivers PUBLIC alpaqa::qpalm-adapter)
+    endif()
+    target_include_directories(drivers PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
+        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    target_compile_definitions(drivers PUBLIC ALPAQA_WITH_DRIVERS)
+    alpaqa_configure_visibility(drivers)
+    set_target_properties(drivers PROPERTIES SOVERSION ${PROJECT_VERSION})
+    add_library(alpaqa::drivers ALIAS drivers)
+    list(APPEND ALPAQA_INSTALL_TARGETS drivers)
+    generate_export_header(drivers
+        EXPORT_FILE_NAME export/alpaqa/drivers-export.h
+        PREFIX_NAME ALPAQA_)
+    target_include_directories(drivers PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+
+    add_executable(driver
         "alpaqa/src/driver/param-complete.cpp"
         "alpaqa/src/driver/openmp.cpp"
+        "alpaqa/src/driver/alpaqa-driver-main.cpp"
     )
     set_target_properties(driver PROPERTIES
         OUTPUT_NAME "alpaqa-driver"
@@ -407,41 +469,14 @@ if (ALPAQA_WITH_DRIVERS)
         VISIBILITY_INLINES_HIDDEN On
     )
     target_link_libraries(driver
-        PRIVATE alpaqa::alpaqa alpaqa::warnings)
+        PRIVATE alpaqa::drivers alpaqa::warnings)
     add_executable(alpaqa::driver ALIAS driver)
     list(APPEND ALPAQA_INSTALL_EXE driver)
-    if (TARGET alpaqa::dl-loader)
-        target_link_libraries(driver PRIVATE alpaqa::dl-loader)
-    endif()
-    if (TARGET alpaqa::casadi-loader)
-        target_link_libraries(driver PRIVATE alpaqa::casadi-loader)
-    endif()
-    if (ALPAQA_WITH_EXTERNAL_CASADI)
-        target_link_libraries(driver PRIVATE casadi::casadi)
-    endif()
-    if (TARGET alpaqa::cutest-interface)
-        target_link_libraries(driver PRIVATE alpaqa::cutest-interface)
-    endif()
-    if (TARGET alpaqa::casadi-ocp-loader)
-        target_link_libraries(driver PRIVATE alpaqa::casadi-ocp-loader)
-    endif()
-    if (TARGET alpaqa::ipopt-adapter)
-        target_link_libraries(driver PRIVATE alpaqa::ipopt-adapter)
-    endif()
-    if (TARGET alpaqa::lbfgsb-adapter)
-        target_link_libraries(driver PRIVATE alpaqa::lbfgsb-adapter)
-    endif()
-    if (TARGET alpaqa::qpalm-adapter)
-        target_link_libraries(driver PRIVATE alpaqa::qpalm-adapter)
-    endif()
 endif()
 
 # Gradient checker tool
 if (ALPAQA_WITH_GRADIENT_CHECKER)
-    add_executable(gradient-checker
-        "alpaqa/src/driver/gradient-checker.cpp"
-        "alpaqa/src/driver/problem.cpp"
-    )
+    add_executable(gradient-checker "alpaqa/src/driver/gradient-checker.cpp")
     set_target_properties(gradient-checker PROPERTIES
         OUTPUT_NAME "alpaqa-gradient-checker"
         RELEASE_POSTFIX ""
@@ -453,24 +488,9 @@ if (ALPAQA_WITH_GRADIENT_CHECKER)
         VISIBILITY_INLINES_HIDDEN On
     )
     target_link_libraries(gradient-checker
-        PRIVATE alpaqa::alpaqa alpaqa::warnings)
+        PRIVATE alpaqa::alpaqa alpaqa::problem-loader alpaqa::warnings)
     add_executable(alpaqa::gradient-checker ALIAS gradient-checker)
     list(APPEND ALPAQA_INSTALL_EXE gradient-checker)
-    if (TARGET alpaqa::dl-loader)
-        target_link_libraries(gradient-checker PRIVATE alpaqa::dl-loader)
-    endif()
-    if (TARGET alpaqa::casadi-loader)
-        target_link_libraries(gradient-checker PRIVATE alpaqa::casadi-loader)
-    endif()
-    if (ALPAQA_WITH_EXTERNAL_CASADI)
-        target_link_libraries(gradient-checker PRIVATE casadi::casadi)
-    endif()
-    if (TARGET alpaqa::cutest-interface)
-        target_link_libraries(gradient-checker PRIVATE alpaqa::cutest-interface)
-    endif()
-    if (TARGET alpaqa::casadi-ocp-loader)
-        target_link_libraries(gradient-checker PRIVATE alpaqa::casadi-ocp-loader)
-    endif()
 endif()
 
 # Installation

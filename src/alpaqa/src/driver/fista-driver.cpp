@@ -1,16 +1,18 @@
 #include <alpaqa/implementation/outer/alm.tpp>
 #include <alpaqa/inner/fista.hpp>
+#include <alpaqa/params/options.hpp>
 
-#include "alm-driver.hpp"
-#include "cancel.hpp"
+#include <alpaqa/driver/alm-driver.hpp>
+#include <alpaqa/driver/cancel.hpp>
+#include <alpaqa/driver/solver-driver.hpp>
 #include "fista-driver.hpp"
-#include "solver-driver.hpp"
 
+namespace alpaqa::driver {
 namespace {
 
 using FISTASolver = alpaqa::FISTASolver<alpaqa::DefaultConfig>;
 
-auto make_inner_fista_solver(Options &opts) {
+auto make_inner_fista_solver(alpaqa::Options &opts) {
     USING_ALPAQA_CONFIG(FISTASolver::config_t);
     // Settings for the solver
     FISTASolver::Params solver_param;
@@ -23,7 +25,7 @@ auto make_inner_fista_solver(Options &opts) {
 
 template <class LoadedProblem>
 SharedSolverWrapper make_fista_driver_impl(std::string_view direction,
-                                           Options &opts) {
+                                           alpaqa::Options &opts) {
     if (!direction.empty())
         throw std::invalid_argument(
             "FISTA solver does not support any directions");
@@ -42,8 +44,10 @@ SharedSolverWrapper make_fista_driver_impl(std::string_view direction,
 } // namespace
 
 SharedSolverWrapper make_fista_driver(std::string_view direction,
-                                      Options &opts) {
-    return make_fista_driver_impl<LoadedProblem>(direction, opts);
+                                      alpaqa::Options &opts) {
+    return make_fista_driver_impl<alpaqa::LoadedProblem>(direction, opts);
 }
 
-template class alpaqa::ALMSolver<FISTASolver>;
+} // namespace alpaqa::driver
+
+template class alpaqa::ALMSolver<alpaqa::driver::FISTASolver>;

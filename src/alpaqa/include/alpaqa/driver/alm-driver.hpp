@@ -2,16 +2,18 @@
 
 #include <alpaqa/inner/internal/panoc-stop-crit.hpp>
 #include <alpaqa/outer/alm.hpp>
+#include <alpaqa/params/options.hpp>
 #include <alpaqa/params/params.hpp>
+#include <alpaqa/problem-loader/problem-loader.hpp>
 
-#include "options.hpp"
-#include "problem.hpp"
-#include "results.hpp"
+#include <alpaqa/driver/results.hpp>
+
+namespace alpaqa::driver {
 
 template <class InnerSolver>
 auto make_alm_solver(InnerSolver &&inner_solver, Options &opts) {
     // Settings for the ALM solver
-    using ALMSolver = alpaqa::ALMSolver<InnerSolver>;
+    using ALMSolver = ALMSolver<InnerSolver>;
     typename ALMSolver::Params alm_param;
     alm_param.max_iter        = 200;
     alm_param.tolerance       = 1e-8;
@@ -22,7 +24,7 @@ auto make_alm_solver(InnerSolver &&inner_solver, Options &opts) {
     return ALMSolver{alm_param, std::forward<InnerSolver>(inner_solver)};
 }
 
-USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+USING_ALPAQA_CONFIG(DefaultConfig);
 
 template <class InnerSolver>
 auto make_inner_solver(Options &opts) {
@@ -30,7 +32,7 @@ auto make_inner_solver(Options &opts) {
     typename InnerSolver::Params solver_param;
     solver_param.max_iter       = 50'000;
     solver_param.print_interval = 0;
-    solver_param.stop_crit      = alpaqa::PANOCStopCrit::ProjGradUnitNorm;
+    solver_param.stop_crit      = PANOCStopCrit::ProjGradUnitNorm;
     set_params(solver_param, "solver", opts);
 
     if constexpr (requires { typename InnerSolver::Direction; }) {
@@ -61,8 +63,7 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
     // Initial guess
     vec x = problem.initial_guess_x, y = problem.initial_guess_y;
     // Final penalties
-    vec Σ = vec::Constant(problem.problem.get_num_constraints(),
-                          alpaqa::NaN<config_t>);
+    vec Σ = vec::Constant(problem.problem.get_num_constraints(), NaN<config_t>);
 
     // Solve the problem
     auto stats = solver(problem.problem, x, y, Σ);
@@ -74,7 +75,7 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
         x      = problem.initial_guess_x;
         y      = problem.initial_guess_y;
         auto s = solver(problem.problem, x, y);
-        if (s.status == alpaqa::SolverStatus::Interrupted) {
+        if (s.status == SolverStatus::Interrupted) {
             os.clear();
             os << "\rInterrupted after " << i << " runs" << std::endl;
             N_exp = i;
@@ -131,7 +132,7 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
             static_cast<index_t>(stats.inner.direction_update_rejected));
     return SolverResults{
         .status             = enum_name(stats.status),
-        .success            = stats.status == alpaqa::SolverStatus::Converged,
+        .success            = stats.status == SolverStatus::Converged,
         .evals              = evals,
         .duration           = avg_duration,
         .solver             = solver.get_name(),
@@ -149,3 +150,5 @@ SolverResults run_alm_solver(LoadedProblem &problem, Solver &solver,
         .extra              = std::move(extra),
     };
 }
+
+} // namespace alpaqa::driver

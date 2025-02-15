@@ -1,17 +1,22 @@
 #pragma once
 
+#include <alpaqa/problem-loader-export.h>
+
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/params/options.hpp>
 #include <alpaqa/problem/problem-counters.hpp>
 #include <alpaqa/problem/type-erased-problem.hpp>
 
-#include "options.hpp"
-
 #include <filesystem>
+#include <iosfwd>
 #include <memory>
 #include <optional>
+
+namespace alpaqa {
+
 namespace fs = std::filesystem;
 
-struct ConstrCount {
+struct PROBLEM_LOADER_EXPORT ConstrCount {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     ConstrCount() = default;
     length_t lb   = 0; ///< Number of variables with only lower bound
@@ -20,7 +25,7 @@ struct ConstrCount {
     length_t eq   = 0; ///< Number of variables with equal bounds
 };
 
-struct LoadedProblem {
+struct PROBLEM_LOADER_EXPORT LoadedProblem {
     USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
     alpaqa::TypeErasedProblem<config_t> problem;
     fs::path abs_path;
@@ -37,5 +42,12 @@ struct LoadedProblem {
                             nnz_hess_ψ = std::nullopt;
 };
 
-LoadedProblem load_problem(std::string_view type, const fs::path &dir,
-                           const fs::path &file, Options &opts);
+PROBLEM_LOADER_EXPORT
+LoadedProblem load_problem(std::string_view type, const fs::path &file,
+                           Options &opts);
+
+PROBLEM_LOADER_EXPORT
+void print_problem_description(std::ostream &os, LoadedProblem &problem,
+                               bool show_funcs = true);
+
+} // namespace alpaqa

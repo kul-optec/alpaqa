@@ -2,21 +2,23 @@
 
 #include <alpaqa/ipopt/ipopt-adapter.hpp>
 #include <alpaqa/ipopt/ipopt-enums.hpp>
+#include <alpaqa/params/options.hpp>
 #include <IpIpoptApplication.hpp>
 
 #include <stdexcept>
 #include <string>
 
-#include "results.hpp"
-#include "solver-driver.hpp"
+#include <alpaqa/driver/results.hpp>
+#include <alpaqa/driver/solver-driver.hpp>
 
+namespace alpaqa::driver {
 namespace {
 
 SolverResults run_ipopt_solver(auto &problem,
                                Ipopt::SmartPtr<Ipopt::IpoptApplication> &solver,
                                std::ostream &os, unsigned N_exp) {
     // Ipopt problem adapter
-    using Problem                    = alpaqa::IpoptAdapter;
+    using Problem                    = IpoptAdapter;
     Ipopt::SmartPtr<Ipopt::TNLP> nlp = new Problem(problem.problem);
     auto *my_nlp                     = dynamic_cast<Problem *>(GetRawPtr(nlp));
 
@@ -71,10 +73,10 @@ SolverResults run_ipopt_solver(auto &problem,
     // Results
     auto &nlp_res = my_nlp->results;
     if (nlp_res.status == Ipopt::SolverReturn::UNASSIGNED) {
-        nlp_res.solution_x   = vec::Constant(n, alpaqa::NaN<config_t>);
-        nlp_res.solution_y   = vec::Constant(m, alpaqa::NaN<config_t>);
-        nlp_res.solution_z_L = vec::Constant(n, alpaqa::NaN<config_t>);
-        nlp_res.solution_z_U = vec::Constant(n, alpaqa::NaN<config_t>);
+        nlp_res.solution_x   = vec::Constant(n, NaN<config_t>);
+        nlp_res.solution_y   = vec::Constant(m, NaN<config_t>);
+        nlp_res.solution_z_L = vec::Constant(n, NaN<config_t>);
+        nlp_res.solution_z_U = vec::Constant(n, NaN<config_t>);
     }
     SolverResults results{
         .status             = std::string(enum_name(status)),
@@ -145,21 +147,24 @@ SharedSolverWrapper make_ipopt_drive_impl(std::string_view direction,
 SharedSolverWrapper make_ipopt_driver(std::string_view direction,
                                       Options &opts) {
     static constexpr bool valid_config =
-        std::is_same_v<LoadedProblem::config_t, alpaqa::IpoptAdapter::config_t>;
+        std::is_same_v<LoadedProblem::config_t, IpoptAdapter::config_t>;
     if constexpr (valid_config)
         return make_ipopt_drive_impl<LoadedProblem>(direction, opts);
     else
         throw std::invalid_argument(
             "Ipopt solver only supports double precision");
 }
+} // namespace alpaqa::driver
 
 #else
 
-#include "solver-driver.hpp"
+#include <alpaqa/driver/solver-driver.hpp>
 
+namespace alpaqa::driver {
 SharedSolverWrapper make_ipopt_driver(std::string_view, Options &) {
     throw std::invalid_argument(
         "This version of alpaqa was compiled without Ipopt support.");
 }
+} // namespace alpaqa::driver
 
 #endif

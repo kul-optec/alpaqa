@@ -1,6 +1,7 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/problem-loader/problem-loader.hpp>
 #include <alpaqa/problem/kkt-error.hpp>
 #include <alpaqa/problem/ocproblem-counters.hpp>
 #include <alpaqa/problem/problem-counters.hpp>
@@ -10,21 +11,19 @@
 #include <charconv>
 #include <chrono>
 #include <iomanip>
-#include <map>
-#include <numeric>
 #include <random>
 #include <string_view>
 #include <variant>
 
-#include "problem.hpp"
+namespace alpaqa::driver {
 
 struct SolverResults {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(DefaultConfig);
     static constexpr real_t NaN = alpaqa::NaN<config_t>;
 
     std::string status;
     bool success = false;
-    alpaqa::EvalCounter evals;
+    EvalCounter evals;
     std::chrono::nanoseconds duration{};
     std::string solver;
     real_t h = NaN, δ = NaN, ε = NaN, γ = NaN, Σ = NaN;
@@ -39,13 +38,13 @@ struct SolverResults {
 };
 
 struct BenchmarkResults {
-    USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
+    USING_ALPAQA_CONFIG(DefaultConfig);
     static constexpr real_t NaN = alpaqa::NaN<config_t>;
 
     LoadedProblem &problem;
     SolverResults solver_results;
     real_t objective = NaN, smooth_objective = NaN;
-    alpaqa::KKTError<config_t> error{};
+    KKTError<config_t> error{};
     std::span<const std::string_view> options;
     int64_t timestamp = 0;
 };
@@ -66,8 +65,7 @@ auto timestamp_ms() {
     return now_ms;
 }
 
-inline void write_evaluations(std::ostream &os,
-                              const alpaqa::EvalCounter &evals) {
+inline void write_evaluations(std::ostream &os, const EvalCounter &evals) {
     auto dict_elem = [&os](std::string_view name, const auto &value) {
         os << name << ": " << value << '\n';
     };
@@ -77,6 +75,7 @@ inline void write_evaluations(std::ostream &os,
     EVAL(proximal_gradient_step);
     EVAL(inactive_indices_res_lna);
     EVAL(prox_jacobian_diag);
+    EVAL(nonsmooth_objective);
     EVAL(objective);
     EVAL(objective_gradient);
     EVAL(objective_and_gradient);
@@ -97,8 +96,7 @@ inline void write_evaluations(std::ostream &os,
 #undef EVAL
 }
 
-inline void write_evaluations(std::ostream &os,
-                              const alpaqa::OCPEvalCounter &evals) {
+inline void write_evaluations(std::ostream &os, const OCPEvalCounter &evals) {
     auto dict_elem = [&os](std::string_view name, const auto &value) {
         os << name << ": " << value << '\n';
     };
@@ -138,7 +136,6 @@ overloaded(Ts...) -> overloaded<Ts...>;
 
 inline void print_results(std::ostream &os, const BenchmarkResults &results) {
     USING_ALPAQA_CONFIG(BenchmarkResults::config_t);
-    using alpaqa::float_to_str;
     const auto &solstats = results.solver_results;
     const auto &kkterr   = results.error;
     auto obj             = results.objective;
@@ -183,8 +180,4 @@ inline void print_results(std::ostream &os, const BenchmarkResults &results) {
     os << std::endl;
 }
 
-inline void write_results(std::ostream &os, const BenchmarkResults &results) {
-    // TODO
-    (void)os;
-    (void)results;
-}
+} // namespace alpaqa::driver

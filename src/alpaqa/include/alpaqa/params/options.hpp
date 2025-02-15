@@ -17,6 +17,8 @@
 #include <fstream>
 #endif
 
+namespace alpaqa {
+
 class Options {
   private:
     std::vector<std::string_view> opts_storage;
@@ -126,3 +128,5 @@ template <class T>
 void set_params(T &t, std::string_view prefix, Options &opts) {
     opts.set_params(t, prefix);
 }
+
+} // namespace alpaqa

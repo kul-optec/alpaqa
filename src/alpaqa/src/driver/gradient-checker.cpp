@@ -4,13 +4,12 @@
 #endif
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/params/options.hpp>
+#include <alpaqa/problem-loader/problem-loader.hpp>
 #include <alpaqa/problem/sparsity-conversions.hpp>
 #include <alpaqa/util/print.hpp>
 #include <guanaqo/demangled-typename.hpp>
 #include <alpaqa-version.h>
-
-#include "options.hpp"
-#include "problem.hpp"
 
 #include <Eigen/Sparse>
 
@@ -111,7 +110,7 @@ struct CheckGradientsOpts {
     real_t scale_perturbations;
 };
 
-void check_gradients(LoadedProblem &, std::ostream &,
+void check_gradients(alpaqa::LoadedProblem &, std::ostream &,
                      const CheckGradientsOpts &);
 
 int main(int argc, const char *argv[]) try {
@@ -126,7 +125,7 @@ int main(int argc, const char *argv[]) try {
     if (argc < 2)
         return print_usage(argv[0]), -1;
     std::span args{argv, static_cast<size_t>(argc)};
-    Options opts{argc - 2, argv + 2};
+    alpaqa::Options opts{argc - 2, argv + 2};
 
     // Check where to write the output to
     std::ostream &os = std::cout;
@@ -136,8 +135,7 @@ int main(int argc, const char *argv[]) try {
 
     // Load problem
     os << "Loading problem " << prob_path << std::endl;
-    auto problem = load_problem(prob_type, prob_path.parent_path(),
-                                prob_path.filename(), opts);
+    auto problem = load_problem(prob_type, prob_path, opts);
     os << "Loaded problem " << problem.path.stem().string() << " from "
        << problem.path << "\nnvar: " << problem.problem.get_num_variables()
        << "\nncon: " << problem.problem.get_num_constraints()
@@ -272,7 +270,7 @@ auto finite_diff_hess(const std::function<void(crvec, rvec)> &grad_L, crvec x) {
     return hess;
 }
 
-void check_gradients(LoadedProblem &lproblem, std::ostream &log,
+void check_gradients(alpaqa::LoadedProblem &lproblem, std::ostream &log,
                      const CheckGradientsOpts &opts) {
     auto &te_problem = lproblem.problem;
 

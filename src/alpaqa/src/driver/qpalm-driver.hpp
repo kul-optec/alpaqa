@@ -1,11 +1,11 @@
 #pragma once
 
 #include <alpaqa/config/config.hpp>
+#include <alpaqa/params/options.hpp>
 
-#include "options.hpp"
-#include "problem.hpp"
-#include "results.hpp"
-#include "solver-driver.hpp"
+#include <alpaqa/driver/solver-driver.hpp>
 
+namespace alpaqa::driver {
 SharedSolverWrapper make_qpalm_driver(std::string_view direction,
-                                      Options &opts);
+                                      alpaqa::Options &opts);
+}

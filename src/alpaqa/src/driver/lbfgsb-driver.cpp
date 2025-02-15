@@ -2,23 +2,25 @@
 
 #include <alpaqa/implementation/outer/alm.tpp>
 #include <alpaqa/lbfgsb/lbfgsb-adapter.hpp>
+#include <alpaqa/params/options.hpp>
 
-#include "alm-driver.hpp"
-#include "cancel.hpp"
+#include <alpaqa/driver/alm-driver.hpp>
+#include <alpaqa/driver/cancel.hpp>
+#include <alpaqa/driver/solver-driver.hpp>
 #include "extra-stats.hpp"
 #include "lbfgsb-driver.hpp"
-#include "solver-driver.hpp"
 
+namespace alpaqa::driver {
 namespace {
 
-using InnerLBFGSBSolver = alpaqa::lbfgsb::LBFGSBSolver;
+using InnerLBFGSBSolver = lbfgsb::LBFGSBSolver;
 
 auto make_inner_lbfgsb_solver(Options &opts) {
     // Settings for the solver
     InnerLBFGSBSolver::Params solver_param;
     solver_param.max_iter       = 50'000;
     solver_param.print_interval = 0;
-    solver_param.stop_crit      = alpaqa::PANOCStopCrit::ProjGradUnitNorm;
+    solver_param.stop_crit      = PANOCStopCrit::ProjGradUnitNorm;
     set_params(solver_param, "solver", opts);
     return InnerLBFGSBSolver{solver_param};
 }
@@ -47,7 +49,7 @@ SharedSolverWrapper make_lbfgsb_driver_impl(std::string_view direction,
     auto run = [solver{std::move(solver)},
                 N_exp](LoadedProblem &problem,
                        std::ostream &os) mutable -> SolverResults {
-        auto cancel = alpaqa::attach_cancellation(solver);
+        auto cancel = attach_cancellation(solver);
         return run_alm_solver(problem, solver, os, N_exp);
     };
     return std::make_shared<AlpaqaSolverWrapperStats<config_t>>(
@@ -66,16 +68,19 @@ SharedSolverWrapper make_lbfgsb_driver(std::string_view direction,
         throw std::invalid_argument(
             "L-BFGS-B solver only supports double precision");
 }
+} // namespace alpaqa::driver
 
-template class alpaqa::ALMSolver<InnerLBFGSBSolver>;
+template class alpaqa::ALMSolver<alpaqa::driver::InnerLBFGSBSolver>;
 
 #else
 
-#include "solver-driver.hpp"
+#include <alpaqa/driver/solver-driver.hpp>
 
-SharedSolverWrapper make_lbfgsb_driver(std::string_view, Options &) {
+namespace alpaqa::driver {
+SharedSolverWrapper make_lbfgsb_driver(std::string_view, alpaqa::Options &) {
     throw std::invalid_argument(
         "This version of alpaqa was compiled without L-BFGS-B support.");
 }
+} // namespace alpaqa::driver
 
 #endif
