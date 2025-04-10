@@ -162,11 +162,6 @@ class CUTEstLoader {
         throw_if_error("Failed to call cutest_csetup", status);
         cutest_terminate = terminator();
 
-        // Check the number of constraints
-        if (ncon == 0)
-            throw std::runtime_error(
-                "Unconstrained CUTEst problems are currently unsupported");
-
         // Allocate workspaces
         work.resize(std::max(nvar, ncon));
         work2.resize(std::max(nvar, ncon));
@@ -292,6 +287,8 @@ void CUTEstProblem::eval_objective_gradient(crvec x, rvec grad_fx) const {
 void CUTEstProblem::eval_constraints(crvec x, rvec gx) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(gx.size() == static_cast<length_t>(impl->ncon));
+    if (impl->ncon == 0)
+        return;
     cutest::logical jtrans = cutest::True, grad = cutest::False;
     cutest::integer zero = 0;
     checked(impl->funcs.ccfg, "eval_constraints: CUTEST_ccfg")(
@@ -300,6 +297,10 @@ void CUTEstProblem::eval_constraints(crvec x, rvec gx) const {
 }
 void CUTEstProblem::eval_constraints_gradient_product(crvec x, crvec y,
                                                       rvec grad_gxy) const {
+    if (impl->ncon == 0) {
+        grad_gxy.setZero();
+        return;
+    }
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(y.size() == static_cast<length_t>(impl->ncon));
     assert(grad_gxy.size() == static_cast<length_t>(impl->nvar));
@@ -315,6 +316,8 @@ void CUTEstProblem::eval_constraints_gradient_product(crvec x, crvec y,
 void CUTEstProblem::eval_constraints_jacobian(crvec x, rvec J_values) const {
     // Compute the nonzero values
     assert(x.size() == static_cast<length_t>(impl->nvar));
+    if (impl->ncon == 0)
+        return;
     // Sparse Jacobian
     if (sparse) {
         assert(nnz_J >= 0);
@@ -339,7 +342,7 @@ void CUTEstProblem::eval_constraints_jacobian(crvec x, rvec J_values) const {
     }
 }
 auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
-    if (!sparse)
+    if (!sparse || impl->ncon == 0)
         return sparsity::Dense{
             .rows     = num_constraints,
             .cols     = num_variables,
@@ -370,6 +373,10 @@ auto CUTEstProblem::get_constraints_jacobian_sparsity() const -> Sparsity {
 void CUTEstProblem::eval_grad_gi(crvec x, index_t i, rvec grad_gi) const {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_gi.size() == static_cast<length_t>(impl->nvar));
+    if (impl->ncon == 0) {
+        grad_gi.setZero();
+        return;
+    }
     auto iprob = static_cast<cutest::integer>(i + 1); // index zero is objective
     checked(impl->funcs.cigr, "eval_grad_gi: CUTEST_cigr")(
         &impl->nvar, &iprob, x.data(), grad_gi.data());
