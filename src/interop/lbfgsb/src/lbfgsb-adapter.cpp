@@ -113,9 +113,33 @@ auto LBFGSBSolver::operator()(
     const real_t &proj_grad_norm = dsave.coeffRef(12);
     const real_t &τ_rel          = dsave.coeffRef(13);
     // const int &lbfgs_tot         = isave.coeffRef(30);
+    int num_iter_tot      = 0; // including restarts of the algorithm
+    int lbfgs_skipped_tot = 0;
 
     auto set_task = [&](std::string_view s) {
         std::fill(std::copy(s.begin(), s.end(), task.begin()), task.end(), ' ');
+    };
+
+    auto check_termination = [&] {
+        if (proj_grad_norm <= opts.tolerance) {
+            s.status = SolverStatus::Converged;
+            set_task("STOP: projected gradient norm");
+            return true;
+        } else if (clock::now() - start_time >= max_time) {
+            s.status = SolverStatus::MaxTime;
+            set_task("STOP: time");
+            return true;
+        } else if (static_cast<unsigned>(num_iter + num_iter_tot) >=
+                   params.max_iter) {
+            s.status = SolverStatus::MaxIter;
+            set_task("STOP: number iterations");
+            return true;
+        } else if (stop_signal.stop_requested()) {
+            s.status = SolverStatus::Interrupted;
+            set_task("STOP: user request");
+            return true;
+        }
+        return false;
     };
 
     std::array<char, 64> print_buf;
@@ -187,21 +211,7 @@ auto LBFGSBSolver::operator()(
         // Next iteration
         else if (task_sv.starts_with("NEW_X")) {
             // Check termination
-            if (proj_grad_norm <= opts.tolerance) {
-                s.status = SolverStatus::Converged;
-                set_task("STOP: projected gradient norm");
-                break;
-            } else if (clock::now() - start_time >= max_time) {
-                s.status = SolverStatus::MaxTime;
-                set_task("STOP: time");
-                break;
-            } else if (static_cast<unsigned>(num_iter) >= params.max_iter) {
-                s.status = SolverStatus::MaxIter;
-                set_task("STOP: number iterations");
-                break;
-            } else if (stop_signal.stop_requested()) {
-                s.status = SolverStatus::Interrupted;
-                set_task("STOP: user request");
+            if (check_termination()) {
                 break;
             } else {
                 auto k        = static_cast<unsigned>(num_iter) - 1;
@@ -224,11 +234,20 @@ auto LBFGSBSolver::operator()(
         }
         // Unexpected status
         else {
-            if (!params.ignore_errors) {
-                s.status = SolverStatus::Exception;
+            s.status = SolverStatus::Exception;
+            if (check_termination() || !params.restart_on_error) {
                 break;
-            } else if (params.print_interval > 0) {
-                print_error(task_sv);
+            } else {
+                if (params.print_interval != 0) {
+                    print_progress_2(q_norm, τ_max, τ_rel, num_free_var);
+                    print_error(task_sv);
+                    print_progress_n(s.status);
+                    did_print = false;
+                }
+                set_task("START"); // and hope for the best ...
+                num_iter_tot += num_iter;
+                lbfgs_skipped_tot += lbfgs_skipped;
+                s.status = SolverStatus::Busy;
             }
         }
     }
@@ -248,10 +267,11 @@ auto LBFGSBSolver::operator()(
     // Progress callback
     do_progress_cb(k, x, ψ, grad_ψ, τ_max, τ_rel, proj_grad_norm, s.status);
 
-    auto time_elapsed           = clock::now() - start_time;
-    s.elapsed_time              = duration_cast<nanoseconds>(time_elapsed);
-    s.direction_update_rejected = static_cast<unsigned>(lbfgs_skipped);
-    s.iterations                = static_cast<unsigned>(num_iter);
+    auto time_elapsed = clock::now() - start_time;
+    s.elapsed_time    = duration_cast<nanoseconds>(time_elapsed);
+    s.direction_update_rejected =
+        static_cast<unsigned>(lbfgs_skipped + lbfgs_skipped_tot);
+    s.iterations = static_cast<unsigned>(num_iter + num_iter_tot);
 
     // Check final error
     s.ε = proj_grad_norm;

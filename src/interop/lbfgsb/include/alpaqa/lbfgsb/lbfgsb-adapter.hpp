@@ -27,9 +27,10 @@ struct LBFGSB_ADAPTER_EXPORT LBFGSBParams {
     int print_precision = std::numeric_limits<real_t>::max_digits10 / 2;
     /// Terminate when (f^k - f^{k+1})/max{|f^k|,|f^{k+1}|,1} <= factr*epsmch
     real_t factr = 0;
-    /// If set to true, ignore abnormal line search termination and other
-    /// errors. Otherwise returns @ref SolverStatus::Exception.
-    bool ignore_errors = false;
+    /// If set to true, restart the algorithm upon abnormal line search
+    /// termination and other errors. Otherwise returns
+    /// @ref SolverStatus::Exception.
+    bool restart_on_error = false;
 };
 
 struct LBFGSB_ADAPTER_EXPORT LBFGSBStats {
