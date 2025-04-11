@@ -231,6 +231,9 @@ auto LBFGSBSolver::operator()(
         else if (task_sv.starts_with("CONVERGENCE: REL_REDUCTION_OF_F")) {
             s.status = SolverStatus::NoProgress;
             break;
+        } else if (task_sv.starts_with("ERROR: ")) {
+            s.status = SolverStatus::Exception;
+            break;
         }
         // Unexpected status
         else {
