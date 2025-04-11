@@ -100,8 +100,8 @@ auto LBFGSBSolver::operator()(
 
     vec x_solve = x;
 
-    real_t factr = 0;
-    real_t pgtol = 0;
+    real_t factr = params.factr;
+    real_t pgtol = 0; // we check this manually
     int print    = params.print;
 
     std::string_view task_sv{task.begin(), task.end()};
@@ -150,6 +150,15 @@ auto LBFGSBSolver::operator()(
     auto print_progress_n = [&](SolverStatus status) {
         *os << "└─ " << status << " ──"
             << std::endl; // Flush for Python buffering
+    };
+    auto print_error = [&](std::string_view task_sv) {
+        std::string_view task_trimmed = task_sv;
+        auto trim_pos                 = task_sv.find('\0');
+        trim_pos                      = task_sv.find_last_not_of(' ', trim_pos);
+        if (trim_pos != task_trimmed.npos)
+            task_trimmed.remove_suffix(task_trimmed.size() - trim_pos);
+        *os << "│ \033[0;31mLBFGSB failure\033[0m: '\033[0;33m" << task_trimmed
+            << "\033[0m'" << std::endl;
     };
     bool did_print = false;
 
@@ -215,8 +224,12 @@ auto LBFGSBSolver::operator()(
         }
         // Unexpected status
         else {
-            s.status = SolverStatus::Exception;
-            break;
+            if (!params.ignore_errors) {
+                s.status = SolverStatus::Exception;
+                break;
+            } else if (params.print_interval > 0) {
+                print_error(task_sv);
+            }
         }
     }
 
@@ -227,15 +240,8 @@ auto LBFGSBSolver::operator()(
     else if (params.print_interval != 0)
         print_progress_1(k, ψ, grad_ψ, proj_grad_norm);
     // Error reporting
-    if (s.status == SolverStatus::Exception) {
-        std::string_view task_trimmed = task_sv;
-        auto trim_pos                 = task_sv.find('\0');
-        trim_pos                      = task_sv.find_last_not_of(' ', trim_pos);
-        if (trim_pos != task_trimmed.npos)
-            task_trimmed.remove_suffix(task_trimmed.size() - trim_pos);
-        *os << "│ \033[0;31mLBFGSB failure\033[0m: '\033[0;33m" << task_trimmed
-            << "\033[0m'" << std::endl;
-    }
+    if (s.status == SolverStatus::Exception)
+        print_error(task_sv);
     if (params.print_interval != 0)
         print_progress_n(s.status);
 

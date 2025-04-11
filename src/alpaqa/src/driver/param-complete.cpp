@@ -23,6 +23,9 @@
 #if ALPAQA_WITH_OCP
 #include <alpaqa/inner/panoc-ocp.hpp>
 #endif
+#if ALPAQA_WITH_LBFGSB
+#include <alpaqa/lbfgsb/lbfgsb-adapter.hpp>
+#endif
 // end
 
 #include <cstdio>
@@ -120,6 +123,9 @@ struct RootOpts {
 };
 
 #include <alpaqa/params/structs.ipp>
+#if ALPAQA_WITH_LBFGSB
+#include <alpaqa/lbfgsb/lbfgsb-structs.ipp>
+#endif
 
 PARAMS_TABLE(
     RootOpts,                                                              //
@@ -188,6 +194,30 @@ Result get_results_panoc_like(const MemberGetter &s) {
 }
 
 template <class S>
+Result get_results_lbfgsb(const MemberGetter &s) {
+    auto [key, remainder] = guanaqo::split(s.key, ".");
+    auto recurse          = s;
+    recurse.key           = remainder;
+
+    if (key == "alm")
+        return get_members<alpaqa::ALMParams<config_t>>(recurse);
+    if (key == "solver")
+        return get_members<typename S::Params>(recurse);
+    if (key.end() != s.key.end() || s.value) // no remainder && no '.'
+        return {.leaf = false, .prefix = "", .members = {}};
+    return {
+        .leaf    = false,
+        .prefix  = "",
+        .members = {{.name   = "alm",
+                     .doc    = "Options for the augmented Lagrangian method",
+                     .suffix = '.'},
+                    {.name   = "solver",
+                     .doc    = "Options for the inner solver",
+                     .suffix = '.'}},
+    };
+}
+
+template <class S>
 Result get_results_fista_like(const MemberGetter &s) {
     auto [key, remainder] = guanaqo::split(s.key, ".");
     auto recurse          = s;
@@ -235,6 +265,11 @@ const dict_t methods{
     {"fista", {get_results_fista_like<alpaqa::FISTASolver<config_t>>, "FISTA solver"}},
     {"ipopt", {alpaqa::params::get_members<void>, "Ipopt solver"}},
     {"qpalm", {alpaqa::params::get_members<void>, "QPALM solver"}},
+    #if ALPAQA_WITH_LBFGSB
+    {"lbfgsb", {get_results_lbfgsb<alpaqa::lbfgsb::LBFGSBSolver>, "L-BFGS-B solver"}},
+    #else
+    {"lbfgsb", {alpaqa::params::get_members<void>, "L-BFGS-B solver (unavailable)"}},
+    #endif
     // clang-format on
 };
 

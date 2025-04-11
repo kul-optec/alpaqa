@@ -6,4 +6,6 @@ PARAMS_TABLE(lbfgsb::LBFGSBSolver::Params,       //
              PARAMS_MEMBER(print, ""),           //
              PARAMS_MEMBER(print_interval, ""),  //
              PARAMS_MEMBER(print_precision, ""), //
+             PARAMS_MEMBER(factr, ""),           //
+             PARAMS_MEMBER(ignore_errors, ""),   //
 );
