@@ -220,7 +220,7 @@ auto LBFGSBSolver::operator()(
                 // Print info
                 if (std::exchange(did_print, do_print))
                     print_progress_2(q_norm, τ_max, τ_rel, num_free_var);
-                if (std::exchange(do_print, false))
+                if (do_print)
                     print_progress_1(k, ψ, grad_ψ, proj_grad_norm);
                 // Progress callback
                 do_progress_cb(k, x, ψ, grad_ψ, τ_max, τ_rel, proj_grad_norm,
@@ -239,13 +239,15 @@ auto LBFGSBSolver::operator()(
                 break;
             } else {
                 if (params.print_interval != 0) {
+                    auto k = static_cast<unsigned>(num_iter) - 2;
+                    if (!std::exchange(did_print, false))
+                        print_progress_1(k, ψ, grad_ψ, proj_grad_norm);
                     print_progress_2(q_norm, τ_max, τ_rel, num_free_var);
                     print_error(task_sv);
                     print_progress_n(s.status);
-                    did_print = false;
                 }
                 set_task("START"); // and hope for the best ...
-                num_iter_tot += num_iter;
+                num_iter_tot += std::max(0, num_iter - 1);
                 lbfgs_skipped_tot += lbfgs_skipped;
                 s.status = SolverStatus::Busy;
             }
