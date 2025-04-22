@@ -22,7 +22,7 @@ find_package_handle_standard_args(MASTSIF
 
 function(cutest_sif_problem PROBLEM_NAME)
     set(options "ALL")
-    set(oneValueArgs SUFFIX COLLECTION)
+    set(oneValueArgs SUFFIX COLLECTION TARGET_GROUP)
     set(multiValueArgs OPTIONS)
     cmake_parse_arguments(PARSE_ARGV 1 CUTEST_SIF_PROBLEM
         "${options}" "${oneValueArgs}" "${multiValueArgs}")
@@ -36,7 +36,7 @@ function(cutest_sif_problem PROBLEM_NAME)
         cmake_path(APPEND PROBLEM_MASTSIF_DIR ${CUTEST_SIF_PROBLEM_COLLECTION})
     endif()
     if (NOT TARGET CUTEst::problem-${FULL_PROBLEM_NAME})
-        set(PROBLEM_DIR ${CMAKE_BINARY_DIR}/CUTEst/${FULL_PROBLEM_NAME})
+        set(PROBLEM_DIR ${CMAKE_BINARY_DIR}/CUTEst/$<CONFIG>/${FULL_PROBLEM_NAME})
         file(MAKE_DIRECTORY ${PROBLEM_DIR})
         add_custom_command(
             OUTPUT
@@ -106,5 +106,12 @@ function(cutest_sif_problem PROBLEM_NAME)
                 "LINKER:-whole-archive,${CUTEST_LIB},-no-whole-archive"
                 "LINKER:--version-script=${VERSION_SCRIPT}")
         endif()
+    endif()
+    if (DEFINED CUTEST_SIF_PROBLEM_TARGET_GROUP)
+        if (NOT TARGET ${CUTEST_SIF_PROBLEM_TARGET_GROUP})
+            add_custom_target(${CUTEST_SIF_PROBLEM_TARGET_GROUP})
+        endif()
+        add_dependencies(${CUTEST_SIF_PROBLEM_TARGET_GROUP}
+            CUTEst::problem-${FULL_PROBLEM_NAME})
     endif()
 endfunction()
