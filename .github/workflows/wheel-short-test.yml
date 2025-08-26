@@ -16,6 +16,8 @@ env:
 
 jobs:
   build-linux:
+    # TODO: port valgrind tests to new Conan-based toolchain
+    if: false
     runs-on: ubuntu-latest
     container: ubuntu:jammy
     strategy:
@@ -83,6 +85,7 @@ jobs:
           path: dist/*.whl
 
   test-linux:
+    if: false
     needs: [build-linux]
     runs-on: ubuntu-latest
     container: python:3.11-bullseye
@@ -117,6 +120,7 @@ jobs:
         run: python -m twine check dist/*.whl
 
   build-macos:
+    if: false
     runs-on: macos-13
     env:
       CMAKE_C_COMPILER_LAUNCHER: ccache
@@ -180,6 +184,7 @@ jobs:
           path: dist/*.whl
 
   build-windows:
+    if: false
     runs-on: windows-2022
     strategy:
       matrix:
@@ -234,6 +239,8 @@ jobs:
           path: dist/*.whl
 
   docs:
+    # TODO: port docs to new Conan-based toolchain
+    if: false
     needs: [build-linux]
     runs-on: ubuntu-latest
     container: ubuntu:jammy
