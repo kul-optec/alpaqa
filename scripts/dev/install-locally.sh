@@ -52,7 +52,7 @@ include($PWD/scripts/ci/profiles/$triple.profile)
 tools.build.cross_building:can_run=True
 tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
 [buildenv]
-LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed 
+LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
 &:CMAKE_C_COMPILER_LAUNCHER=sccache
 &:CMAKE_CXX_COMPILER_LAUNCHER=sccache
 [options]

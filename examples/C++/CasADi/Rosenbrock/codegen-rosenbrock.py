@@ -1,8 +1,9 @@
-import casadi as cs
-from sys import argv, path
-from os.path import join, dirname
+from os.path import dirname, join
+from sys import argv, exit, path
 
-py_path = join(dirname(__file__), '..', '..', '..', '..', 'python', 'alpaqa')
+import casadi as cs
+
+py_path = join(dirname(__file__), "..", "..", "..", "..", "python", "alpaqa")
 path.insert(0, py_path)
 import casadi_generator
 
@@ -19,7 +20,7 @@ p = cs.SX.sym("p")
 
 # Formulate the NLP
 f = x**2 + p * z**2
-g = z + (1 - x)**2 - y
+g = z + (1 - x) ** 2 - y
 
 cg = casadi_generator.generate_casadi_problem(
     cs.Function("f", [unknowns, p], [f]),

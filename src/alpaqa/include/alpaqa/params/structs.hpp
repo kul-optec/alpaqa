@@ -39,10 +39,8 @@ struct attribute_table;
 /// Helper macro to easily initialize a
 /// @ref alpaqa::params::attribute_table_t.
 #define PARAMS_MEMBER(name, ...)                                               \
-    {                                                                          \
-        #name, attribute_accessor<S>::template make<type>(&type::name,         \
-                                                          __VA_ARGS__)         \
-    }
+    {#name,                                                                    \
+     attribute_accessor<S>::template make<type>(&type::name, __VA_ARGS__)}
 
 /// Dictionary that maps struct attribute names to type-erased functions that
 /// set those attributes.
@@ -72,8 +70,7 @@ struct attribute_alias_table;
 
 /// Helper macro to easily initialize a
 /// @ref alpaqa::params::attribute_alias_table_t.
-#define PARAMS_MEMBER_ALIAS(alias, name)                                       \
-    { #alias, #name }
+#define PARAMS_MEMBER_ALIAS(alias, name) {#alias, #name}
 
 /// Function wrapper access the enumerators of an enum, type-erasing the type of
 /// the enum.

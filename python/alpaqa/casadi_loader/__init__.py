@@ -1,34 +1,36 @@
 from __future__ import annotations
 
-import casadi as cs
-import contextlib
-from pathlib import Path
-import os
-from os.path import join, basename
-import shelve
-import uuid
-import pickle
 import base64
+import contextlib
 import glob
-import subprocess
+import os
+import pickle
 import platform
-from textwrap import dedent
+import shelve
+import subprocess
+import sysconfig
+import uuid
 import warnings
+from os.path import basename, join
+from pathlib import Path
+from textwrap import dedent
+
+import casadi as cs
+
 from .. import alpaqa as pa
+from ..cache import get_alpaqa_cache_dir
 from ..casadi_generator import (
-    _prepare_casadi_problem,
     SECOND_ORDER_SPEC,
+    _prepare_casadi_problem,
     write_casadi_problem_data,
 )
-from ..cache import get_alpaqa_cache_dir
 
 # TODO: factor out caching logic
 
 
 def _load_casadi_problem(sofile: Path):
-    print("-- Loading:", sofile)
-    prob = pa.load_casadi_problem(str(sofile))
-    return prob
+    print("-- Loading:", sofile)  # noqa: T201
+    return pa.load_casadi_problem(str(sofile))
 
 
 def _python_sysconfig_platform_to_cmake_platform_win(
@@ -46,12 +48,11 @@ def _python_sysconfig_platform_to_cmake_platform_win(
 
 
 def _get_windows_architecture() -> str:
-    import sysconfig
-
     plat = sysconfig.get_platform()
     arch = _python_sysconfig_platform_to_cmake_platform_win(plat)
     if arch is None:
-        raise RuntimeError(f"Unknown Windows platform architecture {plat}")
+        msg = f"Unknown Windows platform architecture {plat}"
+        raise RuntimeError(msg)
     return arch
 
 
@@ -66,7 +67,7 @@ def _get_cmake_bin() -> str:
     cmake_bin = os.getenv("ALPAQA_CMAKE_PROGRAM")
     if not cmake_bin:
         with contextlib.suppress(ImportError, AttributeError):
-            import cmake
+            import cmake  # noqa: PLC0415
 
             cmake_bin = join(cmake.CMAKE_BIN_DIR, "cmake")
     return cmake_bin or "cmake"
@@ -88,9 +89,7 @@ def _compile_casadi_problem(cachedir, uid, f, g, second_order, name, **kwargs):
         codegen.add(func)
         return codegen
 
-    codegens = {
-        funcname: make_codegen(funcname, func) for funcname, func in functions.items()
-    }
+    codegens = {funcname: make_codegen(funcname, func) for funcname, func in functions.items()}
     # Generate the code
     cfiles = [codegen.generate(join(projdir, "")) for codegen in codegens.values()]
 
@@ -105,8 +104,8 @@ def _compile_casadi_problem(cachedir, uid, f, g, second_order, name, **kwargs):
         install(FILES {" ".join(map(basename, cfiles))}
                 DESTINATION src)
         """
-    with open(join(projdir, "CMakeLists.txt"), "w") as f:
-        f.write(dedent(cmakelists))
+    with open(join(projdir, "CMakeLists.txt"), "w") as cml:
+        cml.write(dedent(cmakelists))
 
     # Run CMake
     build_type = os.getenv("ALPAQA_BUILD_CONFIG", "Release")
@@ -145,11 +144,12 @@ def _compile_casadi_problem(cachedir, uid, f, g, second_order, name, **kwargs):
     # Find the resulting binary
     sofile = glob.glob(join(probdir, "lib", name + ".*"))
     if len(sofile) == 0:
-        raise RuntimeError(f"Unable to find compiled CasADi problem '{name}'")
+        msg = f"Unable to find compiled CasADi problem '{name}'"
+        raise RuntimeError(msg)
     elif len(sofile) > 1:
-        warnings.warn(f"Multiple compiled CasADi problem files were found for '{name}'")
-    soname = os.path.relpath(sofile[0], cachedir)
-    return soname
+        msg = f"Multiple compiled CasADi problem files were found for '{name}'"
+        warnings.warn(msg, stacklevel=2)
+    return os.path.relpath(sofile[0], cachedir)
 
 
 def generate_and_compile_casadi_problem_no_load(
@@ -251,10 +251,10 @@ def generate_and_compile_casadi_problem(
 
     :return: Problem specification that can be passed to the solvers.
     """
-    return _load_casadi_problem(
-        generate_and_compile_casadi_problem_no_load(*args, **kwargs)
-    )
+    return _load_casadi_problem(generate_and_compile_casadi_problem_no_load(*args, **kwargs))
 
 
 if pa.with_casadi_ocp:
-    from .ocp import generate_and_compile_casadi_control_problem
+    from .ocp import (
+        generate_and_compile_casadi_control_problem as generate_and_compile_casadi_control_problem,
+    )

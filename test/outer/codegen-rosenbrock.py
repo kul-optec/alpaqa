@@ -1,5 +1,7 @@
-from sys import argv
+from sys import argv, exit
+
 import casadi as cs
+
 import alpaqa.casadi_generator as cg
 
 if len(argv) < 2:
@@ -14,7 +16,7 @@ p = cs.SX.sym("p")
 
 # Formulate the NLP
 # (https://web.archive.org/web/20201111225115/https://web.casadi.org/blog/opti/)
-f = (1 - x)**2 + (y - x**2)**2
+f = (1 - x) ** 2 + (y - x**2) ** 2
 g = x**2 + p * y**2
 
 C = [0, 0], [5, 5]

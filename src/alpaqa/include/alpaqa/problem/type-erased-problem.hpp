@@ -784,8 +784,10 @@ auto TypeErasedProblem<Conf, Allocator>::eval_proximal_gradient_step(real_t γ, 
     return call(vtable.eval_proximal_gradient_step, γ, x, grad_ψ, x̂, p);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_inactive_indices_res_lna(
-    real_t γ, crvec x, crvec grad_ψ, rindexvec J) const -> index_t {
+auto TypeErasedProblem<Conf, Allocator>::eval_inactive_indices_res_lna(real_t γ, crvec x,
+                                                                       crvec grad_ψ,
+                                                                       rindexvec J) const
+    -> index_t {
     return call(vtable.eval_inactive_indices_res_lna, γ, x, grad_ψ, J);
 }
 template <Config Conf, class Allocator>
@@ -849,13 +851,13 @@ auto TypeErasedProblem<Conf, Allocator>::get_augmented_lagrangian_hessian_sparsi
     return call(vtable.get_augmented_lagrangian_hessian_sparsity);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_objective_and_gradient(crvec x,
-                                                                     rvec grad_fx) const -> real_t {
+auto TypeErasedProblem<Conf, Allocator>::eval_objective_and_gradient(crvec x, rvec grad_fx) const
+    -> real_t {
     return call(vtable.eval_objective_and_gradient, x, grad_fx);
 }
 template <Config Conf, class Allocator>
-auto TypeErasedProblem<Conf, Allocator>::eval_objective_and_constraints(crvec x,
-                                                                        rvec g) const -> real_t {
+auto TypeErasedProblem<Conf, Allocator>::eval_objective_and_constraints(crvec x, rvec g) const
+    -> real_t {
     return call(vtable.eval_objective_and_constraints, x, g);
 }
 template <Config Conf, class Allocator>

@@ -42,42 +42,42 @@ solver = pa.ALMSolver(inner_solver)
 
 inner_solver = pa.PANOCSolver(
     panoc_params={
-        'max_iter': 1000,
-        'stop_crit': pa.PANOCStopCrit.FPRNorm,
-        'print_interval': 1,
+        "max_iter": 1000,
+        "stop_crit": pa.PANOCStopCrit.FPRNorm,
+        "print_interval": 1,
     },
     lbfgs_params={
-        'memory': 10,
+        "memory": 10,
     },
 )
 solver = pa.ALMSolver(
     alm_params={
-        'tolerance': 1e-10,
-        'dual_tolerance': 1e-10,
-        'initial_penalty': 50,
-        'penalty_update_factor': 20,
-        'print_interval': 1,
+        "tolerance": 1e-10,
+        "dual_tolerance": 1e-10,
+        "initial_penalty": 50,
+        "penalty_update_factor": 20,
+        "print_interval": 1,
     },
     inner_solver=inner_solver,
 )
 
 # %% Build a solver with alternative fast directions
 
-direction = pa.LBFGSDirection({'memory': 10})
+direction = pa.LBFGSDirection({"memory": 10})
 inner_solver = pa.PANOCSolver(
     {
         "stop_crit": pa.FPRNorm,
-        'print_interval': 1,
+        "print_interval": 1,
     },
     direction,
 )
 solver = pa.ALMSolver(
     {
-        'tolerance': 1e-10,
-        'dual_tolerance': 1e-10,
-        'initial_penalty': 50,
-        'penalty_update_factor': 20,
-        'print_interval': 1,
+        "tolerance": 1e-10,
+        "dual_tolerance": 1e-10,
+        "initial_penalty": 50,
+        "penalty_update_factor": 20,
+        "print_interval": 1,
     },
     inner_solver,
 )

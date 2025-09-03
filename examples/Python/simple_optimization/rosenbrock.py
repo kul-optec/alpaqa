@@ -83,6 +83,7 @@ print(f"Solution:      {x_sol}")
 print(f"Multipliers:   {y_sol}")
 print(f"Cost:          {problem.eval_objective(x_sol)}")
 from pprint import pprint
+
 pprint(stats)
 
 # %% Plot the results

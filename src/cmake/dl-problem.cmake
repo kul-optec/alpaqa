@@ -40,7 +40,7 @@ endfunction()
     This function creates a CMake module library target with the given name
     ``<target>``, configures the correct visibility settings, generates an
     export header, and links to the correct alpaqa targets.
-    
+
     If the ``FILES`` option is given, the provided files are added to the
     target. Otherwise, the source file ``${target}.cpp`` in the current folder
     is used.

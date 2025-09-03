@@ -1,25 +1,28 @@
-from copy import deepcopy
-import alpaqa as pa
-import numpy as np
 import concurrent.futures
-import pytest
 import os
+from copy import deepcopy
+
+import numpy as np
+import pytest
+
+import alpaqa as pa
 
 
 @pytest.mark.skipif(not pa.with_casadi, reason="requires CasADi")
 def test_alm_threaded():
-    valgrind = 'valgrind' in os.getenv('LD_PRELOAD', '')
+    valgrind = "valgrind" in os.getenv("LD_PRELOAD", "")
 
     pp = pa.PANOCParams(max_no_progress=100, max_iter=100)
     lbfgs = pa.LBFGSDirection()
     panoc = pa.PANOCSolver(pp, lbfgs)
-    alm_params = pa.ALMParams(tolerance=1e-200, dual_tolerance=1e-200, max_iter=200, print_interval=0)
+    alm_params = pa.ALMParams(
+        tolerance=1e-200, dual_tolerance=1e-200, max_iter=200, print_interval=0
+    )
     solver = pa.ALMSolver(alm_params, panoc)
 
     import casadi as cs
 
     n = 2
-    m = 2
     x = cs.SX.sym("x", n)
 
     Q = np.array([[1.5, 0.5], [0.5, 1.5]])

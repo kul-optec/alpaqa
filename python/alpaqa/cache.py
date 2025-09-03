@@ -1,15 +1,15 @@
 import os
-from os.path import join, expanduser
-import tempfile
 import shutil
 import sys
+import tempfile
 import typing
+from os.path import expanduser, join
 
 
 def _is_truthy(s: typing.Optional[str]):
     if s is None:
         return False
-    return not s.lower() in ("", "false", "no", "off", "0")
+    return s.lower() not in ("", "false", "no", "off", "0")
 
 
 def get_cache_dir():
@@ -58,7 +58,7 @@ def interactive_clean(args):
 
     if args.dry:
         print(f"Would remove: {cache_dir}")
-        exit(0)
+        sys.exit(0)
     else:
         confirmed = args.force
         msg = f"Are you sure you want to remove {cache_dir} [y/N]? "
@@ -66,7 +66,7 @@ def interactive_clean(args):
             confirmed = input(msg).lower() == "y"
         if not confirmed:
             print("Aborted.")
-            exit(1)
+            sys.exit(1)
         print("Removing", cache_dir)
         clean(cache_dir)
-        exit(0)
+        sys.exit(0)

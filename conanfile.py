@@ -2,8 +2,8 @@ import os
 
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
-from conan.tools.cmake import CMakeDeps, CMakeToolchain, CMake, cmake_layout
 from conan.tools.build import can_run
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
 
 
 class AlpaqaRecipe(ConanFile):
@@ -14,9 +14,7 @@ class AlpaqaRecipe(ConanFile):
     license = "LGPL-3.0-or-later"
     author = "Pieter P <pieter.p.dev@outlook.com>"
     url = "https://github.com/kul-optec/alpaqa"
-    description = (
-        "Augmented Lagrangian and PANOC solvers for nonconvex numerical optimization"
-    )
+    description = "Augmented Lagrangian and PANOC solvers for nonconvex numerical optimization"
     topics = ("optimization", "panoc", "alm", "mpc")
 
     # Binary configuration
@@ -110,9 +108,7 @@ class AlpaqaRecipe(ConanFile):
             msg = "MATLAB MEX interface requires JSON. Set 'with_json=True'."
             raise ConanInvalidConfiguration(msg)
         if self.options.with_matlab and not self.options.with_external_casadi:
-            msg = (
-                "MATLAB MEX interface requires CasADi. Set 'with_external_casadi=True'."
-            )
+            msg = "MATLAB MEX interface requires CasADi. Set 'with_external_casadi=True'."
             raise ConanInvalidConfiguration(msg)
 
     def configure(self):

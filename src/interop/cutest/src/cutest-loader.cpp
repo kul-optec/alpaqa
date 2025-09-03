@@ -499,8 +499,8 @@ auto CUTEstProblem::get_lagrangian_hessian_sparsity() const -> Sparsity {
         .first_index = 1, // Fortran-style indices
     };
 }
-auto CUTEstProblem::eval_objective_and_gradient(crvec x,
-                                                rvec grad_fx) const -> real_t {
+auto CUTEstProblem::eval_objective_and_gradient(crvec x, rvec grad_fx) const
+    -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(grad_fx.size() == static_cast<length_t>(impl->nvar));
     real_t f;
@@ -509,8 +509,8 @@ auto CUTEstProblem::eval_objective_and_gradient(crvec x,
         &impl->nvar, x.data(), &f, grad_fx.data(), &grad);
     return f;
 }
-auto CUTEstProblem::eval_objective_and_constraints(crvec x,
-                                                   rvec g) const -> real_t {
+auto CUTEstProblem::eval_objective_and_constraints(crvec x, rvec g) const
+    -> real_t {
     assert(x.size() == static_cast<length_t>(impl->nvar));
     assert(g.size() == static_cast<length_t>(impl->ncon));
     real_t f;

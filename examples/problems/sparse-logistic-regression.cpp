@@ -202,9 +202,9 @@ struct Problem {
         : data_file(std::move(csv_filename)) {
         load_data();
         Aᵀb.noalias() = A.transpose() * b;
-        real_t λ_max = Aᵀb.lpNorm<Eigen::Infinity>() / static_cast<real_t>(m);
-        λ            = λ_factor * λ_max;
-        μ            = 1. / static_cast<real_t>(m);
+        real_t λ_max  = Aᵀb.lpNorm<Eigen::Infinity>() / static_cast<real_t>(m);
+        λ             = λ_factor * λ_max;
+        μ             = 1. / static_cast<real_t>(m);
 
         using P = Problem;
         using alpaqa::member_caller;

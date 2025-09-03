@@ -1,7 +1,7 @@
 Inverted Pendulum
 =================
 
-In this example, a mode predictive controller (MPC) is used to swing up and 
+In this example, a mode predictive controller (MPC) is used to swing up and
 stabilize an inverted pendulum mounted on a moving cart.
 
 .. raw:: html
@@ -24,7 +24,7 @@ stabilize an inverted pendulum mounted on a moving cart.
 
    Plot of the states and the control signal of the MPC solution.
 
-The state vector consist of the angle of the pendulum :math:`\theta`, its 
+The state vector consist of the angle of the pendulum :math:`\theta`, its
 angular velocity :math:`\omega`, the position of the cart :math:`x`, and its
 velocity :math:`v`. We use the following model:
 

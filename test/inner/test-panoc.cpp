@@ -37,6 +37,7 @@ auto build_test_problem() {
     p.variable_bounds.lower = vec::Constant(2, -inf);
     p.general_bounds.upper  = vec::Constant(2, 350);
     p.general_bounds.lower  = vec::Constant(2, -1);
+
     p.f = [](crvec x) { // f(x) = 1/6 x₁⁴ + 2x₂ + x₂² + 1
         return 1. / 6 * std::pow(x(0), 4) + 2 * x(1) + std::pow(x(1), 2) + 1;
     };

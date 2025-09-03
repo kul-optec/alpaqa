@@ -1,0 +1,53 @@
+exclude: |
+  (?x)^(
+      test/outer/rosenbrock_functions_test\.c|
+      .*\.svg|
+      src/thirdparty/lbfgsb/Lbfgsb\.3\.0/.*|
+      doxygen/sphinx/source/sphinxstatic/.*|
+  )$
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.12.11"
+    hooks:
+      - id: ruff-check
+        args: ["--fix", "--show-fixes"]
+      - id: ruff-format
+        exclude: "^examples/Python"
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.17.1"
+    hooks:
+      - id: mypy
+        files: ^python-disabled
+        args: []
+        additional_dependencies:
+          - "numpy<3"
+          - "casadi~=3.7.1"
+          - "scipy-stubs>=1.9.3,<2"
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: "v21.1.0"
+    hooks:
+      - id: clang-format
+        types_or: [c++, c]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v6.0.0"
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+        exclude: "(\\.vscode/.*\\.json)|()"
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: name-tests-test
+        args: ["--pytest-test-first"]
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+        args: ["--markdown-linebreak-ext=md,dox,cpp,hpp,tpp,h"]
+  - repo: meta
+    hooks:
+      - id: check-useless-excludes

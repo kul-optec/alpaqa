@@ -2,7 +2,7 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 macro(casadi_function_codegen_python target pythonfile)
     add_custom_command(OUTPUT "${target}.c"
-                    COMMAND Python3::Interpreter 
+                    COMMAND Python3::Interpreter
                             "${CMAKE_CURRENT_SOURCE_DIR}/${pythonfile}"
                             "${target}"
                     MAIN_DEPENDENCY "${pythonfile}")

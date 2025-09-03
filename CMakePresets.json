@@ -2,49 +2,5 @@
     "version": 4,
     "include": [
         "./ConanPresets.json"
-    ],
-    "configurePresets": [
-        {
-            "name": ".dev-vars",
-            "description": "Default options for developer builds",
-            "hidden": true,
-            "warnings": {
-                "dev": true
-            },
-            "cacheVariables": {
-                "CMAKE_POSITION_INDEPENDENT_CODE": true,
-                "CMAKE_EXPORT_COMPILE_COMMANDS": true,
-                "BUILD_SHARED_LIBS": true,
-                "CMAKE_STAGING_PREFIX": "${sourceDir}/staging",
-                "ALPAQA_WITH_DRIVERS": true,
-                "ALPAQA_WITH_GRADIENT_CHECKER": true,
-                "ALPAQA_WITH_EXAMPLES": true,
-                "ALPAQA_WITH_TESTS": true
-            }
-        },
-        {
-            "name": ".dev-linux",
-            "description": "Default settings for developer builds on Linux",
-            "hidden": true,
-            "inherits": [
-                ".dev-vars"
-            ],
-            "generator": "Ninja Multi-Config",
-            "binaryDir": "${sourceDir}/build",
-            "warnings": {
-                "dev": true,
-                "deprecated": true,
-                "uninitialized": false
-            },
-            "environment": {
-                "CFLAGS": "-fdiagnostics-color",
-                "CXXFLAGS": "-fdiagnostics-color",
-                "FCFLAGS": "-fdiagnostics-color"
-            },
-            "cacheVariables": {
-                "CMAKE_C_COMPILER_LAUNCHER": "ccache",
-                "CMAKE_CXX_COMPILER_LAUNCHER": "ccache"
-            }
-        }
     ]
 }

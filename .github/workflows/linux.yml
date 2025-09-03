@@ -54,7 +54,7 @@ jobs:
         host: [x86_64-bionic-linux-gnu]
     env:
       CFLAGS: '-march=haswell' # important for ABI compatibility (Eigen)
-      CXXFLAGS: '-march=haswell' 
+      CXXFLAGS: '-march=haswell'
     steps:
       # Git clone
       - name: Install git

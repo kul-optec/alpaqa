@@ -210,12 +210,12 @@ or :cpp:class:`alpaqa::AndersonDirection`.
     )
 
 .. image:: ../img/classes-light.svg
-    :width: 100% 
+    :width: 100%
     :alt: Different solver classes
     :class: only-light
 
 .. image:: ../img/classes-dark.svg
-    :width: 100% 
+    :width: 100%
     :alt: Different solver classes
     :class: only-dark
 
@@ -277,8 +277,8 @@ documentation of :cpp:class:`alpaqa::ALMSolver::Stats`
 and :cpp:class:`alpaqa::InnerStatsAccumulator\<PANOCStats\>`.
 
 
-.. figure:: ../img/example_minimal.svg 
-    :width: 100% 
+.. figure:: ../img/example_minimal.svg
+    :width: 100%
     :alt: Contour plot of the result
 
     A contour plot of the objective function, with the constraints shown in

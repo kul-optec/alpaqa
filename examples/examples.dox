@@ -5,8 +5,8 @@
  *
  * It solves a simple quadratic program of the form:
  * @f[ \begin{aligned}
- * & \underset{x}{\text{minimize}} && \tfrac12 \tp x Q x \\ 
- * & \text{subject to} && Ax \le b \\ 
+ * & \underset{x}{\text{minimize}} && \tfrac12 \tp x Q x \\  
+ * & \text{subject to} && Ax \le b \\  
  * \end{aligned} @f]
  *
  * ## Problem specification
@@ -15,9 +15,9 @@
  * the following form:
  *
  * @f[ \begin{aligned}
- * & \underset{x}{\text{minimize}} && f(x) \\ 
- * & \text{subject to} && x \in C \subseteq \R^n \\ 
- * &&& g(x) \in D \subseteq \R^m. \\ 
+ * & \underset{x}{\text{minimize}} && f(x) \\  
+ * & \text{subject to} && x \in C \subseteq \R^n \\  
+ * &&& g(x) \in D \subseteq \R^m. \\  
  * \end{aligned} @f]
  *
  * The problem is specified by creating a class (`Problem`) that inherits from
@@ -38,7 +38,7 @@
  *
  * The @ref alpaqa::BoxConstrProblem class exposes the two constraint sets,
  * @f$ x \in C @f$ and @f$ g(x) \in D @f$, and provides the projection functions
- * (@ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step", 
+ * (@ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step",
  * @ref alpaqa::TypeErasedProblem::eval_projecting_difference_constraints "eval_projecting_difference_constraints" and
  * @ref alpaqa::TypeErasedProblem::eval_projection_multipliers "eval_projection_multipliers")
  * for you.
@@ -104,13 +104,13 @@
 
 /**
  * @example{lineno} C++/FortranProblem/main.cpp
- * This example shows how to define optimization problems using Fortran 
+ * This example shows how to define optimization problems using Fortran
  * routines.  
  *
  * It solves a simple quadratic program of the form:
  * @f[ \begin{aligned}
- * & \underset{x}{\text{minimize}} && \tfrac12 \tp x Q x \\ 
- * & \text{subject to} && Ax \le b \\ 
+ * & \underset{x}{\text{minimize}} && \tfrac12 \tp x Q x \\  
+ * & \text{subject to} && Ax \le b \\  
  * \end{aligned} @f]
  *
  * # Problem definition in Fortran
@@ -125,8 +125,8 @@
  *
  * It solves a simple quadratic program of the form:
  * @f[ \begin{aligned}
- * & \underset{x}{\text{minimize}} && \tfrac12 \tp x Q x \\ 
- * & \text{subject to} && Ax \le b \\ 
+ * & \underset{x}{\text{minimize}} && \tfrac12 \tp x Q x \\  
+ * & \text{subject to} && Ax \le b \\  
  * \end{aligned} @f]
  *
  * # Problem definition in C
@@ -134,7 +134,7 @@
  * # Problem solution using alpaqa
  */
 
-/** 
+/**
  * @example{lineno} C++/CasADi/Rosenbrock/main.cpp
  * This example shows how to generate a problem using CasADi and how to load
  * and solve it using alpaqa.  

@@ -1,12 +1,12 @@
-import alpaqa as pa
-import numpy as np
 from pprint import pprint
+
+import numpy as np
 import pytest
 
+import alpaqa as pa
 
-@pytest.mark.skipif(
-    not pa.with_casadi or not pa.with_ipopt, reason="requires CasADi and Ipopt"
-)
+
+@pytest.mark.skipif(not pa.with_casadi or not pa.with_ipopt, reason="requires CasADi and Ipopt")
 def test_ipopt_pyapi_compile():
     import casadi as cs
 

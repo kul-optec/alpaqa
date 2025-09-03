@@ -59,10 +59,10 @@ if (NOT CMAKE_CROSSCOMPILING OR ALPAQA_FORCE_TEST_DISCOVERY)
 endif()
 add_executable(alpaqa::tests ALIAS tests)
 
-if (${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.21) 
+if (${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.21)
     # Copy DLLs for test executable
     add_custom_command(TARGET tests PRE_LINK COMMAND
-        COMMAND ${CMAKE_COMMAND} -E 
+        COMMAND ${CMAKE_COMMAND} -E
             $<IF:$<BOOL:$<TARGET_RUNTIME_DLLS:tests>>,copy,true>
             $<TARGET_RUNTIME_DLLS:tests> $<TARGET_FILE_DIR:tests>
         COMMAND_EXPAND_LISTS)

@@ -1,9 +1,11 @@
 # %% alpaqa nonlinear regression example
 
-import alpaqa as pa
+from pprint import pprint
+
 import casadi as cs
 import numpy as np
-from pprint import pprint
+
+import alpaqa as pa
 
 # %% Build the problem (CasADi code, independent of alpaqa)
 

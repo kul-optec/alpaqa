@@ -125,7 +125,7 @@ mode = "symlink"
 
 [tool.cibuildwheel]
 archs = ["auto64"]
-skip = "pp311-*"                               # https://github.com/pypy/pypy/issues/5328
+skip = "pp311-*"                                     # https://github.com/pypy/pypy/issues/5328
 build-frontend = "build"
 environment = { PY_BUILD_CMAKE_VERBOSE = "1" }
 test-command = "pytest {package}/python/test"
@@ -152,3 +152,48 @@ testpaths = ["python/test"]
 
 [tool.mypy]
 plugins = ["numpy.typing.mypy_plugin"]
+
+[tool.ruff]
+line-length = 100
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "W",   # flake8
+    "B",   # flake8-bugbear
+    "I",   # isort
+    "C4",  # flake8-comprehensions
+    "EM",  # flake8-errmsg
+    "ICN", # flake8-import-conventions
+    "G",   # flake8-logging-format
+    "PGH", # pygrep-hooks
+    "PIE", # flake8-pie
+    "PL",  # pylint
+    "PT",  # flake8-pytest-style
+    "RET", # flake8-return
+    "RUF", # Ruff-specific
+    "SIM", # flake8-simplify
+    "T20", # flake8-print
+    "UP",  # pyupgrade
+    "YTT", # flake8-2020
+    "EXE", # flake8-executable
+]
+extend-ignore = [
+    "RUF001",  # Ambiguous string (Greek letters)
+    "RUF002",  # Ambiguous docstring (Greek letters and symbols)
+    "E501",    # Line too long
+    "E731",    # Lambda assignment
+    "PLR2004", # Magic values
+    "PLR0913", # Too many function arguments
+    "RET505",  # Unnecessary `elif` after `return`
+    "RET506",  # Unnecessary `elif` after `raise`
+    "PGH003",  # Specific rules `type: ignore`
+    "PLC2401", # Non-ASCII name
+    "E741",    # Ambiguous variable name
+]
+[tool.ruff.lint.per-file-ignores]
+"**/examples/**" = ["T20", "PLC0415", "E402", "C408"]
+"**/test/**" = ["T20", "PLC0415", "PLR0915"]
+"python/alpaqa/__main__.py" = ["T20"]
+"python/alpaqa/cache.py" = ["T20"]
+"conanfile.py" = ["RUF012"]

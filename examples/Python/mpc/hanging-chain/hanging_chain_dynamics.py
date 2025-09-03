@@ -1,4 +1,5 @@
 from typing import Union
+
 import casadi as cs
 import numpy as np
 from casadi import vertcat as vc
@@ -23,7 +24,7 @@ class HangingChain:
         self.params = vc(self.m, self.D, self.L)
 
         self.g = np.array([0, 0, -9.81] if dim == 3 else [0, -9.81])  # gravity
-        self.x0 = np.zeros((dim, ))  # ball 0 position
+        self.x0 = np.zeros((dim,))  # ball 0 position
         self.x_end = np.eye(1, dim, 0).ravel()  # ball N+1 reference position
 
         self._build_dynamics(Ts)
@@ -39,10 +40,10 @@ class HangingChain:
         f1 = [y2]
         f2 = []
         for i in range(N):
-            xi = y1[d * i:d * i + d]
-            xip1 = y1[d * i + d:d * i + d * 2] if i < N - 1 else y3
+            xi = y1[d * i : d * i + d]
+            xip1 = y1[d * i + d : d * i + d * 2] if i < N - 1 else y3
             Fiip1 = self.D * (1 - self.L / dist(xip1, xi)) * (xip1 - xi)
-            xim1 = y1[d * i - d:d * i] if i > 0 else self.x0
+            xim1 = y1[d * i - d : d * i] if i > 0 else self.x0
             Fim1i = self.D * (1 - self.L / dist(xi, xim1)) * (xi - xim1)
             fi = (Fiip1 - Fim1i) / self.m + self.g
             f2 += [fi]
@@ -68,12 +69,11 @@ class HangingChain:
     def state_to_pos(self, y):
         N, d = self.N, self.dim
         rav = lambda x: np.array(x).ravel()
-        xdim = lambda y, i: np.concatenate(
-            ([0], rav(y[i:d * N:d]), rav(y[-d + i])))
+        xdim = lambda y, i: np.concatenate(([0], rav(y[i : d * N : d]), rav(y[-d + i])))
         if d == 3:
             return (xdim(y, 0), xdim(y, 1), xdim(y, 2))
         else:
-            return (xdim(y, 0), xdim(y, 1), np.zeros((N + 1, )))
+            return (xdim(y, 0), xdim(y, 1), np.zeros((N + 1,)))
 
     def input_to_matrix(self, u):
         """
@@ -81,7 +81,7 @@ class HangingChain:
         that CasADi matrices are stored column-wise and NumPy arrays row-wise)
         """
         if isinstance(u, np.ndarray):
-            return u.reshape((self.dim, u.shape[0] // self.dim), order='F')
+            return u.reshape((self.dim, u.shape[0] // self.dim), order="F")
         else:
             return u.reshape((self.dim, u.shape[0] // self.dim))
 
@@ -91,31 +91,37 @@ class HangingChain:
         that CasADi matrices are stored column-wise and NumPy arrays row-wise)
         """
         if isinstance(y, np.ndarray):
-            return y.reshape((self.nx, y.shape[0] // self.nx), order='F')
+            return y.reshape((self.nx, y.shape[0] // self.nx), order="F")
         else:
             return y.reshape((self.nx, y.shape[0] // self.nx))
 
-    def simulate(self, N_sim: int, y_0: np.ndarray,
-                 u: Union[np.ndarray, list, cs.SX.sym, cs.MX.sym],
-                 p: Union[np.ndarray, list, cs.SX.sym, cs.MX.sym]):
+    def simulate(
+        self,
+        N_sim: int,
+        y_0: np.ndarray,
+        u: Union[np.ndarray, list, cs.SX.sym, cs.MX.sym],
+        p: Union[np.ndarray, list, cs.SX.sym, cs.MX.sym],
+    ):
         if isinstance(u, list):
             u = np.array(u)
-        if isinstance(u, np.ndarray):
-            if u.ndim == 1 or (u.ndim == 2 and u.shape[1] == 1):
-                if u.shape[0] == self.dim:
-                    u = np.tile(u, (N_sim, 1)).T
+        if (
+            isinstance(u, np.ndarray)
+            and (u.ndim == 1 or (u.ndim == 2 and u.shape[1] == 1))
+            and u.shape[0] == self.dim
+        ):
+            u = np.tile(u, (N_sim, 1)).T
         return self.f_d.mapaccum(N_sim)(y_0, u, p)
 
     def initial_state(self):
         N, d = self.N, self.dim
-        y1_0 = np.zeros((d * N))
+        y1_0 = np.zeros(d * N)
         y1_0[0::d] = np.arange(1, N + 1) / (N + 1)
-        y2_0 = np.zeros((d * N))
-        y3_0 = np.zeros((d, ))
+        y2_0 = np.zeros(d * N)
+        y3_0 = np.zeros((d,))
         y3_0[0] = 1
 
         y_null = np.concatenate((y1_0, y2_0, y3_0))
-        u_null = np.zeros((d, ))
+        u_null = np.zeros((d,))
 
         assert self.nx == len(y_null)
 
@@ -131,8 +137,9 @@ class HangingChain:
 
         L_cost_x = α * cs.sumsqr(y3t - self.x_end)
         for i in range(N):
-            xdi = y2t[d * i:d * i + d]
+            xdi = y2t[d * i : d * i + d]
             L_cost_x += β * cs.sumsqr(xdi)
         L_cost_u = γ * cs.sumsqr(ut)
-        return cs.Function("L_cost_x", [yt], [L_cost_x]), \
-            cs.Function("L_cost_u", [ut], [L_cost_u])
+        return cs.Function("L_cost_x", [yt], [L_cost_x]), cs.Function(
+            "L_cost_u", [ut], [L_cost_u]
+        )

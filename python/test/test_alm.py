@@ -1,9 +1,11 @@
-from copy import copy, deepcopy
 import pickle
-import alpaqa as pa
-import numpy as np
+from copy import copy, deepcopy
 from pprint import pprint
+
+import numpy as np
 import pytest
+
+import alpaqa as pa
 
 
 @pytest.mark.skipif(not pa.with_casadi, reason="requires CasADi")
@@ -15,8 +17,7 @@ def test_alm():
     panoc = pa.PANOCSolver(pp, lbfgs)
     pprint(panoc.direction.params)
     solver = pa.ALMSolver(pa.ALMParams(), panoc)
-    print(f"Solver: {solver} "
-          f"({solver.__class__.__module__}.{solver.__class__.__qualname__})")
+    print(f"Solver: {solver} ({solver.__class__.__module__}.{solver.__class__.__qualname__})")
 
     import casadi as cs
 
@@ -32,8 +33,8 @@ def test_alm():
 
     name = "testproblem"
     p = cl.generate_and_compile_casadi_problem(f, g, name=name)
-    p = copy(p) # test copying/cloning
-    p = deepcopy(p) # test copying/cloning
+    p = copy(p)  # test copying/cloning
+    p = deepcopy(p)  # test copying/cloning
     print(p)
     print("C", p.variable_bounds.lower, p.variable_bounds.upper)
     print("D", p.general_bounds.lower, p.general_bounds.upper)
@@ -47,8 +48,8 @@ def test_alm():
     almsolver = pa.ALMSolver(almparams, solver)
     cnt = pa.problem_with_counters(p)
     x0 = np.array([3, 3])
-    y0 = np.zeros((m, ))
-    
+    y0 = np.zeros((m,))
+
     x, y, stats = almsolver(cnt.problem, x=x0, y=y0)
 
     print()
@@ -57,9 +58,9 @@ def test_alm():
     print("x", x)
     print("y", y)
     pprint(stats)
-    assert stats['status'] == pa.SolverStatus.Converged
-    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
-    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+    assert stats["status"] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1 / 6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2 / 3]) < 1e-5
 
 
 @pytest.mark.skipif(not pa.with_casadi, reason="requires CasADi")
@@ -75,8 +76,8 @@ def test_alm_pyapi_compile():
     g = x
     D = [-np.inf, 0.5], [+np.inf, +np.inf]
     p = pa.minimize(f, x).subject_to(g, D).compile()
-    p = copy(p) # test copying/cloning
-    p = deepcopy(p) # test copying/cloning
+    p = copy(p)  # test copying/cloning
+    p = deepcopy(p)  # test copying/cloning
     print(p)
     solver = pa.PANOCSolver(
         pa.PANOCParams(max_iter=200, print_interval=1),
@@ -86,8 +87,8 @@ def test_alm_pyapi_compile():
     almsolver = pa.ALMSolver(almparams, solver)
     cnt = pa.problem_with_counters(p)
     x0 = np.array([3, 3])
-    y0 = np.zeros((m, ))
-    
+    y0 = np.zeros((m,))
+
     x, y, stats = almsolver(cnt.problem, x=x0, y=y0)
 
     print()
@@ -96,9 +97,9 @@ def test_alm_pyapi_compile():
     print("x", x)
     print("y", y)
     pprint(stats)
-    assert stats['status'] == pa.SolverStatus.Converged
-    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
-    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+    assert stats["status"] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1 / 6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2 / 3]) < 1e-5
 
 
 @pytest.mark.skipif(not pa.with_external_casadi, reason="requires CasADi")
@@ -114,8 +115,8 @@ def test_alm_pyapi_build():
     g = x
     D = [-np.inf, 0.5], [+np.inf, +np.inf]
     p = pa.minimize(f, x).subject_to(g, D).build()
-    p = copy(p) # test copying/cloning
-    p = deepcopy(p) # test copying/cloning
+    p = copy(p)  # test copying/cloning
+    p = deepcopy(p)  # test copying/cloning
     print(p)
     solver = pa.PANOCSolver(
         pa.PANOCParams(max_iter=200, print_interval=1),
@@ -125,8 +126,8 @@ def test_alm_pyapi_build():
     almsolver = pa.ALMSolver(almparams, solver)
     cnt = pa.problem_with_counters(p)
     x0 = np.array([3, 3])
-    y0 = np.zeros((m, ))
-    
+    y0 = np.zeros((m,))
+
     x, y, stats = almsolver(cnt.problem, x=x0, y=y0)
 
     print()
@@ -135,9 +136,9 @@ def test_alm_pyapi_build():
     print("x", x)
     print("y", y)
     pprint(stats)
-    assert stats['status'] == pa.SolverStatus.Converged
-    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
-    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+    assert stats["status"] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1 / 6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2 / 3]) < 1e-5
 
 
 class MyProblem(pa.BoxConstrProblem):
@@ -169,7 +170,6 @@ def get_pickled_problem():
 
 
 def test_alm_inherit():
-
     p = pickle.loads(get_pickled_problem())
     solver = pa.PANOCSolver(
         pa.PANOCParams(max_iter=200, print_interval=1),
@@ -189,13 +189,12 @@ def test_alm_inherit():
     print("x", x)
     print("y", y)
     pprint(stats)
-    assert stats['status'] == pa.SolverStatus.Converged
-    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
-    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+    assert stats["status"] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1 / 6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2 / 3]) < 1e-5
 
 
 def test_alm_structured_inherit():
-
     p = pickle.loads(get_pickled_problem())
     solver = pa.PANOCSolver(
         pa.PANOCParams(max_iter=200, print_interval=1),
@@ -217,12 +216,12 @@ def test_alm_structured_inherit():
     print("x", x)
     print("y", y)
     pprint(stats)
-    assert stats['status'] == pa.SolverStatus.Converged
-    assert np.linalg.norm(x - [-1/6, 0.5]) < 1e-5
-    assert np.linalg.norm(y - [0, -2/3]) < 1e-5
+    assert stats["status"] == pa.SolverStatus.Converged
+    assert np.linalg.norm(x - [-1 / 6, 0.5]) < 1e-5
+    assert np.linalg.norm(y - [0, -2 / 3]) < 1e-5
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_alm()
     test_alm_inherit()
     test_alm_structured_inherit()

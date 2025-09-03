@@ -31,7 +31,7 @@ function(pybind11_stubgen target)
 
     # Run pybind11-stubgen in the installation prefix
     set(STUBGEN_MODULE ${STUBGEN_PACKAGE}.$<TARGET_FILE_BASE_NAME:${target}>)
-    set(STUBGEN_CMD "\"${Python3_HOST_EXECUTABLE}\" -m pybind11_stubgen -o \"${ALPAQA_INSTALL_PYSTUBSDIR}\" 
+    set(STUBGEN_CMD "\"${Python3_HOST_EXECUTABLE}\" -m pybind11_stubgen -o \"${ALPAQA_INSTALL_PYSTUBSDIR}\"
         --exit-code --numpy-array-use-type-var --enum-class-locations Sign:LBFGS
         \"${STUBGEN_MODULE}\"")
     install(CODE "

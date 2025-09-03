@@ -7,5 +7,3 @@ Model predictive control
    :caption: Model predictive control
 
    ./*
-
-

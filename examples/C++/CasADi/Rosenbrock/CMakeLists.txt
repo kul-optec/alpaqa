@@ -1,5 +1,5 @@
 add_executable(casadi-rosenbrock main.cpp)
-target_link_libraries(casadi-rosenbrock 
+target_link_libraries(casadi-rosenbrock
     PRIVATE
         alpaqa::casadi-loader
         alpaqa::alpaqa

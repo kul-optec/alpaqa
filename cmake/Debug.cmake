@@ -4,7 +4,7 @@ function(alpaqa_install_debug_syms target component dest_lib dest_bin)
         install(FILES "$<TARGET_PDB_FILE:${target}>"
             DESTINATION ${dest_bin}
             CONFIGURATIONS Debug RelWithDebInfo
-            COMPONENT ${component} 
+            COMPONENT ${component}
             OPTIONAL EXCLUDE_FROM_ALL)
     elseif (CMAKE_STRIP AND CMAKE_OBJCOPY)
         set(DEBUG_FILE "$<TARGET_FILE_NAME:${target}>.debug")

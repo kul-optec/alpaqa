@@ -28,7 +28,7 @@ using guanaqo::required_function_t;
  * Type erasing the @ref ALMSolver class, so that it can be instantiated with
  * inner solvers of different problem types (e.g. @ref TypeErasedProblem and
  * @ref TypeErasedControlProblem).
- * 
+ *
  * To this end, it represents the possible problems as a variant, and then
  * std::visits the variant in the @ref call method, throwing an exception if
  * the given problem type does not match the inner solver's problem type.

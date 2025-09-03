@@ -54,7 +54,7 @@ Using these definitions, problem @f$\eqref{eq:problem-orig}@f$ can equivalently 
 \end{equation}
 @f]
 
-After introduction of a slack variable @f$z@f$, problem @f$\eqref{eq:problem-in-setCD}@f$ can be stated as 
+After introduction of a slack variable @f$z@f$, problem @f$\eqref{eq:problem-in-setCD}@f$ can be stated as
 
 @f[
 \begin{equation}
@@ -80,7 +80,7 @@ The Lagrangian function of problem @f$\eqref{eq:problem-origCD-alm}@f$ is given 
 @f]
 The vector @f$y \in \R^m@f$ is called the vector of Lagrange multipliers.
 
-The augmented Lagrangian function with penalty factor @f$\Sigma@f$ of the problem @f$\eqref{eq:problem-origCD-alm}@f$ is defined as the sum of the Lagrangian function and a quadratic 
+The augmented Lagrangian function with penalty factor @f$\Sigma@f$ of the problem @f$\eqref{eq:problem-origCD-alm}@f$ is defined as the sum of the Lagrangian function and a quadratic
 term that penalizes the constraint violation:
 @f[
 \begin{equation}\label{eq:def-auglagr}
@@ -95,16 +95,16 @@ where @f$\Sigma@f$ is a symmetric positive definite @f$m\times m@f$ matrix that 
 ### The augmented Lagrangian method algorithm
 
 The augmented Lagrangian method for solving Problem @f$\eqref{eq:problem-origCD-alm}@f$
-consists of the successive minimization of @f$\Lagr_\Sigma@f$ 
+consists of the successive minimization of @f$\Lagr_\Sigma@f$
 with respect to the decision variables @f$x@f$ and the slack variables @f$z@f$ (1),
 after which the Lagrange multipliers @f$y@f$ are updated (2),
 and the penalty factors @f$\Sigma_{ii}@f$ corresponding to constraints with high
 violation are increased (3).
 
-The augmented Lagrangian function is used as an exact penalty function 
+The augmented Lagrangian function is used as an exact penalty function
 for problem @f$\eqref{eq:problem-origCD-alm}@f$, it is equivalent to the shifted quadratic penalty method with shift @f$\Sigma^{-1}y@f$.
 
-#### 1. Minimization of the augmented Lagrangian 
+#### 1. Minimization of the augmented Lagrangian
 
 Using some algebraic manipulations, the augmented Lagrangian defined in @f$\eqref{eq:def-auglagr}@f$ can be expressed as
 @f[
@@ -126,7 +126,7 @@ At each iteration @f$\nu@f$ of the ALM algorithm, the following minimization pro
 #### 2. Update of the Lagrange multipliers
 
 The update of the Lagrange multipliers corrects the shift @f$\Sigma^{-1} y@f$ in @f$\eqref{eq:auglagr2}@f$:
-if the constraint violation @f$g(x^\nu) - z^\nu@f$ is positive, 
+if the constraint violation @f$g(x^\nu) - z^\nu@f$ is positive,
 the shift is increased, in an attempt to drive the next iterate
 towards a smaller constraint violation @f$g(x^\nu) - z^\nu@f$. The following update rule formalizes that idea:
 @f[
@@ -137,8 +137,8 @@ towards a smaller constraint violation @f$g(x^\nu) - z^\nu@f$. The following upd
 When the constraint violation becomes zero, the Lagrange multipliers are no longer updated.
 
 As the penalty factors @f$\Sigma@f$ tend towards infinity, the shift @f$\Sigma^{-1} y@f$ has to vanish, because in that case,
-the quadratic penalty method without shifts solves the problem exactly. 
-For @f$\Sigma^{-1} y@f$ to vanish, the Lagrange multipliers must be bounded, which is achieved by the following 
+the quadratic penalty method without shifts solves the problem exactly.
+For @f$\Sigma^{-1} y@f$ to vanish, the Lagrange multipliers must be bounded, which is achieved by the following
 projection:
 
 Let @f$M > 0@f$ be some large but finite bound.
@@ -148,7 +148,7 @@ Let @f$M > 0@f$ be some large but finite bound.
             0 & \underline z_i = -\infty \\
             -M & \text{otherwise},
         \end{cases}
-        \quad\quad\quad\quad\quad\quad 
+        \quad\quad\quad\quad\quad\quad
         \overline y_i \triangleq \begin{cases}
             0 & \overline z_i = +\infty \\
             +M & \text{otherwise}
@@ -165,12 +165,12 @@ The result of @f$\eqref{eq:lagr-update-explanation}@f$ is therefore clamped as f
 
 #### 3. Update of the penalty factors
 
-When the penalty factor for the @f$i@f$-th constraint, @f$\Sigma_{ii}@f$ is increased, minimizing the violation of this 
-constraint becomes more important in @f$\eqref{eq:alm-step-1-argmin}@f$. Therefore, if the constraint violation cannot be reduced by updating the 
-shifts alone, the penalty factors are increased. 
+When the penalty factor for the @f$i@f$-th constraint, @f$\Sigma_{ii}@f$ is increased, minimizing the violation of this
+constraint becomes more important in @f$\eqref{eq:alm-step-1-argmin}@f$. Therefore, if the constraint violation cannot be reduced by updating the
+shifts alone, the penalty factors are increased.
 
-Selecting when and by how much each penalty factor should be increased is more of a heuristic. The strategy 
-used here is to compare the violation at the current iterate with the violation at the previous iterate, it is the same strategy as used in [QPALM](https://arxiv.org/abs/2010.02653). 
+Selecting when and by how much each penalty factor should be increased is more of a heuristic. The strategy
+used here is to compare the violation at the current iterate with the violation at the previous iterate, it is the same strategy as used in [QPALM](https://arxiv.org/abs/2010.02653).
 Denote the vector of constraint violations as @f$e^\nu \triangleq g(x^\nu) - z^\nu@f$.
 Let @f$\theta \in (0, 1)@f$.  
 If @f$|e^\nu_i| \le \theta |e^{\nu-1}_i|@f$, meaning that the constraint violation has decreased by at least a factor @f$\theta@f$ compared to the previous iteration, then the penalty factor is not updated.  
@@ -182,8 +182,8 @@ If the constraint violation did not decrease sufficiently, then the penalty fact
 @f]
 where @f$\Delta > 1@f$ is a tuning parameter. The violation of each individual constraint is scaled by
 the maximum violation of all constraints,
-such that the penalty factors of constraints with a large violation are increased 
-more aggressively. If the factor in @f$\eqref{eq:multipliers-update-factor}@f$ is less than one, the penalty factor is not 
+such that the penalty factors of constraints with a large violation are increased
+more aggressively. If the factor in @f$\eqref{eq:multipliers-update-factor}@f$ is less than one, the penalty factor is not
 updated (otherwise it would result in a reduction of the penalty).
 
 ## PANOC
@@ -203,7 +203,7 @@ where @f$\psi : \Rn \rightarrow \R @f$ has Lipschitz gradient, and
 @f$h : \Rn \rightarrow \overline \R @f$ allows efficient computation of the
 proximal operator.
 
-Recall the inner minimization problem @f$\eqref{eq:alm-step-1-argmin}@f$ 
+Recall the inner minimization problem @f$\eqref{eq:alm-step-1-argmin}@f$
 in the first step of the ALM algorithm. It can be simplified to:
 @f[
 \begin{equation}
@@ -251,12 +251,12 @@ The inner problem in @f$\eqref{eq:problem-inner}@f$ has the same minimizers as t
     \label{eq:problem-inner-panoc}
 \end{equation}
 @f]
-This problem is an instance of problem @f$\eqref{eq:problem-panoc}@f$ where the nonsmooth term @f$h@f$ is the indicator of the 
+This problem is an instance of problem @f$\eqref{eq:problem-panoc}@f$ where the nonsmooth term @f$h@f$ is the indicator of the
 set @f$C@f$, @f$h(x) = \delta_C(x)@f$.
 
 ### Evaluation
 
-The following is a list of symbols and formulas that are used in the 
+The following is a list of symbols and formulas that are used in the
 implementation of the PANOC algorithm.
 
 @f[
@@ -280,7 +280,7 @@ implementation of the PANOC algorithm.
     &= \Sigma\, \left(g(x^k) + \Sigma^{-1}y - \Pi_D\left(g(x^k) + \Sigma^{-1}y\right)\right) &\text{see \eqref{eq:lagr-update-explanation}}\\
     &= y + \Sigma\,\left(g(x^k) - \hat z^k\right) \\
     &= y + \Sigma\, e^k \\[1em]
-    \psi(x^k) &= \Lagr_\Sigma(x^k, \hat z^k, y) + \tfrac{1}{2} \lVert y \rVert_{\Sigma^{-1}}^2 &\text{PANOC objective function} \\    
+    \psi(x^k) &= \Lagr_\Sigma(x^k, \hat z^k, y) + \tfrac{1}{2} \lVert y \rVert_{\Sigma^{-1}}^2 &\text{PANOC objective function} \\  
     &= f(x^k) + \tfrac{1}{2} \dist_\Sigma^2\left(g(x^k) + \Sigma^{-1}y,\;D\right) \\
     &= f(x^k) + \tfrac{1}{2} \left\|\left(g(x^k) + \Sigma^{-1}y\right) -\Pi_D\left(g(x^k) + \Sigma^{-1}y\right)\right\|_\Sigma^2 \\
     &= f(x^k) + \tfrac{1}{2} \left\|\zeta^k - \hat{z}^k\right\|_\Sigma^2 \\
@@ -362,9 +362,9 @@ problem with finite horizon @f$ N @f$.
 \end{equation}
 @f]
 
-The function @f$ f : \R^\nnx \times \R^\nnu \to \R^\nnx @f$ models the 
+The function @f$ f : \R^\nnx \times \R^\nnu \to \R^\nnx @f$ models the
 discrete-time, nonlinear dynamics of the system, which starts from an initial
-state @f$ \xinit @f$. 
+state @f$ \xinit @f$.
 The functions @f$ h_k : \R^\nnx \times \R^\nnu \to \R^{n_h} @f$ for
 @f$ 0 \le k \lt N @f$ and @f$ h_N : \R^\nnx \to \R^{n_h^N} @f$ can be used to
 represent the (possibly time-varying) output mapping of the system,

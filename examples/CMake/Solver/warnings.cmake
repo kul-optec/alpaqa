@@ -2,7 +2,7 @@ function(add_warnings_target tgt_name)
 
     # Add target that defines compiler warning options in its interface.
     add_library(${tgt_name} INTERFACE)
-    
+
     # The warning flags we use depend on the language.
 
     # Note: these are the bare minimum warnings, it is highly recommended to

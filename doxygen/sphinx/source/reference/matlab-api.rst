@@ -50,7 +50,7 @@ MATLAB API Reference
         Objective function.
 
         :type: ``casadi.SX`` | ``casadi.MX``
-    
+
     .. mat:attribute:: x
 
         Optimization variables.
@@ -62,7 +62,7 @@ MATLAB API Reference
         General constraints.
 
         :type: ``casadi.SX`` | ``casadi.MX``
-        
+
     .. mat:attribute:: param
 
         Optional problem parameter variable.

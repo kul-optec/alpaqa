@@ -220,8 +220,8 @@ DLProblem::DLProblem(const std::filesystem::path &so_filename,
                                       alpaqa_register_arg_strings},
                 dl_flags} {}
 
-auto DLProblem::eval_projecting_difference_constraints(crvec z,
-                                                       rvec e) const -> void {
+auto DLProblem::eval_projecting_difference_constraints(crvec z, rvec e) const
+    -> void {
     if (functions->eval_projecting_difference_constraints)
         return functions->eval_projecting_difference_constraints(
             instance.get(), z.data(), e.data());

@@ -51,4 +51,4 @@ For more information, please see the full
 
 ## Publications
 
-> Pieter Pas, Mathijs Schuurmans, and Panagiotis Patrinos. [Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex optimization](https://ieeexplore.ieee.org/document/9838172/). In _2022 European Control Conference (ECC)_, pages 417–422, 2022. 
+> Pieter Pas, Mathijs Schuurmans, and Panagiotis Patrinos. [Alpaqa: A matrix-free solver for nonlinear MPC and large-scale nonconvex optimization](https://ieeexplore.ieee.org/document/9838172/). In _2022 European Control Conference (ECC)_, pages 417–422, 2022.

@@ -210,10 +210,10 @@ ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ControlProblemVTable, Eige
  *     \end{aligned}
  * \end{equation}
  * @f]
- * 
- * The function @f$ f : \R^\nnx \times \R^\nnu \to \R^\nnx @f$ models the 
+ *
+ * The function @f$ f : \R^\nnx \times \R^\nnu \to \R^\nnx @f$ models the
  * discrete-time, nonlinear dynamics of the system, which starts from an initial
- * state @f$ \xinit @f$. 
+ * state @f$ \xinit @f$.
  * The functions @f$ h_k : \R^\nnx \times \R^\nnu \to \R^{n_h} @f$ for
  * @f$ 0 \le k \lt N @f$ and @f$ h_N : \R^\nnx \to \R^{n_h^N} @f$ can be used to
  * represent the (possibly time-varying) output mapping of the system,

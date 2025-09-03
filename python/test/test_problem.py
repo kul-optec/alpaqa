@@ -1,10 +1,13 @@
-import alpaqa
 import numpy as np
 
+import alpaqa
+
+
+# fmt: off
 class MyProblem:
     def __init__(self):
-        self.num_variables = 3 # Number of variables
-        self.num_constraints = 2 # Number of constraints
+        self.num_variables = 3  # Number of variables
+        self.num_constraints = 2  # Number of constraints
     def eval_projecting_difference_constraints(self, z: np.ndarray, e: np.ndarray) -> None: ...
     def eval_projection_multipliers(self, y: np.ndarray, M: float) -> None: ...
     def eval_proximal_gradient_step(self, γ: float, x: np.ndarray, grad_ψ: np.ndarray, x_hat: np.ndarray, p: np.ndarray) -> float: ...
@@ -26,6 +29,8 @@ class MyProblem:
     def get_variable_bounds(self) -> alpaqa.Box: ...
     def get_general_bounds(self) -> alpaqa.Box: ...
     def check(self): ...
+# fmt: on
+
 
 def test_problem_obj():
     problem = alpaqa.Problem(MyProblem())

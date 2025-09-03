@@ -36,7 +36,7 @@ coinmumps/*:static_fortran_libs=True
 [replace_requires]
 tttapa-python-dev/*: tttapa-python-dev/[~$python_majmin, include_prerelease]
 [buildenv]
-LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed 
+LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
 EOF
 
 # Create a py-build-cmake configuration file for cross-compilation

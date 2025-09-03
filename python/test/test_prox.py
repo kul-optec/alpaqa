@@ -1,6 +1,7 @@
-import alpaqa as pa
 import numpy as np
 import numpy.linalg as la
+
+import alpaqa as pa
 
 
 def test_nuclear_norm():

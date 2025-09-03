@@ -7,5 +7,3 @@ Advanced
    :caption: Advanced
 
    ./*
-
-

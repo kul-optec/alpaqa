@@ -93,7 +93,7 @@ struct RosenbrockProblem {
 
 Convenience classes with default implementations of some of these functions are
 provided for common use cases:
-  - @ref alpaqa::BoxConstrProblem "BoxConstrProblem" defines the 
+  - @ref alpaqa::BoxConstrProblem "BoxConstrProblem" defines the
     @ref alpaqa::TypeErasedProblem::eval_projecting_difference_constraints "eval_projecting_difference_constraints",
     @ref alpaqa::TypeErasedProblem::eval_projection_multipliers "eval_projection_multipliers" and
     @ref alpaqa::TypeErasedProblem::eval_proximal_gradient_step "eval_proximal_gradient_step" functions

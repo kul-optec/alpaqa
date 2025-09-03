@@ -176,8 +176,8 @@ print(
 
 # %% Visualize the results
 
-import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.pyplot as plt
 from matplotlib import animation
 
 mpl.rcParams["animation.frame_format"] = "svg"

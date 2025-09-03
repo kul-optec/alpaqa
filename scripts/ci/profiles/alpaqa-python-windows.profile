@@ -11,14 +11,14 @@ alpaqa/*:with_lbfgsb=False
 casadi/*:build_type=Release
 
 # QPALM is disabled because of an MSVC ICE:
-# 
-#   FAILED: [code=3221225477] src/CMakeFiles/qpalm-adapter.dir/Release/interop/qpalm/src/qpalm-adapter.cpp.obj 
+#
+#   FAILED: [code=3221225477] src/CMakeFiles/qpalm-adapter.dir/Release/interop/qpalm/src/qpalm-adapter.cpp.obj
 #   sccache C:\PROGRA~1\MICROS~2\2022\ENTERP~1\VC\Tools\MSVC\1444~1.352\bin\Hostx64\x64\cl.exe  /nologo /TP -DALPAQA_WITH_LONG_DOUBLE -DALPAQA_WITH_QPALM -DEIGEN_DONT_PARALLELIZE -DLADEL_64BIT_INDICES -DLADEL_SIMPLE_COL_COUNTS -DLADEL_USE_AMD -DQPALM_NONCONVEX -DQPALM_PRINTING -DQPALM_TIMING -DQPALM_USE_LADEL -DQPALM_VERSION_MAJOR=1 -DQPALM_VERSION_MINOR=2 -DQPALM_VERSION_PATCH=6 -DQPALM_VERSION_STR=\"1.2.6\" -DCMAKE_INTDIR=\"Release\" -ID:\a\alpaqa\alpaqa\.py-build-cmake_cache\build\cp311-cp311-win_amd64\include -ID:\a\alpaqa\alpaqa\src\interop\qpalm\include -ID:\a\alpaqa\alpaqa\.py-build-cmake_cache\build\cp311-cp311-win_amd64\src\export -ID:\a\alpaqa\alpaqa\src\alpaqa\include -external:ID:\a\alpaqa\alpaqa\.conan2\p\b\qpalm36c9375940a7b\p\include -external:ID:\a\alpaqa\alpaqa\.conan2\p\b\ladel5a0bd9f10f8cf\p\include -external:ID:\a\alpaqa\alpaqa\.conan2\p\b\eigen557b009256fbf\p\include\eigen3 -external:ID:\a\alpaqa\alpaqa\.conan2\p\b\guanaa6dd4439926d8\p\include -external:W0 /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++latest -MD /bigobj /experimental:c11atomics /utf-8 /W3 /wd4127 /wd4458 /wd4251 /wd4305 /wd4661 /wd5030 /showIncludes /Fosrc\CMakeFiles\qpalm-adapter.dir\Release\interop\qpalm\src\qpalm-adapter.cpp.obj /Fdsrc\CMakeFiles\qpalm-adapter.dir\Release\qpalm-adapter.pdb /FS -c D:\a\alpaqa\alpaqa\src\interop\qpalm\src\qpalm-adapter.cpp
 #   D:\a\alpaqa\alpaqa\src\interop\qpalm\src\qpalm-adapter.cpp(115): fatal error C1001: Internal compiler error.
 #   (compiler file 'msc1.cpp', line 1589)
 #    To work around this problem, try simplifying or changing the program near the locations listed above.
-#   If possible please provide a repro here: https://developercommunity.visualstudio.com 
-#   Please choose the Technical Support command on the Visual C++ 
+#   If possible please provide a repro here: https://developercommunity.visualstudio.com
+#   Please choose the Technical Support command on the Visual C++
 #    Help menu, or open the Technical Support help file for more information
 #   D:\a\alpaqa\alpaqa\src\interop\qpalm\src\qpalm-adapter.cpp(115): note: the template instantiation context (the oldest one first) is
 #   D:\a\alpaqa\alpaqa\src\interop\qpalm\src\qpalm-adapter.cpp(49): note: see reference to class template instantiation 'guanaqo::linalg::sparsity::SparsityConverter<guanaqo::linalg::sparsity::Sparsity,alpaqa::build_qpalm_problem::SparseCSC>' being compiled

@@ -1,9 +1,11 @@
 # %% alpaqa lasso example
 
-import alpaqa as pa
+from pprint import pprint
+
 import casadi as cs
 import numpy as np
-from pprint import pprint
+
+import alpaqa as pa
 
 scale = 50
 n, m = scale, scale * 2

@@ -658,11 +658,11 @@ alpaqa_control_problem_register_init(alpaqa_control_problem_register_t *self) {
 /// Available in C only (unnecessary in C++).
 /// @param  self
 ///         A pointer to the instance to initialize.
-#define ALPAQA_PROBLEM_REGISTER_INIT(self)                                          \
-    _Generic((self),                                                                \
-        alpaqa_problem_register_t *: alpaqa_problem_register_init,                  \
-        alpaqa_control_problem_register_t *: alpaqa_control_problem_register_init)( \
-        self)
+#define ALPAQA_PROBLEM_REGISTER_INIT(self)                                     \
+    _Generic((self),                                                           \
+        alpaqa_problem_register_t *: alpaqa_problem_register_init,             \
+        alpaqa_control_problem_register_t                                      \
+            *: alpaqa_control_problem_register_init)(self)
 #endif
 
 #if defined(__cplusplus) &&                                                    \

@@ -1,17 +1,20 @@
+from __future__ import annotations
+
+from os.path import splitext
+from typing import Callable, Literal, get_args
+
 import casadi as cs
 import numpy as np
-from os.path import splitext
-from typing import Tuple, Optional, Literal, get_args, Callable, Dict
 
 SECOND_ORDER_SPEC = Literal["no", "full", "prod", "L", "L_prod", "psi", "psi_prod"]
 
 
-def _prepare_casadi_problem(
+def _prepare_casadi_problem(  # noqa: PLR0912, PLR0915
     f: cs.Function,
-    g: Optional[cs.Function],
+    g: cs.Function | None,
     second_order: SECOND_ORDER_SPEC = "no",
     sym: Callable = cs.SX.sym,
-) -> Dict[str, cs.Function]:
+) -> dict[str, cs.Function]:
     """Convert the objective and constraint functions, their gradients,
     Lagrangians, etc. into CasADi functions."""
 
@@ -170,7 +173,7 @@ def _prepare_casadi_problem(
 
 def generate_casadi_problem(
     f: cs.Function,
-    g: Optional[cs.Function],
+    g: cs.Function | None,
     second_order: SECOND_ORDER_SPEC = "no",
     name: str = "alpaqa_problem",
     sym: Callable = cs.SX.sym,
@@ -197,9 +200,7 @@ def generate_casadi_problem(
     return cg
 
 
-def _add_parameter(
-    f: cs.Function, expected_inputs: int
-) -> Tuple[cs.Function, cs.SX, str]:
+def _add_parameter(f: cs.Function, expected_inputs: int) -> tuple[cs.Function, cs.SX, str]:
     if f.n_in() == expected_inputs + 1:
         # Okay, we already have a parameter argument
         return f, f.sx_in(expected_inputs), f.name_in(expected_inputs)
@@ -219,21 +220,19 @@ def _add_parameter(
             "p",
         )
     else:
-        raise RuntimeError(
-            f"Incorrect number of inputs for {f.name()} "
-            f"(expected {expected_inputs} inputs with optional "
-            f"additional parameter)"
-        )
+        msg = f"Incorrect number of inputs for {f.name()} "
+        msg += f"(expected {expected_inputs} inputs with optional additional parameter)"
+        raise RuntimeError(msg)
 
 
-def generate_casadi_control_problem(
+def generate_casadi_control_problem(  # noqa: PLR0915
     f: cs.Function,
     l: cs.Function,
     l_N: cs.Function,
-    h: cs.Function = None,
-    h_N: cs.Function = None,
-    c: cs.Function = None,
-    c_N: cs.Function = None,
+    h: cs.Function | None = None,
+    h_N: cs.Function | None = None,
+    c: cs.Function | None = None,
+    c_N: cs.Function | None = None,
     name: str = "alpaqa_control_problem",
 ) -> cs.CodeGenerator:
     """Convert the dynamics and cost functions into a CasADi code generator.
@@ -513,13 +512,7 @@ def generate_casadi_control_problem(
         cs.Function(
             "grad_c_prod",
             [x_var, p_var, w_var],
-            [
-                (
-                    cs.jtimes(c(x_var, p_var), x_var, w_var, True)
-                    if nc > 0
-                    else cs.DM.zeros(nx)
-                )
-            ],
+            [(cs.jtimes(c(x_var, p_var), x_var, w_var, True) if nc > 0 else cs.DM.zeros(nx))],
             [c.name_in(i) for i in range(2)] + ["w"],
             ["grad_" + c.name_out(0) + "_prod"],
         )
@@ -571,13 +564,7 @@ def generate_casadi_control_problem(
         cs.Function(
             "grad_c_prod_N",
             [x_var, p_var, wN_var],
-            [
-                (
-                    cs.jtimes(c_N(x_var, p_var), x_var, wN_var, True)
-                    if nc_N > 0
-                    else cs.DM.zeros(nx)
-                )
-            ],
+            [(cs.jtimes(c_N(x_var, p_var), x_var, wN_var, True) if nc_N > 0 else cs.DM.zeros(nx))],
             [c_N.name_in(i) for i in range(2)] + ["w"],
             ["grad_" + c_N.name_out(0) + "_prod"],
         )
@@ -609,7 +596,7 @@ def write_casadi_problem_data(sofile, C, D, param, l1_reg, penalty_alm_split, na
     l1_reg = [] if l1_reg is None else l1_reg
     penalty_alm_split = 0 if penalty_alm_split is None else penalty_alm_split
     with open(f"{splitext(sofile)[0]}.csv", "w") as f:
-        opt = dict(delimiter=",", newline="\n")
+        opt = {"delimiter": ",", "newline": "\n"}
         ravelrow = lambda x: np.reshape(x, (1, -1), order="A")
         writerow = lambda x: np.savetxt(f, ravelrow(x), **opt)
         try_lb = lambda x: x.lower if hasattr(x, "lower") else x[0]
@@ -638,7 +625,7 @@ def write_casadi_control_problem_data(
     if penalty_alm_split_N is None:
         penalty_alm_split_N = penalty_alm_split
     with open(f"{splitext(sofile)[0]}.csv", "w") as f:
-        opt = dict(delimiter=",", newline="\n")
+        opt = {"delimiter": ",", "newline": "\n"}
         ravelrow = lambda x: np.reshape(x, (1, -1), order="A")
         writerow = lambda x: np.savetxt(f, ravelrow(x), **opt)
         try_lb = lambda x: x.lower if hasattr(x, "lower") else x[0]

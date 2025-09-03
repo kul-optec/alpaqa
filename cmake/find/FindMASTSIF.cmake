@@ -46,8 +46,8 @@ function(cutest_sif_problem PROBLEM_NAME)
                 ${PROBLEM_DIR}/EXTER.f
                 ${PROBLEM_DIR}/GROUP.f
                 ${PROBLEM_DIR}/RANGE.f
-            COMMAND ${CMAKE_COMMAND} -E env 
-                ARCHDEFS="${ARCHDEFS_DIR}" 
+            COMMAND ${CMAKE_COMMAND} -E env
+                ARCHDEFS="${ARCHDEFS_DIR}"
                 SIFDECODE="${SIFDECODE_DIR}"
                 MASTSIF="${PROBLEM_MASTSIF_DIR}"
                 MYARCH="${CUTEST_MYARCH}"
@@ -79,7 +79,7 @@ function(cutest_sif_problem PROBLEM_NAME)
                 DEBUG_POSTFIX ""
                 RELWITHDEBINFO_POSTFIX ""
                 MINSIZEREL_POSTFIX "")
-        add_library(CUTEst::problem-${FULL_PROBLEM_NAME} 
+        add_library(CUTEst::problem-${FULL_PROBLEM_NAME}
                     ALIAS cutest-problem-${FULL_PROBLEM_NAME})
         add_custom_command(TARGET cutest-problem-${FULL_PROBLEM_NAME} POST_BUILD
             COMMAND ${CMAKE_COMMAND}

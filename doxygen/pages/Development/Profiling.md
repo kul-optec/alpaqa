@@ -104,7 +104,7 @@ git clone https://github.com/Netflix/flamescope --single-branch --depth=1 ~/opt/
 docker build -t flamescope ~/opt/flamescope
 ```
 
-### Gather profile 
+### Gather profile
 
 LBR mode for Intel CPUs (but does not seem to be 100% accurate).
 ```sh

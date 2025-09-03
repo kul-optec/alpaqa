@@ -196,7 +196,7 @@ function write_index {
 
 }
 
-case "$output_type" in 
+case "$output_type" in
     md) write_readme ;;
     html) write_index ;;
     *) echo "Invalid output type $output_type"; exit 1 ;;

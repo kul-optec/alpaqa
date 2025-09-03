@@ -21,7 +21,7 @@ as GCC or Clang on Linux, Xcode on macOS, or MSVC on Windows (see the
 From source
 -----------
 
-Building alpaqa from source requires the installation of some C++ dependencies, 
+Building alpaqa from source requires the installation of some C++ dependencies,
 see `Installation (Doxygen) <../../Doxygen/installation.html>`_ for detailed
 instructions.
 

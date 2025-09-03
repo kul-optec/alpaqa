@@ -4,11 +4,16 @@ Script that extracts the test coverage percentage and saves it as a JSON
 shields.io endpoint.
 """
 
-from os.path import join, normpath, dirname, realpath
+import contextlib
 import re
+import sys
+from os.path import dirname, join, normpath, realpath
 
 script_dir = dirname(realpath(__file__))
 cov_dir = normpath(join(dirname(script_dir), "docs", "Coverage"))
+
+with contextlib.suppress(IndexError):
+    cov_dir = sys.argv[1]
 
 json = """\
 {{
@@ -19,14 +24,14 @@ json = """\
 }}
 """
 
-def main():
-    with open(join(cov_dir, 'index.html'), 'r') as f:
-        pattern = r'<td class="headerCovTableEntry\w+">([\d.]+)'
-        linecov, = map(lambda m: m.group(1),
-                       re.finditer(pattern, f.read()))
-        print(linecov)
 
-    with open(join(cov_dir, "shield.io.coverage.json"), 'w') as f:
+def main():
+    with open(join(cov_dir, "index.html")) as f:
+        pattern = r'<td class="headerCovTableEntry\w+">([\d.]+)'
+        (linecov,) = (m.group(1) for m in re.finditer(pattern, f.read()))
+        print(linecov)  # noqa: T201
+
+    with open(join(cov_dir, "shield.io.coverage.json"), "w") as f:
         f.write(json.format(linecov=linecov))
 
 

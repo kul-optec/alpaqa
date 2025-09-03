@@ -21,7 +21,7 @@ tools.cmake.cmake_layout:build_folder_vars=['const.pkg']
 *:tools.build:skip_test=True
 &:tools.build:skip_test=False
 [buildenv]
-LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed 
+LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
 &:CMAKE_C_COMPILER_LAUNCHER=sccache
 &:CMAKE_CXX_COMPILER_LAUNCHER=sccache
 [options]

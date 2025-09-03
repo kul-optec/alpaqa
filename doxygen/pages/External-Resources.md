@@ -7,7 +7,7 @@ Main solver used for the box-constrained inner problem.
 - [Lorenzo Stella, Andreas Themelis, Pantelis Sopasakis, and Panagiotis Patrinos, “A Simple and Efficient Algorithm for Nonlinear Model Predictive Control,” _2017 IEEE 56th Annual Conference on Decision and Control (CDC)_, Melbourne, VIC, Australia, 2017, pp. 1939─1944.](https://arxiv.org/abs/1709.06487)  
   Original paper introducing the PANOC algorithm.
 - [Pantelis Sopasakis, Emil Fresk, and Panagiotis Patrinos, “OpEn: Code Generation for Embedded Nonconvex Optimization,” <i>21<sup>st</sup> IFAC World Congress: Proceedings</i>, Berlin, Germany, 2020.](https://arxiv.org/abs/2003.00292)  
-  A Rust implementation of PANOC with ALM and penalty methods, with Python code 
+  A Rust implementation of PANOC with ALM and penalty methods, with Python code
   generation. [Website](https://alphaville.github.io/optimization-engine/).
 
 ## Anderson acceleration
@@ -15,7 +15,7 @@ Main solver used for the box-constrained inner problem.
 Acceleration for the fixed-point projected gradient method.
 
 - [Donald G.M. Anderson, “Iterative procedures for nonlinear integral equations”. _Journal of the Association for Computing Machinery_, Vol. 12, No. 4, pp. 547─560, 1965.](https://dl.acm.org/doi/pdf/10.1145/321296.321305)  
-  Original paper introducing the idea of Anderson acceleration, not that 
+  Original paper introducing the idea of Anderson acceleration, not that
   relevant for the algorithm we implemented.
 - [Donald G.M. Anderson, Comments on “Anderson Acceleration, Mixing and Extrapolation,” _Numerical Algorithms_, Vol. 80, No. 1: pp. 135─234, 2017.](http://nrs.harvard.edu/urn-3:HUL.InstRepos:34773632)  
   Long but interesting discussion of Anderson acceleration by Anderson himself,

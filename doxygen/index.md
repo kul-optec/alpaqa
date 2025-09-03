@@ -2,7 +2,7 @@
 
 `alpaqa` is an efficient implementation of an Augmented Lagrangian method for general nonlinear programming problems.
 It makes use of the first-order, matrix-free PANOC algorithm as an inner solver.
-The numerical algorithms themselves are implemented in C++ for optimal 
+The numerical algorithms themselves are implemented in C++ for optimal
 performance, and they are also exposed as an easy-to-use Python package. An
 experimental MATLAB interface is available as well.
 

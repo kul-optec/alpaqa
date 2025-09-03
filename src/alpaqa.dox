@@ -1,5 +1,5 @@
 /**
- * @defgroup    grp_ALMSolver Augmented Lagrangian solver 
+ * @defgroup    grp_ALMSolver Augmented Lagrangian solver
  * @brief   Augmented Lagrangian Method solver (ALM).
  */
 
@@ -15,7 +15,7 @@
 
 /**
  * @defgroup    grp_DirectionProviders Direction providers
- * @brief   Algorithms that provide quasi-Newton steps for the PANOC solver, 
+ * @brief   Algorithms that provide quasi-Newton steps for the PANOC solver,
  *          such as L-BFGS.
  */
 

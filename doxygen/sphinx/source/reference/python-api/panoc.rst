@@ -45,4 +45,3 @@ Anderson acceleration
 
 .. autoclass:: alpaqa.AndersonAccel.Params
     :noindex:
-

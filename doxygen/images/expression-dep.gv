@@ -9,7 +9,7 @@ digraph ""
 
     x;
     x [label="x"];
-    
+
     # subgraph cluster_0 {
         gx [label="g(x)"];
         zeta [label="ζ"];
@@ -62,7 +62,7 @@ digraph ""
     yhat -> gradpsix;
     gradpsix [label="∇ψ(x)"];
 
-    C; 
+    C;
     C [label="C", style=filled, fillcolor=lightgrey];
 
     gamma;

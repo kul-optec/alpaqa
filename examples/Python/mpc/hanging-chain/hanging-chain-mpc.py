@@ -1,9 +1,10 @@
 # %% Hanging chain MPC example
 
+import sys
+from os.path import dirname
+
 import casadi as cs
 import numpy as np
-from os.path import dirname
-import sys
 
 sys.path.append(dirname(__file__))
 from hanging_chain_dynamics import HangingChain
@@ -188,8 +189,8 @@ print(
 
 # %% Visualize the results
 
-import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.pyplot as plt
 from matplotlib import animation, patheffects
 
 mpl.rcParams["animation.frame_format"] = "svg"
@@ -214,7 +215,8 @@ cgc.set_path_effects(fx)
 
 
 class Animation:
-    points = []
+    def __init__(self) -> None:
+        self.points = []
 
     def __call__(self, i):
         x, y, z = model.state_to_pos(y_sim[:, i])
@@ -234,7 +236,7 @@ class Animation:
         viol = y - g_constr(constr_coeff, x) + 1e-5 < constr_lb
         if np.sum(viol):
             self.points += ax.plot(x[viol], y[viol], "rx", markersize=12)
-        return [line, line_ctrl] + self.points
+        return [line, line_ctrl, *self.points]
 
 
 ani = animation.FuncAnimation(

@@ -1,12 +1,15 @@
-from dataclasses import dataclass
-import casadi as cs
-from typing import Union, Optional, Tuple
-import numpy as np
-from copy import copy
-from ..casadi_loader import generate_and_compile_casadi_problem
-from ..casadi_generator import _prepare_casadi_problem
-from ..alpaqa import CasADiProblem, deserialize_casadi_problem
+from __future__ import annotations
+
 import inspect
+from copy import copy
+from dataclasses import dataclass
+
+import casadi as cs
+import numpy as np
+
+from ..alpaqa import CasADiProblem, deserialize_casadi_problem
+from ..casadi_generator import _prepare_casadi_problem
+from ..casadi_loader import generate_and_compile_casadi_problem
 
 
 @dataclass
@@ -15,27 +18,26 @@ class MinimizationProblemDescription:
     High-level description of a minimization problem.
     """
 
-    objective_expr: Union[cs.SX, cs.MX]
-    variable: Union[cs.SX, cs.MX]
-    constraints_expr: Optional[Union[cs.SX, cs.MX]] = None
-    penalty_constraints_expr: Optional[Union[cs.SX, cs.MX]] = None
-    parameter: Optional[Union[cs.SX, cs.MX]] = None
-    parameter_value: Optional[np.ndarray] = None
-    regularizer: Optional[Union[float, np.ndarray]] = None
-    bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None
-    constraints_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None
-    penalty_constraints_bounds: Optional[Tuple[np.ndarray, np.ndarray]] = None
+    objective_expr: cs.SX | cs.MX
+    variable: cs.SX | cs.MX
+    constraints_expr: cs.SX | cs.MX | None = None
+    penalty_constraints_expr: cs.SX | cs.MX | None = None
+    parameter: cs.SX | cs.MX | None = None
+    parameter_value: np.ndarray | None = None
+    regularizer: float | np.ndarray | None = None
+    bounds: tuple[np.ndarray, np.ndarray] | None = None
+    constraints_bounds: tuple[np.ndarray, np.ndarray] | None = None
+    penalty_constraints_bounds: tuple[np.ndarray, np.ndarray] | None = None
     name: str = "alpaqa_casadi_problem"
 
     @staticmethod
     def _assert_not_set_before(value):
         if value is not None:
             caller_frame = inspect.getouterframes(inspect.currentframe())[1]
-            raise ValueError(f"{caller_frame.function} cannot be called twice")
+            msg = f"{caller_frame.function} cannot be called twice"
+            raise ValueError(msg)
 
-    def subject_to_box(
-        self, C: Tuple[np.ndarray, np.ndarray]
-    ) -> "MinimizationProblemDescription":
+    def subject_to_box(self, C: tuple[np.ndarray, np.ndarray]) -> MinimizationProblemDescription:
         """
         Add box constraints :math:`x \\in C` on the problem variables.
         """
@@ -46,9 +48,9 @@ class MinimizationProblemDescription:
 
     def subject_to(
         self,
-        g: Union[cs.SX, cs.MX],
-        D: Optional[Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]] = None,
-    ) -> "MinimizationProblemDescription":
+        g: cs.SX | cs.MX,
+        D: np.ndarray | tuple[np.ndarray, np.ndarray] | None = None,
+    ) -> MinimizationProblemDescription:
         """
         Add general constraints :math:`g(x) \\in D`, handled using an augmented
         Lagrangian method.
@@ -64,9 +66,9 @@ class MinimizationProblemDescription:
 
     def subject_to_penalty(
         self,
-        g: Union[cs.SX, cs.MX],
-        D: Optional[Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]] = None,
-    ) -> "MinimizationProblemDescription":
+        g: cs.SX | cs.MX,
+        D: np.ndarray | tuple[np.ndarray, np.ndarray] | None = None,
+    ) -> MinimizationProblemDescription:
         """
         Add general constraints :math:`g(x) \\in D`, handled using a quadratic
         penalty method.
@@ -80,9 +82,7 @@ class MinimizationProblemDescription:
         ret.penalty_constraints_bounds = D
         return ret
 
-    def with_l1_regularizer(
-        self, λ: Union[float, np.ndarray]
-    ) -> "MinimizationProblemDescription":
+    def with_l1_regularizer(self, λ: float | np.ndarray) -> MinimizationProblemDescription:
         """
         Add an :math:`\\ell_1`-regularization term :math:`\\|\\lambda x\\|_1`
         to the objective.
@@ -93,8 +93,8 @@ class MinimizationProblemDescription:
         return ret
 
     def with_param(
-        self, p: Union[cs.SX, cs.MX], value: np.ndarray = None
-    ) -> "MinimizationProblemDescription":
+        self, p: cs.SX | cs.MX, value: np.ndarray | None = None
+    ) -> MinimizationProblemDescription:
         """
         Make the problem depend on a symbolic parameter, with an optional
         default value. The value can be changed after the problem has been
@@ -107,18 +107,19 @@ class MinimizationProblemDescription:
             ret.parameter_value = value
         return ret
 
-    def with_param_value(self, value: np.ndarray) -> "MinimizationProblemDescription":
+    def with_param_value(self, value: np.ndarray) -> MinimizationProblemDescription:
         """
         Explicitly change the parameter value for the parameter added by
         :py:func:`with_param`.
         """
         if self.parameter is None:
-            raise RuntimeError("problem has no parameters")
+            msg = "problem has no parameters"
+            raise RuntimeError(msg)
         ret = copy(self)
         ret.parameter_value = value
         return ret
 
-    def with_name(self, name: str) -> "MinimizationProblemDescription":
+    def with_name(self, name: str) -> MinimizationProblemDescription:
         """
         Set the name of the problem. Must be a valid file name, and for compiled
         problems, it should also be a valid C identifier, therefore it is
@@ -163,7 +164,7 @@ class MinimizationProblemDescription:
         if num_param is None:
             num_param = np.nan * np.ones(p)
         λ = self.regularizer
-        return dict(
+        return dict(  # noqa: C408
             f=cs.Function("f", args, f),
             g=cs.Function("g", args, g) if g else None,
             C=C,
@@ -265,9 +266,7 @@ class MinimizationProblemDescription:
         return problem
 
 
-def minimize(
-    f: Union[cs.SX, cs.MX], x: Union[cs.SX, cs.MX]
-) -> MinimizationProblemDescription:
+def minimize(f: cs.SX | cs.MX, x: cs.SX | cs.MX) -> MinimizationProblemDescription:
     """
     Formulate a minimization problem with objective function :math:`f(x)` and
     unknown variables :math:`x`.

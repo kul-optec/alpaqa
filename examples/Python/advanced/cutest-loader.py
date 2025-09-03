@@ -1,9 +1,11 @@
-import os
-import numpy as np
-import alpaqa as pa
 import contextlib
 import gc
+import os
 from pathlib import Path
+
+import numpy as np
+
+import alpaqa as pa
 
 # Path containing the compiled CUTEst problems
 cutest_dir = Path(os.getenv("HOME")) / "opt" / "CUTEst" / "QP"
@@ -11,7 +13,7 @@ problem_name = "CBS"
 
 # alpaqa currently only supports one instance of a CUTEst problem at a time 🙃
 with contextlib.suppress(NameError):
-    del prob
+    del prob  # noqa: F821
 gc.collect()
 # Load problem
 prob = pa.CUTEstProblem(str(cutest_dir / problem_name), sparse=True)

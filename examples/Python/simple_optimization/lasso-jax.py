@@ -1,11 +1,13 @@
 # %% alpaqa lasso example
 
-import numpy as np
-import alpaqa as pa
+from pprint import pprint
+
 import jax
 import jax.numpy as jnp
+import numpy as np
 from jax import grad, jit
-from pprint import pprint
+
+import alpaqa as pa
 
 jax.config.update("jax_enable_x64", True)
 

@@ -1,12 +1,15 @@
+import os
 from dataclasses import dataclass
-import alpaqa as pa
+
 import casadi as cs
 import numpy as np
-import numpy.random as nprand
 import numpy.linalg as la
-import alpaqa.casadi_loader as cl
+import numpy.random as nprand
 import scipy.sparse as sp
-import os
+
+import alpaqa as pa
+import alpaqa.casadi_loader as cl
+
 
 @dataclass
 class OCProblemData:
@@ -18,6 +21,7 @@ class OCProblemData:
     c: cs.Function
     N: int
 
+
 def convert_to_single_shooting(ocp: OCProblemData):
     nx = ocp.f.size1_in(0)
     nu = ocp.f.size1_in(1)
@@ -28,24 +32,23 @@ def convert_to_single_shooting(ocp: OCProblemData):
     mpc_h = ocp.h.map(ocp.N)(cs.horzcat(mpc_x0, mpc_x[:, :-1]), mpc_u)
     mpc_stage_costs = cs.sum2(ocp.l.map(ocp.N)(mpc_h))
     mpc_terminal_cost = ocp.l_N(ocp.h_N(mpc_x[:, -1]))
-    mpc_cost = cs.Function('f_mpc', [cs.vec(mpc_u), mpc_x0],
-        [mpc_stage_costs + mpc_terminal_cost])
+    mpc_cost = cs.Function("f_mpc", [cs.vec(mpc_u), mpc_x0], [mpc_stage_costs + mpc_terminal_cost])
 
     g = [ocp.c(mpc_x0)]
     g += [ocp.c(mpc_x[:, i]) for i in range(ocp.N - 1)]
     # TODO: separate terminal constraint
     g += [ocp.c(mpc_x[:, ocp.N - 1])]
-    mpc_constr = cs.Function("g", [cs.vec(mpc_u), mpc_x0],
-        [cs.vertcat(*g)])
+    mpc_constr = cs.Function("g", [cs.vec(mpc_u), mpc_x0], [cs.vertcat(*g)])
 
     return mpc_cost, mpc_constr
+
 
 def convert_to_multiple_shooting_alm(ocp: OCProblemData, y, μ, D, D_N):
     N = ocp.N
     nx = ocp.f.size1_in(0)
     nu = ocp.f.size1_in(1)
     mpc_u = cs.SX.sym("u", (nu, N))  # Inputs
-    mpc_x = cs.SX.sym("x", (nx, N + 1)) # States
+    mpc_x = cs.SX.sym("x", (nx, N + 1))  # States
 
     mpc_h = ocp.h.map(N)(mpc_x[:, :-1], mpc_u)
     mpc_stage_costs = cs.sum2(ocp.l.map(N)(mpc_h))
@@ -55,18 +58,16 @@ def convert_to_multiple_shooting_alm(ocp: OCProblemData, y, μ, D, D_N):
     penalty = 0
     for i in range(N):
         proj_D = lambda g: cs.fmax(D.lower, cs.fmin(g, D.upper))
-        ζ = ocp.c(mpc_x[:, i]) + y[i * nx:i * nx + nx] / μ[i]
-        penalty += 0.5 * μ[i] * cs.sum1((ζ - proj_D(ζ))**2)
+        ζ = ocp.c(mpc_x[:, i]) + y[i * nx : i * nx + nx] / μ[i]
+        penalty += 0.5 * μ[i] * cs.sum1((ζ - proj_D(ζ)) ** 2)
     proj_D_N = lambda g: cs.fmax(D_N.lower, cs.fmin(g, D_N.upper))
-    ζ = ocp.c(mpc_x[:, N]) + y[N * nx:N * nx + nx] / μ[N]
-    penalty += 0.5 * μ[N] * cs.sum1((ζ - proj_D_N(ζ))**2)
+    ζ = ocp.c(mpc_x[:, N]) + y[N * nx : N * nx + nx] / μ[N]
+    penalty += 0.5 * μ[N] * cs.sum1((ζ - proj_D_N(ζ)) ** 2)
 
-    mpc_cost = cs.Function('f_mpc', [mpc_xu],
-        [mpc_stage_costs + mpc_terminal_cost + penalty])
+    return cs.Function("f_mpc", [mpc_xu], [mpc_stage_costs + mpc_terminal_cost + penalty])
 
-    return mpc_cost
 
-def test_lqr():
+def test_lqr():  # noqa: PLR0912
     if not pa.with_casadi_ocp:
         return
     tol = 1e-10
@@ -87,32 +88,27 @@ def test_lqr():
         cs.tanh(x_sym[3]) * cs.tanh(x_sym[2]) + u_sym[1] * u_sym[5],
         cs.tanh(x_sym[4]) * cs.tanh(x_sym[3]) + u_sym[2] * u_sym[6],
     )
-    f = cs.Function("f", [x_sym, u_sym],
-        [x_next])
+    f = cs.Function("f", [x_sym, u_sym], [x_next])
     # Output
-    h = cs.Function("h", [x_sym, u_sym],
-        [cs.vertcat(cs.sinh(x_sym), 1. / (u_sym**2 + 1.))])
-    hN = cs.Function("hN", [x_sym],
-        [1. / (x_sym**2 + 1.)])
+    h = cs.Function("h", [x_sym, u_sym], [cs.vertcat(cs.sinh(x_sym), 1.0 / (u_sym**2 + 1.0))])
+    hN = cs.Function("hN", [x_sym], [1.0 / (x_sym**2 + 1.0)])
     # Cost
     L = rng.uniform(-1, 1, (nx + nu, nx + nu))
     L = L.T @ L
     hsym = cs.SX.sym("h", nx + nu)
-    l = cs.Function("l", [hsym], 
-        [cs.log(cs.cosh(hsym).T @ L @ cs.cosh(hsym))])
+    l = cs.Function("l", [hsym], [cs.log(cs.cosh(hsym).T @ L @ cs.cosh(hsym))])
     LN = rng.uniform(-1, 1, (nx, nx))
     LN = LN.T @ LN
     hNsym = cs.SX.sym("hN", nx)
-    lN = cs.Function("lN", [hNsym],
-        [cs.log(cs.cosh(hNsym).T @ LN @ cs.cosh(hNsym))])
+    lN = cs.Function("lN", [hNsym], [cs.log(cs.cosh(hNsym).T @ LN @ cs.cosh(hNsym))])
     # Constraints
-    c = cs.Function("c", [x_sym],
-        [cs.sinh(x_sym)])
+    c = cs.Function("c", [x_sym], [cs.sinh(x_sym)])
 
     # Compile problem
     problem = cl.generate_and_compile_casadi_control_problem(
-        N, f=f, l=l, l_N = lN, h=h, h_N=hN, c=c, c_N=c)
-    
+        N, f=f, l=l, l_N=lN, h=h, h_N=hN, c=c, c_N=c
+    )
+
     # Convert to single-shooting problem
     ocp = OCProblemData(f=f, l=l, l_N=lN, h=h, h_N=hN, c=c, N=N)
     ss_cost, ss_constr = convert_to_single_shooting(ocp)
@@ -131,9 +127,7 @@ def test_lqr():
     cs_V = ss_cost(u, problem.x_init)
     assert abs(V - cs_V) < tol
 
-    cs_grad = cs.Function("gr",
-        [cs_u],
-        [cs.gradient(ss_cost(cs_u, problem.x_init), cs_u)])(u)
+    cs_grad = cs.Function("gr", [cs_u], [cs.gradient(ss_cost(cs_u, problem.x_init), cs_u)])(u)
     assert la.norm(grad - cs_grad) < tol
 
     # Check cost and gradient with constraints
@@ -152,15 +146,16 @@ def test_lqr():
     ss_μ = μ.copy()
     proj_D = lambda g: cs.fmax(ss_D_lb, cs.fmin(g, ss_D_ub))
     ζ = ss_constr(cs_u, problem.x_init) + y / ss_μ
-    cs_aug_lagr = cs.Function("al", [cs_u],
-        [ss_cost(cs_u, problem.x_init) + 
-         0.5 * cs.sum1(ss_μ * (ζ - proj_D(ζ))**2)])
+    cs_aug_lagr = cs.Function(
+        "al", [cs_u], [ss_cost(cs_u, problem.x_init) + 0.5 * cs.sum1(ss_μ * (ζ - proj_D(ζ)) ** 2)]
+    )
 
     cs_aug_V = cs_aug_lagr(u)
     assert abs(aug_V - cs_aug_V) < tol
 
-    cs_aug_grad = cs.Function("algr", [cs_u],
-        [cs.gradient(cs_aug_lagr(cs_u), cs_u)])(u).full().ravel()
+    cs_aug_grad = (
+        cs.Function("algr", [cs_u], [cs.gradient(cs_aug_lagr(cs_u), cs_u)])(u).full().ravel()
+    )
     print("‖∇ψ(C++) - ∇ψ(CasADi) =", la.norm(aug_grad - cs_aug_grad))
     assert la.norm(aug_grad - cs_aug_grad) < tol
 
@@ -169,10 +164,10 @@ def test_lqr():
     xu = np.nan * np.ones((nxu * N + nx,))
     xu[0:nx] = problem.x_init
     for i in range(N):
-        xi = xu[i * nxu:i * nxu + nx]
-        ui = u[i * nu:i * nu + nu]
-        xu[i * nxu + nx:i * nxu + nxu] = ui
-        xu[(i + 1) * nxu:(i + 1) * nxu + nx] = f(xi, ui).full().ravel()
+        xi = xu[i * nxu : i * nxu + nx]
+        ui = u[i * nu : i * nu + nu]
+        xu[i * nxu + nx : i * nxu + nxu] = ui
+        xu[(i + 1) * nxu : (i + 1) * nxu + nx] = f(xi, ui).full().ravel()
 
     # Build QP
     n_qp = nxu * N + nx
@@ -181,11 +176,11 @@ def test_lqr():
         Qk = aug_eval.Qk(i, u, y, μ)
         Rk = aug_eval.Rk(i, u, np.arange(nu))
         Sk = aug_eval.Sk(i, u, np.arange(nu))
-        Q_qp[i * nxu:i * nxu + nx, i * nxu:i * nxu + nx] = Qk
-        Q_qp[i * nxu + nx:i * nxu + nxu, i * nxu + nx:i * nxu + nxu] = Rk
-        Q_qp[i * nxu + nx:i * nxu + nxu, i * nxu:i * nxu + nx] = Sk
-        Q_qp[i * nxu:i * nxu + nx, i * nxu + nx:i * nxu + nxu] = Sk.T
-    Q_qp[N * nxu:N * nxu + nx, N * nxu:N * nxu + nx] = aug_eval.Qk(N, u, y, μ)
+        Q_qp[i * nxu : i * nxu + nx, i * nxu : i * nxu + nx] = Qk
+        Q_qp[i * nxu + nx : i * nxu + nxu, i * nxu + nx : i * nxu + nxu] = Rk
+        Q_qp[i * nxu + nx : i * nxu + nxu, i * nxu : i * nxu + nx] = Sk
+        Q_qp[i * nxu : i * nxu + nx, i * nxu + nx : i * nxu + nxu] = Sk.T
+    Q_qp[N * nxu : N * nxu + nx, N * nxu : N * nxu + nx] = aug_eval.Qk(N, u, y, μ)
 
     ms_cost_alm = convert_to_multiple_shooting_alm(ocp, y, μ, problem.D, problem.D_N)
     cs_xu = ms_cost_alm.sx_in(0)
@@ -197,53 +192,54 @@ def test_lqr():
     cs_Q_qp = np.zeros((n_qp, n_qp))
     cs_qr_qp = np.nan * np.ones((N * nxu + nx,))
     for i in range(N):
-        xi = xu[i * nxu:i * nxu + nx]
-        ui = xu[i * nxu + nx:i * nxu + nxu]
-        μi = μ[i * nc:i * nc + nc]
+        xi = xu[i * nxu : i * nxu + nx]
+        ui = xu[i * nxu + nx : i * nxu + nxu]
+        μi = μ[i * nc : i * nc + nc]
         Jhx = cs.substitute(cs.jacobian(h(x_sym, ui), x_sym), x_sym, xi)
         Jhu = cs.substitute(cs.jacobian(h(xi, u_sym), u_sym), u_sym, ui)
         Lhh = cs.substitute(cs.hessian(l(hsym), hsym)[0], hsym, h(xi, ui))
         proj_D = lambda g: cs.fmax(problem.D.lower, cs.fmin(g, problem.D.upper))
         c_sym = cs.SX.sym("c", nx)
-        ζ = c_sym + y[i * nx:i * nx + nx] / μi
-        penalty = 0.5 * cs.sum1(μi * (ζ - proj_D(ζ))**2)
+        ζ = c_sym + y[i * nx : i * nx + nx] / μi
+        penalty = 0.5 * cs.sum1(μi * (ζ - proj_D(ζ)) ** 2)
         ci = ocp.c(xi)
         M = cs.substitute(cs.hessian(penalty, c_sym)[0], c_sym, ci)
         Jc = cs.substitute(cs.jacobian(ocp.c(x_sym), x_sym), x_sym, xi)
         Qk = Jhx.T @ Lhh @ Jhx + Jc.T @ M @ Jc
         Rk = Jhu.T @ Lhh @ Jhu
         Sk = Jhu.T @ Lhh @ Jhx
-        cs_Q_qp[i * nxu:i * nxu + nx, i * nxu:i * nxu + nx] = cs.evalf(Qk)
-        cs_Q_qp[i * nxu + nx:i * nxu + nxu, i * nxu + nx:i * nxu + nxu] = cs.evalf(Rk)
-        cs_Q_qp[i * nxu + nx:i * nxu + nxu, i * nxu:i * nxu + nx] = cs.evalf(Sk)
-        cs_Q_qp[i * nxu:i * nxu + nx, i * nxu + nx:i * nxu + nxu] = cs.evalf(Sk).T
+        cs_Q_qp[i * nxu : i * nxu + nx, i * nxu : i * nxu + nx] = cs.evalf(Qk)
+        cs_Q_qp[i * nxu + nx : i * nxu + nxu, i * nxu + nx : i * nxu + nxu] = cs.evalf(Rk)
+        cs_Q_qp[i * nxu + nx : i * nxu + nxu, i * nxu : i * nxu + nx] = cs.evalf(Sk)
+        cs_Q_qp[i * nxu : i * nxu + nx, i * nxu + nx : i * nxu + nxu] = cs.evalf(Sk).T
         grad_l = cs.substitute(cs.gradient(l(hsym), hsym), hsym, h(xi, ui))
-        ζ = ci + y[i * nx:i * nx + nx] / μi
+        ζ = ci + y[i * nx : i * nx + nx] / μi
         qi = Jhx.T @ grad_l + Jc.T @ (μi * (ζ - proj_D(ζ)))
         ri = Jhu.T @ grad_l
-        cs_qr_qp[i * nxu:i * nxu + nx] = cs.evalf(qi).full().ravel()
-        cs_qr_qp[i * nxu + nx:i * nxu + nxu] = cs.evalf(ri).full().ravel()
-    μN = μ[N * nc:N * nc + nc_N]
-    xN = xu[N * nxu:N * nxu + nx]
+        cs_qr_qp[i * nxu : i * nxu + nx] = cs.evalf(qi).full().ravel()
+        cs_qr_qp[i * nxu + nx : i * nxu + nxu] = cs.evalf(ri).full().ravel()
+    μN = μ[N * nc : N * nc + nc_N]
+    xN = xu[N * nxu : N * nxu + nx]
     JhN = cs.substitute(cs.jacobian(hN(x_sym), x_sym), x_sym, xN)
     LNhh = cs.substitute(cs.hessian(lN(hNsym), hNsym)[0], hNsym, hN(xN))
     proj_D_N = lambda g: cs.fmax(problem.D_N.lower, cs.fmin(g, problem.D_N.upper))
-    c_sym = cs.SX.sym("c", nx) # TODO: terminal constraints
-    ζ = c_sym + y[N * nx:N * nx + nx] / μN
-    penalty = 0.5 * cs.sum1(μN * (ζ - proj_D_N(ζ))**2)
+    c_sym = cs.SX.sym("c", nx)  # TODO: terminal constraints
+    ζ = c_sym + y[N * nx : N * nx + nx] / μN
+    penalty = 0.5 * cs.sum1(μN * (ζ - proj_D_N(ζ)) ** 2)
     cN = ocp.c(xN)
     MN = cs.substitute(cs.hessian(penalty, c_sym)[0], c_sym, cN)
     JcN = cs.substitute(cs.jacobian(ocp.c(x_sym), x_sym), x_sym, xN)
     QN = JhN.T @ LNhh @ JhN + JcN.T @ MN @ JcN
-    cs_Q_qp[N * nxu:N * nxu + nx, N * nxu:N * nxu + nx] = cs.evalf(QN)
+    cs_Q_qp[N * nxu : N * nxu + nx, N * nxu : N * nxu + nx] = cs.evalf(QN)
     grad_lN = cs.substitute(cs.gradient(lN(hNsym), hNsym), hNsym, hN(xN))
-    ζ = cN + y[N * nx:N * nx + nx] / μN
+    ζ = cN + y[N * nx : N * nx + nx] / μN
     qN = JhN.T @ grad_lN + JcN.T @ (μN * (ζ - proj_D_N(ζ)))
-    cs_qr_qp[N * nxu:N * nxu + nx] = cs.evalf(qN).full().ravel()
+    cs_qr_qp[N * nxu : N * nxu + nx] = cs.evalf(qN).full().ravel()
 
     print("‖Q(C++) - Q(CasADi)‖ =", la.norm(Q_qp - cs_Q_qp))
     if "PYTEST_CURRENT_TEST" not in os.environ:
         import matplotlib.pyplot as plt
+
         plt.figure()
         plt.imshow(np.log10(abs(Q_qp - cs_Q_qp)))
         plt.colorbar()
@@ -260,22 +256,25 @@ def test_lqr():
 
     # Build constraint matrix
     triplets = []
+
     def add_identity(r, c, n, fac, triplets):
         for i in range(n):
             triplets += [(r + i, c + i, fac)]
+
     def add_block(r, c, M, triplets):
         for col in range(M.shape[1]):
             for row in range(M.shape[0]):
                 val = M[row, col]
                 if val:
                     triplets += [(r + row, c + col, val)]
+
     # Dynamics
     for i in range(N + 1):
-        add_identity(i * nx, i * nxu, nx, 1., triplets)
+        add_identity(i * nx, i * nxu, nx, 1.0, triplets)
         if i > 0:
             j = i - 1
-            xj = xu[j * nxu:j * nxu + nx]
-            uj = xu[j * nxu + nx:j * nxu + nxu]
+            xj = xu[j * nxu : j * nxu + nx]
+            uj = xu[j * nxu + nx : j * nxu + nxu]
             Aj = cs.substitute(cs.jacobian(f(x_sym, uj), x_sym), x_sym, xj)
             Bj = cs.substitute(cs.jacobian(f(xj, u_sym), u_sym), u_sym, uj)
             add_block(i * nx, j * nxu, cs.evalf(-Aj).full(), triplets)
@@ -291,15 +290,17 @@ def test_lqr():
             ub_j = problem.U.upper[j]
             gs = ui - γ * aug_grad[i * nu + j]
             if gs <= lb_j:
-                triplets += [(N * nx + nx + m, i * nxu + nx + j, 1.)]
+                triplets += [(N * nx + nx + m, i * nxu + nx + j, 1.0)]
                 b += [lb_j - ui]
                 m += 1
             elif gs >= ub_j:
-                triplets += [(N * nx + nx + m, i * nxu + nx + j, 1.)]
+                triplets += [(N * nx + nx + m, i * nxu + nx + j, 1.0)]
                 b += [ub_j - ui]
                 m += 1
     triplets = np.array(triplets)
-    A_qp = sp.csc_matrix((triplets[:, 2], (triplets[:, 0], triplets[:, 1])), shape=(N * nx + nx + m, N * nxu + nx))
+    A_qp = sp.csc_matrix(
+        (triplets[:, 2], (triplets[:, 0], triplets[:, 1])), shape=(N * nx + nx + m, N * nxu + nx)
+    )
 
     if "PYTEST_CURRENT_TEST" not in os.environ:
         plt.figure()
@@ -310,6 +311,7 @@ def test_lqr():
 
     # Solve the QP
     import qpalm
+
     qp_data = qpalm.Data(Q_qp.shape[0], A_qp.shape[0])
     qp_data.Q, qp_data.A, qp_data.q, qp_data.c = Q_qp, A_qp, cs_qr_qp, 0
     qp_data.bmin = np.concatenate((np.zeros((N * nx + nx,)), np.array(b)))
@@ -327,18 +329,20 @@ def test_lqr():
     qp_sol.solve()
     qp_delxu = qp_sol.solution.x
     assert la.norm(A_qp @ qp_delxu - qp_data.bmin) < tol
-    qp_delu = np.reshape(qp_delxu[:-nx], (nxu, N), order='F')[nx:, :]
+    qp_delu = np.reshape(qp_delxu[:-nx], (nxu, N), order="F")[nx:, :]
     assert la.norm(qp_delxu[0:nx]) < tol
     A0 = cs.evalf(cs.substitute(cs.jacobian(f(x_sym, u[:nu]), x_sym), x_sym, xu[:nx])).full()
     B0 = cs.evalf(cs.substitute(cs.jacobian(f(xu[:nx], u_sym), u_sym), u_sym, u[:nu])).full()
-    assert la.norm(A0 @ qp_delxu[0:nx] + B0 @ qp_delxu[nx:nx+nu] - qp_delxu[nxu:nxu+nx]) < tol
+    assert (
+        la.norm(A0 @ qp_delxu[0:nx] + B0 @ qp_delxu[nx : nx + nu] - qp_delxu[nxu : nxu + nx]) < tol
+    )
 
     # Compare with the LQR solution in C++
-    delu = np.reshape(aug_eval.lqr_factor_solve(u, γ, y, μ), (nu, N), order='F')
+    delu = np.reshape(aug_eval.lqr_factor_solve(u, γ, y, μ), (nu, N), order="F")
 
     # Manual LQR solution (does not handle constraints, unused)
-    qN = cs_qr_qp[N * nxu:N * nxu + nx]
-    QN = cs_Q_qp[N * nxu:N * nxu + nx, N * nxu:N * nxu + nx]
+    qN = cs_qr_qp[N * nxu : N * nxu + nx]
+    QN = cs_Q_qp[N * nxu : N * nxu + nx, N * nxu : N * nxu + nx]
     s = qN
     P = QN
     K = [None] * N
@@ -346,13 +350,13 @@ def test_lqr():
     A = [None] * N
     B = [None] * N
     for i in range(N - 1, -1, -1):
-        xi = xu[i * nxu:i * nxu + nx]
-        ui = xu[i * nxu + nx:i * nxu + nxu]
-        qi = cs_qr_qp[i * nxu:i * nxu + nx]
-        ri = cs_qr_qp[i * nxu + nx:i * nxu + nxu]
-        Qi = cs_Q_qp[i * nxu:i * nxu + nx, i * nxu:i * nxu + nx]
-        Ri = cs_Q_qp[i * nxu + nx:i * nxu + nxu, i * nxu + nx:i * nxu + nxu]
-        Si = cs_Q_qp[i * nxu + nx:i * nxu + nxu, i * nxu:i * nxu + nx]
+        xi = xu[i * nxu : i * nxu + nx]
+        ui = xu[i * nxu + nx : i * nxu + nxu]
+        qi = cs_qr_qp[i * nxu : i * nxu + nx]
+        ri = cs_qr_qp[i * nxu + nx : i * nxu + nxu]
+        Qi = cs_Q_qp[i * nxu : i * nxu + nx, i * nxu : i * nxu + nx]
+        Ri = cs_Q_qp[i * nxu + nx : i * nxu + nxu, i * nxu + nx : i * nxu + nxu]
+        Si = cs_Q_qp[i * nxu + nx : i * nxu + nxu, i * nxu : i * nxu + nx]
         Ai = cs.evalf(cs.substitute(cs.jacobian(f(x_sym, ui), x_sym), x_sym, xi)).full()
         Bi = cs.evalf(cs.substitute(cs.jacobian(f(xi, u_sym), u_sym), u_sym, ui)).full()
         R̅ = Ri + Bi.T @ P @ Bi
@@ -368,23 +372,24 @@ def test_lqr():
         B[i] = Bi
     py_delxu = np.zeros((N * nxu + nx,))
     for i in range(N):
-        delxi = py_delxu[i * nxu:i * nxu + nx]
-        delui = py_delxu[i * nxu + nx:i * nxu + nxu]
+        delxi = py_delxu[i * nxu : i * nxu + nx]
+        delui = py_delxu[i * nxu + nx : i * nxu + nxu]
         delui[:] = K[i] @ delxi + e[i]
-        py_delxu[(i+1) * nxu:(i+1) * nxu + nx] = A[i] @ delxi + B[i] @ delui
+        py_delxu[(i + 1) * nxu : (i + 1) * nxu + nx] = A[i] @ delxi + B[i] @ delui
 
     # Show difference between QP and LQR solutions
-    qp_delU = qp_delu.reshape(-1, order='F')
-    delU = delu.reshape(-1, order='F')
+    qp_delU = qp_delu.reshape(-1, order="F")
+    delU = delu.reshape(-1, order="F")
     print("‖Δu(C++) - Δu(QPALM)‖ =", la.norm(delU - qp_delU))
     if "PYTEST_CURRENT_TEST" not in os.environ:
         plt.figure()
-        plt.plot(qp_delU, '.-', label="QPALM")
-        plt.plot(delU, '.-', label="C++ LQR")
+        plt.plot(qp_delU, ".-", label="QPALM")
+        plt.plot(delU, ".-", label="C++ LQR")
         plt.title("QPALM solution vs C++ LQR solution")
         plt.legend()
         plt.show()
     assert la.norm(delU - qp_delU) < 1e3 * tol
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     test_lqr()

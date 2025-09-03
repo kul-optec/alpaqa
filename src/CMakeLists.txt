@@ -51,7 +51,7 @@ if (ALPAQA_WITH_JSON)
         "alpaqa/src/params/json.cpp")
     target_link_libraries(alpaqa
         PUBLIC $<BUILD_INTERFACE:nlohmann_json::nlohmann_json>
-        # Disable in the install interface, enabled again in 
+        # Disable in the install interface, enabled again in
         # cmake/CoreConfig.cmake.in
         PRIVATE $<INSTALL_INTERFACE:nlohmann_json::nlohmann_json>)
 endif()

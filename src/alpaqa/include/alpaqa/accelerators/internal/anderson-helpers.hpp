@@ -7,13 +7,13 @@
 namespace alpaqa {
 
 /**
- * @brief   Solve one step of Anderson acceleration to find a fixed point of a 
+ * @brief   Solve one step of Anderson acceleration to find a fixed point of a
  *          function g(x):
- * 
+ *
  * @f$ g(x^\star) - x^\star = 0 @f$
- * 
- * Updates the QR factorization of @f$ \mathcal{R}_k = QR @f$, solves the least 
- * squares problem to find @f$ \gamma_\text{LS} @f$, computes the next 
+ *
+ * Updates the QR factorization of @f$ \mathcal{R}_k = QR @f$, solves the least
+ * squares problem to find @f$ \gamma_\text{LS} @f$, computes the next
  * iterate @f$ x_{k+1} @f$, and stores the current function value @f$ g_k @f$
  * in the matrix @f$ G @f$, which is used as a circular buffer.
  * @f[ \begin{aligned}

@@ -20,7 +20,7 @@ find_file(ARCHDEFS_COMPILER NAMES compiler.${CUTEST_MYARCH}
 )
 
 mark_as_advanced(SIFDECODE_EXE ARCHDEFS_COMPILER)
-find_package_handle_standard_args(SIFDecode 
+find_package_handle_standard_args(SIFDecode
     REQUIRED_VARS
         SIFDECODE_EXE
         ARCHDEFS_COMPILER

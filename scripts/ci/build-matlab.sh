@@ -27,7 +27,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	[conf]
 	tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
 	[buildenv]
-	LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed 
+	LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
 	EOF
 fi
 
