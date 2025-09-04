@@ -8,7 +8,7 @@ import contextlib
 from .alpaqa import *
 from .alpaqa import __c_version__
 
-assert __version__ == __c_version__
+assert __version__ == __c_version__ or __version__.split("+", 1)[0] == __c_version__
 
 with contextlib.suppress(ModuleNotFoundError):  # Don't fail if CasADi is unavailable
     from .pyapi import *

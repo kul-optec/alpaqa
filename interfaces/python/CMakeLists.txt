@@ -4,7 +4,9 @@ set(PY_BUILD_CMAKE_PACKAGE_NAME "alpaqa" CACHE STRING "Python package name")
 
 # Make sure that the Python and CMake versions match
 if (DEFINED PY_BUILD_CMAKE_PACKAGE_VERSION)
-    if (NOT "${PY_BUILD_CMAKE_PACKAGE_VERSION}" MATCHES "^${PY_FULL_VERSION}$")
+    string(REPLACE "." "\\." PY_FULL_VERSION_ESC "${PY_FULL_VERSION}")
+    string(REPLACE "+" "\\+" PY_FULL_VERSION_ESC "${PY_FULL_VERSION_ESC}")
+    if (NOT "${PY_BUILD_CMAKE_PACKAGE_VERSION}" MATCHES "^${PY_FULL_VERSION_ESC}(\\+[0-9a-zA-Z]+)?$")
         message(FATAL_ERROR "Version number does not match "
                              "(${PY_BUILD_CMAKE_PACKAGE_VERSION} - ${PY_FULL_VERSION}).")
     endif()
