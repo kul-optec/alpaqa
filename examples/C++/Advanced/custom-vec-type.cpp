@@ -70,7 +70,7 @@ template <>
 struct alpaqa::is_config<CustomConfig> : std::true_type {};
 
 template <>
-inline const CustomConfig::vec alpaqa::null_vec<CustomConfig>{};
+const CustomConfig::vec alpaqa::null_vec<CustomConfig>{};
 
 USING_ALPAQA_CONFIG(CustomConfig);
 

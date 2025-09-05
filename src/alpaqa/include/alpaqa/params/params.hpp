@@ -23,7 +23,7 @@ struct ALPAQA_EXPORT ParamString {
 };
 
 /// Custom parameter parsing exception.
-struct ALPAQA_EXPORT invalid_param : std::invalid_argument {
+struct ALPAQA_EXPORT_EXCEPTION invalid_param : std::invalid_argument {
     using std::invalid_argument::invalid_argument;
 };
 
@@ -46,9 +46,9 @@ void ALPAQA_EXPORT set_param(T &, ParamString); /* deliberately undefined */
 /// If @p used is not `nullopt`, sets corresponding flag of the options that
 /// were used.
 template <class T>
-void ALPAQA_EXPORT set_params(
-    T &t, std::string_view prefix, std::span<const std::string_view> options,
-    std::optional<std::span<unsigned>> used = std::nullopt) {
+void set_params(T &t, std::string_view prefix,
+                std::span<const std::string_view> options,
+                std::optional<std::span<unsigned>> used = std::nullopt) {
 
     size_t index = 0;
     for (const auto &kv : options) {
