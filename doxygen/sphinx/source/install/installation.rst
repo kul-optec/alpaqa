@@ -89,7 +89,7 @@ installed from source:
 
 .. code-block:: sh
 
-    git clone https://github.com/tttapa/guanaqo --branch=1.0.0-alpha.16
+    git clone https://github.com/tttapa/guanaqo --branch=1.0.0-alpha.17
     cmake -B build-guanaqo -S guanaqo -G "Ninja Multi-Config" -DBUILD_TESTING=Off
     cmake --build build-guanaqo --config Debug
     sudo cmake --install build-guanaqo --config Debug --prefix=/usr/local
