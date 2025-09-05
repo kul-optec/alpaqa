@@ -46,7 +46,7 @@
    fun:_ZdlPvm
    fun:main
 }
- {
+{
    Mismatched free() / delete / delete []
    Memcheck:Free
    fun:_ZdlPvm
@@ -59,4 +59,12 @@
    fun:_ZdlPvm
    fun:_ZN6alpaqa2dl9DLProblemD1Ev
    fun:main
+}
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   fun:free
+   ...
+   fun:_ZN17Dl_exception_Test8TestBodyEv
+   ...
 }
