@@ -22,7 +22,7 @@ namespace alpaqa::dl {
 using guanaqo::dynamic_load_error;
 using guanaqo::DynamicLoadFlags;
 
-struct DL_LOADER_EXPORT invalid_abi_error : dynamic_load_error {
+struct invalid_abi_error : dynamic_load_error {
     using dynamic_load_error::dynamic_load_error;
 };
 

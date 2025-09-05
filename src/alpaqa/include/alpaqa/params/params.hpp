@@ -23,7 +23,7 @@ struct ALPAQA_EXPORT ParamString {
 };
 
 /// Custom parameter parsing exception.
-struct ALPAQA_EXPORT_EXCEPTION invalid_param : std::invalid_argument {
+struct invalid_param : std::invalid_argument {
     using std::invalid_argument::invalid_argument;
 };
 

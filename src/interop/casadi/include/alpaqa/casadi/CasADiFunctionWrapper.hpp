@@ -19,8 +19,7 @@ namespace alpaqa {
 BEGIN_ALPAQA_CASADI_LOADER_NAMESPACE
 namespace casadi_loader {
 
-struct CASADI_LOADER_EXPORT invalid_argument_dimensions
-    : std::invalid_argument {
+struct invalid_argument_dimensions : std::invalid_argument {
     using std::invalid_argument::invalid_argument;
 };
 
