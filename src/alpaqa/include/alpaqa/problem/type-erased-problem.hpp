@@ -103,62 +103,68 @@ struct ProblemVTable : guanaqo::BasicVTable {
 
     // clang-format on
 
-    ALPAQA_EXPORT static real_t calc_ŷ_dᵀŷ(const void *self, rvec g_ŷ, crvec y, crvec Σ,
-                                           const ProblemVTable &vtable);
-    ALPAQA_EXPORT static index_t default_eval_inactive_indices_res_lna(const void *, real_t, crvec,
-                                                                       crvec, rindexvec,
+    ALPAQA_EXPORT_STATIC static real_t calc_ŷ_dᵀŷ(const void *self, rvec g_ŷ, crvec y, crvec Σ,
+                                                  const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static index_t
+    default_eval_inactive_indices_res_lna(const void *, real_t, crvec, crvec, rindexvec,
+                                          const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void default_eval_constraints_jacobian(const void *, crvec, rvec,
                                                                        const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_constraints_jacobian(const void *, crvec, rvec,
-                                                                const ProblemVTable &);
-    ALPAQA_EXPORT static Sparsity default_get_constraints_jacobian_sparsity(const void *,
-                                                                            const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_grad_gi(const void *, crvec, index_t, rvec,
-                                                   const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_lagrangian_hessian_product(const void *, crvec, crvec,
-                                                                      real_t, crvec, rvec,
-                                                                      const ProblemVTable &);
-    ALPAQA_EXPORT static void default_eval_lagrangian_hessian(const void *, crvec, crvec, real_t,
-                                                              rvec, const ProblemVTable &);
-    ALPAQA_EXPORT static Sparsity default_get_lagrangian_hessian_sparsity(const void *,
-                                                                          const ProblemVTable &);
-    ALPAQA_EXPORT static void
+    ALPAQA_EXPORT_STATIC static Sparsity
+    default_get_constraints_jacobian_sparsity(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void default_eval_grad_gi(const void *, crvec, index_t, rvec,
+                                                          const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void default_eval_lagrangian_hessian_product(const void *, crvec,
+                                                                             crvec, real_t, crvec,
+                                                                             rvec,
+                                                                             const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void default_eval_lagrangian_hessian(const void *, crvec, crvec,
+                                                                     real_t, rvec,
+                                                                     const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static Sparsity
+    default_get_lagrangian_hessian_sparsity(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void
     default_eval_augmented_lagrangian_hessian_product(const void *self, crvec x, crvec y, crvec,
                                                       real_t scale, crvec v, rvec Hv,
                                                       const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void
+    ALPAQA_EXPORT_STATIC static void
     default_eval_augmented_lagrangian_hessian(const void *self, crvec x, crvec y, crvec,
                                               real_t scale, rvec H_values,
                                               const ProblemVTable &vtable);
-    ALPAQA_EXPORT static Sparsity
+    ALPAQA_EXPORT_STATIC static Sparsity
     default_get_augmented_lagrangian_hessian_sparsity(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static real_t default_eval_objective_and_gradient(const void *self, crvec x,
-                                                                    rvec grad_fx,
-                                                                    const ProblemVTable &vtable);
-    ALPAQA_EXPORT static real_t default_eval_objective_and_constraints(const void *self, crvec x,
-                                                                       rvec g,
-                                                                       const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void default_eval_objective_gradient_and_constraints_gradient_product(
-        const void *self, crvec x, crvec y, rvec grad_f, rvec grad_gxy,
-        const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void default_eval_lagrangian_gradient(const void *self, crvec x, crvec y,
-                                                               rvec grad_L, rvec work_n,
-                                                               const ProblemVTable &vtable);
-    ALPAQA_EXPORT static real_t default_eval_augmented_lagrangian(const void *self, crvec x,
-                                                                  crvec y, crvec Σ, rvec ŷ,
-                                                                  const ProblemVTable &vtable);
-    ALPAQA_EXPORT static void
+    ALPAQA_EXPORT_STATIC static real_t
+    default_eval_objective_and_gradient(const void *self, crvec x, rvec grad_fx,
+                                        const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static real_t
+    default_eval_objective_and_constraints(const void *self, crvec x, rvec g,
+                                           const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static void
+    default_eval_objective_gradient_and_constraints_gradient_product(const void *self, crvec x,
+                                                                     crvec y, rvec grad_f,
+                                                                     rvec grad_gxy,
+                                                                     const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static void default_eval_lagrangian_gradient(const void *self, crvec x,
+                                                                      crvec y, rvec grad_L,
+                                                                      rvec work_n,
+                                                                      const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static real_t
+    default_eval_augmented_lagrangian(const void *self, crvec x, crvec y, crvec Σ, rvec ŷ,
+                                      const ProblemVTable &vtable);
+    ALPAQA_EXPORT_STATIC static void
     default_eval_augmented_lagrangian_gradient(const void *self, crvec x, crvec y, crvec Σ,
                                                rvec grad_ψ, rvec work_n, rvec work_m,
                                                const ProblemVTable &vtable);
-    ALPAQA_EXPORT static real_t
+    ALPAQA_EXPORT_STATIC static real_t
     default_eval_augmented_lagrangian_and_gradient(const void *self, crvec x, crvec y, crvec Σ,
                                                    rvec grad_ψ, rvec work_n, rvec work_m,
                                                    const ProblemVTable &vtable);
-    ALPAQA_EXPORT static const Box &default_get_variable_bounds(const void *,
-                                                                const ProblemVTable &);
-    ALPAQA_EXPORT static const Box &default_get_general_bounds(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static void default_check(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT static std::string default_get_name(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static const Box &default_get_variable_bounds(const void *,
+                                                                       const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static const Box &default_get_general_bounds(const void *,
+                                                                      const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static void default_check(const void *, const ProblemVTable &);
+    ALPAQA_EXPORT_STATIC static std::string default_get_name(const void *, const ProblemVTable &);
 
     length_t n, m;
 

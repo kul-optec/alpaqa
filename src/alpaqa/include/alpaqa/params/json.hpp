@@ -1,6 +1,6 @@
 #pragma once
 
-#include <alpaqa/export.h>
+#include <alpaqa/export.hpp>
 #include <alpaqa/params/structs.hpp>
 #include <nlohmann/json_fwd.hpp>
 #include <string>
@@ -25,7 +25,7 @@ struct enum_accessor<T, json> {
 };
 
 /// Custom parameter parsing exception.
-struct ALPAQA_EXPORT invalid_json_param : std::invalid_argument {
+struct ALPAQA_EXPORT_EXCEPTION invalid_json_param : std::invalid_argument {
     using std::invalid_argument::invalid_argument;
     std::vector<std::string> backtrace;
 };
