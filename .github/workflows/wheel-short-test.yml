@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/workflows/setup-conan
         with:
           python-version: '3.12'
-          cache-key: build-sdist
+          cache-key: build-linux-${{ matrix.config }}
 
       - name: Build Wheel package
         run: ./scripts/ci/build-linux-hardened.sh . dist ${{ matrix.config }}

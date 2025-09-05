@@ -25,7 +25,7 @@ jobs:
         uses: ./.github/workflows/setup-conan
         with:
           python-version: '3.12'
-          cache-key: build-linux
+          cache-key: build-${{ matrix.host }}
 
       - name: Install CasADi
         run: python3 -m pip install casadi~=3.7.1
