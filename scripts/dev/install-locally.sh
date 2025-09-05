@@ -49,6 +49,8 @@ include($PWD/scripts/ci/profiles/$triple.profile)
 [conf]
 &:tools.build:exelinkflags+=["-fuse-ld=mold", "-B$ENV{MOLD_ROOT}"]
 &:tools.build:sharedlinkflags+=["-fuse-ld=mold", "-B$ENV{MOLD_ROOT}"]
+!&:tools.build:skip_test=True
+&:tools.build:skip_test=False
 tools.build.cross_building:can_run=True
 tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
 [buildenv]
