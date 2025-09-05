@@ -30,6 +30,13 @@ endif()
 if (MSVC)
     target_compile_definitions(tests PRIVATE __PRETTY_FUNCTION__=__FUNCSIG__)
 endif()
+if (TARGET alpaqa::dl-loader)
+    target_sources(tests PRIVATE "dl/test-dl.cpp")
+    target_link_libraries(tests PRIVATE alpaqa::dl-loader)
+    alpaqa_add_dl_problem_module(dl-test-exc FILES "dl/dl-test-exc.cpp")
+    target_compile_definitions(tests PRIVATE
+        "DL_TEST_EXC_DLL=\"$<TARGET_FILE:dl-test-exc>\"")
+endif()
 
 if (TARGET alpaqa::casadi-loader)
     target_sources(tests PUBLIC "outer/test-casadi.cpp")
