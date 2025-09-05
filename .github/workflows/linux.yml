@@ -77,7 +77,7 @@ jobs:
           bash cmake-$version-Linux-x86_64.sh --skip-license --prefix="/usr/local"
       - name: Install guanaqo
         run: |
-          git clone https://github.com/tttapa/guanaqo --branch=1.0.0-alpha.16
+          git clone https://github.com/tttapa/guanaqo --branch=1.0.0-alpha.17
           cmake -B build-guanaqo -S guanaqo -G "Ninja Multi-Config" -DBUILD_TESTING=Off
           cmake --build build-guanaqo --config ${{ matrix.config }}
           cmake --install build-guanaqo --config ${{ matrix.config }} --prefix=/usr/local
