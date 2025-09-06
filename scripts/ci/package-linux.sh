@@ -10,7 +10,7 @@ tests="${2}"
 
 if [ -n "$tests" ]; then test_flags="-DALPAQA_FORCE_TEST_DISCOVERY=On"; fi
 
-# Create Conan profiles
+# Create Conan profile
 cpp_profile="$PWD/profile-cpp.conan"
 cat <<- EOF > "$cpp_profile"
 include($PWD/scripts/ci/profiles/$triple.profile)
@@ -18,7 +18,7 @@ include($PWD/scripts/ci/profiles/alpaqa-cpp-linux.profile)
 [conf]
 tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
 tools.cmake.cmake_layout:build_folder_vars=['const.pkg']
-*:tools.build:skip_test=True
+!&:tools.build:skip_test=True
 &:tools.build:skip_test=False
 [buildenv]
 LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed

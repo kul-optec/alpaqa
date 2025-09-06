@@ -44,6 +44,38 @@ jobs:
 
       - run: conan cache clean
 
+  build-windows:
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        include:
+          - { host: windows-amd64, tests: ExperimentalTest }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Conan
+        uses: ./.github/workflows/setup-conan
+        with:
+          python-version: '3.12'
+          cache-key: build-${{ matrix.host }}
+
+      - name: Install CasADi
+        run: python3 -m pip install casadi~=3.7.1
+
+      - name: Build and package
+        run: ./scripts/ci/package-windows.ps1 ${{ matrix.host }} "${{ matrix.tests }}"
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: alpaqa-${{ matrix.host }}
+          retention-days: 1
+          path: |
+            build/pkg/alpaqa*.zip
+
+      - run: conan cache clean
+
   test:
     needs: [build]
     runs-on: ubuntu-latest
