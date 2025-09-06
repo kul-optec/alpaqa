@@ -12,6 +12,18 @@ $tests  = if ($args.Count -ge 2) { $args[1] } else { "" }
 
 $test_flags = if ($tests) { "-DALPAQA_FORCE_TEST_DISCOVERY=On" } else { "" }
 
+function Invoke-Checked {
+    param (
+        [string]$Command,
+        [string]$Description = $Command
+    )
+    Write-Host ">>> $Description"
+    iex $Command
+    if ($LASTEXITCODE -ne 0) {
+        throw "Command failed: $Description (exit code $LASTEXITCODE)"
+    }
+}
+
 # Create Conan profile
 $cpp_profile = Join-Path (Get-Location) "profile-cpp.conan"
 @"
@@ -32,15 +44,15 @@ eigen/*: eigen/3.4.0
 
 foreach ($cfg in @("Debug", "Release")) {
     # Dependencies
-    conan install . --build=missing -pr:h "$cpp_profile" -s build_type=$cfg
+    Invoke-Checked "conan install . --build=missing -pr:h $cpp_profile -s build_type=$cfg"
     . ./build/pkg/generators/conanbuild.ps1
     # Configure
-    cmake --preset conan-pkg --fresh $test_flags
+    Invoke-Checked "cmake --preset conan-pkg --fresh $test_flags"
     # Build
-    cmake --build build/pkg -j --config $cfg
+    Invoke-Checked "cmake --build build/pkg -j --config $cfg"
     # Test
     if ($tests) {
-        ctest -C $cfg --test-dir build/pkg -D $tests
+        Invoke-Checked "ctest -C $cfg --test-dir build/pkg -D $tests"
     }
     . ./build/pkg/generators/deactivate_conanbuild.ps1
 }
@@ -48,5 +60,5 @@ foreach ($cfg in @("Debug", "Release")) {
 # Package
 Push-Location build/pkg
 . ./generators/conanbuild.ps1
-cpack -G 'ZIP' -C "Release;Debug"
+Invoke-Checked "cpack -G ZIP -C 'Release;Debug'"
 Pop-Location
