@@ -132,6 +132,8 @@ struct ZeroFPRProgressInfo {
     unsigned outer_iter;
     const TypeErasedProblem<config_t> *problem;
     const ZeroFPRParams<config_t> *params;
+
+    ZeroFPRProgressInfo &operator=(const ZeroFPRProgressInfo &) = delete;
 };
 
 /// ZeroFPR solver for ALM.

@@ -92,6 +92,8 @@ struct WolfeProgressInfo {
     unsigned outer_iter;
     const TypeErasedProblem<config_t> *problem;
     const WolfeParams<config_t> *params;
+
+    WolfeProgressInfo &operator=(const WolfeProgressInfo &) = delete;
 };
 
 /// Unconstrained solver with Wolfe line search.

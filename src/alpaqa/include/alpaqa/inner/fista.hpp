@@ -98,6 +98,8 @@ struct FISTAProgressInfo {
     unsigned outer_iter;
     const TypeErasedProblem<config_t> *problem;
     const FISTAParams<config_t> *params;
+
+    FISTAProgressInfo &operator=(const FISTAProgressInfo &) = delete;
 };
 
 /// FISTA solver for ALM.

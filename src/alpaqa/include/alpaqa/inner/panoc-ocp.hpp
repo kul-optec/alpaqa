@@ -108,6 +108,8 @@ struct PANOCOCPProgressInfo {
     [[nodiscard]] vec û() const;
     [[nodiscard]] vec x() const;
     [[nodiscard]] vec x̂() const;
+
+    PANOCOCPProgressInfo &operator=(const PANOCOCPProgressInfo &) = delete;
 };
 
 template <Config Conf = DefaultConfig>

@@ -134,6 +134,8 @@ struct PANOCProgressInfo {
     unsigned outer_iter;
     const TypeErasedProblem<config_t> *problem;
     const PANOCParams<config_t> *params;
+
+    PANOCProgressInfo &operator=(const PANOCProgressInfo &) = delete;
 };
 
 /// PANOC solver for ALM.

@@ -143,6 +143,8 @@ struct PANTRProgressInfo {
     unsigned outer_iter;
     const TypeErasedProblem<config_t> *problem;
     const PANTRParams<config_t> *params;
+
+    PANTRProgressInfo &operator=(const PANTRProgressInfo &) = delete;
 };
 
 /// PANTR solver for ALM.
