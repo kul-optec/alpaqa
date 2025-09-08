@@ -12,20 +12,14 @@ if [ -n "$tests" ]; then test_flags="-DALPAQA_FORCE_TEST_DISCOVERY=On"; fi
 
 # Create Conan profile
 cpp_profile="$PWD/profile-cpp.conan"
+profiles="$PWD/scripts/ci/conan-profiles/profiles"
 cat <<- EOF > "$cpp_profile"
-include($PWD/scripts/ci/profiles/$triple.profile)
-include($PWD/scripts/ci/profiles/alpaqa-cpp-linux.profile)
+include($profiles/platform/$triple.profile)
+include($profiles/gcc-static.profile)
+include($profiles/test/only-self.profile)
+include($PWD/scripts/ci/options/alpaqa-cpp-linux.profile)
 [conf]
-tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
 tools.cmake.cmake_layout:build_folder_vars=['const.pkg']
-!&:tools.build:skip_test=True
-&:tools.build:skip_test=False
-[buildenv]
-LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
-&:CMAKE_C_COMPILER_LAUNCHER=sccache
-&:CMAKE_CXX_COMPILER_LAUNCHER=sccache
-[options]
-coinmumps/*:static_fortran_libs=True
 [replace_requires]
 eigen/*: eigen/3.4.0
 EOF

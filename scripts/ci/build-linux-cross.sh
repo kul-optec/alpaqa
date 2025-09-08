@@ -26,17 +26,13 @@ out_dir="${4:-dist}"
 
 # Create Conan profile to inject the appropriate Python development files
 python_profile="$PWD/conan-python.cross.profile"
+profiles="$PWD/scripts/ci/conan-profiles/profiles"
 cat << EOF > "$python_profile"
-include($PWD/scripts/ci/profiles/alpaqa-python-linux.profile)
-[conf]
-tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
+include($PWD/scripts/ci/options/alpaqa-python-linux.profile)
 [options]
-coinmumps/*:static_fortran_libs=True
 &:with_conan_python=True
 [replace_requires]
 tttapa-python-dev/*: tttapa-python-dev/[~$python_majmin, include_prerelease]
-[buildenv]
-LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
 EOF
 
 # Create a py-build-cmake configuration file for cross-compilation
@@ -47,9 +43,10 @@ implementation=cp
 version="$python_majmin_nodot"
 abi="cp$python_majmin_nodot"
 arch="$plat_tag"
-conan.profile_host=["$PWD/scripts/ci/profiles/$triple.profile", "$python_profile"]
-conan.cmake.options.CMAKE_C_COMPILER_LAUNCHER=sccache
-conan.cmake.options.CMAKE_CXX_COMPILER_LAUNCHER=sccache
+conan.profile_host=["$profiles/platform/$triple.profile"]
+conan.profile_host+=["$python_profile"]
+conan.profile_host+=["$profiles/gcc-static.profile"]
+conan.profile_host+=["$profiles/test/none.profile"]
 conan.cmake.args+=["--fresh"]
 conan.cmake.build_args+=["--verbose"]
 EOF

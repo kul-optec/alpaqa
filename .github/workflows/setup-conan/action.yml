@@ -82,3 +82,4 @@ runs:
         armv7hf:
           toolchain-cpu: [null, armv8, armv7]
       EOF
+      conan config install scripts/ci/conan-profiles/settings_user.yml

@@ -42,7 +42,9 @@ if (TARGET alpaqa::casadi-loader)
     target_sources(tests PUBLIC "outer/test-casadi.cpp")
     add_library(rosenbrock_functions_test MODULE
         "outer/rosenbrock_functions_test.c")
-    set_target_properties("rosenbrock_functions_test" PROPERTIES
+    target_compile_definitions(rosenbrock_functions_test
+        PRIVATE GCC_HASCLASSVISIBILITY)
+    set_target_properties(rosenbrock_functions_test PROPERTIES
         PREFIX ""
         RELEASE_POSTFIX ""
         DEBUG_POSTFIX ""

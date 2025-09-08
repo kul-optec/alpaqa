@@ -40,25 +40,26 @@ tools_dir="$PWD/toolchains"
     conan remote add tttapa-conan-recipes "$tools_dir/thirdparty/conan-recipes" --force
 }
 
+# Check Conan settings
+if ! grep toolchain-vendor "$(conan config home)/settings_user.yml" >/dev/null; then
+    set +x
+    echo "Missing custom Conan settings. Please install the configuration (WARNING: destructive)."
+    echo "conan config install \"$PWD/scripts/ci/conan-profiles/settings_user.yml\""
+    exit 1
+fi
+
 # Create Conan profiles
 host_profile="$PWD/profile-host.local.conan"
 cat <<- EOF > "$host_profile"
-include($PWD/scripts/ci/profiles/$triple.profile)
+include($PWD/scripts/ci/conan-profiles/profiles/platform/$triple.profile)
+include($PWD/scripts/ci/conan-profiles/profiles/gcc-static.profile)
+include($PWD/scripts/ci/conan-profiles/profiles/test/only-self.profile)
 [tool_requires]
 &:mold/[*]
 [conf]
 &:tools.build:exelinkflags+=["-fuse-ld=mold", "-B$ENV{MOLD_ROOT}"]
 &:tools.build:sharedlinkflags+=["-fuse-ld=mold", "-B$ENV{MOLD_ROOT}"]
-!&:tools.build:skip_test=True
-&:tools.build:skip_test=False
 tools.build.cross_building:can_run=True
-tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
-[buildenv]
-LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
-&:CMAKE_C_COMPILER_LAUNCHER=sccache
-&:CMAKE_CXX_COMPILER_LAUNCHER=sccache
-[options]
-coinmumps/*:static_fortran_libs=True
 EOF
 build_profile="$PWD/profile-build.local.conan"
 cat <<- EOF > "$build_profile"
@@ -70,14 +71,14 @@ EOF
 cpp_profile="$PWD/profile-cpp.local.conan"
 cat <<- EOF > "$cpp_profile"
 include($host_profile)
-include($PWD/scripts/ci/profiles/alpaqa-cpp-linux.profile)
+include($PWD/scripts/ci/options/alpaqa-cpp-linux.profile)
 EOF
 
 # Create Conan profile to inject the appropriate Python development files
 python_profile="$PWD/conan-python.profile"
 cat <<- EOF > "$python_profile"
 include($host_profile)
-include($PWD/scripts/ci/profiles/alpaqa-python-linux.profile)
+include($PWD/scripts/ci/options/alpaqa-python-linux.profile)
 [options]
 &:with_conan_python=True
 [replace_requires]

@@ -24,8 +24,10 @@ call "%vcvarsall_path%" %triple% || exit /b 1
 :: Create Conan profiles
 set "matlab_profile=%CD%\profile-matlab.local.conan"
 > "%matlab_profile%" (
-    @echo.include^(%CD%\scripts\ci\profiles\windows-%triple%.profile^)
-    @echo.include^(%CD%\scripts\ci\profiles\alpaqa-matlab.profile^)
+    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\platform\%triple%-windows.profile^)
+    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\test\none.profile^)
+    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\sccache\only-self.profile^)
+    @echo.include^(%CD%\scripts\ci\options\alpaqa-matlab.profile^)
 )
 
 :: Remove temporary folders

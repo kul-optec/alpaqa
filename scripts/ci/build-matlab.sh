@@ -16,18 +16,19 @@ shared="${5:-False}"
 
 # Create Conan profiles
 matlab_profile="$PWD/profile-matlab.local.conan"
+profiles="$PWD/scripts/ci/conan-profiles/profiles"
 cat <<- EOF > "$matlab_profile"
-include($PWD/scripts/ci/profiles/$triple.profile)
-include($PWD/scripts/ci/profiles/alpaqa-matlab.profile)
-[options]
-alpaqa/*:shared=$shared
+include($profiles/platform/$triple.profile)
+include($profiles/test/none.profile)
+include($PWD/scripts/ci/options/alpaqa-matlab.profile)
 EOF
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     cat <<- EOF >> "$matlab_profile"
-	[conf]
-	tools.cmake.cmaketoolchain:user_toolchain=+['$PWD/scripts/ci/profiles/static-libgcc.cmake']
-	[buildenv]
-	LDFLAGS+= -static-libstdc++ -static-libgfortran -static-libquadmath -Wl,--as-needed
+	include($profiles/gcc-static.profile)
+	EOF
+else
+    cat <<- EOF >> "$matlab_profile"
+	include($profiles/sccache/only-self.profile)
 	EOF
 fi
 
@@ -36,7 +37,9 @@ rm -rf "$pkg_dir"/build/matlab-{debug,release}/{generators,CMakeCache.txt}
 for cfg in Release; do
     conan install "$pkg_dir" --build=missing \
         -pr:h "$matlab_profile" \
-        -s build_type=$cfg
+        -s build_type=$cfg \
+        -o alpaqa/\*:shared=$shared \
+        -c \&:tools.cmake.cmaketoolchain:generator=Ninja
 done
 
 # Build MATLAB bindings

@@ -7,12 +7,25 @@ pkg_dir="${1:-.}"
 out_dir="${2:-dist}"
 install_stubs_dir="$3"
 
+# Create Conan profiles
+python_profile="$PWD/profile-python.local.conan"
+profiles="$PWD/scripts/ci/conan-profiles/profiles"
+cat <<- EOF > "$python_profile"
+include(default)
+include($profiles/color/gcc.profile)
+include($profiles/link/lto-auto.profile)
+include($profiles/visibility/hidden.profile)
+include($profiles/sccache/only-self.profile)
+include($profiles/test/none.profile)
+include($PWD/scripts/ci/options/alpaqa-python-linux.profile)
+[conf]
+tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+EOF
+
 # Create a py-build-cmake config file
 pbc_config="$PWD/native-py-build-cmake.local.pbc"
 cat << EOF > "$pbc_config"
-conan.profile_host=["default", "$PWD/scripts/ci/profiles/linux-conf.profile", "$PWD/scripts/ci/profiles/alpaqa-python-linux.profile"]
-conan.cmake.options.CMAKE_C_COMPILER_LAUNCHER=sccache
-conan.cmake.options.CMAKE_CXX_COMPILER_LAUNCHER=sccache
+conan.profile_host=["$python_profile"]
 conan.cmake.args+=["--fresh"]
 conan.cmake.build_args+=["--verbose"]
 EOF

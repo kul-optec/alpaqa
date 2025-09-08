@@ -49,7 +49,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - { host: windows-amd64, tests: ExperimentalTest }
+          - { host: amd64, tests: ExperimentalTest }
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,18 +58,18 @@ jobs:
         uses: ./.github/workflows/setup-conan
         with:
           python-version: '3.12'
-          cache-key: build-${{ matrix.host }}
+          cache-key: build-windows-${{ matrix.host }}
 
       - name: Install CasADi
         run: python3 -m pip install casadi~=3.7.1
 
       - name: Build and package
-        run: ./scripts/ci/package-windows.ps1 ${{ matrix.host }} "${{ matrix.tests }}"
+        run: ./scripts/ci/package-windows.ps1 ${{ matrix.host }}-windows "${{ matrix.tests }}"
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: alpaqa-${{ matrix.host }}
+          name: alpaqa-windows-${{ matrix.host }}
           retention-days: 1
           path: |
             build/pkg/alpaqa*.zip

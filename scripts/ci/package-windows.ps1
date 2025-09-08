@@ -7,7 +7,7 @@ Set-Location (Join-Path $PSScriptRoot "..\..")
 $env:CTEST_OUTPUT_ON_FAILURE = "1"
 
 # Select architecture
-$triple = if ($args.Count -ge 1) { $args[0] } else { "windows-amd64" }
+$triple = if ($args.Count -ge 1) { $args[0] } else { "amd64-windows" }
 $tests  = if ($args.Count -ge 2) { $args[1] } else { "" }
 
 $test_flags = if ($tests) { "-DALPAQA_FORCE_TEST_DISCOVERY=On" } else { "" }
@@ -27,8 +27,10 @@ function Invoke-Checked {
 # Create Conan profile
 $cpp_profile = Join-Path (Get-Location) "profile-cpp.conan"
 @"
-include($(Get-Location)/scripts/ci/profiles/$triple.profile)
-include($(Get-Location)/scripts/ci/profiles/alpaqa-cpp-windows.profile)
+include($(Get-Location)/scripts/ci/conan-profiles/profiles/platform/$triple.profile)
+include($(Get-Location)/scripts/ci/conan-profiles/profiles/sccache/only-self.profile)
+include($(Get-Location)/scripts/ci/conan-profiles/profiles/test/only-self.profile)
+include($(Get-Location)/scripts/ci/options/alpaqa-cpp-windows.profile)
 [conf]
 tools.cmake.cmake_layout:build_folder_vars=['const.pkg']
 !&:tools.build:skip_test=True

@@ -4,6 +4,7 @@ cd "$(dirname "$0")"
 repodir="$PWD"/../..
 set -x
 cd "$repodir"
+export CTEST_OUTPUT_ON_FAILURE=1
 
 mainbranch="develop"
 output_folder="${1:-/tmp}"
@@ -42,17 +43,15 @@ function run_doxygen_coverage {
 
     # Tweak Conan profile
     cat <<- EOF > "$tmpdir/docs.profile"
-	include($PWD/scripts/ci/profiles/x86_64-bionic-linux-gnu.profile)
+	include($PWD/scripts/ci/conan-profiles/profiles/platform/x86_64-bionic-linux-gnu.profile)
+	include($PWD/scripts/ci/conan-profiles/profiles/gcc-static.profile)
+	include($PWD/scripts/ci/conan-profiles/profiles/test/only-self.profile)
 	[settings]
 	&:build_type=Debug
 	[conf]
-	*:tools.build:skip_test=True
-	&:tools.build:skip_test=False
 	&:tools.build.cross_building:can_run=True
 	&:tools.cmake.cmaketoolchain:generator=Ninja
 	&:tools.cmake.cmaketoolchain:extra_variables*={"ALPAQA_DOXYFILE": "$tmpdir/tmp-Doxyfile"}
-	&:tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_C_COMPILER_LAUNCHER": "sccache"}
-	&:tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_CXX_COMPILER_LAUNCHER": "sccache"}
 	&:tools.cmake.cmake_layout:build_folder_vars=['const.docs']
 	[options]
 	&:with_coverage=True
