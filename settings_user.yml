@@ -1,0 +1,21 @@
+os:
+  Linux:
+    toolchain-vendor: [null, focal, bionic, centos7, neon, rpi, rpi3]
+arch:
+  armv7hf:
+    toolchain-cpu: [null, armv8, armv7]
+
+compiler:
+  gcc:
+    static-libs: [null, ANY]
+    hidden: [null, ANY]
+    harden: [null, ANY]
+  clang:
+    libcxx:
+      libstdc++11:
+        gcc_version: [null, ANY]
+      libstdc++:
+        gcc_version: [null, ANY]
+    static-libs: [null, ANY]
+    hidden: [null, ANY]
+    harden: [null, ANY]
