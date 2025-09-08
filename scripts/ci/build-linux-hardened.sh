@@ -22,6 +22,9 @@ include($PWD/scripts/ci/options/alpaqa-python-linux.profile)
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 EOF
+if [ "$build_type" = "debug" ]; then
+    export ALPAQA_PYTHON_DEBUG=1
+fi
 
 # Create a py-build-cmake config file
 pbc_config="$PWD/native-py-build-cmake.local.pbc"
