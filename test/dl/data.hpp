@@ -5,10 +5,16 @@
 #include <stdexcept>
 #include <string>
 
-struct InitData {
+#ifdef __GNUC__
+#define EXPORT_RTTI __attribute__((visibility("default")))
+#else
+#define EXPORT_RTTI
+#endif
+
+struct EXPORT_RTTI InitData {
     std::string message;
 };
 
-struct dl_exception : std::runtime_error {
+struct EXPORT_RTTI dl_exception : std::runtime_error {
     dl_exception(const std::string &msg) : std::runtime_error(msg) {}
 };

@@ -403,6 +403,9 @@ if (ALPAQA_WITH_DRIVERS)
         DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}"
         RELWITHDEBINFO_POSTFIX ""
         MINSIZEREL_POSTFIX ""
+        ENABLE_EXPORTS On
+        CXX_VISIBILITY_PRESET hidden
+        VISIBILITY_INLINES_HIDDEN On
     )
     target_link_libraries(driver
         PRIVATE alpaqa::alpaqa alpaqa::warnings)
@@ -446,6 +449,9 @@ if (ALPAQA_WITH_GRADIENT_CHECKER)
         DEBUG_POSTFIX "${CMAKE_DEBUG_POSTFIX}"
         RELWITHDEBINFO_POSTFIX ""
         MINSIZEREL_POSTFIX ""
+        ENABLE_EXPORTS On
+        CXX_VISIBILITY_PRESET hidden
+        VISIBILITY_INLINES_HIDDEN On
     )
     target_link_libraries(gradient-checker
         PRIVATE alpaqa::alpaqa alpaqa::warnings)

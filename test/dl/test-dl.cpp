@@ -8,7 +8,8 @@ TEST(Dl, exception) {
     std::any init{InitData{.message = challenge}};
     try {
         alpaqa::dl::DLProblem problem(DL_TEST_EXC_DLL,
-                                      "register_alpaqa_problem", init);
+                                      "register_alpaqa_problem", init,
+                                      {.deepbind = false});
     } catch (dl_exception &e) {
         EXPECT_EQ(e.what(), challenge);
         EXPECT_EQ(any_cast<InitData>(init).message, "ack");

@@ -36,6 +36,10 @@ if (TARGET alpaqa::dl-loader)
     alpaqa_add_dl_problem_module(dl-test-exc FILES "dl/dl-test-exc.cpp")
     target_compile_definitions(tests PRIVATE
         "DL_TEST_EXC_DLL=\"$<TARGET_FILE:dl-test-exc>\"")
+    set_target_properties(tests PROPERTIES
+        ENABLE_EXPORTS On
+        CXX_VISIBILITY_PRESET hidden
+        VISIBILITY_INLINES_HIDDEN On)
 endif()
 
 if (TARGET alpaqa::casadi-loader)
