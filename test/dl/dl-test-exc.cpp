@@ -5,7 +5,7 @@
 #include "data.hpp"
 
 extern "C" DL_TEST_EXC_EXPORT alpaqa_problem_register_t
-register_alpaqa_problem(alpaqa_register_arg_t user_data) try {
+register_test_module(alpaqa_register_arg_t user_data) try {
     if (!user_data.data)
         throw std::invalid_argument("Missing user data");
     if (user_data.type != alpaqa_register_arg_std_any)
@@ -21,6 +21,6 @@ register_alpaqa_problem(alpaqa_register_arg_t user_data) try {
 }
 
 extern "C" DL_TEST_EXC_EXPORT alpaqa_dl_abi_version_t
-register_alpaqa_problem_version() {
+register_test_module_version() {
     return ALPAQA_DL_ABI_VERSION;
 }

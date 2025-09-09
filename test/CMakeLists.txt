@@ -33,7 +33,9 @@ endif()
 if (TARGET alpaqa::dl-loader)
     target_sources(tests PRIVATE "dl/test-dl.cpp")
     target_link_libraries(tests PRIVATE alpaqa::dl-loader)
-    alpaqa_add_dl_problem_module(dl-test-exc FILES "dl/dl-test-exc.cpp")
+    alpaqa_add_dl_problem_module(dl-test-exc
+        FUNCTION_NAME register_test_module
+        FILES "dl/dl-test-exc.cpp")
     target_compile_definitions(tests PRIVATE
         "DL_TEST_EXC_DLL=\"$<TARGET_FILE:dl-test-exc>\"")
     set_target_properties(tests PROPERTIES
