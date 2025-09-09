@@ -21,11 +21,11 @@ jobs:
           - os: macos-14
             name: maca64
             matlab-release: 'R2023b'
-            host: macos
+            host: arm64-macos
           - os: macos-13
             name: maci64
             matlab-release: 'R2021a'
-            host: macos
+            host: x86_64-macos
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
