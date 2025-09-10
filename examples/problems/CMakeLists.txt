@@ -36,6 +36,6 @@ if (BUILD_TESTING AND TARGET sparse-logistic-regression AND TARGET alpaqa::drive
     add_test(NAME sparse-logistic-regression
              COMMAND alpaqa::driver
              dl:$<TARGET_FILE:sparse-logistic-regression>
-             problem.datafile=${CMAKE_CURRENT_LIST_DIR}/breast_cancer.csv
+             problem.datafile=${CMAKE_CURRENT_LIST_DIR}/regression_data.csv
              dl_flags.deepbind=false dl_flags.nodelete=false)
 endif()
