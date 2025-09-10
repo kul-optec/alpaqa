@@ -1,8 +1,8 @@
 set(ALPAQA_EXAMPLE_TARGETS)
 
 if (TARGET alpaqa::dl-api)
-    alpaqa_add_dl_problem_module("sparse-logistic-regression" LINK_ALPAQA)
-    list(APPEND ALPAQA_EXAMPLE_TARGETS "sparse-logistic-regression")
+    alpaqa_add_dl_problem_module(sparse-logistic-regression LINK_ALPAQA)
+    list(APPEND ALPAQA_EXAMPLE_TARGETS sparse-logistic-regression)
 endif()
 
 # TODO: move to a more suitable location?
@@ -31,3 +31,11 @@ install(TARGETS ${ALPAQA_EXAMPLE_TARGETS}
         NAMELINK_COMPONENT extra_dev
     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         COMPONENT extra_dev)
+
+if (BUILD_TESTING AND TARGET sparse-logistic-regression AND TARGET alpaqa::driver)
+    add_test(NAME sparse-logistic-regression
+             COMMAND alpaqa::driver
+             dl:$<TARGET_FILE:sparse-logistic-regression>
+             problem.datafile=${CMAKE_CURRENT_LIST_DIR}/breast_cancer.csv
+             dl_flags.deepbind=false dl_flags.nodelete=false)
+endif()

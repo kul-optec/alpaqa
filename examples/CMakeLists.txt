@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.21...4.1)
 project(alpaqa-examples C CXX)
+include(CTest)
 
 if (PROJECT_IS_TOP_LEVEL)
     find_package(alpaqa REQUIRED CONFIG OPTIONAL_COMPONENTS CasADi Dl Extra)

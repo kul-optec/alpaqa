@@ -68,3 +68,34 @@
    fun:_ZN17Dl_exception_Test8TestBodyEv
    ...
 }
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   fun:_ZdlPvm
+   ...
+   fun:deallocate
+   ...
+   fun:_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvED1Ev
+   ...
+}
+{
+   Mismatched free() / delete / delete []
+   Memcheck:Free
+   fun:_ZdlPvm
+   ...
+   fun:deallocate
+   ...
+   fun:_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonIS_St6vectorS5_blmdSaNS7_14adl_serializerES9_IhSaIhEEvEESt4lessIvESaISt4pairIKS5_SD_EEE5clearEv
+}
+{
+   https://sourceware.org/bugzilla/show_bug.cgi?id=32498
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   obj:*
+   ...
+   fun:call_init
+   fun:_dl_init
+   ...
+   fun:_dlerror_run
+}
