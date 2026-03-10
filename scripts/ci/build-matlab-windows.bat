@@ -33,7 +33,7 @@ call "%vcvarsall_path%" %triple% || exit /b 1
 :: Create Conan profiles
 set "matlab_profile=%CD%\profile-matlab.local.conan"
 > "%matlab_profile%" (
-    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\toolchains\%triple%-windows.profile^)
+    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\toolchain\%triple%-windows.profile^)
     @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\arch\%arch%.profile^)
     @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\test\none.profile^)
     @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\sccache\only-self.profile^)
