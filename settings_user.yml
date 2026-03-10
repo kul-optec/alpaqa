@@ -4,6 +4,7 @@ os:
 arch:
   armv7hf:
     toolchain-cpu: [null, armv8, armv7]
+    microarch: [null, ANY]
   x86_64:
     microarch: [null, ANY]
   armv8:
