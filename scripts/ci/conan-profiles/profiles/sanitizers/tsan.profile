@@ -1,5 +1,5 @@
 [settings]
-compiler.sanitizers+=["thread"]
+compiler.tsan=True
 
 [conf]
 tools.build:cflags+=["-fsanitize=thread"]
