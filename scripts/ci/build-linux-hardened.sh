@@ -18,6 +18,7 @@ include($profiles/visibility/hidden.profile)
 include($profiles/sccache/only-self.profile)
 include($profiles/test/only-self.profile)
 include($profiles/harden/$build_type.profile)
+include($profiles/tools/ninja.profile)
 include($PWD/scripts/ci/options/alpaqa-python-linux.profile)
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config

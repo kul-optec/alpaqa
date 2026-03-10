@@ -11,12 +11,12 @@ python_majmin_nodot="${python_majmin//./}"
 # Select architecture
 triple="${2:-x86_64-bionic-linux-gnu}"
 case "$triple" in
-    x86_64-centos7-*) plat_tag=manylinux_2_17_x86_64 ;;
-    x86_64-bionic-*) plat_tag=manylinux_2_27_x86_64 ;;
-    aarch64-rpi3-*) plat_tag=manylinux_2_27_aarch64 ;;
-    armv8-rpi3-*) plat_tag=manylinux_2_27_armv7l ;;
-    armv7-neon-*) plat_tag=manylinux_2_27_armv7l ;;
-    armv6-*) plat_tag=linux_armv6l ;;
+    x86_64-centos7-*) plat_tag=manylinux_2_17_x86_64; arch=linux/x86-64-v3 ;;
+    x86_64-bionic-*) plat_tag=manylinux_2_27_x86_64; arch=linux/x86-64-v3 ;;
+    aarch64-rpi3-*) plat_tag=manylinux_2_27_aarch64; arch=linux/cortex-a53 ;;
+    armv8-rpi3-*) plat_tag=manylinux_2_27_armv7l; arch=linux/generic ;;
+    armv7-neon-*) plat_tag=manylinux_2_27_armv7l; arch=linux/cortex-a9 ;;
+    armv6-*) plat_tag=linux_armv6l; arch=linux/generic ;;
     *) echo "Unknown platform ${triple}"; exit 1 ;;
 esac
 
@@ -43,7 +43,8 @@ implementation=cp
 version="$python_majmin_nodot"
 abi="cp$python_majmin_nodot"
 arch="$plat_tag"
-conan.profile_host=["$profiles/platform/$triple.profile"]
+conan.profile_host=["$profiles/toolchain/$triple.profile"]
+conan.profile_host+=["$profiles/arch/$arch.profile"]
 conan.profile_host+=["$python_profile"]
 conan.profile_host+=["$profiles/gcc-static.profile"]
 conan.profile_host+=["$profiles/test/none.profile"]

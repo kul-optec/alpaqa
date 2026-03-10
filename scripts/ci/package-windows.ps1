@@ -8,6 +8,14 @@ $env:CTEST_OUTPUT_ON_FAILURE = "1"
 
 # Select architecture
 $triple = if ($args.Count -ge 1) { $args[0] } else { "amd64-windows" }
+$arch = switch ($triple) {
+    "amd64-windows" { "windows/avx2" }
+    "arm64-windows" { "windows/cortex-a53" }
+    default {
+        Write-Error "Unknown platform $triple"
+        exit 1
+    }
+}
 $tests  = if ($args.Count -ge 2) { $args[1] } else { "" }
 
 $test_flags = if ($tests) { "-DALPAQA_FORCE_TEST_DISCOVERY=On" } else { "" }
@@ -27,7 +35,8 @@ function Invoke-Checked {
 # Create Conan profile
 $cpp_profile = Join-Path (Get-Location) "profile-cpp.conan"
 @"
-include($(Get-Location)/scripts/ci/conan-profiles/profiles/platform/$triple.profile)
+include($(Get-Location)/scripts/ci/conan-profiles/profiles/toolchain/$triple.profile)
+include($(Get-Location)/scripts/ci/conan-profiles/profiles/arch/$arch.profile)
 include($(Get-Location)/scripts/ci/conan-profiles/profiles/sccache/only-self.profile)
 include($(Get-Location)/scripts/ci/conan-profiles/profiles/test/only-self.profile)
 include($(Get-Location)/scripts/ci/options/alpaqa-cpp-windows.profile)
@@ -36,10 +45,6 @@ tools.cmake.cmake_layout:build_folder_vars=['const.pkg']
 !&:tools.build:skip_test=True
 &:tools.build:skip_test=False
 &:tools.env.virtualenv:powershell=pwsh
-&:tools.cmake.cmaketoolchain:extra_variables*={"CMAKE_MSVC_DEBUG_INFORMATION_FORMAT": "$<$<CONFIG:Debug,RelWithDebInfo>:Embedded>"}
-[buildenv]
-&:CMAKE_C_COMPILER_LAUNCHER=sccache
-&:CMAKE_CXX_COMPILER_LAUNCHER=sccache
 [replace_requires]
 eigen/*: eigen/3.4.0
 "@ | Set-Content -NoNewline $cpp_profile

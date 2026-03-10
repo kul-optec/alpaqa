@@ -6,6 +6,15 @@ set -ex
 
 # Select architecture
 triple="${1:-x86_64-bionic-linux-gnu}"
+case "$triple" in
+    x86_64-centos7-*) arch=linux/x86-64-v3 ;;
+    x86_64-bionic-*) arch=linux/x86-64-v3 ;;
+    aarch64-rpi3-*) arch=linux/cortex-a53 ;;
+    armv8-rpi3-*) arch=linux/generic ;;
+    armv7-neon-*) arch=linux/cortex-a9 ;;
+    armv6-*) arch=linux/generic ;;
+    *) echo "Unknown platform ${triple}"; exit 1 ;;
+esac
 tests="${2}"
 
 if [ -n "$tests" ]; then test_flags="-DALPAQA_FORCE_TEST_DISCOVERY=On"; fi
@@ -14,12 +23,15 @@ if [ -n "$tests" ]; then test_flags="-DALPAQA_FORCE_TEST_DISCOVERY=On"; fi
 cpp_profile="$PWD/profile-cpp.conan"
 profiles="$PWD/scripts/ci/conan-profiles/profiles"
 cat <<- EOF > "$cpp_profile"
-include($profiles/platform/$triple.profile)
+include($profiles/toolchain/$triple.profile)
+include($profiles/arch/$arch.profile)
 include($profiles/gcc-static.profile)
 include($profiles/test/only-self.profile)
+include($profiles/tools/ninja.profile)
 include($PWD/scripts/ci/options/alpaqa-cpp-linux.profile)
 [conf]
 tools.cmake.cmake_layout:build_folder_vars=['const.pkg']
+tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 [replace_requires]
 eigen/*: eigen/3.4.0
 EOF

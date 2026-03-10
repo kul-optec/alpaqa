@@ -78,7 +78,7 @@ Alternatively, the .tar.gz file can be extracted and installed manually.
 
 When using the development packages, it is important to use the correct version
 of Eigen (currently 3.4.0) to avoid ABI incompatibilities.
-You should also add the correct architecture-specific flags: ``-march=haswell``
+You should also add the correct architecture-specific flags: ``-march=x86-64-v3``
 for amd64 packages, and ``-mcpu=cortex-a53+crc+simd`` for aarch64 packages.
 The reason is that Eigen's ABI depends on the selected SIMD ISA extensions.
 ABI-related issues can be fully avoided by simply using Conan to install alpaqa

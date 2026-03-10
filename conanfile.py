@@ -86,8 +86,8 @@ class AlpaqaRecipe(ConanFile):
         save(self, os.path.join(self.export_sources_folder, "commit.txt"), hash)
 
     def requirements(self):
-        self.requires("eigen/tttapa.20250504", transitive_headers=True, force=True)
-        self.requires("guanaqo/1.0.0-alpha.17", transitive_headers=True)
+        self.requires("eigen/[~3.4 || ~5.0]", transitive_headers=True, force=True)
+        self.requires("guanaqo/1.0.0-alpha.25", transitive_headers=True)
         self.test_requires("gtest/1.17.0")
         if self.options.with_external_casadi:
             self.requires("casadi/3.7.1", transitive_headers=True)

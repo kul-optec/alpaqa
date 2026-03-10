@@ -8,6 +8,13 @@ matlab_dir="${1:-/usr/local/MATLAB}"
 
 # Select architecture
 triple="${2:-x86_64-bionic-linux-gnu}"
+case $triple in
+    x86_64-centos7-*) arch=linux/x86-64-v3 ;;
+    x86_64-bionic-*) arch=linux/x86-64-v3 ;;
+    arm64-macos) arch=macos/arm64 ;;
+    x86_64-macos) arch=macos/x86-64-v3 ;;
+    *) echo "Unknown platform ${triple}"; exit 1 ;;
+esac
 
 # Package and output directories
 pkg_dir="${3:-.}"
@@ -18,7 +25,8 @@ shared="${5:-False}"
 matlab_profile="$PWD/profile-matlab.local.conan"
 profiles="$PWD/scripts/ci/conan-profiles/profiles"
 cat <<- EOF > "$matlab_profile"
-include($profiles/platform/$triple.profile)
+include($profiles/toolchain/$triple.profile)
+include($profiles/arch/$arch.profile)
 include($profiles/test/none.profile)
 include($PWD/scripts/ci/options/alpaqa-matlab.profile)
 EOF

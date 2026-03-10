@@ -43,7 +43,8 @@ function run_doxygen_coverage {
 
     # Tweak Conan profile
     cat <<- EOF > "$tmpdir/docs.profile"
-	include($PWD/scripts/ci/conan-profiles/profiles/platform/x86_64-bionic-linux-gnu.profile)
+	include($PWD/scripts/ci/conan-profiles/profiles/toolchain/x86_64-bionic-linux-gnu.profile)
+	include($PWD/scripts/ci/conan-profiles/profiles/arch/linux/x86-64-v3.profile)
 	include($PWD/scripts/ci/conan-profiles/profiles/gcc-static.profile)
 	include($PWD/scripts/ci/conan-profiles/profiles/test/only-self.profile)
 	[settings]

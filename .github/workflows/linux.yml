@@ -85,8 +85,8 @@ jobs:
         config: [Release, Debug]
         host: [x86_64-bionic-linux-gnu]
     env:
-      CFLAGS: '-march=haswell' # important for ABI compatibility (Eigen)
-      CXXFLAGS: '-march=haswell'
+      CFLAGS: '-march=x86-64-v3' # important for ABI compatibility (Eigen)
+      CXXFLAGS: '-march=x86-64-v3'
     steps:
       # Git clone
       - name: Install git

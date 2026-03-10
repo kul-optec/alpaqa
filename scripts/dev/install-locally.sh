@@ -28,6 +28,7 @@ python_majmin_nodot="${python_majmin//./}"
 
 # Select architecture
 triple=x86_64-bionic-linux-gnu
+arch=linux/x86-64-v3
 plat_tag=manylinux_2_27_x86_64
 
 # Download dependencies
@@ -51,15 +52,15 @@ fi
 # Create Conan profiles
 host_profile="$PWD/profile-host.local.conan"
 cat <<- EOF > "$host_profile"
-include($PWD/scripts/ci/conan-profiles/profiles/platform/$triple.profile)
+include($PWD/scripts/ci/conan-profiles/profiles/toolchain/$triple.profile)
+include($PWD/scripts/ci/conan-profiles/profiles/arch/$arch.profile)
 include($PWD/scripts/ci/conan-profiles/profiles/gcc-static.profile)
 include($PWD/scripts/ci/conan-profiles/profiles/test/only-self.profile)
-[tool_requires]
-&:mold/[*]
+include($PWD/scripts/ci/conan-profiles/profiles/link/mold.profile)
+include($PWD/scripts/ci/conan-profiles/profiles/tools/ninja.profile)
 [conf]
-&:tools.build:exelinkflags+=["-fuse-ld=mold", "-B$ENV{MOLD_ROOT}"]
-&:tools.build:sharedlinkflags+=["-fuse-ld=mold", "-B$ENV{MOLD_ROOT}"]
 tools.build.cross_building:can_run=True
+tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
 EOF
 build_profile="$PWD/profile-build.local.conan"
 cat <<- EOF > "$build_profile"
