@@ -1,7 +1,8 @@
 # Links libgfortran and libquadmath statically
 
 [settings]
-compiler.static-libs+=["gfortran", "quadmath"]
+compiler.static-libgfortran=True
+compiler.static-libquadmath=True
 
 [conf]
 tools.build:exelinkflags+=["-static-libgfortran", "-static-libquadmath"]

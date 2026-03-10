@@ -1,5 +1,5 @@
 [settings]
-compiler.sanitizers+=["undefined"]
+compiler.ubsan=True
 
 [conf]
 tools.build:cflags+=["-fsanitize=undefined"]

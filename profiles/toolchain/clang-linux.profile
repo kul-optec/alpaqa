@@ -12,7 +12,7 @@ compiler.libcxx.gcc_version=15.2
 llvm-openmp/*: llvm-openmp/[~{{ clang_version }}]
 
 [conf]
-tools.build:compiler_executables*={"c": "clang" + clang_suffix, "cpp": "clang++" + clang_suffix}
+tools.build:compiler_executables*={"c": "{{ "clang" + clang_suffix }}", "cpp": "{{ "clang++" + clang_suffix }}" }
 llvm-openmp/*:tools.build:cflags+=["-fvisibility=default"]
 llvm-openmp/*:tools.build:cxxflags+=["-fvisibility=default"]
 

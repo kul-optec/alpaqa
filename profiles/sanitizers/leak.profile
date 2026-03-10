@@ -1,5 +1,5 @@
 [settings]
-compiler.sanitizers+=["leak"]
+compiler.lsan=True
 
 [conf]
 tools.build:exelinkflags+=["-fsanitize=leak"]

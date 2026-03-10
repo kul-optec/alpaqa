@@ -1,5 +1,5 @@
 [settings]
-compiler.sanitizers+=["address"]
+compiler.asan=True
 
 [conf]
 tools.build:cflags+=["-fsanitize=address"]
