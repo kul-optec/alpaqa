@@ -12,9 +12,9 @@ if "%matlab_dir%"=="" set "matlab_dir=C:\Program Files\MATLAB"
 set "triple=%~2"
 if "%triple%"=="" set "triple=amd64"
 if "%triple%"=="amd64" (
-    set "arch=avx2"
+    set "arch=windows/avx2"
 ) else if "%triple%"=="arm64" (
-    set "arch=cortex-a53"
+    set "arch=windows/cortex-a53"
 ) else (
     echo Unknown platform %triple%
     exit /b 1
