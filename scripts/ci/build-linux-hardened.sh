@@ -22,6 +22,8 @@ include($profiles/tools/ninja.profile)
 include($PWD/scripts/ci/options/alpaqa-python-linux.profile)
 [conf]
 tools.cmake.cmaketoolchain:generator=Ninja Multi-Config
+[options]
+openblas/*:target=HASWELL
 EOF
 if [ "$build_type" = "debug" ]; then
     export ALPAQA_PYTHON_DEBUG=1
