@@ -4,12 +4,17 @@ os:
 arch:
   armv7hf:
     toolchain-cpu: [null, armv8, armv7]
+  x86_64:
+    microarch: [null, ANY]
+  armv8:
+    microarch: [null, ANY]
 
 compiler:
   gcc:
     static-libs: [null, ANY]
     hidden: [null, ANY]
     harden: [null, ANY]
+    sanitizers: [null, ANY]
   clang:
     libcxx:
       libstdc++11:
@@ -19,3 +24,4 @@ compiler:
     static-libs: [null, ANY]
     hidden: [null, ANY]
     harden: [null, ANY]
+    sanitizers: [null, ANY]
