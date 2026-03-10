@@ -1,7 +1,7 @@
 # Note: please do not use this profile directly, as it does not enable target-specific tuning.
 [settings]
 arch=armv8
-microarch=apple-m1
+arch.microarch=apple-m1
 
 [conf]
 tools.build:cxxflags+=["-mcpu=apple-m1"]
