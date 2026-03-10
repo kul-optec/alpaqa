@@ -8,8 +8,17 @@ cd /d "%~dp0\..\.."
 set "matlab_dir=%~1"
 if "%matlab_dir%"=="" set "matlab_dir=C:\Program Files\MATLAB"
 
+:: Select architecture
 set "triple=%~2"
 if "%triple%"=="" set "triple=amd64"
+if "%triple%"=="amd64" (
+    set "arch=avx2"
+) else if "%triple%"=="arm64" (
+    set "arch=cortex-a53"
+) else (
+    echo Unknown platform %triple%
+    exit /b 1
+)
 
 set "pkg_dir=%~3"
 if "%pkg_dir%"=="" set "pkg_dir=."
@@ -24,7 +33,8 @@ call "%vcvarsall_path%" %triple% || exit /b 1
 :: Create Conan profiles
 set "matlab_profile=%CD%\profile-matlab.local.conan"
 > "%matlab_profile%" (
-    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\platform\%triple%-windows.profile^)
+    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\toolchains\%triple%-windows.profile^)
+    @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\arch\%arch%.profile^)
     @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\test\none.profile^)
     @echo.include^(%CD%\scripts\ci\conan-profiles\profiles\sccache\only-self.profile^)
     @echo.include^(%CD%\scripts\ci\options\alpaqa-matlab.profile^)

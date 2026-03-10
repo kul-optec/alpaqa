@@ -11,7 +11,7 @@ triple="${2:-x86_64-bionic-linux-gnu}"
 case $triple in
     x86_64-centos7-*) arch=linux/x86-64-v3 ;;
     x86_64-bionic-*) arch=linux/x86-64-v3 ;;
-    arm64-macos) arch=macos/arm64 ;;
+    arm64-macos) arch=macos/apple-m1 ;;
     x86_64-macos) arch=macos/x86-64-v3 ;;
     *) echo "Unknown platform ${triple}"; exit 1 ;;
 esac
