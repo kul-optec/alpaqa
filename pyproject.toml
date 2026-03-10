@@ -115,9 +115,6 @@ generator = "Ninja Multi-Config"
 [tool.py-build-cmake.windows.conan]
 args = ['-c*:tools.build:compiler_executables*={"fortran": "FC-NOTFOUND"}']
 
-[tool.py-build-cmake.stubgen]
-args = ["-v"]
-
 [tool.py-build-cmake.editable]
 mode = "symlink"
 
