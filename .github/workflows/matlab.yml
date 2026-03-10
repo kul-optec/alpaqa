@@ -22,7 +22,7 @@ jobs:
             name: maca64
             matlab-release: 'R2023b'
             host: arm64-macos
-          - os: macos-13
+          - os: macos-15-intel
             name: maci64
             matlab-release: 'R2021a'
             host: x86_64-macos
