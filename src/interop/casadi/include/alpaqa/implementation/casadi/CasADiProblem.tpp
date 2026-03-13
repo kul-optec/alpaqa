@@ -8,6 +8,7 @@
 #include <guanaqo/io/csv.hpp>
 #include <guanaqo/not-implemented.hpp>
 #include <tuple>
+#include <vector>
 
 #if ALPAQA_WITH_EXTERNAL_CASADI
 #include <casadi/core/external.hpp>
@@ -46,6 +47,10 @@ struct CasADiFunctionsWithParam {
     std::optional<CasADiFunctionEvaluator<Conf, 8, 1>> hess_ψ_prod =
         std::nullopt;
     std::optional<CasADiFunctionEvaluator<Conf, 7, 1>> hess_ψ = std::nullopt;
+
+#if !ALPAQA_WITH_EXTERNAL_CASADI
+    std::vector<casadi::Function> extra_functions;
+#endif
 
     template <class Loader>
         requires requires(Loader &&loader, const char *name) {
@@ -92,6 +97,19 @@ struct CasADiFunctionsWithParam {
 
         auto g = wrap_load(loader, "g", load_g);
 
+#if !ALPAQA_WITH_EXTERNAL_CASADI
+        // Load any extra functions
+        std::vector<casadi::Function> extra_functions;
+        try {
+            int i = 0;
+            while (true)
+                extra_functions.push_back(
+                    loader("extra_func_" + std::to_string(i++)));
+        } catch (dynamic_load_error &) {
+            // No more extra functions in dll
+        }
+#endif
+
         return std::make_unique<CasADiFunctionsWithParam>(
             CasADiFunctionsWithParam{
                 .n = n,
@@ -122,6 +140,9 @@ struct CasADiFunctionsWithParam {
                 .hess_ψ = try_load<CasADiFunctionEvaluator<Conf, 7, 1>>(
                     loader, "hess_psi", dims(n, p, m, m, 1, m, m),
                     dims(dim(n, n))),
+#if !ALPAQA_WITH_EXTERNAL_CASADI
+                .extra_functions = std::move(extra_functions),
+#endif
             });
     }
 };
@@ -545,6 +566,16 @@ template <Config Conf>
 std::string CasADiProblem<Conf>::get_name() const {
     return name;
 }
+
+#if !ALPAQA_WITH_EXTERNAL_CASADI
+template <Config Conf>
+casadi::Function *CasADiProblem<Conf>::extra_function(index_t i) {
+    auto iz = static_cast<size_t>(i);
+    if (iz >= impl->extra_functions.size())
+        return nullptr;
+    return &impl->extra_functions[iz];
+}
+#endif
 
 END_ALPAQA_CASADI_LOADER_NAMESPACE
 } // namespace alpaqa

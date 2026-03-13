@@ -139,6 +139,10 @@ class CasADiProblem : public BoxConstrProblem<Conf> {
     /// @see @ref TypeErasedProblem::get_name
     [[nodiscard]] std::string get_name() const;
 
+#if !ALPAQA_WITH_EXTERNAL_CASADI
+    casadi::Function *extra_function(index_t i);
+#endif
+
   private:
     using Functions = casadi_loader::CasADiFunctionsWithParam<Conf>;
     guanaqo::copyable_unique_ptr<Functions> impl;
