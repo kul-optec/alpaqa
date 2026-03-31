@@ -21,6 +21,8 @@ option(ALPAQA_WITH_PYTHON
     "Build the Python bindings" Off)
 option(ALPAQA_WITH_MATLAB
     "Build the MATLAB MEX interface" Off)
+option(ALPAQA_WITH_JULIA
+    "Build the Julia bindings" Off)
 # Compiler support
 option(ALPAQA_WITH_CXX_23
     "Enable components that require C++23" ${ALPAQA_WITH_CXX_23_DEFAULT})

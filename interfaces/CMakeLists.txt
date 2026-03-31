@@ -6,3 +6,7 @@ endif()
 if(ALPAQA_WITH_MATLAB)
     add_subdirectory(matlab)
 endif()
+# Julia interface
+if(ALPAQA_WITH_JULIA)
+    add_subdirectory(julia)
+endif()

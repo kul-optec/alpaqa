@@ -23,6 +23,9 @@ endif()
 if (ALPAQA_WITH_MATLAB)
     list(APPEND CPACK_COMPONENTS_ALL "matlab")
 endif()
+if (ALPAQA_WITH_JULIA)
+    list(APPEND CPACK_COMPONENTS_ALL "julia")
+endif()
 
 set(CPACK_DEBIAN_LIB_PACKAGE_NAME "libalpaqa")
 set(CPACK_DEBIAN_LIB_DISPLAY_NAME "alpaqa libraries")
@@ -100,6 +103,14 @@ set(CPACK_DEBIAN_EXTRA_DEV_DESCRIPTION "C++ header files and CMake target files 
 set(CPACK_DEBIAN_EXTRA_DEV_GROUP "Development")
 set(CPACK_DEBIAN_EXTRA_DEV_PACKAGE_DEPENDS "libalpaqa-extra (= ${CPACK_PACKAGE_VERSION}), libalpaqa-dev (= ${CPACK_PACKAGE_VERSION})")
 set(CPACK_COMPONENT_EXTRA_DEV_DEPENDS "extra;dev")
+
+set(CPACK_DEBIAN_JULIA_PACKAGE_NAME "libalpaqa-julia")
+set(CPACK_DEBIAN_JULIA_DISPLAY_NAME "alpaqa Julia interface")
+set(CPACK_DEBIAN_JULIA_DESCRIPTION "The Julia interface to the alpaqa solvers.")
+set(CPACK_DEBIAN_JULIA_GROUP "Extra")
+set(CPACK_DEBIAN_JULIA_PACKAGE_DEPENDS "libalpaqa-casadi (= ${CPACK_PACKAGE_VERSION}), libalpaqa-extra (= ${CPACK_PACKAGE_VERSION})")
+set(CPACK_COMPONENT_JULIA_DEPENDS "casadi;extra")
+set(CPACK_COMPONENT_JULIA_DISABLED On)
 
 # Source packages
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")

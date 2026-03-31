@@ -24,6 +24,7 @@ class AlpaqaRecipe(ConanFile):
     bool_alpaqa_options = {
         "with_python": False,
         "with_matlab": False,
+        "with_julia": False,
         "with_drivers": True,
         "with_examples": False,
         "with_python_problem_loader": False,
