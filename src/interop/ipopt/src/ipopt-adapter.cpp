@@ -3,6 +3,7 @@
 #include <alpaqa/util/span.hpp>
 
 #include <IpIpoptCalculatedQuantities.hpp>
+#include <IpIpoptData.hpp>
 #include <stdexcept>
 
 namespace alpaqa {

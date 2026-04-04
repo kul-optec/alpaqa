@@ -20,7 +20,10 @@ inline std::string_view enum_name(Ipopt::ApplicationReturnStatus s) {
         case S::Restoration_Failed: return "Restoration_Failed";
         case S::Error_In_Step_Computation: return "Error_In_Step_Computation";
         case S::Maximum_CpuTime_Exceeded: return "Maximum_CpuTime_Exceeded";
+#if IPOPT_VERSION_MAJOR > 3 ||                                                 \
+    (IPOPT_VERSION_MAJOR == 3 && IPOPT_VERSION_MINOR >= 14)
         case S::Maximum_WallTime_Exceeded: return "Maximum_WallTime_Exceeded";
+#endif
         case S::Not_Enough_Degrees_Of_Freedom:
             return "Not_Enough_Degrees_Of_Freedom";
         case S::Invalid_Problem_Definition: return "Invalid_Problem_Definition";
