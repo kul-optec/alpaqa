@@ -79,13 +79,14 @@ cmake --install "${alpaqa_build}"
 
 platforms = supported_platforms()
 platforms = expand_cxxstring_abis(platforms)
+platforms = expand_gfortran_versions(platforms)
 
 products = [
     LibraryProduct("alpaqa-jl", :alpaqa_jl),
 ]
 
 dependencies = [
-    Dependency("Ipopt_jll"; compat="300.1400"),
+    Dependency("Ipopt_jll"; compat="3.13.1"),
     Dependency("Eigen_jll"; compat="3.4"),
     Dependency("nlohmann_json_jll"; compat="3.12"),
     Dependency("CompilerSupportLibraries_jll"; compat="1.1"),
