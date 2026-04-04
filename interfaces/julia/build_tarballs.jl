@@ -85,12 +85,12 @@ products = [
 ]
 
 dependencies = [
-    Dependency("Ipopt_jll"),
-    Dependency("Eigen_jll"),
-    Dependency("nlohmann_json_jll"),
-    Dependency("CompilerSupportLibraries_jll"),
-    HostBuildDependency(PackageSpec(; name="CMake_jll", version = v"3.31.9+0")),
-    HostBuildDependency(PackageSpec(; name="Ninja_jll", version = v"v1.13.1+0"))
+    Dependency("Ipopt_jll"; compat="300.1400"),
+    Dependency("Eigen_jll"; compat="3.4"),
+    Dependency("nlohmann_json_jll"; compat="3.12"),
+    Dependency("CompilerSupportLibraries_jll"; compat="1.1"),
+    HostBuildDependency(PackageSpec(; name="CMake_jll", version=v"3.31.9+0")),
+    HostBuildDependency(PackageSpec(; name="Ninja_jll", version=v"1.13.1+0")),
 ]
 
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies;
