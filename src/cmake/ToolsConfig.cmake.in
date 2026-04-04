@@ -1,11 +1,7 @@
 @PACKAGE_INIT@
 
-if (NOT "" STREQUAL "@ALPAQA_COMPONENT_CASADI_TARGETS@")
-    find_dependency(alpaqaExtra CONFIG)
-endif()
-if (NOT "" STREQUAL "@ALPAQA_COMPONENT_EXTRA_TARGETS@")
-    find_dependency(alpaqaCasADi CONFIG)
-endif()
+include(CMakeFindDependencyMacro)
+find_dependency(alpaqaExtra CONFIG)
 
 include("${CMAKE_CURRENT_LIST_DIR}/alpaqaToolsTargets.cmake")
 

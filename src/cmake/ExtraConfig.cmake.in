@@ -1,6 +1,19 @@
 @PACKAGE_INIT@
 
+include(CMakeFindDependencyMacro)
 find_dependency(alpaqaCore CONFIG)
+if (@ALPAQA_WITH_DL@)
+    find_dependency(alpaqaDl CONFIG)
+endif()
+if (NOT "" STREQUAL "@ALPAQA_COMPONENT_CASADI_TARGETS@")
+    find_dependency(alpaqaCasADi CONFIG)
+endif()
+if (@ALPAQA_WITH_IPOPT@)
+    find_dependency(Ipopt)
+endif()
+if (@ALPAQA_WITH_QPALM@)
+    find_dependency(QPALM COMPONENTS cxx)
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/alpaqaExtraTargets.cmake")
 
