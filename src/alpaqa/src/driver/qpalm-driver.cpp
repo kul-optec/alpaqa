@@ -8,9 +8,10 @@
 #include <stdexcept>
 #include <string>
 
-#include "results.hpp"
-#include "solver-driver.hpp"
+#include <alpaqa/driver/results.hpp>
+#include <alpaqa/driver/solver-driver.hpp>
 
+namespace alpaqa::driver {
 namespace {
 
 USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);
@@ -203,6 +204,8 @@ SharedSolverWrapper make_qpalm_driver(std::string_view direction,
         throw std::invalid_argument(
             "QPALM solver only supports double precision");
 }
+
+} // namespace alpaqa::driver
 
 #else
 
