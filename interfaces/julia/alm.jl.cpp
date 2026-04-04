@@ -16,6 +16,7 @@
 #include <guanaqo/eigen/span.hpp>
 #include <guanaqo/linalg/sparsity-conversions.hpp>
 #include <guanaqo/linalg/sparsity.hpp>
+#include <alpaqa-version.h>
 
 #include <alpaqa/implementation/outer/alm.tpp>
 
@@ -662,4 +663,16 @@ extern "C" ALPAQA_JL_EXPORT size_t
 alpaqa_jl_ocp_nu_casadi(alpaqa::LoadedProblem *problem) {
     using namespace alpaqa::jl;
     return ocp_nu_casadi(*problem);
+}
+
+extern "C" ALPAQA_JL_EXPORT char *alpaqa_jl_version() {
+    return ::strndup(ALPAQA_VERSION_FULL, std::strlen(ALPAQA_VERSION_FULL));
+}
+
+extern "C" ALPAQA_JL_EXPORT char *alpaqa_jl_build_time() {
+    return ::strndup(alpaqa_build_time, std::strlen(alpaqa_build_time));
+}
+
+extern "C" ALPAQA_JL_EXPORT char *alpaqa_jl_commit_hash() {
+    return ::strndup(alpaqa_commit_hash, std::strlen(alpaqa_commit_hash));
 }

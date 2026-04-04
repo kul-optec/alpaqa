@@ -1,0 +1,10 @@
+@PACKAGE_INIT@
+
+find_dependency(alpaqaCore CONFIG)
+find_dependency(alpaqaDl CONFIG)
+find_dependency(alpaqaCasADi CONFIG)
+find_dependency(alpaqaExtra CONFIG)
+
+include("${CMAKE_CURRENT_LIST_DIR}/alpaqaJuliaTargets.cmake")
+
+check_required_components(alpaqaJulia)

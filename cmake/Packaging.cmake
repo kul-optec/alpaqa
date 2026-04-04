@@ -104,13 +104,21 @@ set(CPACK_DEBIAN_EXTRA_DEV_GROUP "Development")
 set(CPACK_DEBIAN_EXTRA_DEV_PACKAGE_DEPENDS "libalpaqa-extra (= ${CPACK_PACKAGE_VERSION}), libalpaqa-dev (= ${CPACK_PACKAGE_VERSION})")
 set(CPACK_COMPONENT_EXTRA_DEV_DEPENDS "extra;dev")
 
-set(CPACK_DEBIAN_JULIA_PACKAGE_NAME "libalpaqa-julia")
+set(CPACK_DEBIAN_JULIA_PACKAGE_NAME "alpaqa-julia")
 set(CPACK_DEBIAN_JULIA_DISPLAY_NAME "alpaqa Julia interface")
 set(CPACK_DEBIAN_JULIA_DESCRIPTION "The Julia interface to the alpaqa solvers.")
 set(CPACK_DEBIAN_JULIA_GROUP "Extra")
 set(CPACK_DEBIAN_JULIA_PACKAGE_DEPENDS "libalpaqa-casadi (= ${CPACK_PACKAGE_VERSION}), libalpaqa-extra (= ${CPACK_PACKAGE_VERSION})")
 set(CPACK_COMPONENT_JULIA_DEPENDS "casadi;extra")
 set(CPACK_COMPONENT_JULIA_DISABLED On)
+
+set(CPACK_DEBIAN_JULIA_DEV_PACKAGE_NAME "alpaqa-julia-dev")
+set(CPACK_DEBIAN_JULIA_DEV_DISPLAY_NAME "alpaqa Julia interface development files")
+set(CPACK_DEBIAN_JULIA_DEV_DESCRIPTION "C++ header files and CMake target files for the Julia interface to the alpaqa solvers.")
+set(CPACK_DEBIAN_JULIA_DEV_GROUP "Development")
+set(CPACK_DEBIAN_JULIA_DEV_PACKAGE_DEPENDS "alpaqa-julia (= ${CPACK_PACKAGE_VERSION}), libalpaqa-casadi-dev (= ${CPACK_PACKAGE_VERSION}), libalpaqa-extra-dev (= ${CPACK_PACKAGE_VERSION})")
+set(CPACK_COMPONENT_JULIA_DEV_DEPENDS "julia;casadi-dev;extra-dev")
+set(CPACK_COMPONENT_JULIA_DEV_DISABLED On)
 
 # Source packages
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PROJECT_NAME}-${CPACK_PACKAGE_VERSION}")

@@ -125,6 +125,7 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "ipopt-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-fortran")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "qpalm-adapter")
+alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "drivers")
 if (ALPAQA_COMPONENT_EXTRA_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_EXTRA_TARGETS}
         EXPORT alpaqaExtraTargets

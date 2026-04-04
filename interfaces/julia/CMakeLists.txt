@@ -10,12 +10,23 @@ target_include_directories(alpaqa-jl PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export-jl>)
 alpaqa_configure_visibility(alpaqa-jl)
 
-# Installation
+# Set the runtime linker/loader search paths to make alpaqa stand-alone
 if (ALPAQA_STANDALONE)
-    set_target_properties(alpaqa-jl PROPERTIES INSTALL_RPATH "$ORIGIN")
+    if (APPLE)
+        set_target_properties(alpaqa-jl PROPERTIES INSTALL_RPATH "$@loader_path")
+    else()
+        set_target_properties(alpaqa-jl PROPERTIES INSTALL_RPATH "$ORIGIN")
+    endif()
 endif()
+
+# Install the Julia interface
 install(TARGETS alpaqa-jl
+    EXPORT alpaqaJuliaTargets
     RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
         COMPONENT julia
     LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
-        COMPONENT julia)
+        COMPONENT julia
+        NAMELINK_COMPONENT julia_dev
+    ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        COMPONENT julia_dev)
+alpaqa_install_config(Julia julia_dev)

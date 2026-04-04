@@ -1,0 +1,16 @@
+name = "Alpaqa"
+uuid = "544fabaf-0b95-421e-ad7e-da4ece42b1a6"
+version = "1.1.0"
+
+[deps]
+Alpaqa_jll = "eb36771f-5a2a-5f5b-ada3-8274660f8cb1"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
+[compat]
+julia = "1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
