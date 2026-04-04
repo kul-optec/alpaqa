@@ -1,0 +1,46 @@
+name: 'CI Tests: Julia'
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'interfaces/julia/**'
+      - '.github/workflows/julia.yml'
+  pull_request:
+    paths:
+      - 'interfaces/julia/**'
+      - '.github/workflows/julia.yml'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Julia
+        uses: julia-actions/setup-julia@4c0cb0fce8556fdb04a90347310e5db8b1f98fb9
+        with:
+          version: '1.10'
+
+      - name: Install BinaryBuilder
+        run: julia -e 'using Pkg; Pkg.add("BinaryBuilder")'
+
+      - name: Build local JLL
+        run: |
+          cd "$(mktemp -d)"
+          julia "$GITHUB_WORKSPACE/interfaces/julia/build_tarballs.jl" "$(gcc -print-multiarch)" --deploy=local --verbose
+
+      - name: Test Julia package
+        run: |
+          julia --project=interfaces/julia/Alpaqa -e '
+              using Pkg
+              jll = joinpath(DEPOT_PATH[1], "dev", "Alpaqa_jll")
+              Pkg.develop(path=jll)
+              Pkg.resolve()
+              Pkg.instantiate()
+              Pkg.test()
+          '
