@@ -76,7 +76,7 @@ endmacro()
 set(ALPAQA_INSTALLED_TARGETS_MSG "\nSummary of alpaqa components and targets to install:\n\n")
 
 # Install the alpaqa core libraries
-install(TARGETS warnings alpaqa problem-loader
+install(TARGETS warnings alpaqa
     EXPORT alpaqaCoreTargets
     RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
         COMPONENT lib
@@ -89,7 +89,7 @@ alpaqa_install_config(Core dev)
 alpaqa_install_headers("${PROJECT_BINARY_DIR}/include/" dev)
 alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/alpaqa/include/" dev)
 alpaqa_install_headers("${CMAKE_CURRENT_BINARY_DIR}/export/" dev)
-string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Core:   alpaqa, problem-loader\n")
+string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Core:   alpaqa\n")
 
 # Install the CasADi interface
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_CASADI_TARGETS "casadi-loader")
@@ -125,6 +125,7 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "ipopt-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-fortran")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "qpalm-adapter")
+alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "problem-loader")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "drivers")
 if (ALPAQA_COMPONENT_EXTRA_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_EXTRA_TARGETS}
