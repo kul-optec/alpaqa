@@ -86,9 +86,9 @@ products = [
 ]
 
 dependencies = [
-    Dependency("Ipopt_jll"; compat="3.13.1"),
-    Dependency("Eigen_jll"; compat="3.4"),
-    Dependency("nlohmann_json_jll"; compat="3.12"),
+    Dependency("Ipopt_jll"; compat="~300.1400.1901"),
+    Dependency("Eigen_jll"; compat="~5.0.1, ~3.4.1"),
+    Dependency("nlohmann_json_jll"; compat="~3.12.0"),
     Dependency("CompilerSupportLibraries_jll"; compat="1.1"),
     HostBuildDependency(PackageSpec(; name="CMake_jll", version=v"3.31.9+0")),
     HostBuildDependency(PackageSpec(; name="Ninja_jll", version=v"1.13.1+0")),
