@@ -2,7 +2,7 @@
 
 include(CMakeFindDependencyMacro)
 
-set(ALPAQA_AVAILABLE_COMPONENTS "Core" "CasADi" "Dl" "Extra" "Tools")
+set(ALPAQA_AVAILABLE_COMPONENTS "Core" "CasADi" "Dl" "DlLoader" "CUTEst" "Extra" "Tools")
 # Unless the user requested only "Dl", always require "Core"
 if (NOT alpaqa_FIND_COMPONENTS STREQUAL "Dl")
     list(PREPEND alpaqa_FIND_COMPONENTS "Core")

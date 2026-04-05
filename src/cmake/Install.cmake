@@ -118,9 +118,43 @@ alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl-api/include/" dl_de
 alpaqa_install_cmake("${CMAKE_CURRENT_SOURCE_DIR}/cmake/dl-problem.cmake" dl_dev)
 string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Dl:     dl-api\n")
 
+# Install the DL loader
+alpaqa_add_if_target_exists(ALPAQA_COMPONENT_DLLOADER_TARGETS "dl-loader")
+if (ALPAQA_COMPONENT_DLLOADER_TARGETS)
+    install(TARGETS ${ALPAQA_COMPONENT_DLLOADER_TARGETS}
+        EXPORT alpaqaDlLoaderTargets
+        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+            COMPONENT dl_loader
+        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+            COMPONENT dl_loader
+            NAMELINK_COMPONENT dl_loader_dev
+        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+            COMPONENT dl_loader_dev)
+    alpaqa_install_config(DlLoader dl_loader_dev)
+    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl/include/" dl_loader_dev)
+    list(JOIN ALPAQA_COMPONENT_DLLOADER_TARGETS ", " TGTS)
+    string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * DlLoader: ${TGTS}\n")
+endif()
+
+# Install the CUTEst interface
+alpaqa_add_if_target_exists(ALPAQA_COMPONENT_CUTEST_TARGETS "cutest-interface")
+if (ALPAQA_COMPONENT_CUTEST_TARGETS)
+    install(TARGETS ${ALPAQA_COMPONENT_CUTEST_TARGETS}
+        EXPORT alpaqaCUTEstTargets
+        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+            COMPONENT cutest
+        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+            COMPONENT cutest
+            NAMELINK_COMPONENT cutest_dev
+        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+            COMPONENT cutest_dev)
+    alpaqa_install_config(CUTEst cutest_dev)
+    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/cutest/include/" cutest_dev)
+    list(JOIN ALPAQA_COMPONENT_CUTEST_TARGETS ", " TGTS)
+    string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * CUTEst: ${TGTS}\n")
+endif()
+
 # Install everything else
-alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "dl-loader")
-alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "cutest-interface")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "ipopt-adapter")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-fortran")
 alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "lbfgsb-adapter")
@@ -138,10 +172,8 @@ if (ALPAQA_COMPONENT_EXTRA_TARGETS)
         ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
             COMPONENT extra_dev)
     alpaqa_install_config(Extra extra_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/cutest/include/" extra_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/ipopt/include/" extra_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/lbfgsb/include/" extra_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl/include/" extra_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/qpalm/include/" extra_dev)
     list(JOIN ALPAQA_COMPONENT_EXTRA_TARGETS ", " TGTS)
     string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Extra:  ${TGTS}\n")

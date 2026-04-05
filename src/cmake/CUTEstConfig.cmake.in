@@ -1,0 +1,8 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(alpaqaCore CONFIG)
+
+include("${CMAKE_CURRENT_LIST_DIR}/alpaqaCUTEstTargets.cmake")
+
+check_required_components(alpaqaCUTEst)

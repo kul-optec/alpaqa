@@ -3,7 +3,7 @@ project(alpaqa-examples C CXX)
 include(CTest)
 
 if (PROJECT_IS_TOP_LEVEL)
-    find_package(alpaqa REQUIRED CONFIG OPTIONAL_COMPONENTS CasADi Dl Extra)
+    find_package(alpaqa REQUIRED CONFIG OPTIONAL_COMPONENTS CasADi Dl DlLoader Extra CUTEst)
 endif()
 
 add_subdirectory(util)
