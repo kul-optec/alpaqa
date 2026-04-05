@@ -155,19 +155,22 @@ might want to link to:
  - `alpaqa::alpaqa`: the core alpaqa library and solvers
  - `alpaqa::casadi-loader`: provides the `CasADiProblem` class that allows
     the solvers to interface with problems formulated using CasADi
+    (`CasADi` component)
  - `alpaqa::casadi-ocp-loader`: experimental optimal-control specific CasADi
     problem specification
+    (`CasADi` component)
  - `alpaqa::dl-api`: the stand-alone C API for formulating problems that can be
-    loaded dynamically by alpaqa (`alpaqa/dl/dl-problem.h`)
+    loaded dynamically by alpaqa (`alpaqa/dl/dl-problem.h`, `Dl` component)
  - `alpaqa::dl-loader`: provides the `DLProblem` class to load such problems
+     (`DlLoader` component)
  - `alpaqa::cutest-interface`: provides the `CUTEstProblem` class for loading
-    problems formulated using SIF/CUTEst
+     problems formulated using SIF/CUTEst (`CUTEst` component)
  - `alpaqa::ipopt-adapter`: allows passing any alpaqa problem to the Ipopt
-    solver
+    solver (Extra component)
  - `alpaqa::lbfgsb-adapter`: allows passing any alpaqa problem to the L-BFGS-B
-    solver
+    solver (Extra component)
  - `alpaqa::qpalm-adapter`: allows passing any alpaqa problem to the QPALM
-    solver
+    solver (Extra component)
 
 See the [CMake API documentation](../Sphinx/reference/cmake-api.html) for more
 details.
