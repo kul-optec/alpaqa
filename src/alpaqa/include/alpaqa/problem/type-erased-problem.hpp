@@ -12,6 +12,15 @@
 #include <type_traits>
 #include <utility>
 
+#ifdef _MSC_VER
+#define ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_START                                             \
+    __pragma(warning(push)) __pragma(warning(disable : 4275))
+#define ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_END __pragma(warning(pop))
+#else
+#define ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_START
+#define ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_END
+#endif
+
 namespace alpaqa {
 
 /// Raised when calling problem functions that are not implemented.
@@ -21,8 +30,9 @@ using guanaqo::not_implemented_error;
 /// objective and constraint functions, with their derivatives, and more).
 /// Some default implementations are available.
 /// Internal struct, it is used by @ref TypeErasedProblem.
+ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_START
 template <Config Conf>
-struct ProblemVTable : guanaqo::BasicVTable {
+struct ALPAQA_EXPORT ProblemVTable : guanaqo::BasicVTable {
     USING_ALPAQA_CONFIG(Conf);
     using Box = alpaqa::Box<config_t>;
 
@@ -108,71 +118,203 @@ struct ProblemVTable : guanaqo::BasicVTable {
     // clang-format on
 
     ALPAQA_EXPORT_STATIC static real_t calc_ŷ_dᵀŷ(const void *self, rvec g_ŷ, crvec y, crvec Σ,
-                                                  const ProblemVTable &vtable);
+                                                  const ProblemVTable &vtable) {
+        if constexpr (requires { Σ(0); })
+            if (Σ.size() == 1) {
+                // ζ = g(x) + Σ⁻¹y
+                g_ŷ += (1 / Σ(0)) * y;
+                // d = ζ - Π(ζ, D)
+                vtable.eval_projecting_difference_constraints(self, g_ŷ, g_ŷ);
+                // dᵀŷ, ŷ = Σ d
+                real_t dᵀŷ = Σ(0) * g_ŷ.dot(g_ŷ);
+                g_ŷ *= Σ(0);
+                return dᵀŷ;
+            }
+        if (Σ.size() != y.size())
+            throw std::logic_error("Penalty/multiplier size mismatch");
+        // ζ = g(x) + Σ⁻¹y
+        g_ŷ += y.cwiseQuotient(Σ);
+        // d = ζ - Π(ζ, D)
+        vtable.eval_projecting_difference_constraints(self, g_ŷ, g_ŷ);
+        // dᵀŷ, ŷ = Σ d
+        real_t dᵀŷ = g_ŷ.dot(Σ.cwiseProduct(g_ŷ));
+        g_ŷ        = Σ.cwiseProduct(g_ŷ);
+        return dᵀŷ;
+    }
     ALPAQA_EXPORT_STATIC static real_t default_eval_nonsmooth_objective(const void *, crvec,
-                                                                        const ProblemVTable &);
+                                                                        const ProblemVTable &) {
+        throw not_implemented_error("eval_nonsmooth_objective");
+    }
     ALPAQA_EXPORT_STATIC static index_t
     default_eval_inactive_indices_res_lna(const void *, real_t, crvec, crvec, rindexvec,
-                                          const ProblemVTable &);
+                                          const ProblemVTable &) {
+        throw not_implemented_error("eval_inactive_indices_res_lna");
+    }
     ALPAQA_EXPORT_STATIC static void default_eval_prox_jacobian_diag(const void *, real_t, crvec,
-                                                                     rvec, const ProblemVTable &);
-    ALPAQA_EXPORT_STATIC static void default_eval_constraints_jacobian(const void *, crvec, rvec,
-                                                                       const ProblemVTable &);
+                                                                     rvec, const ProblemVTable &) {
+        throw not_implemented_error("eval_prox_jacobian_diag");
+    }
+    ALPAQA_EXPORT_STATIC static void
+    default_eval_constraints_jacobian(const void *, crvec, rvec, const ProblemVTable &vtable) {
+        if (vtable.m != 0)
+            throw not_implemented_error("eval_constraints_jacobian");
+    }
     ALPAQA_EXPORT_STATIC static Sparsity
-    default_get_constraints_jacobian_sparsity(const void *, const ProblemVTable &);
+    default_get_constraints_jacobian_sparsity(const void *, const ProblemVTable &vtable) {
+        return sparsity::Dense{vtable.m, vtable.n};
+    }
     ALPAQA_EXPORT_STATIC static void default_eval_grad_gi(const void *, crvec, index_t, rvec,
-                                                          const ProblemVTable &);
-    ALPAQA_EXPORT_STATIC static void default_eval_lagrangian_hessian_product(const void *, crvec,
-                                                                             crvec, real_t, crvec,
-                                                                             rvec,
-                                                                             const ProblemVTable &);
+                                                          const ProblemVTable &) {
+        throw not_implemented_error("eval_grad_gi");
+    }
+    ALPAQA_EXPORT_STATIC static void
+    default_eval_lagrangian_hessian_product(const void *, crvec, crvec, real_t, crvec, rvec,
+                                            const ProblemVTable &) {
+        throw not_implemented_error("eval_lagrangian_hessian_product");
+    }
     ALPAQA_EXPORT_STATIC static void default_eval_lagrangian_hessian(const void *, crvec, crvec,
                                                                      real_t, rvec,
-                                                                     const ProblemVTable &);
+                                                                     const ProblemVTable &) {
+        throw not_implemented_error("eval_lagrangian_hessian");
+    }
     ALPAQA_EXPORT_STATIC static Sparsity
-    default_get_lagrangian_hessian_sparsity(const void *, const ProblemVTable &);
+    default_get_lagrangian_hessian_sparsity(const void *, const ProblemVTable &vtable) {
+        return sparsity::Dense{vtable.n, vtable.n, sparsity::Symmetry::Upper};
+    }
     ALPAQA_EXPORT_STATIC static void
     default_eval_augmented_lagrangian_hessian_product(const void *self, crvec x, crvec y, crvec,
                                                       real_t scale, crvec v, rvec Hv,
-                                                      const ProblemVTable &vtable);
+                                                      const ProblemVTable &vtable) {
+        if (vtable.m == 0 && vtable.eval_lagrangian_hessian_product !=
+                                 ProblemVTable::default_eval_lagrangian_hessian_product)
+            return vtable.eval_lagrangian_hessian_product(self, x, y, scale, v, Hv, vtable);
+        throw not_implemented_error("eval_augmented_lagrangian_hessian_product");
+    }
     ALPAQA_EXPORT_STATIC static void
     default_eval_augmented_lagrangian_hessian(const void *self, crvec x, crvec y, crvec,
                                               real_t scale, rvec H_values,
-                                              const ProblemVTable &vtable);
+                                              const ProblemVTable &vtable) {
+        if (vtable.m == 0 && vtable.eval_lagrangian_hessian != default_eval_lagrangian_hessian)
+            return vtable.eval_lagrangian_hessian(self, x, y, scale, H_values, vtable);
+        throw not_implemented_error("eval_augmented_lagrangian_hessian");
+    }
     ALPAQA_EXPORT_STATIC static Sparsity
-    default_get_augmented_lagrangian_hessian_sparsity(const void *, const ProblemVTable &);
+    default_get_augmented_lagrangian_hessian_sparsity(const void *self,
+                                                      const ProblemVTable &vtable) {
+        if (vtable.m == 0 &&
+            vtable.get_lagrangian_hessian_sparsity != default_get_lagrangian_hessian_sparsity)
+            return vtable.get_lagrangian_hessian_sparsity(self, vtable);
+        return sparsity::Dense{vtable.n, vtable.n, sparsity::Symmetry::Upper};
+    }
+    /** @implementation{ProblemVTable<Conf>::default_eval_objective_and_gradient} */
+    /* [ProblemVTable<Conf>::default_eval_objective_and_gradient] */
     ALPAQA_EXPORT_STATIC static real_t
     default_eval_objective_and_gradient(const void *self, crvec x, rvec grad_fx,
-                                        const ProblemVTable &vtable);
+                                        const ProblemVTable &vtable) {
+        vtable.eval_objective_gradient(self, x, grad_fx);
+        return vtable.eval_objective(self, x);
+    }
+    /* [ProblemVTable<Conf>::default_eval_objective_and_gradient] */
+
+    /** @implementation{ProblemVTable<Conf>::default_eval_objective_and_constraints} */
+    /* [ProblemVTable<Conf>::default_eval_objective_and_constraints] */
     ALPAQA_EXPORT_STATIC static real_t
     default_eval_objective_and_constraints(const void *self, crvec x, rvec g,
-                                           const ProblemVTable &vtable);
+                                           const ProblemVTable &vtable) {
+        vtable.eval_constraints(self, x, g);
+        return vtable.eval_objective(self, x);
+    }
+    /* [ProblemVTable<Conf>::default_eval_objective_and_constraints] */
+
+    /** @implementation{ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product} */
+    /* [ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product] */
     ALPAQA_EXPORT_STATIC static void
     default_eval_objective_gradient_and_constraints_gradient_product(const void *self, crvec x,
                                                                      crvec y, rvec grad_f,
                                                                      rvec grad_gxy,
-                                                                     const ProblemVTable &vtable);
+                                                                     const ProblemVTable &vtable) {
+        vtable.eval_objective_gradient(self, x, grad_f);
+        vtable.eval_constraints_gradient_product(self, x, y, grad_gxy);
+    }
+    /* [ProblemVTable<Conf>::default_eval_objective_gradient_and_constraints_gradient_product] */
+
+    /** @implementation{ProblemVTable<Conf>::default_eval_lagrangian_gradient} */
+    /* [ProblemVTable<Conf>::default_eval_lagrangian_gradient] */
     ALPAQA_EXPORT_STATIC static void default_eval_lagrangian_gradient(const void *self, crvec x,
                                                                       crvec y, rvec grad_L,
                                                                       rvec work_n,
-                                                                      const ProblemVTable &vtable);
+                                                                      const ProblemVTable &vtable) {
+        if (y.size() == 0) /* [[unlikely]] */
+            return vtable.eval_objective_gradient(self, x, grad_L);
+        vtable.eval_objective_gradient_and_constraints_gradient_product(self, x, y, grad_L, work_n,
+                                                                        vtable);
+        grad_L += work_n;
+    }
+    /* [ProblemVTable<Conf>::default_eval_lagrangian_gradient] */
+
+    /** @implementation{ProblemVTable<Conf>::default_eval_augmented_lagrangian} */
+    /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian] */
     ALPAQA_EXPORT_STATIC static real_t
     default_eval_augmented_lagrangian(const void *self, crvec x, crvec y, crvec Σ, rvec ŷ,
-                                      const ProblemVTable &vtable);
+                                      const ProblemVTable &vtable) {
+        if (y.size() == 0) /* [[unlikely]] */
+            return vtable.eval_objective(self, x);
+
+        auto f   = vtable.eval_objective_and_constraints(self, x, ŷ, vtable);
+        auto dᵀŷ = calc_ŷ_dᵀŷ(self, ŷ, y, Σ, vtable);
+        // ψ(x) = f(x) + ½ dᵀŷ
+        auto ψ = f + real_t(0.5) * dᵀŷ;
+        return ψ;
+    }
+    /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian] */
+
+    /** @implementation{ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient} */
+    /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient] */
     ALPAQA_EXPORT_STATIC static void
     default_eval_augmented_lagrangian_gradient(const void *self, crvec x, crvec y, crvec Σ,
                                                rvec grad_ψ, rvec work_n, rvec work_m,
-                                               const ProblemVTable &vtable);
+                                               const ProblemVTable &vtable) {
+        if (y.size() == 0) /* [[unlikely]] */ {
+            vtable.eval_objective_gradient(self, x, grad_ψ);
+        } else {
+            vtable.eval_constraints(self, x, work_m);
+            (void)calc_ŷ_dᵀŷ(self, work_m, y, Σ, vtable);
+            vtable.eval_lagrangian_gradient(self, x, work_m, grad_ψ, work_n, vtable);
+        }
+    }
+    /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_gradient] */
+
+    /** @implementation{ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient} */
+    /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient] */
     ALPAQA_EXPORT_STATIC static real_t
     default_eval_augmented_lagrangian_and_gradient(const void *self, crvec x, crvec y, crvec Σ,
                                                    rvec grad_ψ, rvec work_n, rvec work_m,
-                                                   const ProblemVTable &vtable);
+                                                   const ProblemVTable &vtable) {
+        if (y.size() == 0) /* [[unlikely]] */
+            return vtable.eval_objective_and_gradient(self, x, grad_ψ, vtable);
+
+        auto &ŷ = work_m;
+        // ψ(x) = f(x) + ½ dᵀŷ
+        auto f   = vtable.eval_objective_and_constraints(self, x, ŷ, vtable);
+        auto dᵀŷ = calc_ŷ_dᵀŷ(self, ŷ, y, Σ, vtable);
+        auto ψ   = f + real_t(0.5) * dᵀŷ;
+        // ∇ψ(x) = ∇f(x) + ∇g(x) ŷ
+        vtable.eval_lagrangian_gradient(self, x, ŷ, grad_ψ, work_n, vtable);
+        return ψ;
+    }
+    /* [ProblemVTable<Conf>::default_eval_augmented_lagrangian_and_gradient] */
     ALPAQA_EXPORT_STATIC static const Box &default_get_variable_bounds(const void *,
-                                                                       const ProblemVTable &);
+                                                                       const ProblemVTable &) {
+        throw not_implemented_error("get_variable_bounds");
+    }
     ALPAQA_EXPORT_STATIC static const Box &default_get_general_bounds(const void *,
-                                                                      const ProblemVTable &);
-    ALPAQA_EXPORT_STATIC static void default_check(const void *, const ProblemVTable &);
-    ALPAQA_EXPORT_STATIC static std::string default_get_name(const void *, const ProblemVTable &);
+                                                                      const ProblemVTable &) {
+        throw not_implemented_error("get_general_bounds");
+    }
+    ALPAQA_EXPORT_STATIC static void default_check(const void *, const ProblemVTable &) {}
+    ALPAQA_EXPORT_STATIC static std::string default_get_name(const void *, const ProblemVTable &) {
+        return "unknown problem";
+    }
 
     length_t n, m;
 
@@ -226,13 +368,7 @@ struct ProblemVTable : guanaqo::BasicVTable {
     }
     ProblemVTable() = default;
 };
-
-// clang-format off
-ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigd);
-ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigf);)
-ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigl);)
-ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigq);)
-// clang-format on
+ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_END
 
 /// @addtogroup grp_Problems
 /// @{

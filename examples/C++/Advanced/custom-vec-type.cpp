@@ -2,9 +2,9 @@
 
 #include <alpaqa/implementation/inner/panoc.tpp>
 #include <alpaqa/implementation/outer/alm.tpp>
-#include <alpaqa/implementation/problem/type-erased-problem.tpp>
 #include <alpaqa/inner/directions/panoc/noop.hpp>
 #include <alpaqa/problem/box-constr-problem.hpp>
+#include <alpaqa/problem/register-config.hpp>
 
 struct CustomConfig {
     /// Real scalar element type.
@@ -66,12 +66,7 @@ struct CustomConfig {
     static constexpr bool supports_indexvec = false;
 };
 
-template <>
-struct alpaqa::is_config<CustomConfig> : std::true_type {};
-
-template <>
-const CustomConfig::vec alpaqa::null_vec<CustomConfig>{};
-
+DECLARE_AND_DEFINE_ALPAQA_CONFIG(CustomConfig)
 USING_ALPAQA_CONFIG(CustomConfig);
 
 // Problem specification

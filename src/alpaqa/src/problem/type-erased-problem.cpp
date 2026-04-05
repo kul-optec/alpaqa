@@ -1,4 +1,4 @@
-#include <alpaqa/implementation/problem/type-erased-problem.tpp>
+#include <alpaqa/problem/type-erased-problem.hpp>
 
 namespace alpaqa {
 
