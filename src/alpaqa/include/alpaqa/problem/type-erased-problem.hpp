@@ -370,6 +370,13 @@ struct ALPAQA_EXPORT ProblemVTable : guanaqo::BasicVTable {
 };
 ALPAQA_SUPPRESS_NONEXPORTED_BASE_WARNING_END
 
+#ifndef _WIN32
+ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigd);
+ALPAQA_IF_FLOAT(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigf));
+ALPAQA_IF_LONGD(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigl));
+ALPAQA_IF_QUADF(ALPAQA_EXPORT_EXTERN_TEMPLATE(struct, ProblemVTable, EigenConfigq));
+#endif
+
 /// @addtogroup grp_Problems
 /// @{
 
