@@ -10,3 +10,6 @@ openblas/*:no_fortran=False
 
 [settings]
 casadi/*:build_type=Release
+
+[replace_requires]
+openblas/*:openblas/tttapa.0.3.32
