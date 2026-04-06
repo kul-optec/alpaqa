@@ -1,0 +1,80 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d96488124..8463d0a99 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -430,20 +430,6 @@ if(CMAKE_CROSS_COMPILING)
+   install(DIRECTORY ${CMAKE_FIND_ROOT_PATH}/bin/ DESTINATION ${LIB_PREFIX} FILES_MATCHING PATTERN "*${CMAKE_SHARED_LIBRARY_SUFFIX}")
+ endif()
+ 
+-# Make relative paths absolute (needed later on)
+-foreach(p LIB BIN INCLUDE CMAKE PYTHON MATLAB)
+-  set(var ${p}_PREFIX)
+-  if(${var})
+-    if(NOT IS_ABSOLUTE "${${var}}")
+-      # Turn relative path into absolute
+-      set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+-    endif()
+-  else()
+-    # Flat installation hierarchy
+-    set(${var} "${CMAKE_INSTALL_PREFIX}")
+-  endif()
+-endforeach()
+-
+ # Set rpath
+ if(WITH_SELFCONTAINED)
+   if(APPLE)
+@@ -2231,7 +2217,7 @@ if("$ENV{DEFAULT_DOCKCROSS_IMAGE}" MATCHES "manylinux2014" OR "$ENV{DEFAULT_DOCK
+ endif()
+ 
+ # Create casadi-config.cmake
+-file(RELATIVE_PATH REL_LIB_PREFIX "${CMAKE_PREFIX}" "${LIB_PREFIX}")
++set(REL_LIB_PREFIX "${LIB_PREFIX}")
+ # ... for the build tree
+ set(CONF_LIBRARY_DIRS "${LIBRARY_OUTPUT_PATH}")
+ configure_file(casadi-config.cmake.in "${PROJECT_BINARY_DIR}/casadi-config.cmake" @ONLY)
+@@ -2259,7 +2245,7 @@ install(FILES
+   DESTINATION "${LIB_PREFIX}/pkgconfig" COMPONENT dev)
+ 
+ # Install the export set for use with the install-tree
+-file(RELATIVE_PATH REL_CMAKE_PREFIX "${CMAKE_INSTALL_PREFIX}" "${CMAKE_PREFIX}")
++set(REL_CMAKE_PREFIX ${CMAKE_PREFIX})
+ install(EXPORT casadi-targets NAMESPACE casadi:: DESTINATION ${REL_CMAKE_PREFIX})
+ 
+ set(CPACK_PACKAGE_CONTACT "casadi-users@googlegroups.com")
+diff --git a/casadi/CMakeLists.txt b/casadi/CMakeLists.txt
+index 07a982867..b9f1d4eb1 100644
+--- a/casadi/CMakeLists.txt
++++ b/casadi/CMakeLists.txt
+@@ -37,8 +37,8 @@ macro(casadi_library name)
+   endif()
+   generate_export_header(${name})
+   
+-  file(RELATIVE_PATH TREL_LIB_PREFIX "${CMAKE_INSTALL_PREFIX}" "${LIB_PREFIX}")
+-  file(RELATIVE_PATH TREL_BIN_PREFIX "${CMAKE_INSTALL_PREFIX}" "${BIN_PREFIX}")
++  set(TREL_LIB_PREFIX ${LIB_PREFIX})
++  set(TREL_BIN_PREFIX ${BIN_PREFIX})
+ 
+   # Link with the core
+   if(NOT "${name}" STREQUAL "casadi")
+diff --git a/casadi/core/CMakeLists.txt b/casadi/core/CMakeLists.txt
+index d6aedb145..dac2b72bf 100644
+--- a/casadi/core/CMakeLists.txt
++++ b/casadi/core/CMakeLists.txt
+@@ -237,7 +237,7 @@ set(CASADI_INTERNAL
+ 
+ add_executable(casadi-cli casadi_cli.cpp)
+ target_link_libraries(casadi-cli casadi)
+-file(RELATIVE_PATH TREL_BIN_PREFIX "${CMAKE_INSTALL_PREFIX}" "${BIN_PREFIX}")
++set(TREL_BIN_PREFIX ${BIN_PREFIX})
+ install(TARGETS casadi-cli
+   RUNTIME DESTINATION ${TREL_BIN_PREFIX}
+ )
+@@ -264,7 +264,7 @@ set(CASADI_INTERNAL ${CASADI_INTERNAL} "${CMAKE_CURRENT_BINARY_DIR}/runtime/casa
+ # Build static and/or shared
+ casadi_library(casadi ${CASADI_PUBLIC} ${CASADI_INTERNAL})
+ 
+-file(RELATIVE_PATH TREL_INCLUDE_PREFIX "${CMAKE_INSTALL_PREFIX}" "${INCLUDE_PREFIX}")
++set(TREL_INCLUDE_PREFIX ${INCLUDE_PREFIX})
+ 
+ target_include_directories(casadi
+   PUBLIC

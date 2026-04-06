@@ -1,0 +1,22 @@
+From 35d10d53ceb9b6b8e3e089db3c1e474e4140da30 Mon Sep 17 00:00:00 2001
+From: prlw1 <prlw1@cam.ac.uk>
+Date: Thu, 17 Jul 2025 11:25:01 +0100
+Subject: [PATCH] Trivial build fix for SIMD_HAS_SUBSCRIPT_GATHER
+
+---
+ bits/simd_mask.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bits/simd_mask.h b/bits/simd_mask.h
+index 3fb6809..25418d0 100644
+--- a/bits/simd_mask.h
++++ b/bits/simd_mask.h
+@@ -197,7 +197,7 @@ namespace std::datapar
+           using _Rp = resize_t<__detail::__simd_size_v<_Up, _Ap>, basic_simd_mask>;
+           return _Rp([&](int __i) {
+                    return _Impl::_S_get(_M_data, __idx[__i]);
+-                 }));
++                 });
+         }
+ #endif
+ 

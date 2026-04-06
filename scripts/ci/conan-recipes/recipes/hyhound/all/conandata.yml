@@ -1,0 +1,26 @@
+sources:
+  "1.1.1":
+    url: "https://github.com/kul-optec/hyhound/archive/refs/tags/1.1.1.zip"
+    sha256: "d276b2b6653f6eb4238fd471ba4bde38886cf8372fe41ce81d9f55983e0fb1b1"
+  "1.1.0":
+    url: "https://github.com/kul-optec/hyhound/archive/refs/tags/1.1.0.zip"
+    sha256: "dff8457ebcb34a2a2b4fea3316a1496d754c31cd409dee5f1af2b893249877fb"
+  "1.0.2-alpha.2":
+    url: "https://github.com/kul-optec/hyhound/archive/refs/tags/1.0.2a2.zip"
+    sha256: "b5e002dc5e5e95436047e385cb3af0e056563d8f7b7940ccdeb0d0f058f216f6"
+  "1.0.2-alpha.1":
+    url: "https://github.com/kul-optec/hyhound/archive/refs/tags/1.0.2a1.zip"
+    sha256: "dd567ba698286eb0ee275f79f021e21581b0aabb14e3d2e794d3287fbcb9a6d2"
+  "1.0.1":
+    url: "https://github.com/kul-optec/hyhound/archive/refs/tags/1.0.1.zip"
+    sha256: "18ea899df91edb9ed9fabf4354ee2805c6ae017795a55ded7ca0d30c39a65958"
+  "1.0.0":
+    url: "https://github.com/kul-optec/hyhound/archive/refs/tags/1.0.0.zip"
+    sha256: "341ff19434f781c3540dc35993f17aadb64d1bbf7bf328a589583ba204ad4735"
+commits:
+  "1.1.1": "4467f84dd7c4be7e86e978e1e602f54e402a2cda"
+  "1.1.0": "d15d90de861e099820aaa00d2c2424aecc8bb4e6"
+  "1.0.2-alpha.2": "42a4b5c0c28b2ca237982197d54851054b584a80"
+  "1.0.2-alpha.1": "ab5d1ca1f14486665601ffa9462f4ff7215ae3bc"
+  "1.0.1": "9e50f115ea4d155dd94b2a1ad7f085c3e12f35ec"
+  "1.0.0": "bc0e129f79fc9184857ceb67ba8d6ea281eeb726"

@@ -1,0 +1,46 @@
+sources:
+  "0.0.19":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.19.zip"
+    sha256: "26ecb2fc6747f1de04f928d6823d67be2a1e81a16ed213e6b8db3f164671c112"
+  "0.0.18":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.18.zip"
+    sha256: "719cd8e329ef52fe07040a1cec67570e723ddcc449da4e34f3701d792447e6a7"
+  "0.0.17":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.17.zip"
+    sha256: "61db9b9117b96942350371d25f239e1b39d1190efcdfc937e856532c1cd36dee"
+  "0.0.16":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.16.zip"
+    sha256: "f40787b1e89d04567fe0434638bbc1e841725e10f6424a19411042d7226cd4a2"
+  "0.0.15":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.15.zip"
+    sha256: "71320c5345c388aa68310acb5662d5a6dff5e4799a8c889a37ea0f5fe8eea7c8"
+  "0.0.14":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.14.zip"
+    sha256: "8a14e42e6f4cea1f0a78461c22d47a001fe104e9131f400f7572637c9c3dc5af"
+  "0.0.13":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.13.zip"
+    sha256: "d5f63201e0f71a8f27f1bef28e08ef23604798dbe55407c1ef682bf8a0ca74d6"
+  "0.0.12":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.12.zip"
+    sha256: "cf1a289e74632e95b4c96756409bee5153e74b4b772fc709f2a171ba4a2b0218"
+  "0.0.11":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.11.zip"
+    sha256: "fa5c279237d29e954e9911823a9d6a261ce34455bbab19241c5073f6f532afb9"
+  "0.0.10":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.10.zip"
+    sha256: "7e4e91718ea1344a6e56e8fe20ae42f4573e4e535445a1cfc2e6fd0c20de8ce9"
+  "0.0.9":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.9.zip"
+    sha256: "99408ed99c94ecfb63ed3ed58e940cd143c27fba89294616a2bcd91be13ca39c"
+commits:
+  "0.0.19": "0e2d5020a3ca6a295678ce9269b39a3c814125c0"
+  "0.0.18": "1e3387237bddb694705a62beceeaf08236a96b7b"
+  "0.0.17": "9a568284d0c21e3632954c283038f118bd097c55"
+  "0.0.16": "a27b536c92882743f480ef3c5180f4933bb1bcde"
+  "0.0.15": "7e97a3f5391f187ff0b914a3505276803ad49610"
+  "0.0.14": "727e4d31ea31db619579af729802f1c01e3cd08d"
+  "0.0.13": "bb35513bd84246600aec7466d95747d77d788529"
+  "0.0.12": "44a5642ae9a7906afb0611aacf97d4c20beb14cf"
+  "0.0.11": "569c517e159cd383a52300dae63abbd24801e39c"
+  "0.0.10": "cb2b50099a6c14c4e716c768c4b2d8aaf49aa802"
+  "0.0.9": "0fb68e82e39fb69c682f9e33087607a931758ee1"

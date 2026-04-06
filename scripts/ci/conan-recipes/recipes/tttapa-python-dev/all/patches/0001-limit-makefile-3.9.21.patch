@@ -1,0 +1,26 @@
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index a276d535c7f..b987a13b93e 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -1643,7 +1643,7 @@ LIBPL=		@LIBPL@
+ # pkgconfig directory
+ LIBPC=		$(LIBDIR)/pkgconfig
+ 
+-libainstall:	@DEF_MAKE_RULE@ python-config
++libainstall:	python-config
+ 	@for i in $(LIBDIR) $(LIBPL) $(LIBPC) $(BINDIR); \
+ 	do \
+ 		if test ! -d $(DESTDIR)$$i; then \
+diff --git a/setup.py b/setup.py
+index 0bec170d3f2..78f5fc91c93 100644
+--- a/setup.py
++++ b/setup.py
+@@ -634,7 +634,7 @@ class PyBuildExt(build_ext):
+             self.failed.append(ext.name)
+ 
+     def add_multiarch_paths(self):
+-        # Debian/Ubuntu multiarch support.
++        return
+         # https://wiki.ubuntu.com/MultiarchSpec
+         tmpfile = os.path.join(self.build_temp, 'multiarch')
+         if not os.path.exists(self.build_temp):

@@ -1,0 +1,24 @@
+From ae34fa0eaf119f0af162bbc3e672fa1e484daad2 Mon Sep 17 00:00:00 2001
+From: Pieter P <pieter.p.dev@outlook.com>
+Date: Fri, 6 Dec 2024 18:09:28 +0100
+Subject: [PATCH] Fix null_ptr_on_copy constructor to support C++20
+
+---
+ casadi/core/optistack_internal.hpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/casadi/core/optistack_internal.hpp b/casadi/core/optistack_internal.hpp
+index 98df7096a8..0341449e78 100644
+--- a/casadi/core/optistack_internal.hpp
++++ b/casadi/core/optistack_internal.hpp
+@@ -35,8 +35,8 @@ namespace casadi {
+ template<class T>
+ class null_ptr_on_copy {
+ public:
+-  null_ptr_on_copy<T>() : ptr_(nullptr) {}
+-  null_ptr_on_copy<T>(const null_ptr_on_copy<T>& rhs) : ptr_(nullptr) {}
++  null_ptr_on_copy() : ptr_(nullptr) {}
++  null_ptr_on_copy(const null_ptr_on_copy& rhs) : ptr_(nullptr) {}
+   void operator=(T* ptr) { ptr_ = ptr; }
+   T* operator->() { return ptr_; }
+   operator bool() const { return ptr_; }

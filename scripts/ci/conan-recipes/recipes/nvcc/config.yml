@@ -1,0 +1,9 @@
+versions:
+  12.8.0:
+    folder: binary
+  12.6.3:
+    folder: binary
+  12.4.1:
+    folder: binary
+  12.2.2:
+    folder: binary

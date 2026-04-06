@@ -1,0 +1,12 @@
+diff --git a/src/batmat/include/batmat/ops/mask.hpp b/src/batmat/include/batmat/ops/mask.hpp
+index ec9a030..bb45db5 100644
+--- a/src/batmat/include/batmat/ops/mask.hpp
++++ b/src/batmat/include/batmat/ops/mask.hpp
+@@ -1,7 +1,6 @@
+ #pragma once
+ 
+ #include <batmat/simd.hpp>
+-#include <immintrin.h>
+ 
+ namespace batmat::ops::detail {
+ 

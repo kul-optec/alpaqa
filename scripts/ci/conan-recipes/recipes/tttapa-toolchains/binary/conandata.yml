@@ -1,0 +1,480 @@
+sources:
+  "1.2.0":
+    "15.2":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-focal-linux-gnu-gcc15.tar.xz"
+          sha256: "ded78e06b146c72f74b7238fcaa9a4eff469b0c82556716c33c9de1ea453f054"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-bionic-linux-gnu-gcc15.tar.xz"
+          sha256: "92cd7d00efa27298b6a2c7956afc6df4132051846c357547f278a52de56e7762"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-centos7-linux-gnu-gcc15.tar.xz"
+          sha256: "69886381038530de1e990d95bd91cc9e7cb0daefe0cddfe53ea9118fff45e389"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-aarch64-rpi3-linux-gnu-gcc15.tar.xz"
+          sha256: "90451fa51870864493ca7e2a876196d7e7e4671f8a12c7d351141b0251c2ad14"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "2dab20c10d9af901656c7ba2b18e2288726ad2a59d81d7d63adc832ac5f0e802"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv7-neon-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "759a37f95d5898ed15ceef26ab75d9ea9e48fa3d9fe609d0a6b857493d957453"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv6-rpi-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "2486745e91000c811ddacda6bc7d247b2e5d19546db41bba154e57412ba28fff"
+    "14.3":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-focal-linux-gnu-gcc14.tar.xz"
+          sha256: "71a278c6bc2c453ad25c621d51e2c08efc70aa976616683f6d23d5f6df4995c8"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-bionic-linux-gnu-gcc14.tar.xz"
+          sha256: "51374db4bf34c97358ca1609e91a3bc36d56feddc6be74ba87211c426faa8b22"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-centos7-linux-gnu-gcc14.tar.xz"
+          sha256: "7123f30e1ceae84d3e5ee5036f16507e2c3e8558413f15a1eafa8bacae504455"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-aarch64-rpi3-linux-gnu-gcc14.tar.xz"
+          sha256: "c8ba6e72beac5eee8089b5d3caad3bb879f98fe683ef9baaf1d8d2882ea6f767"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "ffb7d2b7b10094ecbb6237684754574945f737f60f1ceccdc4864b6d81eb85f0"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv7-neon-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "9e9e723f11f277db703568731df467381100f9a4f609364d3dc4410cf095381d"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv6-rpi-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "2b10b80911b0114d4f66e1a6df43f492d6accf5b2f26aab426f2b7e821d4033f"
+    "13.4":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-focal-linux-gnu-gcc13.tar.xz"
+          sha256: "b01fd39f13d1e6daa22711919bbb8ceaee0dfcca3451dbaa47410e259d0d5313"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-bionic-linux-gnu-gcc13.tar.xz"
+          sha256: "1d465ac8e56d93b287b1971d6e2ac8fed66a00ced1bf98321c3ce0cb87f02789"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-centos7-linux-gnu-gcc13.tar.xz"
+          sha256: "b81766d893a5c9846d392790caa7480254e57f856a83108fddd2e3b7ecf7d565"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-aarch64-rpi3-linux-gnu-gcc13.tar.xz"
+          sha256: "58eeccf88f81f8b2157069fde993fa82c8694553e23cd3bc5b8e455e02f4ea03"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "c13a1efb463c09a3e94041f9b797c691f726953fcdbf821de65f9954304797bb"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv7-neon-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "d7f5f2b00d89522934e756fb0eb1fd21252f3a54019d5dcf728fb73fcbc1f3fa"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv6-rpi-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "70a59846fcfb37e3e9ef9ad9605a7972ae74257fd739dbd17e1ed4ca167b224e"
+    "12.5":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-focal-linux-gnu-gcc12.tar.xz"
+          sha256: "387cfe225ae4324a8ddb5f3054d9b26ed287868e6e945f1d86ee4bd37540db6d"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-bionic-linux-gnu-gcc12.tar.xz"
+          sha256: "40ae98ddece6c081e481304ead79b9017360e6db77f3a4bddcaa0bd956aa4d71"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-x86_64-centos7-linux-gnu-gcc12.tar.xz"
+          sha256: "9848a2ff5f2cc7cfadfe63f4e2a37bcb29cbbcc985e389221145eccc53f80aab"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-aarch64-rpi3-linux-gnu-gcc12.tar.xz"
+          sha256: "b664626b436658d91a49ebd0e1efc7a315ca564ee7535cbd29b25ebacc7aaa7a"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "267eb0bf3e9253c1e2d56c1f2f60525ecdfea7d5ca7068f2947e85b0c0b81c7b"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv7-neon-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "4aaaa942e2710e69bc3bf869335d638e0e5efc730348094988a13662d37968a3"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0/x-tools-armv6-rpi-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "1e9acde0d4a0467318aec11229f0bae1bd2245c99a9f6ec445a2959d1b1c2de7"
+  "1.2.0-alpha.1":
+    "15.2":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-focal-linux-gnu-gcc15.tar.xz"
+          sha256: "6239ed9139f6411fcde4cbb11d1aba7bf0c7672f05a3f097e037d56adedf177e"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-bionic-linux-gnu-gcc15.tar.xz"
+          sha256: "8cd7daa12c238c5a5e5b67cc378fe710ff80e8ada8cb368c2bc2d3eac7a9dd44"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-aarch64-rpi3-linux-gnu-gcc15.tar.xz"
+          sha256: "d3cadcd62951cd28ff9feb6dc2ff2a51aed2e10e4b5b55b2713b2815d299288f"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "0ca09201679baba84d4c404eb5c0160cb2a0984f9d5a1078f3c067f68ec50da9"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv7-neon-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "a1b4bb16fecfecc3c5eb0630b15545afce1027222597bd2d11418c0a9248f73f"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv6-rpi-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "25e1cfbe100d94b2c31356b91c980909369b3c4349e6f410776316e0aa3c5c8a"
+    "14.3":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-focal-linux-gnu-gcc14.tar.xz"
+          sha256: "d249cf54d2ed88fac90da468d175cdffeb47068b05d11b4e4179ceeea79710b0"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-bionic-linux-gnu-gcc14.tar.xz"
+          sha256: "6bd7bb563849b72481a2abbbe855f2bbb5f5f7de198ea68b8b6b0f122da975d0"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-aarch64-rpi3-linux-gnu-gcc14.tar.xz"
+          sha256: "b00bc05c2d91632b2f884fbe6960fc53fd6cdf652f317100f9e0934eddb89c7e"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "298f7bbd91ddcb867b7dcbf49386b1bb336e163173838c21d50d3cb2b483c55c"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv7-neon-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "084c2cf85960d2e43bd0a014d619eb99d5df24625c2a2b9142a14813157ebd8c"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv6-rpi-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "e06df0b3594c50df600a517c55c140414a80c3457c0a367fa443e05bedd6855b"
+    "13.4":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-focal-linux-gnu-gcc13.tar.xz"
+          sha256: "f955fd5c6ecb991a3a3a32bb88503d82cb591119b9781eceae103a22aed530ee"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-bionic-linux-gnu-gcc13.tar.xz"
+          sha256: "1b40ba850cf2d2e15793b1821af245456ac26a7eccc982a2e2fce9fc0ba8ea43"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-centos7-linux-gnu-gcc13.tar.xz"
+          sha256: "4f3159aa31286bcca38adb48b3da5e113dcd0e157816a363f515a8f153c41227"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-aarch64-rpi3-linux-gnu-gcc13.tar.xz"
+          sha256: "069f754b9ae4fd5d9c680b8c14821078b83bd77d07e6a958abc9ede694cc062b"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "39eb84d165ae705708a70c7a9a6f57650c2bd0c17f8e4453e9e3c0293a1de464"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv7-neon-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "88a27cf2f15189e5d330b8c65e1a9f78cf0f898c80f7a39b6dc8c81512744180"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv6-rpi-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "c8b72940c86a7eef59e75e54683dc3fb3da5a6edf4d6ad4aa21a34051094c471"
+    "12.5":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-focal-linux-gnu-gcc12.tar.xz"
+          sha256: "434ef7137c54142e49def5e57b7a7061236d153d628d3a7d0a49486b72709361"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-bionic-linux-gnu-gcc12.tar.xz"
+          sha256: "bfc118e67115121e4bee48fd13609332ed96aa481f61bf3d79d78f112a3c73ab"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-x86_64-centos7-linux-gnu-gcc12.tar.xz"
+          sha256: "e515230c5989a6ada63a9d710bf29c50e404c73a49ef8f37ccdefb2ebea13729"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-aarch64-rpi3-linux-gnu-gcc12.tar.xz"
+          sha256: "be905417da6b39d62cfa0f1df603d0d5ad804e9ac5f3f371185b69628ab6142c"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "657573f50a7880ce526ecadf36e3f30b9278d019ed16a512b6282aecd5793462"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv7-neon-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "9ff653c326e1fff8016c183c134a387292a52b4f3297c5bc606131bddeaf18d0"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.2.0-alpha.1/x-tools-armv6-rpi-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "21eded942f59d91a41e0abf0a3a4dfe7b2f475fdd7b66b13f34d22853a9289a8"
+  "1.1.2":
+    "15.2":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-focal-linux-gnu-gcc15.tar.xz"
+          sha256: "d1139e5d2e399047de61c365863606c9d021b3a97896c8600ab8ea665cc664e5"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-bionic-linux-gnu-gcc15.tar.xz"
+          sha256: "df94b924fd7cdaf15b71b0e39e8a077d98ffb1048c567e491de33aa31a809d8f"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-aarch64-rpi3-linux-gnu-gcc15.tar.xz"
+          sha256: "28625090eb9febcd40d35cdf440187cf301adc52a40b5ea61cb9c433f83adbc2"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "b3e6c3e418d6e2ebfba61c9307a7301772c11a31f9b3627aa2dad2c8a5c03cb6"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv7-neon-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "7c3b18eb7176ccbe513a12a85a9de32de29a099bebadecf7da1041959b4b76e6"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv6-rpi-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "4a07e0578acda924a1d5a0e25e2f24d1ad1104487ab4570db8b8d3f4e4d6aff3"
+    "14.3":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-focal-linux-gnu-gcc14.tar.xz"
+          sha256: "1a66947bfd9a61d2793592ad1540691c2624059adbc7ad1498dd5cbeeb14647d"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-bionic-linux-gnu-gcc14.tar.xz"
+          sha256: "65ccb3cde094704f4c1dd69d1c78110c094d029f1a7e275268cd7c49643085bf"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-aarch64-rpi3-linux-gnu-gcc14.tar.xz"
+          sha256: "32b1ee42b2fbdb7374bc9f326e683c472bc89ebf64466b93e48bac5abe5ba8c8"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "9e1a2edc86079494b309c18876534809108b2a5e2ace63f88de59b51f198eeac"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv7-neon-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "96df4a0517c09598db7e6e8646e7bd2a91b77bae6ec653c548c51316ea716100"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv6-rpi-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "88876d487476aa351a15ba3d66b9f96e24f9eab8a6e27745e857d2c6dd7524b0"
+    "13.4":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-focal-linux-gnu-gcc13.tar.xz"
+          sha256: "6e6b9819e3282e924de639250afceb3d4ec971664801c8aab01ba0a4b80c9080"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-bionic-linux-gnu-gcc13.tar.xz"
+          sha256: "23d28e8899960e6df85dc5bea71dd4257b986c6082659ccdeccbf7835420f99c"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-centos7-linux-gnu-gcc13.tar.xz"
+          sha256: "1236e178dd6f530030a9cba331f03ac1e2c81a0649908a9a493498040c5ae20a"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-aarch64-rpi3-linux-gnu-gcc13.tar.xz"
+          sha256: "a6be852429e82225773f1930b85c0100cce6050c4f47cd992ce3435c3af9523a"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "b4a02f0d52f64c81fce50dfce56f5dc7720406ae0feeb8a3beb38cb8f602512e"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv7-neon-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "3b7855b5a638d7f266445c0fb3cbb68922bec0ea3cddfe9d2aa5e8e04075dbf4"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv6-rpi-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "1e89d389567019b31f308ea9912d2ce6225142a6644212ec6e31966d1212902d"
+    "12.5":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-focal-linux-gnu-gcc12.tar.xz"
+          sha256: "e16c700afe8043673e7a84998f715d997d2abeb5a37fbe68c232094f6003d9b2"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-bionic-linux-gnu-gcc12.tar.xz"
+          sha256: "5ff4871c11d008f318edf8e56b6db28e850188ab034ef6a0599ce242db183c2e"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-x86_64-centos7-linux-gnu-gcc12.tar.xz"
+          sha256: "53b564788332cdc48763a337cb0beb914d02d36f8343c6dc29b5c06433f5dccc"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-aarch64-rpi3-linux-gnu-gcc12.tar.xz"
+          sha256: "695abefb66f61ef1e30e5c81bee0ef8fe5f1baed60935de65279baa15e82a09c"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "5fd91fd44f657e3c82ec75c2a518fe99523983c79b0710a2c3fca3f293e41b05"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv7-neon-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "c0d08cb743a97e72485aab62e2425a87523654ef79c21d98fc963e03b1ee3201"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.2/x-tools-armv6-rpi-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "f9f46b8dbbd69abf8ea7aa7b400f1466d9506ec2102480c065056929770793ff"
+  "1.1.0":
+    "15.1":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-focal-linux-gnu-gcc15.tar.xz"
+          sha256: "9e111d39975a55f78b48cf86001251203a7b99b7899875b6723870abb01c75fe"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-bionic-linux-gnu-gcc15.tar.xz"
+          sha256: "8043f9e9469bbe774ca872d429a409d9cac161e5e4f5ac2e69e55e2c5912ee8c"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-aarch64-rpi3-linux-gnu-gcc15.tar.xz"
+          sha256: "7bb8eda8e3b42c6467d60b6bd5ee60821aa5b9cf63c7a1107101c06284af92ff"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "f8b69ff5e6ffbde15f5ce72878b3c7cf7eedebde4b1f0cfa82fc20aa5ef35d41"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv7-neon-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "fcf7ce06126896ac44cfdf70f3841877ebbb56a3d191c378569386a7b24ad5dd"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv6-rpi-linux-gnueabihf-gcc15.tar.xz"
+          sha256: "af576b8ba7a0a86dcfbd240a6bedddab95b6351218c41cb58a4d0d65e7aa052f"
+    "14.2":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-focal-linux-gnu-gcc14.tar.xz"
+          sha256: "a0af50c5a36c9d31753ce872404d70f36c8f821240ddce7b6dc6f4f032ed82e0"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-bionic-linux-gnu-gcc14.tar.xz"
+          sha256: "fcb865bfe49a78a56ed27adc06f81578731a08023e5add3c5e5686467d976f56"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-aarch64-rpi3-linux-gnu-gcc14.tar.xz"
+          sha256: "bad911765e51110a06cae9993c36067ff149b307f04aca4cccb9fa55538f3b68"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "198ca1c4a2651cde329093af59bfa127af310d535a4b5b6beafd31015bd68f0b"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv7-neon-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "e5fab25858bb4e6f031e54b380a013214f15e007b715ca5537c230defe4c44d2"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv6-rpi-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "db803dcaa5d22da8fdb6134fa13548650b1fc7a7b2a8c36200343f49dce34f84"
+    "13.3":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-focal-linux-gnu-gcc13.tar.xz"
+          sha256: "417916917e3368767284160624ec179c5b043f3b4b355f82110463c429f7f1b0"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-bionic-linux-gnu-gcc13.tar.xz"
+          sha256: "563778f4a4ed687746997c69dec023012c4a2d2bf226fe90236995ec1ed40c18"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-centos7-linux-gnu-gcc13.tar.xz"
+          sha256: "47fd628999f2452fed2e880ec7455fa52f3104b79dd977bdbb4319e17d5617c2"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-aarch64-rpi3-linux-gnu-gcc13.tar.xz"
+          sha256: "b9bb53be51116bb18a8dc425f315ef006a1525e2cb85dc208660c3959df52bf7"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "bca147bc0082dca4ba360f009e3bdbb843601bb618b1a9a3554c3600cb9c31a3"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv7-neon-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "c2e627bc4eb885deac3ac0d50b35ccbc0bb16bc913db239b2208c9060f828efc"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv6-rpi-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "af4a683349cb4f386267d69a6ac5cbe16bb9d511a9effabc9f8740ca296a7570"
+    "12.4":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-focal-linux-gnu-gcc12.tar.xz"
+          sha256: "6c52c41b334ef7a807cd1b66e249fa8f1711952db5f43e5477c863e739f1aed2"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-bionic-linux-gnu-gcc12.tar.xz"
+          sha256: "6930cdbf9cc6599cac1b904840a60621272fdcdda85eafa996c0c44a17382e9b"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-x86_64-centos7-linux-gnu-gcc12.tar.xz"
+          sha256: "dd2f75fbdd77cf49058afe9ca53647b230ad8a1b3a2065356d7415d318977fb6"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-aarch64-rpi3-linux-gnu-gcc12.tar.xz"
+          sha256: "25fd06e8079307f5b86f5628b49ab85e097d2bf37bd9f5d5ed9ab16a7796fea3"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv8-rpi3-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "603a763a8151d15a1b0115c21f4f462b49dbb753291abb095eea24a231fa4c63"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv7-neon-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "c1d533c56eb0d2f852e9dfa17e5bb9bc3979502403316a3d8f769e4608053052"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.1.0/x-tools-armv6-rpi-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "5558183bd5d578e7404f21a7a0e89ff6680bca17101cf456f5f169adb014e5e5"
+  "1.0.2":
+    "14.2":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-focal-linux-gnu-gcc14.tar.xz"
+          sha256: "236ea5c116fe3c7129b21c5fdd7218efcb410e821ea7031cb83d543121143ee8"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-bionic-linux-gnu-gcc14.tar.xz"
+          sha256: "0cf4e60c3a545c56ca16464ac0017ed71a269870f8ff6cfc33f54b01a68f83ae"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-aarch64-rpi3-linux-gnu-gcc14.tar.xz"
+          sha256: "90ca8ee5dfe5e4bb464319cb0810161678c18638a51fb63a67798ca6ce8f5bc1"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "326f338b7bc8f3d2e3ed42a44316d11eee8c86686fa4b4d550424a27d04d68d5"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv7-neon-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "b424f98d54ba4399a009ea94fd37e7b76adf7de4dc501128b1ac40ab92a6f057"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv6-rpi-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "6dd76bde733828f74403a3b1c63afbcd531bf369adc53cba72b1293cf3cb35a1"
+    "13.3":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-focal-linux-gnu-gcc13.tar.xz"
+          sha256: "7c4a67fc50577cf2aa0a6623892aea9fa2cc9fc8d49d01f49152462922e34d77"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-bionic-linux-gnu-gcc13.tar.xz"
+          sha256: "d6933e091106e7473559e0a27d7ddd5e14506d3026278d3752ad56962df50b25"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-centos7-linux-gnu-gcc13.tar.xz"
+          sha256: "b70977ff03572986a42beae9ff8f5e33096e931ac20a132a342867288df952f9"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-aarch64-rpi3-linux-gnu-gcc13.tar.xz"
+          sha256: "a949fcfcf0e0ae07040d427f78cfe6ba58f9badd43eca32afc1384599dd940a0"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "65486260db904bed15db2da43e3da207a21949703ec629ca2a09946fd45ad257"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv7-neon-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "883f73f56615e8c8da7806afe43071338d08feff673991ba3e177a5b7b61a66b"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv6-rpi-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "c1137ceecd7a9796b330ecfc5b7910d687f2fd8c81b930a2ff7da23b6377a797"
+    "12.4":
+      Linux-x86_64:
+        x86_64-focal-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-focal-linux-gnu-gcc12.tar.xz"
+          sha256: "3deec74556f8717fa7ec2b5f2dc71030ed6242c3da1ee9c413af5379a5d1ee3c"
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-bionic-linux-gnu-gcc12.tar.xz"
+          sha256: "c479b0f654b01d00b5c14187761ecaa3bd149fed0962c7dc593e9c7239fcc01c"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-x86_64-centos7-linux-gnu-gcc12.tar.xz"
+          sha256: "bfc4a91af5999291f0401f9fece048e34225e3e384bc477bef5a96c7570f6d26"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-aarch64-rpi3-linux-gnu-gcc12.tar.xz"
+          sha256: "d71eb50e3e9a662acd475458997bc1282cf56a17aa325e3a1d5a78e5a0827700"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv8-rpi3-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "fa29c867e8d99fc58dfda2502e36b0505039a3c377c7f61a3156cd0a782030d1"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv7-neon-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "50dd51b53229a36f5e0dfa34ac37d461fef0e878b7dcdcf7f8acc4d75791fe29"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.2/x-tools-armv6-rpi-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "bac7389cba279256c10fe0e813a56886d2f012c00eab4579c5dc00e5c432ca4b"
+  "1.0.1":
+    "14.2":
+      Linux-x86_64:
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-x86_64-bionic-linux-gnu-gcc14.tar.xz"
+          sha256: "d6e2ec5b3b1c1f084aaaabee03532b07227b1dd2c6bce8b24d64a16fbddddc0c"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-aarch64-rpi3-linux-gnu-gcc14.tar.xz"
+          sha256: "550b3a63f134456f22d68eae32dd0e7137aa3ca04dcd738a58ce3d6383ba8c7e"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "65312fd78b08e31df3c3d10db04844286babe36684b16b2a38c06a799d9e2d3e"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv7-neon-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "ec02f32c276e27a66925c23d6650a2505515c608892a0c3ecb7048762c403bbd"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv6-rpi-linux-gnueabihf-gcc14.tar.xz"
+          sha256: "7eabdd6036139a98126e897b2fb308a987faf342f793e18c9eb0f50867c30da8"
+    "13.3":
+      Linux-x86_64:
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-x86_64-bionic-linux-gnu-gcc13.tar.xz"
+          sha256: "3751790ecda721933a9353786c8fd39e08b5bce806308ea2c12926d5bde0e447"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-x86_64-centos7-linux-gnu-gcc13.tar.xz"
+          sha256: "90c42cfc5edf4d6e3dc5155874379f3e950bba6f2bf08efc4f6f61731b937587"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-aarch64-rpi3-linux-gnu-gcc13.tar.xz"
+          sha256: "2f6f2ae614ce38b40eebda693cd8925385f620c2fbc9b82fd34577711e1d7417"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "4558e7619e3b905144a032a5b9d8e30642e8c3966029d1f6e8da6b2ac0519a55"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv7-neon-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "35987a71642245f5c7d069bc108834adbbafa32e2a37122a5f3a63534a9a042d"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv6-rpi-linux-gnueabihf-gcc13.tar.xz"
+          sha256: "ac0457402a43dd4a3a07e454158d5c7ba63a50ca5025abf7c5d6bdb79c30b62a"
+    "12.4":
+      Linux-x86_64:
+        x86_64-bionic-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-x86_64-bionic-linux-gnu-gcc12.tar.xz"
+          sha256: "c701759db49d3e4eb52bbf828ee8bf8a04f6eb93417a83aaa17886eed9335a15"
+        x86_64-centos7-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-x86_64-centos7-linux-gnu-gcc12.tar.xz"
+          sha256: "1e586ef1ba8bc8828bbe3716f878b338aa8c4bda4ee856c0d22d5371d6f7fe7a"
+        aarch64-rpi3-linux-gnu:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-aarch64-rpi3-linux-gnu-gcc12.tar.xz"
+          sha256: "b6a66b9588b6449091316c89ac4b3caf34b1ef4a172d109f116009486af800de"
+        armv8-rpi3-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv8-rpi3-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "9283d875eba8fd5a02816abbbb491f3fee1b4565d31b99fef4994e67c6a7d1d0"
+        armv7-neon-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv7-neon-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "e8bd274ae0df5e982829ae864ed97d79867649a146ad172b3d1e39ea7fe76a29"
+        armv6-rpi-linux-gnueabihf:
+          url: "https://github.com/tttapa/toolchains/releases/download/1.0.1/x-tools-armv6-rpi-linux-gnueabihf-gcc12.tar.xz"
+          sha256: "2e662ff5e2fa7d1ebb47d37e9efba5f5e54b00243ac175711e459589bd00b8d0"

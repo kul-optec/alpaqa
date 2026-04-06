@@ -1,0 +1,13 @@
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index 67a99bdbea3..249afefc969 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -1571,7 +1571,7 @@ LIBPL=		@LIBPL@
+ LIBPC=		$(LIBDIR)/pkgconfig
+ 
+ libainstall:	python-config
+-	@for i in $(LIBDIR) $(LIBPL) $(LIBPC); \
++	@for i in $(LIBDIR) $(LIBPL) $(LIBPC) $(BINDIR); \
+ 	do \
+ 		if test ! -d $(DESTDIR)$$i; then \
+ 			echo "Creating directory $$i"; \

@@ -1,0 +1,7 @@
+sources:
+  "2.10.2":
+    url: "https://github.com/wjakob/nanobind/archive/refs/tags/v2.10.2.zip"
+    sha256: "11ad43c35a1528f546c226e442a062dce117a3afb9d142a8796e41f269e067e3"
+  "2.9.2":
+    url: "https://github.com/wjakob/nanobind/archive/refs/tags/v2.9.2.zip"
+    sha256: "d519a9a5b3f853e1f0c227f5aabdc585a5e879fae9c6d1b03df189ed9a314552"

@@ -1,0 +1,549 @@
+sources:
+  12.8.0:
+    x86_64:
+      host:
+        cuda_cuobjdump:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuobjdump/linux-x86_64/cuda_cuobjdump-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: ddf6fe703e5ff5d55eb921841e2ad75f05f794e7cdb650740ffc5518fb9028f5
+        cuda_cuxxfilt:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuxxfilt/linux-x86_64/cuda_cuxxfilt-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: 095a8be77127288c63f150933f7ea1d18b817f02a3713037c9a924e5844540db
+        cuda_gdb:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_gdb/linux-x86_64/cuda_gdb-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: 62a47ba39c8e4e050e37f3413b9b6e6d231eb6f8485c5c9e8a954bdad55c2d0c
+        cuda_nvcc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/linux-x86_64/cuda_nvcc-linux-x86_64-12.8.61-archive.tar.xz
+          sha256: 145f8779bd56bdfa214447e5cb1b3a206ec1b7398da460e257f2898fd8604c54
+        cuda_nvdisasm:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvdisasm/linux-x86_64/cuda_nvdisasm-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: 102b74439c32f5be7be8aa983aa0251045cf52cb75a05f4ffe32e13c7480090a
+        cuda_nvprune:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvprune/linux-x86_64/cuda_nvprune-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: 8422b4ba0ba87ded97b5daab8d17b044bb408d3902bcaaa62eb9da560f6038f9
+      x86_64:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-x86_64/cuda_cccl-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: dce4f2e7720d4432ab0861ede2243f9cbd46bc675008932bc9dcdb871fc7d60b
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-x86_64/cuda_cudart-linux-x86_64-12.8.57-archive.tar.xz
+          sha256: 5bd3ac35ea8e8ab880e595d5054ee373abf6d9e53dcb8cef0a5c75358dbc0ae2
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-x86_64/cuda_cupti-linux-x86_64-12.8.57-archive.tar.xz
+          sha256: f2b3e26816f9799b21545637f4520b1119de12550dc3a3910fac9883943e9e1e
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-x86_64/cuda_nvml_dev-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: b3d920e772a79360e8ec8579128bcc8bd8fe5116c8c3af256f0e8219bc4cea0c
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-x86_64/cuda_nvrtc-linux-x86_64-12.8.61-archive.tar.xz
+          sha256: df1df922d6af3a01ccfbf4db9125b2c20b9b23bbd4a737be9d2261b241ae77c0
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-x86_64/cuda_nvtx-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: cd869608f15e9ddae9ff39aac0474a3d098e3d7c0e53d2d08956c05824e221a4
+        cuda_opencl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_opencl/linux-x86_64/cuda_opencl-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: 7389890bad60c61ee11be766f3a15839f8c7fb089981204e32a4c49ef0a3b57b
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-x86_64/cuda_profiler_api-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: ebe1b661906c261fea9cc62d0b91bdabd3a2f6efdae64c7d7d83659652755ef3
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-x86_64/cuda_sanitizer_api-linux-x86_64-12.8.55-archive.tar.xz
+          sha256: 2353e67ab7982839cede04a6adaa01906cf2f94cd4170cda29f5f383169bf114
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-x86_64/libcublas-linux-x86_64-12.8.3.14-archive.tar.xz
+          sha256: d634d545a670a43337741e1672b63ef9b989aaba15823f27ee4b4c7f43d790bb
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-x86_64/libcufft-linux-x86_64-11.3.3.41-archive.tar.xz
+          sha256: 04f54ccb47b8785cd47fbaa6c78cda1521950841a2dbac1d95d7ba6a414bb22b
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-x86_64/libcufile-linux-x86_64-1.13.0.11-archive.tar.xz
+          sha256: 9b7766e89114e9625bcec433adb33d2fd520a5ee86e7b25a3eaaf2ae3a36f2b6
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-x86_64/libcurand-linux-x86_64-10.3.9.55-archive.tar.xz
+          sha256: 91923b0e38dc3d0e14c667800ebf95ee7cd290387effc7a0a559144004b5504f
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-x86_64/libcusolver-linux-x86_64-11.7.2.55-archive.tar.xz
+          sha256: 8371ae8dccaac9681cf37155401db155c75183e319c8626800eae8dc756d2d07
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-x86_64/libcusparse-linux-x86_64-12.5.7.53-archive.tar.xz
+          sha256: de3ff527e803aff2c6a35e1e367b405fdc39ab313468554a72d112d54b37b090
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-x86_64/libnpp-linux-x86_64-12.3.3.65-archive.tar.xz
+          sha256: 020037ee6c5e6ea41352b6a82a22bbdc75616339e9453b70ed3e84df51f6a25e
+        libnvidia_nscq:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvidia_nscq/linux-x86_64/libnvidia_nscq-linux-x86_64-570.86.10-archive.tar.xz
+          sha256: 9f57b34e6e87c1fcccd1762fdf3e18fa83a25dd1bffa99af785e1175ac60987d
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-x86_64/libnvjitlink-linux-x86_64-12.8.61-archive.tar.xz
+          sha256: 522ac9a54f9a83bdaeb0f6fbdf9a030c379f53f1bb628d0a554fd33003c3a485
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-x86_64/libnvjpeg-linux-x86_64-12.3.5.57-archive.tar.xz
+          sha256: 00f83dfb3fc88452674a9e816ec11d8a52d0a4de68596d7e130980b461e509cb
+      armv8:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-aarch64/cuda_cccl-linux-aarch64-12.8.55-archive.tar.xz
+          sha256: bd6842730b2e5663595ab6b8c7b74b96dba6baf500c809431034a70691f00439
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-aarch64/cuda_cudart-linux-aarch64-12.8.57-archive.tar.xz
+          sha256: 45a6f64522329448d75e9c6adcd625994fe85f6aff9befe0dd43468aa65cb00a
+        cuda_compat:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_compat/linux-aarch64/cuda_compat-linux-aarch64-12.8.38905961-archive.tar.xz
+          sha256: 66fdedc834695d8763a749fcd1caff1c3d05b1ca497b74c47df71a3aa509d840
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-aarch64/cuda_cupti-linux-aarch64-12.8.57-archive.tar.xz
+          sha256: 75b64bcb5f25ded6df3f37f2596b1ab9404cbdd4ed46d33046aea31a686adb06
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-aarch64/cuda_nvml_dev-linux-aarch64-12.8.55-archive.tar.xz
+          sha256: 1856e7d77acec580cf727c542ab30aba8c33cef3c70a14813868aaa0a73027aa
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-aarch64/cuda_nvrtc-linux-aarch64-12.8.61-archive.tar.xz
+          sha256: 03dcbbc31e87e9a7c83a40a4df2f0600d2474331bb3fbdddc5e01fc469fcd385
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-aarch64/cuda_nvtx-linux-aarch64-12.8.55-archive.tar.xz
+          sha256: 70a50ab4bb6cd68b9ba37def4cd7980397eaf19d4a1695c75a063e0a6b43c601
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-aarch64/cuda_profiler_api-linux-aarch64-12.8.55-archive.tar.xz
+          sha256: f74a025086602ff907d4a6b393bc900c5a4730378ebca718508128aaee06c25c
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-aarch64/cuda_sanitizer_api-linux-aarch64-12.8.55-archive.tar.xz
+          sha256: 8342801e13c231f54b8988191e9cbd15ac4f0ecd5c78273aecce3a5885b5ad6b
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-aarch64/libcublas-linux-aarch64-12.8.3.14-archive.tar.xz
+          sha256: 62d358b180ffedbfec120b38aa06c23f00e63a99dd254876efeb6533fe84ee1c
+        libcudla:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcudla/linux-aarch64/libcudla-linux-aarch64-12.8.55-archive.tar.xz
+          sha256: c1276d1f41ab2bcb3cc4e39e14f1fdb3234321f8821451f1b10de4984068a188
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-aarch64/libcufft-linux-aarch64-11.3.3.41-archive.tar.xz
+          sha256: c239667c03cf6ba3af71926518286b95740950b870711d1c44555644dd30d1c9
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-aarch64/libcufile-linux-aarch64-1.13.0.11-archive.tar.xz
+          sha256: 08ff0f554827388c876e6909d2e0844751c70ff9db79e8c93465860fae4a0318
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-aarch64/libcurand-linux-aarch64-10.3.9.55-archive.tar.xz
+          sha256: 561aae0bb1d14266bce879d834ef99ee0230083b3a88ec632baca2412c134d09
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-aarch64/libcusolver-linux-aarch64-11.7.2.55-archive.tar.xz
+          sha256: d64d595a9c502a0a49ff95521e9b0f2c9120a7ecd8f1df1915bc17d0445cc65c
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-aarch64/libcusparse-linux-aarch64-12.5.7.53-archive.tar.xz
+          sha256: da9958295f723ceafdcce2a4cde3f250700b39bcc873244b7012c41ca36f10a2
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-aarch64/libnpp-linux-aarch64-12.3.3.65-archive.tar.xz
+          sha256: 797437cf5223ce2e6d4b363057fdb76e8b384825294442da51ff01d3ced6269a
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-aarch64/libnvjitlink-linux-aarch64-12.8.61-archive.tar.xz
+          sha256: 875057ce2458cb7cd1f28bcc6571db34e7ae2e396b8be62489212b09b4aa93da
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-aarch64/libnvjpeg-linux-aarch64-12.3.5.57-archive.tar.xz
+          sha256: cef58342a4de0df41348e909462b8e713285fc89da1357431e3d851a00fb8bb0
+  12.6.3:
+    x86_64:
+      host:
+        cuda_cuobjdump:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuobjdump/linux-x86_64/cuda_cuobjdump-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: 54d0edf14284249baf8e2db1c26c71d079ad7afd1f41779e22f239ff9e8bf60f
+        cuda_cuxxfilt:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuxxfilt/linux-x86_64/cuda_cuxxfilt-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: f8c4c9434621597367ce826f6ad3c0267cf06ca50625b36ff32777604013235d
+        cuda_gdb:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_gdb/linux-x86_64/cuda_gdb-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: 458cb1c88eb0af9d986071782c48134b9871633b1c7b29b1f73df194b5ae70db
+        cuda_nvcc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/linux-x86_64/cuda_nvcc-linux-x86_64-12.6.85-archive.tar.xz
+          sha256: 840deff234d9bef20d6856439c49881cb4f29423b214f9ecd2fa59b7ac323817
+        cuda_nvdisasm:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvdisasm/linux-x86_64/cuda_nvdisasm-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: aeae4d2bdeaaa0b9149f1c6f486d40b248e8f4f5f1fccba42de5ab69337f7252
+        cuda_nvprune:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvprune/linux-x86_64/cuda_nvprune-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: c633bf85f0263ff01fd2c34bd8341e65363faef775b3127dfdac48d74e6d2b8b
+      x86_64:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-x86_64/cuda_cccl-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: 9c3145ef01f73e50c0f5fcf923f0899c847f487c529817daa8f8b1a3ecf20925
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-x86_64/cuda_cudart-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: f74689258a60fd9c5bdfa7679458527a55e22442691ba678dcfaeffbf4391ef9
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-x86_64/cuda_cupti-linux-x86_64-12.6.80-archive.tar.xz
+          sha256: 5ef9aa8229f81e16f243ebe5b710a8b6a871374bbe1aeb5b95c0ed35791592b7
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-x86_64/cuda_nvml_dev-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: bf297acf16ddc9340859180c5395689fcd890c1e3295915851de3977f306d601
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-x86_64/cuda_nvrtc-linux-x86_64-12.6.85-archive.tar.xz
+          sha256: a4289ba86f0deeccf4e1d94c58559eae4c8184fcb6eaade8fcab45584e6cf402
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-x86_64/cuda_nvtx-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: d97dd4f3bbc23e57302990c1573f737bea55f3174b2c8e3d19067d9b189a446b
+        cuda_opencl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_opencl/linux-x86_64/cuda_opencl-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: aaf8aedb89ad5e4a63ccf564a6ec1073ac17863a7ae2a211a5d8127b3e1d09f4
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-x86_64/cuda_profiler_api-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: 0807ec2335ea358a96f984ce08cc0b3d572b5cc486f9082fc3afa9a1773f2a58
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-x86_64/cuda_sanitizer_api-linux-x86_64-12.6.77-archive.tar.xz
+          sha256: 6839933c940fe023c133f0e2b41a5d02d4068359a1487ec8bcb82ea9a7237d57
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-x86_64/libcublas-linux-x86_64-12.6.4.1-archive.tar.xz
+          sha256: ec682bac6387f9cdfd0c20b25a16cd6ed0b8b3b7ff42be9eaeb41828e3a72572
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-x86_64/libcufft-linux-x86_64-11.3.0.4-archive.tar.xz
+          sha256: 63a046d51a45388e10612c3fd423bb7fa5127496aa9bb3951a609e8b9d996852
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-x86_64/libcufile-linux-x86_64-1.11.1.6-archive.tar.xz
+          sha256: 99ee42e0ebf826f13cea9d15d63f54f225ddc42ff87be1427c58be9692ae25bc
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-x86_64/libcurand-linux-x86_64-10.3.7.77-archive.tar.xz
+          sha256: 981339cc86d7b8779e9a3c17e72d8c5e1a8a2d06c24db692eecabed8e746a3c7
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-x86_64/libcusolver-linux-x86_64-11.7.1.2-archive.tar.xz
+          sha256: 7cf794bf21c4947d0922e378984fa7939f0811bfc355121be1a0d44cd8695c09
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-x86_64/libcusparse-linux-x86_64-12.5.4.2-archive.tar.xz
+          sha256: a9ad797756a7bb9a92bf8a63768dec837af38064ee8be3c32e21382e03604bd8
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-x86_64/libnpp-linux-x86_64-12.3.1.54-archive.tar.xz
+          sha256: 0a7f5bb81e65e60775f831990a567394682a209694b396a4e9233a6c91db65e3
+        libnvidia_nscq:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvidia_nscq/linux-x86_64/libnvidia_nscq-linux-x86_64-560.35.05-archive.tar.xz
+          sha256: 5458c10c0d9d2236ff59aad1229eaf6532e33606225b295c339d5fe6dbcdf63d
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-x86_64/libnvjitlink-linux-x86_64-12.6.85-archive.tar.xz
+          sha256: 1055077ce594fad6fd86d23604c60c64b673cdc8dd01fae7e0cbec633c35930d
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-x86_64/libnvjpeg-linux-x86_64-12.3.3.54-archive.tar.xz
+          sha256: f74f6aee35ef4fb1619bc2a67be943c3d1a84d6746b41788c44a7d3b0d9ae3b4
+      armv8:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-aarch64/cuda_cccl-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: ab8bd5c346ca69c96ac9afb9d317e8cbc0ec8fc32629ca17b38c14b3dede2fb7
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-aarch64/cuda_cudart-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: d5b8f6f5a2ab34066c267daf5f73f25d2f24ea25d8fa3dce427c196ff07504e7
+        cuda_compat:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_compat/linux-aarch64/cuda_compat-linux-aarch64-12.6.36890662-archive.tar.xz
+          sha256: 007cdab536bf0a1ec274faff73cde2233f3ccfe0e6dba2b015fb1b527e7e231f
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-aarch64/cuda_cupti-linux-aarch64-12.6.80-archive.tar.xz
+          sha256: 9a3945219e5cf98c8df612681bd1984a9fdad6d86226bb0e99a515d18f736b4b
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-aarch64/cuda_nvml_dev-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: 56abe6ff8e45f1d07433963093557a82ed92689a4ce9bc6f9a5e1c076141c5bb
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-aarch64/cuda_nvrtc-linux-aarch64-12.6.85-archive.tar.xz
+          sha256: 9debdacfd445d7c8c2bb79e90088e45544f3ed194f614d2904ab6a749b7997ca
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-aarch64/cuda_nvtx-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: 38cafee61f9cf1001e3c2b03de3c85fbea1b4c1b5d84f7fdac72ed7c98cb314a
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-aarch64/cuda_profiler_api-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: f09f8b865fa07093400faaf1ca24133cf9014d5eebe9596d667687a9e16400f9
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-aarch64/cuda_sanitizer_api-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: dbf5b1c1cf51327c449123a80f5b4b3551da3470ff8aa8a11a11902887a6dff8
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-aarch64/libcublas-linux-aarch64-12.6.4.1-archive.tar.xz
+          sha256: 3324e0a995794704874c71397964c4739667c279d3e3cb183e482476df9b57ed
+        libcudla:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcudla/linux-aarch64/libcudla-linux-aarch64-12.6.77-archive.tar.xz
+          sha256: d255c6b436e46d514af4d2899a5166b07204808eaafa6a37539819e360e9cfd1
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-aarch64/libcufft-linux-aarch64-11.3.0.4-archive.tar.xz
+          sha256: beafc176148563833a4271a6913bc318a004037a8b4f5b73904667a33fe6ecb1
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-aarch64/libcufile-linux-aarch64-1.11.1.6-archive.tar.xz
+          sha256: 2d2e461830748ebb508be8cc93c804486618dbd6a53de13fb7976d71a481013a
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-aarch64/libcurand-linux-aarch64-10.3.7.77-archive.tar.xz
+          sha256: eab273ca1d30659f026600d15cd0492d511408ae2141349cdf2edadd3da2661d
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-aarch64/libcusolver-linux-aarch64-11.7.1.2-archive.tar.xz
+          sha256: d7e578143ebd90582873cb4c84f0f29ae1b3f086104a7660f5a63a28a115b9e6
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-aarch64/libcusparse-linux-aarch64-12.5.4.2-archive.tar.xz
+          sha256: fc790c3d0d194fc96212bde94c8a22016e63a07d048ac6e9e49fdc8cf2a2dfcc
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-aarch64/libnpp-linux-aarch64-12.3.1.54-archive.tar.xz
+          sha256: eb0473643b991be77b64b31f5e63437203e1167bbc9274d7f6a6ad5114d048fd
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-aarch64/libnvjitlink-linux-aarch64-12.6.85-archive.tar.xz
+          sha256: 65497b5bf4abd81fa993bf89996e7e9678a801284d8df798ddceb00502972ed6
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-aarch64/libnvjpeg-linux-aarch64-12.3.3.54-archive.tar.xz
+          sha256: e81f56682cb4d6e837d5527aaf1acd26ab8eace470b5e7a32f9a8d685e7ef2bc
+  12.4.1:
+    x86_64:
+      host:
+        cuda_cuobjdump:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuobjdump/linux-x86_64/cuda_cuobjdump-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: ae4f9bcb5333b78a84a3babe23feeb8d48c00b6faa21b31477ce4c19f22f39a4
+        cuda_cuxxfilt:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuxxfilt/linux-x86_64/cuda_cuxxfilt-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 5c9a74786bc84dee6f2ea941f3933ce77bfa26a9135a8d38ee8c3a7183b9b200
+        cuda_gdb:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_gdb/linux-x86_64/cuda_gdb-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: b882e12dd05dd40e4e742c4f77dfbbb493efab87949548896c84ced4ad90ee08
+        cuda_nvcc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/linux-x86_64/cuda_nvcc-linux-x86_64-12.4.131-archive.tar.xz
+          sha256: 7ffba1ada0e4b8c17e451ac7a60d386aa2642ecd08d71202a0b100c98bd74681
+        cuda_nvdisasm:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvdisasm/linux-x86_64/cuda_nvdisasm-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 44018a76ee5977b603b0a1f3176a8398eaa893008dadf23e82d01733c20b5542
+        cuda_nvprune:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvprune/linux-x86_64/cuda_nvprune-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 85d348b08d1e652ac2fd6377d1f837aa1aeaf7f784aa451175fd5ea58fd3b28b
+      x86_64:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-x86_64/cuda_cccl-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: e1636f27a142d24e73dfd831c54bbf5575b498fd5900648d7372fae46f824fdf
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-x86_64/cuda_cudart-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 0483bff9a36e7a44465db3cd42874f6f70f019297dcf803fbefcbf58d7448c8f
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-x86_64/cuda_cupti-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 232f4677a30335f4bafcd4a42b61d4cb65060680067e0dce32966d663f4224ac
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-x86_64/cuda_nvml_dev-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 15af54c7d909f6e24db8b557e34276d70778fcb26f1969b7a9fe42abaa919265
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-x86_64/cuda_nvrtc-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: b5e7a984fcf05d3123684d7926e595306d31fbf99f9b19e9a0d268a02fc75827
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-x86_64/cuda_nvtx-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: f3afccda5ff1e7521cca74153e92708349148294bc75559afe64d57c43763454
+        cuda_opencl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_opencl/linux-x86_64/cuda_opencl-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 34648ff01acb49ec0247e4cb240470b93e9d0c9ee0641091a7bfee0698f09ed9
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-x86_64/cuda_profiler_api-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: fa11c08e39ab35453e07dd5012adc0767408955431fc4acdf64ca4cdd7692646
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-x86_64/cuda_sanitizer_api-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: b719c6b2a8cd330ab0e4361e41dda5493946fb7fa0c4b04c8dbd776fadc3b11b
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-x86_64/libcublas-linux-x86_64-12.4.5.8-archive.tar.xz
+          sha256: c267c4d2cd42065ae2c30ca41a43ddce4e0ecc5484de23f299e3c397b5506eda
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-x86_64/libcufft-linux-x86_64-11.2.1.3-archive.tar.xz
+          sha256: 0963b4b57fb7fe9217e97b494159ff4719f1abdc407b2dc215d71bae0576bb02
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-x86_64/libcufile-linux-x86_64-1.9.1.3-archive.tar.xz
+          sha256: 5bf067c142e0e78d6b5eb9904f0703a1f5f814a27c44cff596f54630582bb2a9
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-x86_64/libcurand-linux-x86_64-10.3.5.147-archive.tar.xz
+          sha256: f3752abef1ffae7bc9180bd9885905e971cc9c28d7f4d5860731a012e07638a3
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-x86_64/libcusolver-linux-x86_64-11.6.1.9-archive.tar.xz
+          sha256: 0a35a16e3bc02ba6fe0393e916da087bac079eb998a01666c79533db4f0d37f6
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-x86_64/libcusparse-linux-x86_64-12.3.1.170-archive.tar.xz
+          sha256: 21b7e5c3afd8c3e761471c644b8bbf36cd528dd0f9d274becbeb09b79dd9bec5
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-x86_64/libnpp-linux-x86_64-12.2.5.30-archive.tar.xz
+          sha256: 9062bec77b9844663692459255f35fe70cf826bce2fc8065278410fc5f27023f
+        libnvidia_nscq:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvidia_nscq/linux-x86_64/libnvidia_nscq-linux-x86_64-550.54.15-archive.tar.xz
+          sha256: 170788919ae9ef6a026a5a784df47e23bb25dcae3b22b1a68dfe91c41f8fe165
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-x86_64/libnvjitlink-linux-x86_64-12.4.127-archive.tar.xz
+          sha256: 0e0ec59ee56d3dfa29c66bd4e225b1a6330d42b36545ab4377880009d42b675c
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-x86_64/libnvjpeg-linux-x86_64-12.3.1.117-archive.tar.xz
+          sha256: 9f297a160b8a934e8095c4eb2ee1674a3497e06ca6a0a7d6f2cdea983d443c96
+      armv8:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-aarch64/cuda_cccl-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 23ddd81e43f1522247fcdc1948f3473d2f474a048527c1f20fb3bec345807e2c
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-aarch64/cuda_cudart-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 0fc5240b1c2a27169b3fefb1e7390cdb0177cb86469fd545f580cd4cc69c7fde
+        cuda_compat:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_compat/linux-aarch64/cuda_compat-linux-aarch64-12.4.35753180-archive.tar.xz
+          sha256: 7b8a09396c61ccf94a55a418c6a16e371f4e8b9fc4bdae7e2c33cbabcb7a97f3
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-aarch64/cuda_cupti-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 93275f4069a05e2342f4648130e039de20900bc3e81d797a7239032ddec5556e
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-aarch64/cuda_nvml_dev-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 1ccaf8990080ac498f39799f081af770b476983bc0a24f40f168985379029519
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-aarch64/cuda_nvrtc-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 9fb6f14168c3194225f29f85467d95150ea65ea676f86303c5ea47ef42ff302f
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-aarch64/cuda_nvtx-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: d7fbb08e056f11bacae8d4165d5bd4ec4cc601ab326dc36e76678eec6971f612
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-aarch64/cuda_profiler_api-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 9ec80b22522f8491425f4194f86ac4f74a990207bd1fa85169829be5dd450076
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-aarch64/cuda_sanitizer_api-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: d93b5d59c0a18753678fbcce9fa0d83c6b2ff008cebbcb226a2e138b26305aa9
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-aarch64/libcublas-linux-aarch64-12.4.5.8-archive.tar.xz
+          sha256: 1d3886c1da442325d21424f5c021957bdb0c9c8b0b8aef7bf5ca5a449f60490b
+        libcudla:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcudla/linux-aarch64/libcudla-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: ed418c2104eeb8edd640c8e7694c548e57f42e3f92b53486b16c61db1613232a
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-aarch64/libcufft-linux-aarch64-11.2.1.3-archive.tar.xz
+          sha256: 538735221a110b052d21ebfe57f710572814b4d8a820c125ce63db621f6b973b
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-aarch64/libcufile-linux-aarch64-1.9.1.3-archive.tar.xz
+          sha256: 90e691a5eec221701231401aa645b95c25c7ec9c509f00717bfdea6399d8c678
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-aarch64/libcurand-linux-aarch64-10.3.5.147-archive.tar.xz
+          sha256: 3be3a69ab2b242cfc78ef2f85a14c3d02b04d4e64a4345c75f565d981ae99415
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-aarch64/libcusolver-linux-aarch64-11.6.1.9-archive.tar.xz
+          sha256: 82050419231f3ab6252cf4edb6673504adcdd712cb34ab519f7913beadb8526e
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-aarch64/libcusparse-linux-aarch64-12.3.1.170-archive.tar.xz
+          sha256: 0ae1b89c7c26aa1fc1c59e4b5fd65b37bbefe0914cae3b36e057e8a66bd3c349
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-aarch64/libnpp-linux-aarch64-12.2.5.30-archive.tar.xz
+          sha256: c3eaaa8ac7e566d0a0452b1451c52d453f4509a236164b2b231cd194dcd2d7a6
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-aarch64/libnvjitlink-linux-aarch64-12.4.127-archive.tar.xz
+          sha256: 104229ab8ed7f585339a4b4e43f7926d8f7478e9b376a376613bbe402dfd5e5b
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-aarch64/libnvjpeg-linux-aarch64-12.3.1.117-archive.tar.xz
+          sha256: 9950455d771f18ba4dc4f60de75ed072e04b19d9ea6c01f69b40315b10709194
+  12.2.2:
+    x86_64:
+      host:
+        cuda_cuobjdump:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuobjdump/linux-x86_64/cuda_cuobjdump-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 6c5c3d6e50f3ea14fcd356a83338110882305bffa8d5e4eecbaaf7479599f0d0
+        cuda_cuxxfilt:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cuxxfilt/linux-x86_64/cuda_cuxxfilt-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 56b3dd86ee2ed566eeff24f8e09e80870e59888a8c3ff7114b97ea51461d97dd
+        cuda_gdb:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_gdb/linux-x86_64/cuda_gdb-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 94f8b223412689544e86bc28660acf4f53e75674eeba2c9a62b51ff58686f9fc
+        cuda_nvcc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/linux-x86_64/cuda_nvcc-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 3feaab191e1ae3fded02c02b0f24453069ada96b2e3a750251293b36079dc2f1
+        cuda_nvdisasm:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvdisasm/linux-x86_64/cuda_nvdisasm-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: ca07e223ff3d9954ff2664f90ea1bdfcde1c3cbdcdfd0dbfcd131c36f6ae0449
+        cuda_nvprune:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvprune/linux-x86_64/cuda_nvprune-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: f5cf2db9d3214d540490c663691b171b11531be98611b4e6b86b208c7ee4f5cf
+      x86_64:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-x86_64/cuda_cccl-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 90fa538e41f7f444896b61d573d502ea501f44126f8ff64442987e192a8a39dd
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-x86_64/cuda_cudart-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: baebd331249bca0edf36776ead90e6b2024ffee01ea26cd9dd07344bebeaff08
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-x86_64/cuda_cupti-linux-x86_64-12.2.142-archive.tar.xz
+          sha256: b269a3616634c6bbab8b0c3929aae05d9f7d7dc5f0f1a07f35d8847196965b6e
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-x86_64/cuda_nvml_dev-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 9542ff071138d5efd541071ed4211d515b90fc988afdf7ba5b8ff1e863630429
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-x86_64/cuda_nvrtc-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: d13903b5785f9c2157bec4c0d48f2217bfd9079dae5e9873901e4723a83a31d4
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-x86_64/cuda_nvtx-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 2651bfb5c15fc546556da2d6b1dc48c97e1ee6f8c38d3f1910df56f24d5d028e
+        cuda_opencl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_opencl/linux-x86_64/cuda_opencl-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 2d921db089c490addc3f66047ea51858dc4e77c74a43fd53454c44a3c22a7a87
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-x86_64/cuda_profiler_api-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 4c27538fb10dc86d0a54ff205e4099204ca2534784605dde80284a59be05d7ae
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-x86_64/cuda_sanitizer_api-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 1d02913ab7a1389a13b4f66479be73fe6391df29a53123cf86efba5f88e991d2
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-x86_64/libcublas-linux-x86_64-12.2.5.6-archive.tar.xz
+          sha256: 56ccf7ffbe7ea204fbb0c5c4c55829ef3fb81b2e811f8073fcd0bbef438b262e
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-x86_64/libcufft-linux-x86_64-11.0.8.103-archive.tar.xz
+          sha256: b146efb8bb500ee82519a7783b55c68c36f2c350a61cbba7d7b642ddc0d68bcb
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-x86_64/libcufile-linux-x86_64-1.7.2.10-archive.tar.xz
+          sha256: 60f9e442b09998d1937827b4f56982bfc22fa1c15ede9bc1261e9cc947a94087
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-x86_64/libcurand-linux-x86_64-10.3.3.141-archive.tar.xz
+          sha256: 105ce31a3e83e8e548e35efe8e3b9f18b4fdb30048d0305015c2cf62257a090c
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-x86_64/libcusolver-linux-x86_64-11.5.2.141-archive.tar.xz
+          sha256: 7037b9fda9d5e4cebab204e0850a9df7e6f66724f798c4ca17e9af21dcfe9ba3
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-x86_64/libcusparse-linux-x86_64-12.1.2.141-archive.tar.xz
+          sha256: 042d635487006837e08ebe0c307ee1ccfa026209d0ce2c64183581626c79ff3b
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-x86_64/libnpp-linux-x86_64-12.2.1.4-archive.tar.xz
+          sha256: 82aff958dab64a89ec719ae082290b998082719aea6be4de9d642bf2c9fcbc04
+        libnvidia_nscq:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvidia_nscq/linux-x86_64/libnvidia_nscq-linux-x86_64-535.104.05-archive.tar.xz
+          sha256: ab3704b11cdf381d739fdae98e53aea6aec95538a32efc89cc90dbd3a8595091
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-x86_64/libnvjitlink-linux-x86_64-12.2.140-archive.tar.xz
+          sha256: 1d6339ea90dc0d68e8e3d819c92ca1b3b1a0fab4837587d546a3289c152e5337
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-x86_64/libnvjpeg-linux-x86_64-12.2.2.4-archive.tar.xz
+          sha256: 86f5dde034a89c0ca26f39c6ec14e1ce47c88f7e7852913137153fd45de78f4b
+      armv8:
+        cuda_cccl:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cccl/linux-aarch64/cuda_cccl-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: ca3956b1528b4b4a637f5e9f2d708e955f23ae4510f7aca4fd30080e3329fb02
+        cuda_cudart:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/linux-aarch64/cuda_cudart-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: ec0b5100d7c20819a2b775a479478fb571039b5743eddd5d51e1df0edf7fcb37
+        cuda_compat:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_compat/linux-aarch64/cuda_compat-linux-aarch64-12.2.34086590-archive.tar.xz
+          sha256: fd59f6c5f6c670a62b7bac75d74db29a26f3e3703f0e5035cf30f7b6cfd5a74d
+        cuda_cupti:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cupti/linux-aarch64/cuda_cupti-linux-aarch64-12.2.142-archive.tar.xz
+          sha256: 2659cc15e8cf0ae04c5500a9db4dade5bcef480030821f4dfdb0ff646252aec4
+        cuda_nvml_dev:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvml_dev/linux-aarch64/cuda_nvml_dev-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: be4d96927aa52c7468fd0eb15eaac89526f154a164c4a64732afb502a03bcbf8
+        cuda_nvrtc:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvrtc/linux-aarch64/cuda_nvrtc-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: 30056d9fadac1b6b347e316463cbdb0245ef699f0ba51b890f8419827b0d0623
+        cuda_nvtx:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvtx/linux-aarch64/cuda_nvtx-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: cda3e9725103446d17ba8e117230f985834d85bdacb4ed036cef5a113abed352
+        cuda_profiler_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/linux-aarch64/cuda_profiler_api-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: a93303be55363f9e8f2570a1a16abbcf0194f36fd5c894624f73e76d5a3282e2
+        cuda_sanitizer_api:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_sanitizer_api/linux-aarch64/cuda_sanitizer_api-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: 4503ed0e7f2b24bbe8b47ceef5df44f2ef9ddf707d33bdd561964f1d5ad01cf7
+        libcublas:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcublas/linux-aarch64/libcublas-linux-aarch64-12.2.5.6-archive.tar.xz
+          sha256: db001ba7f3e33568846b1c37ccdf54dcea66396975e43720471d799d08e1eb5f
+        libcudla:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcudla/linux-aarch64/libcudla-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: 3e4e3b6ecdd80f8519f3411ee01b479260130665c38b620cad163e7838b3a863
+        libcufft:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufft/linux-aarch64/libcufft-linux-aarch64-11.0.8.103-archive.tar.xz
+          sha256: 15d1ada050f60a5362b80650ef63be4663bf6749a8c298bfa93009ce4b8113fa
+        libcufile:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcufile/linux-aarch64/libcufile-linux-aarch64-1.7.2.10-archive.tar.xz
+          sha256: 36477dbe734c00945ff5f99369c9324bd560c4ad65b65a260996ae41d3b2e4f5
+        libcurand:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcurand/linux-aarch64/libcurand-linux-aarch64-10.3.3.141-archive.tar.xz
+          sha256: b1430ba8424f638ef1eeb16a602641d68d9929b88f5a6328217da0d660a0694e
+        libcusolver:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusolver/linux-aarch64/libcusolver-linux-aarch64-11.5.2.141-archive.tar.xz
+          sha256: 988c5e61477e4425c02b3c162c6e8eaad907452ccbdcd0297040e9c0c0ac12df
+        libcusparse:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libcusparse/linux-aarch64/libcusparse-linux-aarch64-12.1.2.141-archive.tar.xz
+          sha256: 12f3b910e7facb0f4204cdfd9cc1d46e828a6d6d220da36e852bb4be3fa10b15
+        libnpp:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnpp/linux-aarch64/libnpp-linux-aarch64-12.2.1.4-archive.tar.xz
+          sha256: b046373786657d7f8c7a2aca170900d38ec62bd91c728489e2ed62f78e5ac588
+        libnvjitlink:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjitlink/linux-aarch64/libnvjitlink-linux-aarch64-12.2.140-archive.tar.xz
+          sha256: 42f0caf3f922464edda5b8c1973ad388a39d606245793c59ebbaefc69cbc327d
+        libnvjpeg:
+          url: https://developer.download.nvidia.com/compute/cuda/redist/libnvjpeg/linux-aarch64/libnvjpeg-linux-aarch64-12.2.2.4-archive.tar.xz
+          sha256: 3fc0049b56dbfc380eebcaf77cdeddd2a4f1ea71ab89a2caaaf529924d52404d

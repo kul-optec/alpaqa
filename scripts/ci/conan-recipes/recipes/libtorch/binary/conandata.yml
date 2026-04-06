@@ -1,0 +1,16 @@
+sources:
+  2.6.0:
+    Linux:
+      cpu:
+        url: https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.6.0%2Bcpu.zip
+        sha256: 6887b5186e466a6d5ca044a51d083bb03c48cb1b4952059b7ca51a5398fbafcc
+      'cuda-12.4':
+        url: https://download.pytorch.org/libtorch/cu124/libtorch-cxx11-abi-shared-with-deps-2.6.0%2Bcu124.zip
+        sha256: be21b2ad0d7848fed3f909711889a549864b6cf06d564c58454eeb32a76eaaae
+    Windows:
+      cpu:
+        url: https://download.pytorch.org/libtorch/cpu/libtorch-win-shared-with-deps-2.6.0%2Bcpu.zip
+        sha256: f2c2e46073848a8e0150984ef26af7c112149a61401063dd4b1f12b7905dac41
+      'cuda-12.4':
+        url: https://download.pytorch.org/libtorch/cu124/libtorch-win-shared-with-deps-2.6.0%2Bcu124.zip
+        sha256sum: f7e77cf17642b41f2c1708235687744131e21e137eaa1e2e31fb9446685c784d

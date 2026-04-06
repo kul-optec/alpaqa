@@ -1,0 +1,24 @@
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index b987a13b93e..bb4e0f4a3ec 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -1652,7 +1652,7 @@ libainstall:	python-config
+ 		else	true; \
+ 		fi; \
+ 	done
+-	@if test -d $(LIBRARY); then :; else \
++	@if test -e $(LIBRARY); then \
+ 		if test "$(PYTHONFRAMEWORKDIR)" = no-framework; then \
+ 			if test "$(SHLIB_SUFFIX)" = .dll; then \
+ 				$(INSTALL_DATA) $(LDLIBRARY) $(DESTDIR)$(LIBPL) ; \
+@@ -1664,7 +1664,9 @@ libainstall:	python-config
+ 		fi; \
+ 	fi
+ 	$(INSTALL_DATA) Modules/config.c $(DESTDIR)$(LIBPL)/config.c
+-	$(INSTALL_DATA) Programs/python.o $(DESTDIR)$(LIBPL)/python.o
++	@if test -e Programs/python.o; then \
++		$(INSTALL_DATA) Programs/python.o $(DESTDIR)$(LIBPL)/python.o ; \
++	fi
+ 	$(INSTALL_DATA) $(srcdir)/Modules/config.c.in $(DESTDIR)$(LIBPL)/config.c.in
+ 	$(INSTALL_DATA) Makefile $(DESTDIR)$(LIBPL)/Makefile
+ 	$(INSTALL_DATA) $(srcdir)/Modules/Setup $(DESTDIR)$(LIBPL)/Setup

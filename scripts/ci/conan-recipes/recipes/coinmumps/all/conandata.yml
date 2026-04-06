@@ -1,0 +1,8 @@
+sources:
+  "3.0.7":
+    url: "https://github.com/coin-or-tools/ThirdParty-Mumps/archive/refs/tags/releases/3.0.7.tar.gz"
+    sha256: "3847b3665e7235ead8710b13ee7f19159926e33a640a0225c08ad766db02d761"
+mumps-sources:
+  "3.0.7":
+    url: "http://coin-or-tools.github.io/ThirdParty-Mumps/MUMPS_5.7.1.tar.gz"
+    sha256: "43b3e7bcbf1d7c71e32b00b82c583931c2f6629a396799a0878518fa08dd4a64"

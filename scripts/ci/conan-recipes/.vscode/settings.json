@@ -1,0 +1,8 @@
+{
+    "black-formatter.args": [
+        "--line-length=100"
+    ],
+    "editor.rulers": [
+        100,
+    ],
+}

@@ -1,0 +1,27 @@
+name: 'CI: Test'
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        version: ['==2.15.0', '<3']
+      fail-fast: false
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+    - name: Install Conan
+      run: pip install -U pip 'conan${{ matrix.version }}'
+    - name: Set up Conan
+      run: conan profile detect -f
+
+    - name: Build
+      run: >
+        conan create recipes/tttapa-toolchains/binary --version=1.0.2 -vtrace
+        --build=missing --build-require -s compiler.version=14 -s compiler=gcc

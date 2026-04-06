@@ -1,0 +1,17 @@
+sources:
+  "tttapa.20250625":
+    commit: 543175518938b33bb219e0bd48e6d8e3fae6aa48
+patches:
+  "tttapa.20250625":
+    - patch_file: patches/0006.patch
+      base_path: simd
+    - patch_file: patches/0009.patch
+      base_path: simd
+    - patch_file: patches/0010-isfinite.patch
+      base_path: simd
+    - patch_file: patches/0012-all_of-any_of.patch
+      base_path: simd
+    - patch_file: patches/0015-sqrt512.patch
+      base_path: simd
+    - patch_file: patches/0018-static-range-size.patch
+      base_path: simd

@@ -1,0 +1,7 @@
+sources:
+  "tttapa.20260119":
+    url: "https://github.com/giaf/blasfeo"
+    commit: "b7975786b7fd6bda0638a559b30bf517d0aa119c"
+patches:
+  "tttapa.20260119":
+    - patch_file: "patches/0003-sign-mask-section-size.patch"

@@ -1,0 +1,68 @@
+sources:
+  "22.1.0":
+    llvm:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.0/llvm-project-22.1.0.src.tar.xz"
+      sha256: "25d2e2adc4356d758405dd885fcfd6447bce82a90eb78b6b87ce0934bd077173"
+  "21.1.8":
+    openmp:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/openmp-21.1.8.src.tar.xz"
+      sha256: "856b023748b41ac7b2c83fd8e9f765ff48a4df2fe6777d2811ef7c7ed8f2f977"
+    cmake:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-21.1.8/cmake-21.1.8.src.tar.xz"
+      sha256: "85735f20fd8c81ecb0a09abb0c267018475420e93b65050cc5b7634eab744de9"
+  "20.1.6":
+    openmp:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.6/openmp-20.1.6.src.tar.xz"
+      sha256: "ff8dabd89212cd41b4fc5c26433bcde368873e4f10ea0331792e6b6e7707eff9"
+    cmake:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.6/cmake-20.1.6.src.tar.xz"
+      sha256: "b4b3efa5d5b01b3f211f1ba326bb6f0c318331f828202d332c95b7f30fca5f8c"
+  "17.0.6":
+    openmp:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/openmp-17.0.6.src.tar.xz"
+      sha256: "74334cbb4dc8b73a768448a7561d5a3540404940b2267b1fb9813a6464b320de"
+    cmake:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/cmake-17.0.6.src.tar.xz"
+      sha256: "807f069c54dc20cb47b21c1f6acafdd9c649f3ae015609040d6182cab01140f4"
+  "17.0.4":
+    openmp:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.4/openmp-17.0.4.src.tar.xz"
+      sha256: "535cbcca075430cb2d4e54a8062cb9646938170aeb72d359f13183f2a31b701a"
+    cmake:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.4/cmake-17.0.4.src.tar.xz"
+      sha256: "1a5cbe4a1fcda56ecdd80f42c3437060a28c97ec31de1748f6ba6aa84948fb0f"
+  "16.0.6":
+    openmp:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.6/openmp-16.0.6.src.tar.xz"
+      sha256: "a2536f06373774f2829d892b72eea5f97bab20e69b26b03042d947f992eb8e38"
+    cmake:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.6/cmake-16.0.6.src.tar.xz"
+      sha256: "39d342a4161095d2f28fb1253e4585978ac50521117da666e2b1f6f28b62f514"
+  "15.0.7":
+    openmp:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.7/openmp-15.0.7.src.tar.xz"
+      sha256: "3f168d38e7a37b928dcb94b33ce947f75d81eef6fa6a4f9d16b6dc5511c07358"
+    cmake:
+      url: "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.7/cmake-15.0.7.src.tar.xz"
+      sha256: "8986f29b634fdaa9862eedda78513969fe9788301c9f2d938f4c10a3e7a3e7ea"
+patches:
+  "20.1.6":
+    - patch_file: "patches/20/0001-disable-build-testing.patch"
+      patch_description: "Disable building of tools, gdb-plugin, tests and docs"
+      patch_type: "conan"
+  "17.0.6":
+    - patch_file: "patches/17/0001-disable-build-testing.patch"
+      patch_description: "Disable building of tools, gdb-plugin, tests and docs"
+      patch_type: "conan"
+  "17.0.4":
+    - patch_file: "patches/17/0001-disable-build-testing.patch"
+      patch_description: "Disable building of tools, gdb-plugin, tests and docs"
+      patch_type: "conan"
+  "16.0.6":
+    - patch_file: "patches/16/0001-disable-build-testing.patch"
+      patch_description: "Disable building of tools, gdb-plugin, tests and docs"
+      patch_type: "conan"
+  "15.0.7":
+    - patch_file: "patches/15/0001-disable-build-testing.patch"
+      patch_description: "Disable building of tools, gdb-plugin, tests and docs"
+      patch_type: "conan"

@@ -1,0 +1,37 @@
+sources:
+  "0.0.8":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.8.zip"
+    sha256: "1999ceae278ed5341c6210ad0749a3ec2118c28ac98935a7d2912c432148f5fe"
+  "0.0.7":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.7.zip"
+    sha256: "0719206e405a294928c038709141b450aad8298140aa6f4a5ee42f2b1480d721"
+  "0.0.6":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.6.zip"
+    sha256: "25cba664f48f1e5dd129a94833645f91d92607d3cd09fcb2ca717f28081050a7"
+  "0.0.5":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.5.zip"
+    sha256: "04a2557d96c1c23e2ccd3781e3fc7390ef00571d6073b5217dabb9819422908d"
+  "0.0.4":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.4.zip"
+    sha256: "d423134c8ce61912e13cf15bfe5f3af14e9e6e18598930c2b8099610a7c8940e"
+  "0.0.3":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.3.zip"
+    sha256: "dd55f10f2d9efba6990a0be878f4360b3360455fa7d45d33f61a541b5cf22f8e"
+  "0.0.2":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.2.zip"
+    sha256: "0d6186e64c26d5c9f93380ad65636096b0b733a78a926543b3041a688528de3d"
+  "0.0.1":
+    url: "https://github.com/tttapa/batmat/archive/refs/tags/0.0.1.zip"
+    sha256: "25cad417a289e8b3476e9a42cdceff54d680db2d094538b64b4f9c116815aae1"
+commits:
+  "0.0.8": "6dac61268e78430a52ea43c2b982e67737e76ac1"
+  "0.0.7": "4f4a5412df2a8af643deccdf8b2bb91394918cb7"
+  "0.0.6": "fc13cfc03acbd1f8845a9ea90baa17c4c6e0a97f"
+  "0.0.5": "22b84a27591342a11092265df0f3f7b978c4b7ab"
+  "0.0.4": "3416fe267f987d97d0c80ac008df9a66ea6faa80"
+  "0.0.3": "adf9ff69479f7d79104ada2356c3a31364a16ba8"
+  "0.0.2": "0404c18ee3aa33f593289e85550e43bd3165ee31"
+  "0.0.1": "d7e0a60cf68d4c2de49bac9b1d0a4611a2dc9b86"
+patches:
+  "0.0.8":
+    - patch_file: "patches/0001-immintrin.patch"

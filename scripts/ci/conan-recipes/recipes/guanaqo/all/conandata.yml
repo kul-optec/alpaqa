@@ -1,0 +1,110 @@
+sources:
+  "1.0.0-alpha.27":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.27.zip"
+    sha256: "84ad617c49dc7c9d35768f944384cf2c72e9778fbe6bbfb6a5937e85ec338f43"
+  "1.0.0-alpha.26":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.26.zip"
+    sha256: "aca610ad8abbda4af7512c17f81719b6fc7c9363ac4c3c346bcb34c98bee3b35"
+  "1.0.0-alpha.25":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.25.zip"
+    sha256: "b8afc7eb7f9cd9584e568d8321499043c1f2b1d45753d4a49de184261f82d468"
+  "1.0.0-alpha.24":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.24.zip"
+    sha256: "c3b5fc8118e9e34d11c196d96a53dfe974ddf1c8bfdb17ca2b04f971d70fab61"
+  "1.0.0-alpha.23":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.23.zip"
+    sha256: "395a5d6eca68e2db33259e588e066d4c0178c23d91ff823c722cf871167982d5"
+  "1.0.0-alpha.22":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.22.zip"
+    sha256: "c521828af061983d11bc31e133aade4f90a7616ec20a1853bcd6c46365ba1147"
+  "1.0.0-alpha.21":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.21.zip"
+    sha256: "f3bbd4e7035e601d8494a4d9e6f1de063f304491352851c49ed290da42732320"
+  "1.0.0-alpha.20":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.20.zip"
+    sha256: "d3bebae86d479a7c850dbc0bc641bfae254f154b8dc2239c6b4f06420d35dd52"
+  "1.0.0-alpha.19":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.19.zip"
+    sha256: "d984b6aca9c02394d9d128c13f5f05d7b56c63d0c596d0276f804464a1dfc76d"
+  "1.0.0-alpha.18":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.18.zip"
+    sha256: "13203df8dc2a2f2752be7f6a7f94c8d15216dc84fd980faf74b26b09459907b3"
+  "1.0.0-alpha.17":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.17.zip"
+    sha256: "1917a7a560134f76fcb530e6289608d496b131b0ee7d6f7a6965ae0525c0da8c"
+  "1.0.0-alpha.16":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.16.zip"
+    sha256: "6b6c67e2f356168e3d613ef60ad32a8903b480421e9587afc94d29c98291af46"
+  "1.0.0-alpha.15":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.15.zip"
+    sha256: "bbd69c8c7bd09a4e1346ad92bfa08459bbd98b1445c5621ad4fc454aa4dc64d7"
+  "1.0.0-alpha.14":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.14.zip"
+    sha256: "be9736849d31e05196c4aad9478949fc531b98210f5eecd52eab082ada429b9c"
+  "1.0.0-alpha.13":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.13.zip"
+    sha256: "204c882b688eacc38b7133a11cba643bf25c767aba01c817ac92e836988f6a4c"
+  "1.0.0-alpha.12":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.12.zip"
+    sha256: "8f96402df27de6e97d1410158661e0793c4da51df4990c0916bc758e62828e4b"
+  "1.0.0-alpha.11":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.11.zip"
+    sha256: "5e90c836876e80fb6d5b40fa31331edcc5e7d3c83e38386bda5d8a2c37627428"
+  "1.0.0-alpha.10":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.10.zip"
+    sha256: "6c2e49b34535e48e3fd8bc6d8990df4fb4e15cae7bcdbba70eb76c0fc90e9e51"
+  "1.0.0-alpha.9":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.9.zip"
+    sha256: "c19844f2d89822562ee4f218cfafa1bcb248e47d4bf5b78c3c61fae9717a126a"
+  "1.0.0-alpha.8":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.8.zip"
+    sha256: "f3c9884899e262f723229939d01a0cdab378dd7628f5095032ac6ed8ef8fe29b"
+  "1.0.0-alpha.7":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.7.zip"
+    sha256: "8da441bcd2dc89024281666646e6d33e195b27e7f4dd5e125c927785e3e668b9"
+  "1.0.0-alpha.6":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.6.zip"
+    sha256: "615c8671623a6b2adbc6b8bbccbe0b446a021b887b9322af0ae63c9efc6c71c5"
+  "1.0.0-alpha.5":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.5.zip"
+    sha256: "1fc0a11e7c479561a02a7944c0bd7c3f3178e7ce1187f8b660e89dd7c2158166"
+  "1.0.0-alpha.4":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.4.zip"
+    sha256: "8f914020afed9ecc336e3755372d3564109e55859c85ef1d95a78ce639a6f3a1"
+  "1.0.0-alpha.3":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.3.zip"
+    sha256: "54079f362ec47f9bc6f6c1acd8442b177bf9e511f5a4c9281bf82c03946f224c"
+  "1.0.0-alpha.2":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.2.zip"
+    sha256: "9cee89f66efb9440417398725d44958d89a1da7629a49389f93a6174ca38325a"
+  "1.0.0-alpha.1":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.1.zip"
+    sha256: "015e808be4a09d0c8c647755fb0b46cf9f3c235aead2a7918861c74efc287413"
+commits:
+  "1.0.0-alpha.27": "fe7223d92aca3e40c4add51d0a21a9ac89358595"
+  "1.0.0-alpha.26": "c778863a1c324207102b83c4492a01283ed1d0cc"
+  "1.0.0-alpha.25": "d811fb2700b5a0a0047431c869c456d07d0a2f7a"
+  "1.0.0-alpha.24": "d64458590aaefaee80a06891532d460019fc0040"
+  "1.0.0-alpha.23": "88f6134f8afc5d7eee79d80af3a94705711fce6d"
+  "1.0.0-alpha.22": "cd8c2b2e486c51523ce2fa9b71998389da613da7"
+  "1.0.0-alpha.21": "9158bd74a55540bb494136bc5ffec9534eb1ab54"
+  "1.0.0-alpha.20": "ca7eec34e49c0cc6f56d3c169d12ab0dc1420ed1"
+  "1.0.0-alpha.19": "849f2522b3f11c88fe72e0937db4f788f70e65ef"
+  "1.0.0-alpha.18": "3df1fee35e0bd04c4cf9a387619750d43c6c28d6"
+  "1.0.0-alpha.17": "a6c0b7a1d85fbdf59e9eb32903072519cd8ab4c6"
+  "1.0.0-alpha.16": "81833ca2afec890f1fcabb3ca2fca27276ef5cb1"
+  "1.0.0-alpha.15": "b05a7457e6698e0a11e63181c64d7bd7b6d2a038"
+  "1.0.0-alpha.14": "31dd6165828f7e74beea0f17b3cfba60712fdda8"
+  "1.0.0-alpha.13": "6d19ce1855c8e035879823649df6f6cd901341b1"
+  "1.0.0-alpha.12": "f5415068c2078695f14759f1cdec177fa9a7f43d"
+  "1.0.0-alpha.11": "79bf1d09841023f7992448bef03ada751dbbfae3"
+  "1.0.0-alpha.10": "1fd657ec5b1647271f7959eee3896701ae14db4e"
+  "1.0.0-alpha.9": "8f02903949a28484bbf476541cbbfb7571a71f2f"
+  "1.0.0-alpha.8": "bada6e1635c775a0436c305381bae47ea3a8fee8"
+  "1.0.0-alpha.7": "648e593ada47a243041b4ca4b72bc3709c2a4f3f"
+  "1.0.0-alpha.6": "9036652073cfe2f9c8ac4882a02ba617fdc06e82"
+  "1.0.0-alpha.5": "bc93c82b25bce84cc7afabe52a3a91f9da2c630c"
+  "1.0.0-alpha.4": "c20b1656358953270756a96488338ff92b6efd04"
+  "1.0.0-alpha.3": "65f3e5bdb62b1479715ca0ce318cedae86c73a36"
+  "1.0.0-alpha.2": "64b7f075e1066025fd0c3c309eef378e5ffd2d3a"
+  "1.0.0-alpha.1": "401f15bd46523eaac85775b7555235208ed4d11e"
