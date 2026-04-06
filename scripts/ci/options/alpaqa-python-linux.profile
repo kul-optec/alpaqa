@@ -6,6 +6,7 @@ alpaqa/*:with_qpalm=True
 alpaqa/*:with_cutest=True
 alpaqa/*:with_json=False
 alpaqa/*:with_lbfgsb=True
+openblas/*:no_fortran=False
 
 [settings]
 casadi/*:build_type=Release

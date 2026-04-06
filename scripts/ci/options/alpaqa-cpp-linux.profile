@@ -7,6 +7,7 @@ alpaqa/*:with_json=True
 alpaqa/*:with_python=False
 alpaqa/*:with_examples=True
 &:shared=True
+openblas/*:no_fortran=False
 
 [settings]
 casadi/*:build_type=Release
