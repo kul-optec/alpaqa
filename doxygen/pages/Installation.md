@@ -53,8 +53,7 @@ The Conan package manager is used for installing the dependencies. Since not all
 packages are in the main Conan Center repository, we add a secondary repository:
 
 ```sh
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 ```
 
 We'll now install the dependencies of alpaqa. See `conanfile.py` for a list of
@@ -100,8 +99,7 @@ py -m venv .venv
 &./.venv/Scripts/Activate.ps1
 pip install conan
 conan profile detect
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 conan install . --build=missing -s build_type=Release -c tools.build:skip_test=True
 cmake --preset conan-default
 cmake --build --preset conan-release
@@ -187,8 +185,7 @@ python3 -m venv .venv
 . ./.venv/bin/activate
 pip install conan
 conan profile detect ||:
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 ```
 
 ## Windows
@@ -198,8 +195,7 @@ py -m venv .venv
 &./.venv/Scripts/Activate.ps1
 pip install conan
 conan profile detect || $null
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 ```
 
 After creating the virtual environment and installing the dependencies, you can
@@ -227,8 +223,7 @@ python3 -m venv .venv
 . ./.venv/bin/activate
 python -m pip install -U conan
 conan profile detect ||:
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 conan install . --build=missing \
     -c tools.cmake.cmaketoolchain:generator="Ninja Multi-Config" \
     -c tools.build:skip_test=True \
@@ -247,8 +242,7 @@ py -m venv .venv
 &./.venv/Scripts/Activate.ps1
 pip install conan
 conan profile detect || $null
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes" --force
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 conan install . --build=missing `
     -c tools.build:skip_test=True `
     -o with_matlab=True -o with_external_casadi=True

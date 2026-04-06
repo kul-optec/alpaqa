@@ -33,13 +33,8 @@ plat_tag=manylinux_2_27_x86_64
 
 # Download dependencies
 pip install -U pip build conan
-# My own custom recipes for Ipopt, CasADi, QPALM, patched Eigen
-tools_dir="$PWD/toolchains"
-[ -d "$tools_dir/thirdparty/conan-recipes" ] || {
-    mkdir -p "$tools_dir/thirdparty"
-    git clone https://github.com/tttapa/conan-recipes "$tools_dir/thirdparty/conan-recipes"
-    conan remote add tttapa-conan-recipes "$tools_dir/thirdparty/conan-recipes" --force
-}
+# My own custom recipes for Ipopt, CasADi, QPALM, OpenBLAS, guanaqo, etc.
+conan remote add alpaqa-conan-recipes "scripts/ci/conan-recipes" --force
 
 # Check Conan settings
 if ! grep toolchain-vendor "$(conan config home)/settings_user.yml" >/dev/null; then

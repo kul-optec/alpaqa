@@ -172,7 +172,7 @@ jobs:
           git fetch origin gh-pages:gh-pages ||:
           git checkout gh-pages || \
           { git checkout --orphan gh-pages && git rm -rf . && git clean -fxd ; }
-          echo -e 'bib*.aux\ncitelist.doc*\npy-build-cmake\n.conan2\nbuild\ntttapa-conan-recipes' > .gitignore
+          echo -e 'bib*.aux\ncitelist.doc*\npy-build-cmake\n.conan2\nbuild' > .gitignore
       # Download and install package, Install dependencies for generating docs
       - name: Download wheels
         uses: actions/download-artifact@v4
@@ -190,7 +190,7 @@ jobs:
           ./doxygen/scripts/gen-docs.sh /tmp/staging
           ./doxygen/scripts/gen-docs-index.sh /tmp/staging md
       # Commit the new documentation, squash the commits, and push it to GitHub
-      - name: Commit and push documention
+      - name: Commit and push documentation
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"

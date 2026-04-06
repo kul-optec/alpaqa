@@ -30,11 +30,10 @@ git clone https://github.com/kul-optec/alpaqa --branch=1.1.0a1 --single-branch
 conan export alpaqa
 ```
 
-Download Conan recipes for the dependencies:
+Add Conan recipes for the dependencies:
 
 ```sh
-git clone https://github.com/tttapa/conan-recipes
-conan remote add tttapa-conan-recipes "$PWD/conan-recipes"
+conan remote add alpaqa-conan-recipes "alpaqa/scripts/ci/conan-recipes"
 ```
 
 Build and install the dependencies for the example project:
