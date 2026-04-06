@@ -2,7 +2,7 @@
 compiler.ubsan=True
 
 [conf]
-tools.build:cflags+=["-fsanitize=undefined"]
-tools.build:cxxflags+=["-fsanitize=undefined"]
-tools.build:sharedlinkflags+=["-fsanitize=undefined"]
-tools.build:exelinkflags+=["-fsanitize=undefined"]
+tools.build:cflags+=["-fsanitize=undefined", "-mcmodel=large"]
+tools.build:cxxflags+=["-fsanitize=undefined", "-mcmodel=large"]
+tools.build:sharedlinkflags+=["-fsanitize=undefined", "-mcmodel=large"]
+tools.build:exelinkflags+=["-fsanitize=undefined", "-mcmodel=large"]
