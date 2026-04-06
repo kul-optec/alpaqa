@@ -1,0 +1,40 @@
+diff --git a/bits/loadstore.h b/bits/loadstore.h
+index cccd1dd..344d1dc 100644
+--- a/bits/loadstore.h
++++ b/bits/loadstore.h
+@@ -100,7 +100,7 @@ namespace std::datapar
+       constexpr bool __throw_on_out_of_bounds = (is_same_v<_Flags, __detail::_Throw> or ...);
+       constexpr bool __allow_out_of_bounds
+         = (__throw_on_out_of_bounds or ... or is_same_v<_Flags, __detail::_AllowPartialLoadStore>);
+-      constexpr auto __static_size = __detail::__static_range_size(__r);
++      constexpr auto __static_size = decltype(span(__r))::extent;
+ 
+       static_assert(__static_size >= _RV::size.value or __allow_out_of_bounds
+                       or __static_size == dynamic_extent, "Out-of-bounds simd load");
+@@ -245,7 +245,7 @@ namespace std::datapar
+       constexpr bool __throw_on_out_of_bounds = (is_same_v<_Flags, __detail::_Throw> or ...);
+       constexpr bool __allow_out_of_bounds
+         = (__throw_on_out_of_bounds or ... or is_same_v<_Flags, __detail::_AllowPartialLoadStore>);
+-      constexpr auto __static_size = __detail::__static_range_size(__r);
++      constexpr auto __static_size = decltype(span(__r))::extent;
+ 
+       static_assert(__static_size >= _RV::size.value or __allow_out_of_bounds
+                       or __static_size == dynamic_extent, "Out-of-bounds simd load");
+@@ -347,7 +347,7 @@ namespace std::datapar
+       constexpr bool __throw_on_out_of_bounds = (is_same_v<_Flags, __detail::_Throw> or ...);
+       constexpr bool __allow_out_of_bounds
+         = (__throw_on_out_of_bounds or ... or is_same_v<_Flags, __detail::_AllowPartialLoadStore>);
+-      constexpr auto __static_size = __detail::__static_range_size(__r);
++      constexpr auto __static_size = decltype(span(__r))::extent;
+ 
+       static_assert(__static_size >= _TV::size.value or __allow_out_of_bounds
+                       or __static_size == dynamic_extent, "Out-of-bounds simd store");
+@@ -451,7 +451,7 @@ namespace std::datapar
+       constexpr bool __throw_on_out_of_bounds = (is_same_v<_Flags, __detail::_Throw> or ...);
+       constexpr bool __allow_out_of_bounds
+         = (__throw_on_out_of_bounds or ... or is_same_v<_Flags, __detail::_AllowPartialLoadStore>);
+-      constexpr auto __static_size = __detail::__static_range_size(__r);
++      constexpr auto __static_size = decltype(span(__r))::extent;
+ 
+       static_assert(__static_size >= _TV::size.value or __allow_out_of_bounds
+                       or __static_size == dynamic_extent, "Out-of-bounds simd store");

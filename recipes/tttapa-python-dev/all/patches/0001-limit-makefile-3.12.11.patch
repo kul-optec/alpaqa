@@ -1,0 +1,22 @@
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index 7ca3dc62c01..405c68cc962 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -2023,7 +2023,7 @@ altbininstall: $(BUILDPYTHON) @FRAMEWORKPYTHONW@
+ # before we possibly overwrite the global 'python3' symlink to avoid causing
+ # problems for anything else trying to run 'python3' while we install, particularly
+ # if we're installing in parallel with -j.
+-bininstall: commoninstall altbininstall
++bininstall: altbininstall
+ 	if test ! -d $(DESTDIR)$(LIBPC); then \
+ 		echo "Creating directory $(LIBPC)"; \
+ 		$(INSTALL) -d -m $(DIRMODE) $(DESTDIR)$(LIBPC); \
+@@ -2439,7 +2439,7 @@ LIBPL=		@LIBPL@
+ LIBPC=		$(LIBDIR)/pkgconfig
+ 
+ .PHONY: libainstall
+-libainstall: all scripts
++libainstall: scripts
+ 	@for i in $(LIBDIR) $(LIBPL) $(LIBPC) $(BINDIR); \
+ 	do \
+ 		if test ! -d $(DESTDIR)$$i; then \

@@ -1,0 +1,22 @@
+diff --git a/bits/simd_abi.h b/bits/simd_abi.h
+index 114f32b..f2f81c3 100644
+--- a/bits/simd_abi.h
++++ b/bits/simd_abi.h
+@@ -830,7 +830,7 @@ namespace std::__detail
+       template <typename _Kp>
+         _GLIBCXX_SIMD_INTRINSIC static constexpr bool
+         _S_all_of(const array<_Kp, _Np>& __masks)
+-        { return (_Impl0::_S_all_of(__masks[_Is]) or ...); }
++        { return (_Impl0::_S_all_of(__masks[_Is]) and ...); }
+ 
+       template <typename _Kp>
+         _GLIBCXX_SIMD_INTRINSIC static constexpr bool
+@@ -840,7 +840,7 @@ namespace std::__detail
+       template <typename _Kp>
+         _GLIBCXX_SIMD_INTRINSIC static constexpr bool
+         _S_none_of(const array<_Kp, _Np>& __masks)
+-        { return (_Impl0::_S_none_of(__masks[_Is]) or ...); }
++        { return (_Impl0::_S_none_of(__masks[_Is]) and ...); }
+ 
+       // TODO: benchmark whether it's more efficient to do element-wise reduction of array members
+       // on -__k or +__k or a sum of popcount on each sub-mask.

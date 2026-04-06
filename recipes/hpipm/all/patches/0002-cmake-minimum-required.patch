@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c4de098..f94e093 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -33,7 +33,7 @@
+ #                                                                                                 #
+ ###################################################################################################
+ 
+-cmake_minimum_required(VERSION 2.8.11)
++cmake_minimum_required(VERSION 2.8.11...4.1)
+ 
+ # installation directory ( has to be before `project()` )
+ set(CMAKE_INSTALL_PREFIX "/opt/hpipm" CACHE STRING "Installation path")

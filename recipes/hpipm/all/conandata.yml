@@ -1,0 +1,16 @@
+sources:
+  "tttapa.20251105":
+    commit: 8f3a2d00f6d1bd7101fb651391fba79377915288
+  "tttapa.20250523":
+    commit: c39c453bef3b78361d40af1ac6316c25e6171c33
+  "tttapa.20241127":
+    commit: 3f2c501db4f8a43c85613d9d774d999204d6570b
+patches:
+  "tttapa.20251105":
+    - patch_file: "patches/0001-cmake-install-config-c39c453bef3b78361d40af1ac6316c25e6171c33.patch"
+  "tttapa.20250523":
+    - patch_file: "patches/0001-cmake-install-config-c39c453bef3b78361d40af1ac6316c25e6171c33.patch"
+    - patch_file: "patches/0002-cmake-minimum-required.patch"
+  "tttapa.20241127":
+    - patch_file: "patches/0001-cmake-install-config.patch"
+    - patch_file: "patches/0002-cmake-minimum-required.patch"

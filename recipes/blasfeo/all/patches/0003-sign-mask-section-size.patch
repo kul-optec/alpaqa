@@ -1,0 +1,162 @@
+diff --git a/kernel/avx/kernel_dgemm_4x4_lib4.S b/kernel/avx/kernel_dgemm_4x4_lib4.S
+index 1a16e223..2ddefd79 100644
+--- a/kernel/avx/kernel_dgemm_4x4_lib4.S
++++ b/kernel/avx/kernel_dgemm_4x4_lib4.S
+@@ -11883,8 +11883,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ 
+diff --git a/kernel/avx/kernel_dgemm_8x4_lib4.S b/kernel/avx/kernel_dgemm_8x4_lib4.S
+index 7d03bece..5b6ee828 100644
+--- a/kernel/avx/kernel_dgemm_8x4_lib4.S
++++ b/kernel/avx/kernel_dgemm_8x4_lib4.S
+@@ -15640,8 +15640,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ #if defined(OS_LINUX) | defined(OS_WINDOWS)
+ 	.align 32
+diff --git a/kernel/avx2/kernel_dgemm_12x4_lib4.S b/kernel/avx2/kernel_dgemm_12x4_lib4.S
+index 88d11c94..e3f43c65 100644
+--- a/kernel/avx2/kernel_dgemm_12x4_lib4.S
++++ b/kernel/avx2/kernel_dgemm_12x4_lib4.S
+@@ -20171,8 +20171,6 @@ LC13:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ 
+diff --git a/kernel/avx2/kernel_dgemm_4x4_lib4.S b/kernel/avx2/kernel_dgemm_4x4_lib4.S
+index 86e4fa82..7794dd62 100644
+--- a/kernel/avx2/kernel_dgemm_4x4_lib4.S
++++ b/kernel/avx2/kernel_dgemm_4x4_lib4.S
+@@ -11300,8 +11300,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ 
+diff --git a/kernel/avx2/kernel_dgemm_8x4_lib4.S b/kernel/avx2/kernel_dgemm_8x4_lib4.S
+index 01c02398..0a98d520 100644
+--- a/kernel/avx2/kernel_dgemm_8x4_lib4.S
++++ b/kernel/avx2/kernel_dgemm_8x4_lib4.S
+@@ -15125,8 +15125,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ #if defined(OS_LINUX) | defined(OS_WINDOWS)
+ 	.align 32
+diff --git a/kernel/avx2/kernel_dgemm_8x8_lib4.S b/kernel/avx2/kernel_dgemm_8x8_lib4.S
+index f4226964..e7954297 100644
+--- a/kernel/avx2/kernel_dgemm_8x8_lib4.S
++++ b/kernel/avx2/kernel_dgemm_8x8_lib4.S
+@@ -5999,8 +5999,6 @@ LC11: // { -1.0 1.0 1.0 1.0 }
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ 
+diff --git a/kernel/avx512/kernel_dgemm_16x8_lib8.S b/kernel/avx512/kernel_dgemm_16x8_lib8.S
+index 4f31eaf7..3f1b2014 100644
+--- a/kernel/avx512/kernel_dgemm_16x8_lib8.S
++++ b/kernel/avx512/kernel_dgemm_16x8_lib8.S
+@@ -16331,10 +16331,6 @@ LC03:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ #if defined(OS_LINUX) | defined(OS_WINDOWS)
+diff --git a/kernel/avx512/kernel_dgemm_24x8_lib8.S b/kernel/avx512/kernel_dgemm_24x8_lib8.S
+index 17a98fc2..3269f049 100644
+--- a/kernel/avx512/kernel_dgemm_24x8_lib8.S
++++ b/kernel/avx512/kernel_dgemm_24x8_lib8.S
+@@ -8175,10 +8175,6 @@ LC03:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ #if defined(OS_LINUX) | defined(OS_WINDOWS)
+diff --git a/kernel/avx512/kernel_dgemm_8x8_lib8.S b/kernel/avx512/kernel_dgemm_8x8_lib8.S
+index b6f902e0..da1516de 100644
+--- a/kernel/avx512/kernel_dgemm_8x8_lib8.S
++++ b/kernel/avx512/kernel_dgemm_8x8_lib8.S
+@@ -14749,10 +14749,6 @@ LC03:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ #if defined(OS_LINUX) | defined(OS_WINDOWS)
+diff --git a/kernel/fma/kernel_dgemm_4x4_lib4.S b/kernel/fma/kernel_dgemm_4x4_lib4.S
+index b43a12f6..5d3e2d25 100644
+--- a/kernel/fma/kernel_dgemm_4x4_lib4.S
++++ b/kernel/fma/kernel_dgemm_4x4_lib4.S
+@@ -4237,8 +4237,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ 
+diff --git a/kernel/sse3/kernel_dgemm_4x4_lib4.S b/kernel/sse3/kernel_dgemm_4x4_lib4.S
+index 0fc83890..5d7e2e0c 100644
+--- a/kernel/sse3/kernel_dgemm_4x4_lib4.S
++++ b/kernel/sse3/kernel_dgemm_4x4_lib4.S
+@@ -7732,8 +7732,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ #if defined(OS_LINUX)
+diff --git a/kernel/sse3_x86/kernel_dgemm_4x2_lib4.S b/kernel/sse3_x86/kernel_dgemm_4x2_lib4.S
+index acec2b83..77d75e90 100644
+--- a/kernel/sse3_x86/kernel_dgemm_4x2_lib4.S
++++ b/kernel/sse3_x86/kernel_dgemm_4x2_lib4.S
+@@ -3261,8 +3261,6 @@ LC11:
+ 	.long	0x80000000
+ 	.long	0x0
+ 	.long	0x80000000
+-	.long	0x0
+-	.long	0x80000000
+ 
+ 
+ 

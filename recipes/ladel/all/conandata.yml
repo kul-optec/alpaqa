@@ -1,0 +1,13 @@
+sources:
+  "0.0.4":
+    url: "https://github.com/kul-optec/LADEL/archive/refs/tags/0.0.4.zip"
+    sha256: "100d4c474afe22acee4ca2e8a20535cf03cfec511e21b6beca3eb048968e8842"
+  "0.0.3":
+    url: "https://github.com/kul-optec/LADEL/archive/refs/tags/0.0.3.zip"
+    sha256: "9d8194c0658b4d8078fa58391beb2979f8ef066556135d963ab1b1a31e2f3eb9"
+  "0.0.2":
+    url: "https://github.com/kul-optec/LADEL/archive/refs/tags/0.0.2.zip"
+    sha256: "bfb0313b23e6a658c9a086815605ec5d05e107a92ecb878f6ee469f666c6db7a"
+  "tttapa.20241118":
+    url: "https://github.com/kul-optec/LADEL/archive/4656913dfd940b0afd36f085efc04700d67e41c2.zip"
+    sha256: "dbd0e176f6b792b06b721908175032274331de4e9d0eab0392eed88c279f0556"

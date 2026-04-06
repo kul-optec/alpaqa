@@ -1,0 +1,27 @@
+diff --git a/bits/simd_math.h b/bits/simd_math.h
+index fa7f6aa..a193b93 100644
+--- a/bits/simd_math.h
++++ b/bits/simd_math.h
+@@ -346,8 +346,9 @@ namespace std::datapar
+     isfinite(const _V0& __x0)
+     {
+       using _Vp = __detail::__deduced_simd_t<_V0>;
++      using _Kp = typename _Vp::mask_type;
+       const _Vp& __x = __x0;
+-      return _Vp::_Impl::_S_isfinite(__x._M_data);
++      return _Kp(__detail::__private_init, _Vp::_Impl::_S_isfinite(__x._M_data));
+     }
+ 
+   template <typename _V0, typename _V1>
+@@ -355,9 +356,10 @@ namespace std::datapar
+     isunordered(const _V0& __x0, const _V1& __x1)
+     {
+       using _Vp = __detail::__math_common_simd_t<_V0, _V1>;
++      using _Kp = typename _Vp::mask_type;
+       const _Vp& __x = __x0;
+       const _Vp& __y = __x1;
+-      return _Vp::_Impl::_S_isunordered(__x._M_data, __y._M_data);
++      return _Kp(__detail::__private_init, _Vp::_Impl::_S_isunordered(__x._M_data, __y._M_data));
+     }
+ }
+ 

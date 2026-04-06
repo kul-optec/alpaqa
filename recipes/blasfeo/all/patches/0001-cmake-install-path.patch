@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c0d4f40b..3f97cd68 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1288,7 +1288,7 @@ install(TARGETS blasfeo EXPORT blasfeoConfig
+ 	RUNTIME DESTINATION bin)
+ 
+ 
+-install(EXPORT blasfeoConfig DESTINATION cmake)
++install(EXPORT blasfeoConfig DESTINATION lib/cmake/blasfeo)
+ 
+ file(GLOB_RECURSE BLASFEO_HEADERS "include/*.h")
+ install(FILES ${BLASFEO_HEADERS} DESTINATION ${BLASFEO_HEADERS_INSTALLATION_DIRECTORY})
