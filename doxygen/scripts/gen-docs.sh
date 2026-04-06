@@ -46,12 +46,12 @@ function run_doxygen_coverage {
 	include($PWD/scripts/ci/conan-profiles/profiles/toolchain/x86_64-bionic-linux-gnu.profile)
 	include($PWD/scripts/ci/conan-profiles/profiles/arch/linux/x86-64-v3.profile)
 	include($PWD/scripts/ci/conan-profiles/profiles/gcc-static.profile)
+	include($PWD/scripts/ci/conan-profiles/profiles/tools/ninja.profile)
 	include($PWD/scripts/ci/conan-profiles/profiles/test/only-self.profile)
 	[settings]
 	&:build_type=Debug
 	[conf]
 	&:tools.build.cross_building:can_run=True
-	&:tools.cmake.cmaketoolchain:generator=Ninja
 	&:tools.cmake.cmaketoolchain:extra_variables*={"ALPAQA_DOXYFILE": "$tmpdir/tmp-Doxyfile"}
 	&:tools.cmake.cmake_layout:build_folder_vars=['const.docs']
 	[options]

@@ -48,6 +48,7 @@ conan.profile_host+=["$profiles/arch/$arch.profile"]
 conan.profile_host+=["$python_profile"]
 conan.profile_host+=["$profiles/gcc-static.profile"]
 conan.profile_host+=["$profiles/test/none.profile"]
+conan.profile_host+=["$profiles/tools/ninja.profile"]
 conan.cmake.args+=["--fresh"]
 conan.cmake.build_args+=["--verbose"]
 EOF
