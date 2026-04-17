@@ -8,6 +8,7 @@ namespace py = pybind11;
 using namespace py::literals;
 
 #include <alpaqa/functions/indicator-box.hpp>
+#include <alpaqa/functions/indicator-so3.hpp>
 #include <alpaqa/functions/l1-norm.hpp>
 #include <alpaqa/functions/nuclear-norm.hpp>
 #include <alpaqa/functions/prox.hpp>
@@ -113,6 +114,14 @@ void register_prox(py::module_ &m) {
 
     using Box = alpaqa::Box<config_t>;
     register_prox_func<config_t, Box>(m);
+
+    using IndicatorSO3 = alpaqa::functions::IndicatorSO3<config_t>;
+    py::class_<IndicatorSO3>(funcs, "IndicatorSO3",
+                             "C++ documentation :cpp:class:`alpaqa::functions::IndicatorSO3`\n"
+                             "Indicator function of SO(3), the group of 3D rotation matrices.\n\n"
+                             ".. seealso:: :py:func:`alpaqa.prox`")
+        .def(py::init<>());
+    register_prox_func<config_t, IndicatorSO3>(m);
 }
 
 template void register_prox<alpaqa::EigenConfigd>(py::module_ &);
