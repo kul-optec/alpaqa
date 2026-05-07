@@ -32,7 +32,7 @@ runs:
     shell: bash
     run: |
       git clone https://github.com/tttapa/py-build-cmake --branch conan
-      pip install -U pip build
+      python3 -m pip install -U pip build
       python3 -m build -w py-build-cmake
       echo "PIP_FIND_LINKS=$PWD/py-build-cmake/dist" >> "$GITHUB_ENV"
 
@@ -41,14 +41,14 @@ runs:
     shell: pwsh
     run: |
       git clone https://github.com/tttapa/py-build-cmake --branch conan
-      pip install -U pip build
+      python3 -m pip install -U pip build
       python3 -m build -w py-build-cmake
       echo "PIP_FIND_LINKS=$((Resolve-Path 'py-build-cmake\dist'))" >> $env:GITHUB_ENV
 
   - name: Install Python dependencies
     shell: bash
     run: >
-      pip install -U pip build
+      python3 -m pip install -U pip build
       conan~=2.26.2 'py-build-cmake~=0.6.0a2' 'pybind11-stubgen~=2.5.5'
 
   - name: Configure sccache version
