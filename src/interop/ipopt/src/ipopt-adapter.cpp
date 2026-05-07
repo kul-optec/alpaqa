@@ -34,12 +34,22 @@ bool IpoptAdapter::get_nlp_info(Index &n, Index &m, Index &nnz_jac_g,
 
 bool IpoptAdapter::get_bounds_info(Index n, Number *x_l, Number *x_u, Index m,
                                    Number *g_l, Number *g_u) {
-    const auto &C = problem.get_variable_bounds();
-    mvec{x_l, n}  = C.lower;
-    mvec{x_u, n}  = C.upper;
-    const auto &D = problem.get_general_bounds();
-    mvec{g_l, m}  = D.lower;
-    mvec{g_u, m}  = D.upper;
+    if (problem.provides_get_variable_bounds()) {
+        const auto &C = problem.get_variable_bounds();
+        mvec{x_l, n}  = C.lower;
+        mvec{x_u, n}  = C.upper;
+    } else {
+        mvec{x_l, n}.setConstant(-std::numeric_limits<Number>::infinity());
+        mvec{x_u, n}.setConstant(+std::numeric_limits<Number>::infinity());
+    }
+    if (problem.provides_get_general_bounds()) {
+        const auto &D = problem.get_general_bounds();
+        mvec{g_l, m}  = D.lower;
+        mvec{g_u, m}  = D.upper;
+    } else {
+        mvec{g_l, m}.setConstant(-std::numeric_limits<Number>::infinity());
+        mvec{g_u, m}.setConstant(+std::numeric_limits<Number>::infinity());
+    }
     return true;
 }
 
@@ -96,9 +106,6 @@ bool IpoptAdapter::eval_jac_g(Index n, const Number *x,
                               [[maybe_unused]] bool new_x,
                               [[maybe_unused]] Index m, Index nele_jac,
                               Index *iRow, Index *jCol, Number *values) {
-    if (!problem.provides_eval_constraints_jacobian())
-        throw std::logic_error(
-            "Missing required function: eval_constraints_jacobian");
     if (values == nullptr) { // Initialize sparsity
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_jac_g.get_sparsity().col_indices, jCol);
@@ -117,9 +124,6 @@ bool IpoptAdapter::eval_h(Index n, const Number *x, [[maybe_unused]] bool new_x,
                           Number obj_factor, Index m, const Number *lambda,
                           [[maybe_unused]] bool new_lambda, Index nele_hess,
                           Index *iRow, Index *jCol, Number *values) {
-    if (!problem.provides_eval_lagrangian_hessian())
-        throw std::logic_error(
-            "Missing required function: eval_lagrangian_hessian");
     if (values == nullptr) { // Initialize sparsity
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().row_indices, iRow);
         std::ranges::copy(cvt_sparsity_hess_L.get_sparsity().col_indices, jCol);
