@@ -94,6 +94,7 @@ source_path = "."
 args = ["-Wdev"]
 build_type = "Release"
 install_components = ["python_modules", "python_stubs"]
+find_python3_build_artifacts_prefix = "_HOST"
 [tool.py-build-cmake.conan]
 args = [
     "--build=missing",
