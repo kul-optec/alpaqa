@@ -87,7 +87,7 @@ class BatmatRecipe(ConanFile):
     def requirements(self):
         if Version(self.version) >= "0.0.13":
             self.requires(
-                "guanaqo/[>=1.0.0-alpha.25 <1.0.0-alpha.28, include_prerelease]",
+                "guanaqo/[>=1.0.0-alpha.25 <1.0.0-alpha.29, include_prerelease]",
                 transitive_headers=True,
                 transitive_libs=True,
             )

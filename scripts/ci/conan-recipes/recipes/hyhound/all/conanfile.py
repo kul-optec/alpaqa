@@ -64,7 +64,7 @@ class HyhoundRecipe(ConanFile):
 
     def requirements(self):
         self.requires(
-            "guanaqo/[>=1.0.0-alpha.22 <1.0.0-alpha.28, include_prerelease]",
+            "guanaqo/[>=1.0.0-alpha.22 <1.0.0-alpha.29, include_prerelease]",
             transitive_headers=True,
             transitive_libs=True,
         )

@@ -1,4 +1,10 @@
 sources:
+  "3.15.0-rc1":
+    url: "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc1.tgz"
+    sha256: "32c2b9878bbd6ac3ceb138c5b6c880345ce9d33388b399378c0da6fc7cb3bfbc"
+  "3.14.7":
+    url: "https://www.python.org/ftp/python/3.14.7/Python-3.14.7.tgz"
+    sha256: "62859805f6fdf25e2bcbf3fa3217801e1996887ca33e6a2af80674bdfa2dbe07"
   "3.14.2":
     url: "https://www.python.org/ftp/python/3.14.2/Python-3.14.2.tgz"
     sha256: "c609e078adab90e2c6bacb6afafacd5eaf60cd94cf670f1e159565725fcd448d"
@@ -8,6 +14,9 @@ sources:
   "3.14.0-rc2":
     url: "https://www.python.org/ftp/python/3.14.0/Python-3.14.0rc2.tgz"
     sha256: "b336f5d76fcf2725b29108f253d4338fbe4cc6a17cd8baf059deebb5a343dd8f"
+  "3.13.14":
+    url: "https://www.python.org/ftp/python/3.13.14/Python-3.13.14.tgz"
+    sha256: "5ae535a36af0ebca6fca176ecb8197f5db9c1cb8c8f0cd12cdf1787046db1f41"
   "3.13.11":
     url: "https://www.python.org/ftp/python/3.13.11/Python-3.13.11.tgz"
     sha256: "03cfedbe06ce21bc44ce09245e091a77f2fee9ec9be5c52069048a181300b202"
@@ -17,6 +26,9 @@ sources:
   "3.13.1":
     url: "https://www.python.org/ftp/python/3.13.1/Python-3.13.1.tgz"
     sha256: "1513925a9f255ef0793dbf2f78bb4533c9f184bdd0ad19763fd7f47a400a7c55"
+  "3.12.13":
+    url: "https://www.python.org/ftp/python/3.12.13/Python-3.12.13.tgz"
+    sha256: "0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b"
   "3.12.12":
     url: "https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tgz"
     sha256: "487c908ddf4097a1b9ba859f25fe46d22ccaabfb335880faac305ac62bffb79b"
@@ -26,6 +38,9 @@ sources:
   "3.12.8":
     url: "https://www.python.org/ftp/python/3.12.8/Python-3.12.8.tgz"
     sha256: "5978435c479a376648cb02854df3b892ace9ed7d32b1fead652712bee9d03a45"
+  "3.11.15":
+    url: "https://www.python.org/ftp/python/3.11.15/Python-3.11.15.tgz"
+    sha256: "f4de1b10bd6c70cbb9fa1cd71fc5038b832747a74ee59d599c69ce4846defb50"
   "3.11.14":
     url: "https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tgz"
     sha256: "563d2a1b2a5ba5d5409b5ecd05a0e1bf9b028cf3e6a6f0c87a5dc8dc3f2d9182"
@@ -35,6 +50,9 @@ sources:
   "3.11.11":
     url: "https://www.python.org/ftp/python/3.11.11/Python-3.11.11.tgz"
     sha256: "883bddee3c92fcb91cf9c09c5343196953cbb9ced826213545849693970868ed"
+  "3.10.20":
+    url: "https://www.python.org/ftp/python/3.10.20/Python-3.10.20.tgz"
+    sha256: "4ff5fd4c5bab803b935019f3e31d7219cebd6f870d00389cea53b88bbe935d1a"
   "3.10.19":
     url: "https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tgz"
     sha256: "a078fb2d7a216071ebbe2e34b5f5355dd6b6e9b0cd1bacc4a41c63990c5a0eec"
@@ -58,30 +76,42 @@ sources:
     sha256: "9f2d5962c2583e67ef75924cd56d0c1af78bf45ec57035cf8a2cc09f74f4bf78"
 
 patches:
+  "3.15.0-rc1":
+    - patch_file: "patches/0001-limit-makefile-3.15.0-rc1.patch"
+  "3.14.7":
+    - patch_file: "patches/0001-limit-makefile-3.14.7.patch"
   "3.14.2":
     - patch_file: "patches/0001-limit-makefile-3.14.2.patch"
   "3.14.0-rc3":
     - patch_file: "patches/0001-limit-makefile-3.14.0-rc2.patch"
   "3.14.0-rc2":
     - patch_file: "patches/0001-limit-makefile-3.14.0-rc2.patch"
+  "3.13.14":
+    - patch_file: "patches/0001-limit-makefile-3.13.7.patch"
   "3.13.11":
     - patch_file: "patches/0001-limit-makefile-3.13.7.patch"
   "3.13.7":
     - patch_file: "patches/0001-limit-makefile-3.13.7.patch"
   "3.13.1":
     - patch_file: "patches/0001-limit-makefile-3.13.1.patch"
+  "3.12.13":
+    - patch_file: "patches/0001-limit-makefile-3.12.11.patch"
   "3.12.12":
     - patch_file: "patches/0001-limit-makefile-3.12.11.patch"
   "3.12.11":
     - patch_file: "patches/0001-limit-makefile-3.12.11.patch"
   "3.12.8":
     - patch_file: "patches/0001-limit-makefile-3.12.8.patch"
+  "3.11.15":
+    - patch_file: "patches/0001-limit-makefile-3.11.13.patch"
   "3.11.14":
     - patch_file: "patches/0001-limit-makefile-3.11.13.patch"
   "3.11.13":
     - patch_file: "patches/0001-limit-makefile-3.11.13.patch"
   "3.11.11":
     - patch_file: "patches/0001-limit-makefile-3.11.11.patch"
+  "3.10.20":
+    - patch_file: "patches/0001-limit-makefile-3.10.18.patch"
   "3.10.19":
     - patch_file: "patches/0001-limit-makefile-3.10.18.patch"
   "3.10.18":

@@ -1,4 +1,7 @@
 sources:
+  "1.0.0-alpha.28":
+    url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.28.zip"
+    sha256: "91ef273fbf0c64fdab5f8a85353cd62e3e283e218be8ef4744df268f55678fe5"
   "1.0.0-alpha.27":
     url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.27.zip"
     sha256: "84ad617c49dc7c9d35768f944384cf2c72e9778fbe6bbfb6a5937e85ec338f43"
@@ -81,6 +84,7 @@ sources:
     url: "https://github.com/tttapa/guanaqo/archive/refs/tags/1.0.0-alpha.1.zip"
     sha256: "015e808be4a09d0c8c647755fb0b46cf9f3c235aead2a7918861c74efc287413"
 commits:
+  "1.0.0-alpha.28": "d0671c2ba3ff3b01253964d1eedb8c93dc6a1bcc"
   "1.0.0-alpha.27": "fe7223d92aca3e40c4add51d0a21a9ac89358595"
   "1.0.0-alpha.26": "c778863a1c324207102b83c4492a01283ed1d0cc"
   "1.0.0-alpha.25": "d811fb2700b5a0a0047431c869c456d07d0a2f7a"
