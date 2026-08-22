@@ -24,6 +24,7 @@ compiler:
     lsan: [null, ANY]
     tsan: [null, ANY]
     ubsan: [null, ANY]
+    version: [ANY]
   clang:
     libcxx:
       libstdc++11:

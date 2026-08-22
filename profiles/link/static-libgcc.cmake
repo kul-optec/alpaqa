@@ -1,8 +1,10 @@
+set(ENV{CMAKE_C_IMPLICIT_LINK_LIBRARIES_EXCLUDE} "gcc_s_asneeded")
+set(ENV{CMAKE_CXX_IMPLICIT_LINK_LIBRARIES_EXCLUDE} "gcc_s_asneeded")
 set(CMAKE_C_STANDARD_LIBRARIES_INIT
     "${CMAKE_C_STANDARD_LIBRARIES_INIT} -Wl,-Bstatic -lgcc -Wl,-Bdynamic -lgcc_s"
     CACHE STRING "" FORCE
 )
 set(CMAKE_CXX_STANDARD_LIBRARIES_INIT
-    "${CMAKE_CXX_STANDARD_LIBRARIES_INIT} -Wl,-Bstatic -lgcc -Wl,-Bdynamic -lgcc_s"
+    "${CMAKE_CXX_STANDARD_LIBRARIES_INIT} -Wl,-Bstatic -lstdc++ -lgcc -Wl,-Bdynamic -lgcc_s"
     CACHE STRING "" FORCE
 )
