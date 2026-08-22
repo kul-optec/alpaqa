@@ -117,7 +117,7 @@ jobs:
 
       - name: Build Wheels
         run: |
-          for v in 3.9 3.10 3.11 3.12 3.13 3.14; do
+          for v in 3.9 3.10 3.11 3.12 3.13 3.14 3.15; do
             ./scripts/ci/build-linux-cross.sh $v ${{ matrix.host }} sdist dist
           done
 
@@ -139,16 +139,16 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'ubuntu-24.04-arm']
         python: ['python']
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
         include:
           - os: 'ubuntu-latest'
             python: 'python'
-            python-version: '3.14'
+            python-version: '3.15'
             image-suffix: '-rc'  # Set this to '-rc' to test pre-releases
             host: 'x86_64-bionic-linux-gnu'
           - os: 'ubuntu-24.04-arm'
             python: 'python'
-            python-version: '3.14'
+            python-version: '3.15'
             image-suffix: '-rc'  # Set this to '-rc' to test pre-releases
             host: 'aarch64-rpi3-linux-gnu'
           - os: 'ubuntu-latest'
