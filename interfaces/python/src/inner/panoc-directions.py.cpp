@@ -191,6 +191,7 @@ void register_panoc_directions(py::module_ &m) {
     te_direction //
         .def(py::init([](py::object o) {
                  struct {
+                     USING_ALPAQA_CONFIG(Conf);
                      using Problem = alpaqa::TypeErasedProblem<Conf>;
                      void initialize(const Problem &problem, crvec y, crvec Σ, real_t γ_0,
                                      crvec x_0, crvec x̂_0, crvec p_0, crvec grad_ψx_0) {
