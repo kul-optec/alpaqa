@@ -1,9 +1,15 @@
 versions:
+  "3.15.0-rc1":
+    folder: all
+  "3.14.7":
+    folder: all
   "3.14.2":
     folder: all
   "3.14.0-rc3":
     folder: all
   "3.14.0-rc2":
+    folder: all
+  "3.13.14":
     folder: all
   "3.13.11":
     folder: all
@@ -11,17 +17,23 @@ versions:
     folder: all
   "3.13.1":
     folder: all
+  "3.12.13":
+    folder: all
   "3.12.12":
     folder: all
   "3.12.11":
     folder: all
   "3.12.8":
     folder: all
+  "3.11.15":
+    folder: all
   "3.11.14":
     folder: all
   "3.11.13":
     folder: all
   "3.11.11":
+    folder: all
+  "3.10.20":
     folder: all
   "3.10.19":
     folder: all

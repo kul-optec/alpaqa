@@ -46,7 +46,7 @@ class CPythonRecipe(ConanFile):
         apply_conandata_patches(self)
 
     def requirements(self):
-        self.requires("zlib/1.3.1")
+        self.requires("zlib/[~1.3]")
 
     def generate(self):
         pc = PkgConfigDeps(self)

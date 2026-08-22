@@ -11,7 +11,10 @@ patches:
       base_path: simd
     - patch_file: patches/0012-all_of-any_of.patch
       base_path: simd
-    - patch_file: patches/0015-sqrt512.patch
+    - patch_file: patches/0015-sqrt-intrin.patch
       base_path: simd
+      patch_description: >
+        Clang does not provide __builtin_ia32_sqrtpd256 etc. as builtins, so we need to call the
+        intrinsics instead.
     - patch_file: patches/0018-static-range-size.patch
       base_path: simd

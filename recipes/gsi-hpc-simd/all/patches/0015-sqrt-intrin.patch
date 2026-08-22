@@ -1,0 +1,37 @@
+diff --git a/bits/simd_x86.h b/bits/simd_x86.h
+index 11b5297..317824b 100644
+--- a/bits/simd_x86.h
++++ b/bits/simd_x86.h
+@@ -2405,23 +2405,23 @@ namespace std::__detail
+         _S_sqrt(_TV __x)
+         {
+           if constexpr (__vec_builtin_sizeof<_TV, 2, 64> and _Flags._M_have_avx512fp16())
+-            return __builtin_ia32_sqrtph512_mask_round(__x, _TV(), -1, static_cast<int>(_X86Round::_CurDirection));
++            return _mm512_sqrt_ph(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 4, 64>)
+-            return __builtin_ia32_sqrtps512_mask(__x, _TV(), -1, static_cast<int>(_X86Round::_CurDirection));
++            return _mm512_sqrt_ps(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 8, 64>)
+-            return __builtin_ia32_sqrtpd512_mask(__x, _TV(), -1, static_cast<int>(_X86Round::_CurDirection));
++            return _mm512_sqrt_pd(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 2, 32> and _Flags._M_have_avx512fp16())
+-            return __builtin_ia32_sqrtph256_mask(__x, _TV(), -1);
++            return _mm256_sqrt_ph(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 4, 32>)
+-            return __builtin_ia32_sqrtps256(__x);
++            return _mm256_sqrt_ps(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 8, 32>)
+-            return __builtin_ia32_sqrtpd256(__x);
++            return _mm256_sqrt_pd(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 2> and _Flags._M_have_avx512fp16())
+-            return __builtin_ia32_sqrtph128_mask(__x, _TV(), -1);
++            return _mm_sqrt_ph(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 4>)
+-            return __builtin_ia32_sqrtps(__x);
++            return _mm_sqrt_ps(__x);
+           else if constexpr (__vec_builtin_sizeof<_TV, 8>)
+-            return __builtin_ia32_sqrtpd(__x);
++            return _mm_sqrt_pd(__x);
+           else
+             static_assert(false);
+         }
