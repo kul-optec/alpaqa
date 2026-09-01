@@ -1,4 +1,7 @@
 sources:
+  "1.3.0":
+    url: "https://github.com/kul-optec/QPALM/archive/refs/tags/1.3.0.zip"
+    sha256: "860218f9dea16a583d9580f5ce258ecb6ea7393b99dc21d99673353bb109641c"
   "1.2.6":
     url: "https://github.com/kul-optec/QPALM/archive/refs/tags/1.2.6.zip"
     sha256: "7f6f309b1172d859f4137686ef6110e1375dcb5268f83572c7299eab64b6ca81"
