@@ -193,7 +193,7 @@ jobs:
       SCCACHE_CACHE_MULTIARCH: "1"
       CIBW_ARCHS: ${{ matrix.cibw-arch }}
       CIBW_ENABLE: 'pypy'
-      CIBW_TEST_SKIP: 'pp* *-win32 cp314*'
+      CIBW_TEST_SKIP: 'pp* *-win32 cp315*-win*'
       CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ''
     steps:
       - run: echo "SOURCE_DATE_EPOCH=${{ needs.build-sdist.outputs.epoch }}" >> $GITHUB_ENV
