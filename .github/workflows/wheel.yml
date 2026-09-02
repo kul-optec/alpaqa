@@ -183,12 +183,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - {os: windows-latest, cibw-arch: AMD64, arch: amd64}
-          - {os: windows-latest, cibw-arch: x86, arch: amd64_x86}
-          - {os: windows-latest, cibw-arch: ARM64, arch: amd64_arm64}
-          - {os: macos-latest, cibw-arch: universal2}
-          - {os: macos-latest, cibw-arch: x86_64}
-          - {os: macos-latest, cibw-arch: arm64}
+          - {os: windows-2022, cibw-arch: AMD64, arch: amd64}
+          - {os: windows-2022, cibw-arch: x86, arch: amd64_x86}
+          - {os: windows-2022, cibw-arch: ARM64, arch: amd64_arm64}
+          - {os: macos-15-intel, cibw-arch: x86_64}
+          - {os: macos-14, cibw-arch: arm64}
       fail-fast: false
     env:
       SCCACHE_CACHE_MULTIARCH: "1"
