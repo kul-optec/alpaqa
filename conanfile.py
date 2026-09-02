@@ -91,7 +91,7 @@ class AlpaqaRecipe(ConanFile):
         self.requires("guanaqo/1.0.0-alpha.25", transitive_headers=True)
         self.test_requires("gtest/1.17.0")
         if self.options.with_external_casadi:
-            self.requires("casadi/3.7.1", transitive_headers=True)
+            self.requires("casadi/3.8.0", transitive_headers=True)
         if self.options.with_json:
             self.requires("nlohmann_json/3.12.0", transitive_headers=True)
         if self.options.with_ipopt:

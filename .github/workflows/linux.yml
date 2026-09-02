@@ -28,7 +28,7 @@ jobs:
           cache-key: build-${{ matrix.host }}
 
       - name: Install CasADi
-        run: python3 -m pip install casadi~=3.7.1
+        run: python3 -m pip install casadi~=3.8.0
 
       - name: Build and package
         run: ./scripts/ci/package-linux.sh ${{ matrix.host }} "${{ matrix.tests }}"
@@ -61,7 +61,7 @@ jobs:
           cache-key: build-windows-${{ matrix.host }}
 
       - name: Install CasADi
-        run: python3 -m pip install casadi~=3.7.1
+        run: python3 -m pip install casadi~=3.8.0
 
       - name: Build and package
         run: ./scripts/ci/package-windows.ps1 ${{ matrix.host }}-windows "${{ matrix.tests }}"

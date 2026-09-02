@@ -28,7 +28,7 @@ dependencies = ["numpy<3"]
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
-casadi = ["casadi~=3.7.1", "cmake>=3.28,<5", "ninja>=1.11.1,<2"]
+casadi = ["casadi~=3.8.0", "cmake>=3.28,<5", "ninja>=1.11.1,<2"]
 docs = [
     "breathe~=4.36.0",
     "sphinx~=8.2.3",
@@ -36,7 +36,7 @@ docs = [
     "sphinxcontrib-matlabdomain~=0.22.1",
     "sphinxcontrib-moderncmakedomain~=3.29.0",
     "furo==2025.7.19",
-    "casadi~=3.7.1",
+    "casadi~=3.8.0",
     "cmake>=3.28,<5",
     "ninja>=1.11.1,<2",
     "matplotlib",
@@ -45,7 +45,7 @@ test = [
     "pytest>=7.2.0,<9",
     "qpalm>=1.2.6,<1.4.0",
     "scipy>=1.9.3,<2",
-    "casadi~=3.7.1",
+    "casadi~=3.8.0",
     "cmake>=3.28,<5",
     "ninja>=1.11.1,<2",
 ]
