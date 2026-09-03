@@ -1,0 +1,13 @@
+<map id="build_qpalm_problem" name="build_qpalm_problem">
+<area shape="rect" id="node1" title=" " alt="" coords="5,301,168,326"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#aa68007440e5fa3b8ec89cc391566c91d" title="[Optional] Evaluate both &#160;and its gradient, ." alt="" coords="217,5,419,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#acdf5c7c7f249c05d53643e1715070f45" title="[Required] Function that evaluates the constraints," alt="" coords="217,69,419,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#a8432c33fb118d707216d6098734c4160" title="[Optional] Function that evaluates the Hessian of the Lagrangian as a sparse matrix," alt="" coords="217,133,419,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html#af081bd553ada01e6498e26c4210f267f" title="[Optional] Function that evaluates the Jacobian of the constraints as a sparse matrix," alt="" coords="217,197,419,237"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedProblem.html#ae0ffecc22b09ce70fb1fe663c0255018" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="217,261,419,301"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedProblem.html#a193ee88bf3ca51034ff602e30882edd7" title="[Optional] Get the rectangular constraint set of the general constraint function, ." alt="" coords="217,325,419,365"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedProblem.html#aff13d511093c03b6d1f00de23ce8fae5" title="[Optional] Function that gets the number of nonzeros of the sparse Hessian of the Lagrangian." alt="" coords="216,389,420,429"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1TypeErasedProblem.html#ad41b8495a9eea0e1c313d749c5a98b69" title="[Optional] Function that gets the number of nonzeros of the sparse Jacobian of the constraints." alt="" coords="217,453,419,493"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="217,517,419,557"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="217,581,419,621"/>
+</map>

@@ -1,0 +1,21 @@
+<map id="src/alpaqa/include/alpaqa/problem/box&#45;constr&#45;problem.hpp" name="src/alpaqa/include/alpaqa/problem/box&#45;constr&#45;problem.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="327,5,483,60"/>
+<area shape="rect" id="Node000002" href="$functional-problem_8hpp.html" title=" " alt="" coords="5,108,203,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="315,67,183,110,182,105,313,62"/>
+<area shape="rect" id="Node000003" href="$CasADiProblem_8hpp.html" title=" " alt="" coords="227,108,394,163"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="373,72,337,110,333,106,369,68"/>
+<area shape="rect" id="Node000006" href="$cutest-loader_8hpp.html" title=" " alt="" coords="419,108,584,163"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="442,68,478,106,474,110,438,72"/>
+<area shape="rect" id="Node000008" href="$dl-problem_8hpp.html" title=" " alt="" coords="608,115,797,155"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="496,62,648,113,646,118,495,67"/>
+<area shape="rect" id="Node000004" href="$CasADiProblem_8tpp.html" title=" " alt="" coords="171,211,400,265"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="303,177,295,211,289,210,298,175"/>
+<area shape="rect" id="Node000005" href="$CasADiProblem_8cpp.html" title=" " alt="" coords="197,313,374,353"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="288,279,288,313,283,313,283,279"/>
+<area shape="rect" id="Node000007" href="$cutest-loader_8cpp.html" title=" " alt="" coords="425,218,586,258"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="506,176,507,217,502,218,500,177"/>
+<area shape="rect" id="Node000009" href="$problem_8cpp.html" title=" " alt="" coords="620,218,775,258"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="704,169,701,218,696,218,698,169"/>
+<area shape="rect" id="Node000010" href="$dl-problem_8cpp.html" title=" " alt="" coords="799,218,929,258"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="746,160,835,216,832,220,743,165"/>
+</map>

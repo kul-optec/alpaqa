@@ -1,0 +1,27 @@
+<map id="build_qpalm_problem" name="build_qpalm_problem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,340,168,365"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4aa5d1b70ae86454004ab771713c0826" title="Convert an Eigen vector view to a std::span." alt="" coords="287,5,362,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,339,95,284,115,203,132,158,154,115,181,75,214,40,243,24,273,17,275,22,244,29,218,44,185,78,158,118,137,161,121,204,100,285,92,340"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a9c0fe4aab3b62a12106dd1e6834a7231" title="Convert a std::span to an Eigen::Vector view." alt="" coords="291,55,358,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="88,339,99,292,122,225,139,188,160,152,185,119,214,91,245,75,277,67,278,72,246,79,218,95,189,123,164,155,144,191,127,227,104,294,93,341"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a06afe342b1e278861fed32bbb5473769" title="[Required] Function that evaluates the constraints," alt="" coords="223,105,426,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="90,339,106,303,132,253,168,200,190,176,214,155,222,149,225,154,218,159,194,180,172,203,136,256,110,305,95,341"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#a4eac4f18f8f66a887563ba8e5428fb5b" title="[Optional] Function that evaluates the nonzero values of the Jacobian matrix of the constraints," alt="" coords="223,169,426,209"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="95,338,142,281,176,247,215,218,226,212,229,217,217,223,179,251,145,284,99,341"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedProblem.html#a1f4c466406a231e54dacd29bb3efd5d0" title="[Optional] Function that evaluates the nonzero values of the Hessian of the Lagrangian," alt="" coords="223,233,426,273"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="108,337,156,310,215,282,235,275,237,280,217,287,158,315,110,342"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1TypeErasedProblem.html#a2915d8983a05ab9b96d2274e95499b53" title="[Optional] Evaluate both &#160;and its gradient, ." alt="" coords="216,297,433,337"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="168,338,202,333,203,338,169,343"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedProblem.html#a9b5667c162cf4556a3832ec90e2eed96" title="[Optional] Function that returns (a view of) the sparsity pattern of the Jacobian of the constraints." alt="" coords="223,361,426,416"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="169,362,210,369,209,374,168,368"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1TypeErasedProblem.html#aa225ae75b604165138937807ed087f0e" title="[Optional] Get the rectangular constraint set of the general constraint function, ." alt="" coords="223,441,426,481"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="108,363,157,393,217,425,239,434,237,439,215,430,154,398,105,368"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1TypeErasedProblem.html#a0ef11beb007a8812b716ed3e800db223" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the Lagrangian." alt="" coords="223,505,426,560"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="99,364,145,424,179,459,218,490,227,497,224,501,214,495,175,463,141,427,94,367"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1TypeErasedProblem.html#a7ef7a630a3001ce5a3767669f764bf79" title="[Required] Number of constraints." alt="" coords="223,585,426,625"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="94,365,109,405,134,460,170,519,192,546,218,569,226,575,223,580,214,573,188,549,166,522,129,462,104,407,89,367"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1TypeErasedProblem.html#a96109ae835ef39b086365fd5fe91317a" title="[Required] Number of decision variables." alt="" coords="223,649,426,689"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="93,365,103,415,125,488,142,528,163,567,188,603,218,635,223,639,220,643,214,639,184,606,158,570,137,530,120,490,98,417,87,366"/>
+<area shape="rect" id="Node000013" href="$classalpaqa_1_1TypeErasedProblem.html#a4e4d22f040b5624b3e12a7aee68faa7a" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="223,713,426,753"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="91,365,98,425,118,515,134,564,155,613,183,659,218,699,222,703,219,707,214,703,179,662,151,616,129,566,112,517,93,426,86,366"/>
+</map>

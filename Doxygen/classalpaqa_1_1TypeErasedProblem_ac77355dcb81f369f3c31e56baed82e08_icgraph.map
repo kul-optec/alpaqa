@@ -1,0 +1,11 @@
+<map id="eval_objective_gradient" name="eval_objective_gradient">
+<area shape="rect" id="Node000001" title="[Required] Function that evaluates the gradient of the cost," alt="" coords="749,13,928,38"/>
+<area shape="rect" id="Node000002" href="$gradient-checker_8cpp.html#a4111b4a693eccbe2514eade7f9642617" title=" " alt="" coords="523,5,701,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="735,28,702,28,702,23,735,23"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#ab61549120c6f03f32d591657c1b158cb" title=" " alt="" coords="284,5,475,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="509,28,475,28,475,23,509,23"/>
+<area shape="rect" id="Node000004" href="$gradient-checker_8cpp.html#aff809b3945d62b51f641c0176ba90e7c" title=" " alt="" coords="108,13,236,38"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="270,28,236,28,236,23,270,23"/>
+<area shape="rect" id="Node000005" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,13,60,38"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,28,60,28,60,23,94,23"/>
+</map>

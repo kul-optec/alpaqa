@@ -1,0 +1,7 @@
+<map id="CUTEstProblem" name="CUTEstProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,20,128,45"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CUTEstProblem.html#a46a9c4965580ec01c8b06e8a3a4460b8" title="Load a CUTEst problem from the given shared library and OUTSDIF.d file." alt="" coords="176,20,299,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,30,162,30,162,35,128,35"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1BoxConstrProblem.html#a659ffbf5a03c1b42392ed1a286a7a9ee" title=" " alt="" coords="347,5,541,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="299,30,333,30,333,35,299,35"/>
+</map>

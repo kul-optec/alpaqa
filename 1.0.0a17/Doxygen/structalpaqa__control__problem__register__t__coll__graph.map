@@ -1,0 +1,9 @@
+<map id="alpaqa_control_problem_register_t" name="alpaqa_control_problem_register_t">
+<area shape="rect" id="Node000001" title=" " alt="" coords="238,808,409,928"/>
+<area shape="rect" id="Node000002" href="$structalpaqa__control__problem__functions__t.html" title=" " alt="" coords="5,5,217,745"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,738,244,783,251,793,247,796,240,785,215,741"/>
+<area shape="rect" id="Node000003" href="$dl-problem_8h.html#structalpaqa__function__dict__s" title=" " alt="" coords="242,343,405,408"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="326,408,326,792,321,792,321,408"/>
+<area shape="rect" id="Node000004" href="$dl-problem_8h.html#structalpaqa__exception__ptr__s" title=" " alt="" coords="429,343,597,408"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="518,408,520,481,514,578,506,631,493,685,474,737,448,786,423,814,419,811,444,782,469,735,488,684,501,630,509,578,515,480,513,408"/>
+</map>

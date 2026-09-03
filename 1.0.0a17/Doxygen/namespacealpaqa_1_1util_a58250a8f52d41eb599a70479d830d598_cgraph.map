@@ -1,0 +1,9 @@
+<map id="parse_duration" name="parse_duration">
+<area shape="rect" id="Node000001" title="Adds the sum of the durations in the string s to the duration t." alt="" coords="5,31,124,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util.html#a2803e4b1b7bfcfd27157e478e735c235" title="Adds the first duration in the string s to the duration t." alt="" coords="172,31,337,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,41,158,41,158,46,124,46"/>
+<area shape="rect" id="Node000003" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="385,5,553,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="337,31,371,27,372,32,338,36"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1util.html#a8d08e39b0a4742aea14e6e2bd145db22" title=" " alt="" coords="422,55,517,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="338,50,408,58,407,63,337,55"/>
+</map>

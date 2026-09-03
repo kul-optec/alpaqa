@@ -1,0 +1,12 @@
+<map id="enumerate" name="enumerate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="496,33,589,59"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="264,54,448,94"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="483,58,449,63,448,58,482,52"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="33,5,188,31"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="482,45,188,26,189,20,482,39"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="254,54,166,33,168,28,255,48"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1util.html#a8f8729f20b9e0c58b08803046e2e5e54" title="S += S_full(mask,:)" alt="" coords="15,59,207,84"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="250,76,207,75,207,70,250,70"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="5,109,216,149"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="253,100,202,111,200,106,252,94"/>
+</map>

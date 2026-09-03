@@ -1,0 +1,4 @@
+<map id="get_Q" name="get_Q">
+<area shape="rect" id="node1" title="Get the matrix Q such that Q times R is the original matrix." alt="" coords="5,5,65,32"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#ac88f0961aa7ed7c7415550ab2cad49c8" title=" " alt="" coords="113,5,152,32"/>
+</map>

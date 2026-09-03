@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 8b862c1df62c6e2ea98b70eaafb0f03f9e81b51d - src/alpaqa/src/driver/alpaqa-driver.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/alpaqa/src/driver">src/alpaqa/src/driver</a> - alpaqa-driver.cpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">8b862c1df62c6e2ea98b70eaafb0f03f9e81b51d</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">119</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2026-09-03 16:26:02</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:&nbsp&nbsp&nbsp&nbsp
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #ifdef _WIN32</span>
+<span id="L2"><span class="lineNum">       2</span>              : #define NOMINMAX</span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;Windows.h&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #endif</span>
+<span id="L5"><span class="lineNum">       5</span>              : </span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &lt;alpaqa/config/config.hpp&gt;</span>
+<span id="L7"><span class="lineNum">       7</span>              : #include &lt;alpaqa/params/options.hpp&gt;</span>
+<span id="L8"><span class="lineNum">       8</span>              : #include &lt;alpaqa/problem-loader/problem-loader.hpp&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : #include &lt;alpaqa/problem/kkt-error.hpp&gt;</span>
+<span id="L10"><span class="lineNum">      10</span>              : #include &lt;alpaqa/util/print.hpp&gt;</span>
+<span id="L11"><span class="lineNum">      11</span>              : #include &lt;alpaqa/util/span.hpp&gt;</span>
+<span id="L12"><span class="lineNum">      12</span>              : #include &lt;guanaqo/demangled-typename.hpp&gt;</span>
+<span id="L13"><span class="lineNum">      13</span>              : #include &lt;guanaqo/string-util.hpp&gt;</span>
+<span id="L14"><span class="lineNum">      14</span>              : #include &lt;alpaqa-version.h&gt;</span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span>              : #include &lt;alpaqa/driver/alpaqa-driver.hpp&gt;</span>
+<span id="L17"><span class="lineNum">      17</span>              : </span>
+<span id="L18"><span class="lineNum">      18</span>              : #include &quot;fista-driver.hpp&quot;</span>
+<span id="L19"><span class="lineNum">      19</span>              : #include &quot;ipopt-driver.hpp&quot;</span>
+<span id="L20"><span class="lineNum">      20</span>              : #include &quot;lbfgsb-driver.hpp&quot;</span>
+<span id="L21"><span class="lineNum">      21</span>              : #include &quot;panoc-driver.hpp&quot;</span>
+<span id="L22"><span class="lineNum">      22</span>              : #include &quot;pantr-driver.hpp&quot;</span>
+<span id="L23"><span class="lineNum">      23</span>              : #include &quot;qpalm-driver.hpp&quot;</span>
+<span id="L24"><span class="lineNum">      24</span>              : </span>
+<span id="L25"><span class="lineNum">      25</span>              : #ifdef ALPAQA_WITH_EXTERNAL_CASADI</span>
+<span id="L26"><span class="lineNum">      26</span>              : #include &lt;casadi/config.h&gt;</span>
+<span id="L27"><span class="lineNum">      27</span>              : #endif</span>
+<span id="L28"><span class="lineNum">      28</span>              : #ifdef ALPAQA_WITH_JSON</span>
+<span id="L29"><span class="lineNum">      29</span>              : #include &lt;nlohmann/json_fwd.hpp&gt;</span>
+<span id="L30"><span class="lineNum">      30</span>              : #endif</span>
+<span id="L31"><span class="lineNum">      31</span>              : #ifdef ALPAQA_WITH_IPOPT</span>
+<span id="L32"><span class="lineNum">      32</span>              : #include &lt;IpoptConfig.h&gt;</span>
+<span id="L33"><span class="lineNum">      33</span>              : #endif</span>
+<span id="L34"><span class="lineNum">      34</span>              : </span>
+<span id="L35"><span class="lineNum">      35</span>              : #include &lt;filesystem&gt;</span>
+<span id="L36"><span class="lineNum">      36</span>              : #include &lt;fstream&gt;</span>
+<span id="L37"><span class="lineNum">      37</span>              : #include &lt;iostream&gt;</span>
+<span id="L38"><span class="lineNum">      38</span>              : #include &lt;random&gt;</span>
+<span id="L39"><span class="lineNum">      39</span>              : #include &lt;span&gt;</span>
+<span id="L40"><span class="lineNum">      40</span>              : #include &lt;stdexcept&gt;</span>
+<span id="L41"><span class="lineNum">      41</span>              : #include &lt;string&gt;</span>
+<span id="L42"><span class="lineNum">      42</span>              : #include &lt;string_view&gt;</span>
+<span id="L43"><span class="lineNum">      43</span>              : #include &lt;tuple&gt;</span>
+<span id="L44"><span class="lineNum">      44</span>              : </span>
+<span id="L45"><span class="lineNum">      45</span>              : namespace alpaqa::driver {</span>
+<span id="L46"><span class="lineNum">      46</span>              : </span>
+<span id="L47"><span class="lineNum">      47</span>              : USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);</span>
+<span id="L48"><span class="lineNum">      48</span>              : </span>
+<span id="L49"><span class="lineNum">      49</span>              : const auto *docs = R&quot;==(</span>
+<span id="L50"><span class="lineNum">      50</span>              : problem types:</span>
+<span id="L51"><span class="lineNum">      51</span>              :     dl: Dynamically loaded problem using the DLProblem class.</span>
+<span id="L52"><span class="lineNum">      52</span>              :         Specify the name of the registration function using the</span>
+<span id="L53"><span class="lineNum">      53</span>              :         problem.register option, e.g. problem.register=register_alpaqa_problem.</span>
+<span id="L54"><span class="lineNum">      54</span>              :         Further options can be passed to the problem using</span>
+<span id="L55"><span class="lineNum">      55</span>              :         problem.&lt;key&gt;[=&lt;value&gt;].</span>
+<span id="L56"><span class="lineNum">      56</span>              :     cs: Load a CasADi problem using the CasADiProblem class.</span>
+<span id="L57"><span class="lineNum">      57</span>              :         If a .tsv file with the same name as the shared library file exists,</span>
+<span id="L58"><span class="lineNum">      58</span>              :         the bounds and parameters will be loaded from that file. See</span>
+<span id="L59"><span class="lineNum">      59</span>              :         CasADiProblem::load_numerical_data for more details.</span>
+<span id="L60"><span class="lineNum">      60</span>              :         The problem parameter can be set using the problem.param option.</span>
+<span id="L61"><span class="lineNum">      61</span>              :     cu: Load a CUTEst problem using the CUTEstProblem class.</span>
+<span id="L62"><span class="lineNum">      62</span>              : </span>
+<span id="L63"><span class="lineNum">      63</span>              : methods:</span>
+<span id="L64"><span class="lineNum">      64</span>              :     panoc[.&lt;direction&gt;]:</span>
+<span id="L65"><span class="lineNum">      65</span>              :         PANOC solver with the given direction.</span>
+<span id="L66"><span class="lineNum">      66</span>              :         Directions include: lbfgs, struclbfgs, anderson, convex-newton.</span>
+<span id="L67"><span class="lineNum">      67</span>              :     zerofpr[.&lt;direction&gt;]:</span>
+<span id="L68"><span class="lineNum">      68</span>              :         ZeroFPR solver, supports the same directions as PANOC.</span>
+<span id="L69"><span class="lineNum">      69</span>              :     pantr:</span>
+<span id="L70"><span class="lineNum">      70</span>              :         PANTR solver. Requires products with the Hessian of the augmented</span>
+<span id="L71"><span class="lineNum">      71</span>              :         Lagrangian (unless dir.finite_diff=true).</span>
+<span id="L72"><span class="lineNum">      72</span>              :     fista:</span>
+<span id="L73"><span class="lineNum">      73</span>              :         FISTA (fast iterative shrinkage-thresholding algorithm). Only for</span>
+<span id="L74"><span class="lineNum">      74</span>              :         convex problems.</span>
+<span id="L75"><span class="lineNum">      75</span>              :     ipopt:</span>
+<span id="L76"><span class="lineNum">      76</span>              :         Ipopt interior point solver. Requires Jacobian of the constraints</span>
+<span id="L77"><span class="lineNum">      77</span>              :         and Hessian of the Lagrangian (unless finite memory is enabled).</span>
+<span id="L78"><span class="lineNum">      78</span>              :     qpalm:</span>
+<span id="L79"><span class="lineNum">      79</span>              :         QPALM proximal ALM QP solver. Assumes that the problem is a QP.</span>
+<span id="L80"><span class="lineNum">      80</span>              :         Requires Jacobian of the constraints and Hessian of the Lagrangian.</span>
+<span id="L81"><span class="lineNum">      81</span>              : </span>
+<span id="L82"><span class="lineNum">      82</span>              : options:</span>
+<span id="L83"><span class="lineNum">      83</span>              :     Solver-specific options can be specified as key-value pairs, where the</span>
+<span id="L84"><span class="lineNum">      84</span>              :     keys use periods to access struct members. For example,</span>
+<span id="L85"><span class="lineNum">      85</span>              :     solver.Lipschitz.L_0=1e3.</span>
+<span id="L86"><span class="lineNum">      86</span>              : </span>
+<span id="L87"><span class="lineNum">      87</span>              :     solver:  Parameters for the main (inner) solver.</span>
+<span id="L88"><span class="lineNum">      88</span>              :     alm:     Parameters for the outer ALM solver (if applicable).</span>
+<span id="L89"><span class="lineNum">      89</span>              :     dir:     Parameters for solver's direction provider (if applicable).</span>
+<span id="L90"><span class="lineNum">      90</span>              :     accel:   Parameters for direction's accelerator (if applicable).</span>
+<span id="L91"><span class="lineNum">      91</span>              :     out:     File to write output to (default: -, i.e. standard output).</span>
+<span id="L92"><span class="lineNum">      92</span>              :     sol:     Folder to write the solutions (and optional statistics) to.</span>
+<span id="L93"><span class="lineNum">      93</span>              :     x0:      Initial guess for the solution.</span>
+<span id="L94"><span class="lineNum">      94</span>              :     mul_g0:  Initial guess for the multipliers of the general constraints.</span>
+<span id="L95"><span class="lineNum">      95</span>              :     mul_x0:  Initial guess for the multipliers of the bound constraints on x.</span>
+<span id="L96"><span class="lineNum">      96</span>              :     num_exp: Repeat the experiment this many times for more accurate timings.</span>
+<span id="L97"><span class="lineNum">      97</span>              :     extra_stats: Log more per-iteration solver statistics, such as step sizes,</span>
+<span id="L98"><span class="lineNum">      98</span>              :                  Newton step acceptance, and residuals. Requires `sol' to be set.</span>
+<span id="L99"><span class="lineNum">      99</span>              :     show_funcs: Print an overview of the functions provided by the problem.</span>
+<span id="L100"><span class="lineNum">     100</span>              :     dl_flags:   Flags passed to dlopen when loading the problem.</span>
+<span id="L101"><span class="lineNum">     101</span>              : </span>
+<span id="L102"><span class="lineNum">     102</span>              :     The prefix @ can be added to the values of x0, mul_g0 and mul_x0 to read</span>
+<span id="L103"><span class="lineNum">     103</span>              :     the values from the given CSV file.</span>
+<span id="L104"><span class="lineNum">     104</span>              : </span>
+<span id="L105"><span class="lineNum">     105</span>              :     Options can be loaded from a JSON file by using an @ prefix. For example,</span>
+<span id="L106"><span class="lineNum">     106</span>              :     an argument @options.json loads the options from a file options.json in the</span>
+<span id="L107"><span class="lineNum">     107</span>              :     current directory. Multiple JSON files are processed in the order they</span>
+<span id="L108"><span class="lineNum">     108</span>              :     appear in the command line arguments. Options specified on the command line</span>
+<span id="L109"><span class="lineNum">     109</span>              :     always have precedence over options in a JSON file, regardless of order.</span>
+<span id="L110"><span class="lineNum">     110</span>              : </span>
+<span id="L111"><span class="lineNum">     111</span>              : examples:</span>
+<span id="L112"><span class="lineNum">     112</span>              :     alpaqa-driver problem.so \</span>
+<span id="L113"><span class="lineNum">     113</span>              :         problem.register=register_alpaqa_problem \</span>
+<span id="L114"><span class="lineNum">     114</span>              :         problem.custom_arg=foo \</span>
+<span id="L115"><span class="lineNum">     115</span>              :         method=panoc.struclbfgs \</span>
+<span id="L116"><span class="lineNum">     116</span>              :         accel.memory=50 \</span>
+<span id="L117"><span class="lineNum">     117</span>              :         alm.{tolerance,dual_tolerance}=1e-8 \</span>
+<span id="L118"><span class="lineNum">     118</span>              :         solver.print_interval=50 \</span>
+<span id="L119"><span class="lineNum">     119</span>              :         x0=@/some/file.csv</span>
+<span id="L120"><span class="lineNum">     120</span>              : </span>
+<span id="L121"><span class="lineNum">     121</span>              :     alpaqa-driver cs:build/casadi_problem.so \</span>
+<span id="L122"><span class="lineNum">     122</span>              :         @options/default.json \</span>
+<span id="L123"><span class="lineNum">     123</span>              :         problem.param=1,2,3 \</span>
+<span id="L124"><span class="lineNum">     124</span>              :         method=ipopt \</span>
+<span id="L125"><span class="lineNum">     125</span>              :         solver.tol=1e-8 solver.constr_viol_tol=1e-8 \</span>
+<span id="L126"><span class="lineNum">     126</span>              :         solver.warm_start_init_point=yes \</span>
+<span id="L127"><span class="lineNum">     127</span>              :         x0=@/some/file.csv \</span>
+<span id="L128"><span class="lineNum">     128</span>              :         mul_g0=@/some/other/file.csv \</span>
+<span id="L129"><span class="lineNum">     129</span>              :         mul_x0=@/yet/another/file.csv</span>
+<span id="L130"><span class="lineNum">     130</span>              : )==&quot;;</span>
+<span id="L131"><span class="lineNum">     131</span>              : </span>
+<span id="L132"><span class="lineNum">     132</span> <span class="tlaUNC">           0 : void print_usage(const char *a0, std::ostream &amp;os) {</span></span>
+<span id="L133"><span class="lineNum">     133</span> <span class="tlaUNC">           0 :     const auto *opts = &quot; [&lt;problem-type&gt;:][&lt;path&gt;/]&lt;name&gt; [method=&lt;solver&gt;] &quot;</span></span>
+<span id="L134"><span class="lineNum">     134</span>              :                        &quot;[&lt;key&gt;=&lt;value&gt;...]\n&quot;;</span>
+<span id="L135"><span class="lineNum">     135</span>              :     os &lt;&lt; &quot;alpaqa-driver &quot; ALPAQA_VERSION_FULL &quot; (&quot; &lt;&lt; alpaqa_build_time</span>
+<span id="L136"><span class="lineNum">     136</span>              :        &lt;&lt; &quot;)\n\n&quot;</span>
+<span id="L137"><span class="lineNum">     137</span>              :           &quot;    Command-line interface to the alpaqa solvers.\n&quot;</span>
+<span id="L138"><span class="lineNum">     138</span>              :           &quot;    alpaqa is published under the LGPL-3.0.\n&quot;</span>
+<span id="L139"><span class="lineNum">     139</span>              :           &quot;    https://github.com/kul-optec/alpaqa&quot;</span>
+<span id="L140"><span class="lineNum">     140</span>              :           &quot;\n\n&quot;</span>
+<span id="L141"><span class="lineNum">     141</span>              :           &quot;    Usage: &quot;</span>
+<span id="L142"><span class="lineNum">     142</span> <span class="tlaUNC">           0 :        &lt;&lt; a0 &lt;&lt; opts &lt;&lt; docs &lt;&lt; std::endl;</span></span>
+<span id="L143"><span class="lineNum">     143</span>              :     os &lt;&lt; &quot;Third-party libraries:\n&quot;</span>
+<span id="L144"><span class="lineNum">     144</span> <span class="tlaUNC">           0 :        &lt;&lt; &quot;  * Eigen &quot; &lt;&lt; EIGEN_WORLD_VERSION &lt;&lt; '.' &lt;&lt; EIGEN_MAJOR_VERSION</span></span>
+<span id="L145"><span class="lineNum">     145</span> <span class="tlaUNC">           0 :        &lt;&lt; '.' &lt;&lt; EIGEN_MINOR_VERSION</span></span>
+<span id="L146"><span class="lineNum">     146</span>              :        &lt;&lt; &quot; (https://gitlab.com/libeigen/eigen) - MPL-2.0\n&quot;</span>
+<span id="L147"><span class="lineNum">     147</span>              : #ifdef ALPAQA_WITH_EXTERNAL_CASADI</span>
+<span id="L148"><span class="lineNum">     148</span>              :        &lt;&lt; &quot;  * CasADi &quot; CASADI_VERSION_STRING</span>
+<span id="L149"><span class="lineNum">     149</span>              :           &quot; (https://github.com/casadi/casadi) - LGPL-3.0-or-later\n&quot;</span>
+<span id="L150"><span class="lineNum">     150</span>              : #endif</span>
+<span id="L151"><span class="lineNum">     151</span>              : #ifdef ALPAQA_WITH_CUTEST</span>
+<span id="L152"><span class="lineNum">     152</span>              :        &lt;&lt; &quot;  * CUTEst&quot;</span>
+<span id="L153"><span class="lineNum">     153</span>              :           &quot; (https://github.com/ralna/CUTEst) - BSD-3-Clause\n&quot;</span>
+<span id="L154"><span class="lineNum">     154</span>              : #endif</span>
+<span id="L155"><span class="lineNum">     155</span>              : #ifdef ALPAQA_WITH_LBFGSB</span>
+<span id="L156"><span class="lineNum">     156</span>              :        &lt;&lt; &quot;  * L-BFGS-B 3.0 &quot;</span>
+<span id="L157"><span class="lineNum">     157</span>              :           &quot;(http://users.iems.northwestern.edu/~nocedal/lbfgsb.html) - &quot;</span>
+<span id="L158"><span class="lineNum">     158</span>              :           &quot;BSD-3-Clause\n&quot;</span>
+<span id="L159"><span class="lineNum">     159</span>              : #endif</span>
+<span id="L160"><span class="lineNum">     160</span>              : #ifdef ALPAQA_WITH_IPOPT</span>
+<span id="L161"><span class="lineNum">     161</span>              :        &lt;&lt; &quot;  * Ipopt &quot; IPOPT_VERSION</span>
+<span id="L162"><span class="lineNum">     162</span>              :           &quot; (https://github.com/coin-or/Ipopt) - EPL-2.0\n&quot;</span>
+<span id="L163"><span class="lineNum">     163</span>              :        &lt;&lt; &quot;  * MUMPS (https://mumps-solver.org) - CECILL-C\n&quot;</span>
+<span id="L164"><span class="lineNum">     164</span>              :        &lt;&lt; &quot;  * OpenBLAS (https://github.com/OpenMathLib/OpenBLAS) - &quot;</span>
+<span id="L165"><span class="lineNum">     165</span>              :           &quot;BSD-3-Clause\n&quot;</span>
+<span id="L166"><span class="lineNum">     166</span>              : #endif</span>
+<span id="L167"><span class="lineNum">     167</span>              : #ifdef ALPAQA_WITH_QPALM</span>
+<span id="L168"><span class="lineNum">     168</span>              :        &lt;&lt; &quot;  * QPALM &quot; QPALM_VERSION_STR</span>
+<span id="L169"><span class="lineNum">     169</span>              :           &quot; (https://github.com/kul-optec/QPALM) - LGPL-3.0\n&quot;</span>
+<span id="L170"><span class="lineNum">     170</span>              : #endif</span>
+<span id="L171"><span class="lineNum">     171</span>              : #ifdef ALPAQA_WITH_JSON</span>
+<span id="L172"><span class="lineNum">     172</span> <span class="tlaUNC">           0 :        &lt;&lt; &quot;  * nlohmann/json &quot; &lt;&lt; NLOHMANN_JSON_VERSION_MAJOR &lt;&lt; '.'</span></span>
+<span id="L173"><span class="lineNum">     173</span> <span class="tlaUNC">           0 :        &lt;&lt; NLOHMANN_JSON_VERSION_MINOR &lt;&lt; '.' &lt;&lt; NLOHMANN_JSON_VERSION_PATCH</span></span>
+<span id="L174"><span class="lineNum">     174</span> <span class="tlaUNC">           0 :        &lt;&lt; &quot; (https://github.com/nlohmann/json) - MIT\n&quot;</span></span>
+<span id="L175"><span class="lineNum">     175</span>              : #endif</span>
+<span id="L176"><span class="lineNum">     176</span> <span class="tlaUNC">           0 :        &lt;&lt; std::endl;</span></span>
+<span id="L177"><span class="lineNum">     177</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L178"><span class="lineNum">     178</span>              : </span>
+<span id="L179"><span class="lineNum">     179</span> <span class="tlaUNC">           0 : void print_version(std::ostream &amp;os) {</span></span>
+<span id="L180"><span class="lineNum">     180</span> <span class="tlaUNC">           0 :     os &lt;&lt; ALPAQA_VERSION_FULL &quot; (&quot; &lt;&lt; ALPAQA_BUILD_TIME &lt;&lt; &quot;)\n&quot;;</span></span>
+<span id="L181"><span class="lineNum">     181</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L182"><span class="lineNum">     182</span>              : </span>
+<span id="L183"><span class="lineNum">     183</span> <span class="tlaUNC">           0 : SolverBuilders::SolverBuilders(std::string default_solver)</span></span>
+<span id="L184"><span class="lineNum">     184</span> <span class="tlaUNC">           0 :     : default_solver(std::move(default_solver)),</span></span>
+<span id="L185"><span class="lineNum">     185</span> <span class="tlaUNC">           0 :       solvers{</span></span>
+<span id="L186"><span class="lineNum">     186</span>              :           {&quot;panoc&quot;, make_panoc_driver}, {&quot;zerofpr&quot;, make_zerofpr_driver},</span>
+<span id="L187"><span class="lineNum">     187</span>              :           {&quot;pantr&quot;, make_pantr_driver}, {&quot;lbfgsb&quot;, make_lbfgsb_driver},</span>
+<span id="L188"><span class="lineNum">     188</span>              :           {&quot;fista&quot;, make_fista_driver}, {&quot;ipopt&quot;, make_ipopt_driver},</span>
+<span id="L189"><span class="lineNum">     189</span>              :           {&quot;qpalm&quot;, make_qpalm_driver},</span>
+<span id="L190"><span class="lineNum">     190</span> <span class="tlaUNC">           0 :       } {}</span></span>
+<span id="L191"><span class="lineNum">     191</span>              : </span>
+<span id="L192"><span class="lineNum">     192</span>              : std::tuple&lt;solver_builder_func, std::string&gt;</span>
+<span id="L193"><span class="lineNum">     193</span> <span class="tlaUNC">           0 : SolverBuilders::get_solver_builder(Options &amp;opts) const {</span></span>
+<span id="L194"><span class="lineNum">     194</span> <span class="tlaUNC">           0 :     std::string method = default_solver, direction;</span></span>
+<span id="L195"><span class="lineNum">     195</span> <span class="tlaUNC">           0 :     set_params(method, &quot;method&quot;, opts);</span></span>
+<span id="L196"><span class="lineNum">     196</span> <span class="tlaUNC">           0 :     std::tie(method, direction) = alpaqa::params::split_key(method, '.');</span></span>
+<span id="L197"><span class="lineNum">     197</span>              :     // Find the selected solver builder</span>
+<span id="L198"><span class="lineNum">     198</span> <span class="tlaUNC">           0 :     auto solver_it = solvers.find(method);</span></span>
+<span id="L199"><span class="lineNum">     199</span> <span class="tlaUNC">           0 :     if (solver_it == solvers.end())</span></span>
+<span id="L200"><span class="lineNum">     200</span> <span class="tlaUNC">           0 :         throw std::invalid_argument(</span></span>
+<span id="L201"><span class="lineNum">     201</span> <span class="tlaUNC">           0 :             &quot;Unknown solver '&quot; + std::string(method) + &quot;'\n&quot; +</span></span>
+<span id="L202"><span class="lineNum">     202</span> <span class="tlaUNC">           0 :             &quot;  Available solvers: &quot; + guanaqo::join(std::views::keys(solvers)));</span></span>
+<span id="L203"><span class="lineNum">     203</span> <span class="tlaUNC">           0 :     return std::make_tuple(solver_it-&gt;second, direction);</span></span>
+<span id="L204"><span class="lineNum">     204</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L205"><span class="lineNum">     205</span>              : </span>
+<span id="L206"><span class="lineNum">     206</span> <span class="tlaUNC">           0 : void SolverBuilders::register_solver_builder(std::string_view name,</span></span>
+<span id="L207"><span class="lineNum">     207</span>              :                                              solver_builder_func builder) {</span>
+<span id="L208"><span class="lineNum">     208</span> <span class="tlaUNC">           0 :     solvers.insert({name, std::move(builder)});</span></span>
+<span id="L209"><span class="lineNum">     209</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L210"><span class="lineNum">     210</span>              : </span>
+<span id="L211"><span class="lineNum">     211</span>              : /// Split the string @p s on the first occurrence of @p tok.</span>
+<span id="L212"><span class="lineNum">     212</span>              : /// Returns (&quot;&quot;, s) if tok was not found.</span>
+<span id="L213"><span class="lineNum">     213</span> <span class="tlaUNC">           0 : static auto split_once(std::string_view s, char tok = '.') {</span></span>
+<span id="L214"><span class="lineNum">     214</span> <span class="tlaUNC">           0 :     auto tok_pos = s.find(tok);</span></span>
+<span id="L215"><span class="lineNum">     215</span> <span class="tlaUNC">           0 :     if (tok_pos == s.npos)</span></span>
+<span id="L216"><span class="lineNum">     216</span> <span class="tlaUNC">           0 :         return std::make_tuple(std::string_view{}, s);</span></span>
+<span id="L217"><span class="lineNum">     217</span> <span class="tlaUNC">           0 :     std::string_view key{s.begin(), s.begin() + tok_pos};</span></span>
+<span id="L218"><span class="lineNum">     218</span> <span class="tlaUNC">           0 :     std::string_view rem{s.begin() + tok_pos + 1, s.end()};</span></span>
+<span id="L219"><span class="lineNum">     219</span> <span class="tlaUNC">           0 :     return std::make_tuple(key, rem);</span></span>
+<span id="L220"><span class="lineNum">     220</span>              : }</span>
+<span id="L221"><span class="lineNum">     221</span>              : </span>
+<span id="L222"><span class="lineNum">     222</span> <span class="tlaUNC">           0 : std::ostream &amp;get_output_stream(alpaqa::Options &amp;opts,</span></span>
+<span id="L223"><span class="lineNum">     223</span>              :                                 std::ofstream &amp;out_fstream,</span>
+<span id="L224"><span class="lineNum">     224</span>              :                                 std::ostream &amp;default_stream) {</span>
+<span id="L225"><span class="lineNum">     225</span> <span class="tlaUNC">           0 :     std::string out_path = &quot;-&quot;;</span></span>
+<span id="L226"><span class="lineNum">     226</span> <span class="tlaUNC">           0 :     set_params(out_path, &quot;out&quot;, opts);</span></span>
+<span id="L227"><span class="lineNum">     227</span> <span class="tlaUNC">           0 :     if (out_path != &quot;-&quot;)</span></span>
+<span id="L228"><span class="lineNum">     228</span> <span class="tlaUNC">           0 :         if (out_fstream.open(out_path); !out_fstream)</span></span>
+<span id="L229"><span class="lineNum">     229</span> <span class="tlaUNC">           0 :             throw std::runtime_error(&quot;Unable to open '&quot; + out_path + &quot;'&quot;);</span></span>
+<span id="L230"><span class="lineNum">     230</span> <span class="tlaUNC">           0 :     return out_fstream.is_open() ? out_fstream : default_stream;</span></span>
+<span id="L231"><span class="lineNum">     231</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L232"><span class="lineNum">     232</span>              : </span>
+<span id="L233"><span class="lineNum">     233</span> <span class="tlaUNC">           0 : std::string get_output_paths(alpaqa::Options &amp;opts) {</span></span>
+<span id="L234"><span class="lineNum">     234</span> <span class="tlaUNC">           0 :     std::string sol_path;</span></span>
+<span id="L235"><span class="lineNum">     235</span> <span class="tlaUNC">           0 :     set_params(sol_path, &quot;sol&quot;, opts);</span></span>
+<span id="L236"><span class="lineNum">     236</span> <span class="tlaUNC">           0 :     return sol_path;</span></span>
+<span id="L237"><span class="lineNum">     237</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L238"><span class="lineNum">     238</span>              : </span>
+<span id="L239"><span class="lineNum">     239</span>              : std::tuple&lt;fs::path, std::string_view&gt;</span>
+<span id="L240"><span class="lineNum">     240</span> <span class="tlaUNC">           0 : get_problem_path(const char *const *argv) {</span></span>
+<span id="L241"><span class="lineNum">     241</span> <span class="tlaUNC">           0 :     bool rel_to_exe              = argv[1][0] == '^';</span></span>
+<span id="L242"><span class="lineNum">     242</span> <span class="tlaUNC">           0 :     std::string_view prob_path_s = argv[1] + static_cast&lt;ptrdiff_t&gt;(rel_to_exe);</span></span>
+<span id="L243"><span class="lineNum">     243</span> <span class="tlaUNC">           0 :     std::string_view prob_type;</span></span>
+<span id="L244"><span class="lineNum">     244</span> <span class="tlaUNC">           0 :     std::tie(prob_type, prob_path_s) = split_once(prob_path_s, ':');</span></span>
+<span id="L245"><span class="lineNum">     245</span> <span class="tlaUNC">           0 :     fs::path prob_path{prob_path_s};</span></span>
+<span id="L246"><span class="lineNum">     246</span> <span class="tlaUNC">           0 :     if (rel_to_exe)</span></span>
+<span id="L247"><span class="lineNum">     247</span> <span class="tlaUNC">           0 :         prob_path = fs::canonical(fs::path(argv[0])).parent_path() / prob_path;</span></span>
+<span id="L248"><span class="lineNum">     248</span> <span class="tlaUNC">           0 :     return std::make_tuple(std::move(prob_path), prob_type);</span></span>
+<span id="L249"><span class="lineNum">     249</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L250"><span class="lineNum">     250</span>              : </span>
+<span id="L251"><span class="lineNum">     251</span> <span class="tlaUNC">           0 : std::string store_solution(const fs::path &amp;sol_output_dir, std::ostream &amp;os,</span></span>
+<span id="L252"><span class="lineNum">     252</span>              :                            BenchmarkResults &amp;results,</span>
+<span id="L253"><span class="lineNum">     253</span>              :                            const SolverWrapper &amp;solver,</span>
+<span id="L254"><span class="lineNum">     254</span>              :                            [[maybe_unused]] const Options &amp;opts,</span>
+<span id="L255"><span class="lineNum">     255</span>              :                            std::span&lt;const char *const&gt; argv) {</span>
+<span id="L256"><span class="lineNum">     256</span> <span class="tlaUNC">           0 :     const auto &amp;sol_res = results.solver_results;</span></span>
+<span id="L257"><span class="lineNum">     257</span> <span class="tlaUNC">           0 :     auto timestamp_str  = std::to_string(results.timestamp);</span></span>
+<span id="L258"><span class="lineNum">     258</span> <span class="tlaUNC">           0 :     auto rnd_str        = random_hex_string(std::random_device());</span></span>
+<span id="L259"><span class="lineNum">     259</span> <span class="tlaUNC">           0 :     auto name           = results.problem.path.stem().string();</span></span>
+<span id="L260"><span class="lineNum">     260</span> <span class="tlaUNC">           0 :     if (name == &quot;PROBLEM&quot;)</span></span>
+<span id="L261"><span class="lineNum">     261</span> <span class="tlaUNC">           0 :         name = results.problem.name;</span></span>
+<span id="L262"><span class="lineNum">     262</span> <span class="tlaUNC">           0 :     auto suffix = '_' + name + '_' + timestamp_str + '_' + rnd_str;</span></span>
+<span id="L263"><span class="lineNum">     263</span> <span class="tlaUNC">           0 :     fs::create_directories(sol_output_dir);</span></span>
+<span id="L264"><span class="lineNum">     264</span> <span class="tlaUNC">           0 :     std::array solutions{</span></span>
+<span id="L265"><span class="lineNum">     265</span> <span class="tlaUNC">           0 :         std::tuple{&quot;solution&quot;, &quot;x&quot;, &amp;sol_res.solution},</span></span>
+<span id="L266"><span class="lineNum">     266</span> <span class="tlaUNC">           0 :         std::tuple{&quot;multipliers for g&quot;, &quot;mul_g&quot;, &amp;sol_res.multipliers},</span></span>
+<span id="L267"><span class="lineNum">     267</span> <span class="tlaUNC">           0 :         std::tuple{&quot;multipliers for x&quot;, &quot;mul_x&quot;, &amp;sol_res.multipliers_bounds},</span></span>
+<span id="L268"><span class="lineNum">     268</span> <span class="tlaUNC">           0 :     };</span></span>
+<span id="L269"><span class="lineNum">     269</span> <span class="tlaUNC">           0 :     std::string warm_start_cmd;</span></span>
+<span id="L270"><span class="lineNum">     270</span> <span class="tlaUNC">           0 :     for (auto [name, fname, value] : solutions) {</span></span>
+<span id="L271"><span class="lineNum">     271</span> <span class="tlaUNC">           0 :         if (value-&gt;size() == 0)</span></span>
+<span id="L272"><span class="lineNum">     272</span> <span class="tlaUNC">           0 :             continue;</span></span>
+<span id="L273"><span class="lineNum">     273</span> <span class="tlaUNC">           0 :         auto pth = sol_output_dir / (std::string(fname) + suffix + &quot;.csv&quot;);</span></span>
+<span id="L274"><span class="lineNum">     274</span> <span class="tlaUNC">           0 :         os &lt;&lt; &quot;Writing &quot; &lt;&lt; name &lt;&lt; &quot; to &quot; &lt;&lt; pth &lt;&lt; std::endl;</span></span>
+<span id="L275"><span class="lineNum">     275</span> <span class="tlaUNC">           0 :         std::ofstream output_file(pth);</span></span>
+<span id="L276"><span class="lineNum">     276</span> <span class="tlaUNC">           0 :         guanaqo::print_csv(output_file, alpaqa::as_span(*value));</span></span>
+<span id="L277"><span class="lineNum">     277</span> <span class="tlaUNC">           0 :         if (!warm_start_cmd.empty())</span></span>
+<span id="L278"><span class="lineNum">     278</span> <span class="tlaUNC">           0 :             warm_start_cmd += &quot; &quot;;</span></span>
+<span id="L279"><span class="lineNum">     279</span> <span class="tlaUNC">           0 :         warm_start_cmd += &quot;'&quot;;</span></span>
+<span id="L280"><span class="lineNum">     280</span> <span class="tlaUNC">           0 :         warm_start_cmd += fname;</span></span>
+<span id="L281"><span class="lineNum">     281</span> <span class="tlaUNC">           0 :         warm_start_cmd += &quot;0=@&quot;;</span></span>
+<span id="L282"><span class="lineNum">     282</span> <span class="tlaUNC">           0 :         warm_start_cmd += pth.string();</span></span>
+<span id="L283"><span class="lineNum">     283</span> <span class="tlaUNC">           0 :         warm_start_cmd += &quot;'&quot;;</span></span>
+<span id="L284"><span class="lineNum">     284</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L285"><span class="lineNum">     285</span>              :     {</span>
+<span id="L286"><span class="lineNum">     286</span> <span class="tlaUNC">           0 :         auto pth = sol_output_dir / (&quot;cmdline&quot; + suffix + &quot;.txt&quot;);</span></span>
+<span id="L287"><span class="lineNum">     287</span> <span class="tlaUNC">           0 :         os &lt;&lt; &quot;Writing arguments to &quot; &lt;&lt; pth &lt;&lt; std::endl;</span></span>
+<span id="L288"><span class="lineNum">     288</span> <span class="tlaUNC">           0 :         std::ofstream output_file(pth);</span></span>
+<span id="L289"><span class="lineNum">     289</span> <span class="tlaUNC">           0 :         for (const char *arg : argv)</span></span>
+<span id="L290"><span class="lineNum">     290</span> <span class="tlaUNC">           0 :             output_file &lt;&lt; std::quoted(arg, '\'') &lt;&lt; ' ';</span></span>
+<span id="L291"><span class="lineNum">     291</span> <span class="tlaUNC">           0 :         output_file &lt;&lt; '\n';</span></span>
+<span id="L292"><span class="lineNum">     292</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L293"><span class="lineNum">     293</span> <span class="tlaUNC">           0 :     if (solver.has_statistics()) {</span></span>
+<span id="L294"><span class="lineNum">     294</span> <span class="tlaUNC">           0 :         auto pth = sol_output_dir / (&quot;stats&quot; + suffix + &quot;.csv&quot;);</span></span>
+<span id="L295"><span class="lineNum">     295</span> <span class="tlaUNC">           0 :         os &lt;&lt; &quot;Writing statistics to &quot; &lt;&lt; pth &lt;&lt; std::endl;</span></span>
+<span id="L296"><span class="lineNum">     296</span> <span class="tlaUNC">           0 :         std::ofstream output_file(pth);</span></span>
+<span id="L297"><span class="lineNum">     297</span> <span class="tlaUNC">           0 :         solver.write_statistics_to_stream(output_file);</span></span>
+<span id="L298"><span class="lineNum">     298</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L299"><span class="lineNum">     299</span>              : #if ALPAQA_WITH_JSON</span>
+<span id="L300"><span class="lineNum">     300</span>              :     {</span>
+<span id="L301"><span class="lineNum">     301</span> <span class="tlaUNC">           0 :         auto pth = sol_output_dir / (&quot;options&quot; + suffix + &quot;.json&quot;);</span></span>
+<span id="L302"><span class="lineNum">     302</span> <span class="tlaUNC">           0 :         os &lt;&lt; &quot;Writing options to &quot; &lt;&lt; pth &lt;&lt; std::endl;</span></span>
+<span id="L303"><span class="lineNum">     303</span> <span class="tlaUNC">           0 :         std::ofstream output_file(pth);</span></span>
+<span id="L304"><span class="lineNum">     304</span> <span class="tlaUNC">           0 :         output_file &lt;&lt; opts.get_json_out() &lt;&lt; '\n';</span></span>
+<span id="L305"><span class="lineNum">     305</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L306"><span class="lineNum">     306</span>              : #endif</span>
+<span id="L307"><span class="lineNum">     307</span>              :     {</span>
+<span id="L308"><span class="lineNum">     308</span> <span class="tlaUNC">           0 :         auto pth = sol_output_dir / (&quot;eval&quot; + suffix + &quot;.yml&quot;);</span></span>
+<span id="L309"><span class="lineNum">     309</span> <span class="tlaUNC">           0 :         os &lt;&lt; &quot;Writing evaluation counters to &quot; &lt;&lt; pth &lt;&lt; std::endl;</span></span>
+<span id="L310"><span class="lineNum">     310</span> <span class="tlaUNC">           0 :         std::ofstream output_file(pth);</span></span>
+<span id="L311"><span class="lineNum">     311</span> <span class="tlaUNC">           0 :         write_evaluations(output_file, sol_res.evals);</span></span>
+<span id="L312"><span class="lineNum">     312</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L313"><span class="lineNum">     313</span> <span class="tlaUNC">           0 :     if (!warm_start_cmd.empty()) {</span></span>
+<span id="L314"><span class="lineNum">     314</span> <span class="tlaUNC">           0 :         os &lt;&lt; &quot;To warm start using this solution, use: &quot; &lt;&lt; warm_start_cmd</span></span>
+<span id="L315"><span class="lineNum">     315</span> <span class="tlaUNC">           0 :            &lt;&lt; std::endl;</span></span>
+<span id="L316"><span class="lineNum">     316</span>              :     }</span>
+<span id="L317"><span class="lineNum">     317</span> <span class="tlaUNC">           0 :     return suffix;</span></span>
+<span id="L318"><span class="lineNum">     318</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L319"><span class="lineNum">     319</span>              : </span>
+<span id="L320"><span class="lineNum">     320</span>              : } // namespace alpaqa::driver</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.2-beta</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

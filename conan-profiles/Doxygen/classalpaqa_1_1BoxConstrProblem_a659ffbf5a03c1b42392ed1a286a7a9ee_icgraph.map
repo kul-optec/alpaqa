@@ -1,0 +1,13 @@
+<map id="BoxConstrProblem" name="BoxConstrProblem">
+<area shape="rect" id="Node000001" title="Create a problem with inactive boxes , with no &#45;regularization, and all general constraints handled u..." alt="" coords="196,104,339,129"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html#abe08cf3ae10c78a83f577a68ae0ee150" title=" " alt="" coords="5,5,148,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,98,195,71,147,44,119,33,121,28,149,40,198,66,239,94"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1BoxConstrProblem.html#a1e9ee602d418e0565608483a94c4b75c" title=" " alt="" coords="5,55,148,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,103,126,83,128,78,205,98"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1BoxConstrProblem.html#abb63e537c52e4c1dc2b0708b4e6ea823" title="Create a problem with inactive boxes , with no &#45;regularization, and all general constraints handled u..." alt="" coords="5,104,148,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="183,119,148,119,148,114,183,114"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1BoxConstrProblem.html#ab577c6d13bc1ac9726b8d9a06548ed93" title=" " alt="" coords="33,153,121,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="205,135,122,157,120,152,204,130"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1BoxConstrProblem.html#a5f805f9c9a71ab470fb49cacb3bbbaf5" title=" " alt="" coords="33,203,121,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="238,140,197,166,149,192,119,205,117,200,147,188,194,162,235,135"/>
+</map>

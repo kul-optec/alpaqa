@@ -1,0 +1,7 @@
+<map id="attach_cancellation" name="attach_cancellation">
+<area shape="rect" id="Node000001" title="Attach SIGINT and SIGTERM handlers to stop the given solver." alt="" coords="240,60,389,85"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02panoc-driver_8cpp_03.html#a2646125ffd95200553629d634b9e9ee0" title=" " alt="" coords="5,5,192,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="231,60,192,53,193,47,232,55"/>
+<area shape="rect" id="Node000003" href="$namespaceanonymous__namespace_02pantr-driver_8cpp_03.html#ab33624b00d76e0611032d0e170e1152f" title=" " alt="" coords="7,84,191,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="230,91,191,97,190,92,229,85"/>
+</map>

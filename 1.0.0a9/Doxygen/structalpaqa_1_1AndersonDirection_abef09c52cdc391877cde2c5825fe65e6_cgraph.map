@@ -1,0 +1,11 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,77,84,102"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="132,5,335,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#ab19f36da69b46652ea4742d2314c45c7" title="Call this function on the first iteration to initialize the accelerator." alt="" coords="148,133,319,173"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1AndersonAccel.html#abfe51417fbebd259808f86d27f1d7ec5" title="Change the problem dimension." alt="" coords="148,69,319,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the problem dimension." alt="" coords="387,111,574,137"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="637,153,833,193"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#a727afc7a58d2e44ae7add57e3fa77bc6" title=" " alt="" coords="629,103,841,129"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LimitedMemoryQR.html#ad15543203799d1dccb5a5e1c572e3f02" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="383,47,579,87"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="627,54,844,79"/>
+</map>

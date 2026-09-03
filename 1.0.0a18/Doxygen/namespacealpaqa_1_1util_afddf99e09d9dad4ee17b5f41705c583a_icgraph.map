@@ -1,0 +1,15 @@
+<map id="iter_set_intersection" name="iter_set_intersection">
+<area shape="rect" id="Node000001" title=" " alt="" coords="508,66,663,91"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util_1_1detail.html#a363a373e4888017ca42c9d0f4650b770" title="Returns a range over the row indices in the given column of sp_mat that are also in mask." alt="" coords="292,16,444,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="506,66,444,54,445,48,508,61"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="276,91,460,131"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="495,95,460,100,460,95,494,89"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#ab1fe477130dff69a401ed5ae0078a5f2" title="out += S(mask,:)ᵀ * v(mask);" alt="" coords="5,5,228,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,35,228,33,228,27,278,30"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="39,70,194,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="262,102,194,94,195,89,263,96"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1util.html#a8f8729f20b9e0c58b08803046e2e5e54" title="S += S_full(mask,:)" alt="" coords="21,119,213,145"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="262,122,213,127,213,121,262,117"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="11,169,222,209"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="296,138,229,160,189,172,188,167,227,155,295,133"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="initialize_penalty" name="initialize_penalty">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,77,140,102"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#ac9fcb632c5d0395e2c36e39277efd1b0" title="[Required] Function that evaluates the cost," alt="" coords="188,5,391,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="116,74,207,47,209,52,118,79"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#acdf5c7c7f249c05d53643e1715070f45" title="[Required] Function that evaluates the constraints," alt="" coords="188,69,391,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,87,174,87,174,92,141,92"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="188,133,391,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="118,100,209,127,207,132,116,105"/>
+</map>

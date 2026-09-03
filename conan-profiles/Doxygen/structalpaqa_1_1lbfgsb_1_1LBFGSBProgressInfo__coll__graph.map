@@ -1,0 +1,9 @@
+<map id="LBFGSBProgressInfo" name="LBFGSBProgressInfo">
+<area shape="rect" id="Node000001" title=" " alt="" coords="151,2047,298,2312"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="5,149,236,1976"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,1976,175,2022,177,2030,172,2031,170,2023,162,1977"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="21,5,221,100"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,114,123,149,118,149,118,114"/>
+<area shape="rect" id="Node000004" href="$group__grp__Parameters.html#structalpaqa_1_1lbfgsb_1_1LBFGSBParams" title="Tuning parameters for the L&#45;BFGS&#45;B solver LBFGSBSolver." alt="" coords="261,950,394,1175"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="324,1176,300,1552,280,1787,254,2023,253,2031,248,2030,249,2022,274,1786,295,1551,319,1175"/>
+</map>

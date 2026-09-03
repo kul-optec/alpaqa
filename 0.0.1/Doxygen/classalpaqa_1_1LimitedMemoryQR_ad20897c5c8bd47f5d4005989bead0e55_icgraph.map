@@ -1,0 +1,9 @@
+<map id="reset" name="reset">
+<area shape="rect" id="node1" title="Reset all indices, clearing the Q and R matrices." alt="" coords="717,78,772,105"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="499,5,669,47"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#ad20897c5c8bd47f5d4005989bead0e55" title=" " alt="" coords="499,71,669,112"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#a94d70718a4b923a645b928bc68524916" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="553,138,615,165"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#af1f7f1b0b1868cb2e03aa548c0ae2e85" title=" " alt="" coords="280,68,451,109"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1PANOCDirection_3_01AndersonAccel_01_4.html#aec1a817f12307745a2f7b39cce9b0a9b" title=" " alt="" coords="5,68,232,109"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1AndersonAccel.html#a94d70718a4b923a645b928bc68524916" title=" " alt="" coords="280,133,451,175"/>
+</map>

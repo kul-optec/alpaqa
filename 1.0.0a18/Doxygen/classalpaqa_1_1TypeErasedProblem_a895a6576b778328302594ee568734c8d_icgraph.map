@@ -1,0 +1,7 @@
+<map id="eval_inactive_indices_res_lna" name="eval_inactive_indices_res_lna">
+<area shape="rect" id="Node000001" title="[Optional] Function that computes the inactive indices &#160;for the evaluation of the linear Newton appro..." alt="" coords="285,37,448,77"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1NewtonTRDirection.html#a23d8f300b8c4eb814e1aef62ab9c6176" title=" " alt="" coords="21,5,221,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="271,48,221,41,222,36,272,42"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1ConvexNewtonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,69,237,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="272,72,238,77,237,72,271,67"/>
+</map>

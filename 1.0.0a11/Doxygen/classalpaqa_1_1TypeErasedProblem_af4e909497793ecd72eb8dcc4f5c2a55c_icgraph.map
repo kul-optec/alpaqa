@@ -1,0 +1,6 @@
+<map id="eval_grad_ψ" name="eval_grad_ψ">
+<area shape="rect" id="node1" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="268,85,371,110"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1NewtonTRDirection.html#a23d8f300b8c4eb814e1aef62ab9c6176" title=" " alt="" coords="13,5,213,45"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#aeafee3f39dd74144bb79e5792e50fcec" title="Compute the Hessian matrix of the augmented Lagrangian function multiplied by the given vector,..." alt="" coords="5,70,220,125"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a8fcef11d85dab80606ade3ddae210fa7" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="5,149,220,189"/>
+</map>

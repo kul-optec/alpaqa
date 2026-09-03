@@ -1,0 +1,9 @@
+<map id="AndersonAccel" name="AndersonAccel">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,124,56"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1AndersonAccel.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the problem dimension." alt="" coords="360,5,399,31"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#abfe51417fbebd259808f86d27f1d7ec5" title="Change the problem dimension." alt="" coords="172,56,233,81"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#a727afc7a58d2e44ae7add57e3fa77bc6" title=" " alt="" coords="528,7,740,32"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#ad15543203799d1dccb5a5e1c572e3f02" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="281,55,477,95"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="525,60,743,85"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="536,110,732,150"/>
+</map>

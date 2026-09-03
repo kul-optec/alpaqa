@@ -1,0 +1,9 @@
+<map id="type" name="type">
+<area shape="rect" id="Node000001" title="Query the contained type." alt="" coords="92,55,143,80"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a07d1acee879c5c543a3355c28bba37fc" title="Convert the type&#45;erased object to the given type." alt="" coords="5,5,44,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,50,43,31,46,26,82,46"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a9b75f26415595c518f7531a9ed96ec57" title="Convert the type&#45;erased object to the given type." alt="" coords="5,55,44,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="78,70,44,70,44,65,78,65"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html#aff4c7fa1ac5ad185fdf95ac294c9b87d" title="Convert the type&#45;erased object to the given type." alt="" coords="5,104,44,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="82,89,46,109,43,104,80,84"/>
+</map>

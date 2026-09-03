@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,218,89,243"/>
+<area shape="rect" id="Node000001" href="$structalpaqa_1_1is__complex__float_3_01std_1_1complex_3_01T_01_4_01_4.html" title=" " alt="" coords="173,5,339,45"/>
+<area shape="poly" id="edge34_Node000000_Node000001" title=" " alt="" coords="52,204,63,170,80,130,104,90,136,55,171,36,173,41,139,59,108,93,85,132,68,172,57,205"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1is__config_3_01EigenConfigd_01_4.html" title=" " alt="" coords="159,70,353,95"/>
+<area shape="poly" id="edge35_Node000000_Node000002" title=" " alt="" coords="57,204,87,153,109,126,136,104,159,93,161,98,139,109,113,130,92,156,62,207"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1is__config_3_01EigenConfigf_01_4.html" title=" " alt="" coords="161,119,351,145"/>
+<area shape="poly" id="edge36_Node000000_Node000003" title=" " alt="" coords="67,206,98,178,136,154,166,142,168,147,139,158,101,183,71,210"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1is__config_3_01EigenConfigl_01_4.html" title=" " alt="" coords="161,169,351,194"/>
+<area shape="poly" id="edge37_Node000000_Node000004" title=" " alt="" coords="102,212,137,203,187,191,189,197,138,208,103,217"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1is__config_3_01EigenConfigq_01_4.html" title=" " alt="" coords="159,218,353,243"/>
+<area shape="poly" id="edge38_Node000000_Node000005" title=" " alt="" coords="103,228,159,228,159,233,103,233"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigd_01_4.html" title=" " alt="" coords="137,267,375,293"/>
+<area shape="poly" id="edge39_Node000000_Node000006" title=" " alt="" coords="103,243,138,252,194,265,192,270,137,257,102,248"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigf_01_4.html" title=" " alt="" coords="139,317,373,342"/>
+<area shape="poly" id="edge40_Node000000_Node000007" title=" " alt="" coords="72,252,102,278,139,302,172,314,171,319,136,306,99,282,69,256"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigl_01_4.html" title=" " alt="" coords="139,366,373,391"/>
+<area shape="poly" id="edge41_Node000000_Node000008" title=" " alt="" coords="62,254,92,305,114,330,139,351,164,363,162,368,136,356,110,334,88,308,58,257"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigq_01_4.html" title=" " alt="" coords="137,415,375,441"/>
+<area shape="poly" id="edge42_Node000000_Node000009" title=" " alt="" coords="57,256,68,290,84,329,108,368,139,401,160,413,158,417,136,405,103,371,79,331,63,291,52,258"/>
+</map>

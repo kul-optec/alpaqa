@@ -1,0 +1,19 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,149,92,174"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title=" " alt="" coords="140,55,355,110"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,146,139,119,155,113,157,117,141,124,78,151"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#aff3369ae5dc19574b4c5a35c00c98a52" title=" " alt="" coords="140,134,355,189"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="92,159,127,159,127,164,92,164"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a8fcef11d85dab80606ade3ddae210fa7" title=" " alt="" coords="140,213,355,267"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="78,172,141,199,157,205,155,210,139,204,76,177"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#aff72343036a34d6195ed0d67a28e47a8" title="[Required] Function that computes a proximal gradient step." alt="" coords="403,5,621,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="354,57,405,46,406,51,355,62"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1vec__util.html#ad25a5d07b7f707ab1d1fa7667a13dffa" title="Get the 1&#45;norm of the given vector." alt="" coords="421,70,603,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="355,80,407,80,407,85,355,85"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="417,119,607,145"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="355,100,430,114,429,119,354,105"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedProblem.html#a1ddee18e9a1f867d37596150604e3953" title="[Optional] Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="405,190,619,245"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="355,228,391,225,391,230,355,233"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1TypeErasedProblem.html#aa169559ba70ce11302eb6b8a7b7349e2" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="405,269,619,323"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="355,260,392,268,391,273,354,265"/>
+</map>

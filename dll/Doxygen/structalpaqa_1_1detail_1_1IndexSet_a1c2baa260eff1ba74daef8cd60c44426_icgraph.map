@@ -1,0 +1,17 @@
+<map id="sizes" name="sizes">
+<area shape="rect" id="Node000001" title=" " alt="" coords="637,81,692,107"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1IndexSet.html#ad4ce799900c8187a39e6595100d3a66b" title=" " alt="" coords="475,5,589,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="629,77,588,52,554,33,557,28,591,48,632,72"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="240,49,427,89"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="623,94,427,78,427,73,623,88"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1detail_1_1IndexSet.html#ae98d4e1db238114398b65aaf11dedb17" title=" " alt="" coords="498,107,566,132"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="624,104,567,116,566,110,623,99"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1detail_1_1IndexSet.html#ad8d66add92f514f8124024c6fb8e359d" title=" " alt="" coords="499,156,565,181"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="636,117,591,146,565,158,563,153,588,141,633,112"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="469,37,413,51,412,46,467,32"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1PANOCOCPSolver.html#ab2cdbacaa27c59db09315b64cab7edee" title=" " alt="" coords="5,17,192,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="226,57,192,52,193,47,227,51"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="5,81,192,121"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="227,86,193,91,192,85,226,81"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="488,153,473,146,370,91,372,87,476,141,490,148"/>
+</map>

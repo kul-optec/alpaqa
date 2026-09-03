@@ -1,0 +1,13 @@
+<map id="split" name="split">
+<area shape="rect" id="Node000001" title="Split the string full on the first occurrence of tok." alt="" coords="327,95,377,121"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1params.html#a037370222e8d36556f0559d15f0a98bd" title="Struct types." alt="" coords="117,5,269,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="323,89,277,60,252,48,254,43,280,55,326,85"/>
+<area shape="rect" id="Node000003" href="$param-complete_8cpp.html#a10fa41deecd7e55df92e83bb80bcdeff" title=" " alt="" coords="114,70,273,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="313,105,272,98,273,93,314,99"/>
+<area shape="rect" id="Node000004" href="$param-complete_8cpp.html#a6ee2311c0d0e0ef40481118430c19f24" title=" " alt="" coords="108,119,279,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="314,116,278,122,277,117,313,111"/>
+<area shape="rect" id="Node000005" href="$param-complete_8cpp.html#ac4321d2b6dc1c99aced49f6b8de3f719" title=" " alt="" coords="127,169,259,194"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="325,131,280,158,247,171,245,166,277,154,322,127"/>
+<area shape="rect" id="Node000006" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,169,60,194"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="114,184,60,184,60,179,114,179"/>
+</map>

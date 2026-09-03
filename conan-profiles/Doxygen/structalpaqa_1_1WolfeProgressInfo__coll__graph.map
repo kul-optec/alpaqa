@@ -1,0 +1,9 @@
+<map id="WolfeProgressInfo&lt; Conf &gt;" name="WolfeProgressInfo&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title="Iterate information for the unconstrained solver with Wolfe line search." alt="" coords="171,2047,313,2327"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="5,149,236,1976"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,1976,193,2022,194,2030,189,2031,187,2023,179,1977"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="21,5,221,100"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,114,123,149,118,149,118,114"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="261,923,463,1203"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="354,1203,321,1574,298,1798,271,2023,270,2031,265,2030,266,2022,293,1798,316,1573,349,1203"/>
+</map>

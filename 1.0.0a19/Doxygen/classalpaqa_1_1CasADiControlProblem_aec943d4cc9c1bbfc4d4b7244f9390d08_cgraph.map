@@ -1,0 +1,24 @@
+<map id="CasADiControlProblem" name="CasADiControlProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,168,176,193"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1casadi.html#abc023a9b409581299c6b5eca6381b65c" title="Load the given CasADi function from the given DLL/SO file." alt="" coords="243,39,421,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,165,293,68,296,73,117,170"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1casadi__loader_1_1CasADiControlFunctionsWithParam.html#a315acb62b6609d1fa6bbf298fcc1064b" title=" " alt="" coords="224,153,440,208"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="176,178,210,178,210,183,176,183"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1CasADiControlProblem.html#a4f1c7c649deebd8f69fd65ebc8ec3a4a" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="253,257,411,283"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="127,191,284,250,283,255,125,196"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#aed9c562b9aa4226072a307634b14c832" title=" " alt="" coords="508,5,663,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="421,37,494,27,494,33,422,42"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1casadi__loader.html#a440de48c7f739b4216916e2aba75b266" title=" " alt="" coords="503,55,667,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="386,151,487,105,506,97,508,102,489,110,388,156"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1casadi__loader_1_1CasADiFunctionEvaluator.html#ac82a9153f840c8894aee66550ccc72a4" title=" " alt="" coords="488,120,683,175"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="440,164,474,159,475,165,440,169"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa_1_1casadi__loader.html#aff26ceb374addcf6ae66ee1e4658fcff" title=" " alt="" coords="731,222,895,262"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="440,192,717,227,717,233,440,197"/>
+<area shape="rect" id="Node000009" href="$namespacealpaqa_1_1casadi__loader.html#a001ff3b26defa1201f68a339a2c5d768" title=" " alt="" coords="503,250,667,290"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="411,206,516,243,514,248,409,211"/>
+<area shape="rect" id="Node000008" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="943,229,1111,255"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="895,239,929,239,929,245,895,245"/>
+<area shape="poly" id="edge9_Node000009_Node000007" title=" " alt="" coords="667,257,716,251,717,256,668,263"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1csv.html#a9e26a8f48527f00e7b73974c398c008a" title=" " alt="" coords="504,315,667,340"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="390,280,516,309,515,314,388,285"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="check_all_stop_conditions" name="check_all_stop_conditions">
+<area shape="rect" id="node1" title="Check all stop conditions (required tolerance reached, out of time, maximum number of iterations exce..." alt="" coords="683,111,875,138"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="379,5,621,47"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="365,71,635,112"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="415,136,585,177"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="425,202,575,229"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="204,202,317,229"/>
+<area shape="rect" id="node7" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,202,156,229"/>
+</map>

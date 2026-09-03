@@ -1,0 +1,20 @@
+<map id="check_gradients" name="check_gradients">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,174,133,199"/>
+<area shape="rect" id="Node000002" href="$gradient-checker_8cpp.html#ab61549120c6f03f32d591657c1b158cb" title=" " alt="" coords="204,45,395,85"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,172,123,134,150,113,180,95,196,88,198,93,183,100,153,117,126,138,85,176"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1sparsity_1_1DenseEvaluator.html#afe8f5bfba9fd57ec4c2272a12873d16e" title=" " alt="" coords="181,109,417,149"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="120,171,205,150,206,155,122,177"/>
+<area shape="rect" id="Node000007" href="$gradient-checker_8cpp.html#a01cd2b951d8115e3920b93b396b87bab" title=" " alt="" coords="258,174,341,199"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="133,184,244,184,244,189,133,189"/>
+<area shape="rect" id="Node000008" href="$gradient-checker_8cpp.html#a31be8f13628905b1658a429d7e12c6ce" title=" " alt="" coords="239,223,359,249"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="130,197,227,218,226,223,129,202"/>
+<area shape="rect" id="Node000009" href="$namespacealpaqa.html#aecd8b35fe743e64cb1d5ab08b86929cd" title=" " alt="" coords="221,297,377,322"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="89,197,131,226,183,258,251,289,249,294,180,262,128,231,86,202"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#a4111b4a693eccbe2514eade7f9642617" title=" " alt="" coords="465,45,644,85"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="395,63,452,63,452,68,395,68"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#ac77355dcb81f369f3c31e56baed82e08" title="[Required] Function that evaluates the gradient of the cost," alt="" coords="692,5,895,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="644,48,678,42,679,47,645,53"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#a5b3592fc682f7b5cd8272652bfb8037a" title="[Optional] Evaluate both &#160;and ." alt="" coords="692,69,895,139"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="645,77,679,83,678,88,644,82"/>
+<area shape="poly" id="edge9_Node000009_Node000009" title=" " alt="" coords="262,298,254,288,258,278,274,272,299,270,332,274,344,283,341,288,330,279,299,275,275,277,262,282,259,288,266,295"/>
+</map>

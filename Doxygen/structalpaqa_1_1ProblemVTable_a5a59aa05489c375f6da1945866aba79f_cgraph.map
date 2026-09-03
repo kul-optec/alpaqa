@@ -1,0 +1,8 @@
+<map id="default_get_augmented_lagrangian_hessian_sparsity" name="default_get_augmented_lagrangian_hessian_sparsity">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,220,45"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1ProblemVTable.html#a3a808b739e639ca76982c2a93fffa2fc" title=" " alt="" coords="488,13,607,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,20,268,19,440,19,474,20,474,25,440,24,268,24,220,25"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1ProblemVTable.html#a141f652b6cff4753dd9bb007214f53d6" title=" " alt="" coords="268,33,440,73"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,35,254,39,254,44,220,40"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="440,38,474,33,475,38,440,44"/>
+</map>

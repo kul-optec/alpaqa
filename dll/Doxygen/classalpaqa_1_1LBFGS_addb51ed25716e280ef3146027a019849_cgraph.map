@@ -1,0 +1,20 @@
+<map id="apply_masked" name="apply_masked">
+<area shape="rect" id="Node000001" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="5,132,121,157"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#abe3b84085aeeb66a23cb64d40a1a072f" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="169,132,321,157"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,142,156,142,156,147,121,147"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#ac7c2ee7d2562303f555dd1f4c3fca8cd" title=" " alt="" coords="524,107,563,132"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="252,130,270,105,296,73,329,42,368,18,398,7,423,3,449,6,477,18,497,33,514,53,535,93,531,95,509,56,494,37,475,23,447,11,423,8,399,13,370,23,332,46,300,77,274,108,257,133"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="403,33,442,59"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="265,130,368,68,390,57,392,62,371,72,268,134"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#aa871b5290773b86e2e4919bbac258a04" title="Iterate over the indices in the history buffer, oldest first." alt="" coords="372,83,473,108"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="291,130,362,109,363,115,292,135"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LBFGS.html#a0804b751cf2035a35f24762474f62cbf" title="Iterate over the indices in the history buffer, newest first." alt="" coords="373,132,472,157"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="322,142,360,142,360,147,322,147"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LBFGS.html#a15e4a3db39457cabe764a7737d24e73f" title=" " alt="" coords="403,181,442,207"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="292,155,391,183,389,188,291,160"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LBFGS.html#abb437bab54050908142b5a47bd64713b" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="369,231,476,256"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="268,155,371,216,383,222,381,227,368,220,265,160"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LBFGS.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="403,280,442,305"/>
+<area shape="poly" id="edge9_Node000002_Node000009" title=" " alt="" coords="259,156,305,207,336,238,371,265,392,278,389,282,368,270,333,242,301,211,255,159"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="456,228,474,216,505,180,528,143,532,146,510,183,478,220,458,233"/>
+</map>

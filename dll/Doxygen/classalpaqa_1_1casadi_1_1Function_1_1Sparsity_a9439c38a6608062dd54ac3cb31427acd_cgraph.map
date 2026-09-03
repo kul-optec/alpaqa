@@ -1,0 +1,7 @@
+<map id="size" name="size">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,53,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1casadi_1_1Function_1_1Sparsity.html#a1ab71d0404def2c8157558a36d4c53cb" title=" " alt="" coords="101,5,157,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="53,35,87,26,89,31,54,40"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1casadi_1_1Function_1_1Sparsity.html#ae91c96337dc0f4401b1948f8151dc001" title=" " alt="" coords="101,55,157,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="54,46,89,55,87,60,53,52"/>
+</map>

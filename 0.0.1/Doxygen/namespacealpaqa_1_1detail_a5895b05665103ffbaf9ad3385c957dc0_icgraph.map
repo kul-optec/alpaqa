@@ -1,0 +1,14 @@
+<map id="calc_ψ_grad_ψ" name="calc_ψ_grad_ψ">
+<area shape="rect" id="node1" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="916,213,1032,239"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a8a1a5d46f1a3fffc7501abc3e2561367" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="683,137,868,163"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="379,5,621,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="365,71,635,112"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="415,188,585,229"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1PGASolver.html#af516b794e244432023aea7ba3cd0d1d8" title=" " alt="" coords="425,253,575,295"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1PANOCSolver.html#aaa9758a40bd362331202fb232b4bb7ae" title=" " alt="" coords="695,289,855,331"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1LBFGSSolver.html#a8540540028b02dfe8b7e3ec0c49c07dd" title=" " alt="" coords="697,355,854,396"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1LBFGSBSolver.html#a8540540028b02dfe8b7e3ec0c49c07dd" title=" " alt="" coords="692,420,859,461"/>
+<area shape="rect" id="node7" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="425,137,575,163"/>
+<area shape="rect" id="node8" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="204,137,317,163"/>
+<area shape="rect" id="node9" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,137,156,163"/>
+</map>

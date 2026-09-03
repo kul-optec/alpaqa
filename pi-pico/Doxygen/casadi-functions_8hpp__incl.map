@@ -1,0 +1,29 @@
+<map id="src/interop/casadi/include/alpaqa/casadi/casadi&#45;functions.hpp" name="src/interop/casadi/include/alpaqa/casadi/casadi&#45;functions.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="391,5,557,60"/>
+<area shape="rect" id="Node000002" href="$casadi-namespace_8hpp.html" title=" " alt="" coords="5,181,177,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="392,63,262,110,188,145,125,177,123,172,186,140,260,106,390,58"/>
+<area shape="rect" id="Node000003" href="$casadi-types_8hpp.html" title=" " alt="" coords="273,108,406,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="434,62,370,103,367,98,431,58"/>
+<area shape="rect" id="Node000007" href="$dl_8hpp.html" title=" " alt="" coords="543,108,677,133"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="517,58,582,98,579,103,514,62"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="702,108,771,133"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="555,58,689,101,688,106,553,63"/>
+<area shape="poly" id="edge6_Node000003_Node000002" title=" " alt="" coords="300,136,145,180,144,175,299,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="202,181,287,207"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="326,135,273,175,270,171,323,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="311,181,367,207"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="342,134,342,168,337,168,337,134"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="391,181,450,207"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="354,131,399,170,395,174,351,135"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="487,255,611,280"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="576,136,542,154,527,167,515,183,511,197,514,213,530,242,526,245,509,215,506,197,510,180,523,163,539,150,573,131"/>
+<area shape="rect" id="Node000009" href="$dl-flags_8hpp.html" title=" " alt="" coords="525,181,695,207"/>
+<area shape="poly" id="edge9_Node000007_Node000009" title=" " alt="" coords="613,134,613,168,607,168,607,134"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="719,181,810,207"/>
+<area shape="poly" id="edge11_Node000007_Node000010" title=" " alt="" coords="636,131,728,173,726,178,634,136"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="834,181,911,207"/>
+<area shape="poly" id="edge12_Node000007_Node000011" title=" " alt="" coords="653,131,821,176,820,181,652,136"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="936,181,1023,207"/>
+<area shape="poly" id="edge13_Node000007_Node000012" title=" " alt="" coords="672,131,923,179,922,184,671,136"/>
+<area shape="poly" id="edge10_Node000009_Node000008" title=" " alt="" coords="602,209,570,246,566,242,598,205"/>
+</map>

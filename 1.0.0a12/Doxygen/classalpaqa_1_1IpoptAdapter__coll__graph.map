@@ -1,0 +1,19 @@
+<map id="IpoptAdapter" name="IpoptAdapter">
+<area shape="rect" id="Node000001" title="Based on https://coin&#45;or.github.io/Ipopt/INTERFACES.html." alt="" coords="272,2741,460,3136"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="17,1826,64,1891"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="35,1905,18,2035,11,2122,8,2219,11,2323,23,2429,45,2534,79,2634,117,2703,166,2766,221,2821,274,2867,270,2871,217,2825,162,2769,113,2706,74,2636,40,2535,18,2430,6,2323,3,2219,5,2122,12,2034,30,1904"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="89,1083,286,2635"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="276,2634,294,2717,296,2725,291,2726,289,2718,271,2635"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="86,213,289,1033"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="190,1047,190,1082,185,1082,185,1047"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="129,5,246,151"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="190,151,190,197,185,197,185,151"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1IpoptAdapter.html#structalpaqa_1_1IpoptAdapter_1_1Results" title=" " alt="" coords="310,1736,422,1981"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="369,1981,369,2725,363,2725,363,1981"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1sparsity_1_1Sparsity.html" title=" " alt="" coords="445,1826,593,1891"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="521,1892,514,2023,499,2228,474,2470,456,2595,434,2718,432,2726,427,2725,429,2717,450,2595,468,2469,494,2227,509,2023,516,1891"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="433,591,606,656"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="522,670,522,1826,517,1826,517,670"/>
+<area shape="rect" id="Node000009" href="$namespacealpaqa_1_1sparsity.html#namespacealpaqa_1_1sparsity" title=" " alt="" coords="618,1804,783,1913"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="709,1914,718,2062,717,2161,711,2270,695,2385,670,2501,631,2614,606,2668,578,2719,529,2785,474,2845,470,2841,525,2782,573,2716,602,2665,626,2612,665,2500,690,2384,705,2270,712,2161,712,2063,704,1914"/>
+</map>

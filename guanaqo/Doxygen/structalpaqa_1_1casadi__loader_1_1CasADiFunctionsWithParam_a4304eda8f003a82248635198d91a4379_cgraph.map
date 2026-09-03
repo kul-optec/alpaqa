@@ -1,0 +1,13 @@
+<map id="load" name="load">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,106,56,131"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1casadi__loader.html#a440de48c7f739b4216916e2aba75b266" title=" " alt="" coords="104,5,268,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="42,104,69,80,103,55,114,49,116,54,105,60,72,84,46,108"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1casadi__loader.html#a2239c88eba32fd22967f6386704d9bd0" title=" " alt="" coords="104,69,268,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="56,111,90,105,91,110,57,117"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1casadi__loader.html#a001ff3b26defa1201f68a339a2c5d768" title=" " alt="" coords="316,120,480,160"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="57,117,303,132,302,137,56,123"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1casadi__loader.html#aff26ceb374addcf6ae66ee1e4658fcff" title=" " alt="" coords="528,149,692,189"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="57,123,105,135,210,157,316,169,398,172,480,169,514,169,514,174,480,175,398,177,316,175,209,162,103,140,56,128"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="269,106,304,115,302,120,268,112"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="481,149,515,154,514,159,480,154"/>
+</map>

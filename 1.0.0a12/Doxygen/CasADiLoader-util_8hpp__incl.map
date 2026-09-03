@@ -1,0 +1,17 @@
+<map id="src/interop/casadi/include/alpaqa/implementation/casadi/CasADiLoader&#45;util.hpp" name="src/interop/casadi/include/alpaqa/implementation/casadi/CasADiLoader&#45;util.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="382,5,611,60"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,108,148,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="382,62,162,110,161,105,381,56"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="172,115,355,141"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="432,63,305,113,303,108,430,58"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="379,115,435,141"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="473,62,430,107,426,103,469,58"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="459,115,534,141"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="499,60,499,101,494,101,494,60"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="559,115,645,141"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="528,58,580,104,577,108,525,62"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="670,115,729,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="555,58,664,107,661,112,553,62"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="753,115,813,141"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="593,58,742,105,747,108,745,113,740,111,591,63"/>
+</map>

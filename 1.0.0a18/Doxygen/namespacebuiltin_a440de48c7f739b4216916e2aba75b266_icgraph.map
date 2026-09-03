@@ -1,0 +1,13 @@
+<map id="dims" name="dims">
+<area shape="rect" id="Node000001" title=" " alt="" coords="567,93,621,119"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="628,85,627,80,622,76,594,72,572,74,561,79,560,85,568,93,564,97,555,87,557,76,571,69,594,67,624,71,632,77,633,84"/>
+<area shape="rect" id="Node000002" href="$namespacebuiltin.html#a231a5b326b3a0f7a0aefa9d150aa1b52" title="Complete the given problem that contains only functions f and g, adding the necessary functions and g..." alt="" coords="323,29,467,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="560,88,518,69,467,55,469,50,520,63,562,84"/>
+<area shape="rect" id="Node000003" href="$structbuiltin_1_1casadi__loader_1_1CasADiControlFunctionsWithParam.html#a315acb62b6609d1fa6bbf298fcc1064b" title=" " alt="" coords="287,79,503,133"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="553,109,504,109,504,103,553,103"/>
+<area shape="rect" id="Node000005" href="$structbuiltin_1_1casadi__loader_1_1CasADiFunctionsWithParam.html#a4304eda8f003a82248635198d91a4379" title=" " alt="" coords="272,158,519,198"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="561,128,520,147,480,160,479,155,518,142,558,123"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="430,19,420,11,395,8,374,10,363,15,361,20,367,28,363,31,356,21,359,11,373,5,395,3,422,6,434,15"/>
+<area shape="rect" id="Node000004" href="$classbuiltin_1_1CasADiControlProblem.html#aec943d4cc9c1bbfc4d4b7244f9390d08" title=" " alt="" coords="5,86,224,126"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="274,109,224,109,224,103,274,103"/>
+</map>

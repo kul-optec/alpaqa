@@ -1,0 +1,29 @@
+<map id="eval_augmented_lagrangian_and_gradient" name="eval_augmented_lagrangian_and_gradient">
+<area shape="rect" id="Node000001" title="[Optional] Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="713,259,920,299"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a8fcef11d85dab80606ade3ddae210fa7" title=" " alt="" coords="451,252,665,307"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="699,282,666,282,666,277,699,277"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1FISTASolver.html#a3e8ce8c8bfa2c124a129b750ea60ad64" title=" " alt="" coords="242,91,393,131"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="505,246,346,134,349,129,508,242"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1PANOCSolver.html#a3e8ce8c8bfa2c124a129b750ea60ad64" title=" " alt="" coords="237,227,397,267"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="437,266,397,261,398,255,437,261"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1PANTRSolver.html#a3e8ce8c8bfa2c124a129b750ea60ad64" title=" " alt="" coords="238,291,397,331"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="437,298,397,303,396,298,437,293"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1ZeroFPRSolver.html#a3e8ce8c8bfa2c124a129b750ea60ad64" title=" " alt="" coords="232,419,403,459"/>
+<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="506,317,350,421,347,417,503,312"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1FISTASolver.html#adad7d5957ac872548d1206dc38a5e43a" title=" " alt="" coords="5,5,184,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="246,89,172,63,174,58,248,84"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1FISTASolver.html#a2538f4422745a93e1ed73cf706ab41f0" title=" " alt="" coords="5,84,184,139"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="228,114,184,114,184,109,228,109"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1PANOCSolver.html#adad7d5957ac872548d1206dc38a5e43a" title=" " alt="" coords="15,163,175,203"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="233,226,164,206,166,201,235,221"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1PANOCSolver.html#a2538f4422745a93e1ed73cf706ab41f0" title=" " alt="" coords="15,227,175,267"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="224,250,175,250,175,245,224,245"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1PANTRSolver.html#adad7d5957ac872548d1206dc38a5e43a" title=" " alt="" coords="15,291,174,331"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="224,314,174,314,174,309,224,309"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1PANTRSolver.html#a2538f4422745a93e1ed73cf706ab41f0" title=" " alt="" coords="15,355,174,395"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="235,338,166,358,164,353,233,333"/>
+<area shape="rect" id="Node000013" href="$classalpaqa_1_1ZeroFPRSolver.html#adad7d5957ac872548d1206dc38a5e43a" title=" " alt="" coords="9,419,180,459"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="218,442,180,442,180,437,218,437"/>
+<area shape="rect" id="Node000014" href="$classalpaqa_1_1ZeroFPRSolver.html#a2538f4422745a93e1ed73cf706ab41f0" title=" " alt="" coords="9,483,180,523"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="235,466,166,486,164,481,233,461"/>
+</map>

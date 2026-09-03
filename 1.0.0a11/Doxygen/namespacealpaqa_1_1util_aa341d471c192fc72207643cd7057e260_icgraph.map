@@ -1,0 +1,10 @@
+<map id="enumerate" name="enumerate">
+<area shape="rect" id="node1" title=" " alt="" coords="767,49,860,74"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="535,69,719,109"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="304,19,459,45"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1util.html#a8f8729f20b9e0c58b08803046e2e5e54" title="S += S_full(mask,:)" alt="" coords="285,77,477,102"/>
+<area shape="rect" id="node7" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="276,129,487,169"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1CasADiControlProblem.html#a55e2e9425cc496e3340e59b099dda766" title=" " alt="" coords="5,5,228,45"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1CasADiControlProblem.html#aad269794afe7753e16a2cf238b9f42ad" title=" " alt="" coords="5,69,228,109"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1CasADiControlProblem.html#a20f8fadf0aeb2daf8695db68f3d50865" title=" " alt="" coords="5,133,228,173"/>
+</map>

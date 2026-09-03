@@ -1,0 +1,11 @@
+<map id="update" name="update">
+<area shape="rect" id="node1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="5,107,72,133"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a644d66009a70ccc909120ba9afa45ea5" title=" " alt="" coords="289,5,327,32"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LBFGS.html#a0df701f7bb07249c37bcbf20d9c980fe" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="148,56,199,83"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LBFGS.html#aaf9c6519c7a7d7ab977113f33c88e2e3" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="120,107,227,133"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="289,157,327,184"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LBFGS.html#aebf0127f7a3e56b2c46e5f189d517f14" title=" " alt="" coords="154,208,193,235"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="389,132,428,159"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="275,56,341,83"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LBFGS.html#a7866204934238efa4a186fc9d48a8a2e" title=" " alt="" coords="289,107,327,133"/>
+</map>

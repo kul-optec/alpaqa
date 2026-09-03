@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 8b862c1df62c6e2ea98b70eaafb0f03f9e81b51d - src/alpaqa/include/alpaqa/driver/solver-driver.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/alpaqa/include/alpaqa/driver">src/alpaqa/include/alpaqa/driver</a> - solver-driver.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">8b862c1df62c6e2ea98b70eaafb0f03f9e81b51d</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2026-09-03 16:26:02</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:&nbsp&nbsp&nbsp&nbsp
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;alpaqa/params/options.hpp&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : </span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &lt;alpaqa/driver/results.hpp&gt;</span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &lt;functional&gt;</span>
+<span id="L7"><span class="lineNum">       7</span>              : #include &lt;memory&gt;</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              : namespace alpaqa::driver {</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : using solver_free_func_t = SolverResults(alpaqa::LoadedProblem &amp;,</span>
+<span id="L12"><span class="lineNum">      12</span>              :                                          std::ostream &amp;);</span>
+<span id="L13"><span class="lineNum">      13</span>              : using solver_func_t      = std::function&lt;solver_free_func_t&gt;;</span>
+<span id="L14"><span class="lineNum">      14</span>              : </span>
+<span id="L15"><span class="lineNum">      15</span>              : struct SolverWrapper {</span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaUNC">           0 :     virtual ~SolverWrapper() = default;</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaUNC">           0 :     [[nodiscard]] virtual bool has_statistics() const { return false; }</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaUNC">           0 :     virtual void write_statistics_to_stream(std::ostream &amp;) const {}</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaUNC">           0 :     SolverWrapper(solver_func_t run) : run(std::move(run)) {}</span></span>
+<span id="L20"><span class="lineNum">      20</span>              :     solver_func_t run;</span>
+<span id="L21"><span class="lineNum">      21</span>              : };</span>
+<span id="L22"><span class="lineNum">      22</span>              : </span>
+<span id="L23"><span class="lineNum">      23</span>              : using SharedSolverWrapper = std::shared_ptr&lt;SolverWrapper&gt;;</span>
+<span id="L24"><span class="lineNum">      24</span>              : </span>
+<span id="L25"><span class="lineNum">      25</span>              : using solver_builder_func =</span>
+<span id="L26"><span class="lineNum">      26</span>              :     std::function&lt;SharedSolverWrapper(std::string_view, alpaqa::Options &amp;)&gt;;</span>
+<span id="L27"><span class="lineNum">      27</span>              : </span>
+<span id="L28"><span class="lineNum">      28</span>              : } // namespace alpaqa::driver</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.2-beta</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

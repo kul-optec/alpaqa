@@ -1,0 +1,75 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,277,60,303"/>
+<area shape="rect" id="Node000002" href="$gradient-checker_8cpp.html#aff809b3945d62b51f641c0176ba90e7c" title=" " alt="" coords="128,104,256,129"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="40,276,68,235,106,188,161,137,165,141,110,192,72,239,45,279"/>
+<area shape="rect" id="Node000009" href="$gradient-checker_8cpp.html#a72e2c27739d9b3a1cd99f46954d9e827" title=" " alt="" coords="122,203,262,228"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="48,275,75,256,107,237,123,230,125,235,109,242,78,260,51,279"/>
+<area shape="rect" id="Node000011" href="$problem_8cpp.html#ae36fc572e3716fb2dbe8ff77cfe1ee10" title=" " alt="" coords="137,252,247,277"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="60,283,122,273,123,278,61,288"/>
+<area shape="rect" id="Node000014" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="108,879,276,919"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="40,302,185,865,180,867,35,303"/>
+<area shape="rect" id="Node000032" href="$gradient-checker_8cpp.html#a741d0efc7ccb377132a09ab946d73d5b" title=" " alt="" coords="143,944,241,969"/>
+<area shape="poly" id="edge31_Node000001_Node000032" title=" " alt="" coords="37,303,45,430,60,630,82,824,96,893,110,930,131,945,128,949,106,933,90,894,77,824,55,631,39,430,32,303"/>
+<area shape="rect" id="Node000033" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="143,301,241,327"/>
+<area shape="poly" id="edge32_Node000001_Node000033" title=" " alt="" coords="61,291,129,302,128,307,60,297"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#ac57cd4cb727fa8a07eac6c072d6fb9c1" title=" " alt="" coords="388,153,471,179"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="254,127,375,152,374,157,253,132"/>
+<area shape="rect" id="Node000004" href="$gradient-checker_8cpp.html#a31be8f13628905b1658a429d7e12c6ce" title=" " alt="" coords="369,5,489,31"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="210,102,260,71,323,40,355,29,357,34,325,44,262,75,213,106"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa.html#ae50af6bf82d3c0cc4093c46b8e2c4379" title=" " alt="" coords="356,55,503,80"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="253,101,354,80,355,85,254,107"/>
+<area shape="rect" id="Node000008" href="$namespacealpaqa.html#affd5c3ef30eabc8ac6e862712a0f60c9" title=" " alt="" coords="351,104,508,129"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="256,114,337,114,337,119,256,119"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="591,55,764,80"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="503,65,577,65,577,70,503,70"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="820,47,967,87"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="764,65,806,65,806,70,764,70"/>
+<area shape="rect" id="Node000010" href="$gradient-checker_8cpp.html#ab9334cd561ac221b327947e14e0eb10c" title="Split the string s on the first occurrence of tok." alt="" coords="385,203,473,228"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="262,213,372,213,372,218,262,218"/>
+<area shape="rect" id="Node000012" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="365,301,493,327"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="248,273,355,296,354,301,247,279"/>
+<area shape="rect" id="Node000013" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="374,252,485,277"/>
+<area shape="poly" id="edge12_Node000011_Node000013" title=" " alt="" coords="248,262,360,262,360,267,248,267"/>
+<area shape="rect" id="Node000015" href="$classalpaqa_1_1TypeErasedProblem.html#a3dbe817bafef746282776869a9e1bbea" title="Returns true if the problem provides an implementation of check." alt="" coords="328,879,531,919"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="276,897,314,897,314,902,276,902"/>
+<area shape="rect" id="Node000016" href="$classalpaqa_1_1TypeErasedProblem.html#afb8d343633b8788ddfd56feb297432c8" title="Returns true if the problem provides a specialized implementation of eval_ψ, false if it uses the def..." alt="" coords="328,943,531,983"/>
+<area shape="poly" id="edge15_Node000014_Node000016" title=" " alt="" coords="268,917,342,937,341,942,266,922"/>
+<area shape="rect" id="Node000017" href="$classalpaqa_1_1TypeErasedProblem.html#a21e480c5b55979a0e74816fd0704f346" title="Returns true if the problem provides a specialized implementation of eval_ψ_grad_ψ,..." alt="" coords="328,1007,531,1047"/>
+<area shape="poly" id="edge16_Node000014_Node000017" title=" " alt="" coords="255,917,278,931,293,947,302,963,310,978,326,993,334,999,331,1003,322,997,306,982,297,966,289,950,274,935,253,922"/>
+<area shape="rect" id="Node000018" href="$classalpaqa_1_1TypeErasedProblem.html#ab88b867d624a80e6e69fb59ab9c3378f" title="Returns true if the problem provides a specialized implementation of eval_f_g, false if it uses the d..." alt="" coords="328,1071,531,1111"/>
+<area shape="poly" id="edge17_Node000014_Node000018" title=" " alt="" coords="261,917,278,931,291,947,298,964,302,996,306,1027,313,1042,326,1057,330,1061,327,1065,322,1061,309,1045,301,1029,297,997,293,966,286,950,274,935,257,922"/>
+<area shape="rect" id="Node000019" href="$classalpaqa_1_1TypeErasedProblem.html#ab18346d3e4d5ffbfe88191ea164d92ac" title="Returns true if the problem provides a specialized implementation of eval_f_grad_f,..." alt="" coords="328,1135,531,1175"/>
+<area shape="poly" id="edge18_Node000014_Node000019" title=" " alt="" coords="262,917,278,931,295,956,302,981,302,1029,300,1053,302,1076,309,1098,326,1122,330,1125,326,1129,322,1125,305,1101,297,1077,295,1053,296,1029,297,982,290,958,274,934,259,922"/>
+<area shape="rect" id="Node000020" href="$classalpaqa_1_1TypeErasedProblem.html#acc03fa37a47885ed1efeb50789e7322d" title="Returns true if the problem provides a specialized implementation of eval_grad_ψ, false if it uses th..." alt="" coords="328,1199,531,1239"/>
+<area shape="poly" id="edge19_Node000014_Node000020" title=" " alt="" coords="263,917,278,931,298,965,306,998,306,1030,301,1062,297,1093,297,1123,305,1154,326,1186,329,1189,325,1192,322,1189,300,1156,292,1124,292,1092,296,1061,300,1030,301,998,293,967,274,934,259,921"/>
+<area shape="rect" id="Node000021" href="$classalpaqa_1_1TypeErasedProblem.html#a77e1b988df8ed0236c4ce19729bc36ad" title="Returns true if the problem provides a specialized implementation of eval_grad_f_grad_g_prod,..." alt="" coords="328,1264,531,1319"/>
+<area shape="poly" id="edge20_Node000014_Node000021" title=" " alt="" coords="263,918,278,931,302,973,311,1014,309,1054,302,1093,295,1131,294,1170,302,1209,326,1250,329,1253,325,1256,322,1253,297,1211,288,1170,290,1131,297,1092,304,1053,306,1014,297,975,274,934,260,922"/>
+<area shape="rect" id="Node000022" href="$classalpaqa_1_1TypeErasedProblem.html#ab6c62b31d326c310c39212fa6331fe6d" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="328,1343,531,1383"/>
+<area shape="poly" id="edge21_Node000014_Node000022" title=" " alt="" coords="264,917,278,931,296,958,307,984,314,1010,316,1035,311,1085,300,1134,290,1183,286,1231,289,1255,296,1280,308,1304,326,1330,329,1332,325,1336,322,1333,304,1307,291,1282,284,1256,281,1231,285,1182,295,1133,306,1085,311,1035,308,1011,302,986,291,960,274,934,260,921"/>
+<area shape="rect" id="Node000023" href="$classalpaqa_1_1TypeErasedProblem.html#acb9e7041994545ffb8b042d2be962639" title="Returns true if the problem provides a specialized implementation of eval_grad_L, false if it uses th..." alt="" coords="328,1407,531,1447"/>
+<area shape="poly" id="edge22_Node000014_Node000023" title=" " alt="" coords="264,917,278,931,298,962,311,993,318,1023,320,1052,314,1110,300,1167,287,1223,281,1279,284,1307,292,1335,306,1364,326,1394,329,1396,325,1400,322,1397,301,1367,287,1337,279,1308,276,1279,281,1222,295,1165,309,1109,315,1052,313,1023,306,994,293,965,274,934,260,921"/>
+<area shape="rect" id="Node000024" href="$classalpaqa_1_1TypeErasedProblem.html#adb1bf2644a0b8e0c7120e3d546e2cbfe" title="Returns true if the problem provides an implementation of eval_hess_ψ." alt="" coords="328,1471,531,1511"/>
+<area shape="poly" id="edge23_Node000014_Node000024" title=" " alt="" coords="264,917,278,931,290,952,298,978,305,1042,305,1117,301,1197,297,1278,298,1352,306,1414,314,1438,326,1458,329,1460,324,1464,322,1461,310,1441,301,1415,292,1352,292,1277,296,1197,300,1117,300,1042,293,979,285,954,274,934,260,921"/>
+<area shape="rect" id="Node000025" href="$classalpaqa_1_1TypeErasedProblem.html#a1fbd424119305ac21128594a2f27086d" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="324,415,535,455"/>
+<area shape="poly" id="edge24_Node000014_Node000025" title=" " alt="" coords="191,879,194,803,201,750,212,692,228,632,251,572,282,515,322,466,326,462,330,466,326,469,286,518,256,574,233,633,217,693,206,751,200,803,196,879"/>
+<area shape="rect" id="Node000026" href="$classalpaqa_1_1TypeErasedProblem.html#a01b7cf0fff8f21d29a5faf139a8896e2" title="Returns true if the problem provides an implementation of eval_hess_L." alt="" coords="328,479,531,519"/>
+<area shape="poly" id="edge25_Node000014_Node000026" title=" " alt="" coords="192,879,199,813,219,719,236,668,258,618,287,571,322,529,327,525,330,529,326,533,291,574,263,620,241,670,224,720,205,813,197,880"/>
+<area shape="rect" id="Node000027" href="$classalpaqa_1_1TypeErasedProblem.html#a9328096779a46c83fb264bfd3009568f" title="Returns true if the problem provides an implementation of eval_hess_L_prod." alt="" coords="325,543,533,583"/>
+<area shape="poly" id="edge26_Node000014_Node000027" title=" " alt="" coords="193,879,205,823,227,746,244,705,265,664,291,627,322,593,328,589,331,593,326,597,295,630,270,667,249,707,232,748,210,824,199,880"/>
+<area shape="rect" id="Node000028" href="$classalpaqa_1_1TypeErasedProblem.html#a53b4d08432e97770dcae02dba82378fa" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="328,608,531,663"/>
+<area shape="poly" id="edge27_Node000014_Node000028" title=" " alt="" coords="197,878,214,836,240,781,276,724,298,697,322,673,329,668,332,672,326,677,302,701,280,727,245,784,219,838,202,880"/>
+<area shape="rect" id="Node000029" href="$classalpaqa_1_1TypeErasedProblem.html#a3abcd94b37675bbd5f6a86e3fb85cda1" title="Returns true if the problem provides an implementation of eval_jac_g." alt="" coords="328,687,531,727"/>
+<area shape="poly" id="edge28_Node000014_Node000029" title=" " alt="" coords="202,877,249,809,283,770,322,737,332,731,335,736,326,742,286,774,253,812,207,880"/>
+<area shape="rect" id="Node000030" href="$classalpaqa_1_1TypeErasedProblem.html#a23a7eb67244853ec477fceda3be3cc2a" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="328,751,531,791"/>
+<area shape="poly" id="edge29_Node000014_Node000030" title=" " alt="" coords="214,877,262,839,323,801,338,794,340,799,325,806,265,843,218,881"/>
+<area shape="rect" id="Node000031" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="328,815,531,855"/>
+<area shape="poly" id="edge30_Node000014_Node000031" title=" " alt="" coords="266,877,341,856,342,861,268,882"/>
+<area shape="poly" id="edge33_Node000033_Node000012" title=" " alt="" coords="241,311,352,311,352,317,241,317"/>
+<area shape="poly" id="edge37_Node000033_Node000013" title=" " alt="" coords="241,301,360,276,361,281,242,307"/>
+<area shape="rect" id="Node000034" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="354,351,505,391"/>
+<area shape="poly" id="edge34_Node000033_Node000034" title=" " alt="" coords="242,323,341,347,340,353,241,328"/>
+<area shape="rect" id="Node000035" href="$namespacealpaqa_1_1params.html#a0de0baee3dda47aba5143ba83bd11712" title=" " alt="" coords="602,381,753,421"/>
+<area shape="poly" id="edge35_Node000034_Node000035" title=" " alt="" coords="505,378,589,388,588,393,505,383"/>
+<area shape="rect" id="Node000036" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="583,331,772,356"/>
+<area shape="poly" id="edge36_Node000034_Node000036" title=" " alt="" coords="505,360,569,353,569,358,505,366"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="referenced_object_is_const" name="referenced_object_is_const">
+<area shape="rect" id="Node000001" title="Check if the wrapped object is const." alt="" coords="149,73,307,113"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a5a8c1d560f1353c400606d0ad37fb3b7" title="Call the vtable function f with the given arguments args, implicitly passing the self pointer and vta..." alt="" coords="31,5,76,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="167,70,75,30,77,25,169,65"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a8baf2f696e451fbba287f66d070f3d9d" title="Call the vtable function f with the given arguments args, implicitly passing the self pointer and vta..." alt="" coords="31,55,76,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="136,82,76,73,77,68,136,77"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html#a801c11f3e60eb66258e11ab7242a8c10" title="Call the vtable function f with the given arguments args, implicitly passing the self pointer and vta..." alt="" coords="31,104,76,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="136,108,76,116,76,111,136,103"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1util_1_1TypeErased.html#a0eeb7f8e9ea2c48ba803e01927fbe21c" title="Get a type&#45;erased pointer to the wrapped object." alt="" coords="5,153,101,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="168,120,86,156,84,151,166,116"/>
+</map>

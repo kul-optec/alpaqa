@@ -1,0 +1,17 @@
+<map id="size_indicates_const" name="size_indicates_const">
+<area shape="rect" id="Node000001" title=" " alt="" coords="355,129,511,155"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a72027b54ab50bb59f0933bdf1e3ab3dc" title="Check if the wrapped object is const." alt="" coords="149,122,307,162"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="341,145,307,145,307,139,341,139"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a07d1acee879c5c543a3355c28bba37fc" title="Convert the type&#45;erased object to the given type." alt="" coords="34,5,73,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="192,115,149,80,100,44,72,29,74,24,103,40,152,75,195,111"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html#a9b75f26415595c518f7531a9ed96ec57" title="Convert the type&#45;erased object to the given type." alt="" coords="34,55,73,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="167,119,72,78,74,73,169,114"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1util_1_1TypeErased.html#a5a8c1d560f1353c400606d0ad37fb3b7" title="Call the vtable function f with the given arguments args, implicitly passing the self pointer and vta..." alt="" coords="31,104,76,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="136,131,76,122,77,117,136,126"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1util_1_1TypeErased.html#a8baf2f696e451fbba287f66d070f3d9d" title="Call the vtable function f with the given arguments args, implicitly passing the self pointer and vta..." alt="" coords="31,153,76,179"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="136,157,76,166,76,160,136,152"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1util_1_1TypeErased.html#a801c11f3e60eb66258e11ab7242a8c10" title="Call the vtable function f with the given arguments args, implicitly passing the self pointer and vta..." alt="" coords="31,203,76,228"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="168,170,77,209,75,204,166,165"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1util_1_1TypeErased.html#a0eeb7f8e9ea2c48ba803e01927fbe21c" title="Get a type&#45;erased pointer to the wrapped object." alt="" coords="5,252,101,277"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="194,173,103,242,81,254,78,250,100,237,191,169"/>
+</map>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 579f380f71fc708611ba8991da392e280a2f6a28 - src/alpaqa/include/alpaqa/util/check-dim.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">src/alpaqa/include/alpaqa/util</a> - check-dim.hpp</td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">579f380f71fc708611ba8991da392e280a2f6a28</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">9</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2023-09-08 15:20:58</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #pragma once</a>
+<a name="2"><span class="lineNum">       2 </span>            : </a>
+<a name="3"><span class="lineNum">       3 </span>            : #include &lt;alpaqa/config/config.hpp&gt;</a>
+<a name="4"><span class="lineNum">       4 </span>            : #include &lt;optional&gt;</a>
+<a name="5"><span class="lineNum">       5 </span>            : #include &lt;stdexcept&gt;</a>
+<a name="6"><span class="lineNum">       6 </span>            : #include &lt;string&gt;</a>
+<a name="7"><span class="lineNum">       7 </span>            : </a>
+<a name="8"><span class="lineNum">       8 </span>            : namespace alpaqa::util {</a>
+<a name="9"><span class="lineNum">       9 </span>            : </a>
+<a name="10"><span class="lineNum">      10 </span>            : template &lt;Config Conf&gt;</a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">         32 : void check_dim_msg(crvec&lt;Conf&gt; v, auto sz, std::string msg) {</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineCov">         32 :     if (v.size() != sz) {</span></a>
+<a name="13"><span class="lineNum">      13 </span><span class="lineNoCov">          0 :         msg += &quot;\n(should be &quot;;</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineNoCov">          0 :         msg += std::to_string(sz);</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineNoCov">          0 :         msg += &quot;, got &quot;;</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineNoCov">          0 :         msg += std::to_string(v.size());</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineNoCov">          0 :         msg += &quot;)&quot;;</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineNoCov">          0 :         throw std::invalid_argument(msg);</span></a>
+<a name="19"><span class="lineNum">      19 </span>            :     }</a>
+<a name="20"><span class="lineNum">      20 </span><span class="lineCov">         32 : }</span></a>
+<a name="21"><span class="lineNum">      21 </span>            : </a>
+<a name="22"><span class="lineNum">      22 </span>            : template &lt;Config Conf&gt;</a>
+<a name="23"><span class="lineNum">      23 </span>            : void check_dim_msg(std::optional&lt;vec&lt;Conf&gt;&gt; &amp;v, auto sz, std::string msg) {</a>
+<a name="24"><span class="lineNum">      24 </span>            :     if (!v) {</a>
+<a name="25"><span class="lineNum">      25 </span>            :         v = vec&lt;Conf&gt;::Zero(sz);</a>
+<a name="26"><span class="lineNum">      26 </span>            :     } else if (v-&gt;size() != sz) {</a>
+<a name="27"><span class="lineNum">      27 </span>            :         msg += &quot;\n(should be &quot;;</a>
+<a name="28"><span class="lineNum">      28 </span>            :         msg += std::to_string(sz);</a>
+<a name="29"><span class="lineNum">      29 </span>            :         msg += &quot;, got &quot;;</a>
+<a name="30"><span class="lineNum">      30 </span>            :         msg += std::to_string(v-&gt;size());</a>
+<a name="31"><span class="lineNum">      31 </span>            :         msg += &quot;)&quot;;</a>
+<a name="32"><span class="lineNum">      32 </span>            :         throw std::invalid_argument(msg);</a>
+<a name="33"><span class="lineNum">      33 </span>            :     }</a>
+<a name="34"><span class="lineNum">      34 </span>            : }</a>
+<a name="35"><span class="lineNum">      35 </span>            : </a>
+<a name="36"><span class="lineNum">      36 </span>            : template &lt;Config Conf, class V&gt;</a>
+<a name="37"><span class="lineNum">      37 </span>            : void check_dim(std::string name, V &amp;&amp;v, auto sz) {</a>
+<a name="38"><span class="lineNum">      38 </span>            :     name += &quot;: dimension mismatch&quot;;</a>
+<a name="39"><span class="lineNum">      39 </span>            :     check_dim_msg&lt;Conf&gt;(std::forward&lt;V&gt;(v), sz, name);</a>
+<a name="40"><span class="lineNum">      40 </span>            : }</a>
+<a name="41"><span class="lineNum">      41 </span>            : </a>
+<a name="42"><span class="lineNum">      42 </span>            : template &lt;Config Conf&gt;</a>
+<a name="43"><span class="lineNum">      43 </span>            : void check_dim_msg(crmat&lt;Conf&gt; m, auto rows, auto cols, std::string msg) {</a>
+<a name="44"><span class="lineNum">      44 </span>            :     if (m.cols() != cols || m.rows() != rows) {</a>
+<a name="45"><span class="lineNum">      45 </span>            :         msg += &quot;\n(should be &quot;;</a>
+<a name="46"><span class="lineNum">      46 </span>            :         msg += std::to_string(rows);</a>
+<a name="47"><span class="lineNum">      47 </span>            :         msg += &quot;×&quot;;</a>
+<a name="48"><span class="lineNum">      48 </span>            :         msg += std::to_string(cols);</a>
+<a name="49"><span class="lineNum">      49 </span>            :         msg += &quot;, got &quot;;</a>
+<a name="50"><span class="lineNum">      50 </span>            :         msg += std::to_string(m.rows());</a>
+<a name="51"><span class="lineNum">      51 </span>            :         msg += &quot;×&quot;;</a>
+<a name="52"><span class="lineNum">      52 </span>            :         msg += std::to_string(m.cols());</a>
+<a name="53"><span class="lineNum">      53 </span>            :         msg += &quot;)&quot;;</a>
+<a name="54"><span class="lineNum">      54 </span>            :         throw std::invalid_argument(msg);</a>
+<a name="55"><span class="lineNum">      55 </span>            :     }</a>
+<a name="56"><span class="lineNum">      56 </span>            : }</a>
+<a name="57"><span class="lineNum">      57 </span>            : </a>
+<a name="58"><span class="lineNum">      58 </span>            : template &lt;Config Conf&gt;</a>
+<a name="59"><span class="lineNum">      59 </span>            : void check_dim(std::string name, crmat&lt;Conf&gt; m, auto rows, auto cols) {</a>
+<a name="60"><span class="lineNum">      60 </span>            :     name += &quot;: dimension mismatch&quot;;</a>
+<a name="61"><span class="lineNum">      61 </span>            :     check_dim_msg&lt;Conf&gt;(m, rows, cols, name);</a>
+<a name="62"><span class="lineNum">      62 </span>            : }</a>
+<a name="63"><span class="lineNum">      63 </span>            : </a>
+<a name="64"><span class="lineNum">      64 </span>            : } // namespace alpaqa::util</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.15</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

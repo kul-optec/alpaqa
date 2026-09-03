@@ -1,0 +1,92 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,832,92,857"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a195721eb9ab308e8929aa55089ac847f" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="155,143,315,183"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="48,831,54,719,69,540,81,445,96,356,115,281,138,227,156,205,177,188,181,192,159,209,142,230,120,282,101,357,86,445,74,540,59,719,53,831"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1detail.html#a6bd1a4a692a847afed18dfdac982b2bf" title=" " alt="" coords="155,315,316,355"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="48,831,55,740,71,600,82,527,97,460,116,404,138,365,142,361,146,365,142,368,121,406,103,461,88,528,76,601,60,740,53,832"/>
+<area shape="rect" id="Node000012" href="$namespacealpaqa_1_1detail.html#af491b0de3cd827129678e22afdbd882f" title=" " alt="" coords="155,403,316,443"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="49,831,58,755,76,642,102,529,119,484,138,453,142,449,146,453,142,457,124,486,107,530,81,643,63,756,54,832"/>
+<area shape="rect" id="Node000013" href="$structalpaqa_1_1OCPEvaluator.html#aac26fb1e500caabcd837ef0b1e48b035" title=" " alt="" coords="154,467,317,507"/>
+<area shape="poly" id="edge15_Node000001_Node000013" title=" " alt="" coords="47,831,48,775,59,691,70,645,86,599,109,556,138,517,142,513,146,517,142,521,113,558,91,601,75,646,64,692,54,775,52,831"/>
+<area shape="rect" id="Node000015" href="$structalpaqa_1_1detail_1_1IndexSet.html#ad4ce799900c8187a39e6595100d3a66b" title=" " alt="" coords="147,1054,323,1094"/>
+<area shape="poly" id="edge17_Node000001_Node000015" title=" " alt="" coords="55,856,63,892,79,942,105,994,122,1018,142,1040,147,1044,144,1048,138,1044,118,1022,100,997,74,944,58,894,50,858"/>
+<area shape="rect" id="Node000016" href="$structalpaqa_1_1detail_1_1IndexSet.html#ad31b9dec898577e38e99847e3d68cade" title=" " alt="" coords="382,990,558,1030"/>
+<area shape="poly" id="edge25_Node000001_Node000016" title=" " alt="" coords="63,855,96,890,141,923,226,947,373,984,372,989,225,952,139,928,92,894,59,859"/>
+<area shape="rect" id="Node000017" href="$structalpaqa_1_1detail_1_1IndexSet.html#a1c2baa260eff1ba74daef8cd60c44426" title=" " alt="" coords="382,1054,558,1094"/>
+<area shape="poly" id="edge37_Node000001_Node000017" title=" " alt="" coords="52,857,55,906,66,974,77,1011,93,1046,114,1078,142,1103,173,1121,208,1130,244,1134,281,1132,353,1118,413,1097,415,1102,354,1123,282,1137,244,1139,207,1136,171,1126,138,1108,110,1081,88,1049,72,1013,61,976,49,906,47,857"/>
+<area shape="rect" id="Node000018" href="$structalpaqa_1_1OCPVariables.html#a276799effc79e618746bf6a7e44c84af" title=" " alt="" coords="155,1168,316,1208"/>
+<area shape="poly" id="edge20_Node000001_Node000018" title=" " alt="" coords="53,857,56,909,68,987,79,1029,95,1072,115,1112,142,1148,155,1159,151,1163,138,1151,111,1115,90,1074,74,1031,63,988,51,910,47,857"/>
+<area shape="rect" id="Node000019" href="$structalpaqa_1_1OCPEvaluator.html#aa390f28c24f187326b60eedd7ff4fe66" title=" " alt="" coords="154,531,317,571"/>
+<area shape="poly" id="edge21_Node000001_Node000019" title=" " alt="" coords="48,831,53,785,66,718,78,681,93,645,113,611,138,581,143,577,146,581,142,585,118,614,98,648,83,683,72,719,58,785,53,832"/>
+<area shape="rect" id="Node000020" href="$structalpaqa_1_1OCPEvaluator.html#a02a290de7f57c49cbc1ce72fbd8a69b3" title=" " alt="" coords="154,595,317,635"/>
+<area shape="poly" id="edge23_Node000001_Node000020" title=" " alt="" coords="50,831,58,795,74,745,100,692,118,667,138,645,144,640,147,644,142,649,122,670,105,694,79,747,63,796,55,832"/>
+<area shape="rect" id="Node000021" href="$structalpaqa_1_1Box.html#a85dea72f7f5cdd115734c476729d49da" title=" " alt="" coords="168,1233,303,1258"/>
+<area shape="poly" id="edge26_Node000001_Node000021" title=" " alt="" coords="54,857,63,931,81,1040,107,1148,124,1190,142,1218,157,1230,154,1234,138,1222,119,1193,102,1150,76,1041,58,932,49,857"/>
+<area shape="rect" id="Node000022" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="140,1282,331,1308"/>
+<area shape="poly" id="edge27_Node000001_Node000022" title=" " alt="" coords="54,857,61,940,78,1064,90,1129,104,1188,122,1237,142,1269,146,1273,142,1276,138,1273,117,1239,99,1190,84,1130,72,1065,56,940,48,857"/>
+<area shape="rect" id="Node000023" href="$structalpaqa_1_1OCPVariables.html#a50482e485b208e4ced084891de1b7f49" title=" " alt="" coords="143,1332,328,1357"/>
+<area shape="poly" id="edge28_Node000001_Node000023" title=" " alt="" coords="53,857,59,948,75,1088,86,1161,101,1227,120,1282,142,1319,145,1322,141,1325,138,1322,115,1284,96,1229,81,1162,69,1089,54,949,48,857"/>
+<area shape="rect" id="Node000024" href="$structalpaqa_1_1OCPEvaluator.html#ac7a042acaf800ba78e029229c09a650e" title=" " alt="" coords="141,660,330,685"/>
+<area shape="poly" id="edge29_Node000001_Node000024" title=" " alt="" coords="52,830,81,766,106,728,138,695,149,689,152,693,142,700,110,731,85,768,57,832"/>
+<area shape="rect" id="Node000026" href="$classalpaqa_1_1LBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="157,1381,314,1406"/>
+<area shape="poly" id="edge32_Node000001_Node000026" title=" " alt="" coords="53,857,58,957,72,1111,83,1192,98,1266,118,1327,129,1350,142,1368,147,1373,143,1376,138,1371,125,1353,113,1329,93,1267,78,1193,66,1111,53,957,48,857"/>
+<area shape="rect" id="Node000027" href="$structalpaqa_1_1OCPEvaluator.html#a5fa1750865bfb54072049e5acaa85e52" title=" " alt="" coords="141,889,329,914"/>
+<area shape="poly" id="edge33_Node000001_Node000027" title=" " alt="" coords="85,854,141,874,172,883,170,888,139,879,83,860"/>
+<area shape="rect" id="Node000028" href="$structalpaqa_1_1OCPEvaluator.html#af2168f996a43777dd54f11ec99f9cbd9" title=" " alt="" coords="154,710,317,750"/>
+<area shape="poly" id="edge35_Node000001_Node000028" title=" " alt="" coords="59,829,92,795,139,759,151,753,153,758,141,764,96,799,63,833"/>
+<area shape="rect" id="Node000029" href="$structalpaqa_1_1OCPEvaluator.html#a832b6879e9ba1e10af2db41a10d74db5" title=" " alt="" coords="142,774,329,800"/>
+<area shape="poly" id="edge38_Node000001_Node000029" title=" " alt="" coords="83,829,139,810,170,801,172,806,141,815,85,834"/>
+<area shape="rect" id="Node000030" href="$structalpaqa_1_1OCPEvaluator.html#ac564caeba638785c351f33ffe40339f3" title=" " alt="" coords="154,824,317,864"/>
+<area shape="poly" id="edge40_Node000001_Node000030" title=" " alt="" coords="92,842,140,842,140,847,92,847"/>
+<area shape="rect" id="Node000031" href="$structalpaqa_1_1detail_1_1IndexSet.html#ad8d66add92f514f8124024c6fb8e359d" title=" " alt="" coords="147,990,323,1030"/>
+<area shape="poly" id="edge42_Node000001_Node000031" title=" " alt="" coords="58,856,90,910,113,941,142,969,160,981,157,986,138,973,109,945,85,913,54,859"/>
+<area shape="rect" id="Node000033" href="$classalpaqa_1_1LBFGS.html#ae34a8e5e432c990eb8af2f95bcbc04bd" title="Update the inverse Hessian approximation using the new vectors xₙₑₓₜ and pₙₑₓₜ." alt="" coords="151,241,320,266"/>
+<area shape="poly" id="edge47_Node000001_Node000033" title=" " alt="" coords="48,831,51,725,64,559,76,471,91,390,112,323,124,297,138,277,143,272,147,276,142,281,129,300,117,325,96,391,81,472,70,559,57,725,53,832"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#abe3b84085aeeb66a23cb64d40a1a072f" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="390,138,550,178"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="316,158,376,157,376,162,316,164"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#ac7c2ee7d2562303f555dd1f4c3fca8cd" title=" " alt="" coords="860,94,993,120"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="483,136,504,109,533,78,568,48,608,26,664,8,710,3,756,10,813,26,839,37,864,51,904,82,901,86,861,55,837,41,811,31,755,15,710,8,665,13,610,31,571,53,536,82,508,112,487,139"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="645,140,777,165"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="551,153,631,151,631,157,551,158"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LBFGS.html#aa871b5290773b86e2e4919bbac258a04" title="Iterate over the indices in the history buffer, oldest first." alt="" coords="609,41,812,66"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="499,135,549,104,608,75,630,68,632,73,610,80,551,109,502,140"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LBFGS.html#a0804b751cf2035a35f24762474f62cbf" title="Iterate over the indices in the history buffer, newest first." alt="" coords="610,90,811,116"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="550,137,640,116,642,121,551,142"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LBFGS.html#a15e4a3db39457cabe764a7737d24e73f" title=" " alt="" coords="645,353,776,378"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="496,176,529,209,564,249,578,275,584,298,593,318,611,338,633,351,631,355,608,342,588,321,579,300,573,277,559,252,525,212,492,179"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LBFGS.html#abb437bab54050908142b5a47bd64713b" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="626,190,795,230"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="551,172,613,186,612,191,550,177"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1LBFGS.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="645,254,777,280"/>
+<area shape="poly" id="edge10_Node000003_Node000010" title=" " alt="" coords="512,175,563,205,586,223,611,239,633,248,631,253,608,244,583,227,560,209,509,180"/>
+<area shape="poly" id="edge9_Node000009_Node000004" title=" " alt="" coords="779,187,811,174,855,150,894,125,897,130,858,155,813,179,781,192"/>
+<area shape="poly" id="edge12_Node000011_Node000011" title=" " alt="" coords="200,315,198,305,204,296,216,290,235,288,257,291,269,298,267,303,256,296,235,294,218,295,207,300,203,306,205,314"/>
+<area shape="poly" id="edge14_Node000012_Node000012" title=" " alt="" coords="200,403,198,393,204,384,216,378,235,376,257,379,269,386,267,391,256,384,235,382,218,383,207,388,203,394,205,402"/>
+<area shape="rect" id="Node000014" href="$structalpaqa_1_1OCPEvaluator.html#af06e2b654a841e284d3be368332b956f" title=" " alt="" coords="379,570,561,596"/>
+<area shape="poly" id="edge16_Node000013_Node000014" title=" " alt="" coords="300,504,332,516,432,562,430,566,330,521,298,509"/>
+<area shape="poly" id="edge18_Node000015_Node000016" title=" " alt="" coords="309,1051,383,1031,384,1036,310,1056"/>
+<area shape="poly" id="edge19_Node000015_Node000017" title=" " alt="" coords="324,1071,368,1071,368,1076,324,1076"/>
+<area shape="poly" id="edge22_Node000019_Node000014" title=" " alt="" coords="318,559,366,566,365,571,317,565"/>
+<area shape="poly" id="edge24_Node000020_Node000014" title=" " alt="" coords="317,601,365,594,366,600,318,606"/>
+<area shape="poly" id="edge31_Node000024_Node000014" title=" " alt="" coords="290,657,330,644,431,599,433,604,332,649,291,662"/>
+<area shape="rect" id="Node000025" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="379,774,561,800"/>
+<area shape="poly" id="edge30_Node000024_Node000025" title=" " alt="" coords="296,682,332,695,393,729,443,764,440,768,390,733,330,700,294,688"/>
+<area shape="poly" id="edge34_Node000027_Node000025" title=" " alt="" coords="294,886,330,874,390,840,440,806,443,810,393,845,332,879,296,891"/>
+<area shape="poly" id="edge36_Node000028_Node000025" title=" " alt="" coords="318,747,405,768,403,774,317,752"/>
+<area shape="poly" id="edge39_Node000029_Node000025" title=" " alt="" coords="329,784,365,784,365,790,329,790"/>
+<area shape="poly" id="edge41_Node000030_Node000025" title=" " alt="" coords="317,822,403,800,405,805,318,827"/>
+<area shape="poly" id="edge45_Node000031_Node000016" title=" " alt="" coords="324,1007,368,1007,368,1012,324,1012"/>
+<area shape="poly" id="edge46_Node000031_Node000017" title=" " alt="" coords="310,1027,384,1047,383,1053,309,1032"/>
+<area shape="rect" id="Node000032" href="$structalpaqa_1_1detail_1_1IndexSet.html#a8cf1f39757f181ead17d56f7336064d4" title=" " alt="" coords="382,926,558,966"/>
+<area shape="poly" id="edge43_Node000031_Node000032" title=" " alt="" coords="309,987,383,967,384,972,310,992"/>
+<area shape="poly" id="edge44_Node000032_Node000032" title=" " alt="" coords="426,926,424,916,431,907,446,901,470,899,497,902,512,909,510,914,496,907,470,904,447,906,434,911,429,917,431,924"/>
+<area shape="poly" id="edge48_Node000033_Node000008" title=" " alt="" coords="299,264,332,277,346,286,356,295,366,304,380,312,444,334,511,349,575,357,632,362,632,367,575,363,510,354,442,339,378,317,363,309,353,299,343,290,329,281,297,269"/>
+<area shape="poly" id="edge55_Node000033_Node000010" title=" " alt="" coords="320,249,379,248,470,246,561,248,631,254,631,259,561,254,470,252,379,254,320,254"/>
+<area shape="rect" id="Node000034" href="$classalpaqa_1_1LBFGS.html#ad67ba15f46e10679e631093d7fb2765f" title=" " alt="" coords="385,263,555,303"/>
+<area shape="poly" id="edge49_Node000033_Node000034" title=" " alt="" coords="321,262,372,268,371,273,320,267"/>
+<area shape="poly" id="edge50_Node000034_Node000005" title=" " alt="" coords="490,261,541,217,574,195,608,175,631,166,633,171,610,180,577,199,545,222,494,265"/>
+<area shape="poly" id="edge51_Node000034_Node000008" title=" " alt="" coords="516,301,610,338,641,347,639,352,608,343,514,306"/>
+<area shape="poly" id="edge53_Node000034_Node000009" title=" " alt="" coords="536,260,631,231,632,236,537,265"/>
+<area shape="poly" id="edge54_Node000034_Node000010" title=" " alt="" coords="555,275,631,270,631,275,555,280"/>
+<area shape="rect" id="Node000035" href="$classalpaqa_1_1LBFGS.html#a70926baed7362e4fcce66523bb8e2842" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="634,304,787,329"/>
+<area shape="poly" id="edge52_Node000034_Node000035" title=" " alt="" coords="555,292,620,301,620,306,555,297"/>
+</map>

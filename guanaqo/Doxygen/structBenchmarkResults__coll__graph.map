@@ -1,0 +1,17 @@
+<map id="BenchmarkResults" name="BenchmarkResults">
+<area shape="rect" id="Node000001" title=" " alt="" coords="280,2903,425,3048"/>
+<area shape="rect" id="Node000002" href="$problem_8hpp.html#structLoadedProblem" title=" " alt="" coords="77,2497,245,2782"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,2781,276,2877,283,2888,279,2891,272,2880,219,2783"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="5,673,236,2376"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="154,2376,158,2480,152,2481,149,2376"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="21,257,221,351"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="123,365,123,673,118,673,118,365"/>
+<area shape="rect" id="Node000005" href="$structSolverResults.html" title=" " alt="" coords="276,2447,429,2832"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="355,2832,355,2886,350,2886,350,2832"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1EvalCounter.html" title=" " alt="" coords="261,1226,461,1823"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="361,1824,357,2430,351,2430,356,1824"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1EvalCounter.html#structalpaqa_1_1EvalCounter_1_1EvalTimer" title=" " alt="" coords="261,5,461,603"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="363,603,363,1209,358,1209,358,603"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1KKTError.html" title=" " alt="" coords="453,2567,604,2712"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="525,2713,507,2796,492,2840,471,2880,440,2917,436,2913,466,2877,487,2837,502,2795,520,2712"/>
+</map>

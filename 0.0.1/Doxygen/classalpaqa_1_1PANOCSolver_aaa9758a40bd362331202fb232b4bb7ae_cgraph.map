@@ -1,0 +1,14 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node1" title=" " alt="" coords="5,217,92,244"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a609b04c1159d9c3a0346c2ff7fbacb86" title="Calculate the error between ẑ and g(x)." alt="" coords="584,13,729,54"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a998a56114e97dc0ea3b883d34df2cb77" title="Calculate ∇ψ(x) using ŷ." alt="" coords="366,187,511,229"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1detail.html#adaff98bd8130d1eee1f5bcaab5069026" title=" " alt="" coords="359,279,519,305"/>
+<area shape="rect" id="node7" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="153,115,298,157"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="366,110,511,151"/>
+<area shape="rect" id="node10" href="$namespacealpaqa_1_1detail.html#a3e432963691339ba0588d90186008735" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="140,181,311,222"/>
+<area shape="rect" id="node11" href="$namespacealpaqa_1_1detail.html#af622b46ff2f9f3237cef3781eb65cf0c" title=" " alt="" coords="151,349,300,390"/>
+<area shape="rect" id="node12" href="$namespacealpaqa_1_1detail.html#a556206d028eb9c80c0f483115cd3eef0" title=" " alt="" coords="141,414,309,455"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="795,64,913,91"/>
+<area shape="rect" id="node6" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="567,271,747,313"/>
+<area shape="rect" id="node9" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="587,99,726,141"/>
+</map>

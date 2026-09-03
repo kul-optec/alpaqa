@@ -1,0 +1,11 @@
+<map id="TypeErased&lt; VTable, Allocator, SmallBufferSize &gt;" name="TypeErased&lt; VTable, Allocator, SmallBufferSize &gt;">
+<area shape="rect" id="Node000001" title="Class for polymorphism through type erasure." alt="" coords="363,5,568,1060"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedControlProblem.html" title=" " alt="" coords="5,1113,227,2790"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="360,772,296,936,267,1023,241,1109,229,1155,224,1154,236,1107,261,1021,291,934,355,770"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="251,1108,448,2795"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="424,1074,421,1108,416,1108,418,1073"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedControlProblem.html" title="Nonlinear optimal control problem with finite horizon ." alt="" coords="472,1113,693,2790"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="513,1073,516,1112,511,1113,507,1074"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html" title="The main polymorphic minimization problem interface." alt="" coords="717,1108,915,2795"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="576,754,648,925,680,1016,708,1107,720,1154,715,1155,703,1109,675,1018,643,926,571,756"/>
+</map>

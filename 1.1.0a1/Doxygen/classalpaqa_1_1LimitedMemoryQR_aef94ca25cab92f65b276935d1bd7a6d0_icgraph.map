@@ -1,0 +1,21 @@
+<map id="ring_iter" name="ring_iter">
+<area shape="rect" id="Node000001" title="Get iterators in the circular buffer." alt="" coords="769,153,845,178"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="224,69,411,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="777,147,750,131,721,119,641,100,558,90,480,86,411,86,411,81,480,81,559,84,641,95,722,113,753,126,780,143"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LimitedMemoryQR.html#ae25c810f03c3095159bbdb30fdb92b4b" title="Get reverse iterators in the circular buffer." alt="" coords="589,127,721,153"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="755,159,721,154,722,148,756,154"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3322cd9c833dc65702b574640eefe1" title="Solve the least squares problem Ax = b." alt="" coords="459,131,541,157"/>
+<area shape="poly" id="edge10_Node000001_Node000006" title=" " alt="" coords="756,171,677,173,589,168,541,159,542,153,590,163,677,168,755,166"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LimitedMemoryQR.html#adf11f99cb8b119423c86498dbaab9820" title="Multiply the matrix R by a scalar." alt="" coords="619,229,691,254"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="771,187,723,212,684,231,682,226,720,207,769,182"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title=" " alt="" coords="5,5,176,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,68,161,48,163,43,233,63"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AndersonAccel.html#af02aae3147e83aeb9f83c4f0a17f537f" title=" " alt="" coords="5,69,176,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="210,92,176,92,176,87,210,87"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="576,145,541,146,541,140,576,139"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="444,130,384,112,385,107,446,125"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LimitedMemoryQR.html#a33f0a7b277c8d3c311b0b4868c55eda1" title="Solve the least squares problem AX = B." alt="" coords="289,134,346,159"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="445,147,346,149,346,144,445,142"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LimitedMemoryQR.html#a5f3732971788e558366a2b509a538206" title="Solve the least squares problem AX = B." alt="" coords="62,134,119,159"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="275,149,119,149,119,144,275,144"/>
+</map>

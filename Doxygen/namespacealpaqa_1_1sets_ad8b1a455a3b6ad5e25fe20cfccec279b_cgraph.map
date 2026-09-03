@@ -1,0 +1,7 @@
+<map id="dist_squared" name="dist_squared">
+<area shape="rect" id="Node000001" title="Get the distance squared between the given vector and its projection." alt="" coords="5,5,111,31"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1sets.html#a0aa3a21307a2b125ccd70ac4265c4446" title="Get the difference between the given vector and its projection." alt="" coords="159,5,317,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,15,145,15,145,21,111,21"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1sets.html#ace167fc364a50a555a05a8bc695ff189" title="Project a vector onto a box." alt="" coords="365,5,432,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,15,352,15,352,21,317,21"/>
+</map>

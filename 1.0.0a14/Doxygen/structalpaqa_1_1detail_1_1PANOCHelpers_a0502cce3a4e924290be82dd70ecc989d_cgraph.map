@@ -1,0 +1,5 @@
+<map id="check_all_stop_conditions" name="check_all_stop_conditions">
+<area shape="rect" id="Node000001" title="Check all stop conditions (required tolerance reached, out of time, maximum number of iterations exce..." alt="" coords="5,13,197,38"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1AtomicStopSignal.html#aa0097deccc19b49f8ab5344d8d6d5cf6" title=" " alt="" coords="245,5,435,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,23,231,23,231,28,198,28"/>
+</map>

@@ -1,0 +1,58 @@
+<map id="get_solver_builder" name="get_solver_builder">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,230,148,255"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util.html#aa93b2039064bcb3304233064c0485c9b" title="Join the list of strings into a single string, using the separator given by opt." alt="" coords="1897,54,2024,79"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,228,91,190,113,138,147,85,169,61,195,41,232,21,266,9,298,4,329,3,395,10,477,16,1545,16,1637,19,1728,27,1884,50,1883,55,1728,33,1637,24,1545,21,477,21,395,15,329,9,299,9,268,14,234,26,197,46,173,65,152,88,118,141,96,192,84,230"/>
+<area shape="rect" id="Node000003" href="$fista-driver_8cpp.html#a3080e58fe1053f672b75de34a403d459" title=" " alt="" coords="205,56,343,82"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="82,228,124,163,156,124,194,91,204,85,207,90,198,95,160,128,128,166,87,231"/>
+<area shape="rect" id="Node000004" href="$ipopt-driver_8cpp.html#a9db57eebb9637ef5eac449bd549b2e2a" title=" " alt="" coords="203,106,345,131"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="88,227,132,185,162,161,195,140,208,133,211,138,197,145,165,165,136,189,92,231"/>
+<area shape="rect" id="Node000005" href="$lbfgsb-driver_8cpp.html#a951f806cc7949c81529361ac24a2f699" title=" " alt="" coords="199,155,349,180"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="104,227,195,189,215,182,217,187,197,194,106,232"/>
+<area shape="rect" id="Node000006" href="$panoc-driver_8cpp.html#a19879efa6ead750308768da16e7c3417" title=" " alt="" coords="199,204,349,230"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="148,230,185,226,186,231,149,236"/>
+<area shape="rect" id="Node000007" href="$pantr-driver_8cpp.html#acc9e603bc87299f28c5faa02034e9387" title=" " alt="" coords="202,254,346,279"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="149,248,189,253,188,258,148,254"/>
+<area shape="rect" id="Node000008" href="$qpalm-driver_8cpp.html#a5d8f499c6e7f8baa849c4fbff89fdae5" title=" " alt="" coords="199,303,349,328"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="109,253,197,288,220,296,218,301,195,293,107,257"/>
+<area shape="rect" id="Node000009" href="$panoc-driver_8cpp.html#a0191399270ebc2b9eaeb169f445ecc38" title=" " alt="" coords="196,352,352,378"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="92,253,137,294,166,317,197,337,214,345,211,350,195,342,163,322,133,298,89,257"/>
+<area shape="rect" id="Node000010" href="$options_8hpp.html#a91fca5414dbe50bec5104c59d9ebda11" title=" " alt="" coords="225,402,323,427"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="87,254,129,317,160,354,198,387,213,396,211,400,194,391,156,358,124,320,83,257"/>
+<area shape="rect" id="Node000026" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="804,398,993,423"/>
+<area shape="poly" id="edge29_Node000001_Node000026" title=" " alt="" coords="84,254,95,292,117,344,151,396,172,418,197,436,239,456,283,472,328,484,374,492,468,497,561,492,649,479,729,461,851,425,852,430,731,467,650,484,561,497,468,503,373,497,327,489,281,477,237,461,195,441,169,422,147,399,112,346,90,294,78,256"/>
+<area shape="rect" id="Node000011" href="$classOptions.html#a8ca2e3915e8acf3cd04e02180e66e9ab" title=" " alt="" coords="400,262,556,287"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="323,399,351,387,381,366,410,342,455,296,459,299,414,345,385,370,353,391,325,404"/>
+<area shape="rect" id="Node000012" href="$namespacealpaqa_1_1params.html#a1f2f7590328c20e04138a91eee5e0e98" title="Get the first argument as a JSON object j." alt="" coords="604,58,756,98"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="484,260,528,190,562,147,602,108,609,103,612,108,606,112,566,150,532,193,488,263"/>
+<area shape="rect" id="Node000015" href="$namespacealpaqa_1_1util.html#a381655901120dbb2a07cec1df230595e" title="Join the list of strings into a single string, using the separator given by opt." alt="" coords="617,122,743,162"/>
+<area shape="poly" id="edge14_Node000011_Node000015" title=" " alt="" coords="491,259,538,218,603,172,613,166,616,171,605,176,542,222,494,264"/>
+<area shape="rect" id="Node000016" href="$classOptions.html#a32a1a00438ef83609a2ecf66d9e77056" title=" " alt="" coords="607,187,753,212"/>
+<area shape="poly" id="edge15_Node000011_Node000016" title=" " alt="" coords="508,259,603,221,623,214,625,219,605,226,510,264"/>
+<area shape="rect" id="Node000017" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="616,236,744,262"/>
+<area shape="poly" id="edge16_Node000011_Node000017" title=" " alt="" coords="556,262,602,256,603,261,557,267"/>
+<area shape="rect" id="Node000018" href="$namespacealpaqa_1_1params.html#ab8eefa468e61c2fa2c0e5349c1b3ef12" title="Update/overwrite the first argument based on the JSON object j." alt="" coords="823,280,974,320"/>
+<area shape="poly" id="edge17_Node000011_Node000018" title=" " alt="" coords="556,276,810,292,809,297,556,282"/>
+<area shape="rect" id="Node000025" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="605,337,755,377"/>
+<area shape="poly" id="edge25_Node000011_Node000025" title=" " alt="" coords="511,284,618,329,616,334,509,289"/>
+<area shape="rect" id="Node000027" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="625,402,735,427"/>
+<area shape="poly" id="edge28_Node000011_Node000027" title=" " alt="" coords="492,285,538,334,570,362,605,387,620,394,617,399,603,391,567,366,535,338,488,289"/>
+<area shape="rect" id="Node000013" href="$namespacealpaqa_1_1params.html#a2ed398728f87219847d2db047fa70195" title=" " alt="" coords="823,58,975,98"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="756,76,809,76,809,81,756,81"/>
+<area shape="rect" id="Node000014" href="$namespacealpaqa.html#ad0c64aea84b4b70c07be417122dd8e3f" title=" " alt="" coords="1041,66,1196,91"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="975,76,1028,76,1028,81,975,81"/>
+<area shape="rect" id="Node000019" href="$namespacealpaqa_1_1params.html#a39fab1bdf1cebbc5e1574eac16a9af53" title=" " alt="" coords="1043,197,1194,237"/>
+<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="952,277,1051,239,1053,244,954,282"/>
+<area shape="rect" id="Node000020" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="1244,147,1412,172"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="1192,194,1267,173,1268,179,1193,199"/>
+<area shape="rect" id="Node000021" href="$namespacealpaqa_1_1params_1_1detail.html#a13c61ce864494c3fe91b86bf8ffda476" title=" " alt="" coords="1244,197,1412,237"/>
+<area shape="poly" id="edge20_Node000019_Node000021" title=" " alt="" coords="1194,214,1230,214,1230,220,1194,220"/>
+<area shape="rect" id="Node000022" href="$namespacealpaqa_1_1params_1_1detail.html#a5eef50360de8527b24463d00629819f8" title=" " alt="" coords="1460,148,1628,188"/>
+<area shape="poly" id="edge21_Node000021_Node000022" title=" " alt="" coords="1412,195,1446,187,1447,192,1413,200"/>
+<area shape="rect" id="Node000023" href="$namespacealpaqa_1_1params_1_1detail.html#a6aa41a8827ffd36b3e2a8e7346a44f19" title=" " alt="" coords="1676,118,1844,158"/>
+<area shape="poly" id="edge22_Node000022_Node000023" title=" " alt="" coords="1628,153,1662,149,1663,154,1629,159"/>
+<area shape="poly" id="edge23_Node000023_Node000002" title=" " alt="" coords="1816,116,1911,81,1913,86,1817,121"/>
+<area shape="rect" id="Node000024" href="$namespacealpaqa_1_1util.html#ab38ac790b4155e7631dfb11d7dfff1c3" title="Sort the given range of strings in&#45;place in a case&#45;insensitive manner." alt="" coords="1892,118,2029,158"/>
+<area shape="poly" id="edge24_Node000023_Node000024" title=" " alt="" coords="1844,136,1878,136,1878,141,1844,141"/>
+<area shape="poly" id="edge26_Node000025_Node000018" title=" " alt="" coords="755,335,810,320,811,325,756,340"/>
+<area shape="poly" id="edge27_Node000025_Node000026" title=" " alt="" coords="756,373,834,392,832,397,755,378"/>
+</map>

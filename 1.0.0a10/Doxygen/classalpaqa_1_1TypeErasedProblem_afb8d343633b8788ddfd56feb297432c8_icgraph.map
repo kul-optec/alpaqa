@@ -1,0 +1,5 @@
+<map id="provides_eval_ψ" name="provides_eval_ψ">
+<area shape="rect" id="node1" title="Returns true if the problem provides a specialized implementation of eval_ψ, false if it uses the def..." alt="" coords="324,13,453,38"/>
+<area shape="rect" id="node2" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="108,5,276,45"/>
+<area shape="rect" id="node3" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,13,60,38"/>
+</map>

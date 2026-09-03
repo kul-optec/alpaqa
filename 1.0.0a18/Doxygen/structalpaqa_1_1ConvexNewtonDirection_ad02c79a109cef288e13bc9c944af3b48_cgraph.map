@@ -1,0 +1,12 @@
+<map id="apply" name="apply">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,137,64,162"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1IndexSet.html#a8cf1f39757f181ead17d56f7336064d4" title=" " alt="" coords="125,29,301,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="45,135,73,107,111,79,124,72,126,77,113,84,77,111,49,138"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#ad7a02043161c640d10aa5ee6b8ac5b1b" title="[Optional] Function that evaluates the nonzero values of the Hessian of the Lagrangian," alt="" coords="112,93,315,133"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="64,141,100,133,101,139,65,146"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a895a6576b778328302594ee568734c8d" title="[Optional] Function that computes the inactive indices &#160;for the evaluation of the linear Newton appro..." alt="" coords="112,158,315,213"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="65,153,99,160,98,165,64,158"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1ConvexNewtonDirection.html#aed91b2b4bb653344bb4e4aa179fe693d" title=" " alt="" coords="185,237,242,262"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="48,161,75,192,113,222,142,234,171,241,170,246,140,239,111,226,71,196,44,164"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="179,30,177,20,183,11,195,5,213,3,235,6,246,13,243,17,233,11,213,8,196,10,186,15,183,21,185,28"/>
+</map>

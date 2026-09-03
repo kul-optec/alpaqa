@@ -1,0 +1,12 @@
+<map id="norm_inf" name="norm_inf">
+<area shape="rect" id="node1" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="881,177,961,203"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a164b2b3296b6868a4dd53b7c0d9d64e2" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="685,136,831,177"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1ALMSolver.html#a3383f0f2b3a6516f8f031396e1a1289c" title=" " alt="" coords="683,201,833,243"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SecondOrderPANOCSolver.html#acb04b3f19dafad9b4e7e7c1c19018d19" title=" " alt="" coords="379,5,621,47"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="365,71,635,112"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="415,136,585,177"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1PGASolver.html#af516b794e244432023aea7ba3cd0d1d8" title=" " alt="" coords="425,201,575,243"/>
+<area shape="rect" id="node7" href="$namespacealpaqa.html#a623fe9757577812e38c5e4f85f484954" title=" " alt="" coords="425,267,575,294"/>
+<area shape="rect" id="node8" href="$namespacealpaqa.html#a376c6e914033784e80698c416693b9c7" title=" " alt="" coords="204,267,317,294"/>
+<area shape="rect" id="node9" href="$alpaqa_8cpp.html#a52c00cccef0976f125d4a27f9906c36b" title=" " alt="" coords="5,267,156,294"/>
+</map>

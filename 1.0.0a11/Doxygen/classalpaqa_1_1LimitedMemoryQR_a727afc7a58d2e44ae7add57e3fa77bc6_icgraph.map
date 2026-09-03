@@ -1,0 +1,11 @@
+<map id="n" name="n">
+<area shape="rect" id="node1" title=" " alt="" coords="701,80,740,105"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#a32367fb2ecbdf71d6071bddc4dc3ce5d" title="Get the matrix Q such that Q times R is the original matrix." alt="" coords="530,5,590,31"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the problem dimension." alt="" coords="467,104,653,129"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LimitedMemoryQR.html#ad15543203799d1dccb5a5e1c572e3f02" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="529,55,591,80"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LimitedMemoryQR.html#a00483d13e65f3ad72dd440a5d4e7a03e" title=" " alt="" coords="536,153,584,179"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#a1fcb04cfb2b1398b54d8242cc3b0fb34" title=" " alt="" coords="17,133,188,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1AndersonAccel.html#ab19f36da69b46652ea4742d2314c45c7" title="Call this function on the first iteration to initialize the accelerator." alt="" coords="248,103,419,143"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1AndersonAccel.html#abfe51417fbebd259808f86d27f1d7ec5" title="Change the problem dimension." alt="" coords="248,39,419,79"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1AndersonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="5,54,200,94"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="eval_add_R_prod_masked" name="eval_add_R_prod_masked">
+<area shape="rect" id="node1" title=" " alt="" coords="5,35,196,60"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="244,27,483,67"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="531,27,715,67"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1util.html#aa341d471c192fc72207643cd7057e260" title=" " alt="" coords="763,5,937,31"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1util.html#afddf99e09d9dad4ee17b5f41705c583a" title=" " alt="" coords="783,55,917,95"/>
+</map>

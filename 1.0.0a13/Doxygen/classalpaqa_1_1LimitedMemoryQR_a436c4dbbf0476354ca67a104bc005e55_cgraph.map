@@ -1,0 +1,9 @@
+<map id="remove_column" name="remove_column">
+<area shape="rect" id="Node000001" title="Remove the leftmost column." alt="" coords="5,31,132,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#a24829df3eaf3f15bd3c677781348b14d" title="Get the number of columns that are currently stored." alt="" coords="180,5,293,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,31,166,26,166,31,132,36"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#a9f68bead8c70041aacb90dd175150dc4" title="Get the next index in the circular storage for R." alt="" coords="205,55,268,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,50,192,58,191,64,132,55"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="341,55,380,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="269,65,328,65,328,70,269,70"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="DLControlProblem" name="DLControlProblem">
+<area shape="rect" id="Node000001" title="Load a problem from a shared library." alt="" coords="5,31,145,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util.html#ab13404efd1f9c5ada5ab29d20d1a02ba" title=" " alt="" coords="193,5,360,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,32,179,28,180,33,146,37"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#aed9c562b9aa4226072a307634b14c832" title=" " alt="" coords="199,55,354,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="146,49,186,54,185,59,145,54"/>
+</map>

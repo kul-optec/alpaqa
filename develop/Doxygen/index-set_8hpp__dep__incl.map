@@ -1,0 +1,22 @@
+<map id="src/alpaqa/include/alpaqa/util/index&#45;set.hpp" name="src/alpaqa/include/alpaqa/util/index&#45;set.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="327,5,515,45"/>
+<area shape="rect" id="Node000002" href="$panoc-ocp_8tpp.html" title=" " alt="" coords="71,93,249,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="357,52,234,96,233,91,355,47"/>
+<area shape="rect" id="Node000004" href="$structured-newton_8hpp.html" title=" " alt="" coords="313,93,529,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="424,59,424,93,419,93,419,59"/>
+<area shape="rect" id="Node000007" href="$newton-tr_8hpp.html" title=" " alt="" coords="574,93,749,148"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="483,48,595,91,593,96,482,53"/>
+<area shape="rect" id="Node000003" href="$panoc-ocp_8cpp.html" title=" " alt="" coords="5,203,155,243"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="133,160,97,205,93,201,128,157"/>
+<area shape="rect" id="Node000005" href="$structured-newton_8cpp.html" title=" " alt="" coords="179,196,381,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="375,158,319,198,316,194,372,154"/>
+<area shape="rect" id="Node000006" href="$params_8cpp.html" title=" " alt="" coords="405,203,571,243"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="449,158,477,201,473,204,444,161"/>
+<area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="606,157,522,205,519,201,603,152"/>
+<area shape="rect" id="Node000008" href="$newton-tr-pantr-alm_8hpp.html" title=" " alt="" coords="595,196,771,251"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="672,161,680,195,674,196,667,162"/>
+<area shape="rect" id="Node000010" href="$pantr-driver_8cpp.html" title=" " alt="" coords="795,203,949,243"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="730,151,833,201,831,205,727,156"/>
+<area shape="rect" id="Node000009" href="$newton-tr-pantr-alm_8cpp.html" title=" " alt="" coords="601,299,765,339"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="685,264,685,299,680,299,680,264"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="get_variable_bounds" name="get_variable_bounds">
+<area shape="rect" id="Node000001" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="537,77,695,102"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="322,5,477,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="558,75,467,48,469,43,560,70"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="320,69,479,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="523,92,479,92,479,87,523,87"/>
+<area shape="rect" id="Node000006" href="$namespaceanonymous__namespace_02problem-loader_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="309,158,489,213"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="575,110,463,160,461,156,573,105"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1driver.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="108,77,261,102"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="306,92,262,92,262,87,306,87"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver-main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,77,60,102"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,92,60,92,60,87,94,87"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="435,147,422,139,399,137,380,139,368,143,363,150,363,158,357,158,358,148,365,139,379,133,399,131,424,134,437,142"/>
+</map>

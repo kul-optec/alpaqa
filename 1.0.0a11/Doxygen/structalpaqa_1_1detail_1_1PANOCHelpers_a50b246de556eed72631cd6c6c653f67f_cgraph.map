@@ -1,0 +1,5 @@
+<map id="descent_lemma" name="descent_lemma">
+<area shape="rect" id="node1" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="5,45,132,70"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a5003755b3ffefadc3e812fcda2e1a061" title="[Optional] Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="180,5,383,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a02bf998629ca590cf5a2e183cbf43444" title="[Required] Function that computes a proximal gradient step." alt="" coords="180,69,383,109"/>
+</map>

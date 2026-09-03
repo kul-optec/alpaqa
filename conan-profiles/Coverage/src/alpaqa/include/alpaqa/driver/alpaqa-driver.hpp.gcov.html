@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 8b862c1df62c6e2ea98b70eaafb0f03f9e81b51d - src/alpaqa/include/alpaqa/driver/alpaqa-driver.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/alpaqa/include/alpaqa/driver">src/alpaqa/include/alpaqa/driver</a> - alpaqa-driver.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">8b862c1df62c6e2ea98b70eaafb0f03f9e81b51d</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2026-09-03 16:26:02</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:&nbsp&nbsp&nbsp&nbsp
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;alpaqa/drivers-export.h&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : </span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &lt;alpaqa/config/config.hpp&gt;</span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &lt;alpaqa/params/options.hpp&gt;</span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              : #include &lt;alpaqa/driver/results.hpp&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : #include &lt;alpaqa/driver/solver-driver.hpp&gt;</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : #include &lt;filesystem&gt;</span>
+<span id="L12"><span class="lineNum">      12</span>              : #include &lt;iosfwd&gt;</span>
+<span id="L13"><span class="lineNum">      13</span>              : #include &lt;map&gt;</span>
+<span id="L14"><span class="lineNum">      14</span>              : #include &lt;span&gt;</span>
+<span id="L15"><span class="lineNum">      15</span>              : #include &lt;string_view&gt;</span>
+<span id="L16"><span class="lineNum">      16</span>              : #include &lt;tuple&gt;</span>
+<span id="L17"><span class="lineNum">      17</span>              : </span>
+<span id="L18"><span class="lineNum">      18</span>              : namespace alpaqa::driver {</span>
+<span id="L19"><span class="lineNum">      19</span>              : </span>
+<span id="L20"><span class="lineNum">      20</span>              : namespace fs = std::filesystem;</span>
+<span id="L21"><span class="lineNum">      21</span>              : using namespace std::string_view_literals;</span>
+<span id="L22"><span class="lineNum">      22</span>              : </span>
+<span id="L23"><span class="lineNum">      23</span>              : ALPAQA_DRIVERS_EXPORT void print_usage(const char *a0, std::ostream &amp;os);</span>
+<span id="L24"><span class="lineNum">      24</span>              : ALPAQA_DRIVERS_EXPORT void print_version(std::ostream &amp;os);</span>
+<span id="L25"><span class="lineNum">      25</span>              : </span>
+<span id="L26"><span class="lineNum">      26</span>              : struct ALPAQA_DRIVERS_EXPORT SolverBuilders {</span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaUNC">           0 :     SolverBuilders(std::string default_solver = &quot;panoc&quot;);</span></span>
+<span id="L28"><span class="lineNum">      28</span>              :     std::tuple&lt;solver_builder_func, std::string&gt;</span>
+<span id="L29"><span class="lineNum">      29</span>              :     get_solver_builder(alpaqa::Options &amp;opts) const;</span>
+<span id="L30"><span class="lineNum">      30</span>              :     void register_solver_builder(std::string_view name,</span>
+<span id="L31"><span class="lineNum">      31</span>              :                                  solver_builder_func builder);</span>
+<span id="L32"><span class="lineNum">      32</span>              :     std::string default_solver;</span>
+<span id="L33"><span class="lineNum">      33</span>              :     std::map&lt;std::string_view, solver_builder_func&gt; solvers;</span>
+<span id="L34"><span class="lineNum">      34</span>              : };</span>
+<span id="L35"><span class="lineNum">      35</span>              : </span>
+<span id="L36"><span class="lineNum">      36</span>              : ALPAQA_DRIVERS_EXPORT std::string</span>
+<span id="L37"><span class="lineNum">      37</span>              : store_solution(const fs::path &amp;sol_output_dir, std::ostream &amp;os,</span>
+<span id="L38"><span class="lineNum">      38</span>              :                BenchmarkResults &amp;results, const SolverWrapper &amp;solver,</span>
+<span id="L39"><span class="lineNum">      39</span>              :                [[maybe_unused]] const alpaqa::Options &amp;opts,</span>
+<span id="L40"><span class="lineNum">      40</span>              :                std::span&lt;const char *const&gt; argv);</span>
+<span id="L41"><span class="lineNum">      41</span>              : </span>
+<span id="L42"><span class="lineNum">      42</span>              : ALPAQA_DRIVERS_EXPORT std::ostream &amp;</span>
+<span id="L43"><span class="lineNum">      43</span>              : get_output_stream(alpaqa::Options &amp;opts, std::ofstream &amp;out_fstream,</span>
+<span id="L44"><span class="lineNum">      44</span>              :                   std::ostream &amp;default_stream);</span>
+<span id="L45"><span class="lineNum">      45</span>              : </span>
+<span id="L46"><span class="lineNum">      46</span>              : ALPAQA_DRIVERS_EXPORT std::string get_output_paths(alpaqa::Options &amp;opts);</span>
+<span id="L47"><span class="lineNum">      47</span>              : </span>
+<span id="L48"><span class="lineNum">      48</span>              : ALPAQA_DRIVERS_EXPORT std::tuple&lt;fs::path, std::string_view&gt;</span>
+<span id="L49"><span class="lineNum">      49</span>              : get_problem_path(const char *const *argv);</span>
+<span id="L50"><span class="lineNum">      50</span>              : </span>
+<span id="L51"><span class="lineNum">      51</span>              : } // namespace alpaqa::driver</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.2-beta</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<map id="DLControlProblem" name="DLControlProblem">
+<area shape="rect" id="Node000001" title="Load a problem from a shared library." alt="" coords="5,31,145,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util.html#a68a89a9d6da2af52f71a01e1b98acd5c" title="Get a pointer to a function inside of a loaded DLL or SO file." alt="" coords="193,5,360,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,32,179,28,180,33,146,37"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1util.html#add4ab2565a84fc50da616a2bb3a08cb1" title="Load a DLL or SO file." alt="" coords="199,55,354,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="146,49,186,54,185,59,145,54"/>
+</map>

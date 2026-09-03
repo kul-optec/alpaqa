@@ -1,0 +1,9 @@
+<map id="ring_tail" name="ring_tail">
+<area shape="rect" id="node1" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="725,45,800,70"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="491,5,677,45"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1AndersonAccel.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset the accelerator (but keep the last function value and residual, so calling initialize is not ne..." alt="" coords="499,69,669,109"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="260,5,431,45"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1AndersonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,5,200,45"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1AndersonDirection.html#a0a4209f98cf9b6125e83cc5d3ec47a8b" title=" " alt="" coords="248,69,443,109"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1AndersonDirection.html#ad20897c5c8bd47f5d4005989bead0e55" title=" " alt="" coords="248,133,443,173"/>
+</map>

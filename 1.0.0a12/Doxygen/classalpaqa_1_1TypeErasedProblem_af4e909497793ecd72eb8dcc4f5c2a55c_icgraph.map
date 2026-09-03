@@ -1,0 +1,11 @@
+<map id="eval_grad_ψ" name="eval_grad_ψ">
+<area shape="rect" id="Node000001" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="268,121,371,146"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1NewtonTRDirection.html#a23d8f300b8c4eb814e1aef62ab9c6176" title=" " alt="" coords="13,5,213,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="293,113,259,85,219,60,191,48,193,43,221,55,262,81,296,109"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#aeafee3f39dd74144bb79e5792e50fcec" title="Compute the Hessian matrix of the augmented Lagrangian function multiplied by the given vector,..." alt="" coords="5,70,220,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="254,125,220,119,221,113,255,119"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#aa61fba548f4bfe73fc3158b728afb756" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="5,149,220,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="255,147,221,153,220,148,254,142"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a8fcef11d85dab80606ade3ddae210fa7" title="Estimate the Lipschitz constant of the gradient &#160;using finite differences." alt="" coords="5,213,220,253"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="294,157,260,181,221,204,192,216,190,211,219,199,257,177,291,152"/>
+</map>

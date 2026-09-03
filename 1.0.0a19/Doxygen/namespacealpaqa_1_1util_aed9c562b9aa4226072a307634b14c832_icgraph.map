@@ -1,0 +1,11 @@
+<map id="load_lib" name="load_lib">
+<area shape="rect" id="Node000001" title=" " alt="" coords="536,77,609,102"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1dl_1_1DLControlProblem.html#ae799884f00a1e0ac63424d489a224d67" title="Load a problem from a shared library." alt="" coords="276,5,488,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="526,74,487,60,451,48,453,43,489,55,528,69"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1dl_1_1DLProblem.html#aab4dba3b5080fca12a47b5dffd17f419" title="Load a problem from a shared library." alt="" coords="299,69,465,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="523,92,465,92,465,87,523,87"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1casadi.html#abc023a9b409581299c6b5eca6381b65c" title="Load the given CasADi function from the given DLL/SO file." alt="" coords="293,134,471,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="529,110,489,124,443,136,441,131,487,119,527,105"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CasADiControlProblem.html#aec943d4cc9c1bbfc4d4b7244f9390d08" title=" " alt="" coords="5,127,228,167"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="279,149,228,149,228,144,279,144"/>
+</map>

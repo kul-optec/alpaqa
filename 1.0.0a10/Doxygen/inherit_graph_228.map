@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="5,101,216,141"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedControlProblem.html" title=" " alt="" coords="264,5,461,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="282,69,443,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedControlProblem.html" title="Nonlinear optimal control problem with finite horizon ." alt="" coords="264,133,461,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html" title="The main polymorphic minimization problem interface." alt="" coords="282,197,443,237"/>
+</map>

@@ -1,0 +1,3 @@
+<map id="noop_delete&lt; T &gt;" name="noop_delete&lt; T &gt;">
+<area shape="rect" id="node1" title="Deleter for std::unique_ptr that just destructs the object, without deallocating." alt="" coords="5,5,145,112"/>
+</map>

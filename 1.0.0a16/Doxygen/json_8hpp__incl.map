@@ -1,0 +1,19 @@
+<map id="src/alpaqa/include/alpaqa/params/json.hpp" name="src/alpaqa/include/alpaqa/params/json.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="447,5,629,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,129,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="447,45,143,95,143,89,446,39"/>
+<area shape="rect" id="Node000003" href="$structs_8hpp.html" title=" " alt="" coords="154,93,349,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="470,48,307,92,306,87,469,43"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="373,93,549,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="521,47,484,85,480,82,517,44"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="573,93,660,119"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="559,44,597,82,593,85,555,47"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="685,93,743,119"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="581,43,677,85,674,90,579,48"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="768,93,831,119"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="601,43,756,89,754,94,600,48"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="177,167,227,192"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="245,121,220,157,216,154,241,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="252,167,349,192"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="262,117,287,154,283,157,257,121"/>
+</map>

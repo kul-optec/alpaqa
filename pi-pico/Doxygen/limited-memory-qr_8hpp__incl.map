@@ -1,0 +1,26 @@
+<map id="src/alpaqa/include/alpaqa/accelerators/internal/limited&#45;memory&#45;qr.hpp" name="src/alpaqa/include/alpaqa/accelerators/internal/limited&#45;memory&#45;qr.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="690,5,877,75"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="419,123,599,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="691,75,556,121,554,116,689,70"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="679,203,771,229"/>
+<area shape="poly" id="edge12_Node000001_Node000007" title=" " alt="" coords="767,76,746,124,731,190,725,189,741,122,762,74"/>
+<area shape="rect" id="Node000009" href="$ringbuffer_8hpp.html" title=" " alt="" coords="756,123,941,148"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="809,73,835,110,830,113,805,76"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="966,123,1067,148"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="869,72,976,115,974,120,867,77"/>
+<area shape="rect" id="Node000003" href="$quadmath-print_8hpp.html" title=" " alt="" coords="5,196,167,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="443,151,181,198,180,193,442,145"/>
+<area shape="rect" id="Node000004" href="$quadmath_8hpp.html" title=" " alt="" coords="191,196,352,236"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="475,151,342,194,341,189,473,145"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="376,203,455,229"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="497,150,441,196,438,192,493,146"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="479,203,538,229"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="511,148,511,189,506,189,506,148"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="541,146,681,196,680,201,539,151"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="563,203,655,229"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="525,146,585,193,581,197,522,150"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="807,203,877,229"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="850,148,847,190,841,189,845,148"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="901,203,972,229"/>
+<area shape="poly" id="edge10_Node000009_Node000011" title=" " alt="" coords="863,146,915,192,912,196,860,150"/>
+</map>

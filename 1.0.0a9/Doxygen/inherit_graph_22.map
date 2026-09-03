@@ -1,0 +1,7 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="5,99,105,125"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1ControlProblemVTable.html" title=" " alt="" coords="189,5,356,45"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1ProblemVTable.html" title=" " alt="" coords="153,70,392,95"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1ControlProblemVTable.html" title=" " alt="" coords="189,120,356,160"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1ProblemVTable.html" title="Struct containing function pointers to all problem functions (like the objective and constraint funct..." alt="" coords="183,185,362,210"/>
+</map>

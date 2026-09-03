@@ -1,0 +1,21 @@
+<map id="num_columns" name="num_columns">
+<area shape="rect" id="Node000001" title="Get the number of columns that are currently stored." alt="" coords="876,81,989,107"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3077223e98c1e4e286e01503f220d5" title="Add the given column to the right." alt="" coords="714,5,815,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="890,78,793,33,795,28,893,73"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="467,49,653,89"/>
+<area shape="poly" id="edge6_Node000001_Node000003" title=" " alt="" coords="862,92,653,78,654,72,862,87"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LimitedMemoryQR.html#a436c4dbbf0476354ca67a104bc005e55" title="Remove the leftmost column." alt="" coords="701,107,828,132"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="863,107,829,112,828,107,862,102"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LimitedMemoryQR.html#a33f0a7b277c8d3c311b0b4868c55eda1" title="Solve the least squares problem AX = B." alt="" coords="736,156,793,181"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="896,115,829,147,794,161,792,156,827,142,894,110"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="701,36,642,51,641,46,700,31"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,17,419,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="453,56,419,51,419,46,453,51"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1AndersonAccel.html#af02aae3147e83aeb9f83c4f0a17f537f" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,81,419,121"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="453,86,419,91,419,86,453,81"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1AndersonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,17,200,57"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="234,39,200,39,200,34,234,34"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="699,106,641,91,642,86,700,101"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LimitedMemoryQR.html#a5f3732971788e558366a2b509a538206" title="Solve the least squares problem AX = B." alt="" coords="531,156,589,181"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="722,171,589,171,589,166,722,166"/>
+</map>

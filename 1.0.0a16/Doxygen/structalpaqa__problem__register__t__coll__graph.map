@@ -1,0 +1,11 @@
+<map id="alpaqa_problem_register_t" name="alpaqa_problem_register_t">
+<area shape="rect" id="Node000001" title=" " alt="" coords="216,751,404,856"/>
+<area shape="rect" id="Node000002" href="$structalpaqa__problem__functions__t.html" title="C API providing function pointers to problem functions." alt="" coords="5,183,204,688"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,687,231,725,240,737,236,740,226,728,202,690"/>
+<area shape="rect" id="Node000003" href="$structalpaqa__sparsity__t.html" title="Sparsity of matrices." alt="" coords="40,5,169,91"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,91,107,166,102,166,102,91"/>
+<area shape="rect" id="Node000004" href="$dl-problem_8h.html#structalpaqa__function__dict__s" title=" " alt="" coords="229,403,391,468"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="313,468,313,734,307,734,307,468"/>
+<area shape="rect" id="Node000005" href="$dl-problem_8h.html#structalpaqa__exception__ptr__s" title=" " alt="" coords="415,403,583,468"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="502,468,500,522,490,589,470,661,454,696,435,728,419,746,415,743,431,725,450,694,465,660,485,588,494,521,497,468"/>
+</map>

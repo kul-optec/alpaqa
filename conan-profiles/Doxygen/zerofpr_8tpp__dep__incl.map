@@ -1,0 +1,13 @@
+<map id="src/alpaqa/include/alpaqa/implementation/inner/zerofpr.tpp" name="src/alpaqa/include/alpaqa/implementation/inner/zerofpr.tpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="379,5,557,60"/>
+<area shape="rect" id="Node000002" href="$zerofpr_8cpp.html" title=" " alt="" coords="5,108,155,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="366,61,155,111,154,106,365,56"/>
+<area shape="rect" id="Node000003" href="$structured-zerofpr-alm_8cpp.html" title=" " alt="" coords="179,108,362,148"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="401,68,312,110,310,105,399,63"/>
+<area shape="rect" id="Node000004" href="$zerofpr-alm_8cpp.html" title=" " alt="" coords="387,108,549,148"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="471,74,471,108,465,108,465,74"/>
+<area shape="rect" id="Node000005" href="$zerofpr-anderson-alm_8cpp.html" title=" " alt="" coords="573,108,736,148"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="534,64,618,105,616,110,531,68"/>
+<area shape="rect" id="Node000006" href="$zerofpr-convex-newton-alm_8cpp.html" title=" " alt="" coords="760,108,944,148"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="572,56,775,105,773,110,570,61"/>
+</map>

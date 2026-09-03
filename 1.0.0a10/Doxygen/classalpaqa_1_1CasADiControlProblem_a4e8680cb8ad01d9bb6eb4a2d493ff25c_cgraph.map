@@ -1,0 +1,6 @@
+<map id="eval_add_S_prod_masked" name="eval_add_S_prod_masked">
+<area shape="rect" id="node1" title=" " alt="" coords="5,20,196,45"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util.html#ab1fe477130dff69a401ed5ae0078a5f2" title="out += S(mask,:)ᵀ * v(mask);" alt="" coords="244,5,424,60"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util_1_1detail.html#a363a373e4888017ca42c9d0f4650b770" title="Returns a range over the row indices in the given column of sp_mat that are also in mask." alt="" coords="472,13,624,53"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1util.html#afddf99e09d9dad4ee17b5f41705c583a" title=" " alt="" coords="672,13,805,53"/>
+</map>

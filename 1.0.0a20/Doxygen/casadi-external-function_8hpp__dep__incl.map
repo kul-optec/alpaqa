@@ -1,0 +1,28 @@
+<map id="src/interop/casadi/include/alpaqa/casadi/casadi&#45;external&#45;function.hpp" name="src/interop/casadi/include/alpaqa/casadi/casadi&#45;external&#45;function.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="511,5,724,60"/>
+<area shape="rect" id="Node000002" href="$CasADiFunctionWrapper_8hpp.html" title=" " alt="" coords="300,108,511,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="551,68,462,110,459,106,549,63"/>
+<area shape="rect" id="Node000009" href="$CasADiProblem_8hpp.html" title=" " alt="" coords="534,108,701,163"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="620,74,620,108,615,108,615,74"/>
+<area shape="rect" id="Node000011" href="$casadi-external-function_8cpp.html" title=" " alt="" coords="725,108,875,163"/>
+<area shape="poly" id="edge15_Node000001_Node000011" title=" " alt="" coords="678,64,753,105,751,110,676,69"/>
+<area shape="rect" id="Node000003" href="$CasADiControlProblem_8tpp.html" title=" " alt="" coords="5,313,251,368"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="287,158,195,181,159,196,137,212,125,236,120,262,124,313,118,313,114,262,119,234,133,209,157,191,193,176,286,152"/>
+<area shape="rect" id="Node000005" href="$CasADiLoader-util_8hpp.html" title=" " alt="" coords="147,211,376,265"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="358,173,301,213,298,208,355,168"/>
+<area shape="rect" id="Node000006" href="$CasADiProblem_8tpp.html" title=" " alt="" coords="548,313,777,368"/>
+<area shape="poly" id="edge9_Node000002_Node000006" title=" " alt="" coords="425,174,453,220,471,243,491,263,532,290,576,311,573,316,529,295,488,267,467,247,448,223,421,177"/>
+<area shape="rect" id="Node000008" href="$CompleteCasADiProblem_8cpp.html" title=" " alt="" coords="284,321,524,361"/>
+<area shape="poly" id="edge10_Node000002_Node000008" title=" " alt="" coords="408,177,407,321,401,321,402,176"/>
+<area shape="rect" id="Node000004" href="$CasADiControlProblem_8cpp.html" title=" " alt="" coords="16,416,240,456"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="131,382,131,416,125,416,125,382"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="217,276,165,315,161,311,214,271"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="379,266,559,311,557,316,378,271"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="311,271,379,318,375,323,308,276"/>
+<area shape="rect" id="Node000007" href="$CasADiProblem_8cpp.html" title=" " alt="" coords="574,416,751,456"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="665,382,665,416,660,416,660,382"/>
+<area shape="poly" id="edge14_Node000009_Node000006" title=" " alt="" coords="694,168,717,186,734,209,742,238,734,266,719,293,699,315,695,311,715,290,730,264,737,238,730,212,713,190,691,172"/>
+<area shape="rect" id="Node000010" href="$CompleteCasADiProblem_8hpp.html" title=" " alt="" coords="501,211,720,265"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="617,177,615,211,610,210,612,176"/>
+<area shape="poly" id="edge13_Node000010_Node000008" title=" " alt="" coords="546,274,444,323,442,318,544,269"/>
+</map>

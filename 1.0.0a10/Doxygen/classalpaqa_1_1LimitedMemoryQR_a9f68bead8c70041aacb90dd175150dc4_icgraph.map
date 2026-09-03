@@ -1,0 +1,9 @@
+<map id="r_succ" name="r_succ">
+<area shape="rect" id="node1" title="Get the next index in the circular storage for R." alt="" coords="876,55,939,80"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3077223e98c1e4e286e01503f220d5" title="Add the given column to the right." alt="" coords="714,5,815,31"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#a436c4dbbf0476354ca67a104bc005e55" title="Remove the leftmost column." alt="" coords="701,55,828,80"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#ad24371ff0ab7c48c4fb9750d5d66cd0c" title="Get the next index in the circular buffer." alt="" coords="723,104,806,129"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="467,23,653,63"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,23,419,63"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1AndersonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,23,200,63"/>
+</map>

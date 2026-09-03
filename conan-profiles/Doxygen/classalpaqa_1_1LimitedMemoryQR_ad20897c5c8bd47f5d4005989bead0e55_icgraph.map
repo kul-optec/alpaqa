@@ -1,0 +1,5 @@
+<map id="reset" name="reset">
+<area shape="rect" id="Node000001" title="Reset all indices, clearing the Q and R matrices." alt="" coords="115,5,169,31"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#ad15543203799d1dccb5a5e1c572e3f02" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="5,5,67,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,21,67,21,67,15,101,15"/>
+</map>

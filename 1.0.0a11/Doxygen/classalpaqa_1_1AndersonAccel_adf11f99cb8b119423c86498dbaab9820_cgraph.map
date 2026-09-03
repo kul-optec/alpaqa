@@ -1,0 +1,6 @@
+<map id="scale_R" name="scale_R">
+<area shape="rect" id="node1" title="Scale the factorization." alt="" coords="5,13,77,38"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#adf11f99cb8b119423c86498dbaab9820" title="Multiply the matrix R by a scalar." alt="" coords="125,5,321,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#a0bf0ad441ec87440e4525e75de00d053" title="Get iterators in the circular buffer." alt="" coords="369,5,565,45"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="613,13,831,38"/>
+</map>

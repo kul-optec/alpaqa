@@ -1,0 +1,7 @@
+<map id="is_bound" name="is_bound">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,85,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4aa5d1b70ae86454004ab771713c0826" title="Convert an Eigen vector view to a std::span." alt="" coords="133,5,260,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,34,119,28,120,33,86,39"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LinConstrConverter.html#aa7668b0df53654f4f6681905b9f49453" title="Check if the variable with the given index has bound constraints, i.e." alt="" coords="157,55,237,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="86,47,143,56,143,62,85,52"/>
+</map>

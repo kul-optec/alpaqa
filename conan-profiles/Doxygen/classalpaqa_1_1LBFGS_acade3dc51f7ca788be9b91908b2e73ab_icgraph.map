@@ -1,0 +1,26 @@
+<map id="ρ" name="ρ">
+<area shape="rect" id="Node000001" title=" " alt="" coords="839,80,877,105"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#adac6fec090a2001b2ba47ce6c6daf921" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="685,5,744,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="831,73,789,44,743,27,745,22,792,40,834,69"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#abe3b84085aeeb66a23cb64d40a1a072f" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="639,55,791,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="825,90,786,83,787,77,825,84"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LBFGS.html#adeddc1e1eb8ce1c1bbaf931b6f9a5b9c" title="Scale the stored y vectors by the given factor." alt="" coords="679,104,750,129"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="825,101,750,113,750,108,824,95"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1LBFGS.html#ad67ba15f46e10679e631093d7fb2765f" title=" " alt="" coords="652,153,777,179"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="834,116,792,144,765,156,763,151,789,140,831,112"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#addb51ed25716e280ef3146027a019849" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="475,29,591,55"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="624,57,590,53,591,47,625,52"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#a195721eb9ab308e8929aa55089ac847f" title="Apply the inverse Hessian approximation to the given vector q, applying only the columns and rows of ..." alt="" coords="475,79,591,104"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="625,82,591,86,590,81,624,77"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="240,97,427,137"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="462,103,427,107,427,102,461,98"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1PANOCOCPSolver.html#ab2cdbacaa27c59db09315b64cab7edee" title=" " alt="" coords="5,65,192,105"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="226,105,192,100,193,95,227,99"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="5,129,192,169"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="227,134,193,139,192,133,226,129"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1LBFGS.html#ae34a8e5e432c990eb8af2f95bcbc04bd" title="Update the inverse Hessian approximation using the new vectors xₙₑₓₜ and pₙₑₓₜ." alt="" coords="499,128,566,153"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="638,158,566,148,566,143,639,153"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1LBFGS.html#aad441bdca6bcb18c8493253a54b409ef" title="Update the inverse Hessian approximation using the new vectors sₖ = xₙₑₓₜ &#45; xₖ and yₖ = pₙₑₓₜ &#45; pₖ." alt="" coords="488,177,577,203"/>
+<area shape="poly" id="edge12_Node000010_Node000012" title=" " alt="" coords="639,179,578,187,577,182,638,173"/>
+<area shape="poly" id="edge11_Node000011_Node000006" title=" " alt="" coords="486,138,427,131,427,125,486,132"/>
+</map>

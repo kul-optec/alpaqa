@@ -1,0 +1,8 @@
+<map id="IpoptAdapter" name="IpoptAdapter">
+<area shape="rect" id="node1" title=" " alt="" coords="5,141,112,166"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a8432c33fb118d707216d6098734c4160" title="[Optional] Function that evaluates the Hessian of the Lagrangian as a sparse matrix," alt="" coords="161,5,363,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#af081bd553ada01e6498e26c4210f267f" title="[Optional] Function that evaluates the Jacobian of the constraints as a sparse matrix," alt="" coords="161,69,363,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#aff13d511093c03b6d1f00de23ce8fae5" title="[Optional] Function that gets the number of nonzeros of the sparse Hessian of the Lagrangian." alt="" coords="160,133,364,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html#ad41b8495a9eea0e1c313d749c5a98b69" title="[Optional] Function that gets the number of nonzeros of the sparse Jacobian of the constraints." alt="" coords="161,197,363,237"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="161,261,363,301"/>
+</map>

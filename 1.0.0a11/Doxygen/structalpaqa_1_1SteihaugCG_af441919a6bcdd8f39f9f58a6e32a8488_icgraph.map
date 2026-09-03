@@ -1,0 +1,5 @@
+<map id="get_boundaries_intersections" name="get_boundaries_intersections">
+<area shape="rect" id="node1" title="Solve the scalar quadratic equation ||z + t d|| == trust_radius." alt="" coords="359,13,572,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1SteihaugCG.html#ad3770958ea8b0bf8e3c8df7e1fa248a0" title=" " alt="" coords="253,13,311,38"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1NewtonTRDirection.html#a23d8f300b8c4eb814e1aef62ab9c6176" title=" " alt="" coords="5,5,205,45"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="set_intersection_iterable&lt; R1, R2, Comp, Proj1, Proj2 &gt;::iter_t&lt; I1, S1, I2, S2 &gt;" name="set_intersection_iterable&lt; R1, R2, Comp, Proj1, Proj2 &gt;::iter_t&lt; I1, S1, I2, S2 &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="50,133,225,423"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,32,71"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="31,70,46,108,51,117,46,120,42,110,26,72"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="83,5,114,71"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="101,71,103,109,104,117,98,117,97,110,95,71"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="164,5,191,71"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="175,71,167,117,162,116,169,70"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="242,5,273,71"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="244,71,220,119,215,117,240,69"/>
+</map>

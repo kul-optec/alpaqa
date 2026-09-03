@@ -1,0 +1,7 @@
+<map id="SolverResults" name="SolverResults">
+<area shape="rect" id="Node000001" title=" " alt="" coords="29,1421,182,1807"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1EvalCounter.html" title=" " alt="" coords="5,713,205,1351"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,1351,108,1405,103,1405,103,1351"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1EvalCounter.html#structalpaqa_1_1EvalCounter_1_1EvalTimer" title=" " alt="" coords="5,5,205,643"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="108,643,108,696,103,696,103,643"/>
+</map>

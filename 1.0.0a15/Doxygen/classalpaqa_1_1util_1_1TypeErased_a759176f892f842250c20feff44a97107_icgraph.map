@@ -1,0 +1,10 @@
+<map id="owns_referenced_object" name="owns_referenced_object">
+<area shape="rect" id="Node000001" title="Check if this wrapper owns the storage of the wrapped object, or whether it simply stores a reference..." alt="" coords="281,31,461,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a4b66d5e31b5dc18b314c8a68163263bd" title="Destroy the type&#45;erased object (if not empty), and deallocate the memory if necessary." alt="" coords="160,5,233,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,31,233,26,234,21,271,26"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html#ab2e7ab1a4dd3191ddfa7b0e83f7761fa" title="Move assignment." alt="" coords="15,55,103,80"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="268,54,103,67,103,61,267,49"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a5e33ed4b3e1700f789f9866c319c9bce" title="Destructor." alt="" coords="5,5,112,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="146,21,112,21,112,15,146,15"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="149,38,96,57,94,52,147,33"/>
+</map>

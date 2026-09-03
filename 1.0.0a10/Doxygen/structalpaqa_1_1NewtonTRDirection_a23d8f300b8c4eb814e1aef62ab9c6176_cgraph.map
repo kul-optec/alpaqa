@@ -1,0 +1,10 @@
+<map id="apply" name="apply">
+<area shape="rect" id="node1" title=" " alt="" coords="5,201,64,226"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1IndexSet.html#a8cf1f39757f181ead17d56f7336064d4" title=" " alt="" coords="125,29,301,69"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="112,93,315,133"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#afbb23530a41d88544aa22358de5d7d1f" title="[Optional] Function that evaluates the Hessian of the augmented Lagrangian multiplied by a vector," alt="" coords="112,157,315,197"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html#a895a6576b778328302594ee568734c8d" title="[Optional] Function that computes the inactive indices &#160;for the evaluation of the linear Newton appro..." alt="" coords="112,222,315,277"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="112,301,315,341"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1SteihaugCG.html#ad3770958ea8b0bf8e3c8df7e1fa248a0" title=" " alt="" coords="138,365,289,405"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1SteihaugCG.html#af441919a6bcdd8f39f9f58a6e32a8488" title="Solve the scalar quadratic equation ||z + t d|| == trust_radius." alt="" coords="363,365,584,405"/>
+</map>

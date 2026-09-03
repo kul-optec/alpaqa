@@ -1,0 +1,10 @@
+<map id="projecting_difference" name="projecting_difference">
+<area shape="rect" id="node1" title="Get the difference between the given vector and its projection." alt="" coords="511,127,669,153"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1OCPEvaluator.html#aac26fb1e500caabcd837ef0b1e48b035" title=" " alt="" coords="270,5,433,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#ad8b1a455a3b6ad5e25fe20cfccec279b" title="Get the distance squared between the given vector and its projection." alt="" coords="299,70,404,95"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1CasADiControlProblem.html#ae9f75b521c8932199f92bfdfc8f91879" title=" " alt="" coords="240,120,463,160"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1BoxConstrProblem.html#a1188b7c2ef47c06747bf40e723f5acf1" title=" " alt="" coords="254,184,449,224"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="258,248,445,288"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1OCPEvaluator.html#aa390f28c24f187326b60eedd7ff4fe66" title=" " alt="" coords="17,63,180,103"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="5,248,192,288"/>
+</map>

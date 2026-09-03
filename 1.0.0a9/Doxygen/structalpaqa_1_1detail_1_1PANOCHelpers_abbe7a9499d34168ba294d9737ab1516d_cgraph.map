@@ -1,0 +1,6 @@
+<map id="calc_err_z" name="calc_err_z">
+<area shape="rect" id="node1" title="Calculate the error between ẑ and g(x)." alt="" coords="5,77,92,102"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#acdf5c7c7f249c05d53643e1715070f45" title="[Required] Function that evaluates the constraints," alt="" coords="140,5,343,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#ae9f75b521c8932199f92bfdfc8f91879" title="[Required] Function that evaluates the difference between the given point &#160;and its projection onto th..." alt="" coords="140,69,343,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="140,133,343,173"/>
+</map>

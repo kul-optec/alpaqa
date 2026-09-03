@@ -1,0 +1,5 @@
+<map id="allocate" name="allocate">
+<area shape="rect" id="node1" title="Ensure that storage is available, either by using the small buffer if it is large enough,..." alt="" coords="189,31,264,56"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1util_1_1TypeErased.html#a2bcceb2b8d33c10cc7955e6b653eac92" title="Ensure storage and construct the type&#45;erased object of type T in&#45;place." alt="" coords="5,5,141,31"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1util_1_1TypeErased.html#a9b81785e21972fb325e1aa9120c53a65" title=" " alt="" coords="11,55,136,80"/>
+</map>

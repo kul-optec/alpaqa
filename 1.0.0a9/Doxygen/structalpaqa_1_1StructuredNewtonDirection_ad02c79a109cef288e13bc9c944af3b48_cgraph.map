@@ -1,0 +1,10 @@
+<map id="apply" name="apply">
+<area shape="rect" id="node1" title=" " alt="" coords="5,158,64,183"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1IndexSet.html#a8cf1f39757f181ead17d56f7336064d4" title=" " alt="" coords="125,29,301,69"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a1c6397671d61e7194556ea6c691764d0" title="[Optional] Function that evaluates the Hessian of the augmented Lagrangian," alt="" coords="112,93,315,133"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#ae50af6bf82d3c0cc4093c46b8e2c4379" title=" " alt="" coords="140,158,287,183"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedProblem.html#ae0ffecc22b09ce70fb1fe663c0255018" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="112,208,315,248"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="112,272,315,312"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="363,158,536,183"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="584,151,731,191"/>
+</map>

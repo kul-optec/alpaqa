@@ -1,0 +1,24 @@
+<map id="N" name="N">
+<area shape="rect" id="Node000001" title=" " alt="" coords="659,104,697,129"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1OCPEvaluator.html#aac26fb1e500caabcd837ef0b1e48b035" title=" " alt="" coords="500,5,585,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="658,94,636,68,609,44,584,32,587,27,612,40,640,64,662,91"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1OCPEvaluator.html#aa390f28c24f187326b60eedd7ff4fe66" title=" " alt="" coords="507,55,579,80"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="645,107,610,94,578,82,580,77,612,89,647,102"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1OCPEvaluator.html#a488c4275c8f27429d2a9eb98c5d1aedd" title=" " alt="" coords="475,104,611,129"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="645,119,611,119,611,114,645,114"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1OCPEvaluator.html#a02a290de7f57c49cbc1ce72fbd8a69b3" title=" " alt="" coords="475,153,611,179"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="646,131,579,156,577,151,644,126"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1OCPEvaluator.html#ac7a042acaf800ba78e029229c09a650e" title=" " alt="" coords="523,203,563,228"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="662,143,640,169,612,194,587,206,564,214,562,209,585,201,609,189,636,165,658,139"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="240,93,427,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="492,38,476,44,373,95,370,90,474,40,490,33"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1PANOCOCPSolver.html#ab2cdbacaa27c59db09315b64cab7edee" title=" " alt="" coords="5,61,192,101"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="226,101,192,96,193,91,227,95"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="5,125,192,165"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="227,130,193,135,192,129,226,125"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="494,81,427,95,425,90,493,75"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="478,152,412,135,413,130,479,147"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="509,208,474,194,415,164,365,135,368,130,418,159,476,189,511,203"/>
+<area shape="rect" id="Node000010" href="$structalpaqa_1_1OCPEvaluator.html#a989ce69498570a25599379a861db8a58" title=" " alt="" coords="314,203,353,228"/>
+<area shape="poly" id="edge12_Node000009_Node000010" title=" " alt="" coords="509,218,353,218,353,213,509,213"/>
+</map>

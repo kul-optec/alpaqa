@@ -1,0 +1,7 @@
+<map id="run_alm_solver" name="run_alm_solver">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,128,60"/>
+<area shape="rect" id="Node000002" href="$ipopt-enums_8hpp.html#a78dc4442f5ab598a9c86a57e0c067f98" title=" " alt="" coords="226,5,329,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,36,212,24,213,30,129,41"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="176,55,379,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="129,53,163,57,162,63,128,58"/>
+</map>

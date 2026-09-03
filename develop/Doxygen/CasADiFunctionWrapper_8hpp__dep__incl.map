@@ -1,0 +1,15 @@
+<map id="src/interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp" name="src/interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="153,5,364,60"/>
+<area shape="rect" id="Node000002" href="$CasADiControlProblem_8tpp.html" title=" " alt="" coords="5,211,251,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,69,152,87,134,109,124,134,121,161,124,210,119,211,115,161,119,133,130,107,149,83,173,65"/>
+<area shape="rect" id="Node000004" href="$CasADiLoader-util_8hpp.html" title=" " alt="" coords="144,108,373,163"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="261,74,261,108,256,108,256,74"/>
+<area shape="rect" id="Node000005" href="$CasADiProblem_8tpp.html" title=" " alt="" coords="285,211,515,265"/>
+<area shape="poly" id="edge7_Node000001_Node000005" title=" " alt="" coords="343,65,367,83,388,107,399,132,405,160,406,210,401,210,400,161,394,134,383,109,364,87,339,69"/>
+<area shape="rect" id="Node000003" href="$CasADiControlProblem_8cpp.html" title=" " alt="" coords="16,313,240,353"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="131,279,131,313,125,313,125,279"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="216,173,164,213,161,208,212,169"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="308,168,364,208,361,213,305,173"/>
+<area shape="rect" id="Node000006" href="$CasADiProblem_8cpp.html" title=" " alt="" coords="311,313,489,353"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="403,279,403,313,397,313,397,279"/>
+</map>
