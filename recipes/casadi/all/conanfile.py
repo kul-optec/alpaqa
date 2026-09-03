@@ -3,6 +3,7 @@ import os
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 from conan.tools.files import apply_conandata_patches, export_conandata_patches, get
+from conan.tools.scm import Version
 
 
 class CasADiRecipe(ConanFile):
@@ -217,6 +218,8 @@ class CasADiRecipe(ConanFile):
     def configure(self):
         if self.options.shared:
             self.options.rm_safe("fPIC")
+        if Version(self.version) >= "3.8.0":
+            self.options.rm_safe("with_python3")
 
     def export_sources(self):
         export_conandata_patches(self)
@@ -240,7 +243,9 @@ class CasADiRecipe(ConanFile):
         tc.variables["ENABLE_SHARED"] = self.options.shared
         tc.variables["ENABLE_STATIC"] = not self.options.shared
         for opt in self.casadi_cmake_options.keys():
-            tc.variables[opt.upper()] = getattr(self.options, opt)
+            value = self.options.get_safe(opt)
+            if value is not None:
+                tc.variables[opt.upper()] = value
         tc.generate()
 
     def build(self):
