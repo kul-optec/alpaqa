@@ -63,7 +63,7 @@ requires = [
     "py-build-cmake~=0.6.0a3",
     "pybind11-stubgen~=2.5.5",
     "numpy<3",
-    "conan~=2.31.2",
+    "conan~=2.32.0",
 ]
 build-backend = "py_build_cmake.build"
 
