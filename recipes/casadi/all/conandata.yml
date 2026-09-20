@@ -1,4 +1,7 @@
 sources:
+  "3.8.1":
+    url: "https://github.com/casadi/casadi/archive/refs/tags/3.8.1.zip"
+    sha256: "1cfd3c8dba0d04529c50f5f3659212e2b3fea240347756191b70d9ffa849dff2"
   "3.8.0":
     url: "https://github.com/casadi/casadi/archive/refs/tags/3.8.0.zip"
     sha256: "fa17b8063dd68549810e9389f52e528d0d67962f854f4f8c293c90ac3df45125"
@@ -9,6 +12,8 @@ sources:
     url: "https://github.com/casadi/casadi/archive/refs/tags/3.6.7.zip"
     sha256: "5cd726ad69c8c831880dc57bf5fa1a0822a33664f8ce45e9e5ca1b6219662540"
 patches:
+  "3.8.1":
+    - patch_file: "patches/3.8.1/0001-cmake-install-relative-paths.patch"
   "3.8.0":
     - patch_file: "patches/3.8.0/0001-cmake-install-relative-paths.patch"
   "3.7.1":

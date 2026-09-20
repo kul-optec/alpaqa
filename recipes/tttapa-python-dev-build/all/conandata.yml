@@ -1,4 +1,7 @@
 sources:
+  "3.15.0-rc2":
+    url: "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc2.tgz"
+    sha256: "164dbb80f5e1fdd8768387724bfa014da1000401b2015d872a2396c8b858b829"
   "3.15.0-rc1":
     url: "https://www.python.org/ftp/python/3.15.0/Python-3.15.0rc1.tgz"
     sha256: "32c2b9878bbd6ac3ceb138c5b6c880345ce9d33388b399378c0da6fc7cb3bfbc"
