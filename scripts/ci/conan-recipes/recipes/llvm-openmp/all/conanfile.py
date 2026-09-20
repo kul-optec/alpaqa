@@ -63,8 +63,10 @@ class LLVMOpenMpConan(ConanFile):
     def layout(self):
         if self.version < "22.0.0":
             cmake_layout(self, src_folder="src")
-        else:
+        elif self.version < "23.0.0":
             cmake_layout(self, src_folder="src/openmp")
+        else:
+            cmake_layout(self, src_folder="src/runtimes")
 
     def validate(self):
         if self.settings.compiler not in ["apple-clang", "clang", "gcc", "intel-cc"]:
@@ -101,18 +103,33 @@ class LLVMOpenMpConan(ConanFile):
                 destination=os.path.dirname(self.source_folder),
             )
         apply_conandata_patches(self)
+        openmp_source_folder = self.source_folder
+        if self.version >= "23.0.0":
+            openmp_source_folder = os.path.join(os.path.dirname(self.source_folder), "openmp")
         replace_in_file(
             self,
-            os.path.join(self.source_folder, "runtime", "CMakeLists.txt"),
+            os.path.join(openmp_source_folder, "runtime", "CMakeLists.txt"),
             "add_subdirectory(test)",
             "",
         )
+        if self.version >= "23.0.0":
+            replace_in_file(
+                self,
+                os.path.join(openmp_source_folder, "runtime", "CMakeLists.txt"),
+                "add_subdirectory(unittests)",
+                "",
+            )
 
     def generate(self):
         env = VirtualBuildEnv(self)
         env.generate()
         tc = CMakeToolchain(self)
-        tc.variables["OPENMP_STANDALONE_BUILD"] = True
+        if self.version < "23.0.0":
+            tc.variables["OPENMP_STANDALONE_BUILD"] = True
+        else:
+            tc.variables["LLVM_ENABLE_RUNTIMES"] = "openmp"
+            tc.variables["LLVM_INCLUDE_TESTS"] = False
+            tc.variables["LLVM_INCLUDE_DOCS"] = False
         tc.variables["LIBOMP_ENABLE_SHARED"] = self.options.shared
         tc.variables["OPENMP_ENABLE_LIBOMPTARGET"] = self.options.build_libomptarget
         # Do not build OpenMP Tools Interface (OMPT)
@@ -127,10 +144,13 @@ class LLVMOpenMpConan(ConanFile):
         cmake.build()
 
     def package(self):
+        openmp_source_folder = self.source_folder
+        if self.version >= "23.0.0":
+            openmp_source_folder = os.path.join(os.path.dirname(self.source_folder), "openmp")
         copy(
             self,
             "LICENSE.txt",
-            src=self.source_folder,
+            src=openmp_source_folder,
             dst=os.path.join(self.package_folder, "licenses"),
         )
         cmake = CMake(self)
