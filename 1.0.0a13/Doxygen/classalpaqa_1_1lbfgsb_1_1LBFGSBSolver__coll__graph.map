@@ -1,0 +1,7 @@
+<map id="LBFGSBSolver" name="LBFGSBSolver">
+<area shape="rect" id="Node000001" title="L&#45;BFGS&#45;B solver for ALM." alt="" coords="84,253,215,419"/>
+<area shape="rect" id="Node000002" href="$group__grp__Parameters.html#structalpaqa_1_1lbfgsb_1_1LBFGSBParams" title="Tuning parameters for the L&#45;BFGS&#45;B solver LBFGSBSolver." alt="" coords="5,5,131,191"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,190,118,237,113,239,97,192"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1AtomicStopSignal.html" title=" " alt="" coords="155,5,309,191"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="202,192,186,239,181,237,197,190"/>
+</map>

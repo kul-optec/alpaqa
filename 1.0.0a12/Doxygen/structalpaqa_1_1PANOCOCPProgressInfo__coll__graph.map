@@ -1,0 +1,17 @@
+<map id="PANOCOCPProgressInfo&lt; Conf &gt;" name="PANOCOCPProgressInfo&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="153,2796,319,3296"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedControlProblem.html" title=" " alt="" coords="5,1096,227,2733"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,2733,210,2779,205,2780,200,2734"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="15,213,217,1033"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,1047,119,1096,113,1096,113,1047"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="57,5,175,151"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,151,119,197,113,197,113,151"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa.html#namespacealpaqa" title=" " alt="" coords="251,1690,466,2139"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="346,2140,322,2441,285,2772,284,2780,279,2779,280,2772,316,2440,341,2139"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1LipschitzEstimateParams.html" title=" " alt="" coords="255,553,433,693"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="347,693,359,1673,353,1674,342,694"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa.html#namespacealpaqa" title=" " alt="" coords="457,551,642,696"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="541,697,397,1674,392,1673,536,696"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1CBFGSParams.html" title=" " alt="" coords="456,35,643,121"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="552,121,552,534,547,534,547,121"/>
+</map>

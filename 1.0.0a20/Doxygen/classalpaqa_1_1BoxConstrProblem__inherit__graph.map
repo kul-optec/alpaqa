@@ -1,0 +1,7 @@
+<map id="BoxConstrProblem&lt; Conf &gt;" name="BoxConstrProblem&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title="Implements common problem functions for minimization problems with box constraints." alt="" coords="115,5,309,644"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CasADiProblem.html" title="Problem definition for a CasADi problem, loaded from a DLL." alt="" coords="5,692,203,1567"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,658,165,692,160,691,165,657"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1FunctionalProblem.html" title="Problem class that allows specifying the basic functions as C++ std::functions." alt="" coords="227,785,413,1474"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="259,657,276,784,271,785,254,658"/>
+</map>

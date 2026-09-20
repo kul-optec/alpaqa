@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 2cc06d006231f4ec254f89b61a3ee14d3621af4d - src/alpaqa/src/driver/qpalm-driver.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/alpaqa/src/driver">src/alpaqa/src/driver</a> - qpalm-driver.cpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">2cc06d006231f4ec254f89b61a3ee14d3621af4d</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-09-03 16:04:43</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:&nbsp&nbsp&nbsp&nbsp
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #ifdef ALPAQA_WITH_QPALM</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;alpaqa/qpalm/qpalm-adapter.hpp&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &lt;alpaqa/util/lin-constr-converter.hpp&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &lt;qpalm/constants.h&gt;</span>
+<span id="L6"><span class="lineNum">       6</span>              : </span>
+<span id="L7"><span class="lineNum">       7</span>              : #include &lt;cstdarg&gt;</span>
+<span id="L8"><span class="lineNum">       8</span>              : #include &lt;stdexcept&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : #include &lt;string&gt;</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : #include &quot;results.hpp&quot;</span>
+<span id="L12"><span class="lineNum">      12</span>              : #include &quot;solver-driver.hpp&quot;</span>
+<span id="L13"><span class="lineNum">      13</span>              : </span>
+<span id="L14"><span class="lineNum">      14</span>              : namespace {</span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span>              : USING_ALPAQA_CONFIG(alpaqa::EigenConfigd);</span>
+<span id="L17"><span class="lineNum">      17</span>              : </span>
+<span id="L18"><span class="lineNum">      18</span>              : std::ostream *qpalm_os = nullptr;</span>
+<span id="L19"><span class="lineNum">      19</span>              : int print_wrap(const char *fmt, ...) LADEL_ATTR_PRINTF_LIKE;</span>
+<span id="L20"><span class="lineNum">      20</span>              : int print_wrap_noop(const char *, ...) LADEL_ATTR_PRINTF_LIKE;</span>
+<span id="L21"><span class="lineNum">      21</span>              : </span>
+<span id="L22"><span class="lineNum">      22</span>              : void compress_multipliers_bounds(const alpaqa::sets::Box&lt;config_t&gt; &amp;C, rvec y,</span>
+<span id="L23"><span class="lineNum">      23</span>              :                                  crvec multipliers_bounds) {</span>
+<span id="L24"><span class="lineNum">      24</span>              :     using Conv    = alpaqa::LinConstrConverter&lt;config_t, index_t, index_t&gt;;</span>
+<span id="L25"><span class="lineNum">      25</span>              :     index_t shift = 0;</span>
+<span id="L26"><span class="lineNum">      26</span>              :     for (index_t i = 0; i &lt; C.lower.size(); ++i)</span>
+<span id="L27"><span class="lineNum">      27</span>              :         if (Conv::is_bound(C, i))</span>
+<span id="L28"><span class="lineNum">      28</span>              :             y(shift++) = multipliers_bounds(i);</span>
+<span id="L29"><span class="lineNum">      29</span>              : }</span>
+<span id="L30"><span class="lineNum">      30</span>              : </span>
+<span id="L31"><span class="lineNum">      31</span>              : void expand_multipliers_bounds(const alpaqa::sets::Box&lt;config_t&gt; &amp;C, crvec y,</span>
+<span id="L32"><span class="lineNum">      32</span>              :                                rvec multipliers_bounds) {</span>
+<span id="L33"><span class="lineNum">      33</span>              :     using Conv    = alpaqa::LinConstrConverter&lt;config_t, index_t, index_t&gt;;</span>
+<span id="L34"><span class="lineNum">      34</span>              :     index_t shift = 0;</span>
+<span id="L35"><span class="lineNum">      35</span>              :     for (index_t i = 0; i &lt; C.lower.size(); ++i)</span>
+<span id="L36"><span class="lineNum">      36</span>              :         if (Conv::is_bound(C, i))</span>
+<span id="L37"><span class="lineNum">      37</span>              :             multipliers_bounds(i) = y(shift++);</span>
+<span id="L38"><span class="lineNum">      38</span>              : }</span>
+<span id="L39"><span class="lineNum">      39</span>              : </span>
+<span id="L40"><span class="lineNum">      40</span>              : SolverResults run_qpalm_solver(auto &amp;problem, const qpalm::Settings &amp;settings,</span>
+<span id="L41"><span class="lineNum">      41</span>              :                                std::ostream &amp;os, unsigned N_exp) {</span>
+<span id="L42"><span class="lineNum">      42</span>              : </span>
+<span id="L43"><span class="lineNum">      43</span>              :     // Set up output stream</span>
+<span id="L44"><span class="lineNum">      44</span>              :     qpalm_os       = &amp;os;</span>
+<span id="L45"><span class="lineNum">      45</span>              :     auto old_print = ladel_set_print_config_printf(&amp;print_wrap);</span>
+<span id="L46"><span class="lineNum">      46</span>              :     struct PrintRestorer {</span>
+<span id="L47"><span class="lineNum">      47</span>              :         printf_sig *print;</span>
+<span id="L48"><span class="lineNum">      48</span>              :         ~PrintRestorer() { ladel_set_print_config_printf(print); }</span>
+<span id="L49"><span class="lineNum">      49</span>              :     } restore_print{old_print};</span>
+<span id="L50"><span class="lineNum">      50</span>              : </span>
+<span id="L51"><span class="lineNum">      51</span>              :     // Adapt problem</span>
+<span id="L52"><span class="lineNum">      52</span>              :     auto qp = alpaqa::build_qpalm_problem(problem.problem);</span>
+<span id="L53"><span class="lineNum">      53</span>              :     qpalm::Solver solver{&amp;qp, settings};</span>
+<span id="L54"><span class="lineNum">      54</span>              : </span>
+<span id="L55"><span class="lineNum">      55</span>              :     // Dimensions</span>
+<span id="L56"><span class="lineNum">      56</span>              :     length_t n = problem.problem.get_num_variables(),</span>
+<span id="L57"><span class="lineNum">      57</span>              :              m = problem.problem.get_num_constraints();</span>
+<span id="L58"><span class="lineNum">      58</span>              :     [[maybe_unused]] length_t num_bounds = static_cast&lt;length_t&gt;(qp.m) - m;</span>
+<span id="L59"><span class="lineNum">      59</span>              : </span>
+<span id="L60"><span class="lineNum">      60</span>              :     // Initial guess</span>
+<span id="L61"><span class="lineNum">      61</span>              :     vec initial_guess_mult;</span>
+<span id="L62"><span class="lineNum">      62</span>              :     if (auto sz = problem.initial_guess_x.size(); sz != n)</span>
+<span id="L63"><span class="lineNum">      63</span>              :         throw std::invalid_argument(</span>
+<span id="L64"><span class="lineNum">      64</span>              :             &quot;Invalid size for initial_guess_x (expected &quot; + std::to_string(n) +</span>
+<span id="L65"><span class="lineNum">      65</span>              :             &quot;, but got &quot; + std::to_string(sz) + &quot;)&quot;);</span>
+<span id="L66"><span class="lineNum">      66</span>              :     if (auto sz = problem.initial_guess_y.size(); sz != m)</span>
+<span id="L67"><span class="lineNum">      67</span>              :         throw std::invalid_argument(</span>
+<span id="L68"><span class="lineNum">      68</span>              :             &quot;Invalid size for initial_guess_y (expected &quot; + std::to_string(m) +</span>
+<span id="L69"><span class="lineNum">      69</span>              :             &quot;, but got &quot; + std::to_string(sz) + &quot;)&quot;);</span>
+<span id="L70"><span class="lineNum">      70</span>              :     if (auto sz = problem.initial_guess_w.size(); sz &gt; 0) {</span>
+<span id="L71"><span class="lineNum">      71</span>              :         if (sz != n)</span>
+<span id="L72"><span class="lineNum">      72</span>              :             throw std::invalid_argument(</span>
+<span id="L73"><span class="lineNum">      73</span>              :                 &quot;Invalid size for initial_guess_w (expected &quot; +</span>
+<span id="L74"><span class="lineNum">      74</span>              :                 std::to_string(n) + &quot;, but got &quot; + std::to_string(sz) + &quot;)&quot;);</span>
+<span id="L75"><span class="lineNum">      75</span>              :         initial_guess_mult.resize(static_cast&lt;length_t&gt;(qp.m));</span>
+<span id="L76"><span class="lineNum">      76</span>              :         if (problem.problem.provides_get_variable_bounds())</span>
+<span id="L77"><span class="lineNum">      77</span>              :             compress_multipliers_bounds(problem.problem.get_variable_bounds(),</span>
+<span id="L78"><span class="lineNum">      78</span>              :                                         initial_guess_mult,</span>
+<span id="L79"><span class="lineNum">      79</span>              :                                         problem.initial_guess_w);</span>
+<span id="L80"><span class="lineNum">      80</span>              :         else</span>
+<span id="L81"><span class="lineNum">      81</span>              :             assert(num_bounds == 0 &amp;&amp; initial_guess_mult.size() == m);</span>
+<span id="L82"><span class="lineNum">      82</span>              :         initial_guess_mult.bottomRows(m) = problem.initial_guess_y;</span>
+<span id="L83"><span class="lineNum">      83</span>              :     }</span>
+<span id="L84"><span class="lineNum">      84</span>              :     auto warm_start = [&amp;] {</span>
+<span id="L85"><span class="lineNum">      85</span>              :         problem.initial_guess_w.size() &gt; 0</span>
+<span id="L86"><span class="lineNum">      86</span>              :             ? solver.warm_start(problem.initial_guess_x, initial_guess_mult)</span>
+<span id="L87"><span class="lineNum">      87</span>              :             : solver.warm_start(problem.initial_guess_x, std::nullopt);</span>
+<span id="L88"><span class="lineNum">      88</span>              :     };</span>
+<span id="L89"><span class="lineNum">      89</span>              : </span>
+<span id="L90"><span class="lineNum">      90</span>              :     // Solve the problem</span>
+<span id="L91"><span class="lineNum">      91</span>              :     auto t0 = std::chrono::steady_clock::now();</span>
+<span id="L92"><span class="lineNum">      92</span>              :     warm_start();</span>
+<span id="L93"><span class="lineNum">      93</span>              :     solver.solve();</span>
+<span id="L94"><span class="lineNum">      94</span>              :     auto t1   = std::chrono::steady_clock::now();</span>
+<span id="L95"><span class="lineNum">      95</span>              :     auto info = solver.get_info();</span>
+<span id="L96"><span class="lineNum">      96</span>              :     vec sol_x = solver.get_solution().x, sol_y = solver.get_solution().y;</span>
+<span id="L97"><span class="lineNum">      97</span>              : </span>
+<span id="L98"><span class="lineNum">      98</span>              :     // Solve the problems again to average runtimes</span>
+<span id="L99"><span class="lineNum">      99</span>              :     using ns          = std::chrono::nanoseconds;</span>
+<span id="L100"><span class="lineNum">     100</span>              :     auto avg_duration = duration_cast&lt;ns&gt;(t1 - t0);</span>
+<span id="L101"><span class="lineNum">     101</span>              :     ladel_set_print_config_printf(&amp;print_wrap_noop);</span>
+<span id="L102"><span class="lineNum">     102</span>              :     os.setstate(std::ios_base::badbit);</span>
+<span id="L103"><span class="lineNum">     103</span>              :     for (unsigned i = 0; i &lt; N_exp; ++i) {</span>
+<span id="L104"><span class="lineNum">     104</span>              :         auto t0 = std::chrono::steady_clock::now();</span>
+<span id="L105"><span class="lineNum">     105</span>              :         warm_start();</span>
+<span id="L106"><span class="lineNum">     106</span>              :         solver.solve();</span>
+<span id="L107"><span class="lineNum">     107</span>              :         auto t1 = std::chrono::steady_clock::now();</span>
+<span id="L108"><span class="lineNum">     108</span>              :         avg_duration += duration_cast&lt;ns&gt;(t1 - t0);</span>
+<span id="L109"><span class="lineNum">     109</span>              :     }</span>
+<span id="L110"><span class="lineNum">     110</span>              :     os.clear();</span>
+<span id="L111"><span class="lineNum">     111</span>              :     avg_duration /= (N_exp + 1);</span>
+<span id="L112"><span class="lineNum">     112</span>              :     auto evals = *problem.evaluations;</span>
+<span id="L113"><span class="lineNum">     113</span>              : </span>
+<span id="L114"><span class="lineNum">     114</span>              :     // Results</span>
+<span id="L115"><span class="lineNum">     115</span>              :     SolverResults results{</span>
+<span id="L116"><span class="lineNum">     116</span>              :         .status             = info.status,</span>
+<span id="L117"><span class="lineNum">     117</span>              :         .success            = info.status_val == QPALM_SOLVED,</span>
+<span id="L118"><span class="lineNum">     118</span>              :         .evals              = evals,</span>
+<span id="L119"><span class="lineNum">     119</span>              :         .duration           = avg_duration,</span>
+<span id="L120"><span class="lineNum">     120</span>              :         .solver             = &quot;QPALM&quot;,</span>
+<span id="L121"><span class="lineNum">     121</span>              :         .h                  = 0,</span>
+<span id="L122"><span class="lineNum">     122</span>              :         .δ                  = info.pri_res_norm,</span>
+<span id="L123"><span class="lineNum">     123</span>              :         .ε                  = info.dua_res_norm,</span>
+<span id="L124"><span class="lineNum">     124</span>              :         .γ                  = 0,</span>
+<span id="L125"><span class="lineNum">     125</span>              :         .Σ                  = 0,</span>
+<span id="L126"><span class="lineNum">     126</span>              :         .solution           = sol_x,</span>
+<span id="L127"><span class="lineNum">     127</span>              :         .multipliers        = sol_y.bottomRows(m),</span>
+<span id="L128"><span class="lineNum">     128</span>              :         .multipliers_bounds = vec::Zero(n), // see bleow</span>
+<span id="L129"><span class="lineNum">     129</span>              :         .penalties          = vec::Zero(n),</span>
+<span id="L130"><span class="lineNum">     130</span>              :         .outer_iter         = info.iter_out,</span>
+<span id="L131"><span class="lineNum">     131</span>              :         .inner_iter         = info.iter,</span>
+<span id="L132"><span class="lineNum">     132</span>              :         .extra              = {{&quot;dua2_res_norm&quot;, info.dua2_res_norm}},</span>
+<span id="L133"><span class="lineNum">     133</span>              :     };</span>
+<span id="L134"><span class="lineNum">     134</span>              :     // Expand the multipliers for the bounds constraints again</span>
+<span id="L135"><span class="lineNum">     135</span>              :     if (problem.problem.provides_get_variable_bounds())</span>
+<span id="L136"><span class="lineNum">     136</span>              :         expand_multipliers_bounds(problem.problem.get_variable_bounds(), sol_y,</span>
+<span id="L137"><span class="lineNum">     137</span>              :                                   results.multipliers_bounds);</span>
+<span id="L138"><span class="lineNum">     138</span>              :     return results;</span>
+<span id="L139"><span class="lineNum">     139</span>              : }</span>
+<span id="L140"><span class="lineNum">     140</span>              : </span>
+<span id="L141"><span class="lineNum">     141</span>              : int print_wrap(const char *fmt, ...) {</span>
+<span id="L142"><span class="lineNum">     142</span>              :     static std::vector&lt;char&gt; buffer(1024);</span>
+<span id="L143"><span class="lineNum">     143</span>              :     std::va_list args, args2;</span>
+<span id="L144"><span class="lineNum">     144</span>              :     va_start(args, fmt);</span>
+<span id="L145"><span class="lineNum">     145</span>              :     va_copy(args2, args);</span>
+<span id="L146"><span class="lineNum">     146</span>              :     int needed = vsnprintf(buffer.data(), buffer.size(), fmt, args);</span>
+<span id="L147"><span class="lineNum">     147</span>              :     va_end(args);</span>
+<span id="L148"><span class="lineNum">     148</span>              :     // Error occurred</span>
+<span id="L149"><span class="lineNum">     149</span>              :     if (needed &lt; 0) {</span>
+<span id="L150"><span class="lineNum">     150</span>              :         // ignore and return</span>
+<span id="L151"><span class="lineNum">     151</span>              :     }</span>
+<span id="L152"><span class="lineNum">     152</span>              :     // Buffer was too small</span>
+<span id="L153"><span class="lineNum">     153</span>              :     else if (auto buf_needed = static_cast&lt;size_t&gt;(needed) + 1;</span>
+<span id="L154"><span class="lineNum">     154</span>              :              buf_needed &gt; buffer.size()) {</span>
+<span id="L155"><span class="lineNum">     155</span>              :         buffer.resize(buf_needed);</span>
+<span id="L156"><span class="lineNum">     156</span>              :         va_start(args2, fmt);</span>
+<span id="L157"><span class="lineNum">     157</span>              :         needed = vsnprintf(buffer.data(), buffer.size(), fmt, args2);</span>
+<span id="L158"><span class="lineNum">     158</span>              :         va_end(args2);</span>
+<span id="L159"><span class="lineNum">     159</span>              :     }</span>
+<span id="L160"><span class="lineNum">     160</span>              :     if (needed &gt;= 0) {</span>
+<span id="L161"><span class="lineNum">     161</span>              :         assert(qpalm_os);</span>
+<span id="L162"><span class="lineNum">     162</span>              :         std::string_view out{buffer.data(), static_cast&lt;size_t&gt;(needed)};</span>
+<span id="L163"><span class="lineNum">     163</span>              :         *qpalm_os &lt;&lt; out;</span>
+<span id="L164"><span class="lineNum">     164</span>              :     }</span>
+<span id="L165"><span class="lineNum">     165</span>              :     return needed;</span>
+<span id="L166"><span class="lineNum">     166</span>              : }</span>
+<span id="L167"><span class="lineNum">     167</span>              : </span>
+<span id="L168"><span class="lineNum">     168</span>              : int print_wrap_noop(const char *, ...) { return 0; }</span>
+<span id="L169"><span class="lineNum">     169</span>              : </span>
+<span id="L170"><span class="lineNum">     170</span>              : auto get_qpalm_settings(Options &amp;opts) {</span>
+<span id="L171"><span class="lineNum">     171</span>              :     qpalm::Settings settings;</span>
+<span id="L172"><span class="lineNum">     172</span>              :     settings.eps_abs = 1e-8;</span>
+<span id="L173"><span class="lineNum">     173</span>              :     settings.eps_rel = 1e-8;</span>
+<span id="L174"><span class="lineNum">     174</span>              :     set_params(settings, &quot;solver&quot;, opts);</span>
+<span id="L175"><span class="lineNum">     175</span>              :     return settings;</span>
+<span id="L176"><span class="lineNum">     176</span>              : }</span>
+<span id="L177"><span class="lineNum">     177</span>              : </span>
+<span id="L178"><span class="lineNum">     178</span>              : template &lt;class LoadedProblem&gt;</span>
+<span id="L179"><span class="lineNum">     179</span>              : SharedSolverWrapper make_qpalm_drive_impl(std::string_view direction,</span>
+<span id="L180"><span class="lineNum">     180</span>              :                                           Options &amp;opts) {</span>
+<span id="L181"><span class="lineNum">     181</span>              :     if (!direction.empty())</span>
+<span id="L182"><span class="lineNum">     182</span>              :         throw std::invalid_argument(</span>
+<span id="L183"><span class="lineNum">     183</span>              :             &quot;QPALM solver does not support any directions&quot;);</span>
+<span id="L184"><span class="lineNum">     184</span>              :     auto settings  = get_qpalm_settings(opts);</span>
+<span id="L185"><span class="lineNum">     185</span>              :     unsigned N_exp = 0;</span>
+<span id="L186"><span class="lineNum">     186</span>              :     set_params(N_exp, &quot;num_exp&quot;, opts);</span>
+<span id="L187"><span class="lineNum">     187</span>              :     return std::make_shared&lt;SolverWrapper&gt;(</span>
+<span id="L188"><span class="lineNum">     188</span>              :         [settings, N_exp](LoadedProblem &amp;problem,</span>
+<span id="L189"><span class="lineNum">     189</span>              :                           std::ostream &amp;os) mutable -&gt; SolverResults {</span>
+<span id="L190"><span class="lineNum">     190</span>              :             return run_qpalm_solver(problem, settings, os, N_exp);</span>
+<span id="L191"><span class="lineNum">     191</span>              :         });</span>
+<span id="L192"><span class="lineNum">     192</span>              : }</span>
+<span id="L193"><span class="lineNum">     193</span>              : </span>
+<span id="L194"><span class="lineNum">     194</span>              : } // namespace</span>
+<span id="L195"><span class="lineNum">     195</span>              : </span>
+<span id="L196"><span class="lineNum">     196</span>              : SharedSolverWrapper make_qpalm_driver(std::string_view direction,</span>
+<span id="L197"><span class="lineNum">     197</span>              :                                       Options &amp;opts) {</span>
+<span id="L198"><span class="lineNum">     198</span>              :     static constexpr bool valid_config =</span>
+<span id="L199"><span class="lineNum">     199</span>              :         std::is_same_v&lt;LoadedProblem::config_t, alpaqa::EigenConfigd&gt;;</span>
+<span id="L200"><span class="lineNum">     200</span>              :     if constexpr (valid_config)</span>
+<span id="L201"><span class="lineNum">     201</span>              :         return make_qpalm_drive_impl&lt;LoadedProblem&gt;(direction, opts);</span>
+<span id="L202"><span class="lineNum">     202</span>              :     else</span>
+<span id="L203"><span class="lineNum">     203</span>              :         throw std::invalid_argument(</span>
+<span id="L204"><span class="lineNum">     204</span>              :             &quot;QPALM solver only supports double precision&quot;);</span>
+<span id="L205"><span class="lineNum">     205</span>              : }</span>
+<span id="L206"><span class="lineNum">     206</span>              : </span>
+<span id="L207"><span class="lineNum">     207</span>              : #else</span>
+<span id="L208"><span class="lineNum">     208</span>              : </span>
+<span id="L209"><span class="lineNum">     209</span>              : #include &quot;solver-driver.hpp&quot;</span>
+<span id="L210"><span class="lineNum">     210</span>              : </span>
+<span id="L211"><span class="lineNum">     211</span> <span class="tlaUNC">           0 : SharedSolverWrapper make_qpalm_driver(std::string_view, Options &amp;) {</span></span>
+<span id="L212"><span class="lineNum">     212</span>              :     throw std::invalid_argument(</span>
+<span id="L213"><span class="lineNum">     213</span> <span class="tlaUNC">           0 :         &quot;This version of alpaqa was compiled without QPALM support.&quot;);</span></span>
+<span id="L214"><span class="lineNum">     214</span>              : }</span>
+<span id="L215"><span class="lineNum">     215</span>              : </span>
+<span id="L216"><span class="lineNum">     216</span>              : #endif</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.2-beta</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

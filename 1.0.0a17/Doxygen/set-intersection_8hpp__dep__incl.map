@@ -1,0 +1,39 @@
+<map id="src/alpaqa/include/alpaqa/util/set&#45;intersection.hpp" name="src/alpaqa/include/alpaqa/util/set&#45;intersection.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1320,5,1549,45"/>
+<area shape="rect" id="Node000002" href="$sparse-ops_8hpp.html" title=" " alt="" coords="1363,93,1506,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1437,59,1437,93,1432,93,1432,59"/>
+<area shape="rect" id="Node000003" href="$sparsity-conversions_8hpp.html" title=" " alt="" coords="1224,196,1408,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1395,159,1349,198,1345,194,1392,155"/>
+<area shape="rect" id="Node000018" href="$CasADiControlProblem_8tpp.html" title=" " alt="" coords="1529,196,1775,251"/>
+<area shape="poly" id="edge17_Node000002_Node000018" title=" " alt="" coords="1505,151,1596,194,1594,198,1502,156"/>
+<area shape="rect" id="Node000004" href="$convex-newton_8hpp.html" title=" " alt="" coords="672,299,869,353"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="1210,247,870,309,869,304,1209,241"/>
+<area shape="rect" id="Node000014" href="$gradient-checker_8cpp.html" title=" " alt="" coords="1017,306,1178,346"/>
+<area shape="poly" id="edge13_Node000003_Node000014" title=" " alt="" coords="1248,259,1140,308,1137,303,1246,254"/>
+<area shape="rect" id="Node000015" href="$ipopt-adapter_8hpp.html" title=" " alt="" coords="1203,306,1429,346"/>
+<area shape="poly" id="edge14_Node000003_Node000015" title=" " alt="" coords="1319,265,1319,306,1313,306,1313,265"/>
+<area shape="rect" id="Node000017" href="$qpalm-adapter_8cpp.html" title=" " alt="" coords="1454,306,1613,346"/>
+<area shape="poly" id="edge16_Node000003_Node000017" title=" " alt="" coords="1386,254,1494,303,1491,308,1384,259"/>
+<area shape="rect" id="Node000005" href="$panoc-convex-newton-alm_8hpp.html" title=" " alt="" coords="21,401,187,456"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="659,340,446,365,324,383,203,404,187,407,186,402,202,399,323,377,446,360,658,335"/>
+<area shape="rect" id="Node000007" href="$zerofpr-convex-newton-alm_8hpp.html" title=" " alt="" coords="215,401,387,456"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="659,351,401,404,388,407,387,402,399,399,658,345"/>
+<area shape="rect" id="Node000009" href="$panoc-driver_8cpp.html" title=" " alt="" coords="412,409,567,449"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="686,360,543,411,541,406,684,355"/>
+<area shape="rect" id="Node000010" href="$param-complete_8cpp.html" title=" " alt="" coords="591,409,753,449"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="737,365,693,410,689,406,733,361"/>
+<area shape="rect" id="Node000011" href="$convex-newton_8cpp.html" title=" " alt="" coords="777,401,961,456"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="808,361,845,399,842,403,804,365"/>
+<area shape="rect" id="Node000012" href="$json_8cpp.html" title=" " alt="" coords="985,409,1151,449"/>
+<area shape="poly" id="edge11_Node000004_Node000012" title=" " alt="" coords="862,355,1013,406,1011,411,860,360"/>
+<area shape="rect" id="Node000013" href="$params_8cpp.html" title=" " alt="" coords="1175,409,1340,449"/>
+<area shape="poly" id="edge12_Node000004_Node000013" title=" " alt="" coords="883,343,1018,368,1163,399,1192,406,1191,411,1162,404,1017,373,882,349"/>
+<area shape="rect" id="Node000006" href="$panoc-convex-newton-alm_8cpp.html" title=" " alt="" coords="5,504,189,544"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="104,470,101,504,96,504,98,470"/>
+<area shape="rect" id="Node000008" href="$zerofpr-convex-newton-alm_8cpp.html" title=" " alt="" coords="213,504,397,544"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="306,470,307,504,302,504,300,470"/>
+<area shape="rect" id="Node000016" href="$ipopt-adapter_8cpp.html" title=" " alt="" coords="1365,409,1515,449"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="1352,353,1418,407,1415,411,1348,357"/>
+<area shape="rect" id="Node000019" href="$CasADiControlProblem_8cpp.html" title=" " alt="" coords="1637,306,1861,346"/>
+<area shape="poly" id="edge18_Node000018_Node000019" title=" " alt="" coords="1689,259,1733,304,1729,307,1685,262"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="get_num_variables" name="get_num_variables">
+<area shape="rect" id="Node000001" title="[Required] Number of decision variables." alt="" coords="351,189,497,214"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="128,5,283,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="406,178,364,119,334,87,301,60,280,48,282,43,304,55,338,83,368,115,410,175"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1AndersonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="108,69,303,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="394,182,351,153,301,124,274,112,276,107,304,119,354,148,397,178"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1LBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="118,133,293,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="351,188,292,175,293,170,353,183"/>
+<area shape="rect" id="Node000005" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#ab42fb3dc0421d6c6c1f45d753a95a2c4" title=" " alt="" coords="115,222,295,277"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="353,220,296,232,295,227,351,214"/>
+<area shape="rect" id="Node000006" href="$alpaqa-driver_8cpp.html#a97d8bbd07c6daf32220df9e0b4fe2cc0" title=" " alt="" coords="109,301,301,326"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="400,225,357,259,304,290,270,303,268,298,302,286,354,254,397,221"/>
+<area shape="rect" id="Node000008" href="$results_8hpp.html#ac44ace62be5699e983e8e4596ea74cf1" title=" " alt="" coords="154,350,257,375"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="410,227,367,284,338,314,304,340,281,351,258,358,256,353,279,346,301,335,334,310,363,280,406,224"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="233,210,223,203,205,201,190,202,181,207,177,214,177,222,171,222,171,212,177,203,189,197,205,195,225,198,236,206"/>
+<area shape="rect" id="Node000007" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,326,60,351"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="105,331,60,337,60,332,105,325"/>
+<area shape="poly" id="edge9_Node000008_Node000007" title=" " alt="" coords="140,356,60,345,61,340,141,351"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="dims" name="dims">
+<area shape="rect" id="Node000001" title=" " alt="" coords="571,69,625,95"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1casadi__loader.html#a231a5b326b3a0f7a0aefa9d150aa1b52" title="Complete the given problem that contains only functions f and g, adding the necessary functions and g..." alt="" coords="327,5,471,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="564,64,522,45,471,31,473,26,524,39,566,60"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1casadi__loader_1_1CasADiControlFunctionsWithParam.html#a315acb62b6609d1fa6bbf298fcc1064b" title=" " alt="" coords="291,55,507,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="557,85,508,85,508,79,557,79"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1casadi__loader_1_1CasADiFunctionsWithParam.html#a4304eda8f003a82248635198d91a4379" title=" " alt="" coords="276,134,523,174"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="565,104,524,123,484,136,483,131,522,118,562,99"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CasADiControlProblem.html#aec943d4cc9c1bbfc4d4b7244f9390d08" title=" " alt="" coords="5,62,228,102"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="277,85,228,85,228,79,277,79"/>
+</map>

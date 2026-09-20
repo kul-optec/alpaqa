@@ -1,0 +1,17 @@
+<map id="eval_proximal_gradient_step" name="eval_proximal_gradient_step">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,85,216,110"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html#a9bbaf1061820ec63a0156825cc46601a" title=" " alt="" coords="264,77,483,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,95,251,95,251,100,216,100"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1BoxConstrProblem.html#ae837b185277175a034b6e120c5d84b19" title="Projected gradient step for rectangular box C." alt="" coords="541,5,735,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="447,75,550,46,551,52,448,80"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1BoxConstrProblem.html#a1675a9050e69af2eed772e663bedc762" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="531,149,745,189"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="448,115,551,143,550,148,447,120"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1BoxConstrProblem.html#ad88ec4d005c833d5c2c889ca4bd530e8" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="540,70,736,125"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="483,95,526,95,526,100,483,100"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1BoxConstrProblem.html#a3171c5c9e3761a3f47aaabc94ff80a73" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="793,73,989,127"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="711,147,779,128,780,133,713,152"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1vec__util.html#ad25a5d07b7f707ab1d1fa7667a13dffa" title="Get the 1&#45;norm of the given vector." alt="" coords="800,153,983,178"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="746,165,786,164,786,170,746,170"/>
+<area shape="poly" id="edge7_Node000007_Node000005" title=" " alt="" coords="736,96,779,96,779,101,736,101"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="737,122,794,137,828,147,827,152,793,143,736,127"/>
+</map>

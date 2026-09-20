@@ -1,0 +1,7 @@
+<map id="get_nlp_info" name="get_nlp_info">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,108,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="156,5,359,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,47,142,41,143,46,109,52"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="156,69,359,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,63,143,68,142,74,108,68"/>
+</map>

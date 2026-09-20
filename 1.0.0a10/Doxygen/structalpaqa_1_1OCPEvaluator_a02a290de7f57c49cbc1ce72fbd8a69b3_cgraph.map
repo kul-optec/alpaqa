@@ -1,0 +1,17 @@
+<map id="forward_simulate" name="forward_simulate">
+<area shape="rect" id="node1" title=" " alt="" coords="5,376,141,401"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1OCPVariables.html#a391b2381bfd92a7c2fd61a9fa322e3c0" title=" " alt="" coords="195,5,379,31"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedControlProblem.html#a86c96723a0f613e2269ebd81f72c9c83" title="Stage constraints ." alt="" coords="189,55,384,95"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedControlProblem.html#a4e9cccc0dd3e9920bd9a0d2510270c44" title="Terminal constraints ." alt="" coords="189,119,384,159"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="189,183,384,223"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedControlProblem.html#a9412e49fd073645733eb50f1e93b889a" title="Stage output mapping ." alt="" coords="189,247,384,287"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedControlProblem.html#af14bea7b59a44b2bbf009de9aa3ff3a7" title="Terminal output mapping ." alt="" coords="189,311,384,351"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1OCPVariables.html#ad2e98c60f4f2abe43a52aea5afc9bad4" title=" " alt="" coords="194,376,379,401"/>
+<area shape="rect" id="node10" href="$structalpaqa_1_1OCPVariables.html#ac23599fc3855d4c3d79c3e689dd86f6c" title=" " alt="" coords="195,425,379,451"/>
+<area shape="rect" id="node11" href="$structalpaqa_1_1OCPVariables.html#a9b03b81e6526f30c99d5d9e0fa537768" title=" " alt="" coords="206,475,367,515"/>
+<area shape="rect" id="node12" href="$structalpaqa_1_1OCPVariables.html#a6d6559d215012fc0f573883117ec5398" title=" " alt="" coords="194,540,379,565"/>
+<area shape="rect" id="node13" href="$structalpaqa_1_1OCPVariables.html#a2f879d2af95b130c8c92b49b11e55b9f" title=" " alt="" coords="206,590,367,630"/>
+<area shape="rect" id="node14" href="$structalpaqa_1_1OCPVariables.html#a88158344aedc0355f0e563e54c779ae7" title=" " alt="" coords="194,655,379,680"/>
+<area shape="rect" id="node15" href="$structalpaqa_1_1OCPVariables.html#a5468d87fecd1ab7d60817e223428990b" title=" " alt="" coords="194,704,379,729"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="432,255,615,280"/>
+</map>

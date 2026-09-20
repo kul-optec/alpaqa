@@ -1,0 +1,22 @@
+<map id="src/alpaqa/include/alpaqa/accelerators/steihaugcg.hpp" name="src/alpaqa/include/alpaqa/accelerators/steihaugcg.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="789,5,944,60"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="562,108,742,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="802,63,695,105,693,100,800,58"/>
+<area shape="rect" id="Node000009" href="$alloc-check_8hpp.html" title=" " alt="" coords="768,108,965,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="869,60,869,94,864,94,864,60"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="990,108,1053,133"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="915,58,990,99,987,104,913,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,224,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="571,136,238,184,238,178,570,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="249,189,495,214"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="612,136,427,188,425,182,611,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="519,189,598,214"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="640,136,585,182,581,178,637,131"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="623,189,681,214"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="655,134,655,175,649,175,649,134"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="706,189,798,214"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="668,131,728,178,725,182,665,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="822,189,914,214"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="684,131,825,182,823,187,683,136"/>
+<area shape="poly" id="edge9_Node000009_Node000008" title=" " alt="" coords="870,133,870,175,865,175,864,134"/>
+</map>

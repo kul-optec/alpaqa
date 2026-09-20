@@ -1,0 +1,9 @@
+<map id="resize" name="resize">
+<area shape="rect" id="Node000001" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="467,45,528,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1AndersonAccel.html#abfe51417fbebd259808f86d27f1d7ec5" title="Change the problem dimension." alt="" coords="248,37,419,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="453,60,419,60,419,55,453,55"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1AndersonAccel.html#a1fcb04cfb2b1398b54d8242cc3b0fb34" title=" " alt="" coords="17,5,188,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="234,46,188,40,189,35,235,41"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1AndersonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="5,69,200,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="235,74,201,78,200,73,234,68"/>
+</map>

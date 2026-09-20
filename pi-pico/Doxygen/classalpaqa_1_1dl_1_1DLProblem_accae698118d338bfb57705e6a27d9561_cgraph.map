@@ -1,0 +1,9 @@
+<map id="call_extra_func" name="call_extra_func">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,127,38"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a21b1342c38b8fd3409ad0a80a134b34d" title=" " alt="" coords="175,5,352,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,23,161,23,161,28,127,28"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a273e485fe28cedadf95bd27909a7448e" title=" " alt="" coords="400,5,565,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="352,23,386,23,386,28,352,28"/>
+<area shape="rect" id="Node000004" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="613,13,781,38"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="565,23,600,23,600,28,565,28"/>
+</map>

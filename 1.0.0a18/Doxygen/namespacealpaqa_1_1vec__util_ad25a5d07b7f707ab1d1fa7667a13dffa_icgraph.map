@@ -1,0 +1,20 @@
+<map id="norm_1" name="norm_1">
+<area shape="rect" id="Node000001" title="Get the 1&#45;norm of the given vector." alt="" coords="724,185,795,210"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="461,5,676,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="747,173,720,115,700,85,674,59,655,48,658,43,678,55,704,82,725,113,752,170"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1BoxConstrProblem.html#a1675a9050e69af2eed772e663bedc762" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="461,69,676,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="736,176,709,149,675,124,650,112,652,107,677,119,712,144,740,172"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1BoxConstrProblem.html#ad88ec4d005c833d5c2c889ca4bd530e8" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="471,134,667,189"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="710,191,667,183,668,177,711,186"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1functions_1_1L1NormComplex.html#a2cad272bf5da90db8884e004428606b4" title=" " alt="" coords="485,213,653,253"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="711,209,654,220,653,215,710,204"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1functions_1_1L1Norm.html#a13759bd8f69e5fecd1281d305fb56e5f" title=" " alt="" coords="497,277,640,317"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="738,222,710,246,677,268,641,283,639,278,675,263,707,241,734,218"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1functions_1_1NuclearNorm.html#a13759bd8f69e5fecd1281d305fb56e5f" title=" " alt="" coords="496,341,641,381"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="751,224,724,278,703,307,678,331,643,350,641,345,674,327,699,303,719,276,746,222"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1BoxConstrProblem.html#acdbe943d1576c496e20286c3106c00b8" title=" " alt="" coords="219,105,413,145"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="448,109,414,114,413,109,447,104"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1dl_1_1DLProblem.html#a02bf998629ca590cf5a2e183cbf43444" title=" " alt="" coords="5,105,171,145"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="205,128,171,128,171,123,205,123"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="457,148,413,142,414,137,457,143"/>
+</map>

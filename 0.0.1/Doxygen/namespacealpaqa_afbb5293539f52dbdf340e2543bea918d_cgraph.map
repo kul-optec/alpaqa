@@ -1,0 +1,4 @@
+<map id="dist_squared" name="dist_squared">
+<area shape="rect" id="node1" title="Get the distance squared between the given vector and its projection in the Σ norm." alt="" coords="5,5,111,32"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="159,5,225,32"/>
+</map>

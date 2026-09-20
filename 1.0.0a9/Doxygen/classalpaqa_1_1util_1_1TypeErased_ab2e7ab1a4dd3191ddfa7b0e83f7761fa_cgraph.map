@@ -1,0 +1,5 @@
+<map id="operator=" name="operator=">
+<area shape="rect" id="node1" title="Move assignment." alt="" coords="5,5,93,31"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1util_1_1TypeErased.html#a4b66d5e31b5dc18b314c8a68163263bd" title="Destroy the type&#45;erased object (if not empty), and deallocate the memory if necessary." alt="" coords="141,5,215,31"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1util_1_1TypeErased.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Deallocate the memory without invoking the destructor." alt="" coords="263,5,353,31"/>
+</map>

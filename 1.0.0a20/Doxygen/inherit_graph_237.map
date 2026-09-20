@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,55,116,80"/>
+<area shape="rect" id="Node000001" href="$structalpaqa_1_1csv_1_1read__error.html" title=" " alt="" coords="195,5,284,31"/>
+<area shape="poly" id="edge25_Node000000_Node000001" title=" " alt="" coords="120,48,194,28,195,33,121,54"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1cutest_1_1function__call__error.html" title=" " alt="" coords="168,55,311,80"/>
+<area shape="poly" id="edge26_Node000000_Node000002" title=" " alt="" coords="130,65,167,65,167,70,130,70"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1util_1_1dynamic__load__error.html" title="Failed to load a DLL or SO file, or failed to access a function in it." alt="" coords="164,104,315,129"/>
+<area shape="poly" id="edge27_Node000000_Node000003" title=" " alt="" coords="121,81,193,101,191,106,120,86"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1dl_1_1invalid__abi__error.html" title=" " alt="" coords="363,104,493,129"/>
+<area shape="poly" id="edge28_Node000003_Node000004" title=" " alt="" coords="328,114,362,114,362,119,328,119"/>
+</map>

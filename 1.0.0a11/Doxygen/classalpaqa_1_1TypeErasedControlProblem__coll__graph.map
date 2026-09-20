@@ -1,0 +1,5 @@
+<map id="TypeErasedControlProblem&lt; Conf, Allocator &gt;" name="TypeErasedControlProblem&lt; Conf, Allocator &gt;">
+<area shape="rect" id="node1" title="Nonlinear optimal control problem with finite horizon ." alt="" coords="5,888,232,2153"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="13,204,224,839"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="56,5,181,141"/>
+</map>

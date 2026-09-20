@@ -1,0 +1,8 @@
+<map id="descent_lemma" name="descent_lemma">
+<area shape="rect" id="node1" title="Increase the estimate of the Lipschitz constant of the objective gradient and decrease the step size ..." alt="" coords="5,35,132,61"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#adaff98bd8130d1eee1f5bcaab5069026" title=" " alt="" coords="188,8,251,35"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="180,60,259,87"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1detail.html#a48a7f210ac7bf8ab2cc19b6cb549cc8e" title="Projected gradient step." alt="" coords="307,5,485,32"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="327,57,465,98"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="533,64,652,91"/>
+</map>

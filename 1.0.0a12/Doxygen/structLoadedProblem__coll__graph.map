@@ -1,0 +1,9 @@
+<map id="LoadedProblem" name="LoadedProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="42,2697,171,2883"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="8,1083,205,2635"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,2635,109,2681,104,2681,104,2635"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="5,213,208,1033"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,1047,109,1082,104,1082,104,1047"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="48,5,165,151"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="109,151,109,197,104,197,104,151"/>
+</map>

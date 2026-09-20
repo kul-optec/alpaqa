@@ -1,0 +1,7 @@
+<map id="changed_γ" name="changed_γ">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,97,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="153,5,311,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,34,139,28,140,34,98,40"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#adeddc1e1eb8ce1c1bbaf931b6f9a5b9c" title="Scale the stored y vectors by the given factor." alt="" coords="145,55,319,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="98,47,132,51,131,57,97,52"/>
+</map>

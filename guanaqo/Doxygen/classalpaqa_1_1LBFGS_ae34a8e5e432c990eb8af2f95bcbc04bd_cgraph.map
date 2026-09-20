@@ -1,0 +1,19 @@
+<map id="update" name="update">
+<area shape="rect" id="Node000001" title="Update the inverse Hessian approximation using the new vectors xₙₑₓₜ and pₙₑₓₜ." alt="" coords="5,104,72,129"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a15e4a3db39457cabe764a7737d24e73f" title=" " alt="" coords="327,5,366,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,104,313,26,315,31,73,109"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#ad67ba15f46e10679e631093d7fb2765f" title=" " alt="" coords="120,104,245,129"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="72,114,106,114,106,119,72,119"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LBFGS.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="327,203,366,228"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="73,125,315,203,313,208,71,130"/>
+<area shape="poly" id="edge4_Node000003_Node000002" title=" " alt="" coords="199,102,241,72,292,40,314,29,316,33,295,44,244,77,202,106"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="327,55,366,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="225,101,314,74,315,79,226,107"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#a70926baed7362e4fcce66523bb8e2842" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="321,104,372,129"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="245,114,307,114,307,119,245,119"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LBFGS.html#abb437bab54050908142b5a47bd64713b" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="293,153,400,179"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="226,127,291,147,290,152,225,132"/>
+<area shape="poly" id="edge8_Node000003_Node000008" title=" " alt="" coords="202,127,244,157,295,189,316,200,314,205,292,194,241,161,199,132"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LBFGS.html#ac7c2ee7d2562303f555dd1f4c3fca8cd" title=" " alt="" coords="448,153,487,179"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="400,163,434,163,434,169,400,169"/>
+</map>

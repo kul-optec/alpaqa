@@ -1,0 +1,9 @@
+<map id="scale_y" name="scale_y">
+<area shape="rect" id="Node000001" title="Scale the stored y vectors by the given factor." alt="" coords="5,55,76,80"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="138,5,177,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,52,124,29,126,34,72,57"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="124,55,191,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="76,65,110,65,110,70,76,70"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="138,104,177,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="72,78,126,101,124,106,70,82"/>
+</map>

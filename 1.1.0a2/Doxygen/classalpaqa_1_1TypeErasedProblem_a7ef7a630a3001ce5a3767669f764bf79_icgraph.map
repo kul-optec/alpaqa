@@ -1,0 +1,36 @@
+<map id="get_num_constraints" name="get_num_constraints">
+<area shape="rect" id="Node000001" title="[Required] Number of constraints." alt="" coords="741,251,900,277"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="509,5,663,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="808,239,792,199,767,151,734,101,692,59,662,43,665,39,695,55,738,98,772,148,797,197,813,237"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#abbe7a9499d34168ba294d9737ab1516d" title=" " alt="" coords="479,69,693,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="802,242,757,182,727,151,692,124,669,112,672,107,695,119,730,147,761,179,806,238"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1detail_1_1ALMHelpers.html#aa91b6b1a0715e1efaf34b25131d0e8f1" title=" " alt="" coords="487,134,685,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="783,247,692,202,665,191,667,186,694,198,785,242"/>
+<area shape="rect" id="Node000007" href="$namespaceanonymous__namespace_02problem-loader_8cpp_03.html#a8375e6f3804ecc7ef1defdd9b5cbbaf6" title=" " alt="" coords="496,237,676,291"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="727,267,676,267,676,261,727,261"/>
+<area shape="rect" id="Node000008" href="$namespacealpaqa.html#af145cff32479cdcb832c765895175628" title=" " alt="" coords="503,316,669,356"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="766,283,653,318,651,313,765,278"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1driver.html#ac44ace62be5699e983e8e4596ea74cf1" title=" " alt="" coords="511,380,661,420"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="799,289,754,330,695,370,663,384,661,379,692,366,750,326,796,285"/>
+<area shape="rect" id="Node000012" href="$namespacealpaqa_1_1driver.html#aa7ce176e5df1fd415e66c420646cf10d" title=" " alt="" coords="515,475,657,515"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="807,290,762,359,730,398,695,434,664,458,631,477,628,472,661,453,692,430,726,394,757,355,803,287"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1ALMSolver.html#addcbcd08131cd8fb2d837cdbe59a51ff" title=" " alt="" coords="242,141,393,181"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="473,164,393,164,393,159,473,159"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1ALMSolver.html#abf8cdbf0da02bdb631d4c6701b9c7100" title=" " alt="" coords="5,141,156,181"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="228,164,156,164,156,159,228,159"/>
+<area shape="poly" id="edge7_Node000007_Node000007" title=" " alt="" coords="625,226,611,218,586,215,565,217,552,222,545,228,546,237,540,237,540,226,549,218,564,212,586,210,613,213,628,221"/>
+<area shape="rect" id="Node000009" href="$namespacealpaqa_1_1driver.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="241,323,394,349"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="489,339,394,339,394,333,489,333"/>
+<area shape="rect" id="Node000010" href="$alpaqa-driver-main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="53,323,108,349"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="226,339,108,339,108,333,226,333"/>
+<area shape="poly" id="edge12_Node000011_Node000009" title=" " alt="" coords="496,379,430,363,380,351,381,346,431,357,498,374"/>
+<area shape="rect" id="Node000013" href="$namespacealpaqa_1_1driver_1_1anonymous__namespace_02fista-driver_8cpp_03.html#a99408cb1d6a926c15c996da29a6c2e46" title=" " alt="" coords="207,397,428,451"/>
+<area shape="poly" id="edge14_Node000012_Node000013" title=" " alt="" coords="501,475,421,454,423,449,503,470"/>
+<area shape="rect" id="Node000014" href="$namespacealpaqa_1_1driver_1_1anonymous__namespace_02panoc-driver_8cpp_03.html#a1d542f19816b26db46de0f7a57655d86" title=" " alt="" coords="204,499,431,554"/>
+<area shape="poly" id="edge16_Node000012_Node000014" title=" " alt="" coords="502,507,431,516,431,511,501,502"/>
+<area shape="rect" id="Node000015" href="$namespacealpaqa_1_1driver_1_1anonymous__namespace_02pantr-driver_8cpp_03.html#a8d3ad23cd598420d8786dbed013d55bb" title=" " alt="" coords="206,602,429,657"/>
+<area shape="poly" id="edge18_Node000012_Node000015" title=" " alt="" coords="534,523,374,604,372,599,531,519"/>
+<area shape="poly" id="edge15_Node000013_Node000013" title=" " alt="" coords="356,386,342,378,317,375,296,377,283,382,277,388,277,397,272,397,272,386,280,378,295,372,317,370,344,373,359,381"/>
+<area shape="poly" id="edge17_Node000014_Node000014" title=" " alt="" coords="356,488,342,481,317,478,296,480,283,485,277,491,277,499,272,499,272,489,280,480,295,475,317,473,344,476,359,484"/>
+<area shape="poly" id="edge19_Node000015_Node000015" title=" " alt="" coords="356,591,342,584,317,581,296,583,283,587,277,594,277,602,272,602,272,592,280,583,295,577,317,575,344,578,359,586"/>
+</map>

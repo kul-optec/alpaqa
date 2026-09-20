@@ -1,0 +1,19 @@
+<map id="src/alpaqa/include/alpaqa/accelerators/anderson.hpp" name="src/alpaqa/include/alpaqa/accelerators/anderson.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="419,5,573,60"/>
+<area shape="rect" id="Node000002" href="$inner_2directions_2panoc_2anderson_8hpp.html" title=" " alt="" coords="409,108,583,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="499,74,499,108,493,108,493,74"/>
+<area shape="rect" id="Node000003" href="$panoc-anderson-alm_8hpp.html" title=" " alt="" coords="5,211,184,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="396,164,198,213,185,217,184,211,197,208,395,159"/>
+<area shape="rect" id="Node000005" href="$zerofpr-anderson-alm_8hpp.html" title=" " alt="" coords="209,211,394,265"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="434,171,353,213,351,208,432,167"/>
+<area shape="rect" id="Node000007" href="$panoc-driver_8cpp.html" title=" " alt="" coords="419,218,573,258"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="499,177,499,218,493,218,493,177"/>
+<area shape="rect" id="Node000008" href="$json_8cpp.html" title=" " alt="" coords="597,218,763,258"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="557,167,646,215,644,220,554,171"/>
+<area shape="rect" id="Node000009" href="$params_8cpp.html" title=" " alt="" coords="787,218,952,258"/>
+<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="598,161,775,208,802,215,801,221,774,213,596,166"/>
+<area shape="rect" id="Node000004" href="$panoc-anderson-alm_8cpp.html" title=" " alt="" coords="17,313,172,353"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="97,279,97,313,92,313,92,279"/>
+<area shape="rect" id="Node000006" href="$zerofpr-anderson-alm_8cpp.html" title=" " alt="" coords="220,313,383,353"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="304,279,304,313,299,313,299,279"/>
+</map>

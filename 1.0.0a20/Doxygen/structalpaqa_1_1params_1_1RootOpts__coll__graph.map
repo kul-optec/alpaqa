@@ -1,0 +1,9 @@
+<map id="RootOpts" name="RootOpts">
+<area shape="rect" id="Node000001" title=" " alt="" coords="81,281,186,367"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1params.html#structalpaqa_1_1params_1_1Value" title=" " alt="" coords="5,35,56,101"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="31,101,34,175,43,217,58,256,71,274,67,277,54,259,37,218,29,175,26,101"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1params.html#structalpaqa_1_1params_1_1Struct" title=" " alt="" coords="107,35,159,101"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="136,101,136,265,131,265,131,101"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1DynamicLoadFlags.html" title="Flags to be passed to dlopen." alt="" coords="184,5,323,131"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="251,131,237,195,226,228,210,259,200,274,195,270,206,256,221,226,232,194,245,130"/>
+</map>

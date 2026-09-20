@@ -1,0 +1,7 @@
+<map id="eval_h" name="eval_h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,71,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#ad7a02043161c640d10aa5ee6b8ac5b1b" title="[Optional] Function that evaluates the nonzero values of the Hessian of the Lagrangian," alt="" coords="119,5,321,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,49,105,43,106,48,71,54"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a01b7cf0fff8f21d29a5faf139a8896e2" title="Returns true if the problem provides an implementation of eval_hess_L." alt="" coords="119,69,321,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="71,60,106,66,105,72,71,66"/>
+</map>

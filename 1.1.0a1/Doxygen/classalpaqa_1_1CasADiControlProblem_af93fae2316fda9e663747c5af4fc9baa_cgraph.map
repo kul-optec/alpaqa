@@ -1,0 +1,37 @@
+<map id="CasADiControlProblem" name="CasADiControlProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,237,176,262"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CasADiControlProblem.html#a8e2b94a109c662591fb7d2e3a662bba1" title=" " alt="" coords="224,237,395,262"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,247,210,247,210,252,176,252"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1casadi.html#a89323cd224eb28c58950edc7c4bb3598" title="Load the given CasADi function from the given DLL/SO file." alt="" coords="461,173,640,198"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="350,234,442,207,476,198,477,204,443,212,351,239"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1casadi__loader_1_1CasADiControlFunctionsWithParam.html#a315acb62b6609d1fa6bbf298fcc1064b" title=" " alt="" coords="443,222,659,277"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="395,247,429,247,429,252,395,252"/>
+<area shape="rect" id="Node000015" href="$classalpaqa_1_1CasADiControlProblem.html#a4f1c7c649deebd8f69fd65ebc8ec3a4a" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="471,441,630,466"/>
+<area shape="poly" id="edge16_Node000002_Node000015" title=" " alt="" coords="327,260,526,430,523,434,324,264"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1casadi__loader.html#a440de48c7f739b4216916e2aba75b266" title=" " alt="" coords="714,5,878,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="642,220,657,208,670,189,677,171,680,133,683,95,690,75,705,56,709,52,712,56,709,59,695,78,688,96,685,133,682,172,675,191,661,211,645,224"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1casadi_1_1Function.html#a4ba83e8705bfceadf5efa1a1e9df8acd" title=" " alt="" coords="707,69,885,109"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="639,220,657,207,673,186,680,164,687,142,705,119,711,114,715,119,709,123,692,144,685,166,678,189,661,211,643,224"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1casadi_1_1Function.html#a312ff44362f2dc12550e551cd56e1b11" title=" " alt="" coords="707,133,885,173"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="627,219,658,207,706,183,723,176,725,181,708,188,660,212,629,224"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1casadi_1_1Function.html#ac08b2d73c24bd529c9ece2cecb26b2d7" title=" " alt="" coords="707,197,885,237"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="658,233,692,228,693,233,659,238"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1casadi_1_1Function.html#a392f360e00413be339fecf0d96666cce" title=" " alt="" coords="707,261,885,301"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="659,261,693,265,692,271,658,266"/>
+<area shape="rect" id="Node000013" href="$namespacealpaqa_1_1casadi__loader.html#aff26ceb374addcf6ae66ee1e4658fcff" title=" " alt="" coords="941,351,1105,391"/>
+<area shape="poly" id="edge13_Node000004_Node000013" title=" " alt="" coords="611,274,707,311,821,338,927,356,926,361,820,343,706,316,609,279"/>
+<area shape="rect" id="Node000014" href="$namespacealpaqa_1_1casadi__loader.html#a001ff3b26defa1201f68a339a2c5d768" title=" " alt="" coords="714,376,878,416"/>
+<area shape="poly" id="edge14_Node000004_Node000014" title=" " alt="" coords="589,275,644,314,708,355,733,368,731,373,705,360,641,319,585,279"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1casadi_1_1Function_1_1Sparsity.html#a1ab71d0404def2c8157558a36d4c53cb" title=" " alt="" coords="933,211,1112,251"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="886,220,920,222,919,227,886,225"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1casadi_1_1Function.html#a8a88f2123c5e6ababc7a780c62412f65" title=" " alt="" coords="933,147,1112,187"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="885,195,919,187,920,192,886,200"/>
+<area shape="poly" id="edge11_Node000011_Node000009" title=" " alt="" coords="885,259,919,251,920,256,886,264"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1casadi_1_1Function.html#abe94b952c81a47d500e401413ab3b6d2" title=" " alt="" coords="933,275,1112,315"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="886,284,920,286,919,291,886,289"/>
+<area shape="poly" id="edge15_Node000014_Node000013" title=" " alt="" coords="878,384,927,379,927,384,879,390"/>
+<area shape="rect" id="Node000016" href="$namespacealpaqa.html#a4aa5d1b70ae86454004ab771713c0826" title="Convert an Eigen vector view to a std::span." alt="" coords="733,441,859,466"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="630,451,719,451,719,456,630,456"/>
+<area shape="rect" id="Node000017" href="$namespacealpaqa.html#a9c0fe4aab3b62a12106dd1e6834a7231" title="Convert a std::span to an Eigen::Vector view." alt="" coords="737,490,855,515"/>
+<area shape="poly" id="edge18_Node000015_Node000017" title=" " alt="" coords="615,463,724,486,723,491,614,469"/>
+</map>

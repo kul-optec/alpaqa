@@ -1,0 +1,13 @@
+<map id="PANOCOCPSolver&lt; Conf &gt;" name="PANOCOCPSolver&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="209,873,395,1099"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="39,361,253,811"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="236,810,255,857,250,859,231,812"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="5,156,183,296"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="107,296,114,345,108,345,101,297"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="207,153,392,299"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="271,300,251,347,246,345,266,298"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1CBFGSParams.html" title=" " alt="" coords="206,5,393,91"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="302,91,302,137,297,137,297,91"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1AtomicStopSignal.html" title=" " alt="" coords="277,493,431,679"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="345,679,321,858,316,857,339,679"/>
+</map>

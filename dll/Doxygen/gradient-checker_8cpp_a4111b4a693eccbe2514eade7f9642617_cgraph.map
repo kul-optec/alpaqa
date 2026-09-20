@@ -1,0 +1,7 @@
+<map id="default_eval_lagrangian_gradient" name="default_eval_lagrangian_gradient">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,184,85"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#ac77355dcb81f369f3c31e56baed82e08" title="[Required] Function that evaluates the gradient of the cost," alt="" coords="232,5,435,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,48,218,42,219,47,185,53"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a5b3592fc682f7b5cd8272652bfb8037a" title="[Optional] Evaluate both &#160;and ." alt="" coords="232,69,435,139"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,77,219,83,218,88,184,82"/>
+</map>

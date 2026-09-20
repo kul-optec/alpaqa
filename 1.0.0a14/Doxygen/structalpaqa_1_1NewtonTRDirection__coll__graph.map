@@ -1,0 +1,15 @@
+<map id="NewtonTRDirection&lt; Conf &gt;" name="NewtonTRDirection&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="269,2885,438,3325"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1SteihaugCG.html" title=" " alt="" coords="5,1934,235,2159"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,2159,150,2295,175,2461,207,2642,249,2822,266,2878,261,2879,244,2823,202,2643,169,2462,145,2295,129,2160"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="11,648,229,773"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="123,774,123,1917,117,1917,117,774"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="259,1987,447,2107"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="356,2107,356,2869,351,2869,351,2107"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="472,1271,669,2823"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="502,2824,491,2862,472,2912,448,2961,444,2958,467,2910,485,2860,497,2822"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="468,213,673,1208"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="573,1222,573,1270,568,1270,568,1222"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="512,5,629,151"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="573,151,573,197,568,197,568,151"/>
+</map>

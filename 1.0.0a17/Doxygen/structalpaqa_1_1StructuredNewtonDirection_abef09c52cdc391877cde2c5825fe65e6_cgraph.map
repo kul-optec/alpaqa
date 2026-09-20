@@ -1,0 +1,13 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,141,84,166"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#a37c7d4b0b4e437f4834d17243eb21ab6" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the augmented Lag..." alt="" coords="132,5,335,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="52,139,83,98,105,75,131,55,141,49,144,53,133,60,109,79,87,101,57,142"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="132,69,335,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="78,138,131,119,154,111,156,116,133,124,80,143"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a23a7eb67244853ec477fceda3be3cc2a" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="132,133,335,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="84,151,118,151,118,156,84,156"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="132,197,335,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="80,163,133,183,156,191,154,196,131,188,78,169"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedProblem.html#ab3d0395bba6c08c5215c7eed1258b165" title="Returns true if eval_hess_ψ can be called." alt="" coords="132,261,335,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="57,165,87,206,109,228,133,247,144,253,141,258,131,252,105,232,83,209,52,168"/>
+</map>

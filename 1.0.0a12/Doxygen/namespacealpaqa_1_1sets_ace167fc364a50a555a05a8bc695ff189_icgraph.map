@@ -1,0 +1,9 @@
+<map id="project" name="project">
+<area shape="rect" id="Node000001" title="Project a vector onto a box." alt="" coords="365,31,432,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1sets.html#a596e7b008b80d378c047e1131968e50f" title="Get the distance squared between the given vector and its projection in the Σ norm." alt="" coords="185,5,291,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="351,39,291,29,291,24,352,33"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1sets.html#a0aa3a21307a2b125ccd70ac4265c4446" title="Get the difference between the given vector and its projection." alt="" coords="159,55,317,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="352,53,318,58,318,53,351,48"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1sets.html#ad8b1a455a3b6ad5e25fe20cfccec279b" title="Get the distance squared between the given vector and its projection." alt="" coords="5,55,111,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="145,70,111,70,111,65,145,65"/>
+</map>

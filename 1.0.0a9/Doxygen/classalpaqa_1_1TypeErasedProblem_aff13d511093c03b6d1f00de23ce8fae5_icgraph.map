@@ -1,0 +1,5 @@
+<map id="get_hess_L_num_nonzeros" name="get_hess_L_num_nonzeros">
+<area shape="rect" id="node1" title="[Optional] Function that gets the number of nonzeros of the sparse Hessian of the Lagrangian." alt="" coords="212,45,408,70"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1IpoptAdapter.html#a060dd4fd8af8008a4a6cc2ec807d35f5" title=" " alt="" coords="5,5,164,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="7,69,162,109"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="try_load" name="try_load">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,80,31"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1casadi__loader.html#a001ff3b26defa1201f68a339a2c5d768" title=" " alt="" coords="128,5,241,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,15,114,15,114,21,80,21"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1casadi__loader.html#aff26ceb374addcf6ae66ee1e4658fcff" title=" " alt="" coords="289,5,379,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="241,15,276,15,276,21,241,21"/>
+</map>

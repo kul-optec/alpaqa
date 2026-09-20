@@ -1,0 +1,9 @@
+<map id="LBFGS&lt; Conf, Storage &gt;" name="LBFGS&lt; Conf, Storage &gt;">
+<area shape="rect" id="Node000001" title="Limited memory Broyden–Fletcher–Goldfarb–Shanno (L&#45;BFGS) algorithm." alt="" coords="103,481,277,1167"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LBFGSStorage.html" title=" " alt="" coords="5,153,231,419"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,419,145,465,139,466,133,419"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="255,213,440,359"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="329,360,285,510,279,509,324,358"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1CBFGSParams.html" title=" " alt="" coords="254,5,441,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="350,91,350,197,345,197,345,91"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="eval_proj_grad_step_box" name="eval_proj_grad_step_box">
+<area shape="rect" id="Node000001" title="Projected gradient step for rectangular box C." alt="" coords="531,13,715,38"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html#a9bbaf1061820ec63a0156825cc46601a" title=" " alt="" coords="272,13,483,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="517,28,483,28,483,23,517,23"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1dl_1_1DLProblem.html#aff72343036a34d6195ed0d67a28e47a8" title=" " alt="" coords="5,5,224,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="258,28,224,28,224,23,258,23"/>
+</map>

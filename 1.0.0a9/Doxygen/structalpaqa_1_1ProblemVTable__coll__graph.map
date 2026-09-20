@@ -1,0 +1,4 @@
+<map id="ProblemVTable&lt; Conf &gt;" name="ProblemVTable&lt; Conf &gt;">
+<area shape="rect" id="node1" title="Struct containing function pointers to all problem functions (like the objective and constraint funct..." alt="" coords="5,189,219,1117"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="49,5,175,141"/>
+</map>

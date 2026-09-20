@@ -1,0 +1,15 @@
+<map id="provides_eval_hess_ψ_prod" name="provides_eval_hess_ψ_prod">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="639,69,789,109"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1StructuredLBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="348,5,591,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="624,69,546,48,547,43,626,64"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1NewtonTRDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="369,69,569,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="625,92,570,92,570,87,625,87"/>
+<area shape="rect" id="Node000004" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="385,133,553,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="626,115,547,136,546,131,624,110"/>
+<area shape="rect" id="Node000005" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="177,115,231,141"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="371,147,231,133,232,128,372,141"/>
+<area shape="rect" id="Node000006" href="$alpaqa-driver_8cpp.html#aac67f64489af66b9fd58dcc6976f4d21" title=" " alt="" coords="108,165,300,190"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="372,165,300,171,300,166,371,159"/>
+<area shape="rect" id="Node000007" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,165,60,190"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="95,180,60,180,60,175,95,175"/>
+</map>

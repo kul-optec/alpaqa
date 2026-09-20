@@ -1,0 +1,549 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Inner solvers" href="inner-solvers.html" /><link rel="prev" title="Augmented Lagrangian solver" href="alm-solver.html" />
+
+    <link rel="shortcut icon" href="../../_static/alpaqa_favicon.png"/><!-- Generated with Sphinx 7.3.0 and Furo 2023.08.19 -->
+        <title>Functions and operators - alpaqa documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=a9f360ad" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">alpaqa  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/alpaqa_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">alpaqa  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../install/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage/getting-started.html">Getting started</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso.html">Lasso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/lasso-jax.html">Lasso JAX</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/nonlinear-regression.html">Nonlinear regression</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../examples/mpc/index.html">Model predictive control</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Model predictive control</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/hanging-chain.html">Hanging Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../examples/mpc/inverted-pendulum.html">Inverted Pendulum</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../python-api.html">Python API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Python API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/pyapi.html">High-level problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/panoc.html">Inner PANOC and ZeroFPR Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/pantr.html">Inner PANTR Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/alm.html">Outer ALM Solver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/problem.html">Problem formulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/functions.html">Functions and operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../python-api/casadi.html">CasADi Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../cpp-api.html">C++ API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of C++ API Reference</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="accelerators.html">Accelerators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="alm-solver.html">Augmented Lagrangian solver</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Functions and operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inner-solvers.html">Inner solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="direction-providers.html">Direction providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="problems.html">Problems</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contribution/index.html">How to contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="functions-and-operators">
+<h1>Functions and operators<a class="headerlink" href="#functions-and-operators" title="Link to this heading">#</a></h1>
+<dl>
+<dt class="sig sig-object cpp">
+<span class="target" id="group__grp__Functions"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">grp_Functions</span></span></dt>
+<dd><p>(Proximable) functions and operators. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv44prox">
+<span id="_CPPv34prox"></span><span id="_CPPv24prox"></span><span id="prox__alpaqa::prox_fn"></span><span class="target" id="group__grp__Functions_1ga252ffe26d1756b8448e4c71a42c38361"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv46alpaqa" title="alpaqa"><span class="n"><span class="pre">alpaqa</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa7prox_fnE" title="alpaqa::prox_fn"><span class="n"><span class="pre">prox_fn</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">prox</span></span></span><a class="headerlink" href="#_CPPv44prox" title="Link to this definition">#</a><br /></dt>
+<dd><p>Compute the proximal mapping. </p>
+<p><div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[ \begin{aligned}
+\mathrm{out} &amp;\leftarrow \prox_{\gamma\, \mathrm{func}}
+\left( \mathrm{in} \right).
+\end{aligned}
+\]</div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param func<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The proximable function <span class="math notranslate nohighlight">\( h : \Rn \to \Rn \)</span> to apply the proximal mapping of. </p>
+</dd>
+<dt class="field-even">Param in<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Input vector or matrix <span class="math notranslate nohighlight">\( x \)</span>, e.g. current iterate. </p>
+</dd>
+<dt class="field-odd">Param out<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[out]</strong> Proximal mapping of <span class="math notranslate nohighlight">\( (\gamma\, h) \)</span> at <span class="math notranslate nohighlight">\( x \)</span>. <span class="math notranslate nohighlight">\( \hat x \leftarrow \prox_{\gamma\, h}\left( x \right) \)</span></p>
+</dd>
+<dt class="field-even">Param γ<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Proximal step size <span class="math notranslate nohighlight">\( \gamma \)</span>. </p>
+</dd>
+<dt class="field-odd">Return<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The value of the function evaluated in the output, <span class="math notranslate nohighlight">\( h(\hat x) \)</span>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv49prox_step">
+<span id="_CPPv39prox_step"></span><span id="_CPPv29prox_step"></span><span id="prox_step__alpaqa::prox_step_fn"></span><span class="target" id="group__grp__Functions_1ga8310f2110bbe799073e0df9cfc147bcd"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv46alpaqa" title="alpaqa"><span class="n"><span class="pre">alpaqa</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa12prox_step_fnE" title="alpaqa::prox_step_fn"><span class="n"><span class="pre">prox_step_fn</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">prox_step</span></span></span><a class="headerlink" href="#_CPPv49prox_step" title="Link to this definition">#</a><br /></dt>
+<dd><p>Compute a generalized forward-backward step. </p>
+<p><div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{aligned}
+\mathrm{out} &amp;\leftarrow \prox_{\gamma\, \mathrm{func}}
+\left( \mathrm{in} + \gamma_\mathrm{fwd}\, \mathrm{fwd\_step} \right) \\
+\mathrm{fb\_step} &amp;\leftarrow \mathrm{out} - \mathrm{in}.
+\end{aligned}
+\end{split}\]</div>
+</div>
+ </p>
+<dl class="field-list simple">
+<dt class="field-odd">Param func<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The proximable function <span class="math notranslate nohighlight">\( h : \Rn \to \Rn \)</span> to apply the proximal mapping of. </p>
+</dd>
+<dt class="field-even">Param in<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Input vector or matrix <span class="math notranslate nohighlight">\( x \)</span>, e.g. current iterate. </p>
+</dd>
+<dt class="field-odd">Param fwd_step<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Step <span class="math notranslate nohighlight">\( d \)</span> to add to <span class="math notranslate nohighlight">\( x \)</span> before computing the proximal mapping. Scaled by <span class="math notranslate nohighlight">\( \gamma_\text{fwd} \)</span>. </p>
+</dd>
+<dt class="field-even">Param out<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[out]</strong> Proximal mapping of <span class="math notranslate nohighlight">\( (\gamma\, h) \)</span> at <span class="math notranslate nohighlight">\( x + \gamma_\text{fwd}\, d \)</span>. <span class="math notranslate nohighlight">\( \hat x \leftarrow \prox_{\gamma\, h}\left(
+             x + \gamma_\text{fwd}\, d \right) \)</span></p>
+</dd>
+<dt class="field-odd">Param fb_step<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[out]</strong> Forward-backward step <span class="math notranslate nohighlight">\( p \)</span>. <span class="math notranslate nohighlight">\( p = \hat x - \hat x \)</span></p>
+</dd>
+<dt class="field-even">Param γ<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>[in]</strong> Proximal step size <span class="math notranslate nohighlight">\( \gamma \)</span>. </p>
+</dd>
+<dt class="field-odd">Param γ_fwd<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>[in]</strong> Forward step size <span class="math notranslate nohighlight">\( \gamma_\mathrm{fwd} \)</span>. </p>
+</dd>
+<dt class="field-even">Return<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value of the function evaluated in the output, <span class="math notranslate nohighlight">\( h(\hat x) \)</span>. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I_6Config0EN6alpaqa9functions6L1NormE">
+<span id="_CPPv3I_6Config0EN6alpaqa9functions6L1NormE"></span><span id="_CPPv2I_6Config0EN6alpaqa9functions6L1NormE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Config</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Conf</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Weight</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa9functions6L1NormE" title="alpaqa::functions::L1Norm::Conf"><span class="n"><span class="pre">Conf</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">real_t</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structalpaqa_1_1functions_1_1L1Norm"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">L1Norm</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/functions/l1-norm.hpp&gt;</em></div>
+<p>ℓ₁-norm. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Weight</strong> – Type of weighting factors. Either scalar or vector. </p>
+</dd>
+</dl>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm8weight_tE">
+<span id="_CPPv3N6alpaqa9functions6L1Norm8weight_tE"></span><span id="_CPPv2N6alpaqa9functions6L1Norm8weight_tE"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1af4d5deb0d00c1986f02bbe1919e22580"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">weight_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa9functions6L1NormE" title="alpaqa::functions::L1Norm::Weight"><span class="n"><span class="pre">Weight</span></span></a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm6L1NormE8weight_t">
+<span id="_CPPv3N6alpaqa9functions6L1Norm6L1NormE8weight_t"></span><span id="_CPPv2N6alpaqa9functions6L1Norm6L1NormE8weight_t"></span><span id="alpaqa::functions::L1Norm::L1Norm__weight_t"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a70364205973476ae5f11df45d08f4fb2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">L1Norm</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa9functions6L1Norm8weight_tE" title="alpaqa::functions::L1Norm::weight_t"><span class="n"><span class="pre">weight_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">λ</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm6L1NormEv">
+<span id="_CPPv3N6alpaqa9functions6L1Norm6L1NormEv"></span><span id="_CPPv2N6alpaqa9functions6L1Norm6L1NormEv"></span><span id="alpaqa::functions::L1Norm::L1Norm"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a2c9d280ba9a1f1010d414d538be79dcf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">L1Norm</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp">
+<span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a5ba52195dd1c320e9ec41e70a6fe7022"></span><span class="sig-name descname"><span class="n"><span class="pre">L1Norm</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm4proxE5crmat4rmat6real_t">
+<span id="_CPPv3N6alpaqa9functions6L1Norm4proxE5crmat4rmat6real_t"></span><span id="_CPPv2N6alpaqa9functions6L1Norm4proxE5crmat4rmat6real_t"></span><span id="alpaqa::functions::L1Norm::prox__crmat.rmat.real_t"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a13759bd8f69e5fecd1281d305fb56e5f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">prox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crmatE" title="alpaqa::crmat"><span class="n"><span class="pre">crmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">in</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rmatE" title="alpaqa::rmat"><span class="n"><span class="pre">rmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">out</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm1λE">
+<span id="_CPPv3N6alpaqa9functions6L1Norm1λE"></span><span id="_CPPv2N6alpaqa9functions6L1Norm1λE"></span><span id="alpaqa::functions::L1Norm::λ__weight_t"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a74d39f864b451a568d43461819da98c8"></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa9functions6L1Norm8weight_tE" title="alpaqa::functions::L1Norm::weight_t"><span class="n"><span class="pre">weight_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">λ</span></span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm13scalar_weightE">
+<span id="_CPPv3N6alpaqa9functions6L1Norm13scalar_weightE"></span><span id="_CPPv2N6alpaqa9functions6L1Norm13scalar_weightE"></span><span id="alpaqa::functions::L1Norm::scalar_weight__b"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a92d359868af0853c26163323dc37b139"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scalar_weight</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">is_same_v</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4N6alpaqa9functions6L1Norm8weight_tE" title="alpaqa::functions::L1Norm::weight_t"><span class="n"><span class="pre">weight_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="p"><span class="pre">&gt;</span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions6L1Norm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER6L1Norm5crmat4rmat6real_t">
+<span id="_CPPv3N6alpaqa9functions6L1Norm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER6L1Norm5crmat4rmat6real_t"></span><span id="_CPPv2N6alpaqa9functions6L1Norm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER6L1Norm5crmat4rmat6real_t"></span><span id="alpaqa::functions::L1Norm::alpaqa_tag_invoke__tag_t:alpaqa::prox:.L1NormR.crmat.rmat.real_t"></span><span class="target" id="structalpaqa_1_1functions_1_1L1Norm_1a881ce018f0e4b97772008d36582cbd71"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">alpaqa_tag_invoke</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_RDaEN6alpaqa5tag_tE" title="alpaqa::tag_t"><span class="n"><span class="pre">tag_t</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../cpp-api.html#_CPPv46alpaqa" title="alpaqa"><span class="n"><span class="pre">alpaqa</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">prox</span></span><span class="p"><span class="pre">&gt;</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa9functions6L1NormE" title="alpaqa::functions::L1Norm"><span class="n"><span class="pre">L1Norm</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">self</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crmatE" title="alpaqa::crmat"><span class="n"><span class="pre">crmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">in</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rmatE" title="alpaqa::rmat"><span class="n"><span class="pre">rmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">out</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4I_6Config0EN6alpaqa9functions11NuclearNormE">
+<span id="_CPPv3I_6Config0EN6alpaqa9functions11NuclearNormE"></span><span id="_CPPv2I_6Config0EN6alpaqa9functions11NuclearNormE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Config</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Conf</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SVD</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa9functions10DefaultSVDE" title="alpaqa::functions::DefaultSVD"><span class="n"><span class="pre">DefaultSVD</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa9functions11NuclearNormE" title="alpaqa::functions::NuclearNorm::Conf"><span class="n"><span class="pre">Conf</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NuclearNorm</span></span></span><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;alpaqa/functions/nuclear-norm.hpp&gt;</em></div>
+<p>Nuclear norm (ℓ₁-norm of singular values). </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t"></span><span id="alpaqa::functions::NuclearNorm::NuclearNorm__real_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1a6efb74f61102dc6521390130e05f51e0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NuclearNorm</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">λ</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Construct without pre-allocation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t8length_t8length_t">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t8length_t8length_t"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t8length_t8length_t"></span><span id="alpaqa::functions::NuclearNorm::NuclearNorm__real_t.length_t.length_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1ace4779d195c27d80c180342d23d2e118"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NuclearNorm</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">λ</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">rows</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">cols</span></span><span class="sig-paren">)</span><br /></dt>
+<dd><p>Construct with pre-allocation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm4proxE5crmat4rmat6real_t">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm4proxE5crmat4rmat6real_t"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm4proxE5crmat4rmat6real_t"></span><span id="alpaqa::functions::NuclearNorm::prox__crmat.rmat.real_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1a13759bd8f69e5fecd1281d305fb56e5f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">prox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crmatE" title="alpaqa::crmat"><span class="n"><span class="pre">crmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">in</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rmatE" title="alpaqa::rmat"><span class="n"><span class="pre">rmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">out</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm1λE">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm1λE"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm1λE"></span><span id="alpaqa::functions::NuclearNorm::λ__real_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1af9aac65ea88bc60fdd222a9b90048281"></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">λ</span></span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm4rowsE">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm4rowsE"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm4rowsE"></span><span id="alpaqa::functions::NuclearNorm::rows__length_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1aa317638662d25a4f69612f08a3b46fb0"></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rows</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm4colsE">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm4colsE"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm4colsE"></span><span id="alpaqa::functions::NuclearNorm::cols__length_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1af9abc5299d7c2f35690323120f8798a5"></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa8length_tE" title="alpaqa::length_t"><span class="n"><span class="pre">length_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">cols</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm3svdE">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm3svdE"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm3svdE"></span><span id="alpaqa::functions::NuclearNorm::svd__SVD"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1a8f12ac0b4ff95063192d428b214afcc6"></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa9functions11NuclearNormE" title="alpaqa::functions::NuclearNorm::SVD"><span class="n"><span class="pre">SVD</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">svd</span></span></span><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm15singular_valuesE">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm15singular_valuesE"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm15singular_valuesE"></span><span id="alpaqa::functions::NuclearNorm::singular_values__vec"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1a1297542fe20304803060db21de13ead1"></span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa3vecE" title="alpaqa::vec"><span class="n"><span class="pre">vec</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">singular_values</span></span></span><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6alpaqa9functions11NuclearNorm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER11NuclearNorm5crmat4rmat6real_t">
+<span id="_CPPv3N6alpaqa9functions11NuclearNorm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER11NuclearNorm5crmat4rmat6real_t"></span><span id="_CPPv2N6alpaqa9functions11NuclearNorm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER11NuclearNorm5crmat4rmat6real_t"></span><span id="alpaqa::functions::NuclearNorm::alpaqa_tag_invoke__tag_t:alpaqa::prox:.NuclearNormR.crmat.rmat.real_t"></span><span class="target" id="structalpaqa_1_1functions_1_1NuclearNorm_1ad004f7f30e113956a8b20c0b9d72119a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">alpaqa_tag_invoke</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../cpp-api.html#_CPPv4I_RDaEN6alpaqa5tag_tE" title="alpaqa::tag_t"><span class="n"><span class="pre">tag_t</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../cpp-api.html#_CPPv46alpaqa" title="alpaqa"><span class="n"><span class="pre">alpaqa</span></span></a><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">prox</span></span><span class="p"><span class="pre">&gt;</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6Config0EN6alpaqa9functions11NuclearNormE" title="alpaqa::functions::NuclearNorm"><span class="n"><span class="pre">NuclearNorm</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">self</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa5crmatE" title="alpaqa::crmat"><span class="n"><span class="pre">crmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">in</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa4rmatE" title="alpaqa::rmat"><span class="n"><span class="pre">rmat</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">out</span></span>, <a class="reference internal" href="../cpp-api.html#_CPPv4I_6ConfigEN6alpaqa6real_tE" title="alpaqa::real_t"><span class="n"><span class="pre">real_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">γ</span></span><span class="sig-paren">)</span><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="inner-solvers.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Inner solvers</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="alm-solver.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Augmented Lagrangian solver</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2021, Pieter Pas
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Functions and operators</a><ul>
+<li><a class="reference internal" href="#_CPPv44prox"><code class="docutils literal notranslate"><span class="pre">prox</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv49prox_step"><code class="docutils literal notranslate"><span class="pre">prox_step</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I_6Config0EN6alpaqa9functions6L1NormE"><code class="docutils literal notranslate"><span class="pre">L1Norm</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm8weight_tE"><code class="docutils literal notranslate"><span class="pre">L1Norm::weight_t</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm6L1NormE8weight_t"><code class="docutils literal notranslate"><span class="pre">L1Norm::L1Norm()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm6L1NormEv"><code class="docutils literal notranslate"><span class="pre">L1Norm::L1Norm()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm4proxE5crmat4rmat6real_t"><code class="docutils literal notranslate"><span class="pre">L1Norm::prox()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm1λE"><code class="docutils literal notranslate"><span class="pre">L1Norm::λ</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm13scalar_weightE"><code class="docutils literal notranslate"><span class="pre">L1Norm::scalar_weight</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions6L1Norm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER6L1Norm5crmat4rmat6real_t"><code class="docutils literal notranslate"><span class="pre">L1Norm::alpaqa_tag_invoke()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#_CPPv4I_6Config0EN6alpaqa9functions11NuclearNormE"><code class="docutils literal notranslate"><span class="pre">NuclearNorm</span></code></a><ul>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::NuclearNorm()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm11NuclearNormE6real_t8length_t8length_t"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::NuclearNorm()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm4proxE5crmat4rmat6real_t"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::prox()</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm1λE"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::λ</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm4rowsE"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::rows</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm4colsE"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::cols</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm3svdE"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::svd</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm15singular_valuesE"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::singular_values</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4N6alpaqa9functions11NuclearNorm17alpaqa_tag_invokeE5tag_tIN6alpaqa4proxEER11NuclearNorm5crmat4rmat6real_t"><code class="docutils literal notranslate"><span class="pre">NuclearNorm::alpaqa_tag_invoke()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script>window.MathJax = {"tex": {"macros": {"Reals": "{\\mathrm{I\\!R}}", "Nats": "{\\mathrm{I\\!N}}", "Cplx": "{\\mathbb{C}}", "R": "{\\Reals}", "N": "{\\Nats}", "C": "{\\Cplx}", "Rn": "{\\Reals^n}", "Rm": "{\\Reals^m}", "gph": "{\\operatorname{\\mathbf{gph}}}", "zer": "{\\operatorname{\\mathbf{zer}}}", "fix": "{\\operatorname{\\mathbf{fix}}}", "minimize": "{\\operatorname*{\\mathbf{minimize}}}", "st": "{\\operatorname*{\\mathbf{s.\\!t.}}}", "argmin": "{\\operatorname*{\\mathbf{arg\\,min}}}", "argmax": "{\\operatorname*{\\mathbf{arg\\,max}}}", "subjto": "{\\operatorname*{\\mathbf{subject\\;to}}}", "prox": "{\\operatorname{\\mathbf{prox}}}", "Hilb": "{\\mathcal{H}}", "proj": ["{\\operatorname{\\mathbf{\\Pi}_\\mathnormal{#1}}}", 1], "dist": "{\\operatorname{\\mathbf{dist}}}", "Id": "{\\mathrm{Id}}", "I": "{\\mathrm{I}}", "one": "{\\mathbf{1}}", "defeq": "{\\triangleq}", "inprod": ["{\\left\\langle {#1} \\,\\middle|\\, {#2} \\right\\rangle}", 2], "norm": ["{\\left\\| {#1} \\vphantom{X} \\right\\|}", 1], "normsq": ["{\\norm{#1}^2}", 1], "defset": ["{\\left\\{ {#1} \\;\\middle|\\; {#2} \\right\\}}", 2], "tp": ["{#1^\\top}", 1], "ttp": ["{#1^{\\!\\top\\!}}", 1], "herm": ["{#1^\\mathrm{H}}", 1], "invherm": ["{#1^{-\\mathrm{H}}}", 1], "inv": ["{#1^{-1}}", 1], "pinv": ["{#1^\\dagger}", 1], "lconj": "{\\overline}", "sconj": ["{#1^*}", 1], "iddots": "{\\mathinner{\\kern1mu\\raise1pt{.}\\kern2mu\\raise4pt{.}\\kern2mu\\raise7pt{\\Rule{0pt}{7pt}{0pt}.}\\kern1mu}}", "imagfun": ["{\\left(#1\\right)\\left(#2\\right)}", 2], "Lagr": "{\\mathcal{L}}", "jac": "{\\mathrm{J}}", "dft": "{\\operatorname{\\mathbf{dft}}}", "cbrt": ["{\\sqrt[3]{#1}}", 1], "sgn": "{\\operatorname{\\mathbf{sgn}}}", "setmap": "{\\rightrightarrows}", "lammin": "{\\lambda_\\text{min}}", "lammax": "{\\lambda_\\text{max}}", "Sc": "{\\mathcal{S}}", "Scstar": "{\\mathcal{S}^*}", "diag": "{\\operatorname{\\mathbf{diag}}}", "blkdiag": "{\\operatorname{\\mathbf{blkdiag}}}", "posdef": "{\\succ}", "possdef": "{\\succeq}", "half": "{\\tfrac{1}{2}}", "hhbar": "{\\hbar}", "barxuk": "{\\bar x^k\\!, \\bar u^k}"}, "packages": ["base", "configmacros", "newcommand", "ams"], "tags": "ams"}, "loader": {"load": ["[tex]/newcommand"]}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

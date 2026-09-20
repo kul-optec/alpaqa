@@ -1,0 +1,13 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,104,116,129"/>
+<area shape="rect" id="Node000001" href="$structalpaqa_1_1csv_1_1read__error.html" title=" " alt="" coords="193,5,283,31"/>
+<area shape="poly" id="edge25_Node000000_Node000001" title=" " alt="" coords="85,93,121,66,163,40,192,27,194,32,165,44,124,70,88,97"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1cutest_1_1function__call__error.html" title=" " alt="" coords="167,55,309,80"/>
+<area shape="poly" id="edge26_Node000000_Node000002" title=" " alt="" coords="119,98,191,78,192,83,121,103"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1cutest_1_1function__load__error.html" title=" " alt="" coords="164,104,312,129"/>
+<area shape="poly" id="edge27_Node000000_Node000003" title=" " alt="" coords="130,114,164,114,164,119,130,119"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1dl_1_1function__load__error.html" title=" " alt="" coords="164,153,312,179"/>
+<area shape="poly" id="edge28_Node000000_Node000004" title=" " alt="" coords="121,131,192,151,191,156,119,136"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1dl_1_1invalid__abi__error.html" title=" " alt="" coords="173,203,303,228"/>
+<area shape="poly" id="edge29_Node000000_Node000005" title=" " alt="" coords="89,136,124,162,165,188,195,200,192,205,163,192,121,167,86,140"/>
+</map>

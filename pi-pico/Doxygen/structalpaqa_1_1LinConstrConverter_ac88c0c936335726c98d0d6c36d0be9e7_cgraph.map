@@ -1,0 +1,7 @@
+<map id="is_bound" name="is_bound">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,85,56"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LinConstrConverter.html#aa7668b0df53654f4f6681905b9f49453" title="Check if the variable with the given index has bound constraints, i.e." alt="" coords="133,5,213,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,33,119,26,120,31,86,38"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LinConstrConverter.html#ae35a83e95a5485a85e308b70499633d7" title=" " alt="" coords="137,55,210,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="86,48,124,55,123,61,85,53"/>
+</map>

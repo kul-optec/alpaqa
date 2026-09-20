@@ -1,0 +1,11 @@
+<map id="Rk_prod" name="Rk_prod">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,92,80,117"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="163,5,346,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="56,90,87,65,127,41,151,32,153,37,129,46,90,69,59,94"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedControlProblem.html#a20f8fadf0aeb2daf8695db68f3d50865" title="." alt="" coords="128,55,381,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="80,97,114,92,115,97,81,102"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1OCPVariables.html#ad2e98c60f4f2abe43a52aea5afc9bad4" title=" " alt="" coords="162,120,347,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="81,107,149,116,148,121,80,112"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1OCPVariables.html#ad17879d70c1e3a6e1709166481bdc8c6" title=" " alt="" coords="158,169,351,195"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="63,116,93,136,129,154,157,163,155,168,127,159,90,140,60,120"/>
+</map>

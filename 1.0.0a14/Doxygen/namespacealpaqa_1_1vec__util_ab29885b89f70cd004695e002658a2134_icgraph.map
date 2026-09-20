@@ -1,0 +1,19 @@
+<map id="norm_inf" name="norm_inf">
+<area shape="rect" id="Node000001" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="503,109,583,134"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="240,5,455,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="515,102,486,80,453,60,425,48,427,43,456,55,489,75,518,97"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="268,69,427,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="489,115,427,105,427,100,489,110"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="254,133,441,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="489,133,441,141,441,135,488,127"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1ALMSolver.html#addcbcd08131cd8fb2d837cdbe59a51ff" title=" " alt="" coords="272,212,423,252"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="517,145,456,188,402,214,399,210,453,183,514,141"/>
+<area shape="rect" id="Node000004" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="71,62,126,87"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="254,87,126,79,126,74,255,81"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1PANOCOCPSolver.html#ab2cdbacaa27c59db09315b64cab7edee" title=" " alt="" coords="5,112,192,152"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="240,147,192,143,192,137,241,142"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="5,176,192,216"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="241,174,192,183,192,177,240,169"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1ALMSolver.html#abf8cdbf0da02bdb631d4c6701b9c7100" title=" " alt="" coords="23,240,174,280"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="259,245,175,254,174,249,258,239"/>
+</map>

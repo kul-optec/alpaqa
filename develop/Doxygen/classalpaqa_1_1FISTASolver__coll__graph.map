@@ -1,0 +1,9 @@
+<map id="FISTASolver&lt; Conf &gt;" name="FISTASolver&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title="FISTA solver for ALM." alt="" coords="98,531,281,756"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="5,208,184,468"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="137,467,152,514,147,516,132,469"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="6,5,183,145"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,146,97,192,92,192,92,146"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AtomicStopSignal.html" title=" " alt="" coords="209,245,362,431"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="259,432,232,516,227,514,254,430"/>
+</map>

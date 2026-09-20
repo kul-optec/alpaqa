@@ -1,0 +1,15 @@
+<map id="check_gradients" name="check_gradients">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,133,105"/>
+<area shape="rect" id="Node000002" href="$gradient-checker_8cpp.html#a01cd2b951d8115e3920b93b396b87bab" title=" " alt="" coords="218,5,301,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,77,180,40,204,31,206,36,182,44,97,82"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#a31be8f13628905b1658a429d7e12c6ce" title=" " alt="" coords="199,55,319,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="133,82,185,75,186,80,134,87"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#ae50af6bf82d3c0cc4093c46b8e2c4379" title=" " alt="" coords="186,104,333,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="134,98,173,103,172,108,133,103"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa.html#ae1ca57ced38bc4270939845243045212" title=" " alt="" coords="181,153,337,179"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="99,103,182,138,205,146,203,151,180,143,97,108"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="385,104,559,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="333,114,372,114,372,119,333,119"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="607,97,753,137"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="559,114,593,114,593,119,559,119"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="provides_get_box_D" name="provides_get_box_D">
+<area shape="rect" id="node1" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="399,77,553,102"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1StructuredLBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="108,5,351,45"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1StructuredNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="134,69,325,109"/>
+<area shape="rect" id="node4" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="145,133,313,173"/>
+<area shape="rect" id="node5" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,141,60,166"/>
+</map>

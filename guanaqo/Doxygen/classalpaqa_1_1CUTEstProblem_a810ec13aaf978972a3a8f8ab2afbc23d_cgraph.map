@@ -1,0 +1,9 @@
+<map id="eval_augmented_lagrangian_hessian_product" name="eval_augmented_lagrangian_hessian_product">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,212,95"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CUTEstProblem.html#a06afe342b1e278861fed32bbb5473769" title=" " alt="" coords="304,5,433,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,53,296,31,298,36,201,58"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CUTEstProblem.html#a1a47b44d6f292a7a60456c74f238898c" title=" " alt="" coords="277,55,460,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,73,264,73,264,78,212,78"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1BoxConstrProblem.html#ab3a3226e7a004736ec4dde55c636c3f5" title=" " alt="" coords="260,119,477,189"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="176,93,248,115,246,120,175,98"/>
+</map>

@@ -1,0 +1,60 @@
+<map id="join" name="join">
+<area shape="rect" id="Node000001" title="Join the list of strings into a single string, using the separator given by opt." alt="" coords="1308,639,1355,664"/>
+<area shape="rect" id="Node000002" href="$alpaqa-driver_8cpp.html#a3430011226186bf05d5c2552270587b7" title=" " alt="" coords="263,5,405,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1325,626,1317,567,1302,486,1278,391,1244,292,1223,244,1198,199,1170,158,1138,121,1102,90,1062,67,1018,53,970,47,733,47,556,41,405,28,406,23,556,35,733,42,970,42,1020,47,1065,62,1105,86,1142,117,1174,154,1202,196,1227,242,1249,290,1283,390,1307,485,1322,566,1330,625"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1params_1_1detail.html#a6aa41a8827ffd36b3e2a8e7346a44f19" title=" " alt="" coords="1092,474,1260,514"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1306,631,1195,516,1199,513,1310,627"/>
+<area shape="rect" id="Node000019" href="$namespaceanonymous__namespace_02panoc-driver_8cpp_03.html#ab2ca1091ea82102367666b62756cd7f6" title=" " alt="" coords="5,509,192,564"/>
+<area shape="poly" id="edge32_Node000001_Node000019" title=" " alt="" coords="1294,654,970,654,524,654,473,652,422,645,322,623,232,595,160,567,162,562,234,590,324,618,423,640,474,646,524,649,970,649,1294,649"/>
+<area shape="rect" id="Node000020" href="$namespaceanonymous__namespace_02pantr-driver_8cpp_03.html#a39b6aa8ff07d8400d404f191bdccd499" title=" " alt="" coords="7,588,191,643"/>
+<area shape="poly" id="edge33_Node000001_Node000020" title=" " alt="" coords="1295,665,1261,673,1116,698,1052,703,970,705,524,705,443,704,380,700,318,690,239,673,159,645,161,640,241,667,319,685,381,695,443,699,524,699,970,699,1052,698,1115,692,1259,667,1294,659"/>
+<area shape="rect" id="Node000024" href="$namespacealpaqa_1_1params.html#a69b913c0b571487490ebb19fc9120021" title="Use s to index into the struct type T and overwrite the attribute given by s.key." alt="" coords="1101,739,1251,779"/>
+<area shape="poly" id="edge34_Node000001_Node000024" title=" " alt="" coords="1312,677,1289,700,1262,723,1229,742,1226,737,1258,718,1285,696,1308,673"/>
+<area shape="rect" id="Node000003" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="71,55,126,80"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="260,36,127,64,126,59,259,31"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1params.html#af3ba03bed80f69ff9920df80e5223601" title="Update/overwrite the first argument based on the JSON object j." alt="" coords="893,374,1044,414"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="1120,470,1010,416,1012,412,1122,465"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1params_1_1attribute__accessor_3_01T_00_01ParamString_01_4.html#a97c17f02521c64971107172f3dd8ac33" title=" " alt="" coords="636,288,832,343"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="895,372,815,345,817,340,896,367"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1params_1_1attribute__accessor_3_01T_00_01json_01_4.html#a97c17f02521c64971107172f3dd8ac33" title=" " alt="" coords="623,367,845,421"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="880,397,845,397,845,391,880,391"/>
+<area shape="rect" id="Node000008" href="$namespacealpaqa_1_1params.html#af8d85f5413c4507303b00e5fb7279aea" title=" " alt="" coords="659,446,809,486"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="893,421,846,435,803,448,801,443,845,430,891,416"/>
+<area shape="rect" id="Node000009" href="$namespacealpaqa_1_1params.html#a257fd29e6f4f447cb00eb1f8affdebec" title=" " alt="" coords="659,510,809,550"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="941,426,899,465,847,500,811,515,809,511,844,496,895,460,937,422"/>
+<area shape="rect" id="Node000010" href="$namespacealpaqa_1_1params.html#a09b0cea46e22a098adb003df71cfbe14" title=" " alt="" coords="659,574,809,614"/>
+<area shape="poly" id="edge9_Node000005_Node000010" title=" " alt="" coords="954,428,912,497,882,533,847,564,811,582,808,577,844,560,878,530,908,494,950,425"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1params.html#ac4f7014f0993230c417d5f192b784f6a" title=" " alt="" coords="659,109,809,149"/>
+<area shape="poly" id="edge10_Node000005_Node000011" title=" " alt="" coords="956,362,942,316,919,263,886,209,866,184,844,163,809,144,811,139,847,159,870,181,891,206,923,260,947,315,962,360"/>
+<area shape="rect" id="Node000012" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="476,237,575,263"/>
+<area shape="poly" id="edge11_Node000005_Node000012" title=" " alt="" coords="943,365,901,318,874,295,844,278,810,265,774,255,701,245,632,243,575,247,575,241,632,238,701,240,775,250,812,260,846,273,877,291,905,314,947,361"/>
+<area shape="rect" id="Node000023" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="659,173,809,213"/>
+<area shape="poly" id="edge30_Node000005_Node000023" title=" " alt="" coords="949,364,906,298,877,263,844,234,808,214,811,210,847,229,881,260,911,295,953,361"/>
+<area shape="poly" id="edge16_Node000012_Node000002" title=" " alt="" coords="517,224,507,184,489,135,463,86,446,63,426,44,404,31,407,27,430,40,450,60,467,83,494,133,512,183,522,223"/>
+<area shape="rect" id="Node000013" href="$alpaqa-driver_8cpp.html#a53c823aeddf0a1b037645504d26ee7cd" title=" " alt="" coords="267,104,401,129"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="507,228,474,184,451,162,427,143,401,131,403,126,429,138,455,158,478,180,511,224"/>
+<area shape="rect" id="Node000014" href="$alpaqa-driver_8cpp.html#a62667720f096806ed08c60e4207f8972" title=" " alt="" coords="261,55,407,80"/>
+<area shape="poly" id="edge14_Node000012_Node000014" title=" " alt="" coords="513,225,500,194,482,159,457,123,426,93,405,82,408,77,430,89,461,120,486,156,505,192,518,223"/>
+<area shape="rect" id="Node000015" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#ab42fb3dc0421d6c6c1f45d753a95a2c4" title=" " alt="" coords="244,357,424,412"/>
+<area shape="poly" id="edge17_Node000012_Node000015" title=" " alt="" coords="497,273,375,359,372,355,494,268"/>
+<area shape="rect" id="Node000016" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="307,436,361,461"/>
+<area shape="poly" id="edge19_Node000012_Node000016" title=" " alt="" coords="519,276,507,310,489,350,463,391,430,425,396,442,362,450,361,444,394,437,426,421,459,388,484,348,502,308,514,275"/>
+<area shape="rect" id="Node000017" href="$alm-driver_8hpp.html#ae4ef291d9ec9d55ee804b5723ea2e641" title=" " alt="" coords="265,537,403,563"/>
+<area shape="poly" id="edge20_Node000012_Node000017" title=" " alt="" coords="525,276,517,327,501,392,473,460,454,492,430,520,399,540,396,535,426,516,449,489,469,458,496,390,512,326,519,276"/>
+<area shape="rect" id="Node000018" href="$namespaceanonymous__namespace_02fista-driver_8cpp_03.html#a479d5f0dacbf404f04a694bb1be6f6c5" title=" " alt="" coords="7,268,190,323"/>
+<area shape="poly" id="edge24_Node000012_Node000018" title=" " alt="" coords="463,266,428,271,304,285,190,293,190,288,304,280,428,266,462,260"/>
+<area shape="poly" id="edge28_Node000012_Node000019" title=" " alt="" coords="523,277,514,321,497,374,470,429,452,453,430,475,389,495,329,510,193,531,192,526,328,505,387,490,426,470,448,450,465,426,492,372,509,319,518,276"/>
+<area shape="poly" id="edge29_Node000012_Node000020" title=" " alt="" coords="528,276,526,339,514,421,502,464,484,506,460,545,430,577,404,596,375,610,313,628,249,634,191,632,191,627,249,628,312,622,373,605,401,591,426,573,456,541,479,504,497,462,509,420,521,338,522,276"/>
+<area shape="rect" id="Node000021" href="$namespaceanonymous__namespace_02fista-driver_8cpp_03.html#a6f96d677b5961c6a4fcaa773f37ca65b" title=" " alt="" coords="240,203,428,257"/>
+<area shape="poly" id="edge25_Node000012_Node000021" title=" " alt="" coords="462,246,428,242,428,237,463,241"/>
+<area shape="rect" id="Node000022" href="$alm-driver_8hpp.html#a51b2a2cde56762bcb43a2f4da0913f98" title=" " alt="" coords="261,153,407,179"/>
+<area shape="poly" id="edge27_Node000012_Node000022" title=" " alt="" coords="495,232,463,211,427,192,395,181,396,176,429,188,466,206,498,227"/>
+<area shape="poly" id="edge13_Node000013_Node000003" title=" " alt="" coords="259,104,126,75,127,70,260,99"/>
+<area shape="poly" id="edge15_Node000014_Node000003" title=" " alt="" coords="247,70,126,70,126,65,247,65"/>
+<area shape="poly" id="edge18_Node000015_Node000015" title=" " alt="" coords="365,346,354,339,334,336,317,338,307,343,302,349,302,357,297,357,297,347,303,338,316,333,334,331,356,334,368,342"/>
+<area shape="poly" id="edge21_Node000017_Node000018" title=" " alt="" coords="303,531,238,475,169,395,117,325,121,322,173,392,242,471,306,527"/>
+<area shape="poly" id="edge22_Node000017_Node000019" title=" " alt="" coords="251,548,192,545,192,539,251,543"/>
+<area shape="poly" id="edge23_Node000017_Node000020" title=" " alt="" coords="275,569,192,592,190,587,273,564"/>
+<area shape="poly" id="edge26_Node000021_Node000018" title=" " alt="" coords="227,262,191,273,189,267,226,257"/>
+<area shape="poly" id="edge31_Node000023_Node000012" title=" " alt="" coords="648,219,573,240,572,235,647,214"/>
+</map>

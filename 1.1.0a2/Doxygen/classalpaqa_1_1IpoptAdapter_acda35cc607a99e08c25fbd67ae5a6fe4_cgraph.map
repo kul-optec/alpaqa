@@ -1,0 +1,24 @@
+<map id="IpoptAdapter" name="IpoptAdapter">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,203,112,228"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1IpoptAdapter.html#a9470016372b9d32ab822192f2bf980ee" title=" " alt="" coords="199,5,261,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="61,201,73,169,93,126,121,80,158,40,184,26,187,30,162,44,126,83,98,128,78,171,66,203"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1IpoptAdapter.html#a304ed61b79e02e6b4d18500bd2ba63b8" title=" " alt="" coords="197,55,263,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="65,201,100,148,127,116,159,89,183,76,185,81,161,94,131,120,105,151,69,204"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1IpoptAdapter.html#a32b41ff45ea1fc9ce5fa895cd6fe3835" title=" " alt="" coords="181,104,279,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="73,200,110,170,159,138,172,132,174,137,161,143,114,174,76,204"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1IpoptAdapter.html#a4061f7ec3e2272961f562e449bc32621" title=" " alt="" coords="197,153,263,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="103,200,184,176,185,182,104,205"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1IpoptAdapter.html#aa33a228364694e6a36d5fbbd4e1e32be" title=" " alt="" coords="185,203,275,228"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="112,213,171,213,171,218,112,218"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1IpoptAdapter.html#ac535cca6551dc162a1eeed0e75e4ee43" title=" " alt="" coords="166,252,294,277"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="104,225,172,245,171,250,103,231"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1IpoptAdapter.html#a6a12b21a35ced53a439bfa2510029237" title=" " alt="" coords="165,301,295,327"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="76,226,114,256,161,286,177,294,175,299,159,291,111,260,73,230"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1IpoptAdapter.html#a9eaf7ceaf6c5549371845b11c0ed305b" title=" " alt="" coords="179,351,281,376"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="70,227,105,279,131,309,162,336,173,343,170,347,158,340,127,313,101,283,65,230"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1IpoptAdapter.html#a4c2c8886e89d11b70c9063eb5727fb01" title=" " alt="" coords="160,400,300,425"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="67,227,78,259,98,301,126,346,162,385,170,391,167,396,158,389,122,349,93,304,73,261,62,229"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa.html#a9c0fe4aab3b62a12106dd1e6834a7231" title="Convert a std::span to an Eigen::Vector view." alt="" coords="348,179,467,204"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="263,168,335,178,334,184,263,173"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="275,207,334,199,334,204,276,212"/>
+</map>

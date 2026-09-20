@@ -1,0 +1,12 @@
+<map id="ring_iter" name="ring_iter">
+<area shape="rect" id="node1" title="Get iterators in the circular buffer." alt="" coords="1009,81,1085,108"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#a129a6d7bacdc8362a3c7bcbdca662742" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="464,97,651,138"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#aa422d549bc3e631fa73047a8bfe4a5e5" title="Get reverse iterators in the circular buffer." alt="" coords="829,5,961,32"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#a7a60dfe0a5f68bc1efec69e406a2b619" title="Solve the least squares problem Ax = b." alt="" coords="699,48,781,75"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1LimitedMemoryQR.html#adf11f99cb8b119423c86498dbaab9820" title="Multiply the matrix R by a scalar." alt="" coords="704,160,776,187"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title=" " alt="" coords="245,94,416,135"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="245,159,416,201"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1PANOCDirection_3_01AndersonAccel_01_4.html#a8cd152877142b9d307953209d5428969" title=" " alt="" coords="5,94,197,135"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LimitedMemoryQR.html#a9ec3e86c6cbb239ba0642378b564af41" title="Solve the least squares problem AX = B." alt="" coords="529,44,586,71"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LimitedMemoryQR.html#a5f3732971788e558366a2b509a538206" title="Solve the least squares problem AX = B." alt="" coords="302,43,359,69"/>
+</map>

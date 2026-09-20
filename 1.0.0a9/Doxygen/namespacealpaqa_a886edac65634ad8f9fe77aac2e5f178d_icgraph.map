@@ -1,0 +1,20 @@
+<map id="check_finiteness" name="check_finiteness">
+<area shape="rect" id="node1" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="460,429,591,454"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="217,133,411,173"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedControlProblem.html#a7013162709e225328ff8b61da8636a6e" title="Gradient&#45;vector product of discrete&#45;time dynamics ." alt="" coords="216,325,412,365"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedControlProblem.html#a9412e49fd073645733eb50f1e93b889a" title="Stage output mapping ." alt="" coords="217,197,411,237"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedControlProblem.html#af14bea7b59a44b2bbf009de9aa3ff3a7" title="Terminal output mapping ." alt="" coords="217,261,411,301"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1TypeErasedControlProblem.html#a04ec9deb270c165a338e9b6a0ec835b6" title="Jacobian of discrete&#45;time dynamics ." alt="" coords="217,453,411,493"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1TypeErasedControlProblem.html#a676d1700119cbb315a5a7e799689ca0e" title="Stage cost ." alt="" coords="217,5,411,45"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1TypeErasedControlProblem.html#a62f0734c14da4c35d7504c1c6fd4e255" title="Terminal cost ." alt="" coords="217,69,411,109"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1TypeErasedControlProblem.html#ab9cabb848940c9fea90232ebdca27f5a" title="Terminal cost gradient w.r.t." alt="" coords="217,389,411,429"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1TypeErasedControlProblem.html#ab3ec4e9f2f25b43d158ce3744ccc6f34" title="Initial state ." alt="" coords="217,517,411,557"/>
+<area shape="rect" id="node14" href="$structalpaqa_1_1OCPEvaluator.html#ac7a042acaf800ba78e029229c09a650e" title=" " alt="" coords="219,582,409,607"/>
+<area shape="rect" id="node15" href="$structalpaqa_1_1OCPEvaluator.html#a5fa1750865bfb54072049e5acaa85e52" title=" " alt="" coords="220,631,408,657"/>
+<area shape="rect" id="node16" href="$structalpaqa_1_1OCPEvaluator.html#af2168f996a43777dd54f11ec99f9cbd9" title=" " alt="" coords="233,681,395,721"/>
+<area shape="rect" id="node17" href="$structalpaqa_1_1OCPEvaluator.html#a832b6879e9ba1e10af2db41a10d74db5" title=" " alt="" coords="221,746,407,771"/>
+<area shape="rect" id="node18" href="$structalpaqa_1_1OCPEvaluator.html#ac564caeba638785c351f33ffe40339f3" title=" " alt="" coords="233,796,395,836"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1OCPEvaluator.html#aa390f28c24f187326b60eedd7ff4fe66" title=" " alt="" coords="5,133,168,173"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1OCPEvaluator.html#a02a290de7f57c49cbc1ce72fbd8a69b3" title=" " alt="" coords="5,197,168,237"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1OCPEvaluator.html#aac26fb1e500caabcd837ef0b1e48b035" title=" " alt="" coords="5,357,168,397"/>
+</map>

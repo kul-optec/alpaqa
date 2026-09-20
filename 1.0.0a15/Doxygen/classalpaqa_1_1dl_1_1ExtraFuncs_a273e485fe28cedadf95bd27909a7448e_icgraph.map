@@ -1,0 +1,15 @@
+<map id="extra_func" name="extra_func">
+<area shape="rect" id="Node000001" title=" " alt="" coords="483,77,573,102"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a5d9869864258e53a69bf9f419cd21a77" title=" " alt="" coords="265,27,435,53"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="468,76,396,55,398,50,470,71"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a21b1342c38b8fd3409ad0a80a134b34d" title=" " alt="" coords="265,77,435,102"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="469,92,435,92,435,87,469,87"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a21e49a1fa61f8fea5ac4cab66c678b1f" title=" " alt="" coords="265,126,435,151"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="470,108,398,128,396,123,468,103"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1dl_1_1DLProblem.html#accae698118d338bfb57705e6a27d9561" title=" " alt="" coords="29,5,194,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="288,76,186,48,187,43,289,70"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1dl_1_1DLControlProblem.html#accae698118d338bfb57705e6a27d9561" title=" " alt="" coords="5,69,217,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="251,92,218,92,218,87,251,87"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1dl_1_1DLControlProblem.html#a79b15472c5450095cb80df60b65b851b" title=" " alt="" coords="5,133,217,173"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="289,108,187,136,186,131,288,103"/>
+</map>

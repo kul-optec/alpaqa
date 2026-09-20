@@ -1,0 +1,15 @@
+<map id="count_problem" name="count_problem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,151,124,176"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="31,152,23,142,27,132,41,126,65,124,94,128,105,137,102,141,92,133,65,129,43,131,31,136,28,142,35,149"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a16ff8d368c2e7583983228eb98cba531" title=" " alt="" coords="221,29,326,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="74,149,114,107,141,85,171,65,206,51,208,56,173,70,144,89,117,111,78,152"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#ae0ffecc22b09ce70fb1fe663c0255018" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="172,79,375,119"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="106,148,194,121,195,126,108,153"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a193ee88bf3ca51034ff602e30882edd7" title="[Optional] Get the rectangular constraint set of the general constraint function, ." alt="" coords="172,143,375,183"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="124,161,158,161,158,166,124,166"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#a23a7eb67244853ec477fceda3be3cc2a" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="172,207,375,247"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="108,174,195,201,194,206,106,179"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="172,271,375,311"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="79,175,118,215,145,238,173,257,186,263,183,268,171,262,141,242,115,219,75,178"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="239,31,232,21,236,11,250,5,273,3,302,6,314,15,310,20,300,11,273,8,251,10,239,15,237,20,243,28"/>
+</map>

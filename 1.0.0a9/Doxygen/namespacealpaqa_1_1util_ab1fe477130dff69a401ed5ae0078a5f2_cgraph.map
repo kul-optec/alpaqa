@@ -1,0 +1,5 @@
+<map id="sparse_matvec_add_transpose_masked_rows" name="sparse_matvec_add_transpose_masked_rows">
+<area shape="rect" id="node1" title="out += S(mask,:)ᵀ * v(mask);" alt="" coords="5,5,228,45"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util_1_1detail.html#a363a373e4888017ca42c9d0f4650b770" title="Returns a range over the row indices in the given column of sp_mat that are also in mask." alt="" coords="276,5,428,45"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util.html#afddf99e09d9dad4ee17b5f41705c583a" title=" " alt="" coords="476,13,631,38"/>
+</map>

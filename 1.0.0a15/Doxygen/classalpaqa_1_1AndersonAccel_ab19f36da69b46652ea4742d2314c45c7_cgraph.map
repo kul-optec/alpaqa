@@ -1,0 +1,9 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="Node000001" title="Call this function on the first iteration to initialize the accelerator." alt="" coords="5,35,84,60"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1AndersonAccel.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the problem dimension." alt="" coords="211,5,249,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,39,197,20,197,26,85,44"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="132,55,328,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="85,51,119,56,118,61,84,56"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#a727afc7a58d2e44ae7add57e3fa77bc6" title=" " alt="" coords="376,5,588,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="250,15,362,15,362,21,250,21"/>
+</map>

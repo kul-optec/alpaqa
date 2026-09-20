@@ -1,0 +1,20 @@
+<map id="src/alpaqa/include/alpaqa/functions/prox.hpp" name="src/alpaqa/include/alpaqa/functions/prox.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="417,5,611,45"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="319,93,499,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="490,48,437,87,434,83,487,43"/>
+<area shape="rect" id="Node000008" href="$tag-invoke_8hpp.html" title=" " alt="" coords="526,93,718,119"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="542,43,596,83,593,87,539,48"/>
+<area shape="rect" id="Node000003" href="$quadmath-print_8hpp.html" title=" " alt="" coords="5,167,167,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="362,121,177,166,176,161,361,116"/>
+<area shape="rect" id="Node000004" href="$quadmath_8hpp.html" title=" " alt="" coords="191,167,352,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="390,121,318,162,315,157,387,117"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="377,174,435,199"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="411,119,410,160,404,160,406,119"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="576,174,668,199"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="441,116,579,167,577,172,439,121"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="460,174,552,199"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="425,117,483,163,479,167,421,121"/>
+<area shape="poly" id="edge8_Node000008_Node000006" title=" " alt="" coords="625,119,625,160,619,160,619,119"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="692,174,752,199"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="638,117,698,163,695,167,635,121"/>
+</map>

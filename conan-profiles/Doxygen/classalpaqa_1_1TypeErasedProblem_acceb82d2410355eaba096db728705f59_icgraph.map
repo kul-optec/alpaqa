@@ -1,0 +1,16 @@
+<map id="provides_get_general_bounds" name="provides_get_general_bounds">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of get_general_bounds." alt="" coords="751,73,913,113"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02problem-loader_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="523,29,703,84"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="737,80,702,74,703,69,738,75"/>
+<area shape="rect" id="Node000003" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="529,109,697,149"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="738,111,697,118,697,112,737,106"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="649,18,636,11,613,8,593,10,581,15,575,21,575,29,570,29,570,19,578,10,592,5,613,3,638,6,652,14"/>
+<area shape="rect" id="Node000004" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="365,87,419,112"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="515,118,419,106,420,100,515,113"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa.html#af145cff32479cdcb832c765895175628" title=" " alt="" coords="309,137,475,177"/>
+<area shape="poly" id="edge5_Node000003_Node000005" title=" " alt="" coords="515,144,475,149,474,144,515,138"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1driver.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="108,144,261,169"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="296,159,262,159,262,154,296,154"/>
+<area shape="rect" id="Node000007" href="$alpaqa-driver-main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,144,60,169"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="94,159,60,159,60,154,94,154"/>
+</map>

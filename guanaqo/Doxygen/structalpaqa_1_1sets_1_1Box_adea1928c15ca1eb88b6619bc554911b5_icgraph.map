@@ -1,0 +1,8 @@
+<map id="Box" name="Box">
+<area shape="rect" id="Node000001" title=" " alt="" coords="193,31,240,56"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="241,20,234,12,217,9,202,11,195,16,193,22,197,29,193,32,188,22,190,13,200,6,217,4,236,8,245,16"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1sets_1_1Box.html#a3fd5779dd4a0afa59e4b635e7ee19514" title=" " alt="" coords="5,5,145,31"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="179,39,145,33,146,28,180,34"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1sets_1_1Box.html#a85dea72f7f5cdd115734c476729d49da" title=" " alt="" coords="50,55,101,80"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="180,52,101,66,100,61,179,47"/>
+</map>

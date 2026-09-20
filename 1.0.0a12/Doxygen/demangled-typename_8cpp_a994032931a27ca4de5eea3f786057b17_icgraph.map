@@ -1,0 +1,31 @@
+<map id="demangled_typename" name="demangled_typename">
+<area shape="rect" id="Node000001" title="Get the pretty name of the given type as a string." alt="" coords="787,237,955,262"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1params.html#a852289f9dfc45e0c4193de2da3432067" title="Throw a meaningful error when s.key is not empty, to indicate that the given type T is not of struct ..." alt="" coords="529,5,700,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="857,225,839,188,813,143,779,98,737,60,699,41,701,36,740,55,783,94,817,140,844,185,862,223"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a273e485fe28cedadf95bd27909a7448e" title=" " alt="" coords="532,69,697,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="850,228,803,175,772,147,737,124,696,107,699,102,740,119,775,143,806,171,854,224"/>
+<area shape="rect" id="Node000010" href="$namespacealpaqa_1_1params.html#abb19a28ac46b361195999fdff5cf575f" title=" " alt="" coords="539,133,690,173"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="834,233,789,210,738,188,689,173,691,168,740,183,791,205,836,228"/>
+<area shape="rect" id="Node000011" href="$namespacealpaqa_1_1params.html#aa5e8773a37c56c8296385ae08d7f93e6" title="Update/overwrite the first argument based on the option in s." alt="" coords="539,197,690,237"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="773,240,690,229,690,224,773,235"/>
+<area shape="rect" id="Node000012" href="$namespacealpaqa_1_1params.html#a6085a1535aaa464dae1b548875f87c6f" title="Use s to index into the struct type T and overwrite the attribute given by s.key." alt="" coords="539,261,690,301"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="773,264,690,275,690,269,773,259"/>
+<area shape="rect" id="Node000013" href="$namespaceanonymous__namespace_02from__chars-compat_8ipp_03.html#ab5c7079df5a54decbee29b9ea001f204" title=" " alt="" coords="521,326,708,381"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="835,271,740,316,706,328,704,323,738,311,833,266"/>
+<area shape="rect" id="Node000014" href="$namespacealpaqa_1_1params.html#a665142b3480d021942f322e2fe154f22" title="Throw a meaningful error to indicate that parameters of type T are not supported or implemented." alt="" coords="491,405,739,430"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="857,275,810,337,777,369,740,396,714,407,712,402,737,391,774,365,806,333,852,272"/>
+<area shape="rect" id="Node000015" href="$classalpaqa_1_1util_1_1bad__type__erased__type.html#abf843cbb29dec939d0731e491bab6f70" title=" " alt="" coords="533,455,696,495"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="862,276,844,313,818,359,783,406,740,445,719,457,697,465,695,460,717,452,737,441,779,402,813,356,839,311,857,273"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a5d9869864258e53a69bf9f419cd21a77" title=" " alt="" coords="265,5,443,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="519,69,435,48,437,43,520,63"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a21b1342c38b8fd3409ad0a80a134b34d" title=" " alt="" coords="265,69,443,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="518,92,443,92,443,87,518,87"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html#a21e49a1fa61f8fea5ac4cab66c678b1f" title=" " alt="" coords="265,133,443,173"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="520,115,437,136,435,131,519,110"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1dl_1_1DLProblem.html#accae698118d338bfb57705e6a27d9561" title=" " alt="" coords="29,5,194,45"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="264,68,187,48,188,43,265,63"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1dl_1_1DLControlProblem.html#accae698118d338bfb57705e6a27d9561" title=" " alt="" coords="5,69,217,109"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="251,92,218,92,218,87,251,87"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1dl_1_1DLControlProblem.html#a79b15472c5450095cb80df60b65b851b" title=" " alt="" coords="5,133,217,173"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="265,115,188,136,187,131,264,110"/>
+</map>

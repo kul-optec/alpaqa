@@ -1,0 +1,9 @@
+<map id="PANOCSolver&lt; DirectionT &gt;" name="PANOCSolver&lt; DirectionT &gt;">
+<area shape="rect" id="Node000001" title="PANOC solver for ALM." alt="" coords="109,724,307,1009"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="5,208,208,661"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,661,173,707,168,709,157,662"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#group__grp__Parameters" title=" " alt="" coords="18,5,195,145"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,145,109,192,104,192,104,145"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AtomicStopSignal.html" title=" " alt="" coords="233,342,386,527"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="290,528,248,709,243,707,285,527"/>
+</map>

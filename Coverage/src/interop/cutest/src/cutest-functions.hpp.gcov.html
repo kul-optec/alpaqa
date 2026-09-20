@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 841e44158c8c58969fddcfdfc216002869ba6db2 - src/interop/cutest/src/cutest-functions.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/interop/cutest/src">src/interop/cutest/src</a> - cutest-functions.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">841e44158c8c58969fddcfdfc216002869ba6db2</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-09-06 16:14:49</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:&nbsp&nbsp&nbsp&nbsp
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &quot;cutest-types.hpp&quot;</span>
+<span id="L4"><span class="lineNum">       4</span>              : </span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &lt;alpaqa/cutest/cutest-errors.hpp&gt;</span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &lt;guanaqo/dl.hpp&gt;</span>
+<span id="L7"><span class="lineNum">       7</span>              : #include &lt;cassert&gt;</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              : /*</span>
+<span id="L10"><span class="lineNum">      10</span>              : CUTEST_cfn      : function and constraints values</span>
+<span id="L11"><span class="lineNum">      11</span>              : CUTEST_cofg     : function value and possibly gradient</span>
+<span id="L12"><span class="lineNum">      12</span>              : CUTEST_cofsg    : function value and possibly gradient in sparse format</span>
+<span id="L13"><span class="lineNum">      13</span>              : CUTEST_ccfg     : constraint functions values and possibly gradients</span>
+<span id="L14"><span class="lineNum">      14</span>              : CUTEST_clfg     : Lagrangian function value and possibly gradient</span>
+<span id="L15"><span class="lineNum">      15</span>              : CUTEST_cgr      : constraints gradients and gradient of objective/Lagrangian function</span>
+<span id="L16"><span class="lineNum">      16</span>              : CUTEST_csgr     : constraints gradients and gradient of objective/Lagrangian function</span>
+<span id="L17"><span class="lineNum">      17</span>              : CUTEST_ccfsg    : constraint functions values and possibly their gradients in sparse format</span>
+<span id="L18"><span class="lineNum">      18</span>              : CUTEST_ccifg    : single constraint function value and possibly its gradient</span>
+<span id="L19"><span class="lineNum">      19</span>              : CUTEST_ccifsg   : single constraint function value and possibly gradient in sparse format</span>
+<span id="L20"><span class="lineNum">      20</span>              : CUTEST_cgrdh    : constraints gradients, Hessian of Lagrangian function and gradient of objective/Lagrangian function</span>
+<span id="L21"><span class="lineNum">      21</span>              : CUTEST_cdh      : Hessian of the Lagrangian</span>
+<span id="L22"><span class="lineNum">      22</span>              : CUTEST_cdhc     : Hessian of the constraint part of the Lagrangian</span>
+<span id="L23"><span class="lineNum">      23</span>              : CUTEST_cshp     : sparsity pattern of the Hessian of the Lagrangian function</span>
+<span id="L24"><span class="lineNum">      24</span>              : CUTEST_csh      : Hessian of the Lagrangian, in sparse format</span>
+<span id="L25"><span class="lineNum">      25</span>              : CUTEST_cshc     : Hessian of the constraint part of the Lagrangian, in sparse format</span>
+<span id="L26"><span class="lineNum">      26</span>              : CUTEST_ceh      : sparse Lagrangian Hessian matrix in finite element format</span>
+<span id="L27"><span class="lineNum">      27</span>              : CUTEST_cifn     : problem function value</span>
+<span id="L28"><span class="lineNum">      28</span>              : CUTEST_cigr     : gradient of a problem function</span>
+<span id="L29"><span class="lineNum">      29</span>              : CUTEST_cisgr    : gradient of a problem function in sparse format</span>
+<span id="L30"><span class="lineNum">      30</span>              : CUTEST_cidh     : Hessian of a problem function</span>
+<span id="L31"><span class="lineNum">      31</span>              : CUTEST_cish     : Hessian of an individual problem function, in sparse format</span>
+<span id="L32"><span class="lineNum">      32</span>              : CUTEST_csgrsh   : constraints gradients, sparse Lagrangian Hessian and the gradient of either the objective/Lagrangian in sparse format</span>
+<span id="L33"><span class="lineNum">      33</span>              : CUTEST_csgreh   : constraint gradients, the Lagrangian Hessian in finite element format and the gradient of either the objective/Lagrangian in sparse format</span>
+<span id="L34"><span class="lineNum">      34</span>              : CUTEST_chprod   : matrix-vector product of a vector with the Hessian matrix of the Lagrangian</span>
+<span id="L35"><span class="lineNum">      35</span>              : CUTEST_cshprod  : matrix-vector product of a sparse vector with the Hessian matrix of the Lagrangian</span>
+<span id="L36"><span class="lineNum">      36</span>              : CUTEST_chcprod  : matrix-vector product of a vector with the Hessian matrix of the constraint part of the Lagrangian</span>
+<span id="L37"><span class="lineNum">      37</span>              : CUTEST_cshcprod : matrix-vector product of a spaarse vector with the Hessian matrix of the constraint part of the Lagrangian</span>
+<span id="L38"><span class="lineNum">      38</span>              : CUTEST_cjprod   : matrix-vector product of a vector with the Jacobian of the constraints, or its transpose</span>
+<span id="L39"><span class="lineNum">      39</span>              : CUTEST_csjprod  : matrix-vector product of a sparse vector with the Jacobian of the constraints, or its transpose</span>
+<span id="L40"><span class="lineNum">      40</span>              : CUTEST_cchprods : matrix-vector products of a vector with each of the Hessian matrices of the constraint functions</span>
+<span id="L41"><span class="lineNum">      41</span>              : */</span>
+<span id="L42"><span class="lineNum">      42</span>              : </span>
+<span id="L43"><span class="lineNum">      43</span>              : namespace alpaqa::cutest {</span>
+<span id="L44"><span class="lineNum">      44</span>              : </span>
+<span id="L45"><span class="lineNum">      45</span>              : // clang-format off</span>
+<span id="L46"><span class="lineNum">      46</span>              : using csetup        = Function&lt;&quot;cutest_cint_csetup_&quot;, void(integer *status, const integer *funit, const integer *iout, const integer *io_buffer, integer *n, integer *m, doublereal *x, doublereal *bl, doublereal *bu, doublereal *v, doublereal *cl, doublereal *cu, logical *equatn, logical *linear, const integer *e_order, const integer *l_order, const integer *v_order)&gt;;</span>
+<span id="L47"><span class="lineNum">      47</span>              : using cterminate    = Function&lt;&quot;cutest_cterminate_&quot;, void(integer *status)&gt;;</span>
+<span id="L48"><span class="lineNum">      48</span>              : </span>
+<span id="L49"><span class="lineNum">      49</span>              : using cdimen        = Function&lt;&quot;cutest_cdimen_&quot;, void(integer *status, const integer *funit, integer *n, integer *m)&gt;;</span>
+<span id="L50"><span class="lineNum">      50</span>              : using cdimsj        = Function&lt;&quot;cutest_cdimsj_&quot;, void(integer *status, integer *nnzj)&gt;;</span>
+<span id="L51"><span class="lineNum">      51</span>              : using cdimsh        = Function&lt;&quot;cutest_cdimsh_&quot;, void(integer *status, integer *nnzh)&gt;;</span>
+<span id="L52"><span class="lineNum">      52</span>              : </span>
+<span id="L53"><span class="lineNum">      53</span>              : using probname      = Function&lt;&quot;cutest_probname_&quot;, void(integer *status, char *pname)&gt;;</span>
+<span id="L54"><span class="lineNum">      54</span>              : using creport       = Function&lt;&quot;cutest_creport_&quot;, void(integer *status, doublereal *calls, doublereal *time)&gt;;</span>
+<span id="L55"><span class="lineNum">      55</span>              : using creport       = Function&lt;&quot;cutest_creport_&quot;, void(integer *status, doublereal *calls, doublereal *time)&gt;;</span>
+<span id="L56"><span class="lineNum">      56</span>              : using ureport       = Function&lt;&quot;cutest_ureport_&quot;, void(integer *status, doublereal *calls, doublereal *time)&gt;;</span>
+<span id="L57"><span class="lineNum">      57</span>              : </span>
+<span id="L58"><span class="lineNum">      58</span>              : using cfn           = Function&lt;&quot;cutest_cfn_&quot;, void(integer *status, const integer *n, const integer *m, const doublereal *x, doublereal *f, doublereal *c)&gt;;</span>
+<span id="L59"><span class="lineNum">      59</span>              : using cofg          = Function&lt;&quot;cutest_cint_cofg_&quot;, void(integer *status, const integer *n, const doublereal *x, doublereal *f, doublereal *g, const logical *grad)&gt;;</span>
+<span id="L60"><span class="lineNum">      60</span>              : using ccfg          = Function&lt;&quot;cutest_cint_ccfg_&quot;, void(integer *status, const integer *n, const integer *m, const doublereal *x, doublereal *c, const logical *jtrans, const integer *lcjac1, const integer *lcjac2, doublereal *cjac, const logical *grad)&gt;;</span>
+<span id="L61"><span class="lineNum">      61</span>              : using clfg          = Function&lt;&quot;cutest_cint_clfg_&quot;, void(integer *status, const integer *n, const integer *m, const doublereal *x, const doublereal *y, doublereal *f, doublereal *g, const logical *grad)&gt;;</span>
+<span id="L62"><span class="lineNum">      62</span>              : using ccfsg         = Function&lt;&quot;cutest_cint_ccfsg_&quot;, void(integer *status, const integer *n, const integer *m, const doublereal *x, doublereal *c, integer *nnzj, const integer *lcjac, doublereal *cjac, integer *indvar, integer *indfun, const logical *grad)&gt;;</span>
+<span id="L63"><span class="lineNum">      63</span>              : using ccifg         = Function&lt;&quot;cutest_cint_ccifg_&quot;, void(integer *status, const integer *n, const integer *icon, const doublereal *x, doublereal *ci, doublereal *gci, const logical *grad)&gt;;</span>
+<span id="L64"><span class="lineNum">      64</span>              : using cdh           = Function&lt;&quot;cutest_cdh_&quot;, void(integer *status, const integer *n, const integer *m, const doublereal *x, const doublereal *y, const integer *lh1, doublereal *h)&gt;;</span>
+<span id="L65"><span class="lineNum">      65</span>              : using cshp          = Function&lt;&quot;cutest_cshp_&quot;, void(integer *status, const integer *n, integer *nnzh, const integer *lh, integer *irnh, integer *icnh)&gt;;</span>
+<span id="L66"><span class="lineNum">      66</span>              : using csh           = Function&lt;&quot;cutest_csh_&quot;, void(integer *status, const integer *n, const integer *m, const doublereal *x, const doublereal *y, integer *nnzh, const integer *lh, doublereal *h, integer *irnh, integer *icnh)&gt;;</span>
+<span id="L67"><span class="lineNum">      67</span>              : using cigr          = Function&lt;&quot;cutest_cigr_&quot;, void(integer *status, const integer *n, const integer *iprob, const doublereal *x, doublereal *g)&gt;;</span>
+<span id="L68"><span class="lineNum">      68</span>              : using chprod        = Function&lt;&quot;cutest_chprod_&quot;, void(integer *status, const integer *n, const integer *m, const logical *goth, const doublereal *x, const doublereal *y, doublereal *p, doublereal *q)&gt;;</span>
+<span id="L69"><span class="lineNum">      69</span>              : using cjprod        = Function&lt;&quot;cutest_cjprod_&quot;, void(integer *status, const integer *n, const integer *m, const logical *gotj, const logical *jtrans,const doublereal *x, const doublereal *p, const integer *lp, doublereal *r, const integer *lr)&gt;;</span>
+<span id="L70"><span class="lineNum">      70</span>              : using csjp          = Function&lt;&quot;cutest_csjp_&quot;, void(integer *status, integer *nnzj, const integer *lj, integer *J_var, integer *J_con)&gt;;</span>
+<span id="L71"><span class="lineNum">      71</span>              : </span>
+<span id="L72"><span class="lineNum">      72</span>              : using fortran_open  = Function&lt;&quot;fortran_open_&quot;, void(const integer *funit, const char *fname, integer *ierr)&gt;;</span>
+<span id="L73"><span class="lineNum">      73</span>              : using fortran_close = Function&lt;&quot;fortran_close_&quot;, void(const integer *funit, integer *ierr)&gt;;</span>
+<span id="L74"><span class="lineNum">      74</span>              : // clang-format on</span>
+<span id="L75"><span class="lineNum">      75</span>              : </span>
+<span id="L76"><span class="lineNum">      76</span>              : template &lt;Name Nm, class Sgn&gt;</span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaUNC">           0 : auto Function&lt;Nm, Sgn&gt;::load(void *handle) -&gt; signature_t * {</span></span>
+<span id="L78"><span class="lineNum">      78</span>              :     static_assert(name.value.back() == '\0');</span>
+<span id="L79"><span class="lineNum">      79</span> <span class="tlaUNC">           0 :     auto func = guanaqo::load_func(handle, name.value.data());</span></span>
+<span id="L80"><span class="lineNum">      80</span> <span class="tlaUNC">           0 :     assert(func);</span></span>
+<span id="L81"><span class="lineNum">      81</span> <span class="tlaUNC">           0 :     return reinterpret_cast&lt;signature_t *&gt;(func);</span></span>
+<span id="L82"><span class="lineNum">      82</span>              : }</span>
+<span id="L83"><span class="lineNum">      83</span>              : </span>
+<span id="L84"><span class="lineNum">      84</span>              : } // namespace alpaqa::cutest</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.2-beta</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

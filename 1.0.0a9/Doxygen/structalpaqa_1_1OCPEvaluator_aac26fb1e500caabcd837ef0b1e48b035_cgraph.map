@@ -1,0 +1,20 @@
+<map id="backward" name="backward">
+<area shape="rect" id="node1" title=" " alt="" coords="5,425,91,451"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1OCPVariables.html#a391b2381bfd92a7c2fd61a9fa322e3c0" title=" " alt="" coords="171,5,355,31"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedControlProblem.html#ad5cf284c2c820afca45e77419d49c53c" title="Gradient&#45;vector product of stage constraints ." alt="" coords="147,55,378,95"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedControlProblem.html#a52c823db70d2a2c1042b90156164e3de" title="Gradient&#45;vector product of terminal constraints ." alt="" coords="139,119,387,159"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedControlProblem.html#a7013162709e225328ff8b61da8636a6e" title="Gradient&#45;vector product of discrete&#45;time dynamics ." alt="" coords="165,183,361,223"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedControlProblem.html#ab9cabb848940c9fea90232ebdca27f5a" title="Terminal cost gradient w.r.t." alt="" coords="165,247,360,287"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedControlProblem.html#a49ecb2f26f1b46a7656ca0118fc3acc1" title="Cost gradients w.r.t." alt="" coords="165,311,360,351"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1OCPVariables.html#ad2e98c60f4f2abe43a52aea5afc9bad4" title=" " alt="" coords="170,376,355,401"/>
+<area shape="rect" id="node10" href="$structalpaqa_1_1OCPVariables.html#ac23599fc3855d4c3d79c3e689dd86f6c" title=" " alt="" coords="171,425,355,451"/>
+<area shape="rect" id="node11" href="$structalpaqa_1_1OCPVariables.html#a9b03b81e6526f30c99d5d9e0fa537768" title=" " alt="" coords="182,475,343,515"/>
+<area shape="rect" id="node12" href="$structalpaqa_1_1OCPVariables.html#a50482e485b208e4ced084891de1b7f49" title=" " alt="" coords="170,540,355,565"/>
+<area shape="rect" id="node13" href="$structalpaqa_1_1OCPVariables.html#a523bf412e6eb44e4f05202ac123fb720" title=" " alt="" coords="170,589,355,615"/>
+<area shape="rect" id="node14" href="$namespacealpaqa.html#a0aa3a21307a2b125ccd70ac4265c4446" title="Get the difference between the given vector and its projection." alt="" coords="193,639,332,679"/>
+<area shape="rect" id="node16" href="$structalpaqa_1_1OCPVariables.html#a88158344aedc0355f0e563e54c779ae7" title=" " alt="" coords="170,704,355,729"/>
+<area shape="rect" id="node17" href="$structalpaqa_1_1OCPVariables.html#a5468d87fecd1ab7d60817e223428990b" title=" " alt="" coords="170,753,355,779"/>
+<area shape="rect" id="node18" href="$structalpaqa_1_1OCPVariables.html#ad17879d70c1e3a6e1709166481bdc8c6" title=" " alt="" coords="166,803,359,828"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="435,223,617,248"/>
+<area shape="rect" id="node15" href="$namespacealpaqa.html#ace167fc364a50a555a05a8bc695ff189" title="Project a vector onto a box." alt="" coords="467,647,585,672"/>
+</map>

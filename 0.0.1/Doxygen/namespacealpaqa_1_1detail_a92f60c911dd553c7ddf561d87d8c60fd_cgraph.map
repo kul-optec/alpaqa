@@ -1,0 +1,6 @@
+<map id="calc_augmented_lagrangian_hessian_prod_fd" name="calc_augmented_lagrangian_hessian_prod_fd">
+<area shape="rect" id="node1" title="Compute the Hessian matrix of the augmented Lagrangian function multiplied by the given vector,..." alt="" coords="5,5,211,47"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a8f6ca1622de905436d84d5fe0f028d63" title="Calculate the gradient ∇ψ(x)." alt="" coords="259,13,359,39"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="407,5,545,47"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="593,13,712,39"/>
+</map>

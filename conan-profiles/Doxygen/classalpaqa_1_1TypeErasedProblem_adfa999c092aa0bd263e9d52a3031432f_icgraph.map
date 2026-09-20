@@ -1,0 +1,13 @@
+<map id="provides_eval_prox_jacobian_diag" name="provides_eval_prox_jacobian_diag">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of eval_prox_jacobian_diag." alt="" coords="739,27,888,67"/>
+<area shape="rect" id="Node000002" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="523,27,691,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="725,50,691,50,691,45,725,45"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="365,5,419,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="508,37,419,24,420,19,509,31"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#af145cff32479cdcb832c765895175628" title=" " alt="" coords="309,55,475,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="509,63,475,67,475,62,509,57"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1driver.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="108,63,261,88"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="296,78,262,78,262,73,296,73"/>
+<area shape="rect" id="Node000006" href="$alpaqa-driver-main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,63,60,88"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="94,78,60,78,60,73,94,73"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="update_sy_impl" name="update_sy_impl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,104,131,129"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="213,5,251,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,102,126,72,177,40,199,29,201,33,180,44,129,77,88,106"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#a15e4a3db39457cabe764a7737d24e73f" title=" " alt="" coords="213,55,251,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="110,101,199,74,200,79,112,107"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#a70926baed7362e4fcce66523bb8e2842" title="Get the next index in the circular buffer of previous s and y vectors." alt="" coords="207,104,257,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="131,114,193,114,193,119,131,119"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#abb437bab54050908142b5a47bd64713b" title="Check if the new vectors s and y allow for a valid BFGS update that preserves the positive definitene..." alt="" coords="179,153,285,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="112,127,177,147,175,152,110,132"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LBFGS.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="213,203,251,228"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="88,127,180,188,202,199,199,204,177,192,85,132"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LBFGS.html#ac7c2ee7d2562303f555dd1f4c3fca8cd" title=" " alt="" coords="333,153,372,179"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="285,163,319,163,319,169,285,169"/>
+</map>

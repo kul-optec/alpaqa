@@ -1,0 +1,9 @@
+<map id="PANOCOCPParams&lt; Conf &gt;" name="PANOCOCPParams&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title="Tuning parameters for the PANOC algorithm." alt="" coords="70,361,273,811"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LipschitzEstimateParams.html" title=" " alt="" coords="5,156,183,296"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,296,122,344,117,345,106,297"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#namespacealpaqa" title=" " alt="" coords="207,153,392,299"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="276,300,260,346,254,345,271,298"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1CBFGSParams.html" title=" " alt="" coords="206,5,393,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="302,91,302,137,297,137,297,91"/>
+</map>

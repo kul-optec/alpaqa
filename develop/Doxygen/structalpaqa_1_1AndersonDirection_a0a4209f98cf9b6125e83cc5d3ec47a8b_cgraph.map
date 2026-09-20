@@ -1,0 +1,17 @@
+<map id="changed_γ" name="changed_γ">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,109,97,134"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1AndersonAccel.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset the accelerator (but keep the last function value and residual, so calling initialize is not ne..." alt="" coords="145,69,316,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,111,131,104,132,110,98,116"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1AndersonAccel.html#adf11f99cb8b119423c86498dbaab9820" title="Scale the factorization." alt="" coords="145,133,316,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="98,127,132,133,131,138,97,132"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LimitedMemoryQR.html#ad20897c5c8bd47f5d4005989bead0e55" title="Reset all indices, clearing the Q and R matrices." alt="" coords="364,5,560,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="303,67,375,46,377,52,304,72"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LimitedMemoryQR.html#a8a153a1f58e5c5879095a4c3799b6f49" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="364,69,560,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="316,87,350,87,350,92,316,92"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LimitedMemoryQR.html#adf11f99cb8b119423c86498dbaab9820" title="Multiply the matrix R by a scalar." alt="" coords="364,133,560,173"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="316,151,350,151,350,156,316,156"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LimitedMemoryQR.html#a0bf0ad441ec87440e4525e75de00d053" title="Get iterators in the circular buffer." alt="" coords="608,133,804,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="560,151,594,151,594,156,560,156"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LimitedMemoryQR.html#ac397ae83f5f4dd3d5cf9926f26acfb2d" title=" " alt="" coords="852,141,1069,166"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="804,151,838,151,838,156,804,156"/>
+</map>

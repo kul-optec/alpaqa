@@ -1,0 +1,6 @@
+<map id="LBFGS" name="LBFGS">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,69,57"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="235,5,273,32"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#a57b2556ee8993b06958b9c14511fd4ba" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="117,56,179,83"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="227,56,281,83"/>
+</map>

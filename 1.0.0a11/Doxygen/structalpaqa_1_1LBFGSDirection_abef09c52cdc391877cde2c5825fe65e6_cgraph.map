@@ -1,0 +1,5 @@
+<map id="initialize" name="initialize">
+<area shape="rect" id="node1" title=" " alt="" coords="5,42,84,67"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="132,5,335,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LBFGS.html#abfe51417fbebd259808f86d27f1d7ec5" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="152,70,315,95"/>
+</map>

@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 2906af43b75d5d0d13bc95e1f7bab2934be3a481 - src/alpaqa/include/alpaqa/util/index-set.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">src/alpaqa/include/alpaqa/util</a> - index-set.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">2906af43b75d5d0d13bc95e1f7bab2934be3a481</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">42</td>
+            <td class="headerCovTableEntry">42</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2024-03-27 15:53:42</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;alpaqa/config/config.hpp&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &lt;span&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>              : </span>
+<span id="L6"><span class="lineNum">       6</span>              : namespace alpaqa::detail {</span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              : template &lt;Config Conf&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : struct IndexSet {</span>
+<span id="L10"><span class="lineNum">      10</span>              :     USING_ALPAQA_CONFIG(Conf);</span>
+<span id="L11"><span class="lineNum">      11</span>              : </span>
+<span id="L12"><span class="lineNum">      12</span> <span class="tlaGNC tlaBgGNC">           1 :     IndexSet(length_t N, length_t n) : N{N}, n{n}, storage{N + N * n} {}</span></span>
+<span id="L13"><span class="lineNum">      13</span>              : </span>
+<span id="L14"><span class="lineNum">      14</span>              :     length_t N;</span>
+<span id="L15"><span class="lineNum">      15</span>              :     length_t n;</span>
+<span id="L16"><span class="lineNum">      16</span>              :     indexvec storage;</span>
+<span id="L17"><span class="lineNum">      17</span>              : </span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">           1 :     auto sizes() { return storage.segment(0, N); }</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">          10 :     auto sizes() const { return storage.segment(0, N); }</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           1 :     auto indices() { return storage.segment(N, N * n); }</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaGNC">          10 :     auto indices() const { return storage.segment(N, N * n); }</span></span>
+<span id="L22"><span class="lineNum">      22</span>              : </span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">           5 :     crindexvec indices(index_t i) const {</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">           5 :         length_t nJ = sizes()(i);</span></span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">           5 :         return indices().segment(n * i, nJ);</span></span>
+<span id="L26"><span class="lineNum">      26</span>              :     }</span>
+<span id="L27"><span class="lineNum">      27</span>              : </span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaGNC">           5 :     crindexvec compl_indices(index_t i) const {</span></span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">           5 :         length_t nJ = sizes()(i);</span></span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">           5 :         length_t nK = n - nJ;</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaGNC">           5 :         return indices().segment(n * i + nJ, nK);</span></span>
+<span id="L32"><span class="lineNum">      32</span>              :     }</span>
+<span id="L33"><span class="lineNum">      33</span>              : </span>
+<span id="L34"><span class="lineNum">      34</span>              :     // Compute the complement of the index set `in`. Write the indices not in</span>
+<span id="L35"><span class="lineNum">      35</span>              :     // the input to 'out'.</span>
+<span id="L36"><span class="lineNum">      36</span>              :     static void compute_complement(std::span&lt;const index_t&gt; in,</span>
+<span id="L37"><span class="lineNum">      37</span>              :                                    std::span&lt;index_t&gt; out) {</span>
+<span id="L38"><span class="lineNum">      38</span>              :         compute_complement(in, out.data(),</span>
+<span id="L39"><span class="lineNum">      39</span>              :                            static_cast&lt;length_t&gt;(in.size() + out.size()));</span>
+<span id="L40"><span class="lineNum">      40</span>              :     }</span>
+<span id="L41"><span class="lineNum">      41</span>              :     static void compute_complement(std::span&lt;const index_t&gt; in,</span>
+<span id="L42"><span class="lineNum">      42</span>              :                                    std::span&lt;index_t&gt; out, length_t n) {</span>
+<span id="L43"><span class="lineNum">      43</span>              :         assert(in.size() + out.size() == static_cast&lt;size_t&gt;(n));</span>
+<span id="L44"><span class="lineNum">      44</span>              :         compute_complement(in, out.data(), n);</span>
+<span id="L45"><span class="lineNum">      45</span>              :     }</span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaGNC">         118 :     static void compute_complement(crindexvec in, rindexvec out, length_t n) {</span></span>
+<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">         118 :         assert(in.size() + out.size() == n);</span></span>
+<span id="L48"><span class="lineNum">      48</span> <span class="tlaGNC">         118 :         compute_complement(std::span{in.data(), static_cast&lt;size_t&gt;(in.size())},</span></span>
+<span id="L49"><span class="lineNum">      49</span>              :                            out.data(), n);</span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">         118 :     }</span></span>
+<span id="L51"><span class="lineNum">      51</span>              : </span>
+<span id="L52"><span class="lineNum">      52</span>              :     template &lt;class F&gt;</span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">           1 :     void update(const F &amp;condition) {</span></span>
+<span id="L54"><span class="lineNum">      54</span>              :         // Evaluate the condition for all indices in the given 'time_step',</span>
+<span id="L55"><span class="lineNum">      55</span>              :         // append the indices evaluating to true to 'out', and return the number</span>
+<span id="L56"><span class="lineNum">      56</span>              :         // of indices that were appended.</span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">           6 :         auto build_Jt = [&amp;](index_t time_step, index_t *out) {</span></span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">           5 :             index_t j = 0; // index into the array of inactive indices</span></span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaGNC">          55 :             for (index_t c = 0; c &lt; n; ++c) { // components within time step</span></span>
+<span id="L60"><span class="lineNum">      60</span> <span class="tlaGNC">          50 :                 if (condition(time_step, c))  // if the component is active,</span></span>
+<span id="L61"><span class="lineNum">      61</span> <span class="tlaGNC">          25 :                     out[j++] = c; // append the index of this component to J</span></span>
+<span id="L62"><span class="lineNum">      62</span>              :             }</span>
+<span id="L63"><span class="lineNum">      63</span> <span class="tlaGNC">           5 :             return j; // return the number of elements in J</span></span>
+<span id="L64"><span class="lineNum">      64</span>              :         };</span>
+<span id="L65"><span class="lineNum">      65</span>              : </span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">           1 :         auto sizes    = this-&gt;sizes();</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">           1 :         auto *indices = this-&gt;indices().data();</span></span>
+<span id="L68"><span class="lineNum">      68</span> <span class="tlaGNC">           6 :         for (index_t t = 0; t &lt; N; ++t) { // time steps</span></span>
+<span id="L69"><span class="lineNum">      69</span>              :             // Generate the set of inactive indices, J</span>
+<span id="L70"><span class="lineNum">      70</span> <span class="tlaGNC">           5 :             index_t num_J = build_Jt(t, indices);</span></span>
+<span id="L71"><span class="lineNum">      71</span> <span class="tlaGNC">           5 :             sizes(t)      = num_J; // save number of inactive indices for later</span></span>
+<span id="L72"><span class="lineNum">      72</span> <span class="tlaGNC">           5 :             std::span J{indices, static_cast&lt;size_t&gt;(num_J)};</span></span>
+<span id="L73"><span class="lineNum">      73</span>              :             // Generate the complement, the set of active indices, K</span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaGNC">           5 :             compute_complement(J, indices + num_J, n);</span></span>
+<span id="L75"><span class="lineNum">      75</span>              :             // Prepare for next time step</span>
+<span id="L76"><span class="lineNum">      76</span> <span class="tlaGNC">           5 :             indices += n;</span></span>
+<span id="L77"><span class="lineNum">      77</span>              :         }</span>
+<span id="L78"><span class="lineNum">      78</span> <span class="tlaGNC">           1 :     }</span></span>
+<span id="L79"><span class="lineNum">      79</span>              : </span>
+<span id="L80"><span class="lineNum">      80</span>              :   private:</span>
+<span id="L81"><span class="lineNum">      81</span> <span class="tlaGNC">         123 :     static void compute_complement(std::span&lt;const index_t&gt; in, index_t *out,</span></span>
+<span id="L82"><span class="lineNum">      82</span>              :                                    length_t n) {</span>
+<span id="L83"><span class="lineNum">      83</span> <span class="tlaGNC">         123 :         length_t c = 0; // components within time step</span></span>
+<span id="L84"><span class="lineNum">      84</span> <span class="tlaGNC">         123 :         length_t k = 0; // index into the array of active indices</span></span>
+<span id="L85"><span class="lineNum">      85</span>              :         // iterate over the array with indices 'in'</span>
+<span id="L86"><span class="lineNum">      86</span> <span class="tlaGNC">        1304 :         for (index_t j : in) { //</span></span>
+<span id="L87"><span class="lineNum">      87</span> <span class="tlaGNC">        1925 :             for (; c &lt; j; ++c) // for all indices not in J</span></span>
+<span id="L88"><span class="lineNum">      88</span> <span class="tlaGNC">         744 :                 out[k++] = c;  // append the index of this component</span></span>
+<span id="L89"><span class="lineNum">      89</span> <span class="tlaGNC">        1181 :             ++c;               // skip indices in J, i.e. c == j</span></span>
+<span id="L90"><span class="lineNum">      90</span>              :         }</span>
+<span id="L91"><span class="lineNum">      91</span>              :         // add final indices not in J</span>
+<span id="L92"><span class="lineNum">      92</span> <span class="tlaGNC">         136 :         for (; c &lt; n; ++c)</span></span>
+<span id="L93"><span class="lineNum">      93</span> <span class="tlaGNC">          13 :             out[k++] = c;</span></span>
+<span id="L94"><span class="lineNum">      94</span> <span class="tlaGNC">         123 :     }</span></span>
+<span id="L95"><span class="lineNum">      95</span>              : };</span>
+<span id="L96"><span class="lineNum">      96</span>              : </span>
+<span id="L97"><span class="lineNum">      97</span>              : } // namespace alpaqa::detail</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

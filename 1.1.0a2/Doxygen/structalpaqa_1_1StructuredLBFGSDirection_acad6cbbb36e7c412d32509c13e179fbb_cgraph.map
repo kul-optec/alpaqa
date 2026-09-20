@@ -1,0 +1,7 @@
+<map id="approximate_hessian_vec_term" name="approximate_hessian_vec_term">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,168,53"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#aeafee3f39dd74144bb79e5792e50fcec" title=" " alt="" coords="216,5,435,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,30,202,30,202,35,169,35"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#aa169559ba70ce11302eb6b8a7b7349e2" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="483,5,697,60"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="435,30,469,30,469,35,435,35"/>
+</map>

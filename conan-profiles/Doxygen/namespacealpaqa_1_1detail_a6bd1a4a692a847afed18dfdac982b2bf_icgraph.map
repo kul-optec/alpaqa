@@ -1,0 +1,17 @@
+<map id="assign_extract_u" name="assign_extract_u">
+<area shape="rect" id="Node000001" title=" " alt="" coords="491,109,623,134"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="593,99,583,91,557,87,535,89,523,94,521,100,527,107,523,110,516,100,519,90,533,84,557,82,585,86,597,95"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1detail.html#a8d2b2d87fb010e5222320b67572ebacd" title=" " alt="" coords="308,77,391,102"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="477,112,391,98,392,93,478,107"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1PANOCOCPSolver.html#ab1efa2b14ea4439cabe383cd997688e5" title=" " alt="" coords="256,133,443,173"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="478,136,443,142,442,136,477,131"/>
+<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="386,67,376,59,349,55,327,57,316,62,314,68,320,75,316,78,308,68,312,58,326,52,349,50,378,54,389,63"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1PANOCOCPProgressInfo.html#a38d49a3444afb2aaa0ad0a970169490d" title=" " alt="" coords="5,5,208,45"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="294,78,183,48,184,43,296,73"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1PANOCOCPProgressInfo.html#a5bf74f71dcb8b1f14a6434d57544fb90" title=" " alt="" coords="5,69,208,109"/>
+<area shape="poly" id="edge5_Node000002_Node000004" title=" " alt="" coords="294,92,208,92,208,87,294,87"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1PANOCOCPSolver.html#ab2cdbacaa27c59db09315b64cab7edee" title=" " alt="" coords="13,133,200,173"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="243,156,200,156,200,151,243,151"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1PANOCOCPSolver.html#a74e7957a17047f1b0e6d5ccfcf575a09" title=" " alt="" coords="13,197,200,237"/>
+<area shape="poly" id="edge8_Node000005_Node000007" title=" " alt="" coords="260,179,184,200,182,195,259,174"/>
+</map>

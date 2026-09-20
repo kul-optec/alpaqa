@@ -1,0 +1,5 @@
+<map id="foreach_fwd" name="foreach_fwd">
+<area shape="rect" id="node1" title="Iterate over the indices in the history buffer, oldest first." alt="" coords="5,13,107,38"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="155,13,221,38"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1LBFGSStorage.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="269,5,436,45"/>
+</map>

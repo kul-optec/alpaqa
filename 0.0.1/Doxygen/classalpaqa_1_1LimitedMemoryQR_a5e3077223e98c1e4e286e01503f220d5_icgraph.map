@@ -1,0 +1,7 @@
+<map id="add_column" name="add_column">
+<area shape="rect" id="node1" title="Add the given column to the right." alt="" coords="699,46,800,73"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#a129a6d7bacdc8362a3c7bcbdca662742" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="464,39,651,80"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title=" " alt="" coords="245,5,416,47"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1GAAPGASolver.html#a570ec001ea8eee359be8a1b90b782cfb" title=" " alt="" coords="245,71,416,112"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1PANOCDirection_3_01AndersonAccel_01_4.html#a8cd152877142b9d307953209d5428969" title=" " alt="" coords="5,5,197,47"/>
+</map>

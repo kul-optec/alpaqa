@@ -1,0 +1,9 @@
+<map id="CasADiControlProblem" name="CasADiControlProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,37,176,63"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CasADiControlProblem.html#a4f1c7c649deebd8f69fd65ebc8ec3a4a" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="242,5,401,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,36,228,28,229,34,177,41"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1casadi__loader_1_1CasADiFunctionEvaluator.html#a5e4cc4c2d0a7a061d5ce356a3ddaad68" title=" " alt="" coords="224,55,419,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="177,59,211,64,210,69,176,64"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1csv.html#ae73821e0bcb4fd2933b343533eadc16d" title=" " alt="" coords="467,5,629,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="401,15,453,15,453,21,401,21"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="sparse_add_masked" name="sparse_add_masked">
+<area shape="rect" id="Node000001" title="R += R_full(mask,mask)" alt="" coords="5,13,160,38"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="208,5,392,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,23,194,23,194,28,160,28"/>
+</map>

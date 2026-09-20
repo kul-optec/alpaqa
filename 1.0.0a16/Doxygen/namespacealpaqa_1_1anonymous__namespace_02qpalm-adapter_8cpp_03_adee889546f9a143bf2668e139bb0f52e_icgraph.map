@@ -1,0 +1,10 @@
+<map id="is_bound" name="is_bound">
+<area shape="rect" id="Node000001" title=" " alt="" coords="225,78,305,103"/>
+<area shape="poly" id="edge5_Node000001_Node000001" title=" " alt="" coords="296,68,287,60,265,57,247,59,238,63,236,69,241,76,236,79,230,70,234,60,246,54,265,51,289,55,299,64"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1anonymous__namespace_02qpalm-adapter_8cpp_03.html#a2799769dc17d125a1ba68a5cda0b93f9" title="Update the constraint matrix A, such that for each constraint C(i) with finite bounds,..." alt="" coords="11,29,171,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,81,171,71,172,66,212,75"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1anonymous__namespace_02qpalm-adapter_8cpp_03.html#a0b356e52e87b4ddc08b242ea6126fb03" title="For each constraint C(i) with finite bounds, insert these bounds into b(i), followed by all bounds D,..." alt="" coords="5,118,177,143"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="213,105,148,121,146,115,211,100"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="120,17,110,11,91,8,75,10,65,15,62,21,63,28,58,30,56,20,62,11,73,5,91,3,112,6,123,13"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="122,108,113,100,91,97,73,99,64,103,62,109,67,116,62,119,56,110,60,100,72,94,91,91,115,95,125,104"/>
+</map>

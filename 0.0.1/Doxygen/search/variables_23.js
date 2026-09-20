@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['ψ_0',['ψ',['../namespacealpaqa.html#abcfc556e8060b1ac1c280a907e8cd10a',1,'alpaqa::PANOCProgressInfo::ψ()'],['../classalpaqa_1_1SecondOrderPANOCSolver.html#abcfc556e8060b1ac1c280a907e8cd10a',1,'alpaqa::SecondOrderPANOCSolver::ProgressInfo::ψ()'],['../namespacealpaqa.html#abcfc556e8060b1ac1c280a907e8cd10a',1,'alpaqa::StructuredPANOCLBFGSProgressInfo::ψ()'],['../namespacealpaqa.html#abcfc556e8060b1ac1c280a907e8cd10a',1,'alpaqa::GAAPGAProgressInfo::ψ()'],['../namespacealpaqa.html#abcfc556e8060b1ac1c280a907e8cd10a',1,'alpaqa::PGAProgressInfo::ψ()']]],
+  ['ψ_5fhat_1',['ψ_hat',['../namespacealpaqa.html#af942d66f50b31e893cca0a1666e3f5a9',1,'alpaqa::PANOCProgressInfo::ψ_hat()'],['../classalpaqa_1_1SecondOrderPANOCSolver.html#af942d66f50b31e893cca0a1666e3f5a9',1,'alpaqa::SecondOrderPANOCSolver::ProgressInfo::ψ_hat()'],['../namespacealpaqa.html#af942d66f50b31e893cca0a1666e3f5a9',1,'alpaqa::StructuredPANOCLBFGSProgressInfo::ψ_hat()'],['../namespacealpaqa.html#af942d66f50b31e893cca0a1666e3f5a9',1,'alpaqa::GAAPGAProgressInfo::ψ_hat()'],['../namespacealpaqa.html#af942d66f50b31e893cca0a1666e3f5a9',1,'alpaqa::PGAProgressInfo::ψ_hat()']]]
+];

@@ -1,0 +1,9 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,38,92,63"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="149,13,322,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,42,135,36,135,42,93,47"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="140,62,331,87"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="93,54,127,58,126,63,92,59"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="379,5,525,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="322,23,365,23,365,28,322,28"/>
+</map>

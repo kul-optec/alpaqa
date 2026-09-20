@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 2906af43b75d5d0d13bc95e1f7bab2934be3a481 - src/alpaqa/include/alpaqa/inner/directions/panoc-ocp/lqr.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../../../index.html">top level</a> - <a href="index.html">src/alpaqa/include/alpaqa/inner/directions/panoc-ocp</a> - lqr.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">2906af43b75d5d0d13bc95e1f7bab2934be3a481</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">82</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2024-03-27 15:53:42</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;alpaqa/config/config.hpp&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &lt;Eigen/Cholesky&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &lt;Eigen/LU&gt;</span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &lt;cassert&gt;</span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              : namespace alpaqa {</span>
+<span id="L9"><span class="lineNum">       9</span>              : </span>
+<span id="L10"><span class="lineNum">      10</span>              : template &lt;Config Conf&gt;</span>
+<span id="L11"><span class="lineNum">      11</span>              : struct Dim {</span>
+<span id="L12"><span class="lineNum">      12</span>              :     USING_ALPAQA_CONFIG(Conf);</span>
+<span id="L13"><span class="lineNum">      13</span>              :     length_t N, nx, nu;</span>
+<span id="L14"><span class="lineNum">      14</span>              :     struct Horizon {</span>
+<span id="L15"><span class="lineNum">      15</span>              :         length_t N;</span>
+<span id="L16"><span class="lineNum">      16</span>              :         struct Iter {</span>
+<span id="L17"><span class="lineNum">      17</span>              :             index_t i;</span>
+<span id="L18"><span class="lineNum">      18</span>              :             Iter &amp;operator++() {</span>
+<span id="L19"><span class="lineNum">      19</span>              :                 ++i;</span>
+<span id="L20"><span class="lineNum">      20</span>              :                 return *this;</span>
+<span id="L21"><span class="lineNum">      21</span>              :             }</span>
+<span id="L22"><span class="lineNum">      22</span>              :             Iter operator++(int) const {</span>
+<span id="L23"><span class="lineNum">      23</span>              :                 Iter t = *this;</span>
+<span id="L24"><span class="lineNum">      24</span>              :                 ++i;</span>
+<span id="L25"><span class="lineNum">      25</span>              :                 return t;</span>
+<span id="L26"><span class="lineNum">      26</span>              :             }</span>
+<span id="L27"><span class="lineNum">      27</span>              :             index_t &amp;operator*() { return i; }</span>
+<span id="L28"><span class="lineNum">      28</span>              :             const index_t &amp;operator*() const { return i; }</span>
+<span id="L29"><span class="lineNum">      29</span>              :             friend auto operator&lt;=&gt;(const Iter &amp;, const Iter &amp;) = default;</span>
+<span id="L30"><span class="lineNum">      30</span>              :         };</span>
+<span id="L31"><span class="lineNum">      31</span>              :         static Iter begin() { return {0}; }</span>
+<span id="L32"><span class="lineNum">      32</span>              :         Iter end() const { return {N}; }</span>
+<span id="L33"><span class="lineNum">      33</span>              :     };</span>
+<span id="L34"><span class="lineNum">      34</span>              :     Horizon horizon() const { return {N}; }</span>
+<span id="L35"><span class="lineNum">      35</span>              : };</span>
+<span id="L36"><span class="lineNum">      36</span>              : </span>
+<span id="L37"><span class="lineNum">      37</span>              : template &lt;Config Conf&gt;</span>
+<span id="L38"><span class="lineNum">      38</span>              : struct StatefulLQRFactor {</span>
+<span id="L39"><span class="lineNum">      39</span>              :     USING_ALPAQA_CONFIG(Conf);</span>
+<span id="L40"><span class="lineNum">      40</span>              : </span>
+<span id="L41"><span class="lineNum">      41</span>              :     using Dim = alpaqa::Dim&lt;config_t&gt;;</span>
+<span id="L42"><span class="lineNum">      42</span>              : </span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaUNC tlaBgUNC">           0 :     StatefulLQRFactor(Dim d) : dim{d} {}</span></span>
+<span id="L44"><span class="lineNum">      44</span>              :     Dim dim;</span>
+<span id="L45"><span class="lineNum">      45</span>              :     mat P{dim.nx, dim.nx};</span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaUNC">           0 :     mat gain_K{dim.nu * dim.nx, dim.N};</span></span>
+<span id="L47"><span class="lineNum">      47</span>              :     mat e{dim.nu, dim.N};</span>
+<span id="L48"><span class="lineNum">      48</span>              :     vec s{dim.nx};</span>
+<span id="L49"><span class="lineNum">      49</span>              :     vec c{dim.nx};</span>
+<span id="L50"><span class="lineNum">      50</span>              :     vec y{dim.nx};</span>
+<span id="L51"><span class="lineNum">      51</span>              :     vec t{dim.nu};</span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaUNC">           0 :     vec R̅_sto{dim.nu * dim.nu};</span></span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaUNC">           0 :     vec S̅_sto{dim.nu * dim.nx};</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaUNC">           0 :     vec BiJ_sto{dim.nx * dim.nu};</span></span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaUNC">           0 :     vec PBiJ_sto{dim.nx * dim.nu};</span></span>
+<span id="L56"><span class="lineNum">      56</span>              :     mat PA{dim.nx, dim.nx};</span>
+<span id="L57"><span class="lineNum">      57</span>              :     real_t min_rcond = 1;</span>
+<span id="L58"><span class="lineNum">      58</span>              : </span>
+<span id="L59"><span class="lineNum">      59</span> <span class="tlaUNC">           0 :     void factor_masked(auto &amp;&amp;AB,        ///&lt; System matrix A &amp; input matrix B</span></span>
+<span id="L60"><span class="lineNum">      60</span>              :                        auto &amp;&amp;Q,         ///&lt; State cost matrix Q</span>
+<span id="L61"><span class="lineNum">      61</span>              :                        auto &amp;&amp;R,         ///&lt; Input cost matrix R</span>
+<span id="L62"><span class="lineNum">      62</span>              :                        auto &amp;&amp;S,         ///&lt; Cross cost matrix S</span>
+<span id="L63"><span class="lineNum">      63</span>              :                        auto &amp;&amp;R_prod,    ///&lt; Product with input cost matrix R</span>
+<span id="L64"><span class="lineNum">      64</span>              :                        auto &amp;&amp;S_prod,    ///&lt; Product with cross cost matrix S</span>
+<span id="L65"><span class="lineNum">      65</span>              :                        auto &amp;&amp;q,         ///&lt; Linear state factor q</span>
+<span id="L66"><span class="lineNum">      66</span>              :                        auto &amp;&amp;r,         ///&lt; Linear input factor r</span>
+<span id="L67"><span class="lineNum">      67</span>              :                        auto &amp;&amp;u,         ///&lt; Fixed inputs u</span>
+<span id="L68"><span class="lineNum">      68</span>              :                        auto &amp;&amp;J,         ///&lt; Index set of inactive constraints</span>
+<span id="L69"><span class="lineNum">      69</span>              :                        auto &amp;&amp;K,         ///&lt; Index set of active constraints</span>
+<span id="L70"><span class="lineNum">      70</span>              :                        bool use_cholesky ///&lt; Use Cholesky instead of LU solver</span>
+<span id="L71"><span class="lineNum">      71</span>              :     ) {</span>
+<span id="L72"><span class="lineNum">      72</span>              :         using mmat = Eigen::Map&lt;mat&gt;;</span>
+<span id="L73"><span class="lineNum">      73</span>              :         using Eigen::indexing::all;</span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaUNC">           0 :         auto [N, nx, nu] = dim;</span></span>
+<span id="L75"><span class="lineNum">      75</span>              : </span>
+<span id="L76"><span class="lineNum">      76</span> <span class="tlaUNC">           0 :         min_rcond = 1;</span></span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaUNC">           0 :         P.setZero();</span></span>
+<span id="L78"><span class="lineNum">      78</span> <span class="tlaUNC">           0 :         Q(N)(P);</span></span>
+<span id="L79"><span class="lineNum">      79</span> <span class="tlaUNC">           0 :         s = q(N);</span></span>
+<span id="L80"><span class="lineNum">      80</span> <span class="tlaUNC">           0 :         for (index_t i = N; i-- &gt; 0;) {</span></span>
+<span id="L81"><span class="lineNum">      81</span> <span class="tlaUNC">           0 :             auto &amp;&amp;ABi  = AB(i);</span></span>
+<span id="L82"><span class="lineNum">      82</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Ai   = ABi.leftCols(nx);</span></span>
+<span id="L83"><span class="lineNum">      83</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Bi   = ABi.rightCols(nu);</span></span>
+<span id="L84"><span class="lineNum">      84</span> <span class="tlaUNC">           0 :             auto &amp;&amp;ui   = u(i);</span></span>
+<span id="L85"><span class="lineNum">      85</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Ji   = J(i);</span></span>
+<span id="L86"><span class="lineNum">      86</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Ki   = K(i);</span></span>
+<span id="L87"><span class="lineNum">      87</span> <span class="tlaUNC">           0 :             length_t nJ = Ji.size(); // number of inactive constraints</span></span>
+<span id="L88"><span class="lineNum">      88</span> <span class="tlaUNC">           0 :             mmat R̅{R̅_sto.data(), nJ, nJ};</span></span>
+<span id="L89"><span class="lineNum">      89</span> <span class="tlaUNC">           0 :             mmat S̅{S̅_sto.data(), nJ, nx};</span></span>
+<span id="L90"><span class="lineNum">      90</span> <span class="tlaUNC">           0 :             mmat BiJ{BiJ_sto.data(), nx, nJ};</span></span>
+<span id="L91"><span class="lineNum">      91</span> <span class="tlaUNC">           0 :             mmat PBiJ{PBiJ_sto.data(), nx, nJ};</span></span>
+<span id="L92"><span class="lineNum">      92</span> <span class="tlaUNC">           0 :             auto &amp;&amp;ti = t.topRows(nJ);</span></span>
+<span id="L93"><span class="lineNum">      93</span> <span class="tlaUNC">           0 :             mmat gain_Ki{gain_K.col(i).data(), nJ, nx};</span></span>
+<span id="L94"><span class="lineNum">      94</span> <span class="tlaUNC">           0 :             auto &amp;&amp;ei = e.col(i).topRows(nJ);</span></span>
+<span id="L95"><span class="lineNum">      95</span>              :             // R̅ ← R + Bᵀ P B</span>
+<span id="L96"><span class="lineNum">      96</span> <span class="tlaUNC">           0 :             BiJ.noalias()  = Bi(all, Ji);</span></span>
+<span id="L97"><span class="lineNum">      97</span> <span class="tlaUNC">           0 :             PBiJ.noalias() = P * BiJ;</span></span>
+<span id="L98"><span class="lineNum">      98</span> <span class="tlaUNC">           0 :             R̅.noalias()    = BiJ.transpose() * PBiJ;</span></span>
+<span id="L99"><span class="lineNum">      99</span> <span class="tlaUNC">           0 :             R(i)(Ji, R̅);</span></span>
+<span id="L100"><span class="lineNum">     100</span>              :             // S̅ ← S + Bᵀ P A</span>
+<span id="L101"><span class="lineNum">     101</span> <span class="tlaUNC">           0 :             PA.noalias() = P * Ai;</span></span>
+<span id="L102"><span class="lineNum">     102</span> <span class="tlaUNC">           0 :             S̅.noalias()  = BiJ.transpose() * PA;</span></span>
+<span id="L103"><span class="lineNum">     103</span> <span class="tlaUNC">           0 :             S(i)(Ji, S̅);</span></span>
+<span id="L104"><span class="lineNum">     104</span>              :             // c = B(·,K) u(K), y ← P c + s</span>
+<span id="L105"><span class="lineNum">     105</span> <span class="tlaUNC">           0 :             c.noalias() = Bi(all, Ki) * ui(Ki);</span></span>
+<span id="L106"><span class="lineNum">     106</span> <span class="tlaUNC">           0 :             y.noalias() = P * c;</span></span>
+<span id="L107"><span class="lineNum">     107</span> <span class="tlaUNC">           0 :             y += s;</span></span>
+<span id="L108"><span class="lineNum">     108</span>              :             // t ← Bᵀy + r + R(J,K) u(K)</span>
+<span id="L109"><span class="lineNum">     109</span> <span class="tlaUNC">           0 :             ti.noalias() = BiJ.transpose() * y;</span></span>
+<span id="L110"><span class="lineNum">     110</span> <span class="tlaUNC">           0 :             ti += r(i)(Ji);</span></span>
+<span id="L111"><span class="lineNum">     111</span> <span class="tlaUNC">           0 :             R_prod(i)(Ji, Ki, ui, ti);</span></span>
+<span id="L112"><span class="lineNum">     112</span>              :             // Factor R̅</span>
+<span id="L113"><span class="lineNum">     113</span> <span class="tlaUNC">           0 :             if (use_cholesky) {</span></span>
+<span id="L114"><span class="lineNum">     114</span>              : #ifdef EIGEN_RUNTIME_NO_MALLOC</span>
+<span id="L115"><span class="lineNum">     115</span>              :                 bool prev = Eigen::internal::is_malloc_allowed();</span>
+<span id="L116"><span class="lineNum">     116</span>              :                 Eigen::internal::set_is_malloc_allowed(true); // TODO</span>
+<span id="L117"><span class="lineNum">     117</span>              : #endif</span>
+<span id="L118"><span class="lineNum">     118</span> <span class="tlaUNC">           0 :                 Eigen::LDLT&lt;rmat&gt; R̅LU{R̅};</span></span>
+<span id="L119"><span class="lineNum">     119</span> <span class="tlaUNC">           0 :                 min_rcond = std::min(R̅LU.rcond(), min_rcond);</span></span>
+<span id="L120"><span class="lineNum">     120</span>              : #ifdef EIGEN_RUNTIME_NO_MALLOC</span>
+<span id="L121"><span class="lineNum">     121</span>              :                 Eigen::internal::set_is_malloc_allowed(prev);</span>
+<span id="L122"><span class="lineNum">     122</span>              : #endif</span>
+<span id="L123"><span class="lineNum">     123</span>              :                 // K ← -R̅⁻¹S̅</span>
+<span id="L124"><span class="lineNum">     124</span> <span class="tlaUNC">           0 :                 gain_Ki.noalias() = R̅LU.solve(S̅);</span></span>
+<span id="L125"><span class="lineNum">     125</span>              :                 // e ← -R̅⁻¹(Bᵀy + r)</span>
+<span id="L126"><span class="lineNum">     126</span> <span class="tlaUNC">           0 :                 ei.noalias() = R̅LU.solve(ti);</span></span>
+<span id="L127"><span class="lineNum">     127</span> <span class="tlaUNC">           0 :             } else {</span></span>
+<span id="L128"><span class="lineNum">     128</span>              : #ifdef EIGEN_RUNTIME_NO_MALLOC</span>
+<span id="L129"><span class="lineNum">     129</span>              :                 bool prev = Eigen::internal::is_malloc_allowed();</span>
+<span id="L130"><span class="lineNum">     130</span>              :                 Eigen::internal::set_is_malloc_allowed(true); // TODO</span>
+<span id="L131"><span class="lineNum">     131</span>              : #endif</span>
+<span id="L132"><span class="lineNum">     132</span> <span class="tlaUNC">           0 :                 Eigen::PartialPivLU&lt;rmat&gt; R̅LU{R̅};</span></span>
+<span id="L133"><span class="lineNum">     133</span> <span class="tlaUNC">           0 :                 min_rcond = std::min(R̅LU.rcond(), min_rcond);</span></span>
+<span id="L134"><span class="lineNum">     134</span>              : #ifdef EIGEN_RUNTIME_NO_MALLOC</span>
+<span id="L135"><span class="lineNum">     135</span>              :                 Eigen::internal::set_is_malloc_allowed(prev);</span>
+<span id="L136"><span class="lineNum">     136</span>              : #endif</span>
+<span id="L137"><span class="lineNum">     137</span>              :                 // K ← -R̅⁻¹S̅</span>
+<span id="L138"><span class="lineNum">     138</span> <span class="tlaUNC">           0 :                 gain_Ki.noalias() = R̅LU.solve(S̅);</span></span>
+<span id="L139"><span class="lineNum">     139</span>              :                 // e ← -R̅⁻¹(Bᵀy + r)</span>
+<span id="L140"><span class="lineNum">     140</span> <span class="tlaUNC">           0 :                 ei.noalias() = R̅LU.solve(ti);</span></span>
+<span id="L141"><span class="lineNum">     141</span> <span class="tlaUNC">           0 :             }</span></span>
+<span id="L142"><span class="lineNum">     142</span> <span class="tlaUNC">           0 :             gain_Ki = -gain_Ki;</span></span>
+<span id="L143"><span class="lineNum">     143</span> <span class="tlaUNC">           0 :             ei      = -ei;</span></span>
+<span id="L144"><span class="lineNum">     144</span> <span class="tlaUNC">           0 :             if (i &gt; 0) {</span></span>
+<span id="L145"><span class="lineNum">     145</span>              :                 // P ← Q + Aᵀ P A + S̅ᵀ K</span>
+<span id="L146"><span class="lineNum">     146</span> <span class="tlaUNC">           0 :                 P.noalias() = Ai.transpose() * PA;</span></span>
+<span id="L147"><span class="lineNum">     147</span> <span class="tlaUNC">           0 :                 P.noalias() += S̅.transpose() * gain_Ki;</span></span>
+<span id="L148"><span class="lineNum">     148</span>              :                 // s ← S̅ᵀ e + Aᵀ y + q + Sᵀ(·,K) u(K)</span>
+<span id="L149"><span class="lineNum">     149</span> <span class="tlaUNC">           0 :                 s.noalias() = S̅.transpose() * ei;</span></span>
+<span id="L150"><span class="lineNum">     150</span> <span class="tlaUNC">           0 :                 s.noalias() += Ai.transpose() * y;</span></span>
+<span id="L151"><span class="lineNum">     151</span> <span class="tlaUNC">           0 :                 s += q(i);</span></span>
+<span id="L152"><span class="lineNum">     152</span> <span class="tlaUNC">           0 :                 S_prod(i)(Ki, ui, s);</span></span>
+<span id="L153"><span class="lineNum">     153</span> <span class="tlaUNC">           0 :                 Q(i)(P);</span></span>
+<span id="L154"><span class="lineNum">     154</span>              :             }</span>
+<span id="L155"><span class="lineNum">     155</span>              :         }</span>
+<span id="L156"><span class="lineNum">     156</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L157"><span class="lineNum">     157</span>              : </span>
+<span id="L158"><span class="lineNum">     158</span> <span class="tlaUNC">           0 :     void solve_masked(auto &amp;&amp;AB, auto &amp;&amp;J, rvec Δu_eq, rvec Δx) {</span></span>
+<span id="L159"><span class="lineNum">     159</span> <span class="tlaUNC">           0 :         auto [N, nx, nu] = dim;</span></span>
+<span id="L160"><span class="lineNum">     160</span> <span class="tlaUNC">           0 :         assert(Δx.size() == 2 * nx);</span></span>
+<span id="L161"><span class="lineNum">     161</span> <span class="tlaUNC">           0 :         Δx.topRows(nx).setZero();</span></span>
+<span id="L162"><span class="lineNum">     162</span> <span class="tlaUNC">           0 :         for (index_t i = 0; i &lt; N; ++i) {</span></span>
+<span id="L163"><span class="lineNum">     163</span> <span class="tlaUNC">           0 :             auto &amp;&amp;ABi     = AB(i);</span></span>
+<span id="L164"><span class="lineNum">     164</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Ai      = ABi.leftCols(nx);</span></span>
+<span id="L165"><span class="lineNum">     165</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Bi      = ABi.rightCols(nu);</span></span>
+<span id="L166"><span class="lineNum">     166</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Ji      = J(i);</span></span>
+<span id="L167"><span class="lineNum">     167</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Δxi     = Δx.segment((i % 2) * nx, nx);</span></span>
+<span id="L168"><span class="lineNum">     168</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Δx_next = Δx.segment(((i + 1) % 2) * nx, nx);</span></span>
+<span id="L169"><span class="lineNum">     169</span> <span class="tlaUNC">           0 :             length_t nJ    = Ji.size();</span></span>
+<span id="L170"><span class="lineNum">     170</span> <span class="tlaUNC">           0 :             mmat Ki{gain_K.col(i).data(), nJ, nx};</span></span>
+<span id="L171"><span class="lineNum">     171</span> <span class="tlaUNC">           0 :             auto &amp;&amp;ei  = e.col(i).topRows(nJ);</span></span>
+<span id="L172"><span class="lineNum">     172</span> <span class="tlaUNC">           0 :             auto &amp;&amp;Δui = Δu_eq.segment(i * nu, nu);</span></span>
+<span id="L173"><span class="lineNum">     173</span> <span class="tlaUNC">           0 :             ei.noalias() += Ki * Δxi;</span></span>
+<span id="L174"><span class="lineNum">     174</span> <span class="tlaUNC">           0 :             Δui(Ji).noalias() = ei;</span></span>
+<span id="L175"><span class="lineNum">     175</span> <span class="tlaUNC">           0 :             Δx_next.noalias() = Ai * Δxi;</span></span>
+<span id="L176"><span class="lineNum">     176</span> <span class="tlaUNC">           0 :             Δx_next.noalias() += Bi * Δui;</span></span>
+<span id="L177"><span class="lineNum">     177</span>              :         }</span>
+<span id="L178"><span class="lineNum">     178</span> <span class="tlaUNC">           0 :     }</span></span>
+<span id="L179"><span class="lineNum">     179</span>              : };</span>
+<span id="L180"><span class="lineNum">     180</span>              : </span>
+<span id="L181"><span class="lineNum">     181</span>              : } // namespace alpaqa</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

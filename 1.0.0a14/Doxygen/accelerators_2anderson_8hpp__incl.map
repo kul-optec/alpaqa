@@ -1,0 +1,38 @@
+<map id="src/alpaqa/include/alpaqa/accelerators/anderson.hpp" name="src/alpaqa/include/alpaqa/accelerators/anderson.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="639,5,794,60"/>
+<area shape="rect" id="Node000002" href="$anderson-helpers_8hpp.html" title=" " alt="" coords="350,108,571,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="646,63,526,106,524,101,644,58"/>
+<area shape="rect" id="Node000004" href="$config_8hpp.html" title=" " alt="" coords="448,299,628,324"/>
+<area shape="poly" id="edge17_Node000001_Node000004" title=" " alt="" coords="702,62,555,289,551,286,697,59"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="798,379,857,405"/>
+<area shape="poly" id="edge19_Node000001_Node000007" title=" " alt="" coords="736,59,769,120,801,195,813,242,821,288,829,365,823,366,816,289,807,243,795,197,764,122,731,62"/>
+<area shape="rect" id="Node000014" href="$export_8hpp.html" title=" " alt="" coords="647,211,787,236"/>
+<area shape="poly" id="edge18_Node000001_Node000014" title=" " alt="" coords="719,60,719,197,714,197,714,60"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="863,115,949,141"/>
+<area shape="poly" id="edge20_Node000001_Node000016" title=" " alt="" coords="771,58,872,107,870,112,769,62"/>
+<area shape="rect" id="Node000003" href="$limited-memory-qr_8hpp.html" title=" " alt="" coords="303,196,490,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="450,150,425,186,420,183,446,147"/>
+<area shape="poly" id="edge14_Node000002_Node000004" title=" " alt="" coords="477,147,504,195,522,242,535,285,530,286,517,244,500,197,472,150"/>
+<area shape="poly" id="edge15_Node000002_Node000014" title=" " alt="" coords="513,146,673,203,671,208,512,151"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="441,248,508,289,506,294,438,253"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="195,379,287,405"/>
+<area shape="poly" id="edge13_Node000003_Node000008" title=" " alt="" coords="398,251,392,288,384,308,373,326,359,338,336,352,284,376,281,371,334,347,356,334,369,322,380,306,387,287,393,250"/>
+<area shape="rect" id="Node000010" href="$ringbuffer_8hpp.html" title=" " alt="" coords="43,299,228,324"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="318,253,184,297,182,292,316,248"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="258,299,359,324"/>
+<area shape="poly" id="edge12_Node000003_Node000013" title=" " alt="" coords="372,253,332,291,328,287,368,249"/>
+<area shape="rect" id="Node000005" href="$quadmath-print_8hpp.html" title=" " alt="" coords="612,372,773,412"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="562,322,644,363,642,368,560,327"/>
+<area shape="rect" id="Node000006" href="$quadmath_8hpp.html" title=" " alt="" coords="311,372,472,412"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="518,327,440,368,437,363,515,322"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="599,321,688,341,785,369,791,372,790,377,784,375,686,347,598,327"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="488,327,299,375,288,378,287,373,297,369,487,321"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="496,379,588,405"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="541,324,543,365,538,366,536,324"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="100,379,171,405"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="138,324,138,365,133,365,133,324"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="5,379,76,405"/>
+<area shape="poly" id="edge11_Node000010_Node000012" title=" " alt="" coords="123,326,67,372,64,368,120,322"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="655,299,779,324"/>
+<area shape="poly" id="edge16_Node000014_Node000015" title=" " alt="" coords="719,236,719,284,714,284,714,236"/>
+</map>

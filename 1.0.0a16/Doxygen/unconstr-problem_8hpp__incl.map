@@ -1,0 +1,19 @@
+<map id="src/alpaqa/include/alpaqa/problem/unconstr&#45;problem.hpp" name="src/alpaqa/include/alpaqa/problem/unconstr&#45;problem.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="444,5,632,60"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="372,108,552,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="517,62,483,99,479,96,513,58"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="577,108,651,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="563,58,597,96,593,99,559,62"/>
+<area shape="rect" id="Node000003" href="$quadmath-print_8hpp.html" title=" " alt="" coords="5,181,167,221"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="408,136,180,183,179,178,407,131"/>
+<area shape="rect" id="Node000004" href="$quadmath_8hpp.html" title=" " alt="" coords="191,181,352,221"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="435,136,331,179,329,174,433,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="376,189,455,214"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="457,135,432,178,427,175,453,132"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="479,189,538,214"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="471,132,497,175,492,178,467,135"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="563,189,655,214"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="485,131,576,180,574,184,482,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="679,189,771,214"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="504,131,668,179,678,182,676,187,667,184,502,136"/>
+</map>

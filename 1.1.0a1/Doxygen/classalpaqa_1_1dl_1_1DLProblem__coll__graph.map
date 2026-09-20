@@ -1,0 +1,11 @@
+<map id="DLProblem" name="DLProblem">
+<area shape="rect" id="Node000001" title="Class that loads a problem using dlopen." alt="" coords="239,1123,470,2811"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html" title=" " alt="" coords="5,321,221,993"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,1006,242,1340,237,1341,175,1007"/>
+<area shape="rect" id="Node000003" href="$dl-problem_8h.html#structalpaqa__problem__functions__t" title="C API providing function pointers to problem functions." alt="" coords="246,261,463,1052"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="357,1052,357,1106,352,1106,352,1052"/>
+<area shape="rect" id="Node000004" href="$structalpaqa__sparsity__t.html" title="Sparsity of matrices." alt="" coords="142,5,567,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="357,91,357,245,352,245,352,91"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1dl_1_1ExtraFuncs.html" title=" " alt="" coords="487,574,673,739"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="569,740,475,1280,470,1279,563,739"/>
+</map>

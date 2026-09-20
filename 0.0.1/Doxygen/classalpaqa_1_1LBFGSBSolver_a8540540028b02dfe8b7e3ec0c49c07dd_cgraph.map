@@ -1,0 +1,10 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="node1" title=" " alt="" coords="5,91,92,117"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a609b04c1159d9c3a0346c2ff7fbacb86" title="Calculate the error between ẑ and g(x)." alt="" coords="571,6,716,47"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1detail.html#a5895b05665103ffbaf9ad3385c957dc0" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="162,54,307,95"/>
+<area shape="rect" id="node6" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="377,115,523,157"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1AtomicStopSignal.html#aa0097deccc19b49f8ab5344d8d6d5cf6" title=" " alt="" coords="140,171,329,213"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="764,61,883,88"/>
+<area shape="rect" id="node5" href="$namespacealpaqa_1_1detail.html#a998a56114e97dc0ea3b883d34df2cb77" title="Calculate ∇ψ(x) using ŷ." alt="" coords="377,50,523,91"/>
+<area shape="rect" id="node7" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="574,86,713,127"/>
+</map>

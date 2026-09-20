@@ -1,0 +1,5 @@
+<map id="get_bounds_info" name="get_bounds_info">
+<area shape="rect" id="node1" title=" " alt="" coords="5,45,135,70"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedProblem.html#ae0ffecc22b09ce70fb1fe663c0255018" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="183,5,385,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#a193ee88bf3ca51034ff602e30882edd7" title="[Optional] Get the rectangular constraint set of the general constraint function, ." alt="" coords="183,69,385,109"/>
+</map>

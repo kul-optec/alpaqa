@@ -1,0 +1,13 @@
+<map id="src/alpaqa/include/alpaqa/params/structs.hpp" name="src/alpaqa/include/alpaqa/params/structs.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="101,5,300,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,52,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,48,65,91,63,86,158,43"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="77,93,127,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="178,48,129,87,126,82,175,43"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="152,93,249,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="203,46,203,79,198,79,198,46"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="273,93,365,119"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="231,43,292,84,289,88,228,48"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="389,93,465,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="256,43,382,86,380,91,254,48"/>
+</map>

@@ -1,0 +1,23 @@
+<map id="forward" name="forward">
+<area shape="rect" id="node1" title=" " alt="" coords="5,496,77,521"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1OCPVariables.html#a391b2381bfd92a7c2fd61a9fa322e3c0" title=" " alt="" coords="131,5,315,31"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#ad8b1a455a3b6ad5e25fe20cfccec279b" title="Get the distance squared between the given vector and its projection." alt="" coords="144,55,301,80"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedControlProblem.html#a86c96723a0f613e2269ebd81f72c9c83" title="Stage constraints ." alt="" coords="125,105,320,145"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedControlProblem.html#a4e9cccc0dd3e9920bd9a0d2510270c44" title="Terminal constraints ." alt="" coords="125,169,320,209"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="125,233,320,273"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1TypeErasedControlProblem.html#a9412e49fd073645733eb50f1e93b889a" title="Stage output mapping ." alt="" coords="125,297,320,337"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1TypeErasedControlProblem.html#af14bea7b59a44b2bbf009de9aa3ff3a7" title="Terminal output mapping ." alt="" coords="125,361,320,401"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1TypeErasedControlProblem.html#a676d1700119cbb315a5a7e799689ca0e" title="Stage cost ." alt="" coords="125,425,320,465"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1TypeErasedControlProblem.html#a62f0734c14da4c35d7504c1c6fd4e255" title="Terminal cost ." alt="" coords="125,489,320,529"/>
+<area shape="rect" id="node14" href="$structalpaqa_1_1OCPVariables.html#ad2e98c60f4f2abe43a52aea5afc9bad4" title=" " alt="" coords="130,553,315,579"/>
+<area shape="rect" id="node15" href="$structalpaqa_1_1OCPVariables.html#ac23599fc3855d4c3d79c3e689dd86f6c" title=" " alt="" coords="131,603,315,628"/>
+<area shape="rect" id="node16" href="$structalpaqa_1_1OCPVariables.html#a9b03b81e6526f30c99d5d9e0fa537768" title=" " alt="" coords="142,653,303,693"/>
+<area shape="rect" id="node17" href="$structalpaqa_1_1OCPVariables.html#a6d6559d215012fc0f573883117ec5398" title=" " alt="" coords="130,717,315,743"/>
+<area shape="rect" id="node18" href="$structalpaqa_1_1OCPVariables.html#a2f879d2af95b130c8c92b49b11e55b9f" title=" " alt="" coords="142,767,303,807"/>
+<area shape="rect" id="node19" href="$structalpaqa_1_1OCPVariables.html#a88158344aedc0355f0e563e54c779ae7" title=" " alt="" coords="130,832,315,857"/>
+<area shape="rect" id="node20" href="$structalpaqa_1_1OCPVariables.html#a5468d87fecd1ab7d60817e223428990b" title=" " alt="" coords="130,881,315,907"/>
+<area shape="rect" id="node21" href="$structalpaqa_1_1OCPVariables.html#ad17879d70c1e3a6e1709166481bdc8c6" title=" " alt="" coords="126,931,319,956"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#a0aa3a21307a2b125ccd70ac4265c4446" title="Get the difference between the given vector and its projection." alt="" coords="390,47,529,87"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#ace167fc364a50a555a05a8bc695ff189" title="Project a vector onto a box." alt="" coords="599,55,717,80"/>
+<area shape="rect" id="node9" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="368,368,551,393"/>
+</map>

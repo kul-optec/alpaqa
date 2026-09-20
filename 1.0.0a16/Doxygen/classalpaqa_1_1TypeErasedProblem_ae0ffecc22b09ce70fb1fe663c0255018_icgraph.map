@@ -1,0 +1,16 @@
+<map id="get_box_C" name="get_box_C">
+<area shape="rect" id="Node000001" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="347,141,437,166"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1StructuredNewtonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="108,5,299,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="371,131,339,94,297,60,274,48,277,43,300,55,343,91,375,128"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="126,69,281,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="341,139,298,124,263,112,265,107,300,119,342,134"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="124,133,283,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="333,156,283,156,283,151,333,151"/>
+<area shape="rect" id="Node000006" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="113,222,293,277"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="355,175,259,224,257,220,353,170"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1IpoptAdapter.html#a6a12b21a35ced53a439bfa2510029237" title=" " alt="" coords="124,301,283,341"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="382,180,350,235,327,264,300,290,278,303,276,299,297,286,323,261,346,232,377,177"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,141,60,166"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="110,156,60,156,60,151,110,151"/>
+<area shape="poly" id="edge6_Node000006_Node000006" title=" " alt="" coords="231,210,221,203,203,201,188,202,179,207,175,214,175,222,169,222,169,212,175,203,187,197,203,195,223,198,234,206"/>
+</map>

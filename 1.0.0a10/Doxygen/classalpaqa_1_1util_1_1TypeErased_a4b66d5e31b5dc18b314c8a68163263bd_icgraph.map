@@ -1,0 +1,5 @@
+<map id="cleanup" name="cleanup">
+<area shape="rect" id="node1" title="Destroy the type&#45;erased object (if not empty), and deallocate the memory if necessary." alt="" coords="160,31,233,56"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1util_1_1TypeErased.html#a5e33ed4b3e1700f789f9866c319c9bce" title="Destructor." alt="" coords="5,5,112,31"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1util_1_1TypeErased.html#a27cb54a718aa5cf82a1dcfb1fe5c6838" title="Copy assignment." alt="" coords="15,55,103,80"/>
+</map>

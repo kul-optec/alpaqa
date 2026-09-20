@@ -1,0 +1,7 @@
+<map id="norm_1" name="norm_1">
+<area shape="rect" id="node1" title="Get the 1&#45;norm of the given vector." alt="" coords="724,45,795,70"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="461,5,676,45"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1BoxConstrProblem.html#a1675a9050e69af2eed772e663bedc762" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="461,69,676,109"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1BoxConstrProblem.html#acdbe943d1576c496e20286c3106c00b8" title=" " alt="" coords="219,69,413,109"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1dl_1_1DLProblem.html#a02bf998629ca590cf5a2e183cbf43444" title=" " alt="" coords="5,69,171,109"/>
+</map>

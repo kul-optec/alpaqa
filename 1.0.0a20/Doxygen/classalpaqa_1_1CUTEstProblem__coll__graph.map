@@ -1,0 +1,11 @@
+<map id="CUTEstProblem" name="CUTEstProblem">
+<area shape="rect" id="Node000001" title="Wrapper for CUTEst problems loaded from an external shared library." alt="" coords="283,939,453,1564"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html" title=" " alt="" coords="5,248,200,861"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,841,214,860,286,1042,281,1044,210,862,202,843"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1sets_1_1Box.html" title=" " alt="" coords="24,5,181,171"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,171,105,232,100,232,100,171"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1copyable__unique__ptr.html" title=" " alt="" coords="224,358,512,751"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="371,752,371,922,365,922,365,752"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CUTEstProblem.html#structalpaqa_1_1CUTEstProblem_1_1SparseStorage" title=" " alt="" coords="537,512,645,597"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="586,598,563,718,527,862,496,953,461,1043,456,1041,491,951,521,861,558,716,581,597"/>
+</map>

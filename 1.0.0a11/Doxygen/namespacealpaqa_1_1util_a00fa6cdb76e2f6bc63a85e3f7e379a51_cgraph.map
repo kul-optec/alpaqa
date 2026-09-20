@@ -1,0 +1,6 @@
+<map id="sparse_matvec_add_masked_rows_cols" name="sparse_matvec_add_masked_rows_cols">
+<area shape="rect" id="node1" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="5,23,216,63"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util_1_1detail.html#a619596647bd12dfb15417042bcdef056" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="264,23,448,63"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util.html#aa341d471c192fc72207643cd7057e260" title=" " alt="" coords="527,5,620,31"/>
+<area shape="rect" id="node4" href="$namespacealpaqa_1_1util.html#afddf99e09d9dad4ee17b5f41705c583a" title=" " alt="" coords="496,55,651,80"/>
+</map>

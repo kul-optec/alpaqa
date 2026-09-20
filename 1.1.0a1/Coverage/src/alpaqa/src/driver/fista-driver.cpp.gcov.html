@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 2cc06d006231f4ec254f89b61a3ee14d3621af4d - src/alpaqa/src/driver/fista-driver.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory src/alpaqa/src/driver">src/alpaqa/src/driver</a> - fista-driver.cpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">2cc06d006231f4ec254f89b61a3ee14d3621af4d</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">21</td>
+            <td class="headerCovTableEntry">0</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-09-03 21:35:38</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:&nbsp&nbsp&nbsp&nbsp
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #include &lt;alpaqa/implementation/outer/alm.tpp&gt;</span>
+<span id="L2"><span class="lineNum">       2</span>              : #include &lt;alpaqa/inner/fista.hpp&gt;</span>
+<span id="L3"><span class="lineNum">       3</span>              : </span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &quot;alm-driver.hpp&quot;</span>
+<span id="L5"><span class="lineNum">       5</span>              : #include &quot;cancel.hpp&quot;</span>
+<span id="L6"><span class="lineNum">       6</span>              : #include &quot;fista-driver.hpp&quot;</span>
+<span id="L7"><span class="lineNum">       7</span>              : #include &quot;solver-driver.hpp&quot;</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              : namespace {</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : using FISTASolver = alpaqa::FISTASolver&lt;alpaqa::DefaultConfig&gt;;</span>
+<span id="L12"><span class="lineNum">      12</span>              : </span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaUNC">           0 : auto make_inner_fista_solver(Options &amp;opts) {</span></span>
+<span id="L14"><span class="lineNum">      14</span>              :     USING_ALPAQA_CONFIG(FISTASolver::config_t);</span>
+<span id="L15"><span class="lineNum">      15</span>              :     // Settings for the solver</span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaUNC">           0 :     FISTASolver::Params solver_param;</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaUNC">           0 :     solver_param.max_iter       = 50'000;</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaUNC">           0 :     solver_param.print_interval = 0;</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaUNC">           0 :     solver_param.stop_crit      = alpaqa::PANOCStopCrit::FPRNorm;</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaUNC">           0 :     set_params(solver_param, &quot;solver&quot;, opts);</span></span>
+<span id="L21"><span class="lineNum">      21</span> <span class="tlaUNC">           0 :     return FISTASolver{solver_param};</span></span>
+<span id="L22"><span class="lineNum">      22</span>              : }</span>
+<span id="L23"><span class="lineNum">      23</span>              : </span>
+<span id="L24"><span class="lineNum">      24</span>              : template &lt;class LoadedProblem&gt;</span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaUNC">           0 : SharedSolverWrapper make_fista_driver_impl(std::string_view direction,</span></span>
+<span id="L26"><span class="lineNum">      26</span>              :                                            Options &amp;opts) {</span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaUNC">           0 :     if (!direction.empty())</span></span>
+<span id="L28"><span class="lineNum">      28</span> <span class="tlaUNC">           0 :         throw std::invalid_argument(</span></span>
+<span id="L29"><span class="lineNum">      29</span>              :             &quot;FISTA solver does not support any directions&quot;);</span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaUNC">           0 :     auto inner_solver = make_inner_fista_solver(opts);</span></span>
+<span id="L31"><span class="lineNum">      31</span> <span class="tlaUNC">           0 :     auto solver       = make_alm_solver(std::move(inner_solver), opts);</span></span>
+<span id="L32"><span class="lineNum">      32</span> <span class="tlaUNC">           0 :     unsigned N_exp    = 0;</span></span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaUNC">           0 :     set_params(N_exp, &quot;num_exp&quot;, opts);</span></span>
+<span id="L34"><span class="lineNum">      34</span>              :     return std::make_shared&lt;SolverWrapper&gt;(</span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaUNC">           0 :         [solver{std::move(solver)}, N_exp](</span></span>
+<span id="L36"><span class="lineNum">      36</span>              :             LoadedProblem &amp;problem, std::ostream &amp;os) mutable -&gt; SolverResults {</span>
+<span id="L37"><span class="lineNum">      37</span> <span class="tlaUNC">           0 :             auto cancel = alpaqa::attach_cancellation(solver);</span></span>
+<span id="L38"><span class="lineNum">      38</span> <span class="tlaUNC">           0 :             return run_alm_solver(problem, solver, os, N_exp);</span></span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaUNC">           0 :         });</span></span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaUNC">           0 : }</span></span>
+<span id="L41"><span class="lineNum">      41</span>              : </span>
+<span id="L42"><span class="lineNum">      42</span>              : } // namespace</span>
+<span id="L43"><span class="lineNum">      43</span>              : </span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaUNC">           0 : SharedSolverWrapper make_fista_driver(std::string_view direction,</span></span>
+<span id="L45"><span class="lineNum">      45</span>              :                                       Options &amp;opts) {</span>
+<span id="L46"><span class="lineNum">      46</span> <span class="tlaUNC">           0 :     return make_fista_driver_impl&lt;LoadedProblem&gt;(direction, opts);</span></span>
+<span id="L47"><span class="lineNum">      47</span>              : }</span>
+<span id="L48"><span class="lineNum">      48</span>              : </span>
+<span id="L49"><span class="lineNum">      49</span>              : template class alpaqa::ALMSolver&lt;FISTASolver&gt;;</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3.2-beta</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

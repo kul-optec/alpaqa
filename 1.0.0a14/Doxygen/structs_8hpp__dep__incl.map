@@ -1,0 +1,25 @@
+<map id="src/alpaqa/include/alpaqa/params/structs.hpp" name="src/alpaqa/include/alpaqa/params/structs.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="547,5,746,45"/>
+<area shape="rect" id="Node000002" href="$params_8tpp.html" title=" " alt="" coords="367,93,545,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="597,54,511,96,509,91,595,49"/>
+<area shape="rect" id="Node000007" href="$json_8hpp.html" title=" " alt="" coords="747,101,930,141"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="699,49,801,98,799,103,697,54"/>
+<area shape="rect" id="Node000003" href="$params_8cpp.html" title=" " alt="" coords="5,203,171,243"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="353,152,183,199,157,206,156,201,182,193,352,147"/>
+<area shape="rect" id="Node000004" href="$ipopt-params_8cpp.html" title=" " alt="" coords="195,203,346,243"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="397,157,307,205,304,201,395,152"/>
+<area shape="rect" id="Node000005" href="$lbfgsb-params_8cpp.html" title=" " alt="" coords="371,203,541,243"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="459,162,459,203,453,203,453,162"/>
+<area shape="rect" id="Node000006" href="$qpalm-params_8cpp.html" title=" " alt="" coords="566,203,725,243"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="518,152,611,201,608,205,516,157"/>
+<area shape="rect" id="Node000008" href="$json_8tpp.html" title=" " alt="" coords="749,196,928,251"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="841,154,841,196,836,196,836,154"/>
+<area shape="rect" id="Node000012" href="$ipopt-json_8cpp.html" title=" " alt="" coords="953,203,1103,243"/>
+<area shape="poly" id="edge11_Node000007_Node000012" title=" " alt="" coords="888,145,994,201,991,206,885,150"/>
+<area shape="rect" id="Node000009" href="$json_8cpp.html" title=" " alt="" coords="575,299,740,339"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="777,259,695,301,693,296,774,255"/>
+<area shape="rect" id="Node000010" href="$lbfgsb-json_8cpp.html" title=" " alt="" coords="765,299,913,339"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="841,264,841,299,836,299,836,264"/>
+<area shape="rect" id="Node000011" href="$qpalm-json_8cpp.html" title=" " alt="" coords="937,299,1095,339"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="902,255,981,296,979,301,899,259"/>
+</map>

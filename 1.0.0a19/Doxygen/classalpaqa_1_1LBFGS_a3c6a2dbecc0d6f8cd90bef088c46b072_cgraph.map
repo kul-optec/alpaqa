@@ -1,0 +1,7 @@
+<map id="current_history" name="current_history">
+<area shape="rect" id="Node000001" title="Get the number of previous s and y vectors currently stored in the buffer." alt="" coords="5,13,125,38"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="173,13,240,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,23,160,23,160,28,125,28"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LBFGSStorage.html#a9cf7dcccbc3bc69a10833450ee79c623" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="288,5,455,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="240,23,274,23,274,28,240,28"/>
+</map>

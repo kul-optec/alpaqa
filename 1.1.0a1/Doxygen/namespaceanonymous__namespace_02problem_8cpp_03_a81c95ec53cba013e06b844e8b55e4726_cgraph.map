@@ -1,0 +1,27 @@
+<map id="count_problem" name="count_problem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,388,124,413"/>
+<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="29,390,21,380,25,370,40,364,65,361,95,365,108,374,104,378,93,370,65,367,41,369,28,374,26,379,33,386"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a16ff8d368c2e7583983228eb98cba531" title=" " alt="" coords="233,29,339,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="63,388,66,329,79,241,92,193,111,146,137,102,170,64,193,50,219,42,220,47,195,54,174,68,141,105,116,148,97,195,84,242,71,329,68,388"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#ae89c733cfd16a8233be26cc1e386a4ba" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the augmented Lag..." alt="" coords="182,79,390,133"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="65,387,73,342,91,276,122,205,144,172,170,143,174,140,177,144,174,147,148,175,127,208,96,278,78,343,70,388"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a9b5667c162cf4556a3832ec90e2eed96" title="[Optional] Function that returns (a view of) the sparsity pattern of the Jacobian of the constraints." alt="" coords="185,157,387,212"/>
+<area shape="poly" id="edge5_Node000001_Node000004" title=" " alt="" coords="68,387,81,354,102,310,132,263,170,223,178,217,181,221,174,227,136,267,107,313,86,356,73,389"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#aa225ae75b604165138937807ed087f0e" title="[Optional] Get the rectangular constraint set of the general constraint function, ." alt="" coords="185,237,387,277"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="72,386,111,338,139,310,171,286,182,280,185,285,173,291,142,314,115,341,77,389"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedProblem.html#a0ef11beb007a8812b716ed3e800db223" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the Lagrangian." alt="" coords="185,301,387,356"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="104,385,188,358,189,363,105,390"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1TypeErasedProblem.html#a4e4d22f040b5624b3e12a7aee68faa7a" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="185,381,387,421"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="124,398,171,398,171,403,124,403"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedProblem.html#ade5cfe6645aeb485c2159efae94f1c3e" title="Returns true if the problem provides an implementation of get_augmented_lagrangian_hessian_sparsity." alt="" coords="179,445,393,500"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="105,411,189,438,188,444,104,416"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1TypeErasedProblem.html#a8d5cceb605f31b8e649241d616cb7a2d" title="Returns true if the problem provides an implementation of get_constraints_jacobian_sparsity." alt="" coords="185,524,387,579"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="77,412,116,459,143,486,173,509,184,515,181,520,171,514,140,490,112,462,73,415"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1TypeErasedProblem.html#acceb82d2410355eaba096db728705f59" title="Returns true if the problem provides an implementation of get_general_bounds." alt="" coords="174,603,398,643"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="72,413,84,448,104,495,134,545,152,568,174,588,182,594,179,598,170,592,149,572,129,548,99,497,79,450,67,414"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1TypeErasedProblem.html#a849b63cb9e0de1a6294546479fb64a17" title="Returns true if the problem provides an implementation of get_lagrangian_hessian_sparsity." alt="" coords="185,668,387,723"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="70,413,79,459,97,523,128,593,149,625,174,653,179,658,176,662,170,657,144,628,123,595,92,525,74,460,65,414"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1TypeErasedProblem.html#ab67de1bca07c69fb92e71ee161a4e570" title="Returns true if the problem provides an implementation of get_variable_bounds." alt="" coords="172,747,400,787"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="69,413,72,471,86,556,99,604,118,650,142,694,174,732,180,737,176,741,170,736,138,697,113,653,94,605,81,558,67,471,63,414"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="250,31,242,21,246,11,261,5,286,3,317,6,329,15,326,20,315,11,286,8,262,10,250,15,247,20,254,28"/>
+</map>

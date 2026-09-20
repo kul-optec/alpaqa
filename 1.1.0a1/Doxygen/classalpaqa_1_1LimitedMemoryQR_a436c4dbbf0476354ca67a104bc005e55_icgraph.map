@@ -1,0 +1,9 @@
+<map id="remove_column" name="remove_column">
+<area shape="rect" id="Node000001" title="Remove the leftmost column." alt="" coords="459,45,585,70"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="224,37,411,77"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="445,60,411,60,411,55,445,55"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title=" " alt="" coords="5,5,176,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="210,45,176,40,177,35,211,40"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AndersonAccel.html#af02aae3147e83aeb9f83c4f0a17f537f" title=" " alt="" coords="5,69,176,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="211,75,177,80,176,75,210,70"/>
+</map>

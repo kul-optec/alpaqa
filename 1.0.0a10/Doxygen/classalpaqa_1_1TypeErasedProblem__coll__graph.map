@@ -1,0 +1,5 @@
+<map id="TypeErasedProblem&lt; Conf, Allocator &gt;" name="TypeErasedProblem&lt; Conf, Allocator &gt;">
+<area shape="rect" id="node1" title="The main polymorphic minimization problem interface." alt="" coords="5,888,224,2095"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="9,204,220,839"/>
+<area shape="rect" id="node3" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="52,5,177,141"/>
+</map>

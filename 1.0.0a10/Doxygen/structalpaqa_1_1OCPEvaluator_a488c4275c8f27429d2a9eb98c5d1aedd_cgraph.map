@@ -1,0 +1,7 @@
+<map id="forward_simulate" name="forward_simulate">
+<area shape="rect" id="node1" title=" " alt="" coords="5,70,141,95"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="189,5,384,45"/>
+<area shape="rect" id="node4" href="$structalpaqa_1_1OCPVariables.html#a50482e485b208e4ced084891de1b7f49" title=" " alt="" coords="194,70,379,95"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1OCPVariables.html#a523bf412e6eb44e4f05202ac123fb720" title=" " alt="" coords="194,119,379,145"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="432,13,615,38"/>
+</map>

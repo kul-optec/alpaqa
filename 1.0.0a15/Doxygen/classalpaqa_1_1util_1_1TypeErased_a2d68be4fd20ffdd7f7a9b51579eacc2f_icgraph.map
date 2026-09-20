@@ -1,0 +1,11 @@
+<map id="deallocate" name="deallocate">
+<area shape="rect" id="Node000001" title="Deallocate the memory without invoking the destructor." alt="" coords="407,42,497,67"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1util_1_1TypeErased_1_1Deallocator.html#a13079395e75f61def62b49e4beb4ab06" title=" " alt="" coords="160,5,359,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="393,48,359,43,359,38,394,43"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a4b66d5e31b5dc18b314c8a68163263bd" title="Destroy the type&#45;erased object (if not empty), and deallocate the memory if necessary." alt="" coords="223,70,296,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="393,66,297,80,296,75,393,61"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1util_1_1TypeErased.html#a5e33ed4b3e1700f789f9866c319c9bce" title="Destructor." alt="" coords="5,45,112,70"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="209,79,112,67,113,61,210,74"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1util_1_1TypeErased.html#ab2e7ab1a4dd3191ddfa7b0e83f7761fa" title="Move assignment." alt="" coords="15,94,103,119"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="210,91,103,104,102,99,209,86"/>
+</map>

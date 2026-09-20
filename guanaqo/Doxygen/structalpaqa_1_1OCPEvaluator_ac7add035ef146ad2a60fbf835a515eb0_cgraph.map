@@ -1,0 +1,7 @@
+<map id="R" name="R">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,44,31"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1OCPEvaluator.html#a5fa1750865bfb54072049e5acaa85e52" title=" " alt="" coords="92,5,131,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="44,15,78,15,78,21,44,21"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="179,5,361,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="131,15,165,15,165,21,131,21"/>
+</map>
