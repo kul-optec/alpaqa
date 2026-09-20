@@ -6,7 +6,7 @@ compiler=clang
 compiler.version={{ detect_api.default_compiler_version("clang", clang_version) }}
 compiler.cppstd=23
 compiler.libcxx=libstdc++11
-compiler.libcxx.gcc_version=15.2
+compiler.libcxx.gcc_version=15.3
 
 [replace_requires]
 llvm-openmp/*: llvm-openmp/[~{{ clang_version }}]

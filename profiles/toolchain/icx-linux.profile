@@ -23,7 +23,7 @@ compiler.version={{ detect_api.detect_intel_compiler(icx_bin)[1] }}
 compiler.mode=icx
 compiler.cppstd=23
 compiler.libcxx=libstdc++11
-compiler.libcxx.gcc_version=15.2
+compiler.libcxx.gcc_version=15.3
 
 [buildenv]
 {% if paths.oneapi_root %}
