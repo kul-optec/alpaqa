@@ -1,6 +1,7 @@
 set(ALPAQA_EXAMPLE_TARGETS)
 
-if (TARGET alpaqa::dl-api)
+get_property(SUPPORTS_SHARED_LIBS GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS)
+if (TARGET alpaqa::dl-api AND SUPPORTS_SHARED_LIBS)
     alpaqa_add_dl_problem_module(sparse-logistic-regression LINK_ALPAQA)
     list(APPEND ALPAQA_EXAMPLE_TARGETS sparse-logistic-regression)
 endif()
@@ -9,7 +10,12 @@ endif()
 if (ALPAQA_WITH_PYTHON_PROBLEM_LOADER AND NOT TARGET alpaqa::dl-api)
     message(SEND_ERROR
         "ALPAQA_WITH_PYTHON_PROBLEM_LOADER requires ALPAQA_WITH_DL")
-elseif (ALPAQA_WITH_PYTHON_PROBLEM_LOADER)
+endif()
+if (ALPAQA_WITH_PYTHON_PROBLEM_LOADER AND NOT SUPPORTS_SHARED_LIBS)
+    message(SEND_ERROR
+        "ALPAQA_WITH_PYTHON_PROBLEM_LOADER requires shared library support")
+endif()
+if (ALPAQA_WITH_PYTHON_PROBLEM_LOADER)
     if (CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_CROSSCOMPILING_EMULATOR)
         find_package(Python3 REQUIRED COMPONENTS Development)
     else()

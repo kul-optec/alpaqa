@@ -30,7 +30,6 @@ function(add_warnings_target tgt_name warnings_as_errors)
         -Wextra
         -pedantic
         -Wpedantic
-        -pedantic-errors
         -Wimplicit-fallthrough
         -Wuninitialized
         -Wconversion

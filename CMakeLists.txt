@@ -10,6 +10,11 @@ set(PY_VERSION_SUFFIX "a3.dev0")
 include(CTest)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/find")
 
+# Raspberry Pi Pico support
+if (DEFINED PICO_SDK_VERSION_STRING)
+    pico_sdk_init() # Initialize the SDK
+endif()
+
 # Detect compiler features
 include(cmake/DetectFeatures.cmake)
 
