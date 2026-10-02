@@ -9,8 +9,10 @@
 #include <iostream>
 #include <list>
 #include <memory>
-#include <mutex>
 #include <stdexcept>
+#ifndef ALPAQA_WITHOUT_MUTEX
+#include <mutex>
+#endif
 
 #if _WIN32
 #include <windows.h>
@@ -43,11 +45,14 @@ void check_abi_version(uint64_t abi_version) {
             alpaqa_version + ")");
     }
 }
-
+#ifndef ALPAQA_WITHOUT_MUTEX
 std::mutex leaked_modules_mutex;
+#endif
 std::list<std::shared_ptr<void>> leaked_modules;
 void leak_lib(std::shared_ptr<void> handle) {
+#ifndef ALPAQA_WITHOUT_MUTEX
     std::lock_guard lck{leaked_modules_mutex};
+#endif
     leaked_modules.emplace_back(std::move(handle));
 }
 

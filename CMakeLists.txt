@@ -59,6 +59,8 @@ cmake_dependent_option(ALPAQA_WITH_CASADI_OCP
     ${ALPAQA_WITH_CASADI_OCP_SUPPORTED} "ALPAQA_WITH_CASADI;ALPAQA_WITH_OCP" Off)
 option(ALPAQA_WITH_DL
     "Enable dynamic loading of problems" On)
+option(ALPAQA_WITHOUT_MUTEX
+    "Disable global mutexes for thread-safe problem loading etc." Off)
 # Optimization and parallelization
 option(ALPAQA_WITH_OPENMP
     "Enable parallelization using OpenMP" Off)

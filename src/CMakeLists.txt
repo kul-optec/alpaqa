@@ -80,6 +80,7 @@ target_compile_definitions(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_NO_DLCLOSE}>:ALPAQA_NO_DLCLOSE>
     $<$<BOOL:${ALPAQA_WITH_JSON}>:ALPAQA_WITH_JSON>
     $<$<BOOL:${ALPAQA_WITH_OCP}>:ALPAQA_WITH_OCP>
+    $<$<BOOL:${ALPAQA_WITHOUT_MUTEX}>:ALPAQA_WITHOUT_MUTEX>
 )
 target_link_libraries(alpaqa PUBLIC
     $<$<BOOL:${ALPAQA_WITH_QUAD_PRECISION}>:quadmath>)

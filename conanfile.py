@@ -40,6 +40,7 @@ class AlpaqaRecipe(ConanFile):
         "with_casadi_ocp": False,
         "with_openmp": False,
         "with_dl": True,
+        "without_mutex": False,
         "with_quad_precision": False,
         "with_single_precision": False,
         "with_long_double": False,

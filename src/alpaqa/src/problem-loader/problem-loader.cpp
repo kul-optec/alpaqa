@@ -15,11 +15,13 @@
 #endif
 
 #include <filesystem>
-#include <mutex>
 #include <optional>
 #include <span>
 #include <stdexcept>
 #include <string>
+#ifndef ALPAQA_WITHOUT_MUTEX
+#include <mutex>
+#endif
 namespace fs = std::filesystem;
 
 #include <alpaqa/problem-loader/problem-loader.hpp>
@@ -127,8 +129,10 @@ template <bool = true>
 LoadedProblem load_cs_problem(const fs::path &full_path,
                               std::span<std::string_view> prob_opts,
                               alpaqa::Options &opts) {
+#ifndef ALPAQA_WITHOUT_MUTEX
     static std::mutex mtx;
     std::unique_lock lck{mtx};
+#endif
     using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
     using CsProblem  = alpaqa::CasADiProblem<config_t>;
     using CntProblem = alpaqa::ProblemWithCounters<CsProblem>;
@@ -139,7 +143,9 @@ LoadedProblem load_cs_problem(const fs::path &full_path,
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };
+#ifndef ALPAQA_WITHOUT_MUTEX
     lck.unlock();
+#endif
     auto &cnt_problem   = problem.problem.as<CntProblem>();
     auto &cs_problem    = cnt_problem.problem;
     problem.name        = cs_problem.get_name();
@@ -166,8 +172,10 @@ LoadedProblem load_cu_problem(const fs::path &full_path,
     alpaqa::params::set_params(outsdif_path, "outsdif", prob_opts);
     bool sparse = false;
     alpaqa::params::set_params(sparse, "sparse", prob_opts);
+#ifndef ALPAQA_WITHOUT_MUTEX
     static std::mutex mtx;
     std::unique_lock lck{mtx};
+#endif
     using TEProblem  = alpaqa::TypeErasedProblem<config_t>;
     using CuProblem  = alpaqa::CUTEstProblem;
     using CntProblem = alpaqa::ProblemWithCounters<CuProblem>;
@@ -179,7 +187,9 @@ LoadedProblem load_cu_problem(const fs::path &full_path,
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };
+#ifndef ALPAQA_WITHOUT_MUTEX
     lck.unlock();
+#endif
     auto &cnt_problem       = problem.problem.as<CntProblem>();
     auto &cu_problem        = cnt_problem.problem;
     problem.name            = cu_problem.get_name();
