@@ -31,6 +31,7 @@ namespace {
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 using alpaqa::LoadedProblem;
 
+#if ALPAQA_WITH_DL
 std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
     std::string name          = "register_alpaqa_problem";
     std::string_view name_key = "register=";
@@ -41,7 +42,9 @@ std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
         name = name_it->substr(name_key.size());
     return name;
 }
+#endif
 
+[[maybe_unused]]
 guanaqo::DynamicLoadFlags get_dl_flags(alpaqa::Options &opts) {
     guanaqo::DynamicLoadFlags flags;
     set_params(flags, "dl_flags", opts);
@@ -225,6 +228,7 @@ LoadedProblem load_problem(std::string_view type, const fs::path &file,
 #if ALPAQA_WITH_DL
         return load_dl_problem(file, prob_opts, opts);
 #else
+        (void)file;
         throw std::logic_error("This version of alpaqa was compiled without "
                                "support for dynamic problem loading");
 #endif
