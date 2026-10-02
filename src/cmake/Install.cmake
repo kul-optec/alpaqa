@@ -58,14 +58,6 @@ macro(alpaqa_install_config PKG COMP)
     list(APPEND ALPAQA_OPTIONAL_COMPONENTS ${PKG})
 endmacro()
 
-macro(alpaqa_install_headers DIR COMP)
-    # Install the header files
-    install(DIRECTORY ${DIR}
-        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-            COMPONENT ${COMP}
-        FILES_MATCHING REGEX "/.*\\.(h|[hti]pp)$")
-endmacro()
-
 macro(alpaqa_install_cmake FILES COMP)
     # Install a CMake script
     install(FILES ${FILES}
@@ -84,11 +76,12 @@ install(TARGETS warnings alpaqa
         COMPONENT lib
         NAMELINK_COMPONENT dev
     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+        COMPONENT dev
+    FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+        COMPONENT dev
+    FILE_SET generated_headers DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
         COMPONENT dev)
 alpaqa_install_config(Core dev)
-alpaqa_install_headers("${PROJECT_BINARY_DIR}/include/" dev)
-alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/alpaqa/include/" dev)
-alpaqa_install_headers("${CMAKE_CURRENT_BINARY_DIR}/export/" dev)
 string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Core:   alpaqa\n")
 
 # Install the CasADi interface
@@ -103,18 +96,20 @@ if (ALPAQA_COMPONENT_CASADI_TARGETS)
             COMPONENT casadi
             NAMELINK_COMPONENT casadi_dev
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            COMPONENT casadi_dev
+        FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
             COMPONENT casadi_dev)
     alpaqa_install_config(CasADi casadi_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/casadi/include/" casadi_dev)
     list(JOIN ALPAQA_COMPONENT_CASADI_TARGETS ", " TGTS)
     string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * CasADi: ${TGTS}\n")
 endif()
 
 # Install the DL API
 install(TARGETS dl-api
-    EXPORT alpaqaDlTargets)
+    EXPORT alpaqaDlTargets
+    FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+        COMPONENT dl_dev)
 alpaqa_install_config(Dl dl_dev)
-alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl-api/include/" dl_dev)
 alpaqa_install_cmake("${CMAKE_CURRENT_SOURCE_DIR}/cmake/dl-problem.cmake" dl_dev)
 string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Dl:     dl-api\n")
 
@@ -129,9 +124,10 @@ if (ALPAQA_COMPONENT_DLLOADER_TARGETS)
             COMPONENT dl_loader
             NAMELINK_COMPONENT dl_loader_dev
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            COMPONENT dl_loader_dev
+        FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
             COMPONENT dl_loader_dev)
     alpaqa_install_config(DlLoader dl_loader_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl/include/" dl_loader_dev)
     list(JOIN ALPAQA_COMPONENT_DLLOADER_TARGETS ", " TGTS)
     string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * DlLoader: ${TGTS}\n")
 endif()
@@ -147,9 +143,10 @@ if (ALPAQA_COMPONENT_CUTEST_TARGETS)
             COMPONENT cutest
             NAMELINK_COMPONENT cutest_dev
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            COMPONENT cutest_dev
+        FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
             COMPONENT cutest_dev)
     alpaqa_install_config(CUTEst cutest_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/cutest/include/" cutest_dev)
     list(JOIN ALPAQA_COMPONENT_CUTEST_TARGETS ", " TGTS)
     string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * CUTEst: ${TGTS}\n")
 endif()
@@ -170,11 +167,10 @@ if (ALPAQA_COMPONENT_EXTRA_TARGETS)
             COMPONENT extra
             NAMELINK_COMPONENT extra_dev
         ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+            COMPONENT extra_dev
+        FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
             COMPONENT extra_dev)
     alpaqa_install_config(Extra extra_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/ipopt/include/" extra_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/lbfgsb/include/" extra_dev)
-    alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/qpalm/include/" extra_dev)
     list(JOIN ALPAQA_COMPONENT_EXTRA_TARGETS ", " TGTS)
     string(APPEND ALPAQA_INSTALLED_TARGETS_MSG " * Extra:  ${TGTS}\n")
 endif()

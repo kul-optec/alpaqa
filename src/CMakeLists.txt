@@ -13,6 +13,18 @@ function(alpaqa_configure_visibility target)
     endif()
 endfunction()
 
+function(alpaqa_add_public_headers target scope base_dir)
+    file(GLOB_RECURSE headers CONFIGURE_DEPENDS
+        "${base_dir}/*.h"
+        "${base_dir}/*.hpp"
+        "${base_dir}/*.ipp"
+        "${base_dir}/*.tpp")
+    target_sources(${target} ${scope}
+        FILE_SET HEADERS
+        BASE_DIRS "${base_dir}"
+        FILES ${headers})
+endfunction()
+
 add_library(alpaqa
     "alpaqa/src/accelerators/lbfgs.cpp"
     "alpaqa/src/problem/problem-counters.cpp"
@@ -62,9 +74,8 @@ if (ALPAQA_WITH_CXX_23)
     # versions of the library (see cmake/CoreConfig.cmake.in)
     target_compile_features(alpaqa PUBLIC $<BUILD_INTERFACE:cxx_std_23>)
 endif()
-target_include_directories(alpaqa PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+alpaqa_add_public_headers(alpaqa PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include")
 if (ALPAQA_DEBUG_CHECKS_EIGEN)
     target_compile_definitions(alpaqa PUBLIC
         $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
@@ -107,8 +118,8 @@ list(APPEND ALPAQA_INSTALL_TARGETS alpaqa)
 include(GenerateExportHeader)
 generate_export_header(alpaqa
     EXPORT_FILE_NAME export/alpaqa/export.h)
-target_include_directories(alpaqa PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+set(ALPAQA_GENERATED_HEADERS
+    "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/export.h")
 
 # Build time
 if (ALPAQA_WITH_ACCURATE_BUILD_TIME)
@@ -140,11 +151,9 @@ endif()
 if (ALPAQA_WITH_CASADI)
     # Normal NLPs
     add_library(casadi-loader
-        "interop/casadi/src/CasADiProblem.cpp"
-        "interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp")
-    target_include_directories(casadi-loader PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+        "interop/casadi/src/CasADiProblem.cpp")
+    alpaqa_add_public_headers(casadi-loader PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include")
     target_compile_definitions(casadi-loader PUBLIC
         $<$<BOOL:${ALPAQA_WITH_CASADI}>:ALPAQA_WITH_CASADI>
         $<$<BOOL:${ALPAQA_WITH_EXTERNAL_CASADI}>:ALPAQA_WITH_EXTERNAL_CASADI>)
@@ -168,8 +177,8 @@ if (ALPAQA_WITH_CASADI)
     list(APPEND ALPAQA_INSTALL_TARGETS casadi-loader)
     generate_export_header(casadi-loader
         EXPORT_FILE_NAME export/alpaqa/casadi-loader-export.h)
-    target_include_directories(casadi-loader PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/casadi-loader-export.h")
 
     message(STATUS "Compiling WITH CasADi support")
 else()
@@ -195,14 +204,13 @@ if (ALPAQA_WITH_OCP AND ALPAQA_WITH_CASADI_OCP)
     list(APPEND ALPAQA_INSTALL_TARGETS casadi-ocp-loader)
     generate_export_header(casadi-ocp-loader
         EXPORT_FILE_NAME export/alpaqa/casadi-ocp-loader-export.h)
-    target_include_directories(casadi-ocp-loader PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/casadi-ocp-loader-export.h")
 endif()
 
 add_library(dl-api INTERFACE)
-target_include_directories(dl-api INTERFACE
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+alpaqa_add_public_headers(dl-api INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include")
 if (MSVC)
     target_compile_options(dl-api INTERFACE "/utf-8")
 endif()
@@ -212,9 +220,8 @@ list(APPEND ALPAQA_INSTALL_TARGETS dl-api)
 
 if (ALPAQA_WITH_DL)
     add_library(dl-loader "interop/dl/src/dl-problem.cpp")
-    target_include_directories(dl-loader PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    alpaqa_add_public_headers(dl-loader PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/dl/include")
     target_compile_definitions(dl-loader PUBLIC ALPAQA_WITH_DL)
     set_property(TARGET dl-loader
         PROPERTY OUTPUT_NAME alpaqa-dl-loader)
@@ -227,15 +234,14 @@ if (ALPAQA_WITH_DL)
     list(APPEND ALPAQA_INSTALL_TARGETS dl-loader)
     generate_export_header(dl-loader
         EXPORT_FILE_NAME export/alpaqa/dl-loader-export.h)
-    target_include_directories(dl-loader PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/dl-loader-export.h")
 endif()
 
 if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
     add_library(cutest-interface "interop/cutest/src/cutest-loader.cpp")
-    target_include_directories(cutest-interface PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/cutest/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    alpaqa_add_public_headers(cutest-interface PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/cutest/include")
     set_property(TARGET cutest-interface
         PROPERTY OUTPUT_NAME alpaqa-cutest-interface)
     target_link_libraries(cutest-interface
@@ -251,8 +257,8 @@ if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
     list(APPEND ALPAQA_INSTALL_TARGETS cutest-interface)
     generate_export_header(cutest-interface
         EXPORT_FILE_NAME export/alpaqa/cutest-interface-export.h)
-    target_include_directories(cutest-interface PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/cutest-interface-export.h")
     message(STATUS "Compiling WITH CUTEst support")
 elseif(ALPAQA_WITH_CUTEST)
     message(STATUS "Compiling WITHOUT CUTEst support: missing dlopen")
@@ -274,9 +280,8 @@ if (ALPAQA_WITH_IPOPT)
     endif()
     target_link_libraries(ipopt-adapter
         PUBLIC Ipopt::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
-    target_include_directories(ipopt-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/ipopt/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    alpaqa_add_public_headers(ipopt-adapter PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/ipopt/include")
     target_compile_definitions(ipopt-adapter PUBLIC ALPAQA_WITH_IPOPT)
     set_property(TARGET ipopt-adapter
         PROPERTY OUTPUT_NAME alpaqa-ipopt-adapter)
@@ -286,8 +291,8 @@ if (ALPAQA_WITH_IPOPT)
     list(APPEND ALPAQA_INSTALL_TARGETS ipopt-adapter)
     generate_export_header(ipopt-adapter
         EXPORT_FILE_NAME export/alpaqa/ipopt-adapter-export.h)
-    target_include_directories(ipopt-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/ipopt-adapter-export.h")
 endif()
 
 find_package(lbfgspp QUIET)
@@ -296,9 +301,8 @@ if (TARGET lbfgspp)
     add_library(lbfgspp-adapter "interop/lbfgspp/src/lbfgsb-adapter.cpp")
     target_link_libraries(lbfgspp-adapter
         PUBLIC lbfgspp alpaqa::alpaqa PRIVATE alpaqa::warnings)
-    target_include_directories(lbfgspp-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgspp/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    alpaqa_add_public_headers(lbfgspp-adapter PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgspp/include")
     set_property(TARGET lbfgspp-adapter
         PROPERTY OUTPUT_NAME alpaqa-lbfgspp-adapter)
     alpaqa_configure_visibility(lbfgspp-adapter)
@@ -307,8 +311,8 @@ if (TARGET lbfgspp)
     list(APPEND ALPAQA_INSTALL_TARGETS lbfgspp-adapter)
     generate_export_header(lbfgspp-adapter
         EXPORT_FILE_NAME export/alpaqa/lbfgspp-adapter-export.h)
-    target_include_directories(lbfgspp-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/lbfgspp-adapter-export.h")
 endif()
 
 if (ALPAQA_WITH_LBFGSB)
@@ -337,9 +341,8 @@ if (ALPAQA_WITH_LBFGSB)
                  PROPERTY Fortran_PREPROCESS On)
     target_link_libraries(lbfgsb-adapter
         PUBLIC lbfgsb-fortran alpaqa::alpaqa PRIVATE alpaqa::warnings)
-    target_include_directories(lbfgsb-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgsb/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    alpaqa_add_public_headers(lbfgsb-adapter PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgsb/include")
     target_compile_definitions(lbfgsb-adapter PUBLIC ALPAQA_WITH_LBFGSB)
     set_property(TARGET lbfgsb-adapter
         PROPERTY OUTPUT_NAME alpaqa-lbfgsb-adapter)
@@ -349,8 +352,8 @@ if (ALPAQA_WITH_LBFGSB)
     list(APPEND ALPAQA_INSTALL_TARGETS lbfgsb-adapter)
     generate_export_header(lbfgsb-adapter
         EXPORT_FILE_NAME export/alpaqa/lbfgsb-adapter-export.h)
-    target_include_directories(lbfgsb-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/lbfgsb-adapter-export.h")
 endif()
 
 if (ALPAQA_WITH_QPALM)
@@ -367,9 +370,8 @@ if (ALPAQA_WITH_QPALM)
     endif()
     target_link_libraries(qpalm-adapter
         PUBLIC QPALM::qpalm_cxx alpaqa::alpaqa PRIVATE alpaqa::warnings)
-    target_include_directories(qpalm-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/qpalm/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    alpaqa_add_public_headers(qpalm-adapter PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/interop/qpalm/include")
     target_compile_definitions(qpalm-adapter PUBLIC ALPAQA_WITH_QPALM)
     set_property(TARGET qpalm-adapter
         PROPERTY OUTPUT_NAME alpaqa-qpalm-adapter)
@@ -379,8 +381,8 @@ if (ALPAQA_WITH_QPALM)
     list(APPEND ALPAQA_INSTALL_TARGETS qpalm-adapter)
     generate_export_header(qpalm-adapter
         EXPORT_FILE_NAME export/alpaqa/qpalm-adapter-export.h)
-    target_include_directories(qpalm-adapter PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/qpalm-adapter-export.h")
 endif()
 
 # Problem loader
@@ -398,8 +400,8 @@ add_library(alpaqa::problem-loader ALIAS problem-loader)
 list(APPEND ALPAQA_INSTALL_TARGETS problem-loader)
 generate_export_header(problem-loader
     EXPORT_FILE_NAME export/alpaqa/problem-loader-export.h)
-target_include_directories(problem-loader PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+list(APPEND ALPAQA_GENERATED_HEADERS
+    "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/problem-loader-export.h")
 if (TARGET alpaqa::dl-loader)
     target_link_libraries(problem-loader PUBLIC alpaqa::dl-loader)
 endif()
@@ -443,9 +445,6 @@ if (ALPAQA_WITH_DRIVERS)
     if (ALPAQA_WITH_EXTERNAL_CASADI)
         target_link_libraries(drivers PRIVATE casadi::casadi)
     endif()
-    target_include_directories(drivers PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(drivers PUBLIC ALPAQA_WITH_DRIVERS)
     alpaqa_configure_visibility(drivers)
     set_target_properties(drivers PROPERTIES SOVERSION ${PROJECT_VERSION})
@@ -454,8 +453,8 @@ if (ALPAQA_WITH_DRIVERS)
     generate_export_header(drivers
         EXPORT_FILE_NAME export/alpaqa/drivers-export.h
         PREFIX_NAME ALPAQA_)
-    target_include_directories(drivers PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export>)
+    list(APPEND ALPAQA_GENERATED_HEADERS
+        "${CMAKE_CURRENT_BINARY_DIR}/export/alpaqa/drivers-export.h")
 
     add_executable(driver
         "alpaqa/src/driver/param-complete.cpp"
@@ -496,6 +495,16 @@ if (ALPAQA_WITH_GRADIENT_CHECKER)
     add_executable(alpaqa::gradient-checker ALIAS gradient-checker)
     list(APPEND ALPAQA_INSTALL_EXE gradient-checker)
 endif()
+
+target_sources(alpaqa PUBLIC
+    FILE_SET generated_headers
+    TYPE HEADERS
+    BASE_DIRS
+        "${PROJECT_BINARY_DIR}/include"
+        "${CMAKE_CURRENT_BINARY_DIR}/export"
+    FILES
+        "${PROJECT_BINARY_DIR}/include/alpaqa-version.h"
+        ${ALPAQA_GENERATED_HEADERS})
 
 # Installation
 include(cmake/Install.cmake)

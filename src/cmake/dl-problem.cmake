@@ -117,6 +117,9 @@ function(alpaqa_add_dl_problem_module target)
     include(GenerateExportHeader)
     generate_export_header(${target}
         EXPORT_FILE_NAME export-${target}/${target}/export.h)
-    target_include_directories(${target} PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/export-${target}>)
+    target_sources(${target} PRIVATE
+        FILE_SET generated_headers
+        TYPE HEADERS
+        BASE_DIRS "${CMAKE_CURRENT_BINARY_DIR}/export-${target}"
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/export-${target}/${target}/export.h")
 endfunction()

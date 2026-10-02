@@ -156,7 +156,6 @@ endif()
 # Save the project version to a generated file
 configure_file(cmake/alpaqa-version.h.in
     ${PROJECT_BINARY_DIR}/include/alpaqa-version.h @ONLY)
-include_directories(${PROJECT_BINARY_DIR}/include)
 
 # Libraries
 add_subdirectory(src)
