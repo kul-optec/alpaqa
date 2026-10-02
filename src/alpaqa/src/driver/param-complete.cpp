@@ -89,9 +89,9 @@ Result get_members(const MemberGetter &s) {
     auto pfx      = std::string_view{s.full_key.begin(), s.key.begin()};
     auto members  = std::views::transform(m, [](const auto &e) {
         return Result::Member{
-             .name   = e.first,
-             .doc    = e.second.doc,
-             .suffix = std::nullopt,
+            .name   = e.first,
+            .doc    = e.second.doc,
+            .suffix = std::nullopt,
         };
     });
     return {

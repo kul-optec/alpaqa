@@ -113,8 +113,8 @@ LoadedProblem load_dl_problem(const fs::path &full_path,
     auto register_name = get_reg_name_option(prob_opts);
     auto flags         = get_dl_flags(opts);
     LoadedProblem problem{
-        .problem  = TEProblem::make<CntProblem>(std::in_place, full_path,
-                                                register_name, prob_opts, flags),
+        .problem = TEProblem::make<CntProblem>(std::in_place, full_path,
+                                               register_name, prob_opts, flags),
         .abs_path = fs::absolute(full_path),
         .path     = full_path,
     };

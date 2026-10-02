@@ -196,3 +196,6 @@ extend-ignore = [
 "python/alpaqa/__main__.py" = ["T20"]
 "python/alpaqa/cache.py" = ["T20"]
 "conanfile.py" = ["RUF012"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["alpaqa"]

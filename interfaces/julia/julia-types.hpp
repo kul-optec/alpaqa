@@ -10,7 +10,7 @@ struct LoadedProblem;
 
 /// Structs in this namespace should have matching layouts with the
 /// corresponding structs on the Julia side.
-namespace jl ::julia {
+namespace jl::julia {
 
 /// This struct is passed to the Julia inner solver implementation, and enables
 /// calling of the C++ problem functions from Julia. Its layout matches that of

@@ -45,7 +45,7 @@ guanaqo_tag_invoke(tag_t<alpaqa::prox_step>, Box<Conf> &self,
                   .cwiseMax(self.lower - in.reshaped())
                   .cwiseMin(self.upper - in.reshaped())
                   .reshaped(in.rows(), in.cols());
-    out = in + fb_step;
+    out     = in + fb_step;
     return 0;
 }
 
