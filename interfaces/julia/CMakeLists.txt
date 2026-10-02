@@ -22,11 +22,11 @@ endif()
 # Install the Julia interface
 install(TARGETS alpaqa-jl
     EXPORT alpaqaJuliaTargets
-    RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
         COMPONENT julia
-    LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         COMPONENT julia
         NAMELINK_COMPONENT julia_dev
-    ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         COMPONENT julia_dev)
 alpaqa_install_config(Julia julia_dev)

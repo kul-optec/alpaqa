@@ -2,8 +2,8 @@ include(${PROJECT_SOURCE_DIR}/cmake/Debug.cmake)
 
 # Set the runtime linker/loader search paths to make alpaqa stand-alone
 if (ALPAQA_STANDALONE)
-    cmake_path(RELATIVE_PATH ALPAQA_INSTALL_LIBDIR
-               BASE_DIRECTORY ALPAQA_INSTALL_BINDIR
+    cmake_path(RELATIVE_PATH CMAKE_INSTALL_LIBDIR
+               BASE_DIRECTORY CMAKE_INSTALL_BINDIR
                OUTPUT_VARIABLE ALPAQA_INSTALL_LIBRELBINDIR)
     foreach (TGT IN LISTS ALPAQA_INSTALL_TARGETS ALPAQA_INSTALL_EXE)
         if (APPLE)
@@ -61,7 +61,7 @@ endmacro()
 macro(alpaqa_install_headers DIR COMP)
     # Install the header files
     install(DIRECTORY ${DIR}
-        DESTINATION "${ALPAQA_INSTALL_INCLUDEDIR}"
+        DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
             COMPONENT ${COMP}
         FILES_MATCHING REGEX "/.*\\.(h|[hti]pp)$")
 endmacro()
@@ -78,12 +78,12 @@ set(ALPAQA_INSTALLED_TARGETS_MSG "\nSummary of alpaqa components and targets to 
 # Install the alpaqa core libraries
 install(TARGETS warnings alpaqa
     EXPORT alpaqaCoreTargets
-    RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
         COMPONENT lib
-    LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         COMPONENT lib
         NAMELINK_COMPONENT dev
-    ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
         COMPONENT dev)
 alpaqa_install_config(Core dev)
 alpaqa_install_headers("${PROJECT_BINARY_DIR}/include/" dev)
@@ -97,12 +97,12 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_CASADI_TARGETS "casadi-ocp-loader")
 if (ALPAQA_COMPONENT_CASADI_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_CASADI_TARGETS}
         EXPORT alpaqaCasADiTargets
-        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
             COMPONENT casadi
-        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT casadi
             NAMELINK_COMPONENT casadi_dev
-        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT casadi_dev)
     alpaqa_install_config(CasADi casadi_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/casadi/include/" casadi_dev)
@@ -123,12 +123,12 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_DLLOADER_TARGETS "dl-loader")
 if (ALPAQA_COMPONENT_DLLOADER_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_DLLOADER_TARGETS}
         EXPORT alpaqaDlLoaderTargets
-        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
             COMPONENT dl_loader
-        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT dl_loader
             NAMELINK_COMPONENT dl_loader_dev
-        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT dl_loader_dev)
     alpaqa_install_config(DlLoader dl_loader_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/dl/include/" dl_loader_dev)
@@ -141,12 +141,12 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_CUTEST_TARGETS "cutest-interface")
 if (ALPAQA_COMPONENT_CUTEST_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_CUTEST_TARGETS}
         EXPORT alpaqaCUTEstTargets
-        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
             COMPONENT cutest
-        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT cutest
             NAMELINK_COMPONENT cutest_dev
-        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT cutest_dev)
     alpaqa_install_config(CUTEst cutest_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/cutest/include/" cutest_dev)
@@ -164,12 +164,12 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_EXTRA_TARGETS "drivers")
 if (ALPAQA_COMPONENT_EXTRA_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_EXTRA_TARGETS}
         EXPORT alpaqaExtraTargets
-        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
             COMPONENT extra
-        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT extra
             NAMELINK_COMPONENT extra_dev
-        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT extra_dev)
     alpaqa_install_config(Extra extra_dev)
     alpaqa_install_headers("${PROJECT_SOURCE_DIR}/src/interop/ipopt/include/" extra_dev)
@@ -185,12 +185,12 @@ alpaqa_add_if_target_exists(ALPAQA_COMPONENT_TOOLS_TARGETS "gradient-checker")
 if (ALPAQA_COMPONENT_TOOLS_TARGETS)
     install(TARGETS ${ALPAQA_COMPONENT_TOOLS_TARGETS}
         EXPORT alpaqaToolsTargets
-        RUNTIME DESTINATION "${ALPAQA_INSTALL_BINDIR}"
+        RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
             COMPONENT bin
-        LIBRARY DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT bin
             NAMELINK_COMPONENT bin
-        ARCHIVE DESTINATION "${ALPAQA_INSTALL_LIBDIR}"
+        ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
             COMPONENT bin)
     alpaqa_install_config(Tools bin)
     install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/src/driver/alpaqa-driver.autocomplete.zsh"
@@ -211,12 +211,12 @@ foreach(target IN LISTS ALPAQA_INSTALL_TARGETS ALPAQA_INSTALL_EXE)
     get_target_property(target_type ${target} TYPE)
     if (${target_type} STREQUAL "SHARED_LIBRARY")
         alpaqa_install_debug_syms(${target} debug
-                                  ${ALPAQA_INSTALL_LIBDIR}
-                                  ${ALPAQA_INSTALL_BINDIR})
+                                  ${CMAKE_INSTALL_LIBDIR}
+                                  ${CMAKE_INSTALL_BINDIR})
     elseif (${target_type} STREQUAL "EXECUTABLE")
         alpaqa_install_debug_syms(${target} debug
-                                  ${ALPAQA_INSTALL_BINDIR}
-                                  ${ALPAQA_INSTALL_BINDIR})
+                                  ${CMAKE_INSTALL_BINDIR}
+                                  ${CMAKE_INSTALL_BINDIR})
     endif()
 endforeach()
 

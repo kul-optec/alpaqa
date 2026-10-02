@@ -47,6 +47,7 @@ for cfg in Release; do
         -pr:h "$matlab_profile" \
         -s build_type=$cfg \
         -o alpaqa/\*:shared=$shared \
+        -o alpaqa/\*:isolate_lib=True \
         -c \&:tools.cmake.cmaketoolchain:generator=Ninja
 done
 
@@ -56,11 +57,10 @@ cmake --preset conan-matlab-release \
     -D CMAKE_FIND_ROOT_PATH="$matlab_dir" \
     -D CMAKE_C_COMPILER_LAUNCHER=sccache \
     -D CMAKE_CXX_COMPILER_LAUNCHER=sccache \
-    -D ALPAQA_INSTALL_MEXDIR="/" \
-    -D ALPAQA_INSTALL_LIBDIR="/alpaqa.lib" --fresh
+    -D ALPAQA_INSTALL_MEXDIR="." --fresh
 cmake --build --preset conan-matlab-release -v
 for component in lib casadi extra matlab; do
     DESTDIR="$out_dir" \
-    cmake --install build/matlab-release --component $component
+    cmake --install build/matlab-release --prefix / --component $component
 done
 popd

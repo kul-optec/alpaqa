@@ -1,4 +1,4 @@
-set(ALPAQA_INSTALL_MEXDIR "${ALPAQA_INSTALL_LIBDIR}/alpaqa/mex" CACHE PATH
+set(ALPAQA_INSTALL_MEXDIR "${CMAKE_INSTALL_LIBDIR}/alpaqa/mex" CACHE STRING
     "Installation directory for the alpaqa MATLAB/MEX interface")
 
 # Matlab uses UTF-16 for all its strings, so we need to convert back and forth
@@ -45,7 +45,7 @@ set_target_properties(alpaqa_mex PROPERTIES
 
 # Set the runtime linker/loader search paths to make alpaqa stand-alone
 if (ALPAQA_STANDALONE)
-    cmake_path(RELATIVE_PATH ALPAQA_INSTALL_LIBDIR
+    cmake_path(RELATIVE_PATH CMAKE_INSTALL_LIBDIR
                BASE_DIRECTORY "${ALPAQA_INSTALL_MEXDIR}/+alpaqa"
                OUTPUT_VARIABLE ALPAQA_INSTALL_LIBRELMEXDIR)
     if (APPLE)

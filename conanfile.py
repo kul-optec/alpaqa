@@ -56,7 +56,10 @@ class AlpaqaRecipe(ConanFile):
             "fPIC": [True, False],
         }
         | {k: [True, False] for k in bool_alpaqa_options}
-        | {"with_conan_python": [True, False]}
+        | {
+            "with_conan_python": [True, False],
+            "isolate_lib": [True, False],
+        }
     )
     default_options = (
         {
@@ -64,7 +67,10 @@ class AlpaqaRecipe(ConanFile):
             "fPIC": True,
         }
         | bool_alpaqa_options
-        | {"with_conan_python": False}
+        | {
+            "with_conan_python": False,
+            "isolate_lib": False,
+        }
     )
 
     # Sources are located in the same place as this recipe, copy them to the recipe
@@ -135,6 +141,8 @@ class AlpaqaRecipe(ConanFile):
             if self.options.with_matlab:
                 self.folders.build_folder_vars = ["const.matlab"]
         cmake_layout(self)
+        if self.options.isolate_lib:
+            self.cpp.package.libdirs = ["alpaqa.lib"]
 
     def generate(self):
         deps = CMakeDeps(self)
@@ -166,5 +174,6 @@ class AlpaqaRecipe(ConanFile):
 
     def package_info(self):
         self.cpp_info.set_property("cmake_find_mode", "none")
-        self.cpp_info.builddirs.append(os.path.join("lib", "cmake", "alpaqa"))
+        libdir = self.cpp_info.libdirs[0]
+        self.cpp_info.builddirs.append(os.path.join(libdir, "cmake", "alpaqa"))
         self.runenv_info.prepend_path("PATH", os.path.join(self.package_folder, "bin"))

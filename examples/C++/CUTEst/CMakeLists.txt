@@ -36,11 +36,11 @@ function(installed_cutest_sif_problem SUBDIR PROBLEM)
     set_target_properties(cutest-problem-${PROBLEM}
                           PROPERTIES INSTALL_RPATH "$ORIGIN/../..")
     install(TARGETS cutest-problem-${PROBLEM}
-            LIBRARY DESTINATION ${ALPAQA_INSTALL_LIBDIR}/CUTEst/${SUBDIR}/${PROBLEM}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/CUTEst/${SUBDIR}/${PROBLEM}
             CONFIGURATIONS Release RelWithDebInfo
             COMPONENT cutest OPTIONAL)
     install(FILES "$<TARGET_FILE_DIR:cutest-problem-${PROBLEM}>/OUTSDIF.d"
-            DESTINATION ${ALPAQA_INSTALL_LIBDIR}/CUTEst/${SUBDIR}/${PROBLEM}
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/CUTEst/${SUBDIR}/${PROBLEM}
             CONFIGURATIONS Release RelWithDebInfo
             COMPONENT cutest OPTIONAL)
 endfunction()

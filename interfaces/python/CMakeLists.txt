@@ -117,7 +117,7 @@ add_custom_target(python_modules DEPENDS _alpaqa)
 if (DEFINED PY_BUILD_CMAKE_VERSION)
     set(ALPAQA_MODULE_INSTALL_DIR "")
 else()
-    set(ALPAQA_MODULE_INSTALL_DIR "${ALPAQA_INSTALL_LIBDIR}/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages")
+    set(ALPAQA_MODULE_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/python${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}/site-packages")
 endif()
 
 # Install the Python source code

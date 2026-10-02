@@ -64,7 +64,7 @@ if (ALPAQA_WITH_CXX_23)
 endif()
 target_include_directories(alpaqa PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
-    $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 if (ALPAQA_DEBUG_CHECKS_EIGEN)
     target_compile_definitions(alpaqa PUBLIC
         $<$<CONFIG:Debug>:EIGEN_INITIALIZE_MATRICES_BY_NAN>
@@ -144,7 +144,7 @@ if (ALPAQA_WITH_CASADI)
         "interop/casadi/include/alpaqa/casadi/CasADiFunctionWrapper.hpp")
     target_include_directories(casadi-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/casadi/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(casadi-loader PUBLIC
         $<$<BOOL:${ALPAQA_WITH_CASADI}>:ALPAQA_WITH_CASADI>
         $<$<BOOL:${ALPAQA_WITH_EXTERNAL_CASADI}>:ALPAQA_WITH_EXTERNAL_CASADI>)
@@ -202,7 +202,7 @@ endif()
 add_library(dl-api INTERFACE)
 target_include_directories(dl-api INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl-api/include>
-    $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 if (MSVC)
     target_compile_options(dl-api INTERFACE "/utf-8")
 endif()
@@ -214,7 +214,7 @@ if (ALPAQA_WITH_DL)
     add_library(dl-loader "interop/dl/src/dl-problem.cpp")
     target_include_directories(dl-loader PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/dl/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(dl-loader PUBLIC ALPAQA_WITH_DL)
     set_property(TARGET dl-loader
         PROPERTY OUTPUT_NAME alpaqa-dl-loader)
@@ -235,7 +235,7 @@ if (ALPAQA_WITH_CUTEST AND CMAKE_DL_LIBS)
     add_library(cutest-interface "interop/cutest/src/cutest-loader.cpp")
     target_include_directories(cutest-interface PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/cutest/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     set_property(TARGET cutest-interface
         PROPERTY OUTPUT_NAME alpaqa-cutest-interface)
     target_link_libraries(cutest-interface
@@ -276,7 +276,7 @@ if (ALPAQA_WITH_IPOPT)
         PUBLIC Ipopt::Ipopt alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(ipopt-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/ipopt/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(ipopt-adapter PUBLIC ALPAQA_WITH_IPOPT)
     set_property(TARGET ipopt-adapter
         PROPERTY OUTPUT_NAME alpaqa-ipopt-adapter)
@@ -298,7 +298,7 @@ if (TARGET lbfgspp)
         PUBLIC lbfgspp alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(lbfgspp-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgspp/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     set_property(TARGET lbfgspp-adapter
         PROPERTY OUTPUT_NAME alpaqa-lbfgspp-adapter)
     alpaqa_configure_visibility(lbfgspp-adapter)
@@ -339,7 +339,7 @@ if (ALPAQA_WITH_LBFGSB)
         PUBLIC lbfgsb-fortran alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(lbfgsb-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/lbfgsb/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(lbfgsb-adapter PUBLIC ALPAQA_WITH_LBFGSB)
     set_property(TARGET lbfgsb-adapter
         PROPERTY OUTPUT_NAME alpaqa-lbfgsb-adapter)
@@ -369,7 +369,7 @@ if (ALPAQA_WITH_QPALM)
         PUBLIC QPALM::qpalm_cxx alpaqa::alpaqa PRIVATE alpaqa::warnings)
     target_include_directories(qpalm-adapter PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interop/qpalm/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(qpalm-adapter PUBLIC ALPAQA_WITH_QPALM)
     set_property(TARGET qpalm-adapter
         PROPERTY OUTPUT_NAME alpaqa-qpalm-adapter)
@@ -445,7 +445,7 @@ if (ALPAQA_WITH_DRIVERS)
     endif()
     target_include_directories(drivers PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/alpaqa/include>
-        $<INSTALL_INTERFACE:${ALPAQA_INSTALL_INCLUDEDIR}>)
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     target_compile_definitions(drivers PUBLIC ALPAQA_WITH_DRIVERS)
     alpaqa_configure_visibility(drivers)
     set_target_properties(drivers PROPERTIES SOVERSION ${PROJECT_VERSION})
