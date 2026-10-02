@@ -31,7 +31,7 @@ namespace {
 USING_ALPAQA_CONFIG(alpaqa::DefaultConfig);
 using alpaqa::LoadedProblem;
 
-#if ALPAQA_WITH_DL
+[[maybe_unused]]
 std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
     std::string name          = "register_alpaqa_problem";
     std::string_view name_key = "register=";
@@ -42,7 +42,6 @@ std::string get_reg_name_option(std::span<const std::string_view> prob_opts) {
         name = name_it->substr(name_key.size());
     return name;
 }
-#endif
 
 [[maybe_unused]]
 guanaqo::DynamicLoadFlags get_dl_flags(alpaqa::Options &opts) {
@@ -51,6 +50,7 @@ guanaqo::DynamicLoadFlags get_dl_flags(alpaqa::Options &opts) {
     return flags;
 }
 
+[[maybe_unused]]
 void load_initial_guess(alpaqa::Options &opts, LoadedProblem &problem) {
     const auto n = problem.problem.get_num_variables(),
                m = problem.problem.get_num_constraints();
@@ -87,6 +87,7 @@ void count_constr(alpaqa::ConstrCount &cnt, const alpaqa::Box<config_t> &C) {
     }
 }
 
+[[maybe_unused]]
 void count_problem(LoadedProblem &p) {
     if (p.problem.provides_get_variable_bounds())
         count_constr(p.box_constr_count.emplace(),
