@@ -1,9 +1,7 @@
-set(ALPAQA_EXAMPLE_TARGETS)
-
 get_property(SUPPORTS_SHARED_LIBS GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS)
 if (TARGET alpaqa::dl-api AND SUPPORTS_SHARED_LIBS)
     alpaqa_add_dl_problem_module(sparse-logistic-regression LINK_ALPAQA)
-    list(APPEND ALPAQA_EXAMPLE_TARGETS sparse-logistic-regression)
+    alpaqa_install_example(sparse-logistic-regression)
 endif()
 
 # TODO: move to a more suitable location?
@@ -25,18 +23,8 @@ if (ALPAQA_WITH_PYTHON_PROBLEM_LOADER)
     find_pybind11_python_first()
     alpaqa_add_dl_problem_module("python-loader" LINK_ALPAQA VISIBILITY_DEFAULT)
     target_link_libraries(python-loader PRIVATE pybind11::embed)
-    list(APPEND ALPAQA_EXAMPLE_TARGETS "python-loader")
+    alpaqa_install_example(python-loader)
 endif()
-
-include(GNUInstallDirs)
-install(TARGETS ${ALPAQA_EXAMPLE_TARGETS}
-    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
-        COMPONENT extra
-    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-        COMPONENT extra
-        NAMELINK_COMPONENT extra_dev
-    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-        COMPONENT extra_dev)
 
 if (BUILD_TESTING AND TARGET sparse-logistic-regression AND TARGET alpaqa::driver)
     add_test(NAME sparse-logistic-regression
