@@ -1,0 +1,43 @@
+name: 'CI Tests: CMake Solver Example'
+
+on:
+  push:
+    tags-ignore:
+      - '**'
+    branches:
+      - '**'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Conan
+        uses: ./.github/workflows/setup-conan
+        with:
+          python-version: '3.12'
+          cache-key: cmake-solver
+
+      - name: Export alpaqa
+        run: conan export .
+
+      - name: Install dependencies
+        working-directory: examples/CMake/Solver
+        run: conan install . --build=missing -c tools.build:skip_test=True
+
+      - name: Configure and build
+        working-directory: examples/CMake/Solver
+        run: |
+          cmake --preset conan-release
+          cmake --build --preset conan-release
+
+      - name: Run
+        working-directory: examples/CMake/Solver
+        run: ./build/Release/alpaqa-qp-solver data
+
+      - run: conan cache clean
+        if: always()
