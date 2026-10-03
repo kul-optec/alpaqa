@@ -1,0 +1,5 @@
+<map id="get_boundaries_intersections" name="get_boundaries_intersections">
+<area shape="rect" id="Node000001" title="Solve the scalar quadratic equation ||z + t d|| == trust_radius." alt="" coords="111,5,324,31"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1SteihaugCG.html#ad3770958ea8b0bf8e3c8df7e1fa248a0" title=" " alt="" coords="5,5,63,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,21,63,21,63,15,97,15"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="load_numerical_data" name="load_numerical_data">
+<area shape="rect" id="Node000001" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="224,5,383,31"/>
+<area shape="rect" id="Node000002" href="$classbuiltin_1_1CasADiControlProblem.html#aec943d4cc9c1bbfc4d4b7244f9390d08" title=" " alt="" coords="5,5,176,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,21,176,21,176,15,210,15"/>
+</map>

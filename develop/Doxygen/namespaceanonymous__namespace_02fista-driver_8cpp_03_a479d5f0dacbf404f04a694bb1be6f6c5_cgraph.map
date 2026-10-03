@@ -1,0 +1,29 @@
+<map id="make_fista_driver_impl" name="make_fista_driver_impl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,105,180,131"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#aab07e5e969c7c3cb284b49f5b7931bf3" title="Attach SIGINT and SIGTERM handlers to stop the given solver." alt="" coords="228,5,429,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,103,162,71,227,40,249,32,250,37,229,44,165,76,114,107"/>
+<area shape="rect" id="Node000003" href="$alm-driver_8hpp.html#ae4ef291d9ec9d55ee804b5723ea2e641" title=" " alt="" coords="260,55,397,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="152,103,255,80,256,86,153,108"/>
+<area shape="rect" id="Node000004" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="529,105,628,131"/>
+<area shape="poly" id="edge14_Node000001_Node000004" title=" " alt="" coords="180,115,516,115,516,121,180,121"/>
+<area shape="rect" id="Node000010" href="$namespaceanonymous__namespace_02fista-driver_8cpp_03.html#a6f96d677b5961c6a4fcaa773f37ca65b" title=" " alt="" coords="239,156,419,181"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="153,128,256,150,255,156,152,133"/>
+<area shape="rect" id="Node000011" href="$alm-driver_8hpp.html#aa7ce176e5df1fd415e66c420646cf10d" title=" " alt="" coords="267,205,390,231"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="114,129,165,160,229,192,255,200,253,205,227,196,162,165,111,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="393,78,516,103,515,108,392,83"/>
+<area shape="rect" id="Node000005" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="739,48,867,73"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="628,103,739,74,740,79,629,108"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="728,98,879,138"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="628,115,714,115,714,121,628,121"/>
+<area shape="rect" id="Node000009" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="748,163,859,188"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="629,128,740,157,739,162,628,133"/>
+<area shape="rect" id="Node000007" href="$namespacealpaqa_1_1params.html#a0de0baee3dda47aba5143ba83bd11712" title=" " alt="" coords="946,69,1097,109"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="878,105,932,98,933,103,879,111"/>
+<area shape="rect" id="Node000008" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="927,133,1116,159"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="879,125,913,129,913,135,878,130"/>
+<area shape="poly" id="edge10_Node000010_Node000004" title=" " alt="" coords="392,153,515,128,516,133,393,158"/>
+<area shape="rect" id="Node000012" href="$ipopt-enums_8hpp.html#a78dc4442f5ab598a9c86a57e0c067f98" title=" " alt="" coords="527,180,630,205"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="390,209,513,197,514,202,391,214"/>
+<area shape="rect" id="Node000013" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="477,230,680,270"/>
+<area shape="poly" id="edge13_Node000011_Node000013" title=" " alt="" coords="391,223,464,233,463,238,390,228"/>
+</map>

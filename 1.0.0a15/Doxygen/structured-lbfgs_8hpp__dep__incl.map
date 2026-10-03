@@ -1,0 +1,23 @@
+<map id="src/alpaqa/include/alpaqa/inner/directions/panoc/structured&#45;lbfgs.hpp" name="src/alpaqa/include/alpaqa/inner/directions/panoc/structured&#45;lbfgs.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="522,5,722,60"/>
+<area shape="rect" id="Node000002" href="$structured-lbfgs_8tpp.html" title=" " alt="" coords="225,108,403,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="535,67,404,113,403,108,533,62"/>
+<area shape="rect" id="Node000006" href="$structured-panoc-alm_8hpp.html" title=" " alt="" coords="11,115,195,170"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="509,54,367,78,213,111,186,118,185,113,212,105,366,73,508,48"/>
+<area shape="rect" id="Node000007" href="$structured-zerofpr-alm_8hpp.html" title=" " alt="" coords="428,115,619,170"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="590,73,549,117,545,113,586,69"/>
+<area shape="rect" id="Node000008" href="$panoc-driver_8cpp.html" title=" " alt="" coords="643,123,798,163"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="657,69,705,120,701,124,653,72"/>
+<area shape="rect" id="Node000009" href="$json_8cpp.html" title=" " alt="" coords="822,123,987,163"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="705,62,856,120,854,125,703,67"/>
+<area shape="rect" id="Node000010" href="$params_8cpp.html" title=" " alt="" coords="1011,123,1177,163"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="736,49,863,73,1000,105,1046,120,1044,125,999,111,862,78,735,54"/>
+<area shape="rect" id="Node000003" href="$structured-lbfgs_8cpp.html" title=" " alt="" coords="213,225,415,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="317,191,317,225,311,225,311,191"/>
+<area shape="rect" id="Node000004" href="$structured-panoc-alm_8cpp.html" title=" " alt="" coords="5,233,188,273"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="235,186,136,235,134,230,233,181"/>
+<area shape="rect" id="Node000005" href="$structured-zerofpr-alm_8cpp.html" title=" " alt="" coords="440,233,623,273"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="395,181,494,230,492,235,393,186"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="103,184,101,232,95,232,98,184"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="529,184,533,232,527,232,524,185"/>
+</map>

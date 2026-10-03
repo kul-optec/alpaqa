@@ -1,0 +1,9 @@
+<map id="eval_objective" name="eval_objective">
+<area shape="rect" id="Node000001" title="[Required] Function that evaluates the cost," alt="" coords="648,20,765,45"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1ALMHelpers.html#aa91b6b1a0715e1efaf34b25131d0e8f1" title=" " alt="" coords="403,5,600,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="634,35,600,35,600,30,634,30"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1ALMSolver.html#addcbcd08131cd8fb2d837cdbe59a51ff" title=" " alt="" coords="204,13,355,53"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="389,35,355,35,355,30,389,30"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1ALMSolver.html#abf8cdbf0da02bdb631d4c6701b9c7100" title=" " alt="" coords="5,13,156,53"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="191,35,156,35,156,30,191,30"/>
+</map>

@@ -1,0 +1,18 @@
+<map id="timed" name="timed">
+<area shape="rect" id="Node000001" title=" " alt="" coords="264,169,324,195"/>
+<area shape="poly" id="edge8_Node000001_Node000001" title=" " alt="" coords="326,159,317,151,294,148,275,150,265,155,263,160,268,168,264,171,258,161,261,151,273,145,294,143,319,146,329,155"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1ProblemWithCounters.html#a06afe342b1e278861fed32bbb5473769" title=" " alt="" coords="46,5,175,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="283,157,259,100,239,70,214,45,196,35,175,27,177,22,198,30,218,41,243,67,263,97,288,155"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1ProblemWithCounters.html#ad758561bb94639c04e399778e16b374e" title=" " alt="" coords="15,55,206,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="272,160,246,134,215,110,190,98,193,93,217,105,250,130,276,157"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1ProblemWithCounters.html#aceef7724d7d57cf66eb61b8beb3b962b" title=" " alt="" coords="52,120,169,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="250,170,215,159,169,148,170,142,217,154,252,165"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1ProblemWithCounters.html#ac77355dcb81f369f3c31e56baed82e08" title=" " alt="" coords="21,169,200,195"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="250,185,200,185,200,179,250,179"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1ProblemWithCounters.html#abc5d81ac8375cdab427a4ea1eab86951" title=" " alt="" coords="13,219,208,259"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="251,198,176,222,174,217,250,193"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1ProblemWithCounters.html#a38fd6b995f504101b53690481bdd8c61" title=" " alt="" coords="11,284,210,309"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="280,208,254,242,217,274,190,286,188,281,215,269,250,239,276,205"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1ProblemWithCounters.html#a9bbaf1061820ec63a0156825cc46601a" title=" " alt="" coords="5,333,216,359"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="288,209,263,267,243,297,218,323,195,336,192,331,214,319,239,294,259,264,283,207"/>
+</map>

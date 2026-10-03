@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['solver_2ddriver_2ehpp_0',['solver-driver.hpp',['../solver-driver_8hpp.html',1,'']]],
+  ['solverstatus_2ecpp_1',['solverstatus.cpp',['../solverstatus_8cpp.html',1,'']]],
+  ['solverstatus_2ehpp_2',['solverstatus.hpp',['../solverstatus_8hpp.html',1,'']]],
+  ['span_2ehpp_3',['span.hpp',['../span_8hpp.html',1,'']]],
+  ['sparse_2dops_2ehpp_4',['sparse-ops.hpp',['../sparse-ops_8hpp.html',1,'']]],
+  ['sparsity_2dconversions_2ehpp_5',['sparsity-conversions.hpp',['../sparsity-conversions_8hpp.html',1,'']]],
+  ['sparsity_2ehpp_6',['sparsity.hpp',['../sparsity_8hpp.html',1,'']]],
+  ['steihaugcg_2ehpp_7',['steihaugcg.hpp',['../steihaugcg_8hpp.html',1,'']]],
+  ['structs_2ehpp_8',['structs.hpp',['../structs_8hpp.html',1,'']]],
+  ['structs_2eipp_9',['structs.ipp',['../structs_8ipp.html',1,'']]],
+  ['structured_2dlbfgs_2ecpp_10',['structured-lbfgs.cpp',['../structured-lbfgs_8cpp.html',1,'']]],
+  ['structured_2dlbfgs_2ehpp_11',['structured-lbfgs.hpp',['../structured-lbfgs_8hpp.html',1,'']]],
+  ['structured_2dlbfgs_2etpp_12',['structured-lbfgs.tpp',['../structured-lbfgs_8tpp.html',1,'']]],
+  ['structured_2dnewton_2ecpp_13',['structured-newton.cpp',['../structured-newton_8cpp.html',1,'']]],
+  ['structured_2dnewton_2ehpp_14',['structured-newton.hpp',['../structured-newton_8hpp.html',1,'']]],
+  ['structured_2dpanoc_2dalm_2ecpp_15',['structured-panoc-alm.cpp',['../structured-panoc-alm_8cpp.html',1,'']]],
+  ['structured_2dpanoc_2dalm_2ehpp_16',['structured-panoc-alm.hpp',['../structured-panoc-alm_8hpp.html',1,'']]],
+  ['structured_2dzerofpr_2dalm_2ecpp_17',['structured-zerofpr-alm.cpp',['../structured-zerofpr-alm_8cpp.html',1,'']]],
+  ['structured_2dzerofpr_2dalm_2ehpp_18',['structured-zerofpr-alm.hpp',['../structured-zerofpr-alm_8hpp.html',1,'']]]
+];

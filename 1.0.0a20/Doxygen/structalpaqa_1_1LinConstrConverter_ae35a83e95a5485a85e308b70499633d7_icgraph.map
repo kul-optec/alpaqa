@@ -1,0 +1,19 @@
+<map id="to_span" name="to_span">
+<area shape="rect" id="Node000001" title=" " alt="" coords="244,234,317,259"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LinConstrConverter.html#a0ee59cb7fda24428de07e47b412d9050" title=" " alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="272,221,263,185,248,141,225,97,194,59,178,48,181,43,198,55,230,94,253,139,268,183,277,220"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LinConstrConverter.html#a9ebecedcd4e24a2d1336293047b06f78" title=" " alt="" coords="5,69,196,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="266,223,238,172,218,146,194,123,175,112,178,107,198,119,222,142,243,169,271,220"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1LinConstrConverter.html#abda58619a88364152aae228c2cea568b" title=" " alt="" coords="5,133,196,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="253,227,226,207,195,188,168,176,170,171,197,183,229,202,256,223"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1LinConstrConverter.html#a64b0ceb9cab71fa3657a63e58ef8b5a3" title=" " alt="" coords="5,197,196,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="230,241,196,236,197,230,231,236"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1LinConstrConverter.html#aee664472847384bb7ae16fe5f8596946" title=" " alt="" coords="15,262,187,287"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="231,257,183,265,182,259,230,252"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1LinConstrConverter.html#a0937ec1cbdbf880aa3d76f785457fbc3" title=" " alt="" coords="15,311,187,337"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="253,269,197,301,161,314,159,309,195,296,250,265"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1LinConstrConverter.html#a3c8162c090625d7c923a8e2a4d799207" title=" " alt="" coords="45,361,157,386"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="268,273,239,313,219,333,197,350,158,367,156,362,195,346,216,329,235,309,263,269"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1LinConstrConverter.html#ac88c0c936335726c98d0d6c36d0be9e7" title=" " alt="" coords="61,410,141,435"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="275,273,248,337,226,371,198,399,170,414,141,422,140,417,168,409,194,395,222,367,243,334,270,271"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="add_column" name="add_column">
+<area shape="rect" id="node1" title="Add the given column to the right." alt="" coords="5,5,107,32"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LimitedMemoryQR.html#af83f6287b8ea07acdcfa4670af30cbbf" title=" " alt="" coords="265,5,304,32"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1LimitedMemoryQR.html#abb2e912e6196e7c6996d3f43fea78237" title="Get the next index in the circular storage for R." alt="" coords="155,31,217,57"/>
+</map>

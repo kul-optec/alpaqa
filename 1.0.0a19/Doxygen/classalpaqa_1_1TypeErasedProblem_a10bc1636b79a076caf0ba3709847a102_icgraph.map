@@ -1,0 +1,6 @@
+<map id="provides_get_hess_L_sparsity" name="provides_get_hess_L_sparsity">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of get_hess_L_sparsity." alt="" coords="233,37,391,77"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="5,29,185,84"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,59,185,59,185,54,219,54"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="131,18,118,11,95,8,76,10,64,15,58,21,58,29,53,29,53,19,61,10,75,5,95,3,120,6,134,14"/>
+</map>

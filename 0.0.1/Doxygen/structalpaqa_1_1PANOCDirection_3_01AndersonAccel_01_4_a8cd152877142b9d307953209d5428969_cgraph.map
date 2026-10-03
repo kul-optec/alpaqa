@@ -1,0 +1,14 @@
+<map id="apply" name="apply">
+<area shape="rect" id="node1" title=" " alt="" coords="5,214,64,240"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title=" " alt="" coords="112,206,283,248"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a129a6d7bacdc8362a3c7bcbdca662742" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="331,206,517,248"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3077223e98c1e4e286e01503f220d5" title="Add the given column to the right." alt="" coords="565,76,761,117"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LimitedMemoryQR.html#af83f6287b8ea07acdcfa4670af30cbbf" title=" " alt="" coords="1297,108,1515,135"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1LimitedMemoryQR.html#a98e2d9685769a3ebb2c0c9600a4c77b2" title="Get the number of columns that are currently stored." alt="" coords="565,141,761,182"/>
+<area shape="rect" id="node8" href="$classalpaqa_1_1LimitedMemoryQR.html#a436c4dbbf0476354ca67a104bc005e55" title="Remove the leftmost column." alt="" coords="565,206,761,248"/>
+<area shape="rect" id="node9" href="$classalpaqa_1_1LimitedMemoryQR.html#ae82972feb159f229f6914c036291c0d4" title="Get iterators in the circular buffer." alt="" coords="1053,292,1249,333"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1LimitedMemoryQR.html#a25b6259a3ee886a9a54f3a66ab019084" title="Get the tail index of the circular buffer (points to one past the most recent element)." alt="" coords="565,324,761,365"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1LimitedMemoryQR.html#a7a60dfe0a5f68bc1efec69e406a2b619" title="Solve the least squares problem Ax = b." alt="" coords="565,389,761,430"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LimitedMemoryQR.html#abb2e912e6196e7c6996d3f43fea78237" title="Get the next index in the circular storage for R." alt="" coords="809,134,1005,176"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1LimitedMemoryQR.html#aa422d549bc3e631fa73047a8bfe4a5e5" title="Get reverse iterators in the circular buffer." alt="" coords="809,385,1005,426"/>
+</map>

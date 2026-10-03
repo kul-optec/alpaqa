@@ -1,0 +1,21 @@
+<map id="src/alpaqa/include/alpaqa/accelerators/internal/limited&#45;memory&#45;qr.hpp" name="src/alpaqa/include/alpaqa/accelerators/internal/limited&#45;memory&#45;qr.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="305,5,492,75"/>
+<area shape="rect" id="Node000002" href="$anderson-helpers_8hpp.html" title=" " alt="" coords="288,123,509,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="401,88,401,122,396,122,396,88"/>
+<area shape="rect" id="Node000003" href="$accelerators_2anderson_8hpp.html" title=" " alt="" coords="321,225,476,280"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="401,191,401,225,396,225,396,191"/>
+<area shape="rect" id="Node000004" href="$inner_2directions_2panoc_2anderson_8hpp.html" title=" " alt="" coords="311,328,486,383"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="401,294,401,328,396,328,396,294"/>
+<area shape="rect" id="Node000005" href="$panoc-anderson-alm_8hpp.html" title=" " alt="" coords="5,431,184,485"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="308,389,175,433,173,428,306,384"/>
+<area shape="rect" id="Node000007" href="$zerofpr-anderson-alm_8hpp.html" title=" " alt="" coords="209,431,394,485"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="366,395,329,432,325,429,362,391"/>
+<area shape="rect" id="Node000009" href="$panoc-driver_8cpp.html" title=" " alt="" coords="419,438,573,478"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="436,391,479,436,475,439,432,394"/>
+<area shape="rect" id="Node000010" href="$params_8cpp.html" title=" " alt="" coords="597,438,763,478"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="486,385,628,435,626,440,484,390"/>
+<area shape="rect" id="Node000006" href="$panoc-anderson-alm_8cpp.html" title=" " alt="" coords="17,533,172,573"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="97,499,97,533,92,533,92,499"/>
+<area shape="rect" id="Node000008" href="$zerofpr-anderson-alm_8cpp.html" title=" " alt="" coords="220,533,383,573"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="304,499,304,533,299,533,299,499"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="select_rows_in_col_iota" name="select_rows_in_col_iota">
+<area shape="rect" id="Node000001" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="563,77,739,102"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util.html#ab08b0b3734a3c29125bdd089feb869a5" title="R += R_full(mask,mask)" alt="" coords="322,5,469,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="585,76,468,46,470,41,586,71"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1util.html#a8f8729f20b9e0c58b08803046e2e5e54" title="S += S_full(mask,:)" alt="" coords="321,69,470,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="549,92,470,92,470,87,549,87"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1util.html#a00fa6cdb76e2f6bc63a85e3f7e379a51" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="276,133,515,173"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="586,108,477,136,475,131,585,103"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CasADiControlProblem.html#a55e2e9425cc496e3340e59b099dda766" title=" " alt="" coords="5,5,228,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="308,28,228,28,228,23,308,23"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CasADiControlProblem.html#aad269794afe7753e16a2cf238b9f42ad" title=" " alt="" coords="5,69,228,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="307,92,228,92,228,87,307,87"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1CasADiControlProblem.html#a20f8fadf0aeb2daf8695db68f3d50865" title=" " alt="" coords="5,133,228,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="262,156,228,156,228,151,262,151"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="default_eval_grad_L" name="default_eval_grad_L">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,159,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#aba98edc04bad2e0a3ad6645991cd7535" title="[Required] Function that evaluates the gradient of the cost," alt="" coords="207,5,409,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,44,193,39,193,44,159,49"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a6f4989c25256ca477442ef34ae1c6b7f" title="[Optional] Evaluate both &#160;and ." alt="" coords="207,69,409,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="159,66,193,70,193,76,159,71"/>
+</map>

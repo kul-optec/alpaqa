@@ -1,0 +1,48 @@
+<map id="src/alpaqa/src/driver/results.hpp" name="src/alpaqa/src/driver/results.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="516,5,671,45"/>
+<area shape="rect" id="Node000002" href="$alm-driver_8hpp.html" title=" " alt="" coords="1786,181,1940,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="685,33,907,58,1173,91,1460,133,1746,179,1786,185,1785,190,1745,184,1459,138,1172,96,906,63,684,39"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html" title=" " alt="" coords="383,269,538,309"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="503,40,372,60,225,90,155,109,95,131,47,156,16,183,8,202,10,210,16,220,40,237,76,252,121,263,173,272,283,282,383,285,383,291,283,287,172,277,120,268,74,257,37,242,12,223,5,212,3,201,12,180,44,151,93,126,154,104,224,85,371,54,502,35"/>
+<area shape="rect" id="Node000006" href="$ipopt-driver_8hpp.html" title=" " alt="" coords="204,181,359,221"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="549,55,317,183,314,179,546,50"/>
+<area shape="rect" id="Node000007" href="$lbfgsb-driver_8hpp.html" title=" " alt="" coords="383,181,538,221"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="573,58,477,183,473,180,569,55"/>
+<area shape="rect" id="Node000008" href="$panoc-driver_8hpp.html" title=" " alt="" coords="562,181,716,221"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="605,58,637,180,632,182,599,59"/>
+<area shape="rect" id="Node000009" href="$pantr-driver_8hpp.html" title=" " alt="" coords="1556,181,1711,221"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="685,37,1061,96,1545,179,1557,181,1556,186,1544,184,1060,101,684,43"/>
+<area shape="rect" id="Node000010" href="$qpalm-driver_8hpp.html" title=" " alt="" coords="26,181,180,221"/>
+<area shape="poly" id="edge15_Node000001_Node000010" title=" " alt="" coords="529,52,157,184,155,179,527,47"/>
+<area shape="rect" id="Node000011" href="$solver-driver_8hpp.html" title=" " alt="" coords="791,93,946,133"/>
+<area shape="poly" id="edge17_Node000001_Node000011" title=" " alt="" coords="668,47,809,91,807,96,666,52"/>
+<area shape="rect" id="Node000003" href="$panoc-driver_8cpp.html" title=" " alt="" coords="1142,269,1296,309"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="1772,217,1723,224,1297,280,1296,275,1723,219,1772,212"/>
+<area shape="rect" id="Node000004" href="$pantr-driver_8cpp.html" title=" " alt="" coords="1614,269,1768,309"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="1814,230,1730,272,1728,267,1812,225"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="334,225,422,267,420,272,332,230"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="463,235,463,269,458,269,458,235"/>
+<area shape="poly" id="edge11_Node000008_Node000003" title=" " alt="" coords="730,213,1142,274,1141,279,730,219"/>
+<area shape="poly" id="edge10_Node000008_Node000005" title=" " alt="" coords="589,230,501,272,498,267,586,225"/>
+<area shape="poly" id="edge14_Node000009_Node000004" title=" " alt="" coords="1656,232,1681,268,1676,271,1652,234"/>
+<area shape="poly" id="edge13_Node000009_Node000005" title=" " alt="" coords="1543,224,1249,255,963,275,715,285,538,290,538,284,715,280,962,269,1248,250,1542,219"/>
+<area shape="poly" id="edge16_Node000010_Node000005" title=" " alt="" coords="195,222,384,267,382,272,193,227"/>
+<area shape="poly" id="edge26_Node000011_Node000003" title=" " alt="" coords="906,139,959,179,984,201,1010,219,1076,248,1142,268,1141,273,1074,253,1007,224,980,205,956,183,903,144"/>
+<area shape="poly" id="edge28_Node000011_Node000004" title=" " alt="" coords="959,112,1160,116,1401,125,1515,134,1612,145,1685,160,1710,169,1725,180,1735,202,1732,226,1722,250,1709,270,1704,268,1717,248,1727,225,1730,202,1721,183,1707,174,1683,165,1611,151,1514,139,1401,131,1160,121,959,118"/>
+<area shape="poly" id="edge18_Node000011_Node000005" title=" " alt="" coords="834,144,781,183,756,205,730,224,682,244,632,260,538,280,537,275,630,254,680,239,727,219,753,201,777,179,831,139"/>
+<area shape="poly" id="edge23_Node000011_Node000006" title=" " alt="" coords="778,128,590,151,371,184,360,186,359,181,371,179,589,146,777,122"/>
+<area shape="poly" id="edge25_Node000011_Node000007" title=" " alt="" coords="778,136,538,186,537,181,777,131"/>
+<area shape="poly" id="edge27_Node000011_Node000008" title=" " alt="" coords="806,141,690,184,688,179,805,136"/>
+<area shape="poly" id="edge29_Node000011_Node000009" title=" " alt="" coords="959,118,1223,140,1384,157,1545,179,1557,181,1556,186,1544,184,1383,162,1222,145,959,123"/>
+<area shape="poly" id="edge31_Node000011_Node000010" title=" " alt="" coords="778,123,515,145,354,162,193,184,181,186,180,181,192,179,353,157,514,140,777,118"/>
+<area shape="rect" id="Node000012" href="$extra-stats_8hpp.html" title=" " alt="" coords="1378,181,1532,221"/>
+<area shape="poly" id="edge19_Node000011_Node000012" title=" " alt="" coords="960,122,1147,146,1366,179,1378,181,1377,186,1365,184,1147,151,959,128"/>
+<area shape="rect" id="Node000013" href="$ipopt-driver_8cpp.html" title=" " alt="" coords="1020,181,1175,221"/>
+<area shape="poly" id="edge22_Node000011_Node000013" title=" " alt="" coords="932,136,1048,179,1047,184,930,141"/>
+<area shape="rect" id="Node000014" href="$lbfgsb-driver_8cpp.html" title=" " alt="" coords="1199,181,1354,221"/>
+<area shape="poly" id="edge24_Node000011_Node000014" title=" " alt="" coords="960,131,1200,181,1198,186,959,136"/>
+<area shape="rect" id="Node000015" href="$qpalm-driver_8cpp.html" title=" " alt="" coords="791,181,946,221"/>
+<area shape="poly" id="edge30_Node000011_Node000015" title=" " alt="" coords="871,147,871,181,866,181,866,147"/>
+<area shape="poly" id="edge20_Node000012_Node000003" title=" " alt="" coords="1391,229,1272,272,1270,267,1389,224"/>
+<area shape="poly" id="edge21_Node000012_Node000004" title=" " alt="" coords="1521,224,1640,267,1638,272,1519,229"/>
+</map>

@@ -1,0 +1,34 @@
+<map id="as_vec" name="as_vec">
+<area shape="rect" id="Node000001" title="Convert a std::span to an Eigen::Vector view." alt="" coords="817,159,884,185"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="577,6,739,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="838,148,812,95,792,68,768,46,738,32,741,27,771,42,796,65,816,92,843,145"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1sparsity_1_1ConvertingEvaluator.html#a3b7f4d07d78706887626bcefe38dc14f" title=" " alt="" coords="556,56,760,96"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="825,152,799,130,768,110,741,99,743,94,771,106,802,126,828,148"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1IpoptAdapter.html#a4061f7ec3e2272961f562e449bc32621" title=" " alt="" coords="579,120,737,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="803,167,737,156,738,151,804,162"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1IpoptAdapter.html#aa33a228364694e6a36d5fbbd4e1e32be" title=" " alt="" coords="579,184,737,224"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="804,182,738,193,737,188,803,177"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1CasADiControlProblem.html#a4f1c7c649deebd8f69fd65ebc8ec3a4a" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="547,248,769,288"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="828,196,802,218,771,238,743,250,741,245,768,234,799,214,825,192"/>
+<area shape="rect" id="Node000014" href="$classalpaqa_1_1CasADiProblem.html#a4f1c7c649deebd8f69fd65ebc8ec3a4a" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="571,312,745,352"/>
+<area shape="poly" id="edge16_Node000001_Node000014" title=" " alt="" coords="842,199,816,251,796,279,771,302,747,316,744,311,768,298,792,275,811,248,838,196"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1IpoptAdapter.html#acda35cc607a99e08c25fbd67ae5a6fe4" title=" " alt="" coords="308,123,467,163"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="565,144,467,145,467,139,565,138"/>
+<area shape="poly" id="edge6_Node000006_Node000005" title=" " alt="" coords="564,186,466,163,468,158,566,180"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1CasADiControlProblem.html#a8e2b94a109c662591fb7d2e3a662bba1" title=" " alt="" coords="276,189,499,229"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="552,248,480,232,481,227,553,243"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1CasADiControlProblem.html#aaeb89b1856e2b1222b9717b0cbe0377b" title=" " alt="" coords="5,285,228,325"/>
+<area shape="poly" id="edge15_Node000007_Node000012" title=" " alt="" coords="533,279,228,300,228,295,533,274"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1CasADiControlProblem.html#af93fae2316fda9e663747c5af4fc9baa" title=" " alt="" coords="5,5,228,45"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="284,184,274,177,262,162,254,146,250,116,245,87,238,73,226,59,210,48,213,43,230,55,243,70,250,85,255,115,259,145,266,159,278,173,287,180"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1CasADiControlProblem.html#a1193c36f447bfe46112fd46258674196" title=" " alt="" coords="5,69,228,109"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="291,186,274,177,259,163,250,149,241,136,227,124,203,112,206,107,229,119,245,133,254,146,263,160,278,172,293,181"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1CasADiControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title=" " alt="" coords="5,157,228,197"/>
+<area shape="poly" id="edge11_Node000008_Node000011" title=" " alt="" coords="262,197,228,193,228,188,263,192"/>
+<area shape="poly" id="edge13_Node000008_Node000012" title=" " alt="" coords="324,237,277,256,229,276,192,288,190,283,227,271,275,251,322,232"/>
+<area shape="rect" id="Node000013" href="$classalpaqa_1_1CasADiControlProblem.html#a36a7a9214987dd23ba41e02d7f00bb64" title=" " alt="" coords="5,221,228,261"/>
+<area shape="poly" id="edge14_Node000008_Node000013" title=" " alt="" coords="263,227,228,231,228,226,262,221"/>
+<area shape="poly" id="edge12_Node000011_Node000011" title=" " alt="" coords="163,146,147,139,117,136,91,138,75,143,69,149,72,156,67,158,64,148,72,138,90,133,117,131,148,133,165,141"/>
+<area shape="rect" id="Node000015" href="$classalpaqa_1_1CasADiProblem.html#a217aec2d8db2ba9ffc16bf927b1b31f9" title=" " alt="" coords="300,312,475,352"/>
+<area shape="poly" id="edge17_Node000014_Node000015" title=" " alt="" coords="557,335,475,335,475,329,557,329"/>
+</map>

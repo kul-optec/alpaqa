@@ -1,0 +1,46 @@
+<map id="check_finiteness" name="check_finiteness">
+<area shape="rect" id="Node000001" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="460,429,591,454"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="217,5,411,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="522,415,518,345,502,249,488,198,469,148,443,101,410,59,395,48,399,43,414,55,448,98,474,146,493,197,508,248,523,344,527,415"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedControlProblem.html#a7013162709e225328ff8b61da8636a6e" title="Gradient&#45;vector product of discrete&#45;time dynamics ." alt="" coords="216,389,412,429"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="446,432,412,427,412,422,447,427"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedControlProblem.html#a9412e49fd073645733eb50f1e93b889a" title="Stage output mapping ." alt="" coords="217,69,411,109"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="520,415,512,356,494,277,480,236,462,195,439,157,410,123,395,112,398,107,414,119,443,154,466,192,485,234,499,276,517,355,525,414"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1TypeErasedControlProblem.html#af14bea7b59a44b2bbf009de9aa3ff3a7" title="Terminal output mapping ." alt="" coords="217,133,411,173"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="517,416,506,367,486,306,455,242,434,213,410,187,394,176,397,171,414,183,438,210,459,240,491,304,511,366,522,415"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1TypeErasedControlProblem.html#a04ec9deb270c165a338e9b6a0ec835b6" title="Jacobian of discrete&#45;time dynamics ." alt="" coords="217,261,411,301"/>
+<area shape="poly" id="edge13_Node000001_Node000010" title=" " alt="" coords="507,419,467,367,440,339,411,316,389,304,391,299,413,311,444,335,471,363,511,415"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1TypeErasedControlProblem.html#a676d1700119cbb315a5a7e799689ca0e" title="Stage cost ." alt="" coords="217,197,411,237"/>
+<area shape="poly" id="edge14_Node000001_Node000011" title=" " alt="" coords="513,417,499,380,477,335,448,290,410,251,392,240,395,235,414,247,452,287,482,333,504,378,518,415"/>
+<area shape="rect" id="Node000012" href="$classalpaqa_1_1TypeErasedControlProblem.html#a62f0734c14da4c35d7504c1c6fd4e255" title="Terminal cost ." alt="" coords="217,325,411,365"/>
+<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="491,423,411,380,381,368,383,363,413,375,494,419"/>
+<area shape="rect" id="Node000013" href="$classalpaqa_1_1TypeErasedControlProblem.html#ab9cabb848940c9fea90232ebdca27f5a" title="Terminal cost gradient w.r.t." alt="" coords="217,453,411,493"/>
+<area shape="poly" id="edge18_Node000001_Node000013" title=" " alt="" coords="447,456,412,461,411,456,446,451"/>
+<area shape="rect" id="Node000014" href="$classalpaqa_1_1TypeErasedControlProblem.html#ab3ec4e9f2f25b43d158ce3744ccc6f34" title="Initial state ." alt="" coords="217,517,411,557"/>
+<area shape="poly" id="edge20_Node000001_Node000014" title=" " alt="" coords="494,464,413,508,383,520,381,515,411,503,491,459"/>
+<area shape="rect" id="Node000015" href="$structalpaqa_1_1OCPEvaluator.html#ac7a042acaf800ba78e029229c09a650e" title=" " alt="" coords="219,582,409,607"/>
+<area shape="poly" id="edge21_Node000001_Node000015" title=" " alt="" coords="511,467,472,520,444,548,413,572,386,584,383,580,411,567,441,544,468,517,507,464"/>
+<area shape="rect" id="Node000016" href="$structalpaqa_1_1OCPEvaluator.html#a5fa1750865bfb54072049e5acaa85e52" title=" " alt="" coords="220,631,408,657"/>
+<area shape="poly" id="edge22_Node000001_Node000016" title=" " alt="" coords="518,468,503,503,481,545,451,587,414,622,393,634,390,629,410,618,447,583,476,542,498,501,513,466"/>
+<area shape="rect" id="Node000017" href="$structalpaqa_1_1OCPEvaluator.html#af2168f996a43777dd54f11ec99f9cbd9" title=" " alt="" coords="233,681,395,721"/>
+<area shape="poly" id="edge23_Node000001_Node000017" title=" " alt="" coords="521,468,508,512,487,567,456,623,436,649,414,671,396,683,393,679,410,667,432,645,451,620,482,564,503,511,516,467"/>
+<area shape="rect" id="Node000018" href="$structalpaqa_1_1OCPEvaluator.html#a832b6879e9ba1e10af2db41a10d74db5" title=" " alt="" coords="221,746,407,771"/>
+<area shape="poly" id="edge24_Node000001_Node000018" title=" " alt="" coords="524,468,516,523,497,596,483,634,465,671,442,705,414,735,394,748,391,744,410,731,437,702,460,668,478,631,492,594,511,522,519,467"/>
+<area shape="rect" id="Node000019" href="$structalpaqa_1_1OCPEvaluator.html#ac564caeba638785c351f33ffe40339f3" title=" " alt="" coords="233,796,395,836"/>
+<area shape="poly" id="edge25_Node000001_Node000019" title=" " alt="" coords="526,468,519,532,502,617,488,662,469,707,445,749,414,786,397,799,394,794,410,782,440,746,464,704,483,660,497,615,514,531,520,468"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1OCPEvaluator.html#aa390f28c24f187326b60eedd7ff4fe66" title=" " alt="" coords="5,133,168,173"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="226,54,218,59,202,75,194,90,186,107,170,123,150,135,148,131,166,119,181,104,189,88,198,71,214,55,223,49"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1OCPEvaluator.html#a488c4275c8f27429d2a9eb98c5d1aedd" title=" " alt="" coords="5,5,168,45"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="203,28,168,28,168,23,203,23"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1OCPEvaluator.html#a02a290de7f57c49cbc1ce72fbd8a69b3" title=" " alt="" coords="5,69,168,109"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="229,52,159,72,157,67,228,47"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1OCPEvaluator.html#aac26fb1e500caabcd837ef0b1e48b035" title=" " alt="" coords="5,421,168,461"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="202,428,169,433,168,427,202,422"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="229,116,159,136,157,131,228,111"/>
+<area shape="poly" id="edge9_Node000008_Node000005" title=" " alt="" coords="203,92,168,92,168,87,203,87"/>
+<area shape="poly" id="edge11_Node000009_Node000003" title=" " alt="" coords="203,156,168,156,168,151,203,151"/>
+<area shape="poly" id="edge12_Node000009_Node000005" title=" " alt="" coords="228,132,157,112,159,107,229,127"/>
+<area shape="poly" id="edge15_Node000011_Node000003" title=" " alt="" coords="228,196,157,176,159,171,229,191"/>
+<area shape="poly" id="edge17_Node000012_Node000003" title=" " alt="" coords="224,321,214,315,176,282,142,244,97,175,101,172,146,240,179,278,218,311,226,317"/>
+<area shape="poly" id="edge19_Node000013_Node000007" title=" " alt="" coords="202,460,168,455,169,450,203,455"/>
+</map>

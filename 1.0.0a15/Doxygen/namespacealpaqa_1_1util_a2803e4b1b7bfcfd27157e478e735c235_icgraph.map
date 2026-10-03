@@ -1,0 +1,9 @@
+<map id="parse_single_duration" name="parse_single_duration">
+<area shape="rect" id="Node000001" title="Adds the first duration in the string s to the duration t." alt="" coords="371,45,536,70"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1util.html#a58250a8f52d41eb599a70479d830d598" title="Adds the sum of the durations in the string s to the duration t." alt="" coords="204,45,323,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="357,60,323,60,323,55,357,55"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1params.html#a7ee32b4f48df81f4d8baa2dff79af467" title=" " alt="" coords="5,5,156,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,47,156,41,157,36,191,42"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1params.html#a3e5465fa8631a02234f282389e605d20" title=" " alt="" coords="5,69,156,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="191,73,157,79,156,73,190,67"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="eval_projecting_difference_constraints" name="eval_projecting_difference_constraints">
+<area shape="rect" id="Node000001" title="[Required] Function that evaluates the difference between the given point &#160;and its projection onto th..." alt="" coords="572,37,767,77"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#abbe7a9499d34168ba294d9737ab1516d" title=" " alt="" coords="309,5,524,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="558,46,524,42,525,36,559,41"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="337,69,496,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="558,74,496,82,496,77,558,69"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa_1_1driver.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="108,77,261,102"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="324,92,262,92,262,87,324,87"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver-main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,77,60,102"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,92,60,92,60,87,94,87"/>
+</map>

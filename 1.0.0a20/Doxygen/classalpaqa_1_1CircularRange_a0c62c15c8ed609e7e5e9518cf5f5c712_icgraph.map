@@ -1,0 +1,17 @@
+<map id="begin" name="begin">
+<area shape="rect" id="Node000001" title=" " alt="" coords="571,102,629,127"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CircularRange.html#a39112ae08f6ffc7ee58c6aa79772e094" title=" " alt="" coords="381,17,446,42"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="572,95,521,62,483,48,446,38,447,33,485,43,524,58,575,91"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CircularRange.html#abef9dfc7607c7e1a3854788ba56a4f34" title=" " alt="" coords="384,73,443,98"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="556,111,442,92,443,87,557,105"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1ReverseCircularRange.html#a4da62c698565a7f1bab4a15a86b167e1" title=" " alt="" coords="304,123,523,163"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="557,124,523,129,523,124,557,118"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1CircularRange.html#ab3fe1cdacc9a53cc2d0cbe27599036c4" title=" " alt="" coords="388,187,439,213"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="578,139,553,159,524,177,480,192,439,200,438,195,478,187,522,172,550,155,574,135"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1ReverseCircularRange.html#a81f80a31923e85af56a7b1ae0712a33b" title=" " alt="" coords="21,5,240,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="367,31,240,30,240,24,367,26"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1ReverseCircularRange.html#a93791e61ab486b4022c389d634b4facc" title=" " alt="" coords="21,69,240,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="370,89,240,90,240,85,370,83"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1ReverseCircularRange.html#a68b688a51bd0cf6fb5bc2cba292209a8" title=" " alt="" coords="5,187,256,213"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="374,203,256,203,256,197,374,197"/>
+</map>

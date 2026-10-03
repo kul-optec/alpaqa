@@ -1,0 +1,37 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,228,60,253"/>
+<area shape="rect" id="node2" href="$gradient-checker_8cpp.html#aff809b3945d62b51f641c0176ba90e7c" title=" " alt="" coords="128,80,256,105"/>
+<area shape="rect" id="node8" href="$gradient-checker_8cpp.html#a72e2c27739d9b3a1cd99f46954d9e827" title=" " alt="" coords="122,153,262,179"/>
+<area shape="rect" id="node10" href="$problem_8cpp.html#ae36fc572e3716fb2dbe8ff77cfe1ee10" title=" " alt="" coords="137,203,247,228"/>
+<area shape="rect" id="node13" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="108,830,276,870"/>
+<area shape="rect" id="node31" href="$gradient-checker_8cpp.html#a741d0efc7ccb377132a09ab946d73d5b" title=" " alt="" coords="143,895,241,920"/>
+<area shape="rect" id="node32" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="143,252,241,277"/>
+<area shape="rect" id="node3" href="$gradient-checker_8cpp.html#ac57cd4cb727fa8a07eac6c072d6fb9c1" title=" " alt="" coords="388,5,471,31"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#ae50af6bf82d3c0cc4093c46b8e2c4379" title=" " alt="" coords="356,55,503,80"/>
+<area shape="rect" id="node7" href="$namespacealpaqa.html#a83808294a15f0b307100da348daf7fd2" title=" " alt="" coords="351,104,508,129"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="591,55,764,80"/>
+<area shape="rect" id="node6" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="820,47,967,87"/>
+<area shape="rect" id="node9" href="$gradient-checker_8cpp.html#ab9334cd561ac221b327947e14e0eb10c" title="Split the string s on the first occurrence of tok." alt="" coords="385,153,473,179"/>
+<area shape="rect" id="node11" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="365,203,493,228"/>
+<area shape="rect" id="node12" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="374,252,485,277"/>
+<area shape="rect" id="node14" href="$classalpaqa_1_1TypeErasedProblem.html#a3dbe817bafef746282776869a9e1bbea" title="Returns true if the problem provides an implementation of check." alt="" coords="328,638,531,678"/>
+<area shape="rect" id="node15" href="$classalpaqa_1_1TypeErasedProblem.html#afb8d343633b8788ddfd56feb297432c8" title="Returns true if the problem provides a specialized implementation of eval_ψ, false if it uses the def..." alt="" coords="328,702,531,742"/>
+<area shape="rect" id="node16" href="$classalpaqa_1_1TypeErasedProblem.html#a21e480c5b55979a0e74816fd0704f346" title="Returns true if the problem provides a specialized implementation of eval_ψ_grad_ψ,..." alt="" coords="328,766,531,806"/>
+<area shape="rect" id="node17" href="$classalpaqa_1_1TypeErasedProblem.html#ab88b867d624a80e6e69fb59ab9c3378f" title="Returns true if the problem provides a specialized implementation of eval_f_g, false if it uses the d..." alt="" coords="328,830,531,870"/>
+<area shape="rect" id="node18" href="$classalpaqa_1_1TypeErasedProblem.html#ab18346d3e4d5ffbfe88191ea164d92ac" title="Returns true if the problem provides a specialized implementation of eval_f_grad_f,..." alt="" coords="328,894,531,934"/>
+<area shape="rect" id="node19" href="$classalpaqa_1_1TypeErasedProblem.html#acc03fa37a47885ed1efeb50789e7322d" title="Returns true if the problem provides a specialized implementation of eval_grad_ψ, false if it uses th..." alt="" coords="328,958,531,998"/>
+<area shape="rect" id="node20" href="$classalpaqa_1_1TypeErasedProblem.html#a77e1b988df8ed0236c4ce19729bc36ad" title="Returns true if the problem provides a specialized implementation of eval_grad_f_grad_g_prod,..." alt="" coords="328,1023,531,1077"/>
+<area shape="rect" id="node21" href="$classalpaqa_1_1TypeErasedProblem.html#ab6c62b31d326c310c39212fa6331fe6d" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="328,1102,531,1142"/>
+<area shape="rect" id="node22" href="$classalpaqa_1_1TypeErasedProblem.html#acb9e7041994545ffb8b042d2be962639" title="Returns true if the problem provides a specialized implementation of eval_grad_L, false if it uses th..." alt="" coords="328,1166,531,1206"/>
+<area shape="rect" id="node23" href="$classalpaqa_1_1TypeErasedProblem.html#adb1bf2644a0b8e0c7120e3d546e2cbfe" title="Returns true if the problem provides an implementation of eval_hess_ψ." alt="" coords="328,1230,531,1270"/>
+<area shape="rect" id="node24" href="$classalpaqa_1_1TypeErasedProblem.html#a1fbd424119305ac21128594a2f27086d" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="324,1294,535,1334"/>
+<area shape="rect" id="node25" href="$classalpaqa_1_1TypeErasedProblem.html#a01b7cf0fff8f21d29a5faf139a8896e2" title="Returns true if the problem provides an implementation of eval_hess_L." alt="" coords="328,1358,531,1398"/>
+<area shape="rect" id="node26" href="$classalpaqa_1_1TypeErasedProblem.html#a9328096779a46c83fb264bfd3009568f" title="Returns true if the problem provides an implementation of eval_hess_L_prod." alt="" coords="325,1422,533,1462"/>
+<area shape="rect" id="node27" href="$classalpaqa_1_1TypeErasedProblem.html#a53b4d08432e97770dcae02dba82378fa" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="328,367,531,421"/>
+<area shape="rect" id="node28" href="$classalpaqa_1_1TypeErasedProblem.html#a3abcd94b37675bbd5f6a86e3fb85cda1" title="Returns true if the problem provides an implementation of eval_jac_g." alt="" coords="328,446,531,486"/>
+<area shape="rect" id="node29" href="$classalpaqa_1_1TypeErasedProblem.html#a23a7eb67244853ec477fceda3be3cc2a" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="328,510,531,550"/>
+<area shape="rect" id="node30" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="328,574,531,614"/>
+<area shape="rect" id="node33" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="354,302,505,342"/>
+<area shape="rect" id="node34" href="$namespacealpaqa_1_1params.html#a0de0baee3dda47aba5143ba83bd11712" title=" " alt="" coords="602,331,753,371"/>
+<area shape="rect" id="node35" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="583,281,772,307"/>
+</map>

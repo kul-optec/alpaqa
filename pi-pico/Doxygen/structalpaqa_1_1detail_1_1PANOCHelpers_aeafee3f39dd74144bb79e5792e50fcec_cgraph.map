@@ -1,0 +1,5 @@
+<map id="calc_augmented_lagrangian_hessian_prod_fd" name="calc_augmented_lagrangian_hessian_prod_fd">
+<area shape="rect" id="Node000001" title="Compute the Hessian matrix of the augmented Lagrangian function multiplied by the given vector,..." alt="" coords="5,5,211,45"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#af4e909497793ecd72eb8dcc4f5c2a55c" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="259,5,461,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="211,23,245,23,245,28,211,28"/>
+</map>

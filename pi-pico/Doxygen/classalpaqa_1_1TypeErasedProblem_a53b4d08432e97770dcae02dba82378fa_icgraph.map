@@ -1,0 +1,17 @@
+<map id="provides_eval_inactive_indices_res_lna" name="provides_eval_inactive_indices_res_lna">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="639,101,811,141"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1ConvexNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="353,5,585,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="673,97,590,60,553,48,555,43,592,55,676,93"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1StructuredLBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="348,69,591,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="625,112,590,107,591,102,625,106"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1NewtonTRDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="369,133,569,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="625,136,570,143,569,138,624,131"/>
+<area shape="rect" id="Node000005" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="385,197,553,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="676,150,592,188,555,200,553,195,590,183,673,145"/>
+<area shape="rect" id="Node000006" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="177,179,231,205"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="371,211,231,197,232,192,372,205"/>
+<area shape="rect" id="Node000007" href="$alpaqa-driver_8cpp.html#a97d8bbd07c6daf32220df9e0b4fe2cc0" title=" " alt="" coords="108,229,300,254"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="372,229,300,235,300,230,371,223"/>
+<area shape="rect" id="Node000008" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,229,60,254"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="95,244,60,244,60,239,95,239"/>
+</map>

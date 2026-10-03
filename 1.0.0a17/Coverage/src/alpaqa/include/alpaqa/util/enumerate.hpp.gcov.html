@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - 6b39cf39fd56deff85d5b1992ef5009ac00ef212 - src/alpaqa/include/alpaqa/util/enumerate.hpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">src/alpaqa/include/alpaqa/util</a> - enumerate.hpp</td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">6b39cf39fd56deff85d5b1992ef5009ac00ef212</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">14</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2024-03-26 00:17:25</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #pragma once</span>
+<span id="L2"><span class="lineNum">       2</span>              : </span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;ranges&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &lt;utility&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>              : </span>
+<span id="L6"><span class="lineNum">       6</span>              : namespace alpaqa::util {</span>
+<span id="L7"><span class="lineNum">       7</span>              : </span>
+<span id="L8"><span class="lineNum">       8</span>              : template &lt;class Rng&gt;</span>
+<span id="L9"><span class="lineNum">       9</span>              : struct enumerate_t : std::ranges::view_interface&lt;enumerate_t&lt;Rng&gt;&gt; {</span>
+<span id="L10"><span class="lineNum">      10</span>              :     Rng rng;</span>
+<span id="L11"><span class="lineNum">      11</span>              : </span>
+<span id="L12"><span class="lineNum">      12</span>              :     // P2325R3: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2325r3.html</span>
+<span id="L13"><span class="lineNum">      13</span>              :     enumerate_t() = default;</span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC tlaBgGNC">        1518 :     enumerate_t(Rng rng) : rng{std::forward&lt;Rng&gt;(rng)} {}</span></span>
+<span id="L15"><span class="lineNum">      15</span>              : </span>
+<span id="L16"><span class="lineNum">      16</span>              :     using begin_t = decltype(std::ranges::begin(std::as_const(rng)));</span>
+<span id="L17"><span class="lineNum">      17</span>              :     using end_t   = decltype(std::ranges::end(std::as_const(rng)));</span>
+<span id="L18"><span class="lineNum">      18</span>              : </span>
+<span id="L19"><span class="lineNum">      19</span>              :     struct sentinel_t {</span>
+<span id="L20"><span class="lineNum">      20</span>              :         end_t it;</span>
+<span id="L21"><span class="lineNum">      21</span>              :     };</span>
+<span id="L22"><span class="lineNum">      22</span>              : </span>
+<span id="L23"><span class="lineNum">      23</span>              :     struct iter_t {</span>
+<span id="L24"><span class="lineNum">      24</span>              :         // P2325R3: https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p2325r3.html</span>
+<span id="L25"><span class="lineNum">      25</span>              :         iter_t() = default;</span>
+<span id="L26"><span class="lineNum">      26</span> <span class="tlaGNC">        1518 :         iter_t(begin_t &amp;&amp;it) : it{std::forward&lt;begin_t&gt;(it)} {}</span></span>
+<span id="L27"><span class="lineNum">      27</span>              : </span>
+<span id="L28"><span class="lineNum">      28</span>              :         using index_t = std::ranges::range_difference_t&lt;Rng&gt;;</span>
+<span id="L29"><span class="lineNum">      29</span>              :         index_t index{};</span>
+<span id="L30"><span class="lineNum">      30</span>              :         begin_t it;</span>
+<span id="L31"><span class="lineNum">      31</span>              : </span>
+<span id="L32"><span class="lineNum">      32</span>              :         using difference_type = std::ptrdiff_t;</span>
+<span id="L33"><span class="lineNum">      33</span>              :         using value_type      = std::tuple&lt;index_t, decltype(*it)&gt;;</span>
+<span id="L34"><span class="lineNum">      34</span>              : </span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaGNC">     1152078 :         bool operator!=(sentinel_t s) const { return s.it != it; }</span></span>
+<span id="L36"><span class="lineNum">      36</span>              :         bool operator==(sentinel_t s) const { return s.it == it; }</span>
+<span id="L37"><span class="lineNum">      37</span>              :         // TODO: For Clang bug</span>
+<span id="L38"><span class="lineNum">      38</span>              :         friend bool operator!=(sentinel_t s, const iter_t &amp;i) { return i != s; }</span>
+<span id="L39"><span class="lineNum">      39</span>              :         friend bool operator==(sentinel_t s, const iter_t &amp;i) { return i == s; }</span>
+<span id="L40"><span class="lineNum">      40</span>              : </span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">      766665 :         iter_t &amp;operator++() {</span></span>
+<span id="L42"><span class="lineNum">      42</span> <span class="tlaGNC">      766665 :             ++it;</span></span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">      766665 :             ++index;</span></span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">      766665 :             return *this;</span></span>
+<span id="L45"><span class="lineNum">      45</span>              :         }</span>
+<span id="L46"><span class="lineNum">      46</span>              :         iter_t operator++(int) const {</span>
+<span id="L47"><span class="lineNum">      47</span>              :             auto tmp = *this;</span>
+<span id="L48"><span class="lineNum">      48</span>              :             ++*this;</span>
+<span id="L49"><span class="lineNum">      49</span>              :             return tmp;</span>
+<span id="L50"><span class="lineNum">      50</span>              :         }</span>
+<span id="L51"><span class="lineNum">      51</span>              : </span>
+<span id="L52"><span class="lineNum">      52</span> <span class="tlaGNC">     1915212 :         value_type operator*() const { return {index, *it}; }</span></span>
+<span id="L53"><span class="lineNum">      53</span>              :     };</span>
+<span id="L54"><span class="lineNum">      54</span>              : </span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">        1518 :     auto begin() const -&gt; std::input_or_output_iterator auto {</span></span>
+<span id="L56"><span class="lineNum">      56</span> <span class="tlaGNC">        1518 :         return iter_t{std::ranges::begin(rng)};</span></span>
+<span id="L57"><span class="lineNum">      57</span>              :     }</span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">        1518 :     auto end() const</span></span>
+<span id="L59"><span class="lineNum">      59</span>              :     // -&gt; std::sentinel_for&lt;iter_t&gt; auto</span>
+<span id="L60"><span class="lineNum">      60</span>              :     {</span>
+<span id="L61"><span class="lineNum">      61</span> <span class="tlaGNC">        1518 :         return sentinel_t{std::ranges::end(rng)};</span></span>
+<span id="L62"><span class="lineNum">      62</span>              :     }</span>
+<span id="L63"><span class="lineNum">      63</span>              : };</span>
+<span id="L64"><span class="lineNum">      64</span>              : </span>
+<span id="L65"><span class="lineNum">      65</span>              : template &lt;class Rng&gt;</span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">        1518 : auto enumerate(Rng &amp;&amp;rng) {</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">        1518 :     return enumerate_t&lt;std::views::all_t&lt;Rng&gt;&gt;{std::forward&lt;Rng&gt;(rng)};</span></span>
+<span id="L68"><span class="lineNum">      68</span>              : }</span>
+<span id="L69"><span class="lineNum">      69</span>              : </span>
+<span id="L70"><span class="lineNum">      70</span>              : } // namespace alpaqa::util</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<map id="size2" name="size2">
+<area shape="rect" id="Node000001" title=" " alt="" coords="459,104,515,129"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1casadi_1_1Function_1_1Sparsity.html#a9170660d72ebe1c35121723ed01e6282" title=" " alt="" coords="299,5,344,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="465,95,440,68,409,44,376,30,344,23,345,18,377,25,412,40,444,64,469,91"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1casadi_1_1Function_1_1Sparsity.html#aae0f58ff5e3c3f94baa361f0313480fa" title=" " alt="" coords="298,55,345,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="445,106,410,95,344,76,346,71,411,90,446,101"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1casadi_1_1Function_1_1Sparsity.html#a9439c38a6608062dd54ac3cb31427acd" title=" " alt="" coords="297,104,345,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="445,119,345,119,345,114,445,114"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1casadi_1_1Function.html#ae255e7ee6b1290819c1bb219e856be9e" title=" " alt="" coords="232,154,411,194"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="446,133,380,156,379,151,445,128"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1casadi_1_1Function.html#a9616740daa35fcafb634c983749b9330" title=" " alt="" coords="232,218,411,258"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="473,142,447,176,412,208,391,220,389,216,409,204,443,172,468,139"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1casadi_1_1Function.html#a70b502b409b5a15e3bd28a26d51825b6" title=" " alt="" coords="5,65,184,105"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="284,114,184,100,185,95,284,109"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1casadi_1_1Function.html#a82f402602a7a1ee9c0e06e0324274a7a" title=" " alt="" coords="5,129,184,169"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="284,124,185,139,184,133,284,119"/>
+</map>

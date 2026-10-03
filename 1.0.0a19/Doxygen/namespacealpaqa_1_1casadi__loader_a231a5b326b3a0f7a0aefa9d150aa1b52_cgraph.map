@@ -1,0 +1,9 @@
+<map id="complete_problem" name="complete_problem">
+<area shape="rect" id="Node000001" title="Complete the given problem that contains only functions f and g, adding the necessary functions and g..." alt="" coords="5,31,149,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa_1_1casadi__loader.html#a440de48c7f739b4216916e2aba75b266" title=" " alt="" coords="197,5,252,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,28,184,22,185,28,150,34"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa_1_1casadi__loader.html#afccc50561e4ab30ea075ee8e5a5c0607" title=" " alt="" coords="197,55,252,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="150,52,185,58,184,63,149,58"/>
+<area shape="rect" id="Node000004" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="300,55,468,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="252,65,286,65,286,70,252,70"/>
+</map>

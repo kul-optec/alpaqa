@@ -1,0 +1,32 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,252,96,277"/>
+<area shape="rect" id="Node000001" href="$structalpaqa_1_1is__config_3_01EigenConfigd_01_4.html" title=" " alt="" coords="165,203,360,228"/>
+<area shape="poly" id="edge13_Node000000_Node000001" title=" " alt="" coords="108,246,143,237,195,225,196,231,145,242,110,251"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1is__config_3_01EigenConfigf_01_4.html" title=" " alt="" coords="167,252,358,277"/>
+<area shape="poly" id="edge14_Node000000_Node000003" title=" " alt="" coords="110,262,167,262,167,267,110,267"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1is__config_3_01EigenConfigl_01_4.html" title=" " alt="" coords="167,301,358,327"/>
+<area shape="poly" id="edge15_Node000000_Node000004" title=" " alt="" coords="110,278,145,287,196,299,195,304,143,293,108,284"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1is__config_3_01EigenConfigq_01_4.html" title=" " alt="" coords="165,351,360,376"/>
+<area shape="poly" id="edge16_Node000000_Node000005" title=" " alt="" coords="75,285,107,313,145,337,175,348,174,353,143,342,103,317,72,289"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigd_01_4.html" title=" " alt="" coords="144,5,381,31"/>
+<area shape="poly" id="edge17_Node000000_Node000006" title=" " alt="" coords="74,240,94,214,104,189,109,166,110,123,115,81,124,61,142,40,158,29,161,33,146,44,129,64,120,83,115,123,114,167,109,191,98,217,78,244"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigf_01_4.html" title=" " alt="" coords="145,55,380,80"/>
+<area shape="poly" id="edge18_Node000000_Node000007" title=" " alt="" coords="73,240,94,214,108,179,112,148,119,119,128,104,142,89,160,78,163,82,146,93,132,107,124,121,117,149,113,181,98,217,77,244"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigl_01_4.html" title=" " alt="" coords="146,104,379,129"/>
+<area shape="poly" id="edge19_Node000000_Node000008" title=" " alt="" coords="72,240,94,214,107,192,114,173,124,156,142,138,164,127,166,132,146,143,128,159,119,176,111,195,98,217,76,243"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1is__eigen__config_3_01EigenConfigq_01_4.html" title=" " alt="" coords="144,153,381,179"/>
+<area shape="poly" id="edge20_Node000000_Node000009" title=" " alt="" coords="72,240,103,212,143,188,174,176,175,181,145,192,107,217,75,244"/>
+<area shape="rect" id="Node000010" href="$structalpaqa_1_1is__config.html" title=" " alt="" coords="204,400,321,425"/>
+<area shape="poly" id="edge21_Node000000_Node000010" title=" " alt="" coords="66,288,97,339,119,365,145,386,174,399,204,407,203,412,172,405,143,391,116,369,93,342,61,291"/>
+<area shape="rect" id="Node000011" href="$structalpaqa_1_1is__eigen__config.html" title=" " alt="" coords="183,449,343,475"/>
+<area shape="poly" id="edge22_Node000000_Node000011" title=" " alt="" coords="61,290,72,324,89,364,113,403,146,436,163,446,183,453,181,458,161,451,142,440,109,406,84,366,67,326,56,291"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="9,179,93,204"/>
+<area shape="poly" id="edge23_Node000002_Node000001" title=" " alt="" coords="107,195,165,202,165,207,106,200"/>
+<area shape="poly" id="edge24_Node000002_Node000003" title=" " alt="" coords="85,208,145,237,189,249,187,255,143,242,83,213"/>
+<area shape="poly" id="edge25_Node000002_Node000004" title=" " alt="" coords="75,212,146,288,171,299,169,304,142,292,71,216"/>
+<area shape="poly" id="edge26_Node000002_Node000005" title=" " alt="" coords="77,212,98,238,112,267,118,293,126,315,146,337,166,349,164,354,142,341,122,318,113,294,107,269,94,241,73,216"/>
+<area shape="poly" id="edge27_Node000002_Node000006" title=" " alt="" coords="58,164,88,101,112,68,142,40,164,28,166,33,146,44,116,71,93,104,63,167"/>
+<area shape="poly" id="edge28_Node000002_Node000007" title=" " alt="" coords="66,165,98,126,119,106,143,89,169,78,171,83,145,94,122,110,102,129,70,169"/>
+<area shape="poly" id="edge29_Node000002_Node000008" title=" " alt="" coords="82,169,143,138,181,127,183,132,145,143,84,174"/>
+<area shape="poly" id="edge30_Node000002_Node000009" title=" " alt="" coords="106,182,156,176,157,181,107,187"/>
+</map>

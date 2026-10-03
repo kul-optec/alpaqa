@@ -1,0 +1,4 @@
+<map id="eval_hess_ψ_prod" name="eval_hess_ψ_prod">
+<area shape="rect" id="node1" title="[Optional] Function that evaluates the Hessian of the augmented Lagrangian multiplied by a vector," alt="" coords="253,13,392,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1NewtonTRDirection.html#a23d8f300b8c4eb814e1aef62ab9c6176" title=" " alt="" coords="5,5,205,45"/>
+</map>

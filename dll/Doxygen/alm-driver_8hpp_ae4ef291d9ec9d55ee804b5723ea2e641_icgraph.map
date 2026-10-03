@@ -1,0 +1,24 @@
+<map id="make_alm_solver" name="make_alm_solver">
+<area shape="rect" id="Node000001" title=" " alt="" coords="737,99,875,124"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02fista-driver_8cpp_03.html#a479d5f0dacbf404f04a694bb1be6f6c5" title=" " alt="" coords="505,5,687,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="757,96,669,63,671,58,759,91"/>
+<area shape="rect" id="Node000006" href="$namespaceanonymous__namespace_02panoc-driver_8cpp_03.html#ab2ca1091ea82102367666b62756cd7f6" title=" " alt="" coords="503,84,689,139"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="723,114,689,114,689,109,723,109"/>
+<area shape="rect" id="Node000009" href="$namespaceanonymous__namespace_02pantr-driver_8cpp_03.html#a39b6aa8ff07d8400d404f191bdccd499" title=" " alt="" coords="504,163,688,217"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="759,131,671,165,669,160,757,126"/>
+<area shape="rect" id="Node000003" href="$fista-driver_8cpp.html#a3080e58fe1053f672b75de34a403d459" title=" " alt="" coords="307,21,446,47"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="491,36,446,36,446,31,491,31"/>
+<area shape="rect" id="Node000004" href="$alpaqa-driver_8cpp.html#a3430011226186bf05d5c2552270587b7" title=" " alt="" coords="108,97,251,123"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="323,54,300,62,210,100,207,95,298,57,321,49"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,97,60,123"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,113,60,113,60,107,94,107"/>
+<area shape="rect" id="Node000007" href="$panoc-driver_8cpp.html#a19879efa6ead750308768da16e7c3417" title=" " alt="" coords="302,72,451,97"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="488,101,452,96,452,91,489,96"/>
+<area shape="rect" id="Node000008" href="$panoc-driver_8cpp.html#a0191399270ebc2b9eaeb169f445ecc38" title=" " alt="" coords="299,121,455,147"/>
+<area shape="poly" id="edge8_Node000006_Node000008" title=" " alt="" coords="489,125,455,129,455,123,489,120"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="289,99,251,103,251,98,288,93"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="285,126,250,121,251,116,285,120"/>
+<area shape="rect" id="Node000010" href="$pantr-driver_8cpp.html#acc9e603bc87299f28c5faa02034e9387" title=" " alt="" coords="305,173,449,199"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="490,191,449,190,449,185,490,185"/>
+<area shape="poly" id="edge12_Node000010_Node000004" title=" " alt="" coords="326,171,298,160,210,125,212,120,300,156,328,166"/>
+</map>

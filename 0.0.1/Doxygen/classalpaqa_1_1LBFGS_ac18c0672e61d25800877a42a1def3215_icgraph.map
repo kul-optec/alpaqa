@@ -1,0 +1,8 @@
+<map id="y" name="y">
+<area shape="rect" id="node1" title=" " alt="" coords="615,117,653,144"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1LBFGS.html#a33d8dd6fd12e1394c9637610086dae4c" title="Apply the inverse Hessian approximation to the given vector q." alt="" coords="415,5,474,32"/>
+<area shape="rect" id="node4" href="$classhanging__chain__dynamics_1_1HangingChain.html#a2e4d9874164cfa87334b099f3ce1f288" title=" " alt="" coords="323,81,567,122"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1LBFGS.html#adeddc1e1eb8ce1c1bbaf931b6f9a5b9c" title="Scale the stored y vectors by the given factor." alt="" coords="409,147,480,173"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1LBFGS.html#a4db75f8c280c32a05a44bb83769befb1" title="Update the inverse Hessian approximation using the new vectors xₖ₊₁ and pₖ₊₁." alt="" coords="411,197,478,224"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1StructuredPANOCLBFGSSolver.html#ade95d8a7a1892d4087d6fffc958cde6e" title=" " alt="" coords="5,94,275,135"/>
+</map>

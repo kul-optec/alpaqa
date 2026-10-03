@@ -1,0 +1,11 @@
+<map id="IpoptAdapter" name="IpoptAdapter">
+<area shape="rect" id="Node000001" title="Based on https://coin&#45;or.github.io/Ipopt/INTERFACES.html." alt="" coords="95,1923,283,2323"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,968,52,1033"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="27,1047,19,1184,16,1385,20,1499,29,1617,44,1736,67,1851,97,1941,92,1943,62,1853,39,1737,24,1618,15,1499,11,1385,14,1184,22,1047"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1IpoptAdapter_1_1Results.html" title=" " alt="" coords="76,878,301,1123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="191,1123,191,1906,186,1906,186,1123"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="325,149,556,1852"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="328,1809,315,1853,292,1920,287,1918,310,1851,323,1807"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="341,5,541,100"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="443,114,443,149,438,149,438,114"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="combine_bound_constr" name="combine_bound_constr">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,177,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4aa5d1b70ae86454004ab771713c0826" title="Convert an Eigen vector view to a std::span." alt="" coords="248,5,375,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,31,234,24,235,29,178,36"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LinConstrConverter.html#ac369fef5d267d5c4c88afd95b4c212a0" title="For each constraint lbx(i)/ubx(i) with finite bounds, insert these bounds into new_lbg(i)/new_ubg(i),..." alt="" coords="225,55,397,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="178,50,212,54,212,59,178,55"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1LinConstrConverter.html#aa7668b0df53654f4f6681905b9f49453" title="Check if the variable with the given index has bound constraints, i.e." alt="" coords="445,55,525,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="398,65,432,65,432,70,398,70"/>
+</map>

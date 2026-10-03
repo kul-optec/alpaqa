@@ -1,0 +1,11 @@
+<map id="forward_simulate" name="forward_simulate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,70,141,95"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="189,5,384,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,67,198,46,199,52,122,73"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1OCPVariables.html#a50482e485b208e4ced084891de1b7f49" title=" " alt="" coords="194,70,379,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="142,80,180,80,180,85,142,85"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1OCPVariables.html#a523bf412e6eb44e4f05202ac123fb720" title=" " alt="" coords="194,119,379,145"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="130,93,218,114,217,119,128,98"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="432,13,615,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="384,23,418,23,418,28,384,28"/>
+</map>

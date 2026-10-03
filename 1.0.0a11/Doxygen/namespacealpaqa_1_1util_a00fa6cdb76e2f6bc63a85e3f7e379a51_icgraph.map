@@ -1,0 +1,4 @@
+<map id="sparse_matvec_add_masked_rows_cols" name="sparse_matvec_add_masked_rows_cols">
+<area shape="rect" id="node1" title="out += R(mask_J,mask_K) * v(mask_K);" alt="" coords="276,5,487,45"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1CasADiControlProblem.html#a20f8fadf0aeb2daf8695db68f3d50865" title=" " alt="" coords="5,5,228,45"/>
+</map>

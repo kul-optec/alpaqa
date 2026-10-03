@@ -1,0 +1,5 @@
+<map id="eval_hess_ψ" name="eval_hess_ψ">
+<area shape="rect" id="Node000001" title="[Optional] Function that evaluates the nonzero values of the Hessian of the augmented Lagrangian," alt="" coords="244,13,347,38"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1StructuredNewtonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,5,196,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,28,196,28,196,23,230,23"/>
+</map>

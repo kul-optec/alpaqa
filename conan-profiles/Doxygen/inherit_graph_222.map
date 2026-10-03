@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,109,101,134"/>
+<area shape="rect" id="Node000001" href="$classalpaqa_1_1TypeErasedControlProblem.html" title=" " alt="" coords="149,5,347,45"/>
+<area shape="poly" id="edge41_Node000000_Node000001" title=" " alt="" coords="80,98,112,76,148,55,177,43,179,48,151,60,115,80,83,102"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html" title=" " alt="" coords="167,69,329,109"/>
+<area shape="poly" id="edge42_Node000000_Node000002" title=" " alt="" coords="115,109,167,100,168,105,116,114"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedControlProblem.html" title="Nonlinear optimal control problem with finite horizon ." alt="" coords="149,133,347,173"/>
+<area shape="poly" id="edge43_Node000000_Node000003" title=" " alt="" coords="115,129,149,134,149,140,115,134"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html" title="The main polymorphic minimization problem interface." alt="" coords="167,197,329,237"/>
+<area shape="poly" id="edge44_Node000000_Node000004" title=" " alt="" coords="83,140,115,162,151,183,179,195,177,200,148,188,112,167,80,145"/>
+</map>

@@ -1,0 +1,35 @@
+<map id="src/alpaqa/include/alpaqa/inner/zerofpr.hpp" name="src/alpaqa/include/alpaqa/inner/zerofpr.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="830,5,1014,45"/>
+<area shape="rect" id="Node000002" href="$zerofpr_8tpp.html" title=" " alt="" coords="423,93,602,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="818,51,615,96,603,99,602,94,613,91,817,46"/>
+<area shape="rect" id="Node000008" href="$structured-zerofpr-alm_8hpp.html" title=" " alt="" coords="5,93,196,148"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="816,34,540,55,375,72,209,96,197,98,196,93,208,91,374,67,540,50,816,29"/>
+<area shape="rect" id="Node000009" href="$zerofpr-alm_8hpp.html" title=" " alt="" coords="221,101,399,141"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="816,39,627,62,412,96,379,103,378,98,411,91,627,56,816,34"/>
+<area shape="rect" id="Node000010" href="$zerofpr-anderson-alm_8hpp.html" title=" " alt="" coords="627,93,812,148"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="870,53,778,96,775,91,868,49"/>
+<area shape="rect" id="Node000011" href="$zerofpr-convex-newton-alm_8hpp.html" title=" " alt="" coords="836,93,1008,148"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="925,59,925,93,919,93,919,59"/>
+<area shape="rect" id="Node000012" href="$panoc-driver_8cpp.html" title=" " alt="" coords="1033,101,1187,141"/>
+<area shape="poly" id="edge15_Node000001_Node000012" title=" " alt="" coords="973,49,1073,98,1071,103,971,54"/>
+<area shape="rect" id="Node000013" href="$param-complete_8cpp.html" title=" " alt="" coords="1212,101,1373,141"/>
+<area shape="poly" id="edge16_Node000001_Node000013" title=" " alt="" coords="1017,46,1200,91,1227,98,1226,103,1199,96,1016,51"/>
+<area shape="rect" id="Node000014" href="$json_8cpp.html" title=" " alt="" coords="1398,101,1563,141"/>
+<area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="1028,35,1197,58,1387,91,1417,98,1416,103,1385,96,1196,63,1027,41"/>
+<area shape="rect" id="Node000015" href="$params_8cpp.html" title=" " alt="" coords="1587,101,1753,141"/>
+<area shape="poly" id="edge18_Node000001_Node000015" title=" " alt="" coords="1028,29,1279,50,1428,67,1576,91,1608,98,1607,103,1575,96,1427,72,1278,55,1027,35"/>
+<area shape="rect" id="Node000003" href="$zerofpr_8cpp.html" title=" " alt="" coords="438,196,587,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="515,162,515,196,510,196,510,162"/>
+<area shape="rect" id="Node000004" href="$structured-zerofpr-alm_8cpp.html" title=" " alt="" coords="27,196,209,236"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="410,151,204,198,203,193,409,146"/>
+<area shape="rect" id="Node000005" href="$zerofpr-alm_8cpp.html" title=" " alt="" coords="239,196,402,236"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="448,156,361,198,358,193,445,152"/>
+<area shape="rect" id="Node000006" href="$zerofpr-anderson-alm_8cpp.html" title=" " alt="" coords="625,196,787,236"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="580,152,668,193,666,198,578,156"/>
+<area shape="rect" id="Node000007" href="$zerofpr-convex-newton-alm_8cpp.html" title=" " alt="" coords="821,196,1005,236"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="616,146,826,193,825,199,615,151"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="111,161,117,195,112,196,105,162"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="316,154,321,196,316,196,311,155"/>
+<area shape="poly" id="edge12_Node000010_Node000006" title=" " alt="" coords="716,162,711,196,706,196,711,161"/>
+<area shape="poly" id="edge14_Node000011_Node000007" title=" " alt="" coords="921,162,917,196,912,196,915,162"/>
+</map>

@@ -1,0 +1,5 @@
+bib*.aux
+citelist.doc*
+py-build-cmake
+.conan2
+build

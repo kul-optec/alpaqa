@@ -1,0 +1,22 @@
+<map id="n" name="n">
+<area shape="rect" id="Node000001" title=" " alt="" coords="701,80,740,105"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#a32367fb2ecbdf71d6071bddc4dc3ce5d" title="Get the matrix Q such that Q times R is the original matrix." alt="" coords="530,5,590,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="694,73,652,44,620,32,590,25,591,20,622,27,655,40,697,68"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1AndersonAccel.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the problem dimension." alt="" coords="467,104,653,129"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="688,100,645,107,645,101,687,95"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LimitedMemoryQR.html#ad15543203799d1dccb5a5e1c572e3f02" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="529,55,591,80"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="687,90,591,75,591,69,688,85"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1LimitedMemoryQR.html#a00483d13e65f3ad72dd440a5d4e7a03e" title=" " alt="" coords="536,153,584,179"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="696,116,655,143,618,157,585,165,583,160,617,151,652,138,693,112"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AndersonAccel.html#a1fcb04cfb2b1398b54d8242cc3b0fb34" title=" " alt="" coords="17,133,188,173"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="496,135,467,143,444,152,419,158,371,163,334,162,248,158,188,157,188,152,248,153,334,157,371,157,418,153,442,146,466,138,495,130"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1AndersonAccel.html#ab19f36da69b46652ea4742d2314c45c7" title="Call this function on the first iteration to initialize the accelerator." alt="" coords="248,103,419,143"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="453,122,419,123,419,118,452,117"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1AndersonAccel.html#abfe51417fbebd259808f86d27f1d7ec5" title="Change the problem dimension." alt="" coords="248,39,419,79"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="495,103,412,82,414,77,497,98"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1AndersonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="5,54,200,94"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="234,105,196,97,197,91,235,100"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="267,87,249,94,151,135,149,130,247,89,265,82"/>
+<area shape="poly" id="edge8_Node000007_Node000006" title=" " alt="" coords="234,68,200,70,200,65,234,63"/>
+<area shape="poly" id="edge10_Node000008_Node000007" title=" " alt="" coords="515,68,419,65,419,60,516,63"/>
+</map>

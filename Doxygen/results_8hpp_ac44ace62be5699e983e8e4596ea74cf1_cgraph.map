@@ -1,0 +1,7 @@
+<map id="print_results" name="print_results">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,108,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedProblem.html#a7ef7a630a3001ce5a3767669f764bf79" title="[Required] Number of constraints." alt="" coords="156,5,359,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="108,47,142,41,143,46,109,52"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#a96109ae835ef39b086365fd5fe91317a" title="[Required] Number of decision variables." alt="" coords="156,69,359,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="109,63,143,68,142,74,108,68"/>
+</map>

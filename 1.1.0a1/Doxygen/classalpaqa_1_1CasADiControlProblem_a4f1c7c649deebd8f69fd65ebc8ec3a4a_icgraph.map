@@ -1,0 +1,17 @@
+<map id="load_numerical_data" name="load_numerical_data">
+<area shape="rect" id="Node000001" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="443,177,601,203"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CasADiControlProblem.html#a8e2b94a109c662591fb7d2e3a662bba1" title=" " alt="" coords="224,140,395,165"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="435,177,382,168,382,163,436,172"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1CasADiControlProblem.html#aaeb89b1856e2b1222b9717b0cbe0377b" title=" " alt="" coords="47,227,135,252"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="429,203,135,237,135,232,429,198"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CasADiControlProblem.html#af93fae2316fda9e663747c5af4fc9baa" title=" " alt="" coords="5,5,176,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="285,132,237,87,207,64,175,44,148,33,150,28,177,40,210,60,240,83,289,128"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CasADiControlProblem.html#a1193c36f447bfe46112fd46258674196" title=" " alt="" coords="5,55,176,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="271,136,175,94,140,83,142,77,177,89,273,131"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CasADiControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title=" " alt="" coords="59,128,122,153"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="210,150,122,145,122,140,210,145"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="273,174,177,218,136,231,134,226,175,213,271,169"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1CasADiControlProblem.html#a36a7a9214987dd23ba41e02d7f00bb64" title=" " alt="" coords="47,177,135,203"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="221,170,136,185,135,180,220,165"/>
+<area shape="poly" id="edge5_Node000005_Node000005" title=" " alt="" coords="129,120,128,115,122,111,91,107,67,109,54,114,53,120,61,128,57,131,48,121,50,110,65,104,91,101,124,106,132,112,134,119"/>
+</map>

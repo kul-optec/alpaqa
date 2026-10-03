@@ -1,0 +1,58 @@
+<map id="main" name="main">
+<area shape="rect" id="node1" title=" " alt="" coords="5,1717,60,1743"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="113,247,271,287"/>
+<area shape="rect" id="node11" href="$alpaqa-driver_8cpp.html#abdc7f0491e5c38d6f9569a0aad3d2925" title=" " alt="" coords="125,1625,259,1651"/>
+<area shape="rect" id="node18" href="$alpaqa-driver_8cpp.html#a62667720f096806ed08c60e4207f8972" title=" " alt="" coords="119,1712,265,1737"/>
+<area shape="rect" id="node19" href="$alpaqa-driver_8cpp.html#a72e2c27739d9b3a1cd99f46954d9e827" title=" " alt="" coords="122,1943,262,1968"/>
+<area shape="rect" id="node21" href="$alpaqa-driver_8cpp.html#a3430011226186bf05d5c2552270587b7" title=" " alt="" coords="121,1792,263,1817"/>
+<area shape="rect" id="node29" href="$problem_8cpp.html#ae36fc572e3716fb2dbe8ff77cfe1ee10" title=" " alt="" coords="374,1547,485,1572"/>
+<area shape="rect" id="node30" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="108,986,276,1026"/>
+<area shape="rect" id="node47" href="$results_8hpp.html#ac44ace62be5699e983e8e4596ea74cf1" title=" " alt="" coords="141,2092,243,2117"/>
+<area shape="rect" id="node53" href="$alpaqa-driver_8cpp.html#a741d0efc7ccb377132a09ab946d73d5b" title=" " alt="" coords="143,2141,241,2167"/>
+<area shape="rect" id="node54" href="$alpaqa-driver_8cpp.html#a64689500f58d1f67853c6de1f906a4d3" title=" " alt="" coords="135,2271,249,2296"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1TypeErasedProblem.html#acdf5c7c7f249c05d53643e1715070f45" title="[Required] Function that evaluates the constraints," alt="" coords="328,55,531,95"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1TypeErasedProblem.html#a5f0f7f91b5bd3732b02700627e9a8558" title="[Optional] Evaluate the gradient of the Lagrangian" alt="" coords="328,119,531,159"/>
+<area shape="rect" id="node5" href="$classalpaqa_1_1TypeErasedProblem.html#ae9f75b521c8932199f92bfdfc8f91879" title="[Required] Function that evaluates the difference between the given point &#160;and its projection onto th..." alt="" coords="328,183,531,223"/>
+<area shape="rect" id="node6" href="$classalpaqa_1_1TypeErasedProblem.html#a02bf998629ca590cf5a2e183cbf43444" title="[Required] Function that computes a proximal gradient step." alt="" coords="328,247,531,287"/>
+<area shape="rect" id="node7" href="$classalpaqa_1_1TypeErasedProblem.html#ae0ffecc22b09ce70fb1fe663c0255018" title="[Optional] Get the rectangular constraint set of the decision variables, ." alt="" coords="328,311,531,351"/>
+<area shape="rect" id="node8" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="334,376,525,401"/>
+<area shape="rect" id="node9" href="$namespacealpaqa.html#ace167fc364a50a555a05a8bc695ff189" title="Project a vector onto a box." alt="" coords="370,5,489,31"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1TypeErasedProblem.html#a23a7eb67244853ec477fceda3be3cc2a" title="Returns true if the problem provides an implementation of get_box_C." alt="" coords="328,426,531,466"/>
+<area shape="rect" id="node12" href="$options_8hpp.html#a15ce06eb1492a582a4abe2ddd5e7f8a1" title=" " alt="" coords="380,1596,479,1621"/>
+<area shape="rect" id="node13" href="$classOptions.html#a502ee531f4e5cdc1c8dd78e9409a4e8e" title=" " alt="" coords="605,1539,733,1564"/>
+<area shape="rect" id="node14" href="$namespacealpaqa_1_1params.html#abadc98653193fbd05b658d62b34f75e7" title="Overwrites t based on the options that start with prefix." alt="" coords="594,1589,745,1629"/>
+<area shape="rect" id="node17" href="$classOptions.html#a12df8f934f6bafb37bf4e64529917d06" title=" " alt="" coords="614,1489,725,1515"/>
+<area shape="rect" id="node15" href="$namespacealpaqa_1_1params.html#a0de0baee3dda47aba5143ba83bd11712" title=" " alt="" coords="823,1589,974,1629"/>
+<area shape="rect" id="node16" href="$namespacealpaqa_1_1params.html#aa3666becfea1ef2eb24d83f592c123e9" title="Split the string full on the first occurrence of tok." alt="" coords="804,1653,993,1679"/>
+<area shape="rect" id="node20" href="$alpaqa-driver_8cpp.html#ab9334cd561ac221b327947e14e0eb10c" title="Split the string s on the first occurrence of tok." alt="" coords="385,2043,473,2068"/>
+<area shape="rect" id="node22" href="$util_8hpp.html#af497b5fe6ea036f154766b39508b338b" title=" " alt="" coords="361,1697,498,1723"/>
+<area shape="rect" id="node23" href="$ipopt-driver_8cpp.html#af164f65986e8c8cd53ae7ff20a5e9bb8" title=" " alt="" coords="358,1747,501,1772"/>
+<area shape="rect" id="node24" href="$lbfgsb-driver_8cpp.html#ab737d25a98ba77e5fb0d0d4c1ff4172d" title=" " alt="" coords="354,1796,505,1821"/>
+<area shape="rect" id="node25" href="$panoc-driver_8cpp.html#a0593042a6a3699d7abd50c243a933ca3" title=" " alt="" coords="355,1845,504,1871"/>
+<area shape="rect" id="node26" href="$pantr-driver_8cpp.html#aa5f9a7c6be5cc33cd70b93162df5cfeb" title=" " alt="" coords="357,1895,501,1920"/>
+<area shape="rect" id="node27" href="$qpalm-driver_8cpp.html#ac19740dc2e1d9008aa47bb21f9ff78ff" title=" " alt="" coords="354,1944,505,1969"/>
+<area shape="rect" id="node28" href="$panoc-driver_8cpp.html#ad9754f90396b070f450b0cded6692db6" title=" " alt="" coords="351,1993,507,2019"/>
+<area shape="rect" id="node31" href="$classalpaqa_1_1TypeErasedProblem.html#a3dbe817bafef746282776869a9e1bbea" title="Returns true if the problem provides an implementation of check." alt="" coords="328,1018,531,1058"/>
+<area shape="rect" id="node32" href="$classalpaqa_1_1TypeErasedProblem.html#afb8d343633b8788ddfd56feb297432c8" title="Returns true if the problem provides a specialized implementation of eval_ψ, false if it uses the def..." alt="" coords="328,1082,531,1122"/>
+<area shape="rect" id="node33" href="$classalpaqa_1_1TypeErasedProblem.html#a21e480c5b55979a0e74816fd0704f346" title="Returns true if the problem provides a specialized implementation of eval_ψ_grad_ψ,..." alt="" coords="328,1146,531,1186"/>
+<area shape="rect" id="node34" href="$classalpaqa_1_1TypeErasedProblem.html#ab88b867d624a80e6e69fb59ab9c3378f" title="Returns true if the problem provides a specialized implementation of eval_f_g, false if it uses the d..." alt="" coords="328,1210,531,1250"/>
+<area shape="rect" id="node35" href="$classalpaqa_1_1TypeErasedProblem.html#ab18346d3e4d5ffbfe88191ea164d92ac" title="Returns true if the problem provides a specialized implementation of eval_f_grad_f,..." alt="" coords="328,1274,531,1314"/>
+<area shape="rect" id="node36" href="$classalpaqa_1_1TypeErasedProblem.html#acc03fa37a47885ed1efeb50789e7322d" title="Returns true if the problem provides a specialized implementation of eval_grad_ψ, false if it uses th..." alt="" coords="328,1338,531,1378"/>
+<area shape="rect" id="node37" href="$classalpaqa_1_1TypeErasedProblem.html#a77e1b988df8ed0236c4ce19729bc36ad" title="Returns true if the problem provides a specialized implementation of eval_grad_f_grad_g_prod,..." alt="" coords="328,1403,531,1457"/>
+<area shape="rect" id="node38" href="$classalpaqa_1_1TypeErasedProblem.html#ab6c62b31d326c310c39212fa6331fe6d" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="328,1482,531,1522"/>
+<area shape="rect" id="node39" href="$classalpaqa_1_1TypeErasedProblem.html#acb9e7041994545ffb8b042d2be962639" title="Returns true if the problem provides a specialized implementation of eval_grad_L, false if it uses th..." alt="" coords="328,490,531,530"/>
+<area shape="rect" id="node40" href="$classalpaqa_1_1TypeErasedProblem.html#adb1bf2644a0b8e0c7120e3d546e2cbfe" title="Returns true if the problem provides an implementation of eval_hess_ψ." alt="" coords="328,554,531,594"/>
+<area shape="rect" id="node41" href="$classalpaqa_1_1TypeErasedProblem.html#a1fbd424119305ac21128594a2f27086d" title="Returns true if the problem provides an implementation of eval_hess_ψ_prod." alt="" coords="324,618,535,658"/>
+<area shape="rect" id="node42" href="$classalpaqa_1_1TypeErasedProblem.html#a01b7cf0fff8f21d29a5faf139a8896e2" title="Returns true if the problem provides an implementation of eval_hess_L." alt="" coords="328,682,531,722"/>
+<area shape="rect" id="node43" href="$classalpaqa_1_1TypeErasedProblem.html#a9328096779a46c83fb264bfd3009568f" title="Returns true if the problem provides an implementation of eval_hess_L_prod." alt="" coords="325,746,533,786"/>
+<area shape="rect" id="node44" href="$classalpaqa_1_1TypeErasedProblem.html#a53b4d08432e97770dcae02dba82378fa" title="Returns true if the problem provides an implementation of eval_inactive_indices_res_lna." alt="" coords="328,811,531,865"/>
+<area shape="rect" id="node45" href="$classalpaqa_1_1TypeErasedProblem.html#a3abcd94b37675bbd5f6a86e3fb85cda1" title="Returns true if the problem provides an implementation of eval_jac_g." alt="" coords="328,890,531,930"/>
+<area shape="rect" id="node46" href="$classalpaqa_1_1TypeErasedProblem.html#ae00dab51fb2143c5d88a29e8a0a564c5" title="Returns true if the problem provides an implementation of get_box_D." alt="" coords="328,954,531,994"/>
+<area shape="rect" id="node48" href="$namespacealpaqa.html#ae50af6bf82d3c0cc4093c46b8e2c4379" title=" " alt="" coords="356,2092,503,2117"/>
+<area shape="rect" id="node51" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="328,2142,531,2182"/>
+<area shape="rect" id="node52" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="328,2206,531,2246"/>
+<area shape="rect" id="node49" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="583,2092,756,2117"/>
+<area shape="rect" id="node50" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="825,2085,972,2125"/>
+<area shape="rect" id="node55" href="$namespacealpaqa.html#ac0e50271f2339906c49eb17eaca00183" title=" " alt="" coords="363,2271,496,2296"/>
+<area shape="rect" id="node56" href="$results_8hpp.html#aa4df378bc6034e19b25248134a510a0f" title=" " alt="" coords="356,2320,503,2345"/>
+</map>

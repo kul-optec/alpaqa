@@ -1,0 +1,7 @@
+<map id="load_numerical_data" name="load_numerical_data">
+<area shape="rect" id="Node000001" title="Load the numerical problem data (bounds and parameters) from a CSV file." alt="" coords="5,31,164,56"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4aa5d1b70ae86454004ab771713c0826" title="Convert an Eigen vector view to a std::span." alt="" coords="212,5,339,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,30,198,26,199,31,164,35"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#a9c0fe4aab3b62a12106dd1e6834a7231" title="Convert a std::span to an Eigen::Vector view." alt="" coords="216,55,335,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,51,203,56,202,61,164,56"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="history" name="history">
+<area shape="rect" id="Node000001" title="Get the number of previous vectors s and y stored in the buffer." alt="" coords="224,173,291,198"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a3c6a2dbecc0d6f8cd90bef088c46b072" title=" " alt="" coords="5,5,176,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="244,161,217,110,197,83,174,59,156,48,159,43,178,55,202,79,221,107,248,159"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#aa871b5290773b86e2e4919bbac258a04" title=" " alt="" coords="5,69,176,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="231,166,205,144,175,124,151,112,153,107,177,119,208,140,234,161"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#a0804b751cf2035a35f24762474f62cbf" title=" " alt="" coords="5,133,176,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,179,176,172,177,167,211,174"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1LBFGS.html#a71f7f5e949a948d578ae6f145e4c4914" title=" " alt="" coords="5,197,176,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="211,197,177,204,176,198,210,192"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LBFGS.html#adeddc1e1eb8ce1c1bbaf931b6f9a5b9c" title="Scale the stored y vectors by the given factor." alt="" coords="55,262,126,287"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="235,210,208,232,177,252,127,270,125,265,175,247,205,227,231,206"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LBFGS.html#a70926baed7362e4fcce66523bb8e2842" title=" " alt="" coords="5,312,176,352"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="246,212,219,256,200,280,178,301,156,314,153,310,174,297,196,276,214,253,242,209"/>
+</map>

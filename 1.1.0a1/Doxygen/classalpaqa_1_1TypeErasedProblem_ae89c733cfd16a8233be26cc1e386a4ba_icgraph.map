@@ -1,0 +1,6 @@
+<map id="get_augmented_lagrangian_hessian_sparsity" name="get_augmented_lagrangian_hessian_sparsity">
+<area shape="rect" id="Node000001" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the augmented Lag..." alt="" coords="233,37,433,77"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="5,29,185,84"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,59,185,59,185,54,220,54"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="135,18,121,11,95,8,74,10,61,15,54,21,54,29,49,29,49,19,58,10,73,5,95,3,122,6,137,14"/>
+</map>

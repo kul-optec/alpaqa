@@ -1,0 +1,15 @@
+<map id="dynamics" name="dynamics">
+<area shape="rect" id="node1" title=" " alt="" coords="5,305,91,331"/>
+<area shape="rect" id="node2" href="$classalpaqa_1_1SpecializedLBFGS.html#a7e9b3fd96d52976693a1fb57fb32ba3c" title=" " alt="" coords="144,305,351,331"/>
+<area shape="rect" id="node5" href="$structalpaqa_1_1problems_1_1RiskaverseProblem.html#a86af0c43a442d2a009639af80d3fb298" title=" " alt="" coords="140,129,355,171"/>
+<area shape="rect" id="node7" href="$structalpaqa_1_1problems_1_1RiskaverseProblem.html#a212bc28d0fcb75843d11f79abf299631" title=" " alt="" coords="667,129,881,171"/>
+<area shape="rect" id="node9" href="$structalpaqa_1_1problems_1_1RiskaverseProblem.html#ac0ed82616c6787608e0b5c5fbe74ff19" title=" " alt="" coords="404,188,619,229"/>
+<area shape="rect" id="node10" href="$classalpaqa_1_1LimitedMemoryQR.html#af83f6287b8ea07acdcfa4670af30cbbf" title=" " alt="" coords="139,355,356,382"/>
+<area shape="rect" id="node11" href="$classalpaqa_1_1LBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="181,457,313,483"/>
+<area shape="rect" id="node13" href="$classalpaqa_1_1SpecializedLBFGS.html#ac18c0672e61d25800877a42a1def3215" title=" " alt="" coords="144,406,351,433"/>
+<area shape="rect" id="node3" href="$classalpaqa_1_1SpecializedLBFGS.html#a5b5fd504f983f6b5f9beb1576ebf591a" title="Get the number of previous vectors s, y, x and g stored in the buffer." alt="" coords="416,305,607,347"/>
+<area shape="rect" id="node4" href="$classalpaqa_1_1SpecializedLBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s, y, x and g vectors in the buffer." alt="" coords="408,389,615,415"/>
+<area shape="rect" id="node6" href="$structalpaqa_1_1problems_1_1RiskaverseProblem.html#a7b649e39ac1e626c7e0ee05dc34667d5" title=" " alt="" coords="404,5,619,47"/>
+<area shape="rect" id="node8" href="$structalpaqa_1_1problems_1_1RiskaverseProblem.html#a747c1f690ddf21e2cb45d43e0df278c6" title=" " alt="" coords="404,71,619,112"/>
+<area shape="rect" id="node12" href="$classalpaqa_1_1LBFGS.html#ac88f0961aa7ed7c7415550ab2cad49c8" title="Get the size of the s and y vectors in the buffer." alt="" coords="445,457,577,483"/>
+</map>

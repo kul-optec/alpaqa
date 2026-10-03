@@ -1,0 +1,11 @@
+<map id="norm_1" name="norm_1">
+<area shape="rect" id="Node000001" title="Get the 1&#45;norm of the given vector." alt="" coords="724,45,795,70"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title="Compute the ε from the stopping criterion, see PANOCStopCrit." alt="" coords="461,5,676,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="710,52,676,46,677,41,711,47"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1BoxConstrProblem.html#a1675a9050e69af2eed772e663bedc762" title="Proximal gradient step for rectangular box C with ℓ₁&#45;regularization." alt="" coords="461,69,676,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="711,68,677,74,676,69,710,63"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1BoxConstrProblem.html#acdbe943d1576c496e20286c3106c00b8" title=" " alt="" coords="219,69,413,109"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="448,92,414,92,414,87,448,87"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1dl_1_1DLProblem.html#a02bf998629ca590cf5a2e183cbf43444" title=" " alt="" coords="5,69,171,109"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="205,92,171,92,171,87,205,87"/>
+</map>

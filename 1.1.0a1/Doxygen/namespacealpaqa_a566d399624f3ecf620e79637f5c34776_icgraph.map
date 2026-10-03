@@ -1,0 +1,13 @@
+<map id="convert_csc" name="convert_csc">
+<area shape="rect" id="Node000001" title=" " alt="" coords="484,99,583,124"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CasADiProblem.html#ae89c733cfd16a8233be26cc1e386a4ba" title=" " alt="" coords="228,5,436,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="489,96,435,74,406,63,408,58,437,69,491,91"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CasADiProblem.html#a9b5667c162cf4556a3832ec90e2eed96" title=" " alt="" coords="236,84,428,139"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="470,114,428,114,428,109,470,109"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CasADiProblem.html#a0ef11beb007a8812b716ed3e800db223" title=" " alt="" coords="240,163,424,217"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="489,132,437,152,405,165,403,160,435,148,487,127"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CasADiProblem.html#a217aec2d8db2ba9ffc16bf927b1b31f9" title=" " alt="" coords="5,91,180,131"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="236,67,155,94,154,89,234,62"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="222,114,180,114,180,109,222,109"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="234,161,154,134,155,129,236,156"/>
+</map>

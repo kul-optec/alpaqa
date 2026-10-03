@@ -1,0 +1,25 @@
+<map id="src/interop/casadi/include/alpaqa/casadi/casadi&#45;functions.hpp" name="src/interop/casadi/include/alpaqa/casadi/casadi&#45;functions.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="585,5,751,60"/>
+<area shape="rect" id="Node000002" href="$casadi-types_8hpp.html" title=" " alt="" coords="157,108,291,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="585,53,297,108,296,103,584,47"/>
+<area shape="rect" id="Node000007" href="$dl_8hpp.html" title=" " alt="" coords="601,108,735,133"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="671,60,671,94,665,94,665,60"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="760,108,829,133"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="708,58,768,98,765,102,705,62"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,181,91,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="197,136,91,178,89,174,195,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="115,181,171,207"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="213,135,168,174,164,170,209,131"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="195,181,253,207"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="227,134,227,168,221,168,221,134"/>
+<area shape="rect" id="Node000006" href="$casadi-namespace_8hpp.html" title=" " alt="" coords="278,181,450,207"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="248,131,330,173,328,177,245,136"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="474,181,598,207"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="648,136,571,177,568,172,646,131"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="623,181,713,207"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="671,134,671,168,665,168,665,134"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="737,181,815,207"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="687,131,748,171,745,176,684,136"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="839,181,926,207"/>
+<area shape="poly" id="edge10_Node000007_Node000011" title=" " alt="" coords="703,131,836,174,834,179,702,136"/>
+</map>

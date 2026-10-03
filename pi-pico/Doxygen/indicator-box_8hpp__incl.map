@@ -1,0 +1,39 @@
+<map id="src/alpaqa/include/alpaqa/functions/indicator&#45;box.hpp" name="src/alpaqa/include/alpaqa/functions/indicator&#45;box.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="545,5,740,60"/>
+<area shape="rect" id="Node000002" href="$config_8hpp.html" title=" " alt="" coords="486,181,666,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="629,61,604,109,584,168,579,167,599,107,624,59"/>
+<area shape="rect" id="Node000009" href="$prox_8hpp.html" title=" " alt="" coords="614,108,805,133"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="665,58,694,95,690,99,661,62"/>
+<area shape="rect" id="Node000012" href="$box_8hpp.html" title=" " alt="" coords="358,108,538,133"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="584,63,487,105,485,100,582,58"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="829,108,899,133"/>
+<area shape="poly" id="edge21_Node000001_Node000016" title=" " alt="" coords="711,58,823,100,821,105,709,63"/>
+<area shape="rect" id="Node000003" href="$quadmath-print_8hpp.html" title=" " alt="" coords="601,255,762,295"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="593,205,647,244,643,249,590,209"/>
+<area shape="rect" id="Node000004" href="$quadmath_8hpp.html" title=" " alt="" coords="197,255,358,295"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="533,209,363,254,362,249,532,204"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="382,262,461,287"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="554,209,458,258,455,253,552,204"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="903,262,961,287"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="667,204,775,223,891,252,897,254,896,259,890,257,774,228,666,209"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="786,262,878,287"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="616,204,775,252,785,255,784,260,774,257,615,209"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="485,262,577,287"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="572,208,547,251,542,249,567,206"/>
+<area shape="poly" id="edge9_Node000009_Node000002" title=" " alt="" coords="689,136,611,177,609,172,687,131"/>
+<area shape="rect" id="Node000010" href="$tag-invoke_8hpp.html" title=" " alt="" coords="736,181,928,207"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="730,131,802,172,799,177,728,136"/>
+<area shape="poly" id="edge11_Node000010_Node000007" title=" " alt="" coords="835,207,835,248,829,248,829,207"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="986,262,1046,287"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="861,204,974,252,978,254,976,259,972,257,859,209"/>
+<area shape="poly" id="edge14_Node000012_Node000002" title=" " alt="" coords="470,131,544,172,542,177,467,136"/>
+<area shape="rect" id="Node000013" href="$float_8hpp.html" title=" " alt="" coords="279,181,431,207"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="435,135,382,175,379,171,431,131"/>
+<area shape="poly" id="edge16_Node000013_Node000004" title=" " alt="" coords="345,209,307,247,304,243,341,205"/>
+<area shape="poly" id="edge18_Node000013_Node000005" title=" " alt="" coords="367,205,405,250,401,253,362,209"/>
+<area shape="poly" id="edge20_Node000013_Node000007" title=" " alt="" coords="431,202,618,226,775,252,788,255,786,260,774,257,617,231,431,207"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="110,262,173,287"/>
+<area shape="poly" id="edge17_Node000013_Node000014" title=" " alt="" coords="320,209,185,257,180,259,178,254,183,252,318,204"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="5,262,85,287"/>
+<area shape="poly" id="edge19_Node000013_Node000015" title=" " alt="" coords="297,209,203,230,98,257,89,260,87,255,97,252,202,225,296,204"/>
+</map>

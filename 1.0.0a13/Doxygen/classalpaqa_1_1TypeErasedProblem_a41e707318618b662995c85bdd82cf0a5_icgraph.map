@@ -1,0 +1,5 @@
+<map id="get_hess_L_sparsity" name="get_hess_L_sparsity">
+<area shape="rect" id="Node000001" title="[Optional] Function that returns (a view of) the sparsity pattern of the Hessian of the Lagrangian." alt="" coords="208,13,361,38"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="5,5,160,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="195,28,160,28,160,23,195,23"/>
+</map>

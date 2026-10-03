@@ -1,0 +1,13 @@
+<map id="provides_eval_grad_gi" name="provides_eval_grad_gi">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of eval_grad_gi." alt="" coords="639,45,807,70"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1StructuredLBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="348,5,591,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="625,48,591,43,591,38,625,42"/>
+<area shape="rect" id="Node000003" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="385,69,553,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="625,72,554,81,553,76,625,67"/>
+<area shape="rect" id="Node000004" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="177,51,231,77"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="371,83,231,69,232,64,372,77"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#a97d8bbd07c6daf32220df9e0b4fe2cc0" title=" " alt="" coords="108,101,300,126"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="372,101,300,107,300,102,371,95"/>
+<area shape="rect" id="Node000006" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,101,60,126"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="95,116,60,116,60,111,95,111"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="provides_get_variable_bounds" name="provides_get_variable_bounds">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of get_variable_bounds." alt="" coords="576,67,743,107"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="125,5,283,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="615,62,573,41,527,25,464,15,400,12,284,17,283,12,400,6,465,10,529,20,575,36,617,57"/>
+<area shape="rect" id="Node000004" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#a81c95ec53cba013e06b844e8b55e4726" title=" " alt="" coords="348,59,528,114"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="563,89,528,89,528,84,563,84"/>
+<area shape="rect" id="Node000005" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="354,139,522,179"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="585,113,501,141,499,136,584,108"/>
+<area shape="rect" id="Node000003" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,93,60,118"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="149,54,61,95,59,90,147,49"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="475,48,461,41,438,38,418,40,406,45,400,51,400,59,395,59,395,49,403,40,417,35,438,33,463,36,477,44"/>
+<area shape="rect" id="Node000006" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="177,97,231,122"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="340,141,231,118,232,112,341,136"/>
+<area shape="rect" id="Node000007" href="$alpaqa-driver_8cpp.html#a97d8bbd07c6daf32220df9e0b4fe2cc0" title=" " alt="" coords="108,146,300,171"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="340,161,300,161,300,156,340,156"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="134,145,107,137,59,119,61,114,109,132,135,140"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="CasADiFunctionsWithParam&lt; Conf &gt;" name="CasADiFunctionsWithParam&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="123,1128,317,1468"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1casadi__loader_1_1CasADiFunctionEvaluator.html" title=" " alt="" coords="5,917,208,1057"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,1056,155,1111,150,1113,129,1058"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1casadi_1_1Function.html" title="Class that loads and calls pre&#45;compiled CasADi functions in a DLL/SO file." alt="" coords="161,381,279,847"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="163,811,135,902,130,901,158,809"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1casadi__loader_1_1CasADiFunctionEvaluator.html" title=" " alt="" coords="232,917,435,1057"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="282,809,310,901,305,902,277,811"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1casadi_1_1Function.html#structalpaqa_1_1casadi_1_1Function_1_1Functions" title=" " alt="" coords="165,5,275,311"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="223,311,223,365,217,365,217,311"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="311,1058,290,1113,285,1111,306,1056"/>
+</map>

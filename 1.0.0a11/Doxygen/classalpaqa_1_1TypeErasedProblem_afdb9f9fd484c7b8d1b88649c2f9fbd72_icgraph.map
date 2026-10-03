@@ -1,0 +1,4 @@
+<map id="get_hess_ψ_num_nonzeros" name="get_hess_ψ_num_nonzeros">
+<area shape="rect" id="node1" title="[Optional] Function that gets the number of nonzeros of the Hessian of the augmented Lagrangian." alt="" coords="244,13,443,38"/>
+<area shape="rect" id="node2" href="$structalpaqa_1_1StructuredNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="5,5,196,45"/>
+</map>

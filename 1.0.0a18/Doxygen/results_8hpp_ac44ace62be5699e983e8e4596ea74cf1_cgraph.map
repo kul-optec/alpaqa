@@ -1,0 +1,13 @@
+<map id="print_results" name="print_results">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,70,108,95"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#ae50af6bf82d3c0cc4093c46b8e2c4379" title=" " alt="" coords="184,13,331,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,67,155,48,189,39,191,44,157,53,96,72"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedProblem.html#a4cb358cffb880a83ec60933c6d44cef4" title="[Required] Number of constraints." alt="" coords="156,63,359,103"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="108,80,142,80,142,85,108,85"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1TypeErasedProblem.html#a3e0872a0f29741da3d5429fce2749a34" title="[Required] Number of decision variables." alt="" coords="156,127,359,167"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="97,93,157,112,181,120,179,125,155,117,96,98"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#ab5ac74453b63ae65ae675f0fb385fc32" title=" " alt="" coords="407,13,580,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="331,23,393,23,393,28,331,28"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#a3d355dd7c275da0f2e297743294d582b" title=" " alt="" coords="628,5,775,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="581,23,614,23,614,28,581,28"/>
+</map>

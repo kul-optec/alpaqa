@@ -1,0 +1,7 @@
+<map id="resize" name="resize">
+<area shape="rect" id="Node000001" title="Re&#45;allocate storage for a problem with a different size." alt="" coords="5,31,67,56"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LBFGS.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the size of the s and y vectors in the buffer." alt="" coords="123,5,161,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="66,34,109,23,110,28,67,39"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#ad20897c5c8bd47f5d4005989bead0e55" title="Throw away the approximation and all previous vectors s and y." alt="" coords="115,55,169,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="67,48,102,56,101,61,66,53"/>
+</map>

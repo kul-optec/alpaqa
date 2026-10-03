@@ -1,0 +1,23 @@
+<map id="operator()" name="operator()">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,189,92,214"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1PANTRSolver.html#a3e8ce8c8bfa2c124a129b750ea60ad64" title=" " alt="" coords="140,189,227,214"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,199,126,199,126,204,92,204"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a9ef6f3ba7e945c7855e6b0f74878f227" title=" " alt="" coords="281,55,495,110"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,186,228,153,273,119,283,114,286,118,276,124,231,157,198,190"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#aff3369ae5dc19574b4c5a35c00c98a52" title=" " alt="" coords="281,134,495,189"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="226,190,267,182,268,188,228,196"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a8fcef11d85dab80606ade3ddae210fa7" title=" " alt="" coords="281,213,495,267"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="228,207,268,214,267,220,227,212"/>
+<area shape="rect" id="Node000011" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#a6e2adb0fccbe34c8c64e26a83b6dba90" title=" " alt="" coords="275,291,501,346"/>
+<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="199,213,232,244,276,276,289,283,286,288,273,281,229,248,195,216"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#aff72343036a34d6195ed0d67a28e47a8" title="[Required] Function that computes a proximal gradient step." alt="" coords="549,5,768,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="495,57,550,46,551,51,496,63"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1vec__util.html#ad25a5d07b7f707ab1d1fa7667a13dffa" title="Get the 1&#45;norm of the given vector." alt="" coords="567,70,750,95"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="496,80,554,80,554,85,496,85"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa_1_1vec__util.html#ab29885b89f70cd004695e002658a2134" title="Get the maximum or infinity&#45;norm of the given vector." alt="" coords="563,119,754,145"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="496,100,575,114,574,119,495,105"/>
+<area shape="rect" id="Node000009" href="$classalpaqa_1_1TypeErasedProblem.html#a1ddee18e9a1f867d37596150604e3953" title="[Optional] Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="551,190,766,245"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="495,228,538,225,538,230,496,234"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1TypeErasedProblem.html#aa169559ba70ce11302eb6b8a7b7349e2" title="[Optional] Calculate the gradient ∇ψ(x)." alt="" coords="551,269,766,323"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="496,260,538,268,537,274,495,265"/>
+</map>

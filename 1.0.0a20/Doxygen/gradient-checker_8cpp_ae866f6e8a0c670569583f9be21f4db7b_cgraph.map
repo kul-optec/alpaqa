@@ -1,0 +1,9 @@
+<map id="default_eval_ψ_grad_ψ" name="default_eval_ψ_grad_ψ">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,45,176,70"/>
+<area shape="rect" id="Node000002" href="$gradient-checker_8cpp.html#aa87afd38b7fb114000f0f42aeb65f429" title=" " alt="" coords="224,45,377,70"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="176,55,210,55,210,60,176,60"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedProblem.html#aba98edc04bad2e0a3ad6645991cd7535" title="[Required] Function that evaluates the gradient of the cost," alt="" coords="425,5,628,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="377,44,411,39,412,44,378,49"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedProblem.html#a6f4989c25256ca477442ef34ae1c6b7f" title="[Optional] Evaluate both &#160;and ." alt="" coords="425,69,628,109"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="378,66,412,70,411,76,377,71"/>
+</map>

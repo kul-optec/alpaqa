@@ -1,0 +1,39 @@
+<map id="n" name="n">
+<area shape="rect" id="Node000001" title="Get the size of the s and y vectors in the buffer." alt="" coords="400,239,439,264"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LBFGSStorage.html#ac7c2ee7d2562303f555dd1f4c3fca8cd" title=" " alt="" coords="267,41,305,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="412,225,406,192,394,154,376,114,350,80,328,66,305,59,306,54,330,61,354,76,381,111,399,152,411,191,417,224"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1LBFGSStorage.html#aac6f3071a5748c46bca056709b880369" title=" " alt="" coords="267,91,305,116"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="408,227,387,177,370,152,350,129,328,116,305,109,306,104,330,111,354,125,375,148,391,175,413,225"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1LBFGSStorage.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="267,140,305,165"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="400,229,378,203,350,179,327,167,305,159,306,154,330,162,354,174,382,199,404,225"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1LBFGSStorage.html#ab9a060f407604846d6345f6f85fddc77" title=" " alt="" coords="267,189,305,215"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="386,242,351,228,305,211,306,206,353,224,388,237"/>
+<area shape="rect" id="Node000010" href="$classalpaqa_1_1LBFGS.html#a727afc7a58d2e44ae7add57e3fa77bc6" title="Get the size of the s and y vectors in the buffer." alt="" coords="220,239,352,264"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="386,254,353,254,353,249,386,249"/>
+<area shape="rect" id="Node000012" href="$structalpaqa_1_1LBFGSStorage.html#a15e4a3db39457cabe764a7737d24e73f" title=" " alt="" coords="267,288,305,313"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="388,265,306,296,304,291,386,260"/>
+<area shape="rect" id="Node000015" href="$structalpaqa_1_1LBFGSStorage.html#a3735458df713d618d1f9798f3c080552" title=" " alt="" coords="267,337,305,363"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="403,277,381,303,354,327,330,340,306,348,305,343,327,335,350,322,377,299,399,274"/>
+<area shape="rect" id="Node000016" href="$structalpaqa_1_1LBFGSStorage.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="267,387,305,412"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="413,278,391,327,374,353,354,376,330,390,306,398,305,393,328,386,350,372,370,350,386,325,408,276"/>
+<area shape="rect" id="Node000019" href="$structalpaqa_1_1LBFGSStorage.html#ad7609eeaecc7dc893ab24f98b8fbe6c8" title=" " alt="" coords="267,436,305,461"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="417,278,411,311,399,350,380,390,354,425,331,440,306,448,305,443,328,436,350,421,376,387,394,348,405,310,412,277"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1LBFGS.html#ac7c2ee7d2562303f555dd1f4c3fca8cd" title=" " alt="" coords="22,5,155,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="253,51,155,33,156,28,254,46"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1LBFGS.html#aac6f3071a5748c46bca056709b880369" title=" " alt="" coords="22,55,155,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="253,59,156,66,155,60,253,54"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LBFGS.html#acade3dc51f7ca788be9b91908b2e73ab" title=" " alt="" coords="23,116,155,141"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="253,151,154,139,155,134,253,146"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1LBFGS.html#ab9a060f407604846d6345f6f85fddc77" title=" " alt="" coords="23,165,155,191"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="253,159,155,172,154,167,253,154"/>
+<area shape="rect" id="Node000011" href="$classalpaqa_1_1LBFGS.html#a728dfcb0d540fc7da341b3352dbe1582" title=" " alt="" coords="5,239,172,264"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="206,254,172,254,172,249,206,249"/>
+<area shape="rect" id="Node000013" href="$classalpaqa_1_1LBFGS.html#a15e4a3db39457cabe764a7737d24e73f" title=" " alt="" coords="23,288,154,313"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="253,303,154,303,154,298,253,298"/>
+<area shape="rect" id="Node000014" href="$classalpaqa_1_1LBFGS.html#a3735458df713d618d1f9798f3c080552" title=" " alt="" coords="23,337,154,363"/>
+<area shape="poly" id="edge13_Node000012_Node000014" title=" " alt="" coords="254,311,141,340,140,335,253,306"/>
+<area shape="rect" id="Node000017" href="$classalpaqa_1_1LBFGS.html#aebac2ec4461761a48a7284152a8217f8" title=" " alt="" coords="23,387,155,412"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="253,402,155,402,155,397,253,397"/>
+<area shape="rect" id="Node000018" href="$classalpaqa_1_1LBFGS.html#ad7609eeaecc7dc893ab24f98b8fbe6c8" title=" " alt="" coords="23,436,155,461"/>
+<area shape="poly" id="edge17_Node000016_Node000018" title=" " alt="" coords="254,410,141,439,140,433,253,405"/>
+</map>

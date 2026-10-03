@@ -1,0 +1,9 @@
+<map id="minimize_update_anderson" name="minimize_update_anderson">
+<area shape="rect" id="Node000001" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="467,45,669,70"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,5,419,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="461,45,418,40,419,34,461,40"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AndersonAccel.html#af02aae3147e83aeb9f83c4f0a17f537f" title="Compute the accelerated iterate , given the function value at the current iterate &#160;and the correspond..." alt="" coords="248,69,419,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="461,75,419,80,418,75,461,69"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1AndersonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="5,5,200,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="234,28,200,28,200,23,234,23"/>
+</map>

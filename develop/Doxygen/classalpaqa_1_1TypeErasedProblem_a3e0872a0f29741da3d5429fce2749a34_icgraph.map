@@ -1,0 +1,28 @@
+<map id="get_n" name="get_n">
+<area shape="rect" id="Node000001" title="[Required] Number of decision variables." alt="" coords="399,333,457,358"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1NewtonTRDirection.html#a23d8f300b8c4eb814e1aef62ab9c6176" title=" " alt="" coords="129,5,329,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="425,319,424,264,414,195,405,158,391,122,373,89,349,59,328,44,331,40,353,55,377,86,396,120,410,156,419,194,429,264,431,319"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1StructuredNewtonDirection.html#ad02c79a109cef288e13bc9c944af3b48" title=" " alt="" coords="134,69,325,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="423,319,418,276,405,223,383,169,368,145,349,123,324,107,327,102,352,119,372,142,388,167,411,222,423,275,428,318"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="152,133,307,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="419,320,410,289,396,253,376,217,349,187,329,175,306,166,308,161,331,170,352,183,380,214,401,251,415,287,424,318"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1IpoptAdapter.html#a9eaf7ceaf6c5549371845b11c0ed305b" title=" " alt="" coords="150,197,309,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="411,322,385,285,368,267,349,252,308,233,310,228,352,247,372,263,390,282,416,319"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1AndersonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="132,261,327,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="386,330,350,316,311,304,313,299,352,311,387,325"/>
+<area shape="rect" id="Node000007" href="$structalpaqa_1_1LBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="142,325,317,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="385,348,317,348,317,343,385,343"/>
+<area shape="rect" id="Node000008" href="$structalpaqa_1_1StructuredLBFGSDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="108,389,351,429"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="387,366,352,380,313,392,311,387,350,375,386,361"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1StructuredNewtonDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="134,453,325,493"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="416,371,390,409,372,428,352,444,326,457,324,452,349,439,368,424,385,405,411,368"/>
+<area shape="rect" id="Node000010" href="$structalpaqa_1_1NewtonTRDirection.html#abef09c52cdc391877cde2c5825fe65e6" title=" " alt="" coords="129,517,329,557"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="424,373,415,404,401,440,380,476,352,507,331,521,328,516,349,503,376,473,396,438,410,402,419,371"/>
+<area shape="rect" id="Node000011" href="$namespaceanonymous__namespace_02problem_8cpp_03.html#ab42fb3dc0421d6c6c1f45d753a95a2c4" title=" " alt="" coords="139,606,319,661"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="427,372,420,414,407,466,385,521,353,571,330,592,304,608,302,604,327,588,349,568,380,519,401,464,415,413,421,371"/>
+<area shape="rect" id="Node000012" href="$results_8hpp.html#ac44ace62be5699e983e8e4596ea74cf1" title=" " alt="" coords="178,685,281,710"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="427,372,418,443,403,533,382,618,368,651,353,674,337,686,319,694,281,701,280,696,317,689,334,681,349,670,364,649,377,616,398,532,413,442,421,371"/>
+<area shape="poly" id="edge11_Node000011_Node000011" title=" " alt="" coords="261,595,250,587,229,585,212,587,201,591,196,598,196,606,191,606,191,596,198,587,211,581,229,579,252,582,264,590"/>
+<area shape="rect" id="Node000013" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,685,60,710"/>
+<area shape="poly" id="edge13_Node000012_Node000013" title=" " alt="" coords="164,700,60,700,60,695,164,695"/>
+</map>

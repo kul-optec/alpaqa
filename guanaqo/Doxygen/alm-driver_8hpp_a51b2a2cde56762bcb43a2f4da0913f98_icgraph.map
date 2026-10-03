@@ -1,0 +1,19 @@
+<map id="make_inner_solver" name="make_inner_solver">
+<area shape="rect" id="Node000001" title=" " alt="" coords="737,65,883,91"/>
+<area shape="rect" id="Node000002" href="$namespaceanonymous__namespace_02panoc-driver_8cpp_03.html#ab2ca1091ea82102367666b62756cd7f6" title=" " alt="" coords="503,11,689,65"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="727,65,689,58,690,53,728,60"/>
+<area shape="rect" id="Node000007" href="$namespaceanonymous__namespace_02pantr-driver_8cpp_03.html#a39b6aa8ff07d8400d404f191bdccd499" title=" " alt="" coords="504,89,688,144"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="726,96,689,103,688,97,725,91"/>
+<area shape="rect" id="Node000003" href="$panoc-driver_8cpp.html#a19879efa6ead750308768da16e7c3417" title=" " alt="" coords="302,5,451,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="488,31,452,27,452,22,489,26"/>
+<area shape="rect" id="Node000006" href="$panoc-driver_8cpp.html#a0191399270ebc2b9eaeb169f445ecc38" title=" " alt="" coords="299,55,455,80"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="489,55,455,60,455,54,488,50"/>
+<area shape="rect" id="Node000004" href="$alpaqa-driver_8cpp.html#a3430011226186bf05d5c2552270587b7" title=" " alt="" coords="108,55,251,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="313,37,232,57,230,52,312,31"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,55,60,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,70,60,70,60,65,94,65"/>
+<area shape="poly" id="edge6_Node000006_Node000004" title=" " alt="" coords="285,70,251,70,251,65,285,65"/>
+<area shape="rect" id="Node000008" href="$pantr-driver_8cpp.html#acc9e603bc87299f28c5faa02034e9387" title=" " alt="" coords="305,104,449,129"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="490,119,449,119,449,114,490,114"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="312,103,230,83,232,77,313,98"/>
+</map>

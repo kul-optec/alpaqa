@@ -1,0 +1,5 @@
+<map id="select_rows_in_col_iota" name="select_rows_in_col_iota">
+<area shape="rect" id="node1" title="Like select_rows_in_col, but returns a range of tuples containing the Eigen InnerIterator and a linea..." alt="" coords="5,35,181,60"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1util.html#aa341d471c192fc72207643cd7057e260" title=" " alt="" coords="229,5,404,31"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1util.html#afddf99e09d9dad4ee17b5f41705c583a" title=" " alt="" coords="250,55,383,95"/>
+</map>

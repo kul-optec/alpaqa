@@ -1,0 +1,7 @@
+<map id="construct_inplace" name="construct_inplace">
+<area shape="rect" id="Node000001" title="Ensure storage and construct the type&#45;erased object of type T in&#45;place." alt="" coords="5,5,141,31"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a195219303aeef84ade1962ae7ae8f79d" title="Ensure that storage is available, either by using the small buffer if it is large enough,..." alt="" coords="189,5,264,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,15,175,15,175,21,142,21"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#acfef1fef827c1d3941958f47f8327d9a" title=" " alt="" coords="312,5,500,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="264,15,299,15,299,21,264,21"/>
+</map>

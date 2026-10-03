@@ -1,0 +1,7 @@
+<map id="CUTEstProblem" name="CUTEstProblem">
+<area shape="rect" id="Node000001" title="Wrapper for CUTEst problems loaded from an external shared library." alt="" coords="100,768,313,1516"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1BoxConstrProblem.html" title=" " alt="" coords="5,5,221,677"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,691,166,768,160,768,151,691"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CUTEstProblem.html#structalpaqa_1_1CUTEstProblem_1_1SparseStorage" title=" " alt="" coords="246,299,354,384"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="298,385,255,752,250,751,292,384"/>
+</map>

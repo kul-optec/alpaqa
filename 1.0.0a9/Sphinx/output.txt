@@ -1,0 +1,17 @@
+Results of doctest builder run on 2023-08-29 15:37:16
+=====================================================
+
+Document: usage/getting-started
+-------------------------------
+1 items passed all tests:
+   7 tests in default
+7 tests in 1 items.
+7 passed and 0 failed.
+Test passed.
+
+Doctest summary
+===============
+    7 tests
+    0 failures in tests
+    0 failures in setup code
+    0 failures in cleanup code

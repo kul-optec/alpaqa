@@ -1,0 +1,13 @@
+<map id="eval_grad_f" name="eval_grad_f">
+<area shape="rect" id="Node000001" title="[Required] Function that evaluates the gradient of the cost," alt="" coords="709,35,808,60"/>
+<area shape="rect" id="Node000002" href="$gradient-checker_8cpp.html#aa87afd38b7fb114000f0f42aeb65f429" title=" " alt="" coords="505,5,659,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="696,40,658,33,659,28,696,34"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1IpoptAdapter.html#a32b41ff45ea1fc9ce5fa895cd6fe3835" title=" " alt="" coords="503,55,661,95"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="696,60,662,65,661,60,695,55"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#ae866f6e8a0c670569583f9be21f4db7b" title=" " alt="" coords="284,5,455,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="491,21,455,21,455,15,491,15"/>
+<area shape="rect" id="Node000004" href="$gradient-checker_8cpp.html#aff809b3945d62b51f641c0176ba90e7c" title=" " alt="" coords="108,5,236,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="270,21,237,21,237,15,270,15"/>
+<area shape="rect" id="Node000005" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>

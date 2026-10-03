@@ -1,0 +1,19 @@
+<map id="src/alpaqa/include/alpaqa/util/enumerate.hpp" name="src/alpaqa/include/alpaqa/util/enumerate.hpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="421,5,620,45"/>
+<area shape="rect" id="Node000002" href="$sparse-ops_8hpp.html" title=" " alt="" coords="449,93,592,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="523,59,523,93,518,93,518,59"/>
+<area shape="rect" id="Node000003" href="$sparsity-conversions_8hpp.html" title=" " alt="" coords="310,196,494,251"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="481,159,435,198,431,194,478,155"/>
+<area shape="rect" id="Node000008" href="$CasADiControlProblem_8tpp.html" title=" " alt="" coords="566,196,811,251"/>
+<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="578,153,646,193,643,198,575,157"/>
+<area shape="rect" id="Node000004" href="$gradient-checker_8cpp.html" title=" " alt="" coords="5,299,167,339"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="301,257,150,301,149,296,299,252"/>
+<area shape="rect" id="Node000005" href="$ipopt-adapter_8hpp.html" title=" " alt="" coords="191,299,418,339"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="366,262,326,301,322,297,363,258"/>
+<area shape="rect" id="Node000007" href="$qpalm-adapter_8cpp.html" title=" " alt="" coords="443,299,601,339"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="449,257,499,297,496,301,445,262"/>
+<area shape="rect" id="Node000006" href="$ipopt-adapter_8cpp.html" title=" " alt="" coords="229,387,380,427"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="307,353,307,386,302,386,302,353"/>
+<area shape="rect" id="Node000009" href="$CasADiControlProblem_8cpp.html" title=" " alt="" coords="626,299,850,339"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="711,262,730,297,726,300,707,264"/>
+</map>

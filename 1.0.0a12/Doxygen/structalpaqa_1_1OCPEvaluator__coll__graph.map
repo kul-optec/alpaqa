@@ -1,0 +1,11 @@
+<map id="OCPEvaluator&lt; Conf &gt;" name="OCPEvaluator&lt; Conf &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="148,2783,311,3228"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1TypeErasedControlProblem.html" title="Nonlinear optimal control problem with finite horizon ." alt="" coords="5,1083,227,2720"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="203,2720,208,2766,202,2767,197,2720"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html" title="Class for polymorphism through type erasure." alt="" coords="15,213,217,1033"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="119,1047,119,1082,113,1082,113,1047"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1util_1_1BasicVTable.html" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="57,5,175,151"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="119,151,119,197,113,197,113,151"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1OCPVariables.html" title=" " alt="" coords="251,1439,434,2364"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="321,2364,304,2562,281,2759,280,2767,275,2766,276,2758,299,2561,316,2364"/>
+</map>

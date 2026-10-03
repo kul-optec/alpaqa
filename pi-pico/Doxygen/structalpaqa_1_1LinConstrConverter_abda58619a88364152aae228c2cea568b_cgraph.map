@@ -1,0 +1,9 @@
+<map id="add_box_constr_to_constr_matrix_inplace" name="add_box_constr_to_constr_matrix_inplace">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,196,75"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LinConstrConverter.html#a43c6d67e83f07aa67fa248d1609b7be8" title=" " alt="" coords="244,5,435,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,40,230,36,231,41,197,46"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1LinConstrConverter.html#ae35a83e95a5485a85e308b70499633d7" title=" " alt="" coords="303,70,376,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="197,63,289,74,289,79,196,69"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1LinConstrConverter.html#aa7668b0df53654f4f6681905b9f49453" title="Check if the variable with the given index has bound constraints, i.e." alt="" coords="483,13,563,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="435,23,469,23,469,28,435,28"/>
+</map>

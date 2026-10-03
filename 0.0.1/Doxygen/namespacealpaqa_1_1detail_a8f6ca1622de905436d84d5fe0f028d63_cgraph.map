@@ -1,0 +1,5 @@
+<map id="calc_grad_ψ" name="calc_grad_ψ">
+<area shape="rect" id="node1" title="Calculate the gradient ∇ψ(x)." alt="" coords="5,13,105,39"/>
+<area shape="rect" id="node2" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="153,5,292,47"/>
+<area shape="rect" id="node3" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="340,13,459,39"/>
+</map>

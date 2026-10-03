@@ -1,0 +1,7 @@
+<map id="update" name="update">
+<area shape="rect" id="Node000001" title="Update the inverse Hessian approximation using the new vectors xₙₑₓₜ and pₙₑₓₜ." alt="" coords="296,45,363,70"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1LBFGSDirection.html#a566f5ad6943cea19425edf62988b404e" title=" " alt="" coords="39,5,214,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="282,53,214,42,215,37,283,47"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1StructuredLBFGSDirection.html#a566f5ad6943cea19425edf62988b404e" title=" " alt="" coords="5,69,248,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="283,67,249,73,248,67,282,62"/>
+</map>

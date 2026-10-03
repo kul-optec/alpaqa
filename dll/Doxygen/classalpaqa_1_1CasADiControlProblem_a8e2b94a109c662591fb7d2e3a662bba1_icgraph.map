@@ -1,0 +1,14 @@
+<map id="CasADiControlProblem" name="CasADiControlProblem">
+<area shape="rect" id="Node000001" title=" " alt="" coords="224,128,395,153"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1CasADiControlProblem.html#af93fae2316fda9e663747c5af4fc9baa" title=" " alt="" coords="5,5,176,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="283,121,235,82,175,44,146,33,148,28,177,40,238,78,286,117"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1CasADiControlProblem.html#a1193c36f447bfe46112fd46258674196" title=" " alt="" coords="5,55,176,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="263,126,175,94,138,83,140,77,177,89,265,121"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1CasADiControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title=" " alt="" coords="59,128,122,153"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,143,122,143,122,138,210,138"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1CasADiControlProblem.html#aaeb89b1856e2b1222b9717b0cbe0377b" title=" " alt="" coords="47,177,135,203"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="240,159,135,183,134,178,239,154"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1CasADiControlProblem.html#a36a7a9214987dd23ba41e02d7f00bb64" title=" " alt="" coords="47,227,135,252"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="278,163,231,190,177,216,136,231,134,226,175,212,229,185,275,158"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="129,120,128,115,122,111,91,107,67,109,54,114,53,120,61,128,57,131,48,121,50,110,65,104,91,101,124,106,132,112,134,119"/>
+</map>

@@ -1,0 +1,16 @@
+<map id="r_succ" name="r_succ">
+<area shape="rect" id="Node000001" title="Get the next index in the circular storage for R." alt="" coords="633,69,696,94"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1LimitedMemoryQR.html#a5e3077223e98c1e4e286e01503f220d5" title="Add the given column to the right." alt="" coords="471,19,573,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="620,69,559,47,561,42,621,64"/>
+<area shape="rect" id="Node000006" href="$classalpaqa_1_1LimitedMemoryQR.html#a436c4dbbf0476354ca67a104bc005e55" title="Remove the leftmost column." alt="" coords="459,69,585,94"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="620,84,586,84,586,79,620,79"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1LimitedMemoryQR.html#ad24371ff0ab7c48c4fb9750d5d66cd0c" title="Get the next index in the circular buffer." alt="" coords="481,118,563,143"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="621,99,561,120,559,115,620,94"/>
+<area shape="rect" id="Node000003" href="$namespacealpaqa.html#adf8fd46412351c743b102d9c56c943b2" title="Solve one step of Anderson acceleration to find a fixed point of a function g(x):" alt="" coords="224,37,411,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="458,43,411,48,411,43,458,37"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1AndersonAccel.html#a7cbecaa52700158ebe36c0d587791ed4" title=" " alt="" coords="5,5,176,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="210,45,176,40,177,35,211,40"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1AndersonAccel.html#af02aae3147e83aeb9f83c4f0a17f537f" title=" " alt="" coords="5,69,176,109"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="211,75,177,80,176,75,210,70"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="445,75,410,71,411,66,445,70"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="get_pointer" name="get_pointer">
+<area shape="rect" id="Node000001" title="Get a type&#45;erased pointer to the wrapped object." alt="" coords="5,13,101,38"/>
+<area shape="rect" id="Node000002" href="$classalpaqa_1_1util_1_1TypeErased.html#a72027b54ab50bb59f0933bdf1e3ab3dc" title="Check if the wrapped object is const." alt="" coords="149,5,307,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,23,136,23,136,28,102,28"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1util_1_1TypeErased.html#a862fbc55eb2e743e9fccb91c70a2db1e" title=" " alt="" coords="355,13,511,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="307,23,341,23,341,28,307,28"/>
+</map>

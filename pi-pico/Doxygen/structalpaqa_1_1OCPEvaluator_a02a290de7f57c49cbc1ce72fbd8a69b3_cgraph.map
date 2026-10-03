@@ -1,0 +1,33 @@
+<map id="forward_simulate" name="forward_simulate">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,376,141,401"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1OCPVariables.html#a391b2381bfd92a7c2fd61a9fa322e3c0" title=" " alt="" coords="195,5,379,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="72,376,76,316,92,226,106,176,127,127,153,81,187,41,194,36,197,40,191,45,158,84,131,129,111,178,97,227,82,316,77,376"/>
+<area shape="rect" id="Node000003" href="$classalpaqa_1_1TypeErasedControlProblem.html#a86c96723a0f613e2269ebd81f72c9c83" title="Stage constraints ." alt="" coords="189,55,384,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="73,375,82,326,101,254,116,214,135,175,159,138,187,105,192,101,196,105,191,109,163,141,140,177,121,216,106,255,87,327,79,376"/>
+<area shape="rect" id="Node000004" href="$classalpaqa_1_1TypeErasedControlProblem.html#a4e9cccc0dd3e9920bd9a0d2510270c44" title="Terminal constraints ." alt="" coords="189,119,384,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="75,375,87,335,109,280,142,221,163,193,188,169,194,164,197,169,191,173,167,197,147,224,114,282,92,337,80,377"/>
+<area shape="rect" id="Node000005" href="$classalpaqa_1_1TypeErasedControlProblem.html#aea104db5b0d6d2a3fd975b31762901ef" title="Discrete&#45;time dynamics ." alt="" coords="189,183,384,223"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="78,375,118,308,150,268,188,233,196,228,199,232,191,237,154,272,122,311,83,377"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1TypeErasedControlProblem.html#a9412e49fd073645733eb50f1e93b889a" title="Stage output mapping ." alt="" coords="189,247,384,287"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="86,374,130,336,188,297,202,290,204,295,191,302,133,341,90,378"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1TypeErasedControlProblem.html#af14bea7b59a44b2bbf009de9aa3ff3a7" title="Terminal output mapping ." alt="" coords="189,311,384,351"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="121,373,198,352,199,358,122,379"/>
+<area shape="rect" id="Node000009" href="$structalpaqa_1_1OCPVariables.html#ad2e98c60f4f2abe43a52aea5afc9bad4" title=" " alt="" coords="194,376,379,401"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="142,386,180,386,180,391,142,391"/>
+<area shape="rect" id="Node000010" href="$structalpaqa_1_1OCPVariables.html#ac23599fc3855d4c3d79c3e689dd86f6c" title=" " alt="" coords="195,425,379,451"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="130,399,218,420,217,425,128,404"/>
+<area shape="rect" id="Node000011" href="$structalpaqa_1_1OCPVariables.html#a9b03b81e6526f30c99d5d9e0fa537768" title=" " alt="" coords="206,475,367,515"/>
+<area shape="poly" id="edge12_Node000001_Node000011" title=" " alt="" coords="93,399,136,429,191,460,209,468,206,473,188,464,134,433,90,404"/>
+<area shape="rect" id="Node000012" href="$structalpaqa_1_1OCPVariables.html#a6d6559d215012fc0f573883117ec5398" title=" " alt="" coords="194,540,379,565"/>
+<area shape="poly" id="edge13_Node000001_Node000012" title=" " alt="" coords="84,400,124,461,155,496,191,525,205,533,202,537,188,530,151,499,120,464,79,403"/>
+<area shape="rect" id="Node000013" href="$structalpaqa_1_1OCPVariables.html#a2f879d2af95b130c8c92b49b11e55b9f" title=" " alt="" coords="206,590,367,630"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="82,401,95,435,118,482,150,532,191,575,200,581,197,585,188,579,146,535,113,485,90,437,77,403"/>
+<area shape="rect" id="Node000014" href="$structalpaqa_1_1OCPVariables.html#a88158344aedc0355f0e563e54c779ae7" title=" " alt="" coords="194,655,379,680"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="79,401,89,447,108,511,123,546,142,581,164,613,191,640,199,646,196,650,188,644,160,616,137,584,118,549,103,513,83,448,74,402"/>
+<area shape="rect" id="Node000015" href="$structalpaqa_1_1OCPVariables.html#a5468d87fecd1ab7d60817e223428990b" title=" " alt="" coords="194,704,379,729"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="78,402,85,455,102,533,117,575,136,617,161,656,191,689,198,695,195,699,188,693,156,659,132,620,112,577,97,534,80,456,73,402"/>
+<area shape="rect" id="Node000006" href="$namespacealpaqa.html#a886edac65634ad8f9fe77aac2e5f178d" title="If the given vector v is not finite, break or throw an exception with the given message msg." alt="" coords="432,255,615,280"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="362,221,463,248,462,254,361,226"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="384,265,418,265,418,270,384,270"/>
+<area shape="poly" id="edge9_Node000008_Node000006" title=" " alt="" coords="361,309,462,281,463,286,362,314"/>
+</map>

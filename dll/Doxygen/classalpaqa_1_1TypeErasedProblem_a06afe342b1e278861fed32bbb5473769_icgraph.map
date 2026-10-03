@@ -1,0 +1,17 @@
+<map id="eval_constraints" name="eval_constraints">
+<area shape="rect" id="Node000001" title="[Required] Function that evaluates the constraints," alt="" coords="665,109,795,134"/>
+<area shape="rect" id="Node000002" href="$namespacealpaqa.html#a4ca1e55c8c5fb7305b9e55d746d7929e" title=" " alt="" coords="433,5,587,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="697,103,659,81,616,60,585,48,587,43,618,55,661,76,699,99"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1detail_1_1PANOCHelpers.html#abbe7a9499d34168ba294d9737ab1516d" title=" " alt="" coords="403,69,617,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="651,113,617,108,618,102,652,107"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#afb0811428e64aa5c800ec37e76ddd051" title=" " alt="" coords="431,133,589,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="652,135,590,144,589,139,651,130"/>
+<area shape="rect" id="Node000006" href="$structalpaqa_1_1detail_1_1ALMHelpers.html#aa91b6b1a0715e1efaf34b25131d0e8f1" title=" " alt="" coords="411,198,609,253"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="698,144,619,188,589,200,587,195,616,183,696,139"/>
+<area shape="rect" id="Node000005" href="$alpaqa-driver_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="252,141,307,166"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="416,156,307,156,307,151,416,151"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1ALMSolver.html#addcbcd08131cd8fb2d837cdbe59a51ff" title=" " alt="" coords="204,205,355,245"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="398,228,355,228,355,223,398,223"/>
+<area shape="rect" id="Node000008" href="$classalpaqa_1_1ALMSolver.html#abf8cdbf0da02bdb631d4c6701b9c7100" title=" " alt="" coords="5,205,156,245"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="191,228,156,228,156,223,191,223"/>
+</map>

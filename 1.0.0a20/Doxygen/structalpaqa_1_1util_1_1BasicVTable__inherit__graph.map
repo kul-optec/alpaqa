@@ -1,0 +1,11 @@
+<map id="BasicVTable" name="BasicVTable">
+<area shape="rect" id="Node000001" title="Struct that stores the size of a polymorphic object, as well as pointers to functions to copy,..." alt="" coords="421,5,538,151"/>
+<area shape="rect" id="Node000002" href="$structalpaqa_1_1ControlProblemVTable.html" title=" " alt="" coords="5,259,217,1347"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="408,97,363,112,314,134,269,163,231,200,192,260,188,257,227,197,265,159,312,129,361,107,407,92"/>
+<area shape="rect" id="Node000003" href="$structalpaqa_1_1ProblemVTable.html" title=" " alt="" coords="241,199,472,1407"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="467,165,462,199,457,198,462,164"/>
+<area shape="rect" id="Node000004" href="$structalpaqa_1_1ControlProblemVTable.html" title=" " alt="" coords="496,259,708,1347"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="496,164,512,258,507,259,491,165"/>
+<area shape="rect" id="Node000005" href="$structalpaqa_1_1ProblemVTable.html" title="Struct containing function pointers to all problem functions (like the objective and constraint funct..." alt="" coords="733,199,946,1407"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="552,94,596,109,642,131,686,160,723,197,735,213,730,216,719,200,683,164,639,136,594,114,550,99"/>
+</map>

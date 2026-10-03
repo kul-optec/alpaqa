@@ -1,0 +1,15 @@
+<map id="provides_eval_augmented_lagrangian_hessian" name="provides_eval_augmented_lagrangian_hessian">
+<area shape="rect" id="Node000001" title="Returns true if the problem provides an implementation of eval_augmented_lagrangian_hessian." alt="" coords="785,66,980,106"/>
+<area shape="rect" id="Node000002" href="$group__grp__Problems.html#ga9ed51a24b30020b93df728547026f370" title=" " alt="" coords="546,26,714,66"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="771,71,714,62,715,57,772,66"/>
+<area shape="rect" id="Node000007" href="$classalpaqa_1_1TypeErasedProblem.html#a899d0e8a2ac4d32430db43986ce9c9f6" title=" " alt="" coords="523,90,737,159"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="772,106,738,111,737,106,771,100"/>
+<area shape="rect" id="Node000003" href="$gradient-checker_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="365,5,419,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="532,37,419,24,420,18,532,32"/>
+<area shape="rect" id="Node000004" href="$namespacealpaqa.html#af145cff32479cdcb832c765895175628" title=" " alt="" coords="309,55,475,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="532,61,475,68,474,63,532,55"/>
+<area shape="rect" id="Node000005" href="$namespacealpaqa_1_1driver.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="108,63,261,88"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="296,78,262,78,262,73,296,73"/>
+<area shape="rect" id="Node000006" href="$alpaqa-driver-main_8cpp.html#ac0f2228420376f4db7e1274f2b41667c" title=" " alt="" coords="5,63,60,88"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="94,78,60,78,60,73,94,73"/>
+</map>

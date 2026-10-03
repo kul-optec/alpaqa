@@ -1,0 +1,7 @@
+<map id="calc_ψ_grad_ψ" name="calc_ψ_grad_ψ">
+<area shape="rect" id="node1" title="Calculate both ψ(x) and its gradient ∇ψ(x)." alt="" coords="5,31,121,57"/>
+<area shape="rect" id="node2" href="$namespacealpaqa_1_1detail.html#a998a56114e97dc0ea3b883d34df2cb77" title="Calculate ∇ψ(x) using ŷ." alt="" coords="169,5,323,32"/>
+<area shape="rect" id="node3" href="$namespacealpaqa_1_1detail.html#a3610f01aab6727758fa7ffff75eb21e6" title="Calculate both ψ(x) and the vector ŷ that can later be used to compute ∇ψ." alt="" coords="207,56,285,83"/>
+<area shape="rect" id="node4" href="$namespacealpaqa.html#aebbd23b8fcae9c5fdf8aac14dcebf39e" title="Get the difference between the given vector and its projection." alt="" coords="371,49,509,90"/>
+<area shape="rect" id="node5" href="$namespacealpaqa.html#a161ffc9e716eaea97d3bbf5a2961f6fd" title="Project a vector onto a box." alt="" coords="557,56,676,83"/>
+</map>

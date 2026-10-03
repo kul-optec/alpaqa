@@ -1,0 +1,12 @@
+<map id="complete_problem" name="complete_problem">
+<area shape="rect" id="Node000001" title="Complete the given problem that contains only functions f and g, adding the necessary functions and g..." alt="" coords="5,67,149,92"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="52,68,47,58,50,49,60,42,77,40,98,44,106,52,103,56,95,48,77,45,62,47,54,52,53,58,57,65"/>
+<area shape="rect" id="Node000002" href="$namespacebuiltin.html#a440de48c7f739b4216916e2aba75b266" title=" " alt="" coords="197,29,252,55"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="127,64,184,50,185,55,129,69"/>
+<area shape="rect" id="Node000003" href="$namespacebuiltin.html#afccc50561e4ab30ea075ee8e5a5c0607" title=" " alt="" coords="197,103,252,128"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="130,89,185,103,183,108,129,95"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="200,31,195,21,197,11,208,5,225,3,245,6,254,15,250,18,242,11,225,8,209,10,202,15,200,20,204,28"/>
+<area shape="poly" id="edge6_Node000003_Node000003" title=" " alt="" coords="200,104,195,94,197,85,208,78,225,76,245,80,254,88,250,92,242,84,225,81,209,83,202,88,200,94,204,101"/>
+<area shape="rect" id="Node000004" href="$demangled-typename_8cpp.html#a994032931a27ca4de5eea3f786057b17" title="Get the pretty name of the given type as a string." alt="" coords="300,103,468,128"/>
+<area shape="poly" id="edge5_Node000003_Node000004" title=" " alt="" coords="252,113,286,113,286,118,252,118"/>
+</map>
