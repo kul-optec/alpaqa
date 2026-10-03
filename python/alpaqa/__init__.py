@@ -2,7 +2,7 @@
 Augmented Lagrangian and PANOC solvers for nonconvex numerical optimization.
 """
 
-__version__ = "1.1.0a2"
+__version__ = "1.1.0a3.dev0"
 
 import contextlib
 

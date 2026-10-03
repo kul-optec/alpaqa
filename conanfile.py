@@ -10,7 +10,7 @@ from conan.tools.scm import Git
 
 class AlpaqaRecipe(ConanFile):
     name = "alpaqa"
-    version = "1.1.0-alpha.2"
+    version = "1.1.0-alpha.3"
 
     # Optional metadata
     license = "LGPL-3.0-or-later"
